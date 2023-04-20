@@ -1,0 +1,28 @@
+graph TB
+  linkStyle default fill:#ffffff
+
+  subgraph diagram [System Landscape]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    1["<div style='font-weight: bold'>Superfluid Checkout</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>"]
+    style 1 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    30["<div style='font-weight: bold'>Web3 Wallet</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The user's wallet with RPC &<br />signature access.</div>"]
+    style 30 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    31["<div style='font-weight: bold'>Superfluid Dashboard</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>"]
+    style 31 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    32["<div style='font-weight: bold'>Superfluid Vesting</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>"]
+    style 32 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    33["<div style='font-weight: bold'>Web3 Store</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>"]
+    style 33 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    35["<div style='font-weight: bold'>Web3 Merchant</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
+    style 35 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    38["<div style='font-weight: bold'>Web3 User</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
+    style 38 fill:#dddddd,stroke:#9a9a9a,color:#000000
+
+    33-. "<div>Uses</div><div style='font-size: 70%'></div>" .->1
+    35-. "<div>Uses</div><div style='font-size: 70%'></div>" .->1
+    38-. "<div>Uses</div><div style='font-size: 70%'></div>" .->30
+    38-. "<div>Goes to</div><div style='font-size: 70%'></div>" .->31
+    38-. "<div>Goes to</div><div style='font-size: 70%'></div>" .->33
+    38-. "<div>Uses</div><div style='font-size: 70%'></div>" .->1
+  end

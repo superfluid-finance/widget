@@ -1,0 +1,30 @@
+graph TB
+  linkStyle default fill:#ffffff
+
+  subgraph diagram [Superfluid Checkout - Containers]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    35["<div style='font-weight: bold'>Web3 Merchant</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
+    style 35 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    38["<div style='font-weight: bold'>Web3 User</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
+    style 38 fill:#dddddd,stroke:#9a9a9a,color:#000000
+
+    subgraph 1 [Superfluid Checkout]
+      style 1 fill:#ffffff,stroke:#9a9a9a,color:#9a9a9a
+
+      2["<div style='font-weight: bold'>Checkout Storage API</div><div style='font-size: 70%; margin-top: 0px'>[Container]</div><div style='font-size: 80%; margin-top:10px'>Something to hold the<br />checkout inputs.</div>"]
+      style 2 fill:#dddddd,stroke:#9a9a9a,color:#000000
+      25["<div style='font-weight: bold'>Checkout Container</div><div style='font-size: 70%; margin-top: 0px'>[Container]</div><div style='font-size: 80%; margin-top:10px'>The website that holds the<br />checkout widget(s).</div>"]
+      style 25 fill:#dddddd,stroke:#9a9a9a,color:#000000
+      28["<div style='font-weight: bold'>Merchant Dashboard</div><div style='font-size: 70%; margin-top: 0px'>[Container]</div><div style='font-size: 80%; margin-top:10px'>The UI to configure</div>"]
+      style 28 fill:#dddddd,stroke:#9a9a9a,color:#000000
+      3["<div style='font-weight: bold'>Checkout Widget V1</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript, React, MUI, wagmi, Zod, Token List]</div><div style='font-size: 80%; margin-top:10px'>Provides a streamlined UX to<br />subscribe to the given<br />product.</div>"]
+      style 3 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    end
+
+    25-. "<div>Gets details from</div><div style='font-size: 70%'></div>" .->2
+    25-. "<div>Uses</div><div style='font-size: 70%'></div>" .->3
+    28-. "<div>CRUD</div><div style='font-size: 70%'></div>" .->2
+    35-. "<div>Uses</div><div style='font-size: 70%'></div>" .->28
+    38-. "<div>Uses</div><div style='font-size: 70%'></div>" .->3
+  end
