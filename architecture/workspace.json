@@ -2,9 +2,10 @@
   "id" : 1,
   "name" : "Superfluid Checkout System",
   "description" : "Description",
-  "lastModifiedDate" : "2023-04-21T10:47:12Z",
+  "lastModifiedDate" : "2023-04-21T11:12:20Z",
+  "lastModifiedAgent" : "structurizr-javascript",
   "properties" : {
-    "structurizr.dsl" : "Ly8gVGhlIGZvbGxvd2luZyBpcyBhcmNoaXRlY3R1cmUgZGVzY3JpYmVkIGluIFN0cnVjdHVyaXpyIERTTCwgdXNpbmcgdGhlIEM0IG1vZGVsIC4Kd29ya3NwYWNlICJTdXBlcmZsdWlkIENoZWNrb3V0IFN5c3RlbSIgewogICAgIWFkcnMgZGVjaXNpb25zCgogICAgbW9kZWwgewogICAgICAgIENoZWNrb3V0Q3VzdG9tZXJTeXN0ZW0gPSBzb2Z0d2FyZVN5c3RlbSAiQ2hlY2tvdXQgQ3VzdG9tZXIgU3lzdGVtIiB7CiAgICAgICAgICAgIENoZWNrb3V0V2lkZ2V0ID0gY29udGFpbmVyICJDaGVja291dCBXaWRnZXQgVjEiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJQcm92aWRlcyBhIHN0cmVhbWxpbmVkIFVYIHRvIHN1YnNjcmliZSB0byB0aGUgZ2l2ZW4gcHJvZHVjdC4iCiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJUeXBlU2NyaXB0LCBSZWFjdCwgTVVJLCB3YWdtaSwgWm9kLCBUb2tlbiBMaXN0IgoKICAgICAgICAgICAgICAgIGdyb3VwICJPbi1DaGFpbiBUcmFuc2FjdGlvbnMiIHsKICAgICAgICAgICAgICAgICAgICBBdXRob3JpemVBdXRvV3JhcFR4ID0gY29tcG9uZW50ICJBdXRob3JpemUgQXV0by1XcmFwIgogICAgICAgICAgICAgICAgICAgIEVuYWJsZUF1dG9XcmFwVHggPSBjb21wb25lbnQgIkVuYWJsZSBBdXRvLVdyYXAiCiAgICAgICAgICAgICAgICAgICAgQXV0aG9yaXplU3VwZXJUb2tlblR4ID0gY29tcG9uZW50ICJBdXRob3JpemUgU3VwZXJmbHVpZCB0byBXcmFwIFRva2VucyIKICAgICAgICAgICAgICAgICAgICBXcmFwSW50b1N1cGVyVG9rZW5UeCA9IGNvbXBvbmVudCAiVXBncmFkZSB0byBTdXBlciBUb2tlbiIKICAgICAgICAgICAgICAgICAgICBDcmVhdGVGbG93VHggPSBjb21wb25lbnQgIkNyZWF0ZSBGbG93IgogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIGdyb3VwICJDb21tYW5kcyIgewogICAgICAgICAgICAgICAgICAgIENoZWNrb3V0QXV0b1dyYXBDb21tYW5kID0gY29tcG9uZW50ICJFbmFibGUgQXV0by1XcmFwIENvbW1hbmQiIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQ29tbWFuZCIKCiAgICAgICAgICAgICAgICAgICAgICAgIC0+IEF1dGhvcml6ZUF1dG9XcmFwVHggIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgICAgICAgICAtPiBFbmFibGVBdXRvV3JhcFR4ICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgQ2hlY2tvdXRXcmFwSW50b1N1cGVyVG9rZW5zQ29tbWFuZCA9IGNvbXBvbmVudCAiV3JhcCBTdXBlciBUb2tlbnMgQ29tbWFuZCIgewogICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJDb21tYW5kIgoKICAgICAgICAgICAgICAgICAgICAgICAgLT4gQXV0aG9yaXplU3VwZXJUb2tlblR4ICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICAgICAgLT4gV3JhcEludG9TdXBlclRva2VuVHggIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBDaGVja291dFN1YnNjcmliZUNvbW1hbmQgPSBjb21wb25lbnQgIlN1YnNjcmliZSBDb21tYW5kIiB7CiAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIkNvbW1hbmQiCgogICAgICAgICAgICAgICAgICAgICAgICAtPiBDcmVhdGVGbG93VHggIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBDaGVja291dFdpZGdldEZvcm0gPSBjb21wb25lbnQgIkNoZWNrb3V0IEZvcm0iIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiVGhlIGZvcm0gd2l0aCBpbnB1dHMgdGhhdCB0aGUgdXNlciBmaWxscyBvdXQuIgogICAgICAgICAgICAgICAgICAgIHRlY2hub2xvZ3kgIndhZ21pLCByZWFjdC1ob29rLWZvcm0sIFpvZCIKICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAtPiBDaGVja291dEF1dG9XcmFwQ29tbWFuZCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICAgICAgLT4gQ2hlY2tvdXRXcmFwSW50b1N1cGVyVG9rZW5zQ29tbWFuZCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICAgICAgLT4gQ2hlY2tvdXRTdWJzY3JpYmVDb21tYW5kICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBDaGVja291dFdpZGdldFByb2R1Y3QgPSBjb21wb25lbnQgIlByb2R1Y3QgSW5mbyIgewogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJQcm9kdWN0IGRldGFpbHMsIGluY2x1ZGluZyBwYXltZW50IG9wdGlvbnMgKHRva2VuICYgbmV0d29yayAmIGZsb3cgcmF0ZSkiCgogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0V2lkZ2V0Rm9ybSAiSW5wdXQgb2YiCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgQ2hlY2tvdXRXaWRnZXRQcm9kdWN0VG9rZW5MaXN0ID0gY29tcG9uZW50ICJUb2tlbiBMaXN0IiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBkaXNwbGF5IGluZm8gZm9yIHRoZSB0b2tlbnMgdGhhdCBhcmUgc2V0IHVwIGFzIHBheW1lbnQgb3B0aW9ucy4iCgogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0V2lkZ2V0Rm9ybSAiSW5wdXQgb2YiCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KCgoKICAgICAgICAgICAgLy8gQ2hlY2tvdXRDb250YWluZXIgPSBjb250YWluZXIgIkNoZWNrb3V0IENvbnRhaW5lciIgIlRoZSB3ZWJzaXRlIHRoYXQgaG9sZHMgdGhlIGNoZWNrb3V0IHdpZGdldChzKS4iIHsKICAgICAgICAgICAgLy8gICAgIC0+IENoZWNrb3V0U3RvcmUgIkdldHMgZGV0YWlscyBmcm9tIgogICAgICAgICAgICAvLyAgICAgLT4gQ2hlY2tvdXRXaWRnZXQgIlVzZXMiCiAgICAgICAgICAgIC8vIH0KCgoKCiAgICAgICAgICAgIC8vIENoZWNrb3V0TWVyY2hhbnREYXNoYm9hcmQgPSBjb250YWluZXIgIk1lcmNoYW50IERhc2hib2FyZCIgIlRoZSBVSSB0byBzZWUgc3Vic2NyaXB0aW9ucyBhbmQgcHJvZHVjdHMgZnJvbSIgewogICAgICAgICAgICAvLyAgICAgLT4gQ2hlY2tvdXRTdG9yZSAiQ1JVRCIKICAgICAgICAgICAgLy8gfQogICAgICAgIH0KCiAgICAgICAgQ2hlY2tvdXRTdG9yYWdlU3lzdGVtID0gc29mdHdhcmVTeXN0ZW0gIkNoZWNrb3V0IFN0b3JhZ2UgU3lzdGVtIiB7CiAgICAgICAgICAgIENoZWNrb3V0U3RvcmFnZUFQSSA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgU3RvcmFnZSBBUEkiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJTb21ldGhpbmcgdG8gaG9sZCB0aGUgY2hlY2tvdXQgaW5wdXRzLiIKCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIENoZWNrb3V0SVBGUyA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgSVBGUyIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkRlY2VudHJhbGl6ZWQgc3RvcmFnZS4iCgogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBDaGVja291dE1lcmNoYW50U3lzdGVtID0gc29mdHdhcmVTeXN0ZW0gIkNoZWNrb3V0IE1lcmNoYW50IFN5c3RlbSIgewogICAgICAgICAgICBDaGVja291dEJ1aWxkZXIgPSBjb250YWluZXIgIkNoZWNrb3V0IEJ1aWxkZXIiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgc2VydmljZSB0aGF0IGJ1aWxkcyB0aGUgaW5wdXQgZm9yIHRoZSB3aWRnZXQuIgoKICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0U3RvcmFnZVN5c3RlbSAiR2V0cyBkZXRhaWxzIGZyb20iCiAgICAgICAgICAgIH0KICAgICAgICB9ICAgICAgICAKCiAgICAgICAgV2FsbGV0ID0gc29mdHdhcmVTeXN0ZW0gIldlYjMgV2FsbGV0IiAiV2FsbGV0IiB7CiAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgdXNlcidzIHdhbGxldCB3aXRoIFJQQyAmIHNpZ25hdHVyZSBhY2Nlc3MuIgogICAgICAgICAgICB0YWdzICJXYWxsZXQiCgogICAgICAgICAgICAvLyAtPiBDaGVja291dFdpZGdldEZvcm0gIkdvZXMgaW50byIKICAgICAgICB9CgogICAgICAgIFN1cGVyZmx1aWRVc2VyU3lzdGVtID0gc29mdHdhcmVTeXN0ZW0gIlN1cGVyZmx1aWQgVXNlciBTeXN0ZW0iIHsKICAgICAgICAgICAgdGFncyAiU3VwZXJmbHVpZCBGaW5hbmNlIgoKICAgICAgICAgICAgU3VwZXJmbHVpZERhc2hib2FyZCA9IGNvbnRhaW5lciAiU3VwZXJmbHVpZCBEYXNoYm9hcmQiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgVUkgdG8gc2VlIHRva2VuIGJhbGFuY2VzIGFuZCBmbG93cy4iCiAgICAgICAgICAgICAgICB0YWdzICJXZWIgQXBwIgoKICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0V2lkZ2V0ICJDYW4gY29udGFpbiBhIGdlbmVyaWMgJ2hvc3RlZCcgdmVyc2lvbiIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgU3VwZXJmbHVpZENvbnNvbGUgPSBjb250YWluZXIgIlN1cGVyZmx1aWQgQ29uc29sZSIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBVSSB2aWV3IFN1cGVyZmx1aWQgUHJvdG9jb2wgZnJvbSBiaXJkJ3MgZXllIHZpZXcuIgogICAgICAgICAgICAgICAgdGFncyAiV2ViIEFwcCIKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgV2ViM01lcmNoYW50RWNvc3lzdGVtID0gc29mdHdhcmVTeXN0ZW0gIldlYjMgU3RvcmVzIiB7CiAgICAgICAgICAgIHRhZ3MgIkV4dGVybmFsIgoKICAgICAgICAgICAgLT4gQ2hlY2tvdXRXaWRnZXQgIlRoZSB3ZWJzaXRlIHRoYXQgaG9sZHMgdGhlIGNoZWNrb3V0IHdpZGdldChzKS4iCiAgICAgICAgfQoKICAgICAgICBXZWIzTWVyY2hhbnQgPSBwZXJzb24gIldlYjMgTWVyY2hhbnQiCiAgICAgICAgV2ViM01lcmNoYW50IC0+IENoZWNrb3V0TWVyY2hhbnRTeXN0ZW0gIlVzZXMiCgogICAgICAgIFdlYjNVc2VyID0gcGVyc29uICJXZWIzIFVzZXIiCiAgICAgICAgLy8gV2ViM1VzZXIgLT4gV2FsbGV0ICJVc2VzIgogICAgICAgIFdlYjNVc2VyIC0+IFN1cGVyZmx1aWREYXNoYm9hcmQgIlVzZXMgdG8gbWFuYWdlIHRva2VuIGJhbGFuY2VzIgogICAgICAgIFdlYjNVc2VyIC0+IFdlYjNNZXJjaGFudEVjb3N5c3RlbSAiR29lcyB0byBzdWJzY3JpYmUgdG8gYSBwcm9kdWN0IgogICAgICAgIFdlYjNVc2VyIC0+IENoZWNrb3V0V2lkZ2V0ICJVc2VzIHRvIG1ha2UgcGF5bWVudCIKICAgIH0KCiAgICB2aWV3cyB7CiAgICAgICAgc3lzdGVtbGFuZHNjYXBlIFRoZUJpZ1BpY3R1cmUgIlRoZSBDaGVja291dCBCaWcgUGljdHVyZSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIENoZWNrb3V0Q3VzdG9tZXJTeXN0ZW0gIkNoZWNrb3V0Q3VzdG9tZXJTeXN0ZW0iIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIGNvbnRhaW5lciBDaGVja291dFN0b3JhZ2VTeXN0ZW0gIkNoZWNrb3V0U3RvcmFnZVN5c3RlbSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIFN1cGVyZmx1aWRVc2VyU3lzdGVtICJTdXBlcmZsdWlkVXNlclN5c3RlbSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KICAgICAgICAKICAgICAgICBjb21wb25lbnQgQ2hlY2tvdXRXaWRnZXQgIkNoZWNrb3V0V2lkZ2V0Q29tcG9uZW50cyIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KCiAgICAgICAgc3R5bGVzIHsKICAgICAgICAgICAgZWxlbWVudCAiUGVyc29uIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBwZXJzb24KICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzk3NjQ0MAogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJXYWxsZXQiIHsKICAgICAgICAgICAgICAgIHNoYXBlIE1vYmlsZURldmljZVBvcnRyYWl0CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICNmNjg1MWIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiV2ViIEFwcCIgewogICAgICAgICAgICAgICAgc2hhcGUgV2ViQnJvd3NlcgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJTdXBlcmZsdWlkIEZpbmFuY2UiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzFkYjIyNwogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJDb21tYW5kIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMzMzk5ZmUKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KfQo="
+    "structurizr.dsl" : "Ly8gVGhpcyBhcmNoaXRlY3R1cmUgaXMgZGVzY3JpYmVkIGluIFN0cnVjdHVyaXpyIERTTCBhbmQgZm9sbG93cyB0aGUgQzQgbW9kZWwuCndvcmtzcGFjZSAiU3VwZXJmbHVpZCBDaGVja291dCBTeXN0ZW0iIHsKICAgICFhZHJzIGRlY2lzaW9ucwoKICAgIG1vZGVsIHsKICAgICAgICBDaGVja291dEN1c3RvbWVyU3lzdGVtID0gc29mdHdhcmVTeXN0ZW0gIkNoZWNrb3V0IEN1c3RvbWVyIFN5c3RlbSIgewogICAgICAgICAgICBDaGVja291dFdpZGdldCA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgV2lkZ2V0IFYxIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiUHJvdmlkZXMgYSBzdHJlYW1saW5lZCBVWCB0byBzdWJzY3JpYmUgdG8gdGhlIGdpdmVuIHByb2R1Y3QuIgogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiVHlwZVNjcmlwdCwgUmVhY3QsIE1VSSwgd2FnbWksIFpvZCwgVG9rZW4gTGlzdCIKCiAgICAgICAgICAgICAgICBncm91cCAiT24tQ2hhaW4gVHJhbnNhY3Rpb25zIiB7CiAgICAgICAgICAgICAgICAgICAgQXV0aG9yaXplQXV0b1dyYXBUeCA9IGNvbXBvbmVudCAiQXV0aG9yaXplIEF1dG8tV3JhcCIKICAgICAgICAgICAgICAgICAgICBFbmFibGVBdXRvV3JhcFR4ID0gY29tcG9uZW50ICJFbmFibGUgQXV0by1XcmFwIgogICAgICAgICAgICAgICAgICAgIEF1dGhvcml6ZVN1cGVyVG9rZW5UeCA9IGNvbXBvbmVudCAiQXV0aG9yaXplIFN1cGVyZmx1aWQgdG8gV3JhcCBUb2tlbnMiCiAgICAgICAgICAgICAgICAgICAgV3JhcEludG9TdXBlclRva2VuVHggPSBjb21wb25lbnQgIlVwZ3JhZGUgdG8gU3VwZXIgVG9rZW4iCiAgICAgICAgICAgICAgICAgICAgQ3JlYXRlRmxvd1R4ID0gY29tcG9uZW50ICJDcmVhdGUgRmxvdyIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBncm91cCAiQ29tbWFuZHMiIHsKICAgICAgICAgICAgICAgICAgICBDaGVja291dEF1dG9XcmFwQ29tbWFuZCA9IGNvbXBvbmVudCAiRW5hYmxlIEF1dG8tV3JhcCBDb21tYW5kIiB7CiAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIkNvbW1hbmQiCgogICAgICAgICAgICAgICAgICAgICAgICAtPiBBdXRob3JpemVBdXRvV3JhcFR4ICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICAgICAgLT4gRW5hYmxlQXV0b1dyYXBUeCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIENoZWNrb3V0V3JhcEludG9TdXBlclRva2Vuc0NvbW1hbmQgPSBjb21wb25lbnQgIldyYXAgU3VwZXIgVG9rZW5zIENvbW1hbmQiIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQ29tbWFuZCIKCiAgICAgICAgICAgICAgICAgICAgICAgIC0+IEF1dGhvcml6ZVN1cGVyVG9rZW5UeCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICAgICAgICAgIC0+IFdyYXBJbnRvU3VwZXJUb2tlblR4ICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgQ2hlY2tvdXRTdWJzY3JpYmVDb21tYW5kID0gY29tcG9uZW50ICJTdWJzY3JpYmUgQ29tbWFuZCIgewogICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJDb21tYW5kIgoKICAgICAgICAgICAgICAgICAgICAgICAgLT4gQ3JlYXRlRmxvd1R4ICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgQ2hlY2tvdXRXaWRnZXRGb3JtID0gY29tcG9uZW50ICJDaGVja291dCBGb3JtIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBmb3JtIHdpdGggaW5wdXRzIHRoYXQgdGhlIHVzZXIgZmlsbHMgb3V0LiIKICAgICAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJ3YWdtaSwgcmVhY3QtaG9vay1mb3JtLCBab2QiCiAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgLT4gQ2hlY2tvdXRBdXRvV3JhcENvbW1hbmQgIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0V3JhcEludG9TdXBlclRva2Vuc0NvbW1hbmQgIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0U3Vic2NyaWJlQ29tbWFuZCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgQ2hlY2tvdXRXaWRnZXRQcm9kdWN0ID0gY29tcG9uZW50ICJQcm9kdWN0IEluZm8iIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiUHJvZHVjdCBkZXRhaWxzLCBpbmNsdWRpbmcgcGF5bWVudCBvcHRpb25zICh0b2tlbiAmIG5ldHdvcmsgJiBmbG93IHJhdGUpIgoKICAgICAgICAgICAgICAgICAgICAtPiBDaGVja291dFdpZGdldEZvcm0gIklucHV0IG9mIgogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIENoZWNrb3V0V2lkZ2V0UHJvZHVjdFRva2VuTGlzdCA9IGNvbXBvbmVudCAiVG9rZW4gTGlzdCIgewogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgZGlzcGxheSBpbmZvIGZvciB0aGUgdG9rZW5zIHRoYXQgYXJlIHNldCB1cCBhcyBwYXltZW50IG9wdGlvbnMuIgoKICAgICAgICAgICAgICAgICAgICAtPiBDaGVja291dFdpZGdldEZvcm0gIklucHV0IG9mIgogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CgoKCiAgICAgICAgICAgIC8vIENoZWNrb3V0Q29udGFpbmVyID0gY29udGFpbmVyICJDaGVja291dCBDb250YWluZXIiICJUaGUgd2Vic2l0ZSB0aGF0IGhvbGRzIHRoZSBjaGVja291dCB3aWRnZXQocykuIiB7CiAgICAgICAgICAgIC8vICAgICAtPiBDaGVja291dFN0b3JlICJHZXRzIGRldGFpbHMgZnJvbSIKICAgICAgICAgICAgLy8gICAgIC0+IENoZWNrb3V0V2lkZ2V0ICJVc2VzIgogICAgICAgICAgICAvLyB9CgoKCgogICAgICAgICAgICAvLyBDaGVja291dE1lcmNoYW50RGFzaGJvYXJkID0gY29udGFpbmVyICJNZXJjaGFudCBEYXNoYm9hcmQiICJUaGUgVUkgdG8gc2VlIHN1YnNjcmlwdGlvbnMgYW5kIHByb2R1Y3RzIGZyb20iIHsKICAgICAgICAgICAgLy8gICAgIC0+IENoZWNrb3V0U3RvcmUgIkNSVUQiCiAgICAgICAgICAgIC8vIH0KICAgICAgICB9CgogICAgICAgIENoZWNrb3V0U3RvcmFnZVN5c3RlbSA9IHNvZnR3YXJlU3lzdGVtICJDaGVja291dCBTdG9yYWdlIFN5c3RlbSIgewogICAgICAgICAgICBDaGVja291dFN0b3JhZ2VBUEkgPSBjb250YWluZXIgIkNoZWNrb3V0IFN0b3JhZ2UgQVBJIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiU29tZXRoaW5nIHRvIGhvbGQgdGhlIGNoZWNrb3V0IGlucHV0cy4iCgogICAgICAgICAgICB9CgogICAgICAgICAgICBDaGVja291dElQRlMgPSBjb250YWluZXIgIkNoZWNrb3V0IElQRlMiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJEZWNlbnRyYWxpemVkIHN0b3JhZ2UuIgoKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgQ2hlY2tvdXRNZXJjaGFudFN5c3RlbSA9IHNvZnR3YXJlU3lzdGVtICJDaGVja291dCBNZXJjaGFudCBTeXN0ZW0iIHsKICAgICAgICAgICAgQ2hlY2tvdXRCdWlsZGVyID0gY29udGFpbmVyICJDaGVja291dCBCdWlsZGVyIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiVGhlIHNlcnZpY2UgdGhhdCBidWlsZHMgdGhlIGlucHV0IGZvciB0aGUgd2lkZ2V0LiIKCiAgICAgICAgICAgICAgICAtPiBDaGVja291dFN0b3JhZ2VTeXN0ZW0gIkdldHMgZGV0YWlscyBmcm9tIgogICAgICAgICAgICB9CiAgICAgICAgfSAgICAgICAgCgogICAgICAgIFdhbGxldCA9IHNvZnR3YXJlU3lzdGVtICJXZWIzIFdhbGxldCIgIldhbGxldCIgewogICAgICAgICAgICBkZXNjcmlwdGlvbiAiVGhlIHVzZXIncyB3YWxsZXQgd2l0aCBSUEMgJiBzaWduYXR1cmUgYWNjZXNzLiIKICAgICAgICAgICAgdGFncyAiV2FsbGV0IgoKICAgICAgICAgICAgLy8gLT4gQ2hlY2tvdXRXaWRnZXRGb3JtICJHb2VzIGludG8iCiAgICAgICAgfQoKICAgICAgICBTdXBlcmZsdWlkVXNlclN5c3RlbSA9IHNvZnR3YXJlU3lzdGVtICJTdXBlcmZsdWlkIFVzZXIgU3lzdGVtIiB7CiAgICAgICAgICAgIHRhZ3MgIlN1cGVyZmx1aWQgRmluYW5jZSIKCiAgICAgICAgICAgIFN1cGVyZmx1aWREYXNoYm9hcmQgPSBjb250YWluZXIgIlN1cGVyZmx1aWQgRGFzaGJvYXJkIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiVGhlIFVJIHRvIHNlZSB0b2tlbiBiYWxhbmNlcyBhbmQgZmxvd3MuIgogICAgICAgICAgICAgICAgdGFncyAiV2ViIEFwcCIKCiAgICAgICAgICAgICAgICAtPiBDaGVja291dFdpZGdldCAiQ2FuIGNvbnRhaW4gYSBnZW5lcmljICdob3N0ZWQnIHZlcnNpb24iCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIFN1cGVyZmx1aWRDb25zb2xlID0gY29udGFpbmVyICJTdXBlcmZsdWlkIENvbnNvbGUiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgVUkgdmlldyBTdXBlcmZsdWlkIFByb3RvY29sIGZyb20gYmlyZCdzIGV5ZSB2aWV3LiIKICAgICAgICAgICAgICAgIHRhZ3MgIldlYiBBcHAiCiAgICAgICAgICAgIH0KICAgICAgICB9CgogICAgICAgIFdlYjNNZXJjaGFudEVjb3N5c3RlbSA9IHNvZnR3YXJlU3lzdGVtICJXZWIzIFN0b3JlcyIgewogICAgICAgICAgICB0YWdzICJFeHRlcm5hbCIKCiAgICAgICAgICAgIC0+IENoZWNrb3V0V2lkZ2V0ICJUaGUgd2Vic2l0ZSB0aGF0IGhvbGRzIHRoZSBjaGVja291dCB3aWRnZXQocykuIgogICAgICAgIH0KCiAgICAgICAgV2ViM01lcmNoYW50ID0gcGVyc29uICJXZWIzIE1lcmNoYW50IgogICAgICAgIFdlYjNNZXJjaGFudCAtPiBDaGVja291dE1lcmNoYW50U3lzdGVtICJVc2VzIgoKICAgICAgICBXZWIzVXNlciA9IHBlcnNvbiAiV2ViMyBVc2VyIgogICAgICAgIC8vIFdlYjNVc2VyIC0+IFdhbGxldCAiVXNlcyIKICAgICAgICBXZWIzVXNlciAtPiBTdXBlcmZsdWlkRGFzaGJvYXJkICJVc2VzIHRvIG1hbmFnZSB0b2tlbiBiYWxhbmNlcyIKICAgICAgICBXZWIzVXNlciAtPiBXZWIzTWVyY2hhbnRFY29zeXN0ZW0gIkdvZXMgdG8gc3Vic2NyaWJlIHRvIGEgcHJvZHVjdCIKICAgICAgICBXZWIzVXNlciAtPiBDaGVja291dFdpZGdldCAiVXNlcyB0byBtYWtlIHBheW1lbnQiCiAgICB9CgogICAgdmlld3MgewogICAgICAgIHN5c3RlbWxhbmRzY2FwZSBUaGVCaWdQaWN0dXJlICJUaGUgQ2hlY2tvdXQgQmlnIFBpY3R1cmUiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIGNvbnRhaW5lciBDaGVja291dEN1c3RvbWVyU3lzdGVtICJDaGVja291dEN1c3RvbWVyU3lzdGVtIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvTGF5b3V0CiAgICAgICAgfQoKICAgICAgICBjb250YWluZXIgQ2hlY2tvdXRTdG9yYWdlU3lzdGVtICJDaGVja291dFN0b3JhZ2VTeXN0ZW0iIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIGNvbnRhaW5lciBTdXBlcmZsdWlkVXNlclN5c3RlbSAiU3VwZXJmbHVpZFVzZXJTeXN0ZW0iIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CiAgICAgICAgCiAgICAgICAgY29tcG9uZW50IENoZWNrb3V0V2lkZ2V0ICJDaGVja291dFdpZGdldENvbXBvbmVudHMiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIHN0eWxlcyB7CiAgICAgICAgICAgIGVsZW1lbnQgIlBlcnNvbiIgewogICAgICAgICAgICAgICAgc2hhcGUgcGVyc29uCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM5NzY0NDAKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiV2FsbGV0IiB7CiAgICAgICAgICAgICAgICBzaGFwZSBNb2JpbGVEZXZpY2VQb3J0cmFpdAogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjZjY4NTFiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIldlYiBBcHAiIHsKICAgICAgICAgICAgICAgIHNoYXBlIFdlYkJyb3dzZXIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiU3VwZXJmbHVpZCBGaW5hbmNlIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMxZGIyMjcKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiQ29tbWFuZCIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMzM5OWZlCiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9Cn0K"
   },
   "configuration" : { },
   "model" : {
@@ -31,17 +32,23 @@
       },
       "name" : "Web3 User",
       "relationships" : [ {
-        "id" : "45",
-        "tags" : "Relationship",
+        "id" : "49",
         "sourceId" : "44",
-        "destinationId" : "33",
-        "description" : "Uses to manage token balances"
+        "destinationId" : "1",
+        "description" : "Uses to make payment",
+        "linkedRelationshipId" : "48"
       }, {
         "id" : "46",
         "sourceId" : "44",
         "destinationId" : "32",
         "description" : "Uses to manage token balances",
         "linkedRelationshipId" : "45"
+      }, {
+        "id" : "45",
+        "tags" : "Relationship",
+        "sourceId" : "44",
+        "destinationId" : "33",
+        "description" : "Uses to manage token balances"
       }, {
         "id" : "47",
         "tags" : "Relationship",
@@ -54,16 +61,60 @@
         "sourceId" : "44",
         "destinationId" : "2",
         "description" : "Uses to make payment"
-      }, {
-        "id" : "49",
-        "sourceId" : "44",
-        "destinationId" : "1",
-        "description" : "Uses to make payment",
-        "linkedRelationshipId" : "48"
       } ],
       "location" : "Unspecified"
     } ],
     "softwareSystems" : [ {
+      "id" : "24",
+      "tags" : "Element,Software System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "checkoutstoragesystem"
+      },
+      "name" : "Checkout Storage System",
+      "location" : "Unspecified",
+      "containers" : [ {
+        "id" : "25",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "checkoutstorageapi"
+        },
+        "name" : "Checkout Storage API",
+        "description" : "Something to hold the checkout inputs.",
+        "documentation" : { }
+      }, {
+        "id" : "26",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "checkoutipfs"
+        },
+        "name" : "Checkout IPFS",
+        "description" : "Decentralized storage.",
+        "documentation" : { }
+      } ],
+      "documentation" : { }
+    }, {
+      "id" : "39",
+      "tags" : "Element,Software System,External",
+      "properties" : {
+        "structurizr.dsl.identifier" : "web3merchantecosystem"
+      },
+      "name" : "Web3 Stores",
+      "relationships" : [ {
+        "id" : "40",
+        "tags" : "Relationship",
+        "sourceId" : "39",
+        "destinationId" : "2",
+        "description" : "The website that holds the checkout widget(s)."
+      }, {
+        "id" : "41",
+        "sourceId" : "39",
+        "destinationId" : "1",
+        "description" : "The website that holds the checkout widget(s).",
+        "linkedRelationshipId" : "40"
+      } ],
+      "location" : "Unspecified",
+      "documentation" : { }
+    }, {
       "id" : "1",
       "tags" : "Element,Software System",
       "properties" : {
@@ -81,22 +132,26 @@
         "description" : "Provides a streamlined UX to subscribe to the given product.",
         "technology" : "TypeScript, React, MUI, wagmi, Zod, Token List",
         "components" : [ {
-          "id" : "4",
-          "tags" : "Element,Component",
+          "id" : "11",
+          "tags" : "Element,Component,Command",
           "properties" : {
-            "structurizr.dsl.identifier" : "enableautowraptx"
+            "structurizr.dsl.identifier" : "checkoutwrapintosupertokenscommand"
           },
-          "name" : "Enable Auto-Wrap",
-          "group" : "On-Chain Transactions",
-          "documentation" : { }
-        }, {
-          "id" : "6",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wrapintosupertokentx"
-          },
-          "name" : "Upgrade to Super Token",
-          "group" : "On-Chain Transactions",
+          "name" : "Wrap Super Tokens Command",
+          "relationships" : [ {
+            "id" : "13",
+            "tags" : "Relationship",
+            "sourceId" : "11",
+            "destinationId" : "6",
+            "description" : "Produces"
+          }, {
+            "id" : "12",
+            "tags" : "Relationship",
+            "sourceId" : "11",
+            "destinationId" : "5",
+            "description" : "Produces"
+          } ],
+          "group" : "Commands",
           "documentation" : { }
         }, {
           "id" : "5",
@@ -106,22 +161,6 @@
           },
           "name" : "Authorize Superfluid to Wrap Tokens",
           "group" : "On-Chain Transactions",
-          "documentation" : { }
-        }, {
-          "id" : "22",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "checkoutwidgetproducttokenlist"
-          },
-          "name" : "Token List",
-          "description" : "The display info for the tokens that are set up as payment options.",
-          "relationships" : [ {
-            "id" : "23",
-            "tags" : "Relationship",
-            "sourceId" : "22",
-            "destinationId" : "16",
-            "description" : "Input of"
-          } ],
           "documentation" : { }
         }, {
           "id" : "14",
@@ -140,55 +179,29 @@
           "group" : "Commands",
           "documentation" : { }
         }, {
-          "id" : "11",
-          "tags" : "Element,Component,Command",
-          "properties" : {
-            "structurizr.dsl.identifier" : "checkoutwrapintosupertokenscommand"
-          },
-          "name" : "Wrap Super Tokens Command",
-          "relationships" : [ {
-            "id" : "12",
-            "tags" : "Relationship",
-            "sourceId" : "11",
-            "destinationId" : "5",
-            "description" : "Produces"
-          }, {
-            "id" : "13",
-            "tags" : "Relationship",
-            "sourceId" : "11",
-            "destinationId" : "6",
-            "description" : "Produces"
-          } ],
-          "group" : "Commands",
-          "documentation" : { }
-        }, {
-          "id" : "16",
+          "id" : "7",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "checkoutwidgetform"
+            "structurizr.dsl.identifier" : "createflowtx"
           },
-          "name" : "Checkout Form",
-          "description" : "The form with inputs that the user fills out.",
+          "name" : "Create Flow",
+          "group" : "On-Chain Transactions",
+          "documentation" : { }
+        }, {
+          "id" : "22",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "checkoutwidgetproducttokenlist"
+          },
+          "name" : "Token List",
+          "description" : "The display info for the tokens that are set up as payment options.",
           "relationships" : [ {
-            "id" : "17",
+            "id" : "23",
             "tags" : "Relationship",
-            "sourceId" : "16",
-            "destinationId" : "8",
-            "description" : "Produces"
-          }, {
-            "id" : "18",
-            "tags" : "Relationship",
-            "sourceId" : "16",
-            "destinationId" : "11",
-            "description" : "Produces"
-          }, {
-            "id" : "19",
-            "tags" : "Relationship",
-            "sourceId" : "16",
-            "destinationId" : "14",
-            "description" : "Produces"
+            "sourceId" : "22",
+            "destinationId" : "16",
+            "description" : "Input of"
           } ],
-          "technology" : "wagmi, react-hook-form, Zod",
           "documentation" : { }
         }, {
           "id" : "20",
@@ -238,43 +251,53 @@
           "group" : "On-Chain Transactions",
           "documentation" : { }
         }, {
-          "id" : "7",
+          "id" : "4",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "createflowtx"
+            "structurizr.dsl.identifier" : "enableautowraptx"
           },
-          "name" : "Create Flow",
+          "name" : "Enable Auto-Wrap",
+          "group" : "On-Chain Transactions",
+          "documentation" : { }
+        }, {
+          "id" : "16",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "checkoutwidgetform"
+          },
+          "name" : "Checkout Form",
+          "description" : "The form with inputs that the user fills out.",
+          "relationships" : [ {
+            "id" : "17",
+            "tags" : "Relationship",
+            "sourceId" : "16",
+            "destinationId" : "8",
+            "description" : "Produces"
+          }, {
+            "id" : "18",
+            "tags" : "Relationship",
+            "sourceId" : "16",
+            "destinationId" : "11",
+            "description" : "Produces"
+          }, {
+            "id" : "19",
+            "tags" : "Relationship",
+            "sourceId" : "16",
+            "destinationId" : "14",
+            "description" : "Produces"
+          } ],
+          "technology" : "wagmi, react-hook-form, Zod",
+          "documentation" : { }
+        }, {
+          "id" : "6",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wrapintosupertokentx"
+          },
+          "name" : "Upgrade to Super Token",
           "group" : "On-Chain Transactions",
           "documentation" : { }
         } ],
-        "documentation" : { }
-      } ],
-      "documentation" : { }
-    }, {
-      "id" : "24",
-      "tags" : "Element,Software System",
-      "properties" : {
-        "structurizr.dsl.identifier" : "checkoutstoragesystem"
-      },
-      "name" : "Checkout Storage System",
-      "location" : "Unspecified",
-      "containers" : [ {
-        "id" : "26",
-        "tags" : "Element,Container",
-        "properties" : {
-          "structurizr.dsl.identifier" : "checkoutipfs"
-        },
-        "name" : "Checkout IPFS",
-        "description" : "Decentralized storage.",
-        "documentation" : { }
-      }, {
-        "id" : "25",
-        "tags" : "Element,Container",
-        "properties" : {
-          "structurizr.dsl.identifier" : "checkoutstorageapi"
-        },
-        "name" : "Checkout Storage API",
-        "description" : "Something to hold the checkout inputs.",
         "documentation" : { }
       } ],
       "documentation" : { }
@@ -312,16 +335,6 @@
       } ],
       "documentation" : { }
     }, {
-      "id" : "31",
-      "tags" : "Element,Software System,Wallet",
-      "properties" : {
-        "structurizr.dsl.identifier" : "wallet"
-      },
-      "name" : "Web3 Wallet",
-      "description" : "The user's wallet with RPC & signature access.",
-      "location" : "Unspecified",
-      "documentation" : { }
-    }, {
       "id" : "32",
       "tags" : "Element,Software System,Superfluid Finance",
       "properties" : {
@@ -329,42 +342,20 @@
       },
       "name" : "Superfluid User System",
       "relationships" : [ {
-        "id" : "36",
-        "sourceId" : "32",
-        "destinationId" : "2",
-        "description" : "Can contain a generic 'hosted' version",
-        "linkedRelationshipId" : "34"
-      }, {
         "id" : "37",
         "sourceId" : "32",
         "destinationId" : "1",
         "description" : "Can contain a generic 'hosted' version",
         "linkedRelationshipId" : "34"
+      }, {
+        "id" : "36",
+        "sourceId" : "32",
+        "destinationId" : "2",
+        "description" : "Can contain a generic 'hosted' version",
+        "linkedRelationshipId" : "34"
       } ],
       "location" : "Unspecified",
       "containers" : [ {
-        "id" : "33",
-        "tags" : "Element,Container,Web App",
-        "properties" : {
-          "structurizr.dsl.identifier" : "superfluiddashboard"
-        },
-        "name" : "Superfluid Dashboard",
-        "description" : "The UI to see token balances and flows.",
-        "relationships" : [ {
-          "id" : "34",
-          "tags" : "Relationship",
-          "sourceId" : "33",
-          "destinationId" : "2",
-          "description" : "Can contain a generic 'hosted' version"
-        }, {
-          "id" : "35",
-          "sourceId" : "33",
-          "destinationId" : "1",
-          "description" : "Can contain a generic 'hosted' version",
-          "linkedRelationshipId" : "34"
-        } ],
-        "documentation" : { }
-      }, {
         "id" : "38",
         "tags" : "Element,Container,Web App",
         "properties" : {
@@ -373,28 +364,38 @@
         "name" : "Superfluid Console",
         "description" : "The UI view Superfluid Protocol from bird's eye view.",
         "documentation" : { }
+      }, {
+        "id" : "33",
+        "tags" : "Element,Container,Web App",
+        "properties" : {
+          "structurizr.dsl.identifier" : "superfluiddashboard"
+        },
+        "name" : "Superfluid Dashboard",
+        "description" : "The UI to see token balances and flows.",
+        "relationships" : [ {
+          "id" : "35",
+          "sourceId" : "33",
+          "destinationId" : "1",
+          "description" : "Can contain a generic 'hosted' version",
+          "linkedRelationshipId" : "34"
+        }, {
+          "id" : "34",
+          "tags" : "Relationship",
+          "sourceId" : "33",
+          "destinationId" : "2",
+          "description" : "Can contain a generic 'hosted' version"
+        } ],
+        "documentation" : { }
       } ],
       "documentation" : { }
     }, {
-      "id" : "39",
-      "tags" : "Element,Software System,External",
+      "id" : "31",
+      "tags" : "Element,Software System,Wallet",
       "properties" : {
-        "structurizr.dsl.identifier" : "web3merchantecosystem"
+        "structurizr.dsl.identifier" : "wallet"
       },
-      "name" : "Web3 Stores",
-      "relationships" : [ {
-        "id" : "40",
-        "tags" : "Relationship",
-        "sourceId" : "39",
-        "destinationId" : "2",
-        "description" : "The website that holds the checkout widget(s)."
-      }, {
-        "id" : "41",
-        "sourceId" : "39",
-        "destinationId" : "1",
-        "description" : "The website that holds the checkout widget(s).",
-        "linkedRelationshipId" : "40"
-      } ],
+      "name" : "Web3 Wallet",
+      "description" : "The user's wallet with RPC & signature access.",
       "location" : "Unspecified",
       "documentation" : { }
     } ]
@@ -421,6 +422,10 @@
       "key" : "TheBigPicture",
       "order" : 1,
       "description" : "The Checkout Big Picture",
+      "dimensions" : {
+        "width" : 3150,
+        "height" : 2000
+      },
       "automaticLayout" : {
         "implementation" : "Graphviz",
         "rankDirection" : "TopBottom",
@@ -432,36 +437,36 @@
       "enterpriseBoundaryVisible" : true,
       "elements" : [ {
         "id" : "44",
-        "x" : 0,
-        "y" : 0
+        "x" : 450,
+        "y" : 200
       }, {
         "id" : "1",
-        "x" : 0,
-        "y" : 0
+        "x" : 425,
+        "y" : 1500
       }, {
         "id" : "24",
-        "x" : 0,
-        "y" : 0
+        "x" : 1925,
+        "y" : 1500
       }, {
         "id" : "27",
-        "x" : 0,
-        "y" : 0
+        "x" : 1925,
+        "y" : 900
       }, {
         "id" : "39",
-        "x" : 0,
-        "y" : 0
+        "x" : 1175,
+        "y" : 900
       }, {
         "id" : "31",
-        "x" : 0,
-        "y" : 0
+        "x" : 2650,
+        "y" : 250
       }, {
         "id" : "42",
-        "x" : 0,
-        "y" : 0
+        "x" : 1950,
+        "y" : 200
       }, {
         "id" : "32",
-        "x" : 0,
-        "y" : 0
+        "x" : 425,
+        "y" : 900
       } ],
       "relationships" : [ {
         "id" : "37"
@@ -476,13 +481,77 @@
       }, {
         "id" : "47"
       }, {
-        "id" : "49"
+        "id" : "49",
+        "vertices" : [ {
+          "x" : 275,
+          "y" : 900
+        }, {
+          "x" : 275,
+          "y" : 1200
+        } ]
       } ]
     } ],
     "containerViews" : [ {
+      "key" : "CheckoutCustomerSystem",
+      "order" : 2,
+      "softwareSystemId" : "1",
+      "dimensions" : {
+        "width" : 1825,
+        "height" : 2091
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "externalSoftwareSystemBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "44",
+        "x" : 974,
+        "y" : 200
+      }, {
+        "id" : "2",
+        "x" : 949,
+        "y" : 1500
+      }, {
+        "id" : "39",
+        "x" : 199,
+        "y" : 900
+      }, {
+        "id" : "32",
+        "x" : 949,
+        "y" : 900
+      } ],
+      "relationships" : [ {
+        "id" : "40"
+      }, {
+        "id" : "36"
+      }, {
+        "id" : "46"
+      }, {
+        "id" : "47"
+      }, {
+        "id" : "48",
+        "vertices" : [ {
+          "x" : 1549,
+          "y" : 900
+        }, {
+          "x" : 1549,
+          "y" : 1200
+        } ]
+      } ]
+    }, {
       "key" : "SuperfluidUserSystem",
       "order" : 4,
       "softwareSystemId" : "32",
+      "paperSize" : "A4_Portrait",
+      "dimensions" : {
+        "width" : 1900,
+        "height" : 2016
+      },
       "automaticLayout" : {
         "implementation" : "Graphviz",
         "rankDirection" : "TopBottom",
@@ -494,73 +563,43 @@
       "externalSoftwareSystemBoundariesVisible" : true,
       "elements" : [ {
         "id" : "33",
-        "x" : 0,
-        "y" : 0
+        "x" : 1137,
+        "y" : 908
       }, {
         "id" : "44",
-        "x" : 0,
-        "y" : 0
+        "x" : 446,
+        "y" : 208
       }, {
         "id" : "1",
-        "x" : 0,
-        "y" : 0
+        "x" : 421,
+        "y" : 1508
       }, {
         "id" : "38",
-        "x" : 0,
-        "y" : 0
+        "x" : 387,
+        "y" : 908
       } ],
       "relationships" : [ {
         "id" : "35"
       }, {
         "id" : "45"
       }, {
-        "id" : "49"
-      } ]
-    }, {
-      "key" : "CheckoutCustomerSystem",
-      "order" : 2,
-      "softwareSystemId" : "1",
-      "automaticLayout" : {
-        "implementation" : "Graphviz",
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "nodeSeparation" : 300,
-        "edgeSeparation" : 0,
-        "vertices" : false
-      },
-      "externalSoftwareSystemBoundariesVisible" : true,
-      "elements" : [ {
-        "id" : "44",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "2",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "39",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "32",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "relationships" : [ {
-        "id" : "36"
-      }, {
-        "id" : "40"
-      }, {
-        "id" : "46"
-      }, {
-        "id" : "47"
-      }, {
-        "id" : "48"
+        "id" : "49",
+        "vertices" : [ {
+          "x" : 208,
+          "y" : 804
+        }, {
+          "x" : 208,
+          "y" : 1312
+        } ]
       } ]
     }, {
       "key" : "CheckoutStorageSystem",
       "order" : 3,
       "softwareSystemId" : "24",
+      "dimensions" : {
+        "width" : 1640,
+        "height" : 811
+      },
       "automaticLayout" : {
         "implementation" : "Graphviz",
         "rankDirection" : "TopBottom",
@@ -572,17 +611,21 @@
       "externalSoftwareSystemBoundariesVisible" : true,
       "elements" : [ {
         "id" : "25",
-        "x" : 0,
-        "y" : 0
+        "x" : 970,
+        "y" : 220
       }, {
         "id" : "26",
-        "x" : 0,
-        "y" : 0
+        "x" : 220,
+        "y" : 220
       } ]
     } ],
     "componentViews" : [ {
       "key" : "CheckoutWidgetComponents",
       "order" : 5,
+      "dimensions" : {
+        "width" : 3930,
+        "height" : 2685
+      },
       "automaticLayout" : {
         "implementation" : "Graphviz",
         "rankDirection" : "TopBottom",
@@ -594,49 +637,49 @@
       "containerId" : "2",
       "externalContainerBoundariesVisible" : true,
       "elements" : [ {
-        "id" : "22",
-        "x" : 0,
-        "y" : 0
-      }, {
         "id" : "11",
-        "x" : 0,
-        "y" : 0
+        "x" : 2489,
+        "y" : 1420
       }, {
-        "id" : "14",
-        "x" : 0,
-        "y" : 0
+        "id" : "22",
+        "x" : 1364,
+        "y" : 220
       }, {
         "id" : "3",
-        "x" : 0,
-        "y" : 0
+        "x" : 989,
+        "y" : 2020
+      }, {
+        "id" : "14",
+        "x" : 1739,
+        "y" : 1420
       }, {
         "id" : "4",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "5",
-        "x" : 0,
-        "y" : 0
+        "x" : 239,
+        "y" : 2020
       }, {
         "id" : "16",
-        "x" : 0,
-        "y" : 0
+        "x" : 1739,
+        "y" : 820
+      }, {
+        "id" : "5",
+        "x" : 2489,
+        "y" : 2020
       }, {
         "id" : "6",
-        "x" : 0,
-        "y" : 0
+        "x" : 3239,
+        "y" : 2020
       }, {
         "id" : "7",
-        "x" : 0,
-        "y" : 0
+        "x" : 1739,
+        "y" : 2020
       }, {
         "id" : "8",
-        "x" : 0,
-        "y" : 0
+        "x" : 989,
+        "y" : 1420
       }, {
         "id" : "20",
-        "x" : 0,
-        "y" : 0
+        "x" : 2114,
+        "y" : 220
       } ],
       "relationships" : [ {
         "id" : "18"
@@ -653,9 +696,9 @@
       }, {
         "id" : "21"
       }, {
-        "id" : "10"
-      }, {
         "id" : "9"
+      }, {
+        "id" : "10"
       }, {
         "id" : "19"
       } ]
@@ -686,7 +729,8 @@
         } ]
       },
       "terminology" : { },
-      "lastSavedView" : "CheckoutStorageSystem"
+      "metadataSymbols" : "SquareBrackets",
+      "lastSavedView" : "CheckoutWidgetComponents"
     }
   }
 }
