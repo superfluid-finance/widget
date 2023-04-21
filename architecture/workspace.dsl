@@ -1,3 +1,4 @@
+// This architecture is described in Structurizr DSL and follows the C4 model.
 workspace "Superfluid Checkout System" {
     !adrs decisions
 

@@ -120,6 +120,112 @@ importers:
         specifier: latest
         version: 5.0.4
 
+  apps/initial-experiment:
+    dependencies:
+      '@emotion/cache':
+        specifier: latest
+        version: 11.10.7
+      '@emotion/react':
+        specifier: latest
+        version: 11.10.6(@types/react@18.0.37)(react@18.2.0)
+      '@emotion/server':
+        specifier: latest
+        version: 11.10.0
+      '@emotion/styled':
+        specifier: latest
+        version: 11.10.6(@emotion/react@11.10.6)(@types/react@18.0.37)(react@18.2.0)
+      '@hookform/error-message':
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.2.0)(react-hook-form@7.44.0-rc.0)(react@18.2.0)
+      '@hookform/resolvers':
+        specifier: ^3.0.1
+        version: 3.0.1(react-hook-form@7.44.0-rc.0)
+      '@mui/icons-material':
+        specifier: latest
+        version: 5.11.16(@mui/material@5.12.1)(@types/react@18.0.37)(react@18.2.0)
+      '@mui/lab':
+        specifier: 5.0.0-alpha.125
+        version: 5.0.0-alpha.125(@emotion/react@11.10.6)(@emotion/styled@11.10.6)(@mui/material@5.12.1)(@types/react@18.0.37)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/material':
+        specifier: latest
+        version: 5.12.1(@emotion/react@11.10.6)(@emotion/styled@11.10.6)(@types/react@18.0.37)(react-dom@18.2.0)(react@18.2.0)
+      '@superfluid-finance/metadata':
+        specifier: git+https://github.com/superfluid-finance/metadata.git
+        version: github.com/superfluid-finance/metadata/7342f837719f5f5f1db80586ea869d00d37b3f8e
+      '@uniswap/token-lists':
+        specifier: 1.0.0-beta.31
+        version: 1.0.0-beta.31
+      '@wagmi/chains':
+        specifier: ^0.2.19
+        version: 0.2.19(typescript@5.0.4)
+      '@wagmi/core':
+        specifier: 0.10.9
+        version: 0.10.9(@types/node@18.15.12)(ethers@5.7.2)(react@18.2.0)(typescript@5.0.4)(zod@3.21.4)
+      '@web3modal/ethereum':
+        specifier: 2.3.3
+        version: 2.3.3(@wagmi/core@0.10.9)(ethers@5.7.2)
+      '@web3modal/react':
+        specifier: 2.3.3
+        version: 2.3.3(react-dom@18.2.0)(react@18.2.0)
+      abitype:
+        specifier: ^0.7.1
+        version: 0.7.1(typescript@5.0.4)(zod@3.21.4)
+      clsx:
+        specifier: ^1.2.1
+        version: 1.2.1
+      ethers:
+        specifier: ^5.7.2
+        version: 5.7.2
+      graphql:
+        specifier: ^16.6.0
+        version: 16.6.0
+      next:
+        specifier: latest
+        version: 13.3.0(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: latest
+        version: 18.2.0
+      react-dom:
+        specifier: latest
+        version: 18.2.0(react@18.2.0)
+      react-hook-form:
+        specifier: ^7.44.0-rc.0
+        version: 7.44.0-rc.0(react@18.2.0)
+      wagmi:
+        specifier: 0.12.10
+        version: 0.12.10(@types/node@18.15.12)(ethers@5.7.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(zod@3.21.4)
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@hookform/devtools':
+        specifier: ^4.3.1
+        version: 4.3.1(@types/react@18.0.37)(react-dom@18.2.0)(react@18.2.0)
+      '@types/node':
+        specifier: latest
+        version: 18.15.12
+      '@types/react':
+        specifier: latest
+        version: 18.0.37
+      '@types/react-dom':
+        specifier: latest
+        version: 18.0.11
+      '@wagmi/cli':
+        specifier: 0.1.15
+        version: 0.1.15(@wagmi/core@0.10.9)(typescript@5.0.4)(wagmi@0.12.10)
+      eslint:
+        specifier: latest
+        version: 8.38.0
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-custom
+      eslint-config-next:
+        specifier: latest
+        version: 13.3.0(eslint@8.38.0)(typescript@5.0.4)
+      typescript:
+        specifier: latest
+        version: 5.0.4
+
   packages/eslint-config-custom:
     dependencies:
       eslint-config-next:
@@ -1615,7 +1721,6 @@ packages:
         optional: true
     dependencies:
       typescript: 5.0.4
-    dev: true
 
   /@wagmi/cli@0.1.15(@wagmi/core@0.10.9)(typescript@5.0.4)(wagmi@0.12.10):
     resolution: {integrity: sha512-fZkYfGJEqFydS753dkEXR6D6ag1ErLz8V2ZLPjpMC3/+0D7euwZKdVoQAeyALkQuJyXUbAgG9VeHLy1r5TZZOA==}
