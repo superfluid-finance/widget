@@ -1,0 +1,54 @@
+graph TB
+  linkStyle default fill:#ffffff
+
+  subgraph diagram [Checkout Customer System - Checkout Widget V1 - Components]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    subgraph 2 [Checkout Widget V1]
+      style 2 fill:#ffffff,stroke:#9a9a9a,color:#9a9a9a
+
+      subgraph group1 [Commands]
+        style group1 fill:#ffffff,stroke:#cccccc,color:#cccccc,stroke-dasharray:5
+
+        11["<div style='font-weight: bold'>Wrap Super Tokens Command</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div>"]
+        style 11 fill:#3399fe,stroke:#236bb1,color:#ffffff
+        14["<div style='font-weight: bold'>Subscribe Command</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div>"]
+        style 14 fill:#3399fe,stroke:#236bb1,color:#ffffff
+        8["<div style='font-weight: bold'>Enable Auto-Wrap Command</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div>"]
+        style 8 fill:#3399fe,stroke:#236bb1,color:#ffffff
+      end
+
+      subgraph group2 [On-Chain Transactions]
+        style group2 fill:#ffffff,stroke:#cccccc,color:#cccccc,stroke-dasharray:5
+
+        3["<div style='font-weight: bold'>Authorize Auto-Wrap</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div>"]
+        style 3 fill:#dddddd,stroke:#9a9a9a,color:#000000
+        4["<div style='font-weight: bold'>Enable Auto-Wrap</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div>"]
+        style 4 fill:#dddddd,stroke:#9a9a9a,color:#000000
+        5["<div style='font-weight: bold'>Authorize Superfluid to Wrap Tokens</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div>"]
+        style 5 fill:#dddddd,stroke:#9a9a9a,color:#000000
+        6["<div style='font-weight: bold'>Upgrade to Super Token</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div>"]
+        style 6 fill:#dddddd,stroke:#9a9a9a,color:#000000
+        7["<div style='font-weight: bold'>Create Flow</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div>"]
+        style 7 fill:#dddddd,stroke:#9a9a9a,color:#000000
+      end
+
+      16["<div style='font-weight: bold'>Checkout Form</div><div style='font-size: 70%; margin-top: 0px'>[Component: wagmi, react-hook-form, Zod]</div><div style='font-size: 80%; margin-top:10px'>The form with inputs that the<br />user fills out.</div>"]
+      style 16 fill:#dddddd,stroke:#9a9a9a,color:#000000
+      20["<div style='font-weight: bold'>Product Info</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div><div style='font-size: 80%; margin-top:10px'>Product details, including<br />payment options (token &<br />network & flow rate)</div>"]
+      style 20 fill:#dddddd,stroke:#9a9a9a,color:#000000
+      22["<div style='font-weight: bold'>Token List</div><div style='font-size: 70%; margin-top: 0px'>[Component]</div><div style='font-size: 80%; margin-top:10px'>The display info for the<br />tokens that are set up as<br />payment options.</div>"]
+      style 22 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    end
+
+    8-. "<div>Produces</div><div style='font-size: 70%'></div>" .->4
+    11-. "<div>Produces</div><div style='font-size: 70%'></div>" .->5
+    11-. "<div>Produces</div><div style='font-size: 70%'></div>" .->6
+    14-. "<div>Produces</div><div style='font-size: 70%'></div>" .->7
+    16-. "<div>Produces</div><div style='font-size: 70%'></div>" .->8
+    16-. "<div>Produces</div><div style='font-size: 70%'></div>" .->11
+    16-. "<div>Produces</div><div style='font-size: 70%'></div>" .->14
+    20-. "<div>Input of</div><div style='font-size: 70%'></div>" .->16
+    22-. "<div>Input of</div><div style='font-size: 70%'></div>" .->16
+    8-. "<div>Produces</div><div style='font-size: 70%'></div>" .->3
+  end
