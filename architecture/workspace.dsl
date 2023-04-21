@@ -87,7 +87,7 @@ workspace "Superfluid Checkout System" {
 
         CheckoutMerchantSystem = softwareSystem "Checkout Merchant System" {
             CheckoutBuilder = container "Checkout Builder" {
-                description "The service that builds the input for the widget."
+                description "The easy to use interface for setting up a checkout."
 
                 -> CheckoutStorageSystem "Gets details from"
             }
@@ -100,7 +100,7 @@ workspace "Superfluid Checkout System" {
             // -> CheckoutWidgetForm "Goes into"
         }
 
-        SuperfluidUserSystem = softwareSystem "Superfluid User System" {
+        SuperfluidUserSystem = softwareSystem "Superfluid User Products" {
             tags "Superfluid Finance"
 
             SuperfluidDashboard = container "Superfluid Dashboard" {

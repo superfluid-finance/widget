@@ -3,7 +3,7 @@
 Date: 2023-04-21
 
 ## Status
-Pending
+Proposed
 
 ## Context
 Superfluid Protocol is great for re-occuring payments. One of the biggest use-cases for that is subscriptions. To increase the adoption of Superfluid being used for checkouts, we'll create a widget that will make it easy to accept both peer-to-peer and peer-to-merchant payments in Superfluid streams. We'll want the widget to be as easy to include on a web site or in a web app as possible.

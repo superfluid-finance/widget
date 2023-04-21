@@ -3,7 +3,7 @@
 Date: 2023-04-21
 
 ## Status
-Pending
+Proposed
 
 ## Context
 To easily use the Checkout Widget, we want to create a Checkout Builder interface that allows users to easily create and customize their own checkout forms for accepting payments in Superfluid streams. This Checkout Builder interface will be used to generate a JSON structure that can be consumed by the Superfluid Checkout Widget. The Checkout Builder interface should be easy to use and work with Superfluid Token List.
@@ -23,3 +23,5 @@ We haven't decided on storage options yet. For user testing and schema testing p
 
 ## Consequences
 We'll have an interface built in swift time to validate the UX viablity and the Checkout Widget schema.
+
+Later on, when we have a more clear merchant product-suite offering, the process of setting up products should work in bulk and be automatable. We'll not deal with this use-case yet. 
