@@ -1,3 +1,4 @@
+```markdown
 # Building Type-Safe and Schema-Validated
 
 Date: 2023-04-21
@@ -14,7 +15,7 @@ JavaScript apps and Web3 wallet RPC interactions are notoriously error-prone.
 
 ## Decision
 
-We will use TypeScript and Zod to build type-safe and schema-validated payments and checkout flows.
+We will use **TypeScript** and **Zod** to build type-safe and schema-validated payments and checkout flows.
 
 TypeScript is a superset of JavaScript that provides static type checking at compile time. This catches many errors before they manifest at runtime.
 
@@ -25,3 +26,4 @@ By using TypeScript and Zod together, we can ensure type safety and schema valid
 ## Consequences
 
 Using TypeScript and Zod will require us to invest time and resources upfront in creating and maintaining schemas, and in ensuring that all relevant code is type-safe. However, this will pay dividends in reduced development time and increased reliability over the long term. Additionally, developers will need to be trained on TypeScript and Zod, or will need to learn these tools as they work on the project.
+```

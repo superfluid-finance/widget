@@ -6,7 +6,7 @@ Date: 2023-04-21
 Proposed
 
 ## Context
-To easily use the Checkout Widget, we want to create a Checkout Builder interface that allows users to easily create and customize their own checkout forms for accepting payments in Superfluid streams. This Checkout Builder interface will be used to generate a JSON structure that can be consumed by the Superfluid Checkout Widget. The Checkout Builder interface should be easy to use and work with Superfluid Token List.
+To easily use the Checkout Widget, we want to create a Checkout Builder interface that allows users to easily create and customize their own checkout forms for accepting payments in Superfluid streams. This Checkout Builder interface will be used to generate a **JSON structure** that can be consumed by the Superfluid Checkout Widget. The Checkout Builder interface should be easy to use and work with Superfluid Token List.
 
 We will use existing patterns from Superfluid Dashboard and Superfluid Console to speed up development. The technologies chosen are aligned with other Superfluid products.
 

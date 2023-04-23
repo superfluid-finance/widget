@@ -3,7 +3,7 @@ workspace "Superfluid Checkout System" {
     !adrs decisions
 
     model {
-        CheckoutCustomerSystem = softwareSystem "Checkout Customer System" {
+        CheckoutConsumerSystem = softwareSystem "Checkout Consumer System" {
             CheckoutWidget = container "Checkout Widget V1" {
                 description "Provides a streamlined UX to subscribe to the given product."
                 technology "TypeScript, React, MUI, wagmi, Zod, Token List"
@@ -47,73 +47,59 @@ workspace "Superfluid Checkout System" {
 
                 CheckoutWidgetProduct = component "Product Info" {
                     description "Product details, including payment options (token & network & flow rate)"
+                    technology "JSON"
 
                     -> CheckoutWidgetForm "Input of"
                 }
 
                 CheckoutWidgetProductTokenList = component "Token List" {
                     description "The display info for the tokens that are set up as payment options."
+                    technology "JSON, Uniswap's Token List standard"
 
                     -> CheckoutWidgetForm "Input of"
                 }
             }
-
-
-
-            // CheckoutContainer = container "Checkout Container" "The website that holds the checkout widget(s)." {
-            //     -> CheckoutStore "Gets details from"
-            //     -> CheckoutWidget "Uses"
-            // }
-
-
-
-
-            // CheckoutMerchantDashboard = container "Merchant Dashboard" "The UI to see subscriptions and products from" {
-            //     -> CheckoutStore "CRUD"
-            // }
         }
 
         CheckoutStorageSystem = softwareSystem "Checkout Storage System" {
             CheckoutStorageAPI = container "Checkout Storage API" {
-                description "Something to hold the checkout inputs."
-
+                description "An API to store and retrieve checkout configurations (product info & payment options)."
             }
 
             CheckoutIPFS = container "Checkout IPFS" {
                 description "Decentralized storage."
-
             }
         }
 
         CheckoutMerchantSystem = softwareSystem "Checkout Merchant System" {
             CheckoutBuilder = container "Checkout Builder" {
-                description "The easy to use interface for setting up a checkout."
+                description "The easy to use GUI for setting up a checkout."
 
                 -> CheckoutStorageSystem "Gets details from"
             }
-        }        
-
-        Wallet = softwareSystem "Web3 Wallet" "Wallet" {
-            description "The user's wallet with RPC & signature access."
-            tags "Wallet"
-
-            // -> CheckoutWidgetForm "Goes into"
         }
 
-        SuperfluidUserSystem = softwareSystem "Superfluid User Products" {
+        SuperfluidUserProducts = softwareSystem "Superfluid User Products" {
             tags "Superfluid Finance"
 
             SuperfluidDashboard = container "Superfluid Dashboard" {
                 description "The UI to see token balances and flows."
                 tags "Web App"
+                technology "TypeScript, Next.js, React, MUI, SDK-core, SDK-redux, Redux Toolkit (RTK), wagmi"
 
                 -> CheckoutWidget "Can contain a generic 'hosted' version"
             }
 
             SuperfluidConsole = container "Superfluid Console" {
                 description "The UI view Superfluid Protocol from bird's eye view."
+                technology "TypeScript, Next.js, React, MUI, SDK-core, SDK-redux"
                 tags "Web App"
             }
+        }
+
+        Wallet = softwareSystem "Web3 Wallet" "Wallet" {
+            description "The user's wallet with RPC & signature access."
+            tags "Wallet"
         }
 
         Web3MerchantEcosystem = softwareSystem "Web3 Stores" {
@@ -125,11 +111,10 @@ workspace "Superfluid Checkout System" {
         Web3Merchant = person "Web3 Merchant"
         Web3Merchant -> CheckoutMerchantSystem "Uses"
 
-        Web3User = person "Web3 User"
-        // Web3User -> Wallet "Uses"
-        Web3User -> SuperfluidDashboard "Uses to manage token balances"
-        Web3User -> Web3MerchantEcosystem "Goes to subscribe to a product"
-        Web3User -> CheckoutWidget "Uses to make payment"
+        Web3Consumer = person "Web3 Consumer"
+        Web3Consumer -> SuperfluidDashboard "Uses to manage token balances"
+        Web3Consumer -> Web3MerchantEcosystem "Goes to subscribe to a product"
+        Web3Consumer -> CheckoutWidget "Uses to make payment"
     }
 
     views {
@@ -138,7 +123,7 @@ workspace "Superfluid Checkout System" {
             autoLayout
         }
 
-        container CheckoutCustomerSystem "CheckoutCustomerSystem" {
+        container CheckoutConsumerSystem "CheckoutConsumerSystem" {
             include *
             autoLayout
         }
@@ -148,7 +133,7 @@ workspace "Superfluid Checkout System" {
             autoLayout
         }
 
-        container SuperfluidUserSystem "SuperfluidUserSystem" {
+        container SuperfluidUserProducts "SuperfluidUserProducts" {
             include *
             autoLayout
         }
