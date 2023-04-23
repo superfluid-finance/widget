@@ -2,7 +2,7 @@
   "id" : 1,
   "name" : "Superfluid Checkout System",
   "description" : "Description",
-  "lastModifiedDate" : "2023-04-21T17:42:47Z",
+  "lastModifiedDate" : "2023-04-23T20:40:40Z",
   "properties" : {
     "structurizr.dsl" : "Ly8gVGhpcyBhcmNoaXRlY3R1cmUgaXMgZGVzY3JpYmVkIGluIFN0cnVjdHVyaXpyIERTTCBhbmQgZm9sbG93cyB0aGUgQzQgbW9kZWwuCndvcmtzcGFjZSAiU3VwZXJmbHVpZCBDaGVja291dCBTeXN0ZW0iIHsKICAgICFhZHJzIGRlY2lzaW9ucwoKICAgIG1vZGVsIHsKICAgICAgICBDaGVja291dENvbnN1bWVyU3lzdGVtID0gc29mdHdhcmVTeXN0ZW0gIkNoZWNrb3V0IENvbnN1bWVyIFN5c3RlbSIgewogICAgICAgICAgICBDaGVja291dFdpZGdldCA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgV2lkZ2V0IFYxIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiUHJvdmlkZXMgYSBzdHJlYW1saW5lZCBVWCB0byBzdWJzY3JpYmUgdG8gdGhlIGdpdmVuIHByb2R1Y3QuIgogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiVHlwZVNjcmlwdCwgUmVhY3QsIE1VSSwgd2FnbWksIFpvZCwgVG9rZW4gTGlzdCIKCiAgICAgICAgICAgICAgICBncm91cCAiT24tQ2hhaW4gVHJhbnNhY3Rpb25zIiB7CiAgICAgICAgICAgICAgICAgICAgQXV0aG9yaXplQXV0b1dyYXBUeCA9IGNvbXBvbmVudCAiQXV0aG9yaXplIEF1dG8tV3JhcCIKICAgICAgICAgICAgICAgICAgICBFbmFibGVBdXRvV3JhcFR4ID0gY29tcG9uZW50ICJFbmFibGUgQXV0by1XcmFwIgogICAgICAgICAgICAgICAgICAgIEF1dGhvcml6ZVN1cGVyVG9rZW5UeCA9IGNvbXBvbmVudCAiQXV0aG9yaXplIFN1cGVyZmx1aWQgdG8gV3JhcCBUb2tlbnMiCiAgICAgICAgICAgICAgICAgICAgV3JhcEludG9TdXBlclRva2VuVHggPSBjb21wb25lbnQgIlVwZ3JhZGUgdG8gU3VwZXIgVG9rZW4iCiAgICAgICAgICAgICAgICAgICAgQ3JlYXRlRmxvd1R4ID0gY29tcG9uZW50ICJDcmVhdGUgRmxvdyIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBncm91cCAiQ29tbWFuZHMiIHsKICAgICAgICAgICAgICAgICAgICBDaGVja291dEF1dG9XcmFwQ29tbWFuZCA9IGNvbXBvbmVudCAiRW5hYmxlIEF1dG8tV3JhcCBDb21tYW5kIiB7CiAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIkNvbW1hbmQiCgogICAgICAgICAgICAgICAgICAgICAgICAtPiBBdXRob3JpemVBdXRvV3JhcFR4ICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICAgICAgLT4gRW5hYmxlQXV0b1dyYXBUeCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIENoZWNrb3V0V3JhcEludG9TdXBlclRva2Vuc0NvbW1hbmQgPSBjb21wb25lbnQgIldyYXAgU3VwZXIgVG9rZW5zIENvbW1hbmQiIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQ29tbWFuZCIKCiAgICAgICAgICAgICAgICAgICAgICAgIC0+IEF1dGhvcml6ZVN1cGVyVG9rZW5UeCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICAgICAgICAgIC0+IFdyYXBJbnRvU3VwZXJUb2tlblR4ICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgQ2hlY2tvdXRTdWJzY3JpYmVDb21tYW5kID0gY29tcG9uZW50ICJTdWJzY3JpYmUgQ29tbWFuZCIgewogICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJDb21tYW5kIgoKICAgICAgICAgICAgICAgICAgICAgICAgLT4gQ3JlYXRlRmxvd1R4ICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgQ2hlY2tvdXRXaWRnZXRGb3JtID0gY29tcG9uZW50ICJDaGVja291dCBGb3JtIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBmb3JtIHdpdGggaW5wdXRzIHRoYXQgdGhlIHVzZXIgZmlsbHMgb3V0LiIKICAgICAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJ3YWdtaSwgcmVhY3QtaG9vay1mb3JtLCBab2QiCiAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgLT4gQ2hlY2tvdXRBdXRvV3JhcENvbW1hbmQgIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0V3JhcEludG9TdXBlclRva2Vuc0NvbW1hbmQgIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0U3Vic2NyaWJlQ29tbWFuZCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgQ2hlY2tvdXRXaWRnZXRQcm9kdWN0ID0gY29tcG9uZW50ICJQcm9kdWN0IEluZm8iIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiUHJvZHVjdCBkZXRhaWxzLCBpbmNsdWRpbmcgcGF5bWVudCBvcHRpb25zICh0b2tlbiAmIG5ldHdvcmsgJiBmbG93IHJhdGUpIgogICAgICAgICAgICAgICAgICAgIHRlY2hub2xvZ3kgIkpTT04iCgogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0V2lkZ2V0Rm9ybSAiSW5wdXQgb2YiCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgQ2hlY2tvdXRXaWRnZXRQcm9kdWN0VG9rZW5MaXN0ID0gY29tcG9uZW50ICJUb2tlbiBMaXN0IiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBkaXNwbGF5IGluZm8gZm9yIHRoZSB0b2tlbnMgdGhhdCBhcmUgc2V0IHVwIGFzIHBheW1lbnQgb3B0aW9ucy4iCiAgICAgICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiSlNPTiwgVW5pc3dhcCdzIFRva2VuIExpc3Qgc3RhbmRhcmQiCgogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0V2lkZ2V0Rm9ybSAiSW5wdXQgb2YiCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICB9CgogICAgICAgIENoZWNrb3V0U3RvcmFnZVN5c3RlbSA9IHNvZnR3YXJlU3lzdGVtICJDaGVja291dCBTdG9yYWdlIFN5c3RlbSIgewogICAgICAgICAgICBDaGVja291dFN0b3JhZ2VBUEkgPSBjb250YWluZXIgIkNoZWNrb3V0IFN0b3JhZ2UgQVBJIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiQW4gQVBJIHRvIHN0b3JlIGFuZCByZXRyaWV2ZSBjaGVja291dCBjb25maWd1cmF0aW9ucyAocHJvZHVjdCBpbmZvICYgcGF5bWVudCBvcHRpb25zKS4iCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIENoZWNrb3V0SVBGUyA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgSVBGUyIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkRlY2VudHJhbGl6ZWQgc3RvcmFnZS4iCiAgICAgICAgICAgIH0KICAgICAgICB9CgogICAgICAgIENoZWNrb3V0TWVyY2hhbnRTeXN0ZW0gPSBzb2Z0d2FyZVN5c3RlbSAiQ2hlY2tvdXQgTWVyY2hhbnQgU3lzdGVtIiB7CiAgICAgICAgICAgIENoZWNrb3V0QnVpbGRlciA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgQnVpbGRlciIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBlYXN5IHRvIHVzZSBHVUkgZm9yIHNldHRpbmcgdXAgYSBjaGVja291dC4iCgogICAgICAgICAgICAgICAgLT4gQ2hlY2tvdXRTdG9yYWdlU3lzdGVtICJHZXRzIGRldGFpbHMgZnJvbSIKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgU3VwZXJmbHVpZFVzZXJQcm9kdWN0cyA9IHNvZnR3YXJlU3lzdGVtICJTdXBlcmZsdWlkIFVzZXIgUHJvZHVjdHMiIHsKICAgICAgICAgICAgdGFncyAiU3VwZXJmbHVpZCBGaW5hbmNlIgoKICAgICAgICAgICAgU3VwZXJmbHVpZERhc2hib2FyZCA9IGNvbnRhaW5lciAiU3VwZXJmbHVpZCBEYXNoYm9hcmQiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgVUkgdG8gc2VlIHRva2VuIGJhbGFuY2VzIGFuZCBmbG93cy4iCiAgICAgICAgICAgICAgICB0YWdzICJXZWIgQXBwIgogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiVHlwZVNjcmlwdCwgTmV4dC5qcywgUmVhY3QsIE1VSSwgU0RLLWNvcmUsIFNESy1yZWR1eCwgUmVkdXggVG9vbGtpdCAoUlRLKSwgd2FnbWkiCgogICAgICAgICAgICAgICAgLT4gQ2hlY2tvdXRXaWRnZXQgIkNhbiBjb250YWluIGEgZ2VuZXJpYyAnaG9zdGVkJyB2ZXJzaW9uIgogICAgICAgICAgICB9CgogICAgICAgICAgICBTdXBlcmZsdWlkQ29uc29sZSA9IGNvbnRhaW5lciAiU3VwZXJmbHVpZCBDb25zb2xlIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiVGhlIFVJIHZpZXcgU3VwZXJmbHVpZCBQcm90b2NvbCBmcm9tIGJpcmQncyBleWUgdmlldy4iCiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJUeXBlU2NyaXB0LCBOZXh0LmpzLCBSZWFjdCwgTVVJLCBTREstY29yZSwgU0RLLXJlZHV4IgogICAgICAgICAgICAgICAgdGFncyAiV2ViIEFwcCIKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgV2FsbGV0ID0gc29mdHdhcmVTeXN0ZW0gIldlYjMgV2FsbGV0IiAiV2FsbGV0IiB7CiAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgdXNlcidzIHdhbGxldCB3aXRoIFJQQyAmIHNpZ25hdHVyZSBhY2Nlc3MuIgogICAgICAgICAgICB0YWdzICJXYWxsZXQiCiAgICAgICAgfQoKICAgICAgICBXZWIzTWVyY2hhbnRFY29zeXN0ZW0gPSBzb2Z0d2FyZVN5c3RlbSAiV2ViMyBTdG9yZXMiIHsKICAgICAgICAgICAgdGFncyAiRXh0ZXJuYWwiCgogICAgICAgICAgICAtPiBDaGVja291dFdpZGdldCAiVGhlIHdlYnNpdGUgdGhhdCBob2xkcyB0aGUgY2hlY2tvdXQgd2lkZ2V0KHMpLiIKICAgICAgICB9CgogICAgICAgIFdlYjNNZXJjaGFudCA9IHBlcnNvbiAiV2ViMyBNZXJjaGFudCIKICAgICAgICBXZWIzTWVyY2hhbnQgLT4gQ2hlY2tvdXRNZXJjaGFudFN5c3RlbSAiVXNlcyIKCiAgICAgICAgV2ViM0NvbnN1bWVyID0gcGVyc29uICJXZWIzIENvbnN1bWVyIgogICAgICAgIFdlYjNDb25zdW1lciAtPiBTdXBlcmZsdWlkRGFzaGJvYXJkICJVc2VzIHRvIG1hbmFnZSB0b2tlbiBiYWxhbmNlcyIKICAgICAgICBXZWIzQ29uc3VtZXIgLT4gV2ViM01lcmNoYW50RWNvc3lzdGVtICJHb2VzIHRvIHN1YnNjcmliZSB0byBhIHByb2R1Y3QiCiAgICAgICAgV2ViM0NvbnN1bWVyIC0+IENoZWNrb3V0V2lkZ2V0ICJVc2VzIHRvIG1ha2UgcGF5bWVudCIKICAgIH0KCiAgICB2aWV3cyB7CiAgICAgICAgc3lzdGVtbGFuZHNjYXBlIFRoZUJpZ1BpY3R1cmUgIlRoZSBDaGVja291dCBCaWcgUGljdHVyZSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIENoZWNrb3V0Q29uc3VtZXJTeXN0ZW0gIkNoZWNrb3V0Q29uc3VtZXJTeXN0ZW0iIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIGNvbnRhaW5lciBDaGVja291dFN0b3JhZ2VTeXN0ZW0gIkNoZWNrb3V0U3RvcmFnZVN5c3RlbSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIFN1cGVyZmx1aWRVc2VyUHJvZHVjdHMgIlN1cGVyZmx1aWRVc2VyUHJvZHVjdHMiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CiAgICAgICAgCiAgICAgICAgY29tcG9uZW50IENoZWNrb3V0V2lkZ2V0ICJDaGVja291dFdpZGdldENvbXBvbmVudHMiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIHN0eWxlcyB7CiAgICAgICAgICAgIGVsZW1lbnQgIlBlcnNvbiIgewogICAgICAgICAgICAgICAgc2hhcGUgcGVyc29uCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM5NzY0NDAKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiV2FsbGV0IiB7CiAgICAgICAgICAgICAgICBzaGFwZSBNb2JpbGVEZXZpY2VQb3J0cmFpdAogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjZjY4NTFiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIldlYiBBcHAiIHsKICAgICAgICAgICAgICAgIHNoYXBlIFdlYkJyb3dzZXIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiU3VwZXJmbHVpZCBGaW5hbmNlIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMxZGIyMjcKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiQ29tbWFuZCIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMzM5OWZlCiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9Cn0K"
   },
@@ -81,6 +81,23 @@
         "description" : "Provides a streamlined UX to subscribe to the given product.",
         "technology" : "TypeScript, React, MUI, wagmi, Zod, Token List",
         "components" : [ {
+          "id" : "20",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "checkoutwidgetproduct"
+          },
+          "name" : "Product Info",
+          "description" : "Product details, including payment options (token & network & flow rate)",
+          "relationships" : [ {
+            "id" : "21",
+            "tags" : "Relationship",
+            "sourceId" : "20",
+            "destinationId" : "16",
+            "description" : "Input of"
+          } ],
+          "technology" : "JSON",
+          "documentation" : { }
+        }, {
           "id" : "5",
           "tags" : "Element,Component",
           "properties" : {
@@ -88,6 +105,62 @@
           },
           "name" : "Authorize Superfluid to Wrap Tokens",
           "group" : "On-Chain Transactions",
+          "documentation" : { }
+        }, {
+          "id" : "14",
+          "tags" : "Element,Component,Command",
+          "properties" : {
+            "structurizr.dsl.identifier" : "checkoutsubscribecommand"
+          },
+          "name" : "Subscribe Command",
+          "relationships" : [ {
+            "id" : "15",
+            "tags" : "Relationship",
+            "sourceId" : "14",
+            "destinationId" : "7",
+            "description" : "Produces"
+          } ],
+          "group" : "Commands",
+          "documentation" : { }
+        }, {
+          "id" : "6",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wrapintosupertokentx"
+          },
+          "name" : "Upgrade to Super Token",
+          "group" : "On-Chain Transactions",
+          "documentation" : { }
+        }, {
+          "id" : "4",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "enableautowraptx"
+          },
+          "name" : "Enable Auto-Wrap",
+          "group" : "On-Chain Transactions",
+          "documentation" : { }
+        }, {
+          "id" : "8",
+          "tags" : "Element,Component,Command",
+          "properties" : {
+            "structurizr.dsl.identifier" : "checkoutautowrapcommand"
+          },
+          "name" : "Enable Auto-Wrap Command",
+          "relationships" : [ {
+            "id" : "9",
+            "tags" : "Relationship",
+            "sourceId" : "8",
+            "destinationId" : "3",
+            "description" : "Produces"
+          }, {
+            "id" : "10",
+            "tags" : "Relationship",
+            "sourceId" : "8",
+            "destinationId" : "4",
+            "description" : "Produces"
+          } ],
+          "group" : "Commands",
           "documentation" : { }
         }, {
           "id" : "16",
@@ -119,114 +192,6 @@
           "technology" : "wagmi, react-hook-form, Zod",
           "documentation" : { }
         }, {
-          "id" : "6",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wrapintosupertokentx"
-          },
-          "name" : "Upgrade to Super Token",
-          "group" : "On-Chain Transactions",
-          "documentation" : { }
-        }, {
-          "id" : "4",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "enableautowraptx"
-          },
-          "name" : "Enable Auto-Wrap",
-          "group" : "On-Chain Transactions",
-          "documentation" : { }
-        }, {
-          "id" : "7",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "createflowtx"
-          },
-          "name" : "Create Flow",
-          "group" : "On-Chain Transactions",
-          "documentation" : { }
-        }, {
-          "id" : "22",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "checkoutwidgetproducttokenlist"
-          },
-          "name" : "Token List",
-          "description" : "The display info for the tokens that are set up as payment options.",
-          "relationships" : [ {
-            "id" : "23",
-            "tags" : "Relationship",
-            "sourceId" : "22",
-            "destinationId" : "16",
-            "description" : "Input of"
-          } ],
-          "technology" : "JSON, Uniswap's Token List standard",
-          "documentation" : { }
-        }, {
-          "id" : "8",
-          "tags" : "Element,Component,Command",
-          "properties" : {
-            "structurizr.dsl.identifier" : "checkoutautowrapcommand"
-          },
-          "name" : "Enable Auto-Wrap Command",
-          "relationships" : [ {
-            "id" : "9",
-            "tags" : "Relationship",
-            "sourceId" : "8",
-            "destinationId" : "3",
-            "description" : "Produces"
-          }, {
-            "id" : "10",
-            "tags" : "Relationship",
-            "sourceId" : "8",
-            "destinationId" : "4",
-            "description" : "Produces"
-          } ],
-          "group" : "Commands",
-          "documentation" : { }
-        }, {
-          "id" : "20",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "checkoutwidgetproduct"
-          },
-          "name" : "Product Info",
-          "description" : "Product details, including payment options (token & network & flow rate)",
-          "relationships" : [ {
-            "id" : "21",
-            "tags" : "Relationship",
-            "sourceId" : "20",
-            "destinationId" : "16",
-            "description" : "Input of"
-          } ],
-          "technology" : "JSON",
-          "documentation" : { }
-        }, {
-          "id" : "3",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "authorizeautowraptx"
-          },
-          "name" : "Authorize Auto-Wrap",
-          "group" : "On-Chain Transactions",
-          "documentation" : { }
-        }, {
-          "id" : "14",
-          "tags" : "Element,Component,Command",
-          "properties" : {
-            "structurizr.dsl.identifier" : "checkoutsubscribecommand"
-          },
-          "name" : "Subscribe Command",
-          "relationships" : [ {
-            "id" : "15",
-            "tags" : "Relationship",
-            "sourceId" : "14",
-            "destinationId" : "7",
-            "description" : "Produces"
-          } ],
-          "group" : "Commands",
-          "documentation" : { }
-        }, {
           "id" : "11",
           "tags" : "Element,Component,Command",
           "properties" : {
@@ -248,6 +213,41 @@
           } ],
           "group" : "Commands",
           "documentation" : { }
+        }, {
+          "id" : "22",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "checkoutwidgetproducttokenlist"
+          },
+          "name" : "Token List",
+          "description" : "The display info for the tokens that are set up as payment options.",
+          "relationships" : [ {
+            "id" : "23",
+            "tags" : "Relationship",
+            "sourceId" : "22",
+            "destinationId" : "16",
+            "description" : "Input of"
+          } ],
+          "technology" : "JSON, Uniswap's Token List standard",
+          "documentation" : { }
+        }, {
+          "id" : "3",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "authorizeautowraptx"
+          },
+          "name" : "Authorize Auto-Wrap",
+          "group" : "On-Chain Transactions",
+          "documentation" : { }
+        }, {
+          "id" : "7",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "createflowtx"
+          },
+          "name" : "Create Flow",
+          "group" : "On-Chain Transactions",
+          "documentation" : { }
         } ],
         "documentation" : { }
       } ],
@@ -261,15 +261,6 @@
       "name" : "Checkout Storage System",
       "location" : "Unspecified",
       "containers" : [ {
-        "id" : "26",
-        "tags" : "Element,Container",
-        "properties" : {
-          "structurizr.dsl.identifier" : "checkoutipfs"
-        },
-        "name" : "Checkout IPFS",
-        "description" : "Decentralized storage.",
-        "documentation" : { }
-      }, {
         "id" : "25",
         "tags" : "Element,Container",
         "properties" : {
@@ -277,6 +268,15 @@
         },
         "name" : "Checkout Storage API",
         "description" : "An API to store and retrieve checkout configurations (product info & payment options).",
+        "documentation" : { }
+      }, {
+        "id" : "26",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "checkoutipfs"
+        },
+        "name" : "Checkout IPFS",
+        "description" : "Decentralized storage.",
         "documentation" : { }
       } ],
       "documentation" : { }
@@ -335,6 +335,16 @@
       } ],
       "location" : "Unspecified",
       "containers" : [ {
+        "id" : "37",
+        "tags" : "Element,Container,Web App",
+        "properties" : {
+          "structurizr.dsl.identifier" : "superfluidconsole"
+        },
+        "name" : "Superfluid Console",
+        "description" : "The UI view Superfluid Protocol from bird's eye view.",
+        "technology" : "TypeScript, Next.js, React, MUI, SDK-core, SDK-redux",
+        "documentation" : { }
+      }, {
         "id" : "32",
         "tags" : "Element,Container,Web App",
         "properties" : {
@@ -356,16 +366,6 @@
           "linkedRelationshipId" : "33"
         } ],
         "technology" : "TypeScript, Next.js, React, MUI, SDK-core, SDK-redux, Redux Toolkit (RTK), wagmi",
-        "documentation" : { }
-      }, {
-        "id" : "37",
-        "tags" : "Element,Container,Web App",
-        "properties" : {
-          "structurizr.dsl.identifier" : "superfluidconsole"
-        },
-        "name" : "Superfluid Console",
-        "description" : "The UI view Superfluid Protocol from bird's eye view.",
-        "technology" : "TypeScript, Next.js, React, MUI, SDK-core, SDK-redux",
         "documentation" : { }
       } ],
       "documentation" : { }
@@ -405,39 +405,60 @@
   },
   "documentation" : {
     "decisions" : [ {
-      "content" : "# 1. Record architecture decisions\n\nDate: 2023-04-20\n\n## Status\n\nProposed\n\n## Context\n\nWe need to record the architectural decisions made on this project.\n\n## Decision\n\nWe will use Architecture Decision Records, as described by Michael Nygard in this article: [http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions)\n\n## Consequences\n\nSee Michael Nygard's article, linked above.",
+      "content" : "# Record Architecture Decisions\n\nDate: 2023-04-20\n\n## Status\n\nProposed\n\n## Context\n\nWe need to record the architectural decisions made on this project.\n\n## Decision\n\nWe will use Architecture Decision Records, as described by Michael Nygard in this article: [http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions)\n\n## Consequences\n\nSee Michael Nygard's article, linked above.",
       "format" : "Markdown",
       "id" : "1",
-      "title" : "Record architecture decisions",
+      "title" : " Record Architecture Decisions",
       "date" : "2023-04-20T00:00:00Z",
       "status" : "Proposed"
     }, {
-      "content" : "# 1. Use Structurizr For Architecture Documentation\n\nDate: 2023-04-20\n\n## Status\n\nProposed\n\n## Context\n\nWe need a good tool for diagramming and architecture decision tracking.\n\n## Decision\n\nWe will use Structurizr: https://structurizr.org/\n\nIt's free, well-maintained and well-documented.\n\nSupports diagrams-as-code approach so all the output can be included in the source code repository. Supports architecture decision records (ADRs).\n\n## Consequences\n\nInclude the Structurizr set-up in the repository and keep it up to date.\n\nStructurizr follows an opinionated approach using the [C4 model](https://c4model.com/) so we'll need to follow it as well.",
+      "content" : "# Maintain Software Architecture Diagrams\n\nDate: 2023-04-23\n\n## Status\nAccepted\n\n## Context\nSoftware architecture diagrams are a helpful communication tool in software development. They improve communication and on-boarding procedures by making it easier for developers to visually understand the project's architecture and how everything is connected. This is especially important for on-boarding new team members later in the development process.\n\nHowever, the diagrams come with maintenance costs. As the system evolves, the diagrams must be updated to reflect those changes. Failure to update the diagrams can lead to confusion and miscommunication among team members, which can result in errors and delays in development.\n\n## Decision\nWe will use the diagrams-as-code approach to maintain our software architecture diagrams. All diagrams will be defined using code, which will be version controlled alongside the rest of the codebase.\n\n## Consequences\nThe diagrams-as-code approach has several benefits:\n\n- **Consistency:** Diagrams can be version controlled alongside the codebase, ensuring that they are always consistent with the current state of the system.\n\n- **Efficiency:** Diagrams can be generated automatically from code, saving time and reducing the risk of errors.\n\n- **Collaboration:** As diagrams are stored in code, they can be easily shared and collaborated on by the development team.\n\n- **Accessibility:** The text-based syntax used to define diagrams is easy to learn and can be used by all members of the development team, regardless of their level of experience with graphical diagramming tools.\n\nHowever, there are also some potential drawbacks to this approach:\n\n- **Learning curve:** Developers may need to spend some time learning the syntax used to define diagrams in code.\n\n- **Limited expressiveness:** Some types of diagrams may be more difficult to define using code, compared to a graphical diagramming tool.\n\nOverall, we believe that the benefits of the diagrams-as-code approach outweigh the potential drawbacks, and we will use this approach to maintain our software architecture diagrams.",
       "format" : "Markdown",
       "id" : "2",
+      "title" : " Maintain Software Architecture Diagrams",
+      "date" : "2023-04-23T00:00:00Z",
+      "status" : "Accepted"
+    }, {
+      "content" : "# 1. Use Structurizr For Architecture Documentation\n\nDate: 2023-04-20\n\n## Status\n\nProposed\n\n## Context\n\nWe need a good tool for diagramming and architecture decision tracking.\n\n## Decision\n\nWe will use Structurizr: https://structurizr.org/\n\nIt's **free**, open-source, well-maintained and well-documented.\n\nIt supports **diagrams-as-code** approach so all the output can be included in the source code repository. \n\nIt has **architecture decision record (ADRs)** support.\n\n## Consequences\n\nInclude the Structurizr set-up in the repository and keep it up to date.\n\nStructurizr follows an opinionated approach using the [C4 model](https://c4model.com/) so we'll need to follow it as well.",
+      "format" : "Markdown",
+      "id" : "3",
       "title" : "Use Structurizr For Architecture Documentation",
       "date" : "2023-04-20T00:00:00Z",
       "status" : "Proposed"
     }, {
-      "content" : "# Building Type-Safe and Schema-Validated\n\nDate: 2023-04-21\n\n## Status\nProposed\n\n## Context\nThe tools and products we build are to be used by other builders and stay maintainable for long periods of time. \n\nThe subject matter of payments, checkouts, merchants and consumers is very serious. Any sort of mistakes can result in financial losses and miserable users. \n\nJavaScript apps and Web3 wallet RPC interactions are notoriously error-prone.\n\n## Decision\n\nWe will use TypeScript and Zod to build type-safe and schema-validated payments and checkout flows.\n\nTypeScript is a superset of JavaScript that provides static type checking at compile time. This catches many errors before they manifest at runtime.\n\nZod is a TypeScript-first schema validation library that allows us to define and validate structured data.\n\nBy using TypeScript and Zod together, we can ensure type safety and schema validation throughout the entire development process, from compile time to runtime, resulting in code that is more reliable and maintainable.\n\n## Consequences\n\nUsing TypeScript and Zod will require us to invest time and resources upfront in creating and maintaining schemas, and in ensuring that all relevant code is type-safe. However, this will pay dividends in reduced development time and increased reliability over the long term. Additionally, developers will need to be trained on TypeScript and Zod, or will need to learn these tools as they work on the project.",
-      "format" : "Markdown",
-      "id" : "3",
-      "title" : " Building Type-Safe and Schema-Validated",
-      "date" : "2023-04-21T00:00:00Z",
-      "status" : "Proposed"
-    }, {
-      "content" : "# Creating a Streamlined Checkout Widget\n\nDate: 2023-04-21\n\n## Status\nProposed\n\n## Context\nSuperfluid Protocol is great for re-occuring payments. One of the biggest use-cases for that is subscriptions. To increase the adoption of Superfluid being used for checkouts, we'll create a widget that will make it easy to accept both peer-to-peer and peer-to-merchant payments in Superfluid streams. We'll want the widget to be as easy to include on a web site or in a web app as possible.\n\nThe widget will make on-boarding and getting started with Superfluid easy by streamlining the experience from wrapping first tokens, enabling Auto-Wrap, sending the stream etc.\n\n## Decision\nWe will create a checkout widget using React, MUI, TypeScript, wagmi (wallet interactions), wagmi CLI (ABI fetching and type generation), AbiType (TypeChain alternative), Zod (validation library) and react-hook-form (form management patterns). The widget will be designed to be minimal (lightweight) and very type-safe, with a focus on ease of use and integration. We will leverage existing patterns from Superfluid Dashboard and Superfluid Console to speed up development. The technologies chosen are aligned with other Superfluid products.\n\nWe will use React to create the widget based on the team's experience and Web3 ecosystem wide-spread usage of it. We will use MUI for styling as it has good theme'ing options and is suitable for fast prototyping. Zod will be used for runtime type-checking of user input and the incoming checkout configurations.\n\nWe will consider using web components to make the widget even more portable and easy to integrate into any web app. React components can be put into web components, so we will explore this option to make the widget as flexible as possible.\n\nWe will keep the logic lightweight and not overly tie it to styling because we want to leave freedom to move away from React and/or MUI if it becomes necessary.\n\n## Consequences\nThe tech stack allows us build something of high quality (type-safe, performant, maintainable, consistent in visual style) and move fast at the same time. \n\nLeveraging existing patterns from Superfluid Dashboard and Superfluid Console will shorten learning curve and ensure consistency across the Superfluid ecosystem. \n\nUsing web components will make the widget even more portable and easy to integrate into any web app.",
+      "content" : "```markdown\n# Building Type-Safe and Schema-Validated\n\nDate: 2023-04-21\n\n## Status\nProposed\n\n## Context\nThe tools and products we build are to be used by other builders and stay maintainable for long periods of time. \n\nThe subject matter of payments, checkouts, merchants and consumers is very serious. Any sort of mistakes can result in financial losses and miserable users. \n\nJavaScript apps and Web3 wallet RPC interactions are notoriously error-prone.\n\n## Decision\n\nWe will use **TypeScript** and **Zod** to build type-safe and schema-validated payments and checkout flows.\n\nTypeScript is a superset of JavaScript that provides static type checking at compile time. This catches many errors before they manifest at runtime.\n\nZod is a TypeScript-first schema validation library that allows us to define and validate structured data.\n\nBy using TypeScript and Zod together, we can ensure type safety and schema validation throughout the entire development process, from compile time to runtime, resulting in code that is more reliable and maintainable.\n\n## Consequences\n\nUsing TypeScript and Zod will require us to invest time and resources upfront in creating and maintaining schemas, and in ensuring that all relevant code is type-safe. However, this will pay dividends in reduced development time and increased reliability over the long term. Additionally, developers will need to be trained on TypeScript and Zod, or will need to learn these tools as they work on the project.\n```",
       "format" : "Markdown",
       "id" : "4",
-      "title" : " Creating a Streamlined Checkout Widget",
+      "title" : "``markdown",
       "date" : "2023-04-21T00:00:00Z",
       "status" : "Proposed"
     }, {
-      "content" : "# Creating a Checkout Builder Interface\n\nDate: 2023-04-21\n\n## Status\nProposed\n\n## Context\nTo easily use the Checkout Widget, we want to create a Checkout Builder interface that allows users to easily create and customize their own checkout forms for accepting payments in Superfluid streams. This Checkout Builder interface will be used to generate a JSON structure that can be consumed by the Superfluid Checkout Widget. The Checkout Builder interface should be easy to use and work with Superfluid Token List.\n\nWe will use existing patterns from Superfluid Dashboard and Superfluid Console to speed up development. The technologies chosen are aligned with other Superfluid products.\n\n## Decision\nWe will create a Checkout Builder interface using Next.js, React, MUI, TypeScript, react-hook-form, and Zod. The interface will allow users to easily create and customize their own checkout forms for accepting payments in Superfluid streams. The Checkout Builder interface will generate a JSON structure that can be consumed by the Superfluid Checkout Widget. \n\nNext.js will be used as the framework for the Checkout Builder interface due to its server-side rendering capabilities and ease of deployment. React will be used for the frontend of the interface as it is widely used and has a large community. MUI will be used for styling as it has good theming options, is suitable for fast prototyping and is good for building back-office apps with good usability. \n\nTypeScript will be used for its strong typing and better developer experience. react-hook-form will be used for form management patterns and Zod for runtime type-checking of user input and the generated JSON structure.\n\nThe interface is supposed to be user-friendly and easy to use. The interface will allow users to customize the fields and properties of their checkout form, including the receiver address, product information, networks, tokens and flow rate. We will also consider adding validation and error handling to make the interface more robust.\n\nWe haven't decided on storage options yet. For user testing and schema testing purposes, it can stay ephemeral. Later on, we will add storage options such as IPFS for decentralized persistence and self-hosted storage for full-blown merchant set-ups.\n\n## Consequences\nWe'll have an interface built in swift time to validate the UX viablity and the Checkout Widget schema.\n\nLater on, when we have a more clear merchant product-suite offering, the process of setting up products should work in bulk and be automatable. We'll not deal with this use-case yet. ",
+      "content" : "# Creating a Checkout Builder Interface\n\nDate: 2023-04-21\n\n## Status\nProposed\n\n## Context\nTo easily use the Checkout Widget, we want to create a Checkout Builder interface that allows users to easily create and customize their own checkout forms for accepting payments in Superfluid streams. This Checkout Builder interface will be used to generate a **JSON structure** that can be consumed by the Superfluid Checkout Widget. The Checkout Builder interface should be easy to use and work with Superfluid Token List.\n\nWe will use existing patterns from Superfluid Dashboard and Superfluid Console to speed up development. The technologies chosen are aligned with other Superfluid products.\n\n## Decision\nWe will create a Checkout Builder interface using Next.js, React, MUI, TypeScript, react-hook-form, and Zod. The interface will allow users to easily create and customize their own checkout forms for accepting payments in Superfluid streams. The Checkout Builder interface will generate a JSON structure that can be consumed by the Superfluid Checkout Widget. \n\nNext.js will be used as the framework for the Checkout Builder interface due to its server-side rendering capabilities and ease of deployment. React will be used for the frontend of the interface as it is widely used and has a large community. MUI will be used for styling as it has good theming options, is suitable for fast prototyping and is good for building back-office apps with good usability. \n\nTypeScript will be used for its strong typing and better developer experience. react-hook-form will be used for form management patterns and Zod for runtime type-checking of user input and the generated JSON structure.\n\nThe interface is supposed to be user-friendly and easy to use. The interface will allow users to customize the fields and properties of their checkout form, including the receiver address, product information, networks, tokens and flow rate. We will also consider adding validation and error handling to make the interface more robust.\n\nWe haven't decided on storage options yet. For user testing and schema testing purposes, it can stay ephemeral. Later on, we will add storage options such as IPFS for decentralized persistence and self-hosted storage for full-blown merchant set-ups.\n\n## Consequences\nWe'll have an interface built in swift time to validate the UX viablity and the Checkout Widget schema.\n\nLater on, when we have a more clear merchant product-suite offering, the process of setting up products should work in bulk and be automatable. We'll not deal with this use-case yet. ",
       "format" : "Markdown",
       "id" : "5",
       "title" : " Creating a Checkout Builder Interface",
       "date" : "2023-04-21T00:00:00Z",
+      "status" : "Proposed"
+    }, {
+      "content" : "# Creating a Streamlined Checkout Widget\n\nDate: 2023-04-21\n\n## Status\nProposed\n\n## Context\nSuperfluid Protocol is great for re-occuring payments. One of the biggest use-cases for that is subscriptions. To increase the adoption of Superfluid being used for checkouts, we'll create a widget that will make it easy to accept both peer-to-peer and peer-to-merchant payments in Superfluid streams. We'll want the widget to be as easy to include on a web site or in a web app as possible.\n\nThe widget will make on-boarding and getting started with Superfluid easy by streamlining the experience from wrapping first tokens, enabling Auto-Wrap, sending the stream etc.\n\n## Decision\nWe will create a checkout widget using **React**, **MUI**, **TypeScript**, **wagmi** (wallet interactions), **wagmi CLI** (ABI fetching and type generation), **AbiType** (TypeChain alternative), **Zod** (validation library) and **react-hook-form** (form management patterns). The widget will be designed to be minimal (lightweight) and very type-safe, with a focus on ease of use and integration. We will leverage existing patterns from Superfluid Dashboard and Superfluid Console to speed up development. The technologies chosen are aligned with other Superfluid products.\n\nWe will use React to create the widget based on the team's experience and Web3 ecosystem wide-spread usage of it. We will use MUI for styling as it has good theme'ing options and is suitable for fast prototyping. Zod will be used for runtime type-checking of user input and the incoming checkout configurations.\n\nWe will consider using web components to make the widget even more portable and easy to integrate into any web app. React components can be put into web components, so we will explore this option to make the widget as flexible as possible.\n\nWe will keep the logic lightweight and not overly tie it to styling because we want to leave freedom to move away from React and/or MUI if it becomes necessary.\n\n## Consequences\nThe tech stack allows us build something of high quality (type-safe, performant, maintainable, consistent in visual style) and move fast at the same time. \n\nLeveraging existing patterns from Superfluid Dashboard and Superfluid Console will shorten learning curve and ensure consistency across the Superfluid ecosystem. \n\nUsing web components will make the widget even more portable and easy to integrate into any web app.",
+      "format" : "Markdown",
+      "id" : "6",
+      "title" : " Creating a Streamlined Checkout Widget",
+      "date" : "2023-04-21T00:00:00Z",
+      "status" : "Proposed"
+    }, {
+      "content" : "---\nstatus: Accepted\ndate: 2022-11-22\ndeciders: ZIO\n---\n\n# AD: System Decomposition into Logical Layers\n\n## Context and Problem Statement\n\nWhich concept is used to decompose the system under construction into logical building blocks?\n\n## Decision Drivers\n\n* Desire to divide the overall system into manageable parts to reduce complexity\n* Ability to exchange system parts without affecting others\n\n## Considered Options\n\n1. Layers pattern \n2. Pipes-and-filters\n3. Workflow\n\n## Decision Outcome\n\nWe decided to apply the Layers pattern and neglected other decomposition pattern such as pipes-and-filters or workflow because the system under construction and its capabilities do not suggest an organization by data flow or control flow. Technology is expected to be primary driver of change during system evolution. \n\n### Consequences\n\n* Good, because the Layers pattern provides high flexibility regarding technology selections within the layers (changeability) and enables teams to work on system parts in parallel.\n* Bad, because there might be a performance penalty for each level of indirection and some undesired replication of implementation artifacts.\n\n## More Information\n\n* The three decomposition options come from the Cloud Computing Pattern [Distributed Application](https://www.cloudcomputingpatterns.org/distributed_application/).\n* The Layers pattern is featured in POSA Volume 1, see <http://www.dre.vanderbilt.edu/~schmidt/POSA-tutorial.pdf>\n\nA follow-on decision will be required to assign logical layers to physical tiers.",
+      "format" : "Markdown",
+      "id" : "7",
+      "title" : "--",
+      "date" : "2023-04-23T20:40:40Z",
+      "status" : "Proposed"
+    }, {
+      "content" : "# Asdf\n\n* Status: Accepted\n* Date: 2000-12-31\n\nTechnical Story: asdf\n\n## Context and Problem Statement\n\nzxcvzxcv\n\n## Decision Drivers\n\n* zxcv\n\n## Considered Options\n\n* react\n* vue\n\n## Decision Outcome\n\nChosen option: \"react\", because asdfasdf\n",
+      "format" : "Markdown",
+      "id" : "8",
+      "title" : " Asdf",
+      "date" : "2023-04-23T20:40:40Z",
       "status" : "Proposed"
     } ]
   },
@@ -546,28 +567,6 @@
         "id" : "48"
       } ]
     }, {
-      "key" : "CheckoutStorageSystem",
-      "order" : 3,
-      "softwareSystemId" : "24",
-      "automaticLayout" : {
-        "implementation" : "Graphviz",
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "nodeSeparation" : 300,
-        "edgeSeparation" : 0,
-        "vertices" : false
-      },
-      "externalSoftwareSystemBoundariesVisible" : true,
-      "elements" : [ {
-        "id" : "25",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "26",
-        "x" : 0,
-        "y" : 0
-      } ]
-    }, {
       "key" : "SuperfluidUserProducts",
       "order" : 4,
       "softwareSystemId" : "31",
@@ -604,6 +603,28 @@
       }, {
         "id" : "49"
       } ]
+    }, {
+      "key" : "CheckoutStorageSystem",
+      "order" : 3,
+      "softwareSystemId" : "24",
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "externalSoftwareSystemBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "25",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      } ]
     } ],
     "componentViews" : [ {
       "key" : "CheckoutWidgetComponents",
@@ -619,19 +640,19 @@
       "containerId" : "2",
       "externalContainerBoundariesVisible" : true,
       "elements" : [ {
-        "id" : "22",
-        "x" : 0,
-        "y" : 0
-      }, {
         "id" : "11",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "3",
+        "id" : "22",
         "x" : 0,
         "y" : 0
       }, {
         "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
         "x" : 0,
         "y" : 0
       }, {
@@ -672,9 +693,9 @@
       }, {
         "id" : "13"
       }, {
-        "id" : "23"
-      }, {
         "id" : "12"
+      }, {
+        "id" : "23"
       }, {
         "id" : "21"
       }, {

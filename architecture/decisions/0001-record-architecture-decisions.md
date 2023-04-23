@@ -1,4 +1,4 @@
-# 1. Record architecture decisions
+# Record Architecture Decisions
 
 Date: 2023-04-20
 

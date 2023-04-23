@@ -14,9 +14,11 @@ We need a good tool for diagramming and architecture decision tracking.
 
 We will use Structurizr: https://structurizr.org/
 
-It's free, well-maintained and well-documented.
+It's **free**, open-source, well-maintained and well-documented.
 
-Supports diagrams-as-code approach so all the output can be included in the source code repository. Supports architecture decision records (ADRs).
+It supports **diagrams-as-code** approach so all the output can be included in the source code repository. 
+
+It has **architecture decision record (ADRs)** support.
 
 ## Consequences
 
