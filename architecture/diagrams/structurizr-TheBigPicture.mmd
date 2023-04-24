@@ -4,45 +4,47 @@ graph TB
   subgraph diagram [System Landscape]
     style diagram fill:#ffffff,stroke:#ffffff
 
-    subgraph group1 [Receive Payment]
+    subgraph group1 [Payment Receivers]
       style group1 fill:#ffffff,stroke:#cccccc,color:#cccccc,stroke-dasharray:5
 
-      53["<div style='font-weight: bold'>Content Creator</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Accepting Web3 donations</div>"]
-      style 53 fill:#976440,stroke:#69462c,color:#ffffff
-      54["<div style='font-weight: bold'>Web2 Merchant</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Selling subscriptions and<br />accepting Web3 payments.</div>"]
-      style 54 fill:#976440,stroke:#69462c,color:#ffffff
-      56["<div style='font-weight: bold'>Web3 Native Merchant</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Accepting Web3 payments and<br />deeply integrating on the<br />blockchain level.</div>"]
-      style 56 fill:#976440,stroke:#69462c,color:#ffffff
+      58["<div style='font-weight: bold'>Content Creator</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Accepting Web3 donations</div>"]
+      style 58 fill:#976440,stroke:#69462c,color:#ffffff
+      61["<div style='font-weight: bold'>Web2 Merchant</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Selling subscriptions and<br />accepting Web3 payments.</div>"]
+      style 61 fill:#976440,stroke:#69462c,color:#ffffff
+      63["<div style='font-weight: bold'>Web3 Native Merchant</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Accepting Web3 payments and<br />deeply integrating on the<br />blockchain level.</div>"]
+      style 63 fill:#976440,stroke:#69462c,color:#ffffff
     end
 
-    subgraph group2 [Send Payment]
+    subgraph group2 [Payment Senders]
       style group2 fill:#ffffff,stroke:#cccccc,color:#cccccc,stroke-dasharray:5
 
-      57["<div style='font-weight: bold'>Web3 Consumer</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
-      style 57 fill:#976440,stroke:#69462c,color:#ffffff
+      65["<div style='font-weight: bold'>Web3 Consumer</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
+      style 65 fill:#976440,stroke:#69462c,color:#ffffff
     end
 
-    1("<div style='font-weight: bold'>Checkout Customer System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>")
+    1("<div style='font-weight: bold'>Superfluid Token Gating</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>")
     style 1 fill:#dddddd,stroke:#9a9a9a,color:#000000
-    25("<div style='font-weight: bold'>Checkout Storage System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>")
-    style 25 fill:#dddddd,stroke:#9a9a9a,color:#000000
-    28("<div style='font-weight: bold'>Superfluid Token Gating System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>")
-    style 28 fill:#dddddd,stroke:#9a9a9a,color:#000000
-    30("<div style='font-weight: bold'>Superfluid Notification System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The system that sends<br />notifications to both the<br />users and other systems.</div>")
-    style 30 fill:#dddddd,stroke:#9a9a9a,color:#000000
-    32("<div style='font-weight: bold'>Checkout Merchant System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>")
-    style 32 fill:#dddddd,stroke:#9a9a9a,color:#000000
-    35("<div style='font-weight: bold'>Superfluid User Products</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The main end-user facing<br />suite of products for<br />anything Superfluid Protocol<br />related.</div>")
-    style 35 fill:#00991f,stroke:#006b15,color:#ffffff
-    49["<div style='font-weight: bold'>Web3 Wallet</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The user's wallet with RPC &<br />signature access.</div>"]
-    style 49 fill:#f6851b,stroke:#ac5d12,color:#000000
-    50("<div style='font-weight: bold'>Web3 Merchant Ecosystem</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Stores & Games & Subscription<br />Services & etc</div>")
-    style 50 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    3("<div style='font-weight: bold'>Checkout Widget System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The main customer facing part<br />of the Checkout system.</div>")
+    style 3 fill:#3b75a9,stroke:#f8c806,color:#ffffff
+    32("<div style='font-weight: bold'>Checkout Storage System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>")
+    style 32 fill:#3b75a9,stroke:#295176,color:#ffffff
+    35("<div style='font-weight: bold'>Superfluid Notification System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The system that sends<br />notifications to both the<br />users and other systems.</div>")
+    style 35 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    37("<div style='font-weight: bold'>Checkout Merchant System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>")
+    style 37 fill:#3b75a9,stroke:#f8c806,color:#ffffff
+    40("<div style='font-weight: bold'>Superfluid User Products</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The main end-user facing<br />suite of products for<br />anything Superfluid Protocol<br />related.</div>")
+    style 40 fill:#00991f,stroke:#006b15,color:#ffffff
+    54["<div style='font-weight: bold'>Web3 Wallet</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The user's wallet with RPC &<br />signature access.</div>"]
+    style 54 fill:#f6851b,stroke:#ac5d12,color:#000000
+    55("<div style='font-weight: bold'>Web3 Merchant Ecosystem</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Stores & Games & Subscription<br />Services & etc</div>")
+    style 55 fill:#dddddd,stroke:#9a9a9a,color:#000000
 
-    35-. "<div>Might 'host' a generic<br />version</div><div style='font-size: 70%'></div>" .->1
-    50-. "<div>The website that hosts the<br />checkout widget.</div><div style='font-size: 70%'></div>" .->1
-    54-. "<div>Uses</div><div style='font-size: 70%'></div>" .->32
-    57-. "<div>Uses to view balances &<br />manage Superfluid things</div><div style='font-size: 70%'></div>" .->35
-    57-. "<div>Wants to buy something from</div><div style='font-size: 70%'></div>" .->50
-    57-. "<div>Uses to make payment with</div><div style='font-size: 70%'></div>" .->1
+    40-. "<div>Might 'host' a decentralized<br />version</div><div style='font-size: 70%'></div>" .->3
+    55-. "<div>The website that hosts the<br />checkout widget.</div><div style='font-size: 70%'></div>" .->3
+    58-. "<div>Uses</div><div style='font-size: 70%'></div>" .->3
+    61-. "<div>Uses</div><div style='font-size: 70%'></div>" .->37
+    63-. "<div>Uses</div><div style='font-size: 70%'></div>" .->37
+    65-. "<div>Uses to view balances &<br />manage Superfluid things</div><div style='font-size: 70%'></div>" .->40
+    65-. "<div>Wants to buy something from</div><div style='font-size: 70%'></div>" .->55
+    65-. "<div>Uses to make payment with</div><div style='font-size: 70%'></div>" .->3
   end

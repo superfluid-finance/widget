@@ -1,0 +1,46 @@
+graph TB
+  linkStyle default fill:#ffffff
+
+  subgraph diagram [Checkout Widget System - Containers]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    55("<div style='font-weight: bold'>Web3 Merchant Ecosystem</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Stores & Games & Subscription<br />Services & etc</div>")
+    style 55 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    58["<div style='font-weight: bold'>Content Creator</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Accepting Web3 donations</div>"]
+    style 58 fill:#976440,stroke:#69462c,color:#ffffff
+    40("<div style='font-weight: bold'>Superfluid User Products</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The main end-user facing<br />suite of products for<br />anything Superfluid Protocol<br />related.</div>")
+    style 40 fill:#00991f,stroke:#006b15,color:#ffffff
+    65["<div style='font-weight: bold'>Web3 Consumer</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
+    style 65 fill:#976440,stroke:#69462c,color:#ffffff
+
+    subgraph 3 [Checkout Widget System]
+      style 3 fill:#ffffff,stroke:#f8c806,color:#f8c806
+
+      subgraph group1 [Checkout Input Details]
+        style group1 fill:#ffffff,stroke:#cccccc,color:#cccccc,stroke-dasharray:5
+
+        22("<div style='font-weight: bold'>Product Info</div><div style='font-size: 70%; margin-top: 0px'>[Container: Schema-validated JSON]</div><div style='font-size: 80%; margin-top:10px'>Product details, including<br />payment options (token &<br />network & flow rate)</div>")
+        style 22 fill:#dddddd,stroke:#9a9a9a,color:#000000
+        25("<div style='font-weight: bold'>Token List</div><div style='font-size: 70%; margin-top: 0px'>[Container: Schema-validated JSON, Uniswap's Token List standard]</div><div style='font-size: 80%; margin-top:10px'>The display info for the<br />tokens that are set up as<br />payment options.</div>")
+        style 25 fill:#dddddd,stroke:#9a9a9a,color:#000000
+      end
+
+      28["<div style='font-weight: bold'>Checkout Builder</div><div style='font-size: 70%; margin-top: 0px'>[Container]</div><div style='font-size: 80%; margin-top:10px'>The easy to use GUI for<br />setting up a checkout.</div>"]
+      style 28 fill:#3b75a9,stroke:#f8c806,color:#ffffff
+      31["<div style='font-weight: bold'>Checkout Link Creator</div><div style='font-size: 70%; margin-top: 0px'>[Container]</div><div style='font-size: 80%; margin-top:10px'>The easy to use GUI for<br />creating a checkout link.</div>"]
+      style 31 fill:#3b75a9,stroke:#f8c806,color:#ffffff
+      4("<div style='font-weight: bold'>Checkout Widget</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript, React, MUI, wagmi, Zod, Token List]</div><div style='font-size: 80%; margin-top:10px'>Provides a streamlined UX to<br />subscribe to the given<br />product.</div>")
+      style 4 fill:#3b75a9,stroke:#f8c806,color:#ffffff
+    end
+
+    22-. "<div>Input of</div><div style='font-size: 70%'></div>" .->4
+    25-. "<div>Input of</div><div style='font-size: 70%'></div>" .->4
+    28-. "<div>Produces</div><div style='font-size: 70%'></div>" .->22
+    28-. "<div>Produces (or denormalizes)</div><div style='font-size: 70%'></div>" .->25
+    40-. "<div>Might 'host' a decentralized<br />version</div><div style='font-size: 70%'></div>" .->4
+    55-. "<div>The website that hosts the<br />checkout widget.</div><div style='font-size: 70%'></div>" .->4
+    58-. "<div>Uses</div><div style='font-size: 70%'></div>" .->4
+    65-. "<div>Uses to view balances &<br />manage Superfluid things</div><div style='font-size: 70%'></div>" .->40
+    65-. "<div>Wants to buy something from</div><div style='font-size: 70%'></div>" .->55
+    65-. "<div>Uses to make payment with</div><div style='font-size: 70%'></div>" .->4
+  end

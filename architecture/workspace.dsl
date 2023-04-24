@@ -2,12 +2,26 @@
 workspace "Superfluid Checkout System" {
     !adrs decisions
 
+    // Note that the model reads better bottom-to-top.
     model {
         SuperfluidTokenGating = softwareSystem "Superfluid Token Gating" {
             tags "Future"
 
             AccessTokenServer = container "Access Token Server" {
                 tags "OAuth"
+            }
+        }
+
+        CheckoutStorageSystem = softwareSystem "Checkout Storage System" {
+            tags "superfluid-checkout, Future"
+
+            CheckoutStorageAPI = container "Checkout Storage API" {
+                description "An API to store and retrieve checkout configurations (product info & payment options)."
+                tags "superfluid-checkout"
+            }
+
+            CheckoutIPFS = container "Checkout IPFS" {
+                description "Decentralized storage."
             }
         }
 
@@ -74,7 +88,6 @@ workspace "Superfluid Checkout System" {
                 }
             }
 
-
             CheckoutBuilder = container "Checkout Builder" {
                 description "The easy to use GUI for setting up a checkout."
                 tags "Web App, superfluid-checkout, In Development"
@@ -89,32 +102,7 @@ workspace "Superfluid Checkout System" {
             }
         }
 
-        CheckoutStorageSystem = softwareSystem "Checkout Storage System" {
-            tags "superfluid-checkout, Future"
-
-            CheckoutStorageAPI = container "Checkout Storage API" {
-                description "An API to store and retrieve checkout configurations (product info & payment options)."
-                tags "superfluid-checkout"
-            }
-
-            CheckoutIPFS = container "Checkout IPFS" {
-                description "Decentralized storage."
-            }
-        }
-
-        SuperfluidNotificationSystem = softwareSystem "Superfluid Notification System" {
-            tags "Future"
-
-            description "The system that sends notifications to both the users and other systems."
-
-            NotificationEventStream = container "Notification Event Stream" {
-                description "A stream of events that other systems can subscribe to."
-                technology "Amazon SNS, Webhooks"
-                tags "Future"
-            }
-        }
-
-        CheckoutMerchantSystem = softwareSystem "Checkout Merchant System" {
+        SelfHostedMerchantSystem = softwareSystem "Checkout Merchant System" {
             tags "superfluid-checkout, In Development"
 
             CheckoutMerchantDashboard = container "Checkout Merchant Dashboard" {
@@ -125,6 +113,17 @@ workspace "Superfluid Checkout System" {
             HostableCheckoutStorage = container "Self-hostable Checkout Storage" {
                 description "A self-hostable centralized storage mechanism. Can hold personal information if properly communicated."
                 tags "Database, superfluid-checkout"
+            }
+        }
+
+        SuperfluidNotificationSystem = softwareSystem "Superfluid Notification System" {
+            description "The system that sends notifications to both the users and other systems."
+            tags "Future"
+
+            NotificationEventStream = container "Notification Event Stream" {
+                description "A stream of events that other systems can subscribe to."
+                technology "Amazon SNS, Webhooks"
+                tags "Future"
             }
         }
 
@@ -179,22 +178,22 @@ workspace "Superfluid Checkout System" {
         }
 
         group "Payment Receivers" {
-            ContentCreator = person "Content Creator" {
-                description "Accepting Web3 donations"
-
-                -> CheckoutWidget "Uses"
-            }
-
             Web2Merchant = person "Web2 Merchant" {
                 description "Selling subscriptions and accepting Web3 payments."
 
-                -> CheckoutMerchantSystem "Uses"
+                -> SelfHostedMerchantSystem "Uses"
             }
 
             Web3NativeMerchant = person "Web3 Native Merchant" {
                 description "Accepting Web3 payments and deeply integrating on the blockchain level."
 
-                -> CheckoutMerchantSystem "Uses"
+                -> SelfHostedMerchantSystem "Uses"
+            }
+
+            IndependentContentCreator = person "Independent Content Creator" {
+                description "Accepting Web3 donations"
+
+                -> CheckoutWidgetSystem "Receives payments from"
             }
         }
 
@@ -223,7 +222,7 @@ workspace "Superfluid Checkout System" {
             autoLayout
         }
 
-        container CheckoutMerchantSystem "CheckoutMerchantSystem" {
+        container SelfHostedMerchantSystem "SelfHostedMerchantSystem" {
             include *
             autoLayout
         }
