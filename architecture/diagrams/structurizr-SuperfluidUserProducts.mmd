@@ -4,21 +4,23 @@ graph TB
   subgraph diagram [Superfluid User Products - Containers]
     style diagram fill:#ffffff,stroke:#ffffff
 
-    44["<div style='font-weight: bold'>Web3 Consumer</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
-    style 44 fill:#976440,stroke:#69462c,color:#ffffff
-    1["<div style='font-weight: bold'>Checkout Consumer System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>"]
+    1("<div style='font-weight: bold'>Checkout Customer System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div>")
     style 1 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    57["<div style='font-weight: bold'>Web3 Consumer</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
+    style 57 fill:#976440,stroke:#69462c,color:#ffffff
 
-    subgraph 31 [Superfluid User Products]
-      style 31 fill:#ffffff,stroke:#147c1b,color:#147c1b
+    subgraph 35 [Superfluid User Products]
+      style 35 fill:#ffffff,stroke:#006b15,color:#006b15
 
-      32["<div style='font-weight: bold'>Superfluid Dashboard</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript, Next.js, React, MUI, SDK-core, SDK-redux, Redux Toolkit (RTK), wagmi]</div><div style='font-size: 80%; margin-top:10px'>The UI to see token balances<br />and flows.</div>"]
-      style 32 fill:#dddddd,stroke:#9a9a9a,color:#000000
-      37["<div style='font-weight: bold'>Superfluid Console</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript, Next.js, React, MUI, SDK-core, SDK-redux]</div><div style='font-size: 80%; margin-top:10px'>The UI view Superfluid<br />Protocol from bird's eye<br />view.</div>"]
-      style 37 fill:#dddddd,stroke:#9a9a9a,color:#000000
+      36["<div style='font-weight: bold'>Superfluid Dashboard</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript, Next.js (SSG), React, MUI, SDK-core, SDK-redux, Redux Toolkit (RTK), wagmi, RainbowKit, react-hook-form]</div><div style='font-size: 80%; margin-top:10px'>The web app to see token<br />balances and streams.</div>"]
+      style 36 fill:#00991f,stroke:#006b15,color:#ffffff
+      47["<div style='font-weight: bold'>Superfluid Console</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript, Next.js (SSR), React, MUI, SDK-core, SDK-redux]</div><div style='font-size: 80%; margin-top:10px'>The UI to view Superfluid<br />Protocol from bird's eye<br />view. Directed at developers.</div>"]
+      style 47 fill:#00991f,stroke:#006b15,color:#ffffff
+      48["<div style='font-weight: bold'>Superfluid Website</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript, Next.js (SSR), React, MDX, gsap (animations), Strapi]</div><div style='font-size: 80%; margin-top:10px'>The main website for<br />introducing Superfluid<br />Protocol. Mostly static<br />marketing content.</div>"]
+      style 48 fill:#00991f,stroke:#006b15,color:#ffffff
     end
 
-    32-. "<div>Can contain a generic<br />'hosted' version</div><div style='font-size: 70%'></div>" .->1
-    44-. "<div>Uses to manage token balances</div><div style='font-size: 70%'></div>" .->32
-    44-. "<div>Uses to make payment</div><div style='font-size: 70%'></div>" .->1
+    36-. "<div>Might 'host' a generic<br />version</div><div style='font-size: 70%'></div>" .->1
+    57-. "<div>Uses to view balances &<br />manage Superfluid things</div><div style='font-size: 70%'></div>" .->36
+    57-. "<div>Uses to make payment with</div><div style='font-size: 70%'></div>" .->1
   end

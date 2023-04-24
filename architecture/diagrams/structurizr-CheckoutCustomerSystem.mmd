@@ -1,0 +1,28 @@
+graph TB
+  linkStyle default fill:#ffffff
+
+  subgraph diagram [Checkout Customer System - Containers]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    57["<div style='font-weight: bold'>Web3 Consumer</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div>"]
+    style 57 fill:#976440,stroke:#69462c,color:#ffffff
+    35("<div style='font-weight: bold'>Superfluid User Products</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The main end-user facing<br />suite of products for<br />anything Superfluid Protocol<br />related.</div>")
+    style 35 fill:#00991f,stroke:#006b15,color:#ffffff
+    50("<div style='font-weight: bold'>Web3 Merchant Ecosystem</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Stores & Games & Subscription<br />Services & etc</div>")
+    style 50 fill:#dddddd,stroke:#9a9a9a,color:#000000
+
+    subgraph 1 [Checkout Customer System]
+      style 1 fill:#ffffff,stroke:#9a9a9a,color:#9a9a9a
+
+      2("<div style='font-weight: bold'>Checkout Widget V1</div><div style='font-size: 70%; margin-top: 0px'>[Container: TypeScript, React, MUI, wagmi, Zod, Token List]</div><div style='font-size: 80%; margin-top:10px'>Provides a streamlined UX to<br />subscribe to the given<br />product.</div>")
+      style 2 fill:#dddddd,stroke:#9a9a9a,color:#000000
+      24["<div style='font-weight: bold'>Merchant Checkout Builder</div><div style='font-size: 70%; margin-top: 0px'>[Container]</div><div style='font-size: 80%; margin-top:10px'>The easy to use GUI for<br />setting up a checkout.</div>"]
+      style 24 fill:#dddddd,stroke:#9a9a9a,color:#000000
+    end
+
+    35-. "<div>Might 'host' a generic<br />version</div><div style='font-size: 70%'></div>" .->2
+    50-. "<div>The website that hosts the<br />checkout widget.</div><div style='font-size: 70%'></div>" .->2
+    57-. "<div>Uses to view balances &<br />manage Superfluid things</div><div style='font-size: 70%'></div>" .->35
+    57-. "<div>Wants to buy something from</div><div style='font-size: 70%'></div>" .->50
+    57-. "<div>Uses to make payment with</div><div style='font-size: 70%'></div>" .->2
+  end
