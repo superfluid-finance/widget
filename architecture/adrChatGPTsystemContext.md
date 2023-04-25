@@ -1,10 +1,10 @@
 ADR format we use:
 ```md
-# 1. Record architecture decisions
+# Record architecture decisions
 
-Date: 2016-02-12
+   Date: 2016-02-12
 
-## Status
+   ## Status
 ## Context
 ## Decision
 ## Consequences
