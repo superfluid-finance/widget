@@ -1,3 +1,4 @@
-import App from "./App";
+export * from "./CheckoutConfig";
+export * from "./CheckoutProvider";
 
-export const SuperfluidCheckoutWidget = App;
+export * from "superfluid-checkout-core";

@@ -1,0 +1,22 @@
+{
+  "name": "superfluid-checkout-core",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "watch": "tsc -w -p ./tsconfig.json",
+    "build": "tsc --build --clean"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "abitype": "^0.7.1",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4",
+    "tsconfig": "workspace:*"
+  }
+}
