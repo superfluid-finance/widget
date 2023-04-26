@@ -18,8 +18,9 @@
     "abitype": "^0.7.1",
     "react": "latest",
     "react-dom": "latest",
-    "zod": "^3.21.4",
-    "superfluid-checkout-core": "workspace:*"
+    "react-hook-form": "^7.44.0-rc.0",
+    "superfluid-checkout-core": "workspace:*",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/react": "latest",

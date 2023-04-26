@@ -1,62 +1,64 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 import useCheckout from "./useCheckout";
-import { useMemo, useState } from "react";
-import { PaymentOption } from "superfluid-checkout-core";
-import { TokenInfo } from "@uniswap/token-lists";
-
-// TODO: Probably better to move it higher.
-export type TokenAutocompleteOption = {
-  paymentOption: PaymentOption;
-  tokenInfo: TokenInfo;
-};
+import { useMemo } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import { DraftForm, PaymentOptionWithTokenInfo } from "./formSchema";
 
 export default function TokenAutoComplete() {
+  const { control: c, watch } = useFormContext<DraftForm>();
+  const network = watch("network");
   const { paymentOptions, tokenList } = useCheckout();
 
-  const autocompleteOptions = useMemo<TokenAutocompleteOption[]>(
+  const autocompleteOptions = useMemo<PaymentOptionWithTokenInfo[]>(
     () =>
-      paymentOptions
-        .map((paymentOption) => {
-          const tokenInfo = tokenList.tokens.find(
-            (tokenInfo_) =>
-              tokenInfo_.address.toLowerCase() ===
-              paymentOption.superToken.address.toLowerCase()
-          );
+      [...(network
+        ? paymentOptions
+            .filter((paymentOptions) => paymentOptions.chainId === network.id)
+            .map((paymentOption) => {
+              const tokenInfo = tokenList.tokens.find(
+                (tokenInfo_) =>
+                  tokenInfo_.address.toLowerCase() ===
+                  paymentOption.superToken.address.toLowerCase()
+              );
 
-          if (tokenInfo === undefined) {
-            // TODO: warn
-            return null;
-          }
+              if (tokenInfo === undefined) {
+                // TODO: warn
+                return null;
+              }
 
-          return {
-            paymentOption,
-            tokenInfo,
-          };
-        })
-        .filter((x): x is TokenAutocompleteOption => x !== null),
-    [paymentOptions, tokenList]
-  );
-
-  const [value, setValue] = useState<TokenAutocompleteOption | null>(
-    autocompleteOptions[0] ?? null
+              return {
+                paymentOption,
+                tokenInfo,
+              };
+            })
+            .filter((x): x is PaymentOptionWithTokenInfo => x !== null)
+        : [])],
+    [network, paymentOptions, tokenList]
   );
 
   return (
-    <Autocomplete
-      value={value}
-      options={autocompleteOptions}
-      autoHighlight
-      getOptionLabel={(option) => option.tokenInfo.symbol}
-      renderOption={(props, option) => (
-        <Box component="li" {...props}>
-          {option.paymentOption.flowRate.amountEther} {option.tokenInfo.symbol}/
-          {option.paymentOption.flowRate.period}
-        </Box>
+    <Controller
+      control={c}
+      name="paymentOptionWithTokenInfo"
+      render={({ field: { value, onChange, onBlur } }) => (
+        <Autocomplete
+          disabled={network === null}
+          value={value}
+          isOptionEqualToValue={(option, value) => option.paymentOption.superToken.address === value.paymentOption.superToken.address}
+          options={autocompleteOptions}
+          autoHighlight
+          getOptionLabel={(option) => option.tokenInfo.symbol}
+          renderOption={(props, option) => (
+            <Box component="li" {...props}>
+              {option.paymentOption.flowRate.amountEther}{" "}
+              {option.tokenInfo.symbol}/{option.paymentOption.flowRate.period}
+            </Box>
+          )}
+          renderInput={(params) => <TextField {...params} label="Token" />}
+          onChange={(_event, newValue) => onChange(newValue)}
+          onBlur={onBlur}
+        />
       )}
-      renderInput={(params) => <TextField {...params} label="Token" />}
-      onChange={(_, newValue) => {
-        setValue(newValue);
-      }}
     />
   );
 }

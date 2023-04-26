@@ -1,15 +1,15 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 import useCheckout from "./useCheckout";
-import { useMemo, useState } from "react";
-import {
-  SupportedNetwork,
-  supportedNetworks,
-} from "superfluid-checkout-core";
+import { useMemo } from "react";
+import { SupportedNetwork, supportedNetworks } from "superfluid-checkout-core";
+import { Controller, useFormContext } from "react-hook-form";
+import { DraftForm } from "./formSchema";
 
 export default function NetworkAutocomplete() {
+  const { control: c, setValue } = useFormContext<DraftForm>();
   const { tokenList } = useCheckout();
 
-  const autocompleteOptions = useMemo(() => {
+  const autocompleteOptions = useMemo<SupportedNetwork[]>(() => {
     const uniqueChainIds = [...new Set(tokenList.tokens.map((x) => x.chainId))];
     return uniqueChainIds
       .map((chainId) => {
@@ -27,25 +27,30 @@ export default function NetworkAutocomplete() {
       .filter((x): x is SupportedNetwork => x !== null);
   }, []);
 
-  const [value, setValue] = useState<SupportedNetwork | null>(
-    autocompleteOptions[0] ?? null
-  );
-
   return (
-    <Autocomplete
-      value={value}
-      options={autocompleteOptions}
-      autoHighlight
-      getOptionLabel={(option) => option.name}
-      renderOption={(props, option) => (
-        <Box component="li" {...props}>
-          {option.name}
-        </Box>
+    <Controller
+      control={c}
+      name="network"
+      render={({ field: { value, onChange, onBlur } }) => (
+        <Autocomplete
+          value={value}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          options={autocompleteOptions}
+          autoHighlight
+          getOptionLabel={(option) => option.name}
+          renderOption={(props, option) => (
+            <Box component="li" {...props}>
+              {option.name}
+            </Box>
+          )}
+          renderInput={(params) => <TextField {...params} label="Network" />}
+          onChange={(_event, newValue) => {
+            onChange(newValue);
+            setValue("paymentOptionWithTokenInfo", null); // TODO(KK): What `options` to use?
+          }}
+          onBlur={onBlur}
+        />
       )}
-      renderInput={(params) => <TextField {...params} label="Network" />}
-      onChange={(_, newValue) => {
-        setValue(newValue);
-      }}
     />
   );
 }

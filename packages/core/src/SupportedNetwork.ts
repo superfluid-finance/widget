@@ -34,4 +34,8 @@ export const supportedNetworks = [
   gnosis,
 ] as const;
 
-export type SupportedNetwork = typeof supportedNetworks[number];
+export const supportedNetworkSchema = z.object({
+  id: chainIdSchema,
+}).transform(x => x as typeof supportedNetworks[number]);
+
+export type SupportedNetwork = z.infer<typeof supportedNetworkSchema>;

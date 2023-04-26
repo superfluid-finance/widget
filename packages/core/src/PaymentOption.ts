@@ -24,4 +24,5 @@ export const paymentOptionSchema = z.object({
   flowRate: flowRateSchema,
 });
 
+
 export type PaymentOption = z.infer<typeof paymentOptionSchema>;
