@@ -12,11 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@wagmi/chains": "^0.2.19",
     "abitype": "^0.7.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "typescript": "^5.0.4",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "typescript": "^5.0.4"
   }
 }

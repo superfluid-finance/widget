@@ -17,11 +17,11 @@ type ModalState = {
   closeModal: () => void
 }
 
-type CheckoutContextValue = {
+export type CheckoutContextValue = {
   modal: ModalState
 } & CheckoutConfig;
 
-const CheckoutContext = createContext<CheckoutContextValue>(undefined!);
+export const CheckoutContext = createContext<CheckoutContextValue>(undefined!);
 
 type Props = {
   children: (

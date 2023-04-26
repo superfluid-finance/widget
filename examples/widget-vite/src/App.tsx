@@ -11,13 +11,20 @@ function App() {
         productDetails={productDetails}
         paymentOptions={paymentOptions}
         tokenList={tokenList}
+        modal="drawer"
       >
-        {() => (
-          <>
-            <button>Modal</button>
-            <br />
-            <button>Drawer</button>
-          </>
+        {({ modal: { openModal } }) => (
+          <button onClick={() => openModal()}>Drawer</button>
+        )}
+      </CheckoutProvider>
+      <CheckoutProvider
+        productDetails={productDetails}
+        paymentOptions={paymentOptions}
+        tokenList={tokenList}
+        modal="dialog"
+      >
+        {({ modal }) => (
+          <button onClick={() => modal.openModal()}>Dialog</button>
         )}
       </CheckoutProvider>
     </>

@@ -1,7 +1,12 @@
+import { Box } from "@mui/material";
+import ProductCard from "./ProductCard";
+import FormStepper from "./FormStepper";
+
 export function CheckoutContent() {
-    return (
-        <div>
-        <h1>Modal Content</h1>
-        </div>
-    );
+  return (
+    <Box>
+      <ProductCard />
+      <FormStepper />
+    </Box>
+  );
 }
