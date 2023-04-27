@@ -18,6 +18,7 @@ export default function AutocompleteToken() {
     });
   }, [network]);
 
+  // Derive autocomplete options from the payment options.
   const autocompleteOptions = useMemo<PaymentOptionWithTokenInfo[]>(
     () => [
       ...(network

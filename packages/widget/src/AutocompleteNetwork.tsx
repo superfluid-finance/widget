@@ -7,10 +7,11 @@ import { useCheckout } from "./CheckoutContext";
 
 export default function AutocompleteNetwork() {
   const { control: c } = useFormContext<DraftFormValues>();
-  const { tokenList } = useCheckout();
+  const { paymentOptions } = useCheckout();
 
+  // Derive autocomplete options from the payment options.
   const autocompleteOptions = useMemo<SupportedNetwork[]>(() => {
-    const uniqueChainIds = [...new Set(tokenList.tokens.map((x) => x.chainId))];
+    const uniqueChainIds = [...new Set(paymentOptions.map((x) => x.chainId))];
     return uniqueChainIds
       .map((chainId) => {
         const supportedNetwork = supportedNetworks.find(
@@ -25,7 +26,7 @@ export default function AutocompleteNetwork() {
         return supportedNetwork;
       })
       .filter((x): x is SupportedNetwork => x !== null);
-  }, []);
+  }, [paymentOptions]);
 
   return (
     <Controller

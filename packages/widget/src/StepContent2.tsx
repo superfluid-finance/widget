@@ -29,7 +29,9 @@ export default function StepContent2() {
   }, [paymentOptionWithTokenInfo]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
-  const underlyingTokenInfo = useMemo(() => {
+
+  // Find the underlying token of the Super Token.
+  const underlyingToken = useMemo(() => {
     if (!superToken) {
       return undefined;
     }
@@ -70,7 +72,7 @@ export default function StepContent2() {
                   onChange={onChange}
                   onBlur={onBlur}
                   InputProps={{
-                    endAdornment: <span>{underlyingTokenInfo?.symbol}</span>,
+                    endAdornment: <span>{underlyingToken?.symbol}</span>,
                   }}
                 />
                 <TextField
