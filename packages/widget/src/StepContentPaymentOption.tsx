@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import { useStepper } from "./StepperContext";
 
-export default function StepContent1() {
+export default function StepContentPaymentOption() {
   const { handleNext } = useStepper();
   const { watch } = useFormContext<DraftFormValues>();
 

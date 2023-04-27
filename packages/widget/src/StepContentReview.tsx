@@ -1,6 +1,6 @@
 import { Button, Stack, StepContent as MUIStepContent } from "@mui/material";
 
-export default function StepContent3() {
+export default function StepContentReview() {
   return (
     <MUIStepContent>
       <Stack>

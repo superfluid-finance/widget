@@ -1,8 +1,8 @@
 import { Stepper as MUIStepper, Step, StepButton } from "@mui/material";
 import { StepperProvider } from "./StepperProvider";
-import StepContent1 from "./StepContent1";
-import StepContent2 from "./StepContent2";
-import StepContent3 from "./StepContent3";
+import StepContentPaymentOption from "./StepContentPaymentOption";
+import StepContentWrap from "./StepContentWrap";
+import StepContentReview from "./StepContentReview";
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
@@ -16,7 +16,7 @@ export default function CheckoutStepper() {
       {
         buttonText: "Select network and token",
         optional: false,
-        content: StepContent1,
+        content: StepContentPaymentOption,
       },
       // Add wrap step only when Super Token has an underlying token.
       ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
@@ -25,14 +25,14 @@ export default function CheckoutStepper() {
             {
               buttonText: "Wrap",
               optional: true,
-              content: StepContent2,
+              content: StepContentWrap,
             },
           ]
         : []),
       {
         buttonText: "Review the transaction",
         optional: false,
-        content: StepContent3,
+        content: StepContentReview,
       },
     ],
     [paymentOptionWithTokenInfo]

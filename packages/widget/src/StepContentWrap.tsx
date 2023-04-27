@@ -13,7 +13,7 @@ import { useEffect, useMemo } from "react";
 import { useStepper } from "./StepperContext";
 import { useCheckout } from "./CheckoutContext";
 
-export default function StepContent2() {
+export default function StepContentWrap() {
   const { tokenList } = useCheckout();
   const { handleNext } = useStepper();
   const { control: c, watch, setValue } = useFormContext<DraftFormValues>();
