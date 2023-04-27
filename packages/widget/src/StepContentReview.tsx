@@ -1,13 +1,13 @@
-import { Button, Stack, StepContent as MUIStepContent } from "@mui/material";
+import { Button, Stack, StepContent } from "@mui/material";
 
 export default function StepContentReview() {
   return (
-    <MUIStepContent>
+    <StepContent>
       <Stack>
         <Button variant="contained" fullWidth>
           Subscribe
         </Button>
       </Stack>
-    </MUIStepContent>
+    </StepContent>
   );
 }

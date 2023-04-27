@@ -4,7 +4,7 @@ import {
   FormControlLabel,
   FormGroup,
   Stack,
-  StepContent as MUIStepContent,
+  StepContent,
   TextField,
 } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
@@ -49,7 +49,7 @@ export default function StepContentWrap() {
   }, [superToken]);
 
   return (
-    <MUIStepContent TransitionProps={{ unmountOnExit: false }}>
+    <StepContent TransitionProps={{ unmountOnExit: false }}>
       <Stack
         direction="column"
         alignItems="stretch"
@@ -91,6 +91,6 @@ export default function StepContentWrap() {
           Continue
         </Button>
       </Stack>
-    </MUIStepContent>
+    </StepContent>
   );
 }

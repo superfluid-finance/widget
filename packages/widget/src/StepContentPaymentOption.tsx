@@ -1,4 +1,4 @@
-import { Box, Button, Stack, StepContent as MUIStepContent } from "@mui/material";
+import { Box, Button, Stack, StepContent } from "@mui/material";
 import AutocompleteToken from "./AutocompleteToken";
 import AutocompleteNetwork from "./AutocompleteNetwork";
 import { useFormContext } from "react-hook-form";
@@ -16,7 +16,7 @@ export default function StepContentPaymentOption() {
   const isStepComplete = !!network && !!paymentOptionWithTokenInfo;
 
   return (
-    <MUIStepContent TransitionProps={{ unmountOnExit: false }}>
+    <StepContent TransitionProps={{ unmountOnExit: false }}>
       <Stack
         direction="column"
         alignItems="stretch"
@@ -40,6 +40,6 @@ export default function StepContentPaymentOption() {
           Continue
         </Button>
       </Stack>
-    </MUIStepContent>
+    </StepContent>
   );
 }
