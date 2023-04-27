@@ -1,6 +1,5 @@
 import {
   PropsWithChildren,
-  createContext,
   useCallback,
   useMemo,
   useState,
@@ -10,18 +9,7 @@ import Dialog from "@mui/material/Dialog";
 import Drawer from "@mui/material/Drawer";
 import { ModalProps } from "@mui/material/Modal";
 import { CheckoutContent } from "./CheckoutContent";
-
-type ModalState = {
-  isOpen: boolean
-  openModal: () => void
-  closeModal: () => void
-}
-
-export type CheckoutContextValue = {
-  modal: ModalState
-} & CheckoutConfig;
-
-export const CheckoutContext = createContext<CheckoutContextValue>(undefined!);
+import { CheckoutContext, CheckoutContextValue } from "./CheckoutContext";
 
 type Props = {
   children: (
@@ -39,7 +27,7 @@ export function CheckoutProvider({ children, modal = "drawer", ...config }: Prop
   const openModal = useCallback(() => setOpen(true), [setOpen]);
   const closeModal = useCallback(() => setOpen(false), [setOpen]);
 
-  const modalState = useMemo<ModalState>(() => ({
+  const modalState = useMemo<CheckoutContextValue["modal"]>(() => ({
     isOpen,
     openModal,
     closeModal,

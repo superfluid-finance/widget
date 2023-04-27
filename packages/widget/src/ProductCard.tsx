@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography } from "@mui/material";
-import useCheckout from "./useCheckout";
+import { useCheckout } from "./CheckoutContext";
 
 export default function ProductCard() {
   const {
@@ -7,7 +7,7 @@ export default function ProductCard() {
   } = useCheckout();
 
   return (
-    <Card variant="elevation">
+    <Card>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}

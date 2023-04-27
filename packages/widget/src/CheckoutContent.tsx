@@ -1,14 +1,12 @@
 import ProductCard from "./ProductCard";
-import FormStepper from "./FormStepper";
-import { FormProvider, useForm } from "react-hook-form";
+import CheckoutStepper from "./CheckoutStepper";
+import CheckoutFormProvider from "./CheckoutFormProvider";
 
 export function CheckoutContent() {
-  const formMethods = useForm();
-
   return (
-    <FormProvider {...formMethods}>
+    <CheckoutFormProvider>
       <ProductCard />
-      <FormStepper />
-    </FormProvider>
+      <CheckoutStepper />
+    </CheckoutFormProvider>
   );
 }

@@ -1,12 +1,12 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
-import useCheckout from "./useCheckout";
 import { useMemo } from "react";
 import { SupportedNetwork, supportedNetworks } from "superfluid-checkout-core";
 import { Controller, useFormContext } from "react-hook-form";
-import { DraftForm } from "./formSchema";
+import { CheckoutFormDraft } from "./CheckoutForm";
+import { useCheckout } from "./CheckoutContext";
 
-export default function NetworkAutocomplete() {
-  const { control: c, setValue } = useFormContext<DraftForm>();
+export default function AutocompleteNetwork() {
+  const { control: c } = useFormContext<CheckoutFormDraft>();
   const { tokenList } = useCheckout();
 
   const autocompleteOptions = useMemo<SupportedNetwork[]>(() => {
@@ -45,8 +45,8 @@ export default function NetworkAutocomplete() {
           )}
           renderInput={(params) => <TextField {...params} label="Network" />}
           onChange={(_event, newValue) => {
+            console.log("onChange");
             onChange(newValue);
-            // setValue("paymentOptionWithTokenInfo", null); // TODO(KK): What `options` to use?
           }}
           onBlur={onBlur}
         />

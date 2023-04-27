@@ -14,7 +14,7 @@ const paymentOptionWithTokenInfoSchema = z.object({
 
 export type PaymentOptionWithTokenInfo = z.infer<typeof paymentOptionWithTokenInfoSchema>;
 
-export const validFormSchema = z.object({
+export const checkoutFormSchema = z.object({
   senderAddress: addressSchema,
   network: supportedNetworkSchema,
   paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
@@ -23,8 +23,8 @@ export const validFormSchema = z.object({
   receiverAddress: addressSchema,
 });
 
-export type ValidForm = z.infer<typeof validFormSchema>;
-export type DraftForm = NullableObject<ValidForm>;
+export type CheckoutForm = z.infer<typeof checkoutFormSchema>;
+export type CheckoutFormDraft = NullableObject<CheckoutForm>;
 
 type NullableObject<T> = {
   [P in keyof T]: T[P] | null;

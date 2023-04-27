@@ -1,17 +1,27 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
-import useCheckout from "./useCheckout";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { DraftForm, PaymentOptionWithTokenInfo } from "./formSchema";
+import { CheckoutFormDraft, PaymentOptionWithTokenInfo } from "./CheckoutForm";
+import { useCheckout } from "./CheckoutContext";
 
-export default function TokenAutoComplete() {
-  const { control: c, watch } = useFormContext<DraftForm>();
-  const network = watch("network");
+export default function AutocompleteToken() {
   const { paymentOptions, tokenList } = useCheckout();
+  const { control: c, watch, setValue } = useFormContext<CheckoutFormDraft>();
+  const network = watch("network");
+
+  useEffect(() => {
+    console.log("network changed?")
+
+    setValue("paymentOptionWithTokenInfo", null, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: false,
+    });
+  }, [network]);
 
   const autocompleteOptions = useMemo<PaymentOptionWithTokenInfo[]>(
-    () =>
-      [...(network
+    () => [
+      ...(network
         ? paymentOptions
             .filter((paymentOptions) => paymentOptions.chainId === network.id)
             .map((paymentOption) => {
@@ -32,7 +42,8 @@ export default function TokenAutoComplete() {
               };
             })
             .filter((x): x is PaymentOptionWithTokenInfo => x !== null)
-        : [])],
+        : []),
+    ],
     [network, paymentOptions, tokenList]
   );
 
@@ -44,7 +55,10 @@ export default function TokenAutoComplete() {
         <Autocomplete
           disabled={network === null}
           value={value}
-          isOptionEqualToValue={(option, value) => option.paymentOption.superToken.address === value.paymentOption.superToken.address}
+          isOptionEqualToValue={(option, value) =>
+            option.paymentOption.superToken.address ===
+            value.paymentOption.superToken.address
+          }
           options={autocompleteOptions}
           autoHighlight
           getOptionLabel={(option) => option.tokenInfo.symbol}
