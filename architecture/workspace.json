@@ -2,7 +2,7 @@
   "id" : 1,
   "name" : "Superfluid Checkout System",
   "description" : "Description",
-  "lastModifiedDate" : "2023-04-26T00:05:12Z",
+  "lastModifiedDate" : "2023-04-27T13:59:45Z",
   "properties" : {
     "structurizr.dsl" : "Ly8gVGhpcyBhcmNoaXRlY3R1cmUgaXMgZGVzY3JpYmVkIGluIFN0cnVjdHVyaXpyIERTTCBhbmQgZm9sbG93cyB0aGUgQzQgbW9kZWwuCndvcmtzcGFjZSAiU3VwZXJmbHVpZCBDaGVja291dCBTeXN0ZW0iIHsKICAgICFhZHJzIGRlY2lzaW9ucwoKICAgIC8vIE5vdGUgdGhhdCB0aGUgbW9kZWwgcmVhZHMgYmV0dGVyIGJvdHRvbS10by10b3AuCiAgICBtb2RlbCB7CiAgICAgICAgU3VwZXJmbHVpZFRva2VuR2F0aW5nID0gc29mdHdhcmVTeXN0ZW0gIlN1cGVyZmx1aWQgVG9rZW4gR2F0aW5nIiB7CiAgICAgICAgICAgIHRhZ3MgIkZ1dHVyZSIKCiAgICAgICAgICAgIEFjY2Vzc1Rva2VuU2VydmVyID0gY29udGFpbmVyICJBY2Nlc3MgVG9rZW4gU2VydmVyIiB7CiAgICAgICAgICAgICAgICB0YWdzICJPQXV0aCIKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgQ2hlY2tvdXRTdG9yYWdlU3lzdGVtID0gc29mdHdhcmVTeXN0ZW0gIkNoZWNrb3V0IFN0b3JhZ2UgU3lzdGVtIiB7CiAgICAgICAgICAgIHRhZ3MgInN1cGVyZmx1aWQtY2hlY2tvdXQsIEZ1dHVyZSIKCiAgICAgICAgICAgIENoZWNrb3V0U3RvcmFnZUFQSSA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgU3RvcmFnZSBBUEkiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJBbiBBUEkgdG8gc3RvcmUgYW5kIHJldHJpZXZlIGNoZWNrb3V0IGNvbmZpZ3VyYXRpb25zIChwcm9kdWN0IGluZm8gJiBwYXltZW50IG9wdGlvbnMpLiIKICAgICAgICAgICAgICAgIHRhZ3MgInN1cGVyZmx1aWQtY2hlY2tvdXQiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIENoZWNrb3V0SVBGUyA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgSVBGUyIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkRlY2VudHJhbGl6ZWQgc3RvcmFnZS4iCiAgICAgICAgICAgIH0KICAgICAgICB9CgogICAgICAgIENoZWNrb3V0V2lkZ2V0U3lzdGVtID0gc29mdHdhcmVTeXN0ZW0gIkNoZWNrb3V0IFdpZGdldCBTeXN0ZW0iIHsKICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBtYWluIGN1c3RvbWVyIGZhY2luZyBwYXJ0IG9mIHRoZSBDaGVja291dCBzeXN0ZW0uIgogICAgICAgICAgICB0YWdzICJzdXBlcmZsdWlkLWNoZWNrb3V0LCBJbiBEZXZlbG9wbWVudCIKCiAgICAgICAgICAgIENoZWNrb3V0V2lkZ2V0ID0gY29udGFpbmVyICJDaGVja291dCBXaWRnZXQiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJQcm92aWRlcyBhIHN0cmVhbWxpbmVkIFVYIHRvIHN1YnNjcmliZSB0byB0aGUgZ2l2ZW4gcHJvZHVjdC4iCiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJUeXBlU2NyaXB0LCBSZWFjdCwgTVVJLCB3YWdtaSwgWm9kLCBUb2tlbiBMaXN0IgogICAgICAgICAgICAgICAgdGFncyAiSW4gRGV2ZWxvcG1lbnQsIHN1cGVyZmx1aWQtY2hlY2tvdXQiCgogICAgICAgICAgICAgICAgZ3JvdXAgIk9uLUNoYWluIFRyYW5zYWN0aW9ucyIgewogICAgICAgICAgICAgICAgICAgIEF1dGhvcml6ZUF1dG9XcmFwVHggPSBjb21wb25lbnQgIkF1dGhvcml6ZSBBdXRvLVdyYXAiCiAgICAgICAgICAgICAgICAgICAgRW5hYmxlQXV0b1dyYXBUeCA9IGNvbXBvbmVudCAiRW5hYmxlIEF1dG8tV3JhcCIKICAgICAgICAgICAgICAgICAgICBBdXRob3JpemVTdXBlclRva2VuVHggPSBjb21wb25lbnQgIkF1dGhvcml6ZSBTdXBlcmZsdWlkIHRvIFdyYXAgVG9rZW5zIgogICAgICAgICAgICAgICAgICAgIFdyYXBJbnRvU3VwZXJUb2tlblR4ID0gY29tcG9uZW50ICJVcGdyYWRlIHRvIFN1cGVyIFRva2VuIgogICAgICAgICAgICAgICAgICAgIENyZWF0ZUZsb3dUeCA9IGNvbXBvbmVudCAiQ3JlYXRlIEZsb3ciCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgZ3JvdXAgIkNvbW1hbmRzIiB7CiAgICAgICAgICAgICAgICAgICAgQ2hlY2tvdXRBdXRvV3JhcENvbW1hbmQgPSBjb21wb25lbnQgIkVuYWJsZSBBdXRvLVdyYXAgQ29tbWFuZCIgewogICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJDb21tYW5kIgoKICAgICAgICAgICAgICAgICAgICAgICAgLT4gQXV0aG9yaXplQXV0b1dyYXBUeCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICAgICAgICAgIC0+IEVuYWJsZUF1dG9XcmFwVHggIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBDaGVja291dFdyYXBJbnRvU3VwZXJUb2tlbnNDb21tYW5kID0gY29tcG9uZW50ICJXcmFwIFN1cGVyIFRva2VucyBDb21tYW5kIiB7CiAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIkNvbW1hbmQiCgogICAgICAgICAgICAgICAgICAgICAgICAtPiBBdXRob3JpemVTdXBlclRva2VuVHggIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgICAgICAgICAtPiBXcmFwSW50b1N1cGVyVG9rZW5UeCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIENoZWNrb3V0U3Vic2NyaWJlQ29tbWFuZCA9IGNvbXBvbmVudCAiU3Vic2NyaWJlIENvbW1hbmQiIHsKICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQ29tbWFuZCIKCiAgICAgICAgICAgICAgICAgICAgICAgIC0+IENyZWF0ZUZsb3dUeCAiUHJvZHVjZXMiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIENoZWNrb3V0V2lkZ2V0Rm9ybSA9IGNvbXBvbmVudCAiQ2hlY2tvdXQgRm9ybSIgewogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgZm9ybSB3aXRoIGlucHV0cyB0aGF0IHRoZSB1c2VyIGZpbGxzIG91dC4iCiAgICAgICAgICAgICAgICAgICAgdGVjaG5vbG9neSAid2FnbWksIHJlYWN0LWhvb2stZm9ybSwgWm9kIgogICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0QXV0b1dyYXBDb21tYW5kICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICAtPiBDaGVja291dFdyYXBJbnRvU3VwZXJUb2tlbnNDb21tYW5kICJQcm9kdWNlcyIKICAgICAgICAgICAgICAgICAgICAtPiBDaGVja291dFN1YnNjcmliZUNvbW1hbmQgIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CgogICAgICAgICAgICBncm91cCAiQ2hlY2tvdXQgSW5wdXQgRGV0YWlscyIgewogICAgICAgICAgICAgICAgQ2hlY2tvdXRQcm9kdWN0SW5mbyA9IGNvbnRhaW5lciAiUHJvZHVjdCBJbmZvIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlByb2R1Y3QgZGV0YWlscywgaW5jbHVkaW5nIHBheW1lbnQgb3B0aW9ucyAodG9rZW4gJiBuZXR3b3JrICYgZmxvdyByYXRlKSIKICAgICAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJTY2hlbWEtdmFsaWRhdGVkIEpTT04iCgogICAgICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0V2lkZ2V0Rm9ybSAiSW5wdXQgb2YiCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgQ2hlY2tvdXRQcm9kdWN0VG9rZW5MaXN0ID0gY29udGFpbmVyICJUb2tlbiBMaXN0IiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBkaXNwbGF5IGluZm8gZm9yIHRoZSB0b2tlbnMgdGhhdCBhcmUgc2V0IHVwIGFzIHBheW1lbnQgb3B0aW9ucy4iCiAgICAgICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiU2NoZW1hLXZhbGlkYXRlZCBKU09OLCBVbmlzd2FwJ3MgVG9rZW4gTGlzdCBzdGFuZGFyZCIKCiAgICAgICAgICAgICAgICAgICAgLT4gQ2hlY2tvdXRXaWRnZXRGb3JtICJJbnB1dCBvZiIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQoKICAgICAgICAgICAgQ2hlY2tvdXRCdWlsZGVyID0gY29udGFpbmVyICJDaGVja291dCBCdWlsZGVyIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiVGhlIGVhc3kgdG8gdXNlIEdVSSBmb3Igc2V0dGluZyB1cCBhIGNoZWNrb3V0LiIKICAgICAgICAgICAgICAgIHRhZ3MgIldlYiBBcHAsIHN1cGVyZmx1aWQtY2hlY2tvdXQsIEluIERldmVsb3BtZW50IgoKICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0UHJvZHVjdEluZm8gIlByb2R1Y2VzIgogICAgICAgICAgICAgICAgLT4gQ2hlY2tvdXRQcm9kdWN0VG9rZW5MaXN0ICJQcm9kdWNlcyAob3IgZGVub3JtYWxpemVzKSIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgQ2hlY2tvdXRMaW5rQ3JlYXRvciA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgTGluayBDcmVhdG9yIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiVGhlIGVhc3kgdG8gdXNlIEdVSSBmb3IgY3JlYXRpbmcgYSBjaGVja291dCBsaW5rLiIKICAgICAgICAgICAgICAgIHRhZ3MgIldlYiBBcHAsIHN1cGVyZmx1aWQtY2hlY2tvdXQsIEluIERldmVsb3BtZW50IgogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBTZWxmSG9zdGVkTWVyY2hhbnRTeXN0ZW0gPSBzb2Z0d2FyZVN5c3RlbSAiQ2hlY2tvdXQgTWVyY2hhbnQgU3lzdGVtIiB7CiAgICAgICAgICAgIHRhZ3MgInN1cGVyZmx1aWQtY2hlY2tvdXQsIEluIERldmVsb3BtZW50IgoKICAgICAgICAgICAgQ2hlY2tvdXRNZXJjaGFudERhc2hib2FyZCA9IGNvbnRhaW5lciAiQ2hlY2tvdXQgTWVyY2hhbnQgRGFzaGJvYXJkIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiVGhlIG9uZSBhZ2dyZWdhdGluZyBpbnRlcmZhY2UgZXZlcnl0aGluZyBhIG1lcmNoYW50IGNvdWxkIG5lZWQuIgogICAgICAgICAgICAgICAgdGFncyAiV2ViIEFwcCwgc3VwZXJmbHVpZC1jaGVja291dCIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgSG9zdGFibGVDaGVja291dFN0b3JhZ2UgPSBjb250YWluZXIgIlNlbGYtaG9zdGFibGUgQ2hlY2tvdXQgU3RvcmFnZSIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkEgc2VsZi1ob3N0YWJsZSBjZW50cmFsaXplZCBzdG9yYWdlIG1lY2hhbmlzbS4gQ2FuIGhvbGQgcGVyc29uYWwgaW5mb3JtYXRpb24gaWYgcHJvcGVybHkgY29tbXVuaWNhdGVkLiIKICAgICAgICAgICAgICAgIHRhZ3MgIkRhdGFiYXNlLCBzdXBlcmZsdWlkLWNoZWNrb3V0IgogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBTdXBlcmZsdWlkTm90aWZpY2F0aW9uU3lzdGVtID0gc29mdHdhcmVTeXN0ZW0gIlN1cGVyZmx1aWQgTm90aWZpY2F0aW9uIFN5c3RlbSIgewogICAgICAgICAgICBkZXNjcmlwdGlvbiAiVGhlIHN5c3RlbSB0aGF0IHNlbmRzIG5vdGlmaWNhdGlvbnMgdG8gYm90aCB0aGUgdXNlcnMgYW5kIG90aGVyIHN5c3RlbXMuIgogICAgICAgICAgICB0YWdzICJGdXR1cmUiCgogICAgICAgICAgICBOb3RpZmljYXRpb25FdmVudFN0cmVhbSA9IGNvbnRhaW5lciAiTm90aWZpY2F0aW9uIEV2ZW50IFN0cmVhbSIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkEgc3RyZWFtIG9mIGV2ZW50cyB0aGF0IG90aGVyIHN5c3RlbXMgY2FuIHN1YnNjcmliZSB0by4iCiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJBbWF6b24gU05TLCBXZWJob29rcyIKICAgICAgICAgICAgICAgIHRhZ3MgIkZ1dHVyZSIKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgU3VwZXJmbHVpZFVzZXJQcm9kdWN0cyA9IHNvZnR3YXJlU3lzdGVtICJTdXBlcmZsdWlkIFVzZXIgUHJvZHVjdHMiIHsKICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBtYWluIGVuZC11c2VyIGZhY2luZyBzdWl0ZSBvZiBwcm9kdWN0cyBmb3IgYW55dGhpbmcgU3VwZXJmbHVpZCBQcm90b2NvbCByZWxhdGVkLiIKICAgICAgICAgICAgdGFncyAiU3VwZXJmbHVpZCBGaW5hbmNlIgoKICAgICAgICAgICAgU3VwZXJmbHVpZERhc2hib2FyZCA9IGNvbnRhaW5lciAiU3VwZXJmbHVpZCBEYXNoYm9hcmQiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgd2ViIGFwcCB0byBzZWUgdG9rZW4gYmFsYW5jZXMgYW5kIHN0cmVhbXMuICIKICAgICAgICAgICAgICAgIHRlY2hub2xvZ3kgIlR5cGVTY3JpcHQsIE5leHQuanMgKFNTRyksIFJlYWN0LCBNVUksIFNESy1jb3JlLCBTREstcmVkdXgsIFJlZHV4IFRvb2xraXQgKFJUSyksIHdhZ21pLCBSYWluYm93S2l0LCByZWFjdC1ob29rLWZvcm0iCiAgICAgICAgICAgICAgICB0YWdzICJXZWIgQXBwLCBTdXBlcmZsdWlkIEZpbmFuY2UiCgogICAgICAgICAgICAgICAgLT4gQ2hlY2tvdXRXaWRnZXQgIk1pZ2h0ICdob3N0JyBhIGRlY2VudHJhbGl6ZWQgdmVyc2lvbiIKCiAgICAgICAgICAgICAgICBWZXN0aW5nID0gY29tcG9uZW50ICJTdXBlcmZsdWlkIFZlc3RpbmcgVUkiCiAgICAgICAgICAgICAgICBBY2NvdW50aW5nID0gY29tcG9uZW50ICJTdXBlcmZsdWlkIEFjY291bnRpbmcgVUkiCiAgICAgICAgICAgICAgICBBZGRyZXNzQm9vayA9IGNvbXBvbmVudCAiU3VwZXJmbHVpZCBBZGRyZXNzIEJvb2sgVUkiCiAgICAgICAgICAgICAgICBBdXRvV3JhcE1hbmFnZXIgPSBjb21wb25lbnQgIlN1cGVyZmx1aWQgQXV0by1XcmFwIE1hbmFnZXIgVUkiIHsKICAgICAgICAgICAgICAgICAgICB0YWdzICJDb21pbmcgU29vbiIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIEJyaWRnZSA9IGNvbXBvbmVudCAiU3VwZXIgVG9rZW4gQnJpZGdlIFVJIiB7CiAgICAgICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiTGkuRmkgd2lkZ2V0IgogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgTm90aWZpY2F0aW9ucyA9IGNvbXBvbmVudCAiU3VwZXJmbHVpZCBOb3RpZmljYXRpb25zIFVJIiB7CiAgICAgICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiUHVzaCBQcm90b2NvbCIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQoKICAgICAgICAgICAgU3VwZXJmbHVpZENvbnNvbGUgPSBjb250YWluZXIgIlN1cGVyZmx1aWQgQ29uc29sZSIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBVSSB0byB2aWV3IFN1cGVyZmx1aWQgUHJvdG9jb2wgZnJvbSBiaXJkJ3MgZXllIHZpZXcuIERpcmVjdGVkIGF0IGRldmVsb3BlcnMuIgogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiVHlwZVNjcmlwdCwgTmV4dC5qcyAoU1NSKSwgUmVhY3QsIE1VSSwgU0RLLWNvcmUsIFNESy1yZWR1eCIKICAgICAgICAgICAgICAgIHRhZ3MgIldlYiBBcHAsIFN1cGVyZmx1aWQgRmluYW5jZSIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgU3VwZXJmbHVpZFdlYnNpdGUgPSBjb250YWluZXIgIlN1cGVyZmx1aWQgV2Vic2l0ZSIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlRoZSBtYWluIHdlYnNpdGUgZm9yIGludHJvZHVjaW5nIFN1cGVyZmx1aWQgUHJvdG9jb2wuIE1vc3RseSBzdGF0aWMgbWFya2V0aW5nIGNvbnRlbnQuIgogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiVHlwZVNjcmlwdCwgTmV4dC5qcyAoU1NSKSwgUmVhY3QsIE1EWCwgZ3NhcCAoYW5pbWF0aW9ucyksIFN0cmFwaSIKICAgICAgICAgICAgICAgIHRhZ3MgIldlYnNpdGUsIFN1cGVyZmx1aWQgRmluYW5jZSIKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgV2FsbGV0ID0gc29mdHdhcmVTeXN0ZW0gIldlYjMgV2FsbGV0IiB7CiAgICAgICAgICAgIGRlc2NyaXB0aW9uICJUaGUgdXNlcidzIHdhbGxldCB3aXRoIFJQQyAmIHNpZ25hdHVyZSBhY2Nlc3MuIgogICAgICAgICAgICB0YWdzICJXYWxsZXQiCiAgICAgICAgfQoKICAgICAgICBXZWIzTWVyY2hhbnRFY29zeXN0ZW0gPSBzb2Z0d2FyZVN5c3RlbSAiV2ViMyBNZXJjaGFudCBFY29zeXN0ZW0iIHsKICAgICAgICAgICAgZGVzY3JpcHRpb24gIlN0b3JlcyAmIEdhbWVzICYgU3Vic2NyaXB0aW9uIFNlcnZpY2VzICYgZXRjIgogICAgICAgICAgICB0YWdzICJFeHRlcm5hbCIKCiAgICAgICAgICAgIC0+IENoZWNrb3V0V2lkZ2V0ICJUaGUgd2Vic2l0ZSB0aGF0IGhvc3RzIHRoZSBjaGVja291dCB3aWRnZXQuIgogICAgICAgIH0KCiAgICAgICAgZ3JvdXAgIlBheW1lbnQgUmVjZWl2ZXJzIiB7CiAgICAgICAgICAgIFdlYjJNZXJjaGFudCA9IHBlcnNvbiAiV2ViMiBNZXJjaGFudCIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlNlbGxpbmcgc3Vic2NyaXB0aW9ucyBhbmQgYWNjZXB0aW5nIFdlYjMgcGF5bWVudHMuIgoKICAgICAgICAgICAgICAgIC0+IFNlbGZIb3N0ZWRNZXJjaGFudFN5c3RlbSAiVXNlcyIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgV2ViM05hdGl2ZU1lcmNoYW50ID0gcGVyc29uICJXZWIzIE5hdGl2ZSBNZXJjaGFudCIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkFjY2VwdGluZyBXZWIzIHBheW1lbnRzIGFuZCBkZWVwbHkgaW50ZWdyYXRpbmcgb24gdGhlIGJsb2NrY2hhaW4gbGV2ZWwuIgoKICAgICAgICAgICAgICAgIC0+IFNlbGZIb3N0ZWRNZXJjaGFudFN5c3RlbSAiVXNlcyIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgSW5kZXBlbmRlbnRDb250ZW50Q3JlYXRvciA9IHBlcnNvbiAiSW5kZXBlbmRlbnQgQ29udGVudCBDcmVhdG9yIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiQWNjZXB0aW5nIFdlYjMgZG9uYXRpb25zIgoKICAgICAgICAgICAgICAgIC0+IENoZWNrb3V0V2lkZ2V0U3lzdGVtICJSZWNlaXZlcyBwYXltZW50cyBmcm9tIgogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBncm91cCAiUGF5bWVudCBTZW5kZXJzIiB7CiAgICAgICAgICAgIFdlYjNDb25zdW1lciA9IHBlcnNvbiAiV2ViMyBDb25zdW1lciIgewogICAgICAgICAgICAgICAgLT4gU3VwZXJmbHVpZERhc2hib2FyZCAiVXNlcyB0byB2aWV3IGJhbGFuY2VzICYgbWFuYWdlIFN1cGVyZmx1aWQgdGhpbmdzIgogICAgICAgICAgICAgICAgLT4gV2ViM01lcmNoYW50RWNvc3lzdGVtICJXYW50cyB0byBidXkgc29tZXRoaW5nIGZyb20iCiAgICAgICAgICAgICAgICAtPiBDaGVja291dFdpZGdldCAiVXNlcyB0byBtYWtlIHBheW1lbnQgd2l0aCIKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KCiAgICB2aWV3cyB7CiAgICAgICAgc3lzdGVtbGFuZHNjYXBlIFRoZUJpZ1BpY3R1cmUgIlRoZSBDaGVja291dCBCaWcgUGljdHVyZSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIFN1cGVyZmx1aWRVc2VyUHJvZHVjdHMgIlN1cGVyZmx1aWRVc2VyUHJvZHVjdHMiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIGNvbnRhaW5lciBDaGVja291dFdpZGdldFN5c3RlbSAiQ2hlY2tvdXRXaWRnZXRTeXN0ZW0iIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9MYXlvdXQKICAgICAgICB9CgogICAgICAgIGNvbnRhaW5lciBTZWxmSG9zdGVkTWVyY2hhbnRTeXN0ZW0gIlNlbGZIb3N0ZWRNZXJjaGFudFN5c3RlbSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIENoZWNrb3V0U3RvcmFnZVN5c3RlbSAiQ2hlY2tvdXRTdG9yYWdlU3lzdGVtIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvTGF5b3V0CiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgQ2hlY2tvdXRXaWRnZXQgIkNoZWNrb3V0V2lkZ2V0Q29tcG9uZW50cyIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b0xheW91dAogICAgICAgIH0KCiAgICAgICAgc3R5bGVzIHsKICAgICAgICAgICAgZWxlbWVudCAiRWxlbWVudCIgewogICAgICAgICAgICAgICAgc2hhcGUgUm91bmRlZEJveAogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJQZXJzb24iIHsKICAgICAgICAgICAgICAgIHNoYXBlIHBlcnNvbgogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjOTc2NDQwCiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIldhbGxldCIgewogICAgICAgICAgICAgICAgc2hhcGUgTW9iaWxlRGV2aWNlUG9ydHJhaXQKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgI2Y2ODUxYgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJXZWIgQXBwIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBXZWJCcm93c2VyCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIldlYnNpdGUiIHsKICAgICAgICAgICAgICAgIHNoYXBlIFdlYkJyb3dzZXIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiU3VwZXJmbHVpZCBGaW5hbmNlIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMwMDk5MWYKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAic3VwZXJmbHVpZC1jaGVja291dCIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjM0I3NUE5CiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIkNvbW1hbmQiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzMzOTlmZQogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJGdXR1cmUiIHsKICAgICAgICAgICAgICAgIG9wYWNpdHkgNTAKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiSW4gRGV2ZWxvcG1lbnQiIHsKICAgICAgICAgICAgICAgIHN0cm9rZSAjZjhjODA2CiAgICAgICAgICAgICAgICBzdHJva2VXaWR0aCAxMAogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQp9Cg=="
   },
@@ -127,15 +127,6 @@
       "name" : "Checkout Storage System",
       "location" : "Unspecified",
       "containers" : [ {
-        "id" : "5",
-        "tags" : "Element,Container",
-        "properties" : {
-          "structurizr.dsl.identifier" : "checkoutipfs"
-        },
-        "name" : "Checkout IPFS",
-        "description" : "Decentralized storage.",
-        "documentation" : { }
-      }, {
         "id" : "4",
         "tags" : "Element,Container,superfluid-checkout",
         "properties" : {
@@ -143,6 +134,15 @@
         },
         "name" : "Checkout Storage API",
         "description" : "An API to store and retrieve checkout configurations (product info & payment options).",
+        "documentation" : { }
+      }, {
+        "id" : "5",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "checkoutipfs"
+        },
+        "name" : "Checkout IPFS",
+        "description" : "Decentralized storage.",
         "documentation" : { }
       } ],
       "documentation" : { }
@@ -156,39 +156,6 @@
       "description" : "The main customer facing part of the Checkout system.",
       "location" : "Unspecified",
       "containers" : [ {
-        "id" : "25",
-        "tags" : "Element,Container",
-        "properties" : {
-          "structurizr.dsl.identifier" : "checkoutproductinfo"
-        },
-        "name" : "Product Info",
-        "description" : "Product details, including payment options (token & network & flow rate)",
-        "relationships" : [ {
-          "id" : "26",
-          "tags" : "Relationship",
-          "sourceId" : "25",
-          "destinationId" : "21",
-          "description" : "Input of"
-        }, {
-          "id" : "27",
-          "sourceId" : "25",
-          "destinationId" : "7",
-          "description" : "Input of",
-          "linkedRelationshipId" : "26"
-        } ],
-        "group" : "Checkout Input Details",
-        "technology" : "Schema-validated JSON",
-        "documentation" : { }
-      }, {
-        "id" : "34",
-        "tags" : "Element,Container,Web App,superfluid-checkout,In Development",
-        "properties" : {
-          "structurizr.dsl.identifier" : "checkoutlinkcreator"
-        },
-        "name" : "Checkout Link Creator",
-        "description" : "The easy to use GUI for creating a checkout link.",
-        "documentation" : { }
-      }, {
         "id" : "28",
         "tags" : "Element,Container",
         "properties" : {
@@ -213,28 +180,6 @@
         "technology" : "Schema-validated JSON, Uniswap's Token List standard",
         "documentation" : { }
       }, {
-        "id" : "31",
-        "tags" : "Element,Container,Web App,superfluid-checkout,In Development",
-        "properties" : {
-          "structurizr.dsl.identifier" : "checkoutbuilder"
-        },
-        "name" : "Checkout Builder",
-        "description" : "The easy to use GUI for setting up a checkout.",
-        "relationships" : [ {
-          "id" : "32",
-          "tags" : "Relationship",
-          "sourceId" : "31",
-          "destinationId" : "25",
-          "description" : "Produces"
-        }, {
-          "id" : "33",
-          "tags" : "Relationship",
-          "sourceId" : "31",
-          "destinationId" : "28",
-          "description" : "Produces (or denormalizes)"
-        } ],
-        "documentation" : { }
-      }, {
         "id" : "7",
         "tags" : "Element,Container,In Development,superfluid-checkout",
         "properties" : {
@@ -244,28 +189,65 @@
         "description" : "Provides a streamlined UX to subscribe to the given product.",
         "technology" : "TypeScript, React, MUI, wagmi, Zod, Token List",
         "components" : [ {
-          "id" : "19",
+          "id" : "13",
           "tags" : "Element,Component,Command",
           "properties" : {
-            "structurizr.dsl.identifier" : "checkoutsubscribecommand"
+            "structurizr.dsl.identifier" : "checkoutautowrapcommand"
           },
-          "name" : "Subscribe Command",
+          "name" : "Enable Auto-Wrap Command",
           "relationships" : [ {
-            "id" : "20",
+            "id" : "14",
             "tags" : "Relationship",
-            "sourceId" : "19",
-            "destinationId" : "12",
+            "sourceId" : "13",
+            "destinationId" : "8",
+            "description" : "Produces"
+          }, {
+            "id" : "15",
+            "tags" : "Relationship",
+            "sourceId" : "13",
+            "destinationId" : "9",
             "description" : "Produces"
           } ],
           "group" : "Commands",
           "documentation" : { }
         }, {
-          "id" : "12",
+          "id" : "16",
+          "tags" : "Element,Component,Command",
+          "properties" : {
+            "structurizr.dsl.identifier" : "checkoutwrapintosupertokenscommand"
+          },
+          "name" : "Wrap Super Tokens Command",
+          "relationships" : [ {
+            "id" : "17",
+            "tags" : "Relationship",
+            "sourceId" : "16",
+            "destinationId" : "10",
+            "description" : "Produces"
+          }, {
+            "id" : "18",
+            "tags" : "Relationship",
+            "sourceId" : "16",
+            "destinationId" : "11",
+            "description" : "Produces"
+          } ],
+          "group" : "Commands",
+          "documentation" : { }
+        }, {
+          "id" : "10",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "createflowtx"
+            "structurizr.dsl.identifier" : "authorizesupertokentx"
           },
-          "name" : "Create Flow",
+          "name" : "Authorize Superfluid to Wrap Tokens",
+          "group" : "On-Chain Transactions",
+          "documentation" : { }
+        }, {
+          "id" : "9",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "enableautowraptx"
+          },
+          "name" : "Enable Auto-Wrap",
           "group" : "On-Chain Transactions",
           "documentation" : { }
         }, {
@@ -298,22 +280,20 @@
           "technology" : "wagmi, react-hook-form, Zod",
           "documentation" : { }
         }, {
-          "id" : "8",
-          "tags" : "Element,Component",
+          "id" : "19",
+          "tags" : "Element,Component,Command",
           "properties" : {
-            "structurizr.dsl.identifier" : "authorizeautowraptx"
+            "structurizr.dsl.identifier" : "checkoutsubscribecommand"
           },
-          "name" : "Authorize Auto-Wrap",
-          "group" : "On-Chain Transactions",
-          "documentation" : { }
-        }, {
-          "id" : "9",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "enableautowraptx"
-          },
-          "name" : "Enable Auto-Wrap",
-          "group" : "On-Chain Transactions",
+          "name" : "Subscribe Command",
+          "relationships" : [ {
+            "id" : "20",
+            "tags" : "Relationship",
+            "sourceId" : "19",
+            "destinationId" : "12",
+            "description" : "Produces"
+          } ],
+          "group" : "Commands",
           "documentation" : { }
         }, {
           "id" : "11",
@@ -325,59 +305,79 @@
           "group" : "On-Chain Transactions",
           "documentation" : { }
         }, {
-          "id" : "16",
-          "tags" : "Element,Component,Command",
-          "properties" : {
-            "structurizr.dsl.identifier" : "checkoutwrapintosupertokenscommand"
-          },
-          "name" : "Wrap Super Tokens Command",
-          "relationships" : [ {
-            "id" : "17",
-            "tags" : "Relationship",
-            "sourceId" : "16",
-            "destinationId" : "10",
-            "description" : "Produces"
-          }, {
-            "id" : "18",
-            "tags" : "Relationship",
-            "sourceId" : "16",
-            "destinationId" : "11",
-            "description" : "Produces"
-          } ],
-          "group" : "Commands",
-          "documentation" : { }
-        }, {
-          "id" : "13",
-          "tags" : "Element,Component,Command",
-          "properties" : {
-            "structurizr.dsl.identifier" : "checkoutautowrapcommand"
-          },
-          "name" : "Enable Auto-Wrap Command",
-          "relationships" : [ {
-            "id" : "14",
-            "tags" : "Relationship",
-            "sourceId" : "13",
-            "destinationId" : "8",
-            "description" : "Produces"
-          }, {
-            "id" : "15",
-            "tags" : "Relationship",
-            "sourceId" : "13",
-            "destinationId" : "9",
-            "description" : "Produces"
-          } ],
-          "group" : "Commands",
-          "documentation" : { }
-        }, {
-          "id" : "10",
+          "id" : "12",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "authorizesupertokentx"
+            "structurizr.dsl.identifier" : "createflowtx"
           },
-          "name" : "Authorize Superfluid to Wrap Tokens",
+          "name" : "Create Flow",
+          "group" : "On-Chain Transactions",
+          "documentation" : { }
+        }, {
+          "id" : "8",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "authorizeautowraptx"
+          },
+          "name" : "Authorize Auto-Wrap",
           "group" : "On-Chain Transactions",
           "documentation" : { }
         } ],
+        "documentation" : { }
+      }, {
+        "id" : "31",
+        "tags" : "Element,Container,Web App,superfluid-checkout,In Development",
+        "properties" : {
+          "structurizr.dsl.identifier" : "checkoutbuilder"
+        },
+        "name" : "Checkout Builder",
+        "description" : "The easy to use GUI for setting up a checkout.",
+        "relationships" : [ {
+          "id" : "32",
+          "tags" : "Relationship",
+          "sourceId" : "31",
+          "destinationId" : "25",
+          "description" : "Produces"
+        }, {
+          "id" : "33",
+          "tags" : "Relationship",
+          "sourceId" : "31",
+          "destinationId" : "28",
+          "description" : "Produces (or denormalizes)"
+        } ],
+        "documentation" : { }
+      }, {
+        "id" : "25",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "checkoutproductinfo"
+        },
+        "name" : "Product Info",
+        "description" : "Product details, including payment options (token & network & flow rate)",
+        "relationships" : [ {
+          "id" : "26",
+          "tags" : "Relationship",
+          "sourceId" : "25",
+          "destinationId" : "21",
+          "description" : "Input of"
+        }, {
+          "id" : "27",
+          "sourceId" : "25",
+          "destinationId" : "7",
+          "description" : "Input of",
+          "linkedRelationshipId" : "26"
+        } ],
+        "group" : "Checkout Input Details",
+        "technology" : "Schema-validated JSON",
+        "documentation" : { }
+      }, {
+        "id" : "34",
+        "tags" : "Element,Container,Web App,superfluid-checkout,In Development",
+        "properties" : {
+          "structurizr.dsl.identifier" : "checkoutlinkcreator"
+        },
+        "name" : "Checkout Link Creator",
+        "description" : "The easy to use GUI for creating a checkout link.",
         "documentation" : { }
       } ],
       "documentation" : { }
@@ -390,15 +390,6 @@
       "name" : "Checkout Merchant System",
       "location" : "Unspecified",
       "containers" : [ {
-        "id" : "36",
-        "tags" : "Element,Container,Web App,superfluid-checkout",
-        "properties" : {
-          "structurizr.dsl.identifier" : "checkoutmerchantdashboard"
-        },
-        "name" : "Checkout Merchant Dashboard",
-        "description" : "The one aggregating interface everything a merchant could need.",
-        "documentation" : { }
-      }, {
         "id" : "37",
         "tags" : "Element,Container,Database,superfluid-checkout",
         "properties" : {
@@ -406,6 +397,15 @@
         },
         "name" : "Self-hostable Checkout Storage",
         "description" : "A self-hostable centralized storage mechanism. Can hold personal information if properly communicated.",
+        "documentation" : { }
+      }, {
+        "id" : "36",
+        "tags" : "Element,Container,Web App,superfluid-checkout",
+        "properties" : {
+          "structurizr.dsl.identifier" : "checkoutmerchantdashboard"
+        },
+        "name" : "Checkout Merchant Dashboard",
+        "description" : "The one aggregating interface everything a merchant could need.",
         "documentation" : { }
       } ],
       "documentation" : { }
@@ -453,14 +453,14 @@
       } ],
       "location" : "Unspecified",
       "containers" : [ {
-        "id" : "52",
-        "tags" : "Element,Container,Web App,Superfluid Finance",
+        "id" : "53",
+        "tags" : "Element,Container,Website,Superfluid Finance",
         "properties" : {
-          "structurizr.dsl.identifier" : "superfluidconsole"
+          "structurizr.dsl.identifier" : "superfluidwebsite"
         },
-        "name" : "Superfluid Console",
-        "description" : "The UI to view Superfluid Protocol from bird's eye view. Directed at developers.",
-        "technology" : "TypeScript, Next.js (SSR), React, MUI, SDK-core, SDK-redux",
+        "name" : "Superfluid Website",
+        "description" : "The main website for introducing Superfluid Protocol. Mostly static marketing content.",
+        "technology" : "TypeScript, Next.js (SSR), React, MDX, gsap (animations), Strapi",
         "documentation" : { }
       }, {
         "id" : "41",
@@ -493,23 +493,6 @@
           "name" : "Superfluid Vesting UI",
           "documentation" : { }
         }, {
-          "id" : "48",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "addressbook"
-          },
-          "name" : "Superfluid Address Book UI",
-          "documentation" : { }
-        }, {
-          "id" : "50",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "bridge"
-          },
-          "name" : "Super Token Bridge UI",
-          "technology" : "Li.Fi widget",
-          "documentation" : { }
-        }, {
           "id" : "51",
           "tags" : "Element,Component",
           "properties" : {
@@ -517,6 +500,22 @@
           },
           "name" : "Superfluid Notifications UI",
           "technology" : "Push Protocol",
+          "documentation" : { }
+        }, {
+          "id" : "49",
+          "tags" : "Element,Component,Coming Soon",
+          "properties" : {
+            "structurizr.dsl.identifier" : "autowrapmanager"
+          },
+          "name" : "Superfluid Auto-Wrap Manager UI",
+          "documentation" : { }
+        }, {
+          "id" : "48",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "addressbook"
+          },
+          "name" : "Superfluid Address Book UI",
           "documentation" : { }
         }, {
           "id" : "47",
@@ -527,24 +526,25 @@
           "name" : "Superfluid Accounting UI",
           "documentation" : { }
         }, {
-          "id" : "49",
-          "tags" : "Element,Component,Coming Soon",
+          "id" : "50",
+          "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "autowrapmanager"
+            "structurizr.dsl.identifier" : "bridge"
           },
-          "name" : "Superfluid Auto-Wrap Manager UI",
+          "name" : "Super Token Bridge UI",
+          "technology" : "Li.Fi widget",
           "documentation" : { }
         } ],
         "documentation" : { }
       }, {
-        "id" : "53",
-        "tags" : "Element,Container,Website,Superfluid Finance",
+        "id" : "52",
+        "tags" : "Element,Container,Web App,Superfluid Finance",
         "properties" : {
-          "structurizr.dsl.identifier" : "superfluidwebsite"
+          "structurizr.dsl.identifier" : "superfluidconsole"
         },
-        "name" : "Superfluid Website",
-        "description" : "The main website for introducing Superfluid Protocol. Mostly static marketing content.",
-        "technology" : "TypeScript, Next.js (SSR), React, MDX, gsap (animations), Strapi",
+        "name" : "Superfluid Console",
+        "description" : "The UI to view Superfluid Protocol from bird's eye view. Directed at developers.",
+        "technology" : "TypeScript, Next.js (SSR), React, MUI, SDK-core, SDK-redux",
         "documentation" : { }
       } ],
       "documentation" : { }
@@ -585,12 +585,12 @@
   },
   "documentation" : {
     "decisions" : [ {
-      "content" : "# Record Architecture Decisions\n\nDate: 2023-04-20\n\n## Status\n\nAccepted\n\n## Context and Problem Statement\n\nA software development team is facing challenges with their traditional waterfall development methodology. They are struggling to keep up with changing requirements and feedback from stakeholders, leading to delayed releases and unhappy customers. The team is considering adopting an Agile development methodology to address these issues.\n\n## Decision Drivers\n\n* Rapid response to changing requirements\n* Increased collaboration with stakeholders\n* Improved delivery speed and customer satisfaction\n\n## Considered Options\n\n* Adopt Agile development methodology\n* Continue with traditional waterfall development methodology\n\n## Decision Outcome\n\nChosen option: \"Adopt Agile development methodology\", because it enables rapid response to changing requirements, encourages collaboration with stakeholders, and can improve delivery speed and customer satisfaction.\n\n### Consequences\n\n* Good, because Agile development methodology can improve communication and collaboration between the development team and stakeholders, leading to better alignment and understanding of requirements.\n* Good, because Agile development methodology emphasizes continuous improvement and adaptation, enabling the team to respond quickly to changing requirements and feedback from stakeholders.\n* Bad, because adopting a new methodology may require a significant investment in time and resources for training and implementation.\n\n## Validation\n\nThe team will receive training in Agile development methodology and work with an Agile coach to ensure compliance with the methodology.\n\n## Pros and Cons of the Options\n\n### Adopt Agile development methodology\n\n* Good, because it emphasizes collaboration and communication with stakeholders, leading to better alignment and understanding of requirements.\n* Good, because it enables rapid response to changing requirements, ensuring the team is delivering the most valuable features to customers.\n* Neutral, because it may require additional time and resources to implement and train the team in the methodology.\n* Neutral, because it may require a cultural shift in the organization to fully embrace Agile development methodology.\n* Neutral, because it may be challenging to accurately estimate project timelines and budgets under an Agile development methodology.\n* Neutral, because it may require additional documentation and reporting to ensure compliance with regulatory requirements.\n* Neutral, because it may require more frequent communication and coordination among team members, leading to more meetings and potential productivity loss.\n* Bad, because it may be challenging to accurately estimate project timelines and budgets under an Agile development methodology.\n\n### Continue with traditional waterfall development methodology\n\n* Good, because the team is already familiar with the methodology and there may be less of a learning curve.\n* Good, because traditional waterfall development methodology may be better suited to projects with well-defined requirements and a clear path to completion.\n* Neutral, because it may be easier to accurately estimate project timelines and budgets under a traditional waterfall development methodology.\n* Neutral, because it may require less documentation and reporting to ensure compliance with regulatory requirements.\n* Neutral, because it may require less frequent communication and coordination among team members, potentially leading to less time spent in meetings.\n* Bad, because it may be challenging to respond to changing requirements and feedback from stakeholders.\n* Bad, because it may result in delayed releases and unhappy customers if requirements are not well-defined or change frequently.\n\n## More Information\n\nThe team will regularly review and evaluate their adherence to Agile development methodology and make adjustments as needed. They will also regularly solicit feedback from stakeholders to ensure the methodology is meeting their needs and expectations.\n\n",
+      "content" : "# Record Architecture Decisions\n\nDate: 2023-04-20\n\n## Status\n\nProposed\n\n## Context\n\nWe need to record the architectural decisions made on this project.\n\n## Decision\n\nWe will use Architecture Decision Records, as described by Michael Nygard in this article: [http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions)\n\n## Consequences\n\nSee Michael Nygard's article, linked above.\n",
       "format" : "Markdown",
       "id" : "1",
       "title" : " Record Architecture Decisions",
       "date" : "2023-04-20T00:00:00Z",
-      "status" : "Accepted"
+      "status" : "Proposed"
     }, {
       "content" : "# Maintain Software Architecture Diagrams\n\nDate: 2023-04-23\n\n## Status\n\nAccepted\n\n## Context\n\nSoftware architecture diagrams are a helpful communication tool in software development. They improve communication and on-boarding procedures by making it easier for developers to visually understand the project's architecture and how everything is connected. This is especially important for on-boarding new team members later in the development process.\n\nHowever, the diagrams come with maintenance costs. As the system evolves, the diagrams must be updated to reflect those changes. Failure to update the diagrams can lead to confusion and miscommunication among team members, which can result in errors and delays in development.\n\n## Decision\n\nWe will use the diagrams-as-code approach to maintain our software architecture diagrams. All diagrams will be defined using code, which will be version controlled alongside the rest of the codebase.\n\n## Consequences\n\nThe diagrams-as-code approach has several benefits:\n\n- **Consistency:** Diagrams can be version controlled alongside the codebase, ensuring that they are always consistent with the current state of the system.\n\n- **Efficiency:** Diagrams can be generated automatically from code, saving time and reducing the risk of errors.\n\n- **Collaboration:** As diagrams are stored in code, they can be easily shared and collaborated on by the development team.\n\n- **Accessibility:** The text-based syntax used to define diagrams is easy to learn and can be used by all members of the development team, regardless of their level of experience with graphical diagramming tools.\n\nHowever, there are also some potential drawbacks to this approach:\n\n- **Learning curve:** Developers may need to spend some time learning the syntax used to define diagrams in code.\n\n- **Limited expressiveness:** Some types of diagrams may be more difficult to define using code, compared to a graphical diagramming tool.\n\nOverall, we believe that the benefits of the diagrams-as-code approach outweigh the potential drawbacks, and we will use this approach to maintain our software architecture diagrams.\n",
       "format" : "Markdown",
@@ -606,7 +606,7 @@
       "date" : "2023-04-20T00:00:00Z",
       "status" : "Proposed"
     }, {
-      "content" : "# Building Type-Safe and Schema-Validated\n\nDate: 2023-04-21\n\n## Context\n\nThe tools and products we build are to be used by other builders and stay maintainable for long periods of time. \n\nThe subject matter of payments, checkouts, merchants and consumers is very serious. Any sort of mistakes can result in financial losses and miserable users.\n\nJavaScript apps and Web3 wallet RPC interactions are notoriously error-prone.\n\n## Decision\n\nWe will use **TypeScript** and **Zod** to build type-safe and schema-validated payments and checkout flows.\n\nTypeScript is a superset of JavaScript that provides static type checking at compile time. This catches many errors before they manifest at runtime.\n\nZod is a TypeScript-first schema validation library that allows us to define and validate structured data.\n\nBy using TypeScript and Zod together, we can ensure type safety and schema validation throughout the entire development process, from compile time to runtime, resulting in code that is more reliable and maintainable.\n\n## Consequences\n\nUsing TypeScript and Zod will require us to invest time and resources upfront in creating and maintaining schemas, and in ensuring that all relevant code is type-safe. However, this will pay dividends in reduced development time and increased reliability over the long term. Additionally, developers will need to be trained on TypeScript and Zod, or will need to learn these tools as they work on the project.\n\n## Status\n\nProposed",
+      "content" : "# Building Type-Safe and Schema-Validated\n\nDate: 2023-04-21\n\n## Status\n\nProposed\n\n## Context\n\nThe tools and products we build are to be used by other builders and stay maintainable for long periods of time. \n\nThe subject matter of payments, checkouts, merchants and consumers is very serious. Any sort of mistakes can result in financial losses and miserable users.\n\nJavaScript apps and Web3 wallet RPC interactions are notoriously error-prone.\n\n## Decision\n\nWe will use **TypeScript** and **Zod** to build type-safe and schema-validated payments and checkout flows.\n\nTypeScript is a superset of JavaScript that provides static type checking at compile time. This catches many errors before they manifest at runtime.\n\nZod is a TypeScript-first schema validation library that allows us to define and validate structured data.\n\nBy using TypeScript and Zod together, we can ensure type safety and schema validation throughout the entire development process, from compile time to runtime, resulting in code that is more reliable and maintainable.\n\n## Consequences\n\nUsing TypeScript and Zod will require us to invest time and resources upfront in creating and maintaining schemas, and in ensuring that all relevant code is type-safe. However, this will pay dividends in reduced development time and increased reliability over the long term. Additionally, developers will need to be trained on TypeScript and Zod, or will need to learn these tools as they work on the project.\n",
       "format" : "Markdown",
       "id" : "4",
       "title" : " Building Type-Safe and Schema-Validated",
@@ -620,11 +620,11 @@
       "date" : "2023-04-21T00:00:00Z",
       "status" : "Proposed"
     }, {
-      "content" : "# Creating a Streamlined Checkout Widget\n\n## Status\n\nProposed\n\n## Context\n\nSuperfluid Protocol is great for re-occuring payments. One of the biggest use-cases for that is subscriptions. To increase the adoption of Superfluid being used for checkouts, we'll create a widget that will make it easy to accept both peer-to-peer and peer-to-merchant payments in Superfluid streams. We'll want the widget to be as easy to include on a web site or in a web app as possible.\n\nThe widget will make on-boarding and getting started with Superfluid easy by streamlining the experience from wrapping first tokens, enabling Auto-Wrap, sending the stream etc.\n\n## Decision\n\nWe will create a checkout widget using **React**, **MUI**, **TypeScript**, **wagmi** (wallet interactions), **wagmi CLI** (ABI fetching and type generation), **AbiType** (TypeChain alternative), **Zod** (validation library) and **react-hook-form** (form management patterns). The widget will be designed to be minimal (lightweight) and very type-safe, with a focus on ease of use and integration. We will leverage existing patterns from Superfluid Dashboard and Superfluid Console to speed up development. The technologies chosen are aligned with other Superfluid products.\n\nWe will use React to create the widget based on the team's experience and Web3 ecosystem wide-spread usage of it. We will use MUI for styling as it has good theme'ing options and is suitable for fast prototyping. Zod will be used for runtime type-checking of user input and the incoming checkout configurations.\n\nWe will consider using web components to make the widget even more portable and easy to integrate into any web app. React components can be put into web components, so we will explore this option to make the widget as flexible as possible.\n\nWe will keep the logic lightweight and not overly tie it to styling because we want to leave freedom to move away from React and/or MUI if it becomes necessary.\n\n## Consequences\n\nThe tech stack allows us build something of high quality (type-safe, performant, maintainable, consistent in visual style) and move fast at the same time.\n\nLeveraging existing patterns from Superfluid Dashboard and Superfluid Console will shorten learning curve and ensure consistency across the Superfluid ecosystem.\n\nUsing web components will make the widget even more portable and easy to integrate into any web app.",
+      "content" : "# Creating a Streamlined Checkout Widget\n\nDate: 2023-04-21\n\n## Status\n\nProposed\n\n## Context\n\nSuperfluid Protocol is great for re-occuring payments. One of the biggest use-cases for that is subscriptions. To increase the adoption of Superfluid being used for checkouts, we'll create a widget that will make it easy to accept both peer-to-peer and peer-to-merchant payments in Superfluid streams. We'll want the widget to be as easy to include on a web site or in a web app as possible.\n\nThe widget will make on-boarding and getting started with Superfluid easy by streamlining the experience from wrapping first tokens, enabling Auto-Wrap, sending the stream etc.\n\n## Decision\n\nWe will create a checkout widget using **React**, **MUI**, **TypeScript**, **wagmi** (wallet interactions), **wagmi CLI** (ABI fetching and type generation), **AbiType** (TypeChain alternative), **Zod** (validation library) and **react-hook-form** (form management patterns). The widget will be designed to be minimal (lightweight) and very type-safe, with a focus on ease of use and integration. We will leverage existing patterns from Superfluid Dashboard and Superfluid Console to speed up development. The technologies chosen are aligned with other Superfluid products.\n\nWe will use React to create the widget based on the team's experience and Web3 ecosystem wide-spread usage of it. We will use MUI for styling as it has good theme'ing options and is suitable for fast prototyping. Zod will be used for runtime type-checking of user input and the incoming checkout configurations.\n\nWe will consider using web components to make the widget even more portable and easy to integrate into any web app. React components can be put into web components, so we will explore this option to make the widget as flexible as possible.\n\nWe will keep the logic lightweight and not overly tie it to styling because we want to leave freedom to move away from React and/or MUI if it becomes necessary.\n\n## Consequences\n\nThe tech stack allows us build something of high quality (type-safe, performant, maintainable, consistent in visual style) and move fast at the same time.\n\nLeveraging existing patterns from Superfluid Dashboard and Superfluid Console will shorten learning curve and ensure consistency across the Superfluid ecosystem.\n\nUsing web components will make the widget even more portable and easy to integrate into any web app.",
       "format" : "Markdown",
       "id" : "6",
       "title" : " Creating a Streamlined Checkout Widget",
-      "date" : "2023-04-26T00:05:12Z",
+      "date" : "2023-04-21T00:00:00Z",
       "status" : "Proposed"
     } ]
   },
@@ -710,6 +710,91 @@
       } ]
     } ],
     "containerViews" : [ {
+      "key" : "CheckoutStorageSystem",
+      "order" : 5,
+      "softwareSystemId" : "3",
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "externalSoftwareSystemBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      } ]
+    }, {
+      "key" : "SuperfluidUserProducts",
+      "order" : 2,
+      "softwareSystemId" : "40",
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "externalSoftwareSystemBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "41",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "52",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "53",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "64",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "relationships" : [ {
+        "id" : "65"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "69"
+      } ]
+    }, {
+      "key" : "SelfHostedMerchantSystem",
+      "order" : 4,
+      "softwareSystemId" : "35",
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "externalSoftwareSystemBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "36",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "37",
+        "x" : 0,
+        "y" : 0
+      } ]
+    }, {
       "key" : "CheckoutWidgetSystem",
       "order" : 3,
       "softwareSystemId" : "6",
@@ -747,11 +832,11 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "31",
+        "id" : "64",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "64",
+        "id" : "31",
         "x" : 0,
         "y" : 0
       } ],
@@ -760,104 +845,19 @@
       }, {
         "id" : "33"
       }, {
-        "id" : "32"
+        "id" : "67"
       }, {
         "id" : "44"
       }, {
-        "id" : "67"
-      }, {
-        "id" : "66"
+        "id" : "32"
       }, {
         "id" : "56"
+      }, {
+        "id" : "66"
       }, {
         "id" : "30"
       }, {
         "id" : "68"
-      } ]
-    }, {
-      "key" : "SelfHostedMerchantSystem",
-      "order" : 4,
-      "softwareSystemId" : "35",
-      "automaticLayout" : {
-        "implementation" : "Graphviz",
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "nodeSeparation" : 300,
-        "edgeSeparation" : 0,
-        "vertices" : false
-      },
-      "externalSoftwareSystemBoundariesVisible" : true,
-      "elements" : [ {
-        "id" : "36",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "37",
-        "x" : 0,
-        "y" : 0
-      } ]
-    }, {
-      "key" : "SuperfluidUserProducts",
-      "order" : 2,
-      "softwareSystemId" : "40",
-      "automaticLayout" : {
-        "implementation" : "Graphviz",
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "nodeSeparation" : 300,
-        "edgeSeparation" : 0,
-        "vertices" : false
-      },
-      "externalSoftwareSystemBoundariesVisible" : true,
-      "elements" : [ {
-        "id" : "6",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "52",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "41",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "64",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "53",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "relationships" : [ {
-        "id" : "65"
-      }, {
-        "id" : "43"
-      }, {
-        "id" : "69"
-      } ]
-    }, {
-      "key" : "CheckoutStorageSystem",
-      "order" : 5,
-      "softwareSystemId" : "3",
-      "automaticLayout" : {
-        "implementation" : "Graphviz",
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "nodeSeparation" : 300,
-        "edgeSeparation" : 0,
-        "vertices" : false
-      },
-      "externalSoftwareSystemBoundariesVisible" : true,
-      "elements" : [ {
-        "id" : "4",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "5",
-        "x" : 0,
-        "y" : 0
       } ]
     } ],
     "componentViews" : [ {
@@ -910,11 +910,11 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "21",
+        "id" : "10",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "10",
+        "id" : "21",
         "x" : 0,
         "y" : 0
       } ],
@@ -925,9 +925,9 @@
       }, {
         "id" : "17"
       }, {
-        "id" : "26"
-      }, {
         "id" : "15"
+      }, {
+        "id" : "26"
       }, {
         "id" : "14"
       }, {
@@ -983,7 +983,7 @@
         } ]
       },
       "terminology" : { },
-      "lastSavedView" : "TheBigPicture"
+      "lastSavedView" : "CheckoutWidgetComponents"
     }
   }
 }

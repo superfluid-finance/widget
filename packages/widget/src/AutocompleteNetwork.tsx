@@ -44,10 +44,7 @@ export default function AutocompleteNetwork() {
             </Box>
           )}
           renderInput={(params) => <TextField {...params} label="Network" />}
-          onChange={(_event, newValue) => {
-            console.log("onChange");
-            onChange(newValue);
-          }}
+          onChange={(_event, newValue) => onChange(newValue)}
           onBlur={onBlur}
         />
       )}

@@ -5,7 +5,7 @@ export default function CheckoutStepContent3() {
     <StepContent>
       <Stack>
         <Button variant="contained" fullWidth>
-          Wrap and Send Stream
+          Subscribe
         </Button>
       </Stack>
     </StepContent>

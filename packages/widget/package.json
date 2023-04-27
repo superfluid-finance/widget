@@ -7,7 +7,7 @@
   "types": "src/index.d.ts",
   "scripts": {
     "watch": "tsc -w -p ./tsconfig.json",
-    "build": "tsc --build --clean"
+    "build": "tsc --build "
   },
   "dependencies": {
     "@emotion/react": "latest",

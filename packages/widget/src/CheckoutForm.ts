@@ -1,4 +1,3 @@
-import { TokenInfo } from "@uniswap/token-lists";
 import {
   addressSchema,
   supportedNetworkSchema,
@@ -6,10 +5,11 @@ import {
   paymentOptionSchema,
 } from "superfluid-checkout-core";
 import { z } from "zod";
+import { SuperTokenInfo } from "./CheckoutContext";
 
 const paymentOptionWithTokenInfoSchema = z.object({
     paymentOption: paymentOptionSchema,
-    tokenInfo: z.custom<TokenInfo>()
+    superToken: z.custom<SuperTokenInfo>()
 });
 
 export type PaymentOptionWithTokenInfo = z.infer<typeof paymentOptionWithTokenInfoSchema>;

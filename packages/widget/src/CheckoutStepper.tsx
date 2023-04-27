@@ -3,29 +3,44 @@ import { StepperProvider } from "./StepperProvider";
 import CheckoutStepContent1 from "./CheckoutStepContent1";
 import CheckoutStepContent2 from "./CheckoutStepContent2";
 import CheckoutStepContent3 from "./CheckoutStepContent3";
-
-const steps = [
-  {
-    buttonText: "Select network and token",
-    optional: false,
-    content: CheckoutStepContent1,
-  },
-  {
-    buttonText: "Wrap",
-    optional: true,
-    content: CheckoutStepContent2,
-  },
-  {
-    buttonText: "Review the transaction",
-    optional: false,
-    content: CheckoutStepContent3,
-  },
-] as const;
+import { useMemo } from "react";
+import { useFormContext } from "react-hook-form";
+import { CheckoutFormDraft } from "./CheckoutForm";
 
 export default function CheckoutStepper() {
+  const { watch } = useFormContext<CheckoutFormDraft>();
+  const paymentOptionWithTokenInfo = watch("paymentOptionWithTokenInfo");
+
+  const steps = useMemo(
+    () => [
+      {
+        buttonText: "Select network and token",
+        optional: false,
+        content: CheckoutStepContent1,
+      },
+      // Add wrap step only when Super Token has an underlying token.
+      ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
+        .underlyingTokenAddress
+        ? [
+            {
+              buttonText: "Wrap",
+              optional: true,
+              content: CheckoutStepContent2,
+            },
+          ]
+        : []),
+      {
+        buttonText: "Review the transaction",
+        optional: false,
+        content: CheckoutStepContent3,
+      },
+    ],
+    [paymentOptionWithTokenInfo]
+  );
+
   return (
     <StepperProvider totalSteps={steps.length}>
-      {({ activeStep, setActiveStep, handleNext }) => (
+      {({ activeStep, setActiveStep }) => (
         <Stepper orientation="vertical" activeStep={activeStep} sx={{ m: 2 }}>
           {steps.map((step, index) => (
             <Step key={index}>

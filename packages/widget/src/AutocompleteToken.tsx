@@ -5,13 +5,12 @@ import { CheckoutFormDraft, PaymentOptionWithTokenInfo } from "./CheckoutForm";
 import { useCheckout } from "./CheckoutContext";
 
 export default function AutocompleteToken() {
-  const { paymentOptions, tokenList } = useCheckout();
+  const { paymentOptions, superTokens } = useCheckout();
   const { control: c, watch, setValue } = useFormContext<CheckoutFormDraft>();
   const network = watch("network");
 
+  // Reset payment option (i.e. the token) when network changes.
   useEffect(() => {
-    console.log("network changed?")
-
     setValue("paymentOptionWithTokenInfo", null, {
       shouldValidate: true,
       shouldDirty: true,
@@ -25,26 +24,26 @@ export default function AutocompleteToken() {
         ? paymentOptions
             .filter((paymentOptions) => paymentOptions.chainId === network.id)
             .map((paymentOption) => {
-              const tokenInfo = tokenList.tokens.find(
+              const superToken = superTokens.find(
                 (tokenInfo_) =>
                   tokenInfo_.address.toLowerCase() ===
                   paymentOption.superToken.address.toLowerCase()
               );
 
-              if (tokenInfo === undefined) {
+              if (superToken === undefined) {
                 // TODO: warn
                 return null;
               }
 
               return {
                 paymentOption,
-                tokenInfo,
+                superToken,
               };
             })
             .filter((x): x is PaymentOptionWithTokenInfo => x !== null)
         : []),
     ],
-    [network, paymentOptions, tokenList]
+    [network, paymentOptions, superTokens]
   );
 
   return (
@@ -61,11 +60,11 @@ export default function AutocompleteToken() {
           }
           options={autocompleteOptions}
           autoHighlight
-          getOptionLabel={(option) => option.tokenInfo.symbol}
+          getOptionLabel={(option) => option.superToken.symbol}
           renderOption={(props, option) => (
             <Box component="li" {...props}>
               {option.paymentOption.flowRate.amountEther}{" "}
-              {option.tokenInfo.symbol}/{option.paymentOption.flowRate.period}
+              {option.superToken.symbol}/{option.paymentOption.flowRate.period}
             </Box>
           )}
           renderInput={(params) => <TextField {...params} label="Token" />}
