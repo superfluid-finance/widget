@@ -1,12 +1,12 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 import { useMemo, useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { CheckoutFormDraft, PaymentOptionWithTokenInfo } from "./CheckoutForm";
+import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues";
 import { useCheckout } from "./CheckoutContext";
 
 export default function AutocompleteToken() {
   const { paymentOptions, superTokens } = useCheckout();
-  const { control: c, watch, setValue } = useFormContext<CheckoutFormDraft>();
+  const { control: c, watch, setValue } = useFormContext<DraftFormValues>();
   const network = watch("network");
 
   // Reset payment option (i.e. the token) when network changes.

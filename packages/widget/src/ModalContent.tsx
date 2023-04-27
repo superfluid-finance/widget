@@ -1,8 +1,8 @@
 import ProductCard from "./ProductCard";
-import CheckoutStepper from "./CheckoutStepper";
-import CheckoutFormProvider from "./CheckoutFormProvider";
+import CheckoutStepper from "./Stepper";
+import CheckoutFormProvider from "./FormProvider";
 
-export function CheckoutContent() {
+export function ModalContent() {
   return (
     <CheckoutFormProvider>
       <ProductCard />

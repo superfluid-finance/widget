@@ -1,12 +1,12 @@
-import { useForm, FormProvider } from "react-hook-form";
-import { CheckoutFormDraft, CheckoutForm } from "./CheckoutForm";
+import { useForm, FormProvider as RHFFormProvider } from "react-hook-form";
+import { DraftFormValues, ValidFormValues } from "./formValues";
 import { DevTool } from "@hookform/devtools";
 import { PropsWithChildren } from "react";
 
 type Props = PropsWithChildren;
 
 export default function CheckoutFormProvider({ children }: Props) {
-  const defaultValues: CheckoutFormDraft = {
+  const defaultValues: DraftFormValues = {
     senderAddress: null,
     network: null,
     paymentOptionWithTokenInfo: null,
@@ -15,14 +15,14 @@ export default function CheckoutFormProvider({ children }: Props) {
     receiverAddress: null,
   };
 
-  const formMethods = useForm<CheckoutFormDraft, any, CheckoutForm>({
+  const formMethods = useForm<DraftFormValues, any, ValidFormValues>({
     defaultValues,
   });
 
   return (
-    <FormProvider {...formMethods}>
+    <RHFFormProvider {...formMethods}>
       {children}
       <DevTool control={formMethods.control} placement="bottom-left" />
-    </FormProvider>
+    </RHFFormProvider>
   );
 }

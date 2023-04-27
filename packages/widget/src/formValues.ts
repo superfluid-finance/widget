@@ -8,11 +8,13 @@ import { z } from "zod";
 import { SuperTokenInfo } from "./CheckoutContext";
 
 const paymentOptionWithTokenInfoSchema = z.object({
-    paymentOption: paymentOptionSchema,
-    superToken: z.custom<SuperTokenInfo>()
+  paymentOption: paymentOptionSchema,
+  superToken: z.custom<SuperTokenInfo>(),
 });
 
-export type PaymentOptionWithTokenInfo = z.infer<typeof paymentOptionWithTokenInfoSchema>;
+export type PaymentOptionWithTokenInfo = z.infer<
+  typeof paymentOptionWithTokenInfoSchema
+>;
 
 export const checkoutFormSchema = z.object({
   senderAddress: addressSchema,
@@ -23,8 +25,8 @@ export const checkoutFormSchema = z.object({
   receiverAddress: addressSchema,
 });
 
-export type CheckoutForm = z.infer<typeof checkoutFormSchema>;
-export type CheckoutFormDraft = NullableObject<CheckoutForm>;
+export type ValidFormValues = z.infer<typeof checkoutFormSchema>;
+export type DraftFormValues = NullableObject<ValidFormValues>;
 
 type NullableObject<T> = {
   [P in keyof T]: T[P] | null;

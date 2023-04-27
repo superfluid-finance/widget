@@ -3,7 +3,7 @@ import { CheckoutConfig } from "./CheckoutConfig";
 import Dialog from "@mui/material/Dialog";
 import Drawer from "@mui/material/Drawer";
 import { ModalProps } from "@mui/material/Modal";
-import { CheckoutContent } from "./CheckoutContent";
+import { ModalContent } from "./ModalContent";
 import {
   CheckoutContext,
   CheckoutContextValue,
@@ -69,7 +69,7 @@ export function CheckoutProvider({
     <CheckoutContext.Provider value={contextValue}>
       {children(contextValue)}
       <ModalComponent {...modalProps}>
-        <CheckoutContent />
+        <ModalContent />
       </ModalComponent>
     </CheckoutContext.Provider>
   );

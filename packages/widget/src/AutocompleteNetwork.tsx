@@ -2,11 +2,11 @@ import { Autocomplete, Box, TextField } from "@mui/material";
 import { useMemo } from "react";
 import { SupportedNetwork, supportedNetworks } from "superfluid-checkout-core";
 import { Controller, useFormContext } from "react-hook-form";
-import { CheckoutFormDraft } from "./CheckoutForm";
+import { DraftFormValues } from "./formValues";
 import { useCheckout } from "./CheckoutContext";
 
 export default function AutocompleteNetwork() {
-  const { control: c } = useFormContext<CheckoutFormDraft>();
+  const { control: c } = useFormContext<DraftFormValues>();
   const { tokenList } = useCheckout();
 
   const autocompleteOptions = useMemo<SupportedNetwork[]>(() => {

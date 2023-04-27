@@ -4,19 +4,19 @@ import {
   FormControlLabel,
   FormGroup,
   Stack,
-  StepContent,
+  StepContent as MUIStepContent,
   TextField,
 } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
-import { CheckoutFormDraft } from "./CheckoutForm";
+import { DraftFormValues } from "./formValues";
 import { useEffect, useMemo } from "react";
 import { useStepper } from "./StepperContext";
 import { useCheckout } from "./CheckoutContext";
 
-export default function CheckoutStepContent2() {
+export default function StepContent2() {
   const { tokenList } = useCheckout();
   const { handleNext } = useStepper();
-  const { control: c, watch, setValue } = useFormContext<CheckoutFormDraft>();
+  const { control: c, watch, setValue } = useFormContext<DraftFormValues>();
   const [paymentOptionWithTokenInfo] = watch(["paymentOptionWithTokenInfo"]);
 
   // Reset wrap amount when payment option (i.e. the token) changes.
@@ -47,7 +47,7 @@ export default function CheckoutStepContent2() {
   }, [superToken]);
 
   return (
-    <StepContent TransitionProps={{ unmountOnExit: false }}>
+    <MUIStepContent TransitionProps={{ unmountOnExit: false }}>
       <Stack
         direction="column"
         alignItems="stretch"
@@ -89,6 +89,6 @@ export default function CheckoutStepContent2() {
           Continue
         </Button>
       </Stack>
-    </StepContent>
+    </MUIStepContent>
   );
 }

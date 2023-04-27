@@ -1,14 +1,14 @@
-import { Stepper, Step, StepButton } from "@mui/material";
+import { Stepper as MUIStepper, Step, StepButton } from "@mui/material";
 import { StepperProvider } from "./StepperProvider";
-import CheckoutStepContent1 from "./CheckoutStepContent1";
-import CheckoutStepContent2 from "./CheckoutStepContent2";
-import CheckoutStepContent3 from "./CheckoutStepContent3";
+import StepContent1 from "./StepContent1";
+import StepContent2 from "./StepContent2";
+import StepContent3 from "./StepContent3";
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import { CheckoutFormDraft } from "./CheckoutForm";
+import { DraftFormValues } from "./formValues";
 
 export default function CheckoutStepper() {
-  const { watch } = useFormContext<CheckoutFormDraft>();
+  const { watch } = useFormContext<DraftFormValues>();
   const paymentOptionWithTokenInfo = watch("paymentOptionWithTokenInfo");
 
   const steps = useMemo(
@@ -16,7 +16,7 @@ export default function CheckoutStepper() {
       {
         buttonText: "Select network and token",
         optional: false,
-        content: CheckoutStepContent1,
+        content: StepContent1,
       },
       // Add wrap step only when Super Token has an underlying token.
       ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
@@ -25,14 +25,14 @@ export default function CheckoutStepper() {
             {
               buttonText: "Wrap",
               optional: true,
-              content: CheckoutStepContent2,
+              content: StepContent2,
             },
           ]
         : []),
       {
         buttonText: "Review the transaction",
         optional: false,
-        content: CheckoutStepContent3,
+        content: StepContent3,
       },
     ],
     [paymentOptionWithTokenInfo]
@@ -41,7 +41,7 @@ export default function CheckoutStepper() {
   return (
     <StepperProvider totalSteps={steps.length}>
       {({ activeStep, setActiveStep }) => (
-        <Stepper orientation="vertical" activeStep={activeStep} sx={{ m: 2 }}>
+        <MUIStepper orientation="vertical" activeStep={activeStep} sx={{ m: 2 }}>
           {steps.map((step, index) => (
             <Step key={index}>
               <StepButton
@@ -53,7 +53,7 @@ export default function CheckoutStepper() {
               {step.content && <step.content />}
             </Step>
           ))}
-        </Stepper>
+        </MUIStepper>
       )}
     </StepperProvider>
   );

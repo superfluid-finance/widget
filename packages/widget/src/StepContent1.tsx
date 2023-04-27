@@ -1,13 +1,13 @@
-import { Box, Button, Stack, StepContent } from "@mui/material";
+import { Box, Button, Stack, StepContent as MUIStepContent } from "@mui/material";
 import AutocompleteToken from "./AutocompleteToken";
 import AutocompleteNetwork from "./AutocompleteNetwork";
 import { useFormContext } from "react-hook-form";
-import { CheckoutFormDraft } from "./CheckoutForm";
+import { DraftFormValues } from "./formValues";
 import { useStepper } from "./StepperContext";
 
-export default function CheckoutStepContent1() {
+export default function StepContent1() {
   const { handleNext } = useStepper();
-  const { watch } = useFormContext<CheckoutFormDraft>();
+  const { watch } = useFormContext<DraftFormValues>();
 
   const [network, paymentOptionWithTokenInfo] = watch([
     "network",
@@ -16,7 +16,7 @@ export default function CheckoutStepContent1() {
   const isStepComplete = !!network && !!paymentOptionWithTokenInfo;
 
   return (
-    <StepContent TransitionProps={{ unmountOnExit: false }}>
+    <MUIStepContent TransitionProps={{ unmountOnExit: false }}>
       <Stack
         direction="column"
         alignItems="stretch"
@@ -40,6 +40,6 @@ export default function CheckoutStepContent1() {
           Continue
         </Button>
       </Stack>
-    </StepContent>
+    </MUIStepContent>
   );
 }
