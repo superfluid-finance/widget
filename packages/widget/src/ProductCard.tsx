@@ -7,7 +7,7 @@ export default function ProductCard() {
   } = useCheckout();
 
   return (
-    <Card>
+    <Card variant="elevation">
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}

@@ -46,7 +46,7 @@ export default function NetworkAutocomplete() {
           renderInput={(params) => <TextField {...params} label="Network" />}
           onChange={(_event, newValue) => {
             onChange(newValue);
-            setValue("paymentOptionWithTokenInfo", null); // TODO(KK): What `options` to use?
+            // setValue("paymentOptionWithTokenInfo", null); // TODO(KK): What `options` to use?
           }}
           onBlur={onBlur}
         />
