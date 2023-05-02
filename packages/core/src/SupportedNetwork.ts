@@ -21,7 +21,7 @@ export const chainIdSchema = z.custom<ChainId>((value) => {
   return chainIds.some((x) => x === (Number(value) as ChainId));
 });
 
-export const supportedNetworks = [
+export const supportedNetwork = {
   polygon,
   bsc,
   goerli,
@@ -32,10 +32,25 @@ export const supportedNetworks = [
   arbitrum,
   mainnet,
   gnosis,
+} as const;
+
+export const supportedNetworks = [
+  supportedNetwork.polygon,
+  supportedNetwork.bsc,
+  supportedNetwork.goerli,
+  supportedNetwork.polygonMumbai,
+  supportedNetwork.avalancheFuji,
+  supportedNetwork.avalanche,
+  supportedNetwork.optimism,
+  supportedNetwork.arbitrum,
+  supportedNetwork.mainnet,
+  supportedNetwork.gnosis,
 ] as const;
 
-export const supportedNetworkSchema = z.object({
-  id: chainIdSchema,
-}).transform(x => x as typeof supportedNetworks[number]);
+export const supportedNetworkSchema = z
+  .object({
+    id: chainIdSchema,
+  })
+  .transform((x) => x as typeof supportedNetworks[number]);
 
 export type SupportedNetwork = z.infer<typeof supportedNetworkSchema>;

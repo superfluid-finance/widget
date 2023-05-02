@@ -4,16 +4,25 @@
   "description": "",
   "type": "module",
   "main": "src/index.ts",
+  "exports": {
+    "wagmi": {
+      "default": "./src/wagmi-generated.ts"
+    }
+  },
   "scripts": {
     "watch": "tsc -w -p ./tsconfig.json",
-    "build": "tsc --build --clean"
+    "build": "tsc --build --noEmit",
+    "wagmi-generate": "wagmi generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@wagmi/chains": "^0.2.19",
+    "@wagmi/cli": "^0.1.15",
+    "@wagmi/core": "^0.10.10",
     "abitype": "^0.7.1",
+    "ethers": "^5.7.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {
