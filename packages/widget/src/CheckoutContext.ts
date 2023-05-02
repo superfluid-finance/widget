@@ -3,33 +3,26 @@ import { CheckoutConfig } from "./CheckoutConfig";
 import { TokenInfo } from "@uniswap/token-lists";
 import { SuperTokenExtension } from "superfluid-checkout-core";
 
-type ModalState = {
-  isOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
-};
-
 export type SuperTokenInfo = TokenInfo & {
   extensions: {
     superTokenInfo: SuperTokenExtension;
   };
 };
 
-export type CheckoutContextValue = {
-  modal: ModalState;
+export type CheckoutState = {
   superTokens: SuperTokenInfo[];
 } & CheckoutConfig;
 
-export const CheckoutContext = createContext<CheckoutContextValue | undefined>(
+export const CheckoutContext = createContext<CheckoutState | undefined>(
   undefined
 );
 
-export function useCheckout(): CheckoutContextValue {
-  const checkoutContext = useContext(CheckoutContext);
+export function useCheckout(): CheckoutState {
+  const context = useContext(CheckoutContext);
 
-  if (!checkoutContext) {
+  if (!context) {
     throw new Error("useCheckout must be used within a CheckoutProvider");
   }
 
-  return checkoutContext;
+  return context;
 }

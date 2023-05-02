@@ -1,76 +1,41 @@
-import { PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { CheckoutConfig } from "./CheckoutConfig";
-import Dialog from "@mui/material/Dialog";
-import Drawer from "@mui/material/Drawer";
-import { ModalProps } from "@mui/material/Modal";
-import { ModalContent } from "./ModalContent";
-import {
-  CheckoutContext,
-  CheckoutContextValue,
-  SuperTokenInfo,
-} from "./CheckoutContext";
+import { CheckoutContext, SuperTokenInfo } from "./CheckoutContext";
+import { CheckoutViewProps, ViewProvider } from "./ViewProvider";
 
-type Props = {
-  children: (
-    contextValue: CheckoutContextValue
-  ) => PropsWithChildren["children"];
-  modal?: "drawer" | "dialog";
-} & CheckoutConfig;
+type Props = CheckoutViewProps & CheckoutConfig;
 
 export function CheckoutProvider({
-  children,
-  modal = "drawer",
-  ...config
+  productDetails,
+  paymentOptions,
+  tokenList,
+  ...viewProps
 }: Props) {
   // TODO: validate input
 
   // # Handle tokens
   const superTokens = useMemo<SuperTokenInfo[]>(
     () =>
-      config.tokenList.tokens.filter(
+      tokenList.tokens.filter(
         (x): x is SuperTokenInfo => !!x.extensions?.superTokenInfo
       ),
-    [config.tokenList]
+    [tokenList]
   ); // TODO: Worry about consumer having to keep the token list reference unchanged.
   // ---
 
-  // # Modal
-  const [isOpen, setOpen] = useState(false);
-
-  const openModal = useCallback(() => setOpen(true), [setOpen]);
-  const closeModal = useCallback(() => setOpen(false), [setOpen]);
-
-  const modalState = useMemo<CheckoutContextValue["modal"]>(
+  const checkoutState = useMemo(
     () => ({
-      isOpen,
-      openModal,
-      closeModal,
-    }),
-    [isOpen, openModal, closeModal]
-  );
-
-  const modalProps: Omit<ModalProps, "children"> = {
-    open: isOpen,
-    onClose: closeModal,
-  };
-  const ModalComponent = modal === "dialog" ? Dialog : Drawer;
-  // ---
-
-  const contextValue = useMemo(
-    () => ({
-      modal: modalState,
       superTokens,
-      ...config,
+      productDetails,
+      paymentOptions,
+      tokenList,
     }),
-    [modalState, Object.values(config)]
+    [productDetails, paymentOptions, tokenList]
   );
 
   return (
-    <CheckoutContext.Provider value={contextValue}>
-      {children(contextValue)}
-      <ModalComponent {...modalProps}>
-        <ModalContent />
-      </ModalComponent>
+    <CheckoutContext.Provider value={checkoutState}>
+      <ViewProvider {...viewProps} />
     </CheckoutContext.Provider>
   );
 }

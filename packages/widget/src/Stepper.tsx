@@ -50,7 +50,7 @@ export default function CheckoutStepper() {
               >
                 {step.buttonText}
               </StepButton>
-              {step.content && <step.content />}
+              <step.content />
             </Step>
           ))}
         </MUIStepper>
