@@ -5,7 +5,9 @@ import { utils } from "ethers";
 
 const { parseEther } = utils;
 
-export const mapValidFormToCommands = (values: ValidFormValues): Command[] => {
+export const mapValidFormToCommands = (
+  values: ValidFormValues
+): readonly Command[] => {
   const {
     network: { id: chainId },
     senderAddress,
@@ -14,15 +16,13 @@ export const mapValidFormToCommands = (values: ValidFormValues): Command[] => {
     enableAutoWrap,
     paymentOptionWithTokenInfo: { paymentOption, superToken },
   } = values;
-
-  const commands: Command[] = [];
-
   const wrapAmount = parseEther(wrapAmountEther ? wrapAmountEther : "0");
 
   const superTokenAddress = superToken.address as Address;
   const underlyingTokenAddress =
     superToken.extensions.superTokenInfo.underlyingTokenAddress;
 
+  const commands: Command[] = [];
   if (underlyingTokenAddress) {
     if (!wrapAmount.isZero()) {
       commands.push({
@@ -53,5 +53,5 @@ export const mapValidFormToCommands = (values: ValidFormValues): Command[] => {
     flowRate: paymentOption.flowRate,
   });
 
-  return commands;
+  return Object.freeze(commands);
 };

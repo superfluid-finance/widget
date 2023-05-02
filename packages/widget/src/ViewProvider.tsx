@@ -5,7 +5,6 @@ import {
   IconButton,
   ModalProps,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import { ViewContent } from "./ViewContent";
 import { PropsWithChildren, useCallback, useMemo, useState } from "react";
@@ -21,7 +20,7 @@ export type CheckoutViewProps =
   | {
       type: "drawer" | "dialog" | "full-screen";
       children: (
-        contextValue: CheckoutViewState
+        state: Readonly<CheckoutViewState>
       ) => PropsWithChildren["children"];
     }
   | {
