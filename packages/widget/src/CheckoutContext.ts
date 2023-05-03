@@ -1,7 +1,11 @@
 import { createContext, useContext } from "react";
 import { CheckoutConfig } from "./CheckoutConfig";
 import { TokenInfo } from "@uniswap/token-lists";
-import { SuperTokenExtension } from "superfluid-checkout-core";
+import {
+  SuperTokenExtension,
+  SupportedNetwork,
+} from "superfluid-checkout-core";
+import { PaymentOptionWithTokenInfo } from "./formValues";
 
 export type SuperTokenInfo = TokenInfo & {
   extensions: {
@@ -11,6 +15,8 @@ export type SuperTokenInfo = TokenInfo & {
 
 export type CheckoutState = {
   superTokens: SuperTokenInfo[];
+  supportedNetworks: ReadonlyArray<SupportedNetwork>;
+  paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
 } & CheckoutConfig;
 
 export const CheckoutContext = createContext<CheckoutState | undefined>(

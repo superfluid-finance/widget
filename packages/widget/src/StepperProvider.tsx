@@ -1,19 +1,20 @@
 import {
   useState,
-  useCallback,
-  PropsWithChildren,
+  useCallback
 } from "react";
 import { StepperContext, StepperContextValue } from "./StepperContext";
+import { Children } from "./utils";
 
 type Props = {
   children: (
     contextValue: StepperContextValue
-  ) => PropsWithChildren["children"];
+  ) => Children;
   totalSteps: number;
+  initialStep?: number;
 };
 
-export function StepperProvider({ children, totalSteps }: Props) {
-  const [activeStep, setActiveStep] = useState(0);
+export function StepperProvider({ children, totalSteps, initialStep = 0 }: Props) {
+  const [activeStep, setActiveStep] = useState(initialStep);
 
   const handleNext = useCallback(() => {
     setActiveStep((prevStep) => Math.min(prevStep + 1, totalSteps - 1));

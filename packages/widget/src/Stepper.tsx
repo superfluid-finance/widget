@@ -7,8 +7,8 @@ import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 
-export default function CheckoutStepper() {
-  const { watch } = useFormContext<DraftFormValues>();
+export default function Stepper() {
+  const { watch, formState: { isValid } } = useFormContext<DraftFormValues>();
   const paymentOptionWithTokenInfo = watch("paymentOptionWithTokenInfo");
 
   const steps = useMemo(
@@ -39,20 +39,29 @@ export default function CheckoutStepper() {
   );
 
   return (
-    <StepperProvider totalSteps={steps.length}>
+    <StepperProvider
+      totalSteps={steps.length}
+      initialStep={isValid ? steps.length - 1 : 0}
+    >
       {({ activeStep, setActiveStep }) => (
-        <MUIStepper orientation="vertical" activeStep={activeStep} sx={{ m: 2 }}>
-          {steps.map((step, index) => (
-            <Step key={index}>
-              <StepButton
-                optional={step.optional ? "optional" : undefined}
-                onClick={() => setActiveStep(index)}
-              >
-                {step.buttonText}
-              </StepButton>
-              <step.content />
-            </Step>
-          ))}
+        <MUIStepper
+          orientation="vertical"
+          activeStep={activeStep}
+          sx={{ m: 2 }}
+        >
+          {steps.map((step, index) => {
+            return (
+              <Step key={index}>
+                <StepButton
+                  optional={step.optional ? "optional" : undefined}
+                  onClick={() => setActiveStep(index)}
+                >
+                  {step.buttonText}
+                </StepButton>
+                <step.content />
+              </Step>
+            );
+          })}
         </MUIStepper>
       )}
     </StepperProvider>

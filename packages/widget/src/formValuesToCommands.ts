@@ -5,9 +5,9 @@ import { utils } from "ethers";
 
 const { parseEther } = utils;
 
-export const mapValidFormToCommands = (
+export const formValuesToCommands = (
   values: ValidFormValues
-): readonly Command[] => {
+): ReadonlyArray<Command> => {
   const {
     network: { id: chainId },
     senderAddress,

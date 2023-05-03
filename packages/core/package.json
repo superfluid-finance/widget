@@ -5,13 +5,12 @@
   "type": "module",
   "main": "src/index.ts",
   "exports": {
-    "wagmi": {
-      "default": "./src/wagmi-generated.ts"
-    }
+    ".": "./src/index.ts",
+    "./wagmi": "./src/wagmi-generated.ts"
   },
   "scripts": {
     "watch": "tsc -w -p ./tsconfig.json",
-    "build": "tsc --build --noEmit",
+    "build": "tsc --build --clean",
     "wagmi-generate": "wagmi generate"
   },
   "keywords": [],

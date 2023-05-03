@@ -1,50 +1,24 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues";
 import { useCheckout } from "./CheckoutContext";
 
 export default function AutocompleteToken() {
-  const { paymentOptions, superTokens } = useCheckout();
-  const { control: c, watch, setValue } = useFormContext<DraftFormValues>();
-  const network = watch("network");
+  const { paymentOptionWithTokenInfoList } = useCheckout();
+  const { control: c, watch } = useFormContext<DraftFormValues>();
+  const [network] = watch(["network"]);
 
-  // Reset payment option (i.e. the token) when network changes.
-  useEffect(() => {
-    setValue("paymentOptionWithTokenInfo", null, {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: false,
-    });
-  }, [network]);
-
-  // Derive autocomplete options from the payment options.
-  const autocompleteOptions = useMemo<PaymentOptionWithTokenInfo[]>(
-    () => [
-      ...(network
-        ? paymentOptions
-            .filter((paymentOptions) => paymentOptions.chainId === network.id)
-            .map((paymentOption) => {
-              const superToken = superTokens.find(
-                (tokenInfo_) =>
-                  tokenInfo_.address.toLowerCase() ===
-                  paymentOption.superToken.address.toLowerCase()
-              );
-
-              if (superToken === undefined) {
-                // TODO: warn
-                return null;
-              }
-
-              return {
-                paymentOption,
-                superToken,
-              };
-            })
-            .filter((x): x is PaymentOptionWithTokenInfo => x !== null)
-        : []),
-    ],
-    [network, paymentOptions, superTokens]
+  const autocompleteOptions = useMemo<
+    ReadonlyArray<PaymentOptionWithTokenInfo>
+  >(
+    () =>
+      network
+        ? paymentOptionWithTokenInfoList.filter(
+            ({ paymentOption }) => paymentOption.chainId === network.id
+          )
+        : [],
+    [network, paymentOptionWithTokenInfoList]
   );
 
   return (

@@ -6,6 +6,7 @@ import {
 } from "superfluid-checkout-core";
 import { z } from "zod";
 import { SuperTokenInfo } from "./CheckoutContext";
+import { UseFormReturn } from "react-hook-form";
 
 const paymentOptionWithTokenInfoSchema = z.object({
   paymentOption: paymentOptionSchema,
@@ -27,6 +28,7 @@ export const checkoutFormSchema = z.object({
 
 export type ValidFormValues = z.infer<typeof checkoutFormSchema>;
 export type DraftFormValues = NullableObject<ValidFormValues>;
+export type FormReturn = UseFormReturn<DraftFormValues, any, ValidFormValues>;
 
 type NullableObject<T> = {
   [P in keyof T]: T[P] | null;

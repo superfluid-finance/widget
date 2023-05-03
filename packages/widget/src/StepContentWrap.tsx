@@ -9,24 +9,15 @@ import {
 } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useStepper } from "./StepperContext";
 import { useCheckout } from "./CheckoutContext";
 
 export default function StepContentWrap() {
   const { tokenList } = useCheckout();
   const { handleNext } = useStepper();
-  const { control: c, watch, setValue } = useFormContext<DraftFormValues>();
+  const { control: c, watch } = useFormContext<DraftFormValues>();
   const [paymentOptionWithTokenInfo] = watch(["paymentOptionWithTokenInfo"]);
-
-  // Reset wrap amount when payment option (i.e. the token) changes.
-  useEffect(() => {
-    setValue("wrapAmountEther", "", {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: false,
-    });
-  }, [paymentOptionWithTokenInfo]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
 
@@ -85,7 +76,22 @@ export default function StepContentWrap() {
               </FormGroup>
             )}
           />
-          <FormControlLabel control={<Checkbox />} label="Enable Auto-Wrap" />
+          <Controller
+            control={c}
+            name="enableAutoWrap"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={value ?? false}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                  />
+                }
+                label="Enable Auto-Wrap"
+              />
+            )}
+          />
         </Stack>
         <Button variant="contained" fullWidth onClick={handleNext}>
           Continue

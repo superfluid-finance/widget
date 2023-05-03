@@ -1,9 +1,20 @@
-import { useForm, FormProvider as RHFFormProvider } from "react-hook-form";
-import { DraftFormValues, ValidFormValues } from "./formValues";
+import {
+  useForm,
+  FormProvider as RHFFormProvider,
+  UseFormReturn,
+} from "react-hook-form";
+import {
+  DraftFormValues,
+  FormReturn as FormMethods,
+  ValidFormValues,
+} from "./formValues";
 import { DevTool } from "@hookform/devtools";
-import { PropsWithChildren } from "react";
+import { Children } from "./utils";
+import { FormEffects } from "./FormEffects";
 
-type Props = PropsWithChildren;
+type Props = {
+  children: ((formMethods: FormMethods) => Children) | Children;
+};
 
 export default function CheckoutFormProvider({ children }: Props) {
   const defaultValues: DraftFormValues = {
@@ -11,17 +22,18 @@ export default function CheckoutFormProvider({ children }: Props) {
     network: null,
     paymentOptionWithTokenInfo: null,
     wrapAmountEther: "",
-    enableAutoWrap: null,
+    enableAutoWrap: false,
     receiverAddress: null,
   };
 
-  const formMethods = useForm<DraftFormValues, any, ValidFormValues>({
+  const formMethods: FormMethods = useForm({
     defaultValues,
   });
 
   return (
     <RHFFormProvider {...formMethods}>
-      {children}
+      {typeof children === "function" ? children(formMethods) : children}
+      <FormEffects />
       <DevTool control={formMethods.control} placement="bottom-left" />
     </RHFFormProvider>
   );

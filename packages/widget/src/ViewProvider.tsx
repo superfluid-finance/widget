@@ -7,8 +7,9 @@ import {
   Toolbar,
 } from "@mui/material";
 import { ViewContent } from "./ViewContent";
-import { PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { Children } from "./utils";
 
 export type CheckoutViewState = {
   isOpen: boolean;
@@ -19,9 +20,7 @@ export type CheckoutViewState = {
 export type CheckoutViewProps =
   | {
       type: "drawer" | "dialog" | "full-screen";
-      children: (
-        state: Readonly<CheckoutViewState>
-      ) => PropsWithChildren["children"];
+      children: (state: Readonly<CheckoutViewState>) => Children;
     }
   | {
       type: "page";

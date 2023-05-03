@@ -1,9 +1,9 @@
 import { Address } from "abitype";
-import { ChainId, TimePeriod } from "superfluid-checkout-core";
+import { ChainId, TimePeriod, autoWrapStrategyAddress } from "superfluid-checkout-core";
 
 export type EnableAutoWrapCommand = {
   title: "Enable Auto-Wrap";
-  chainId: ChainId;
+  chainId: keyof typeof autoWrapStrategyAddress;
   superTokenAddress: Address;
   underlyingTokenAddress: Address;
 };
