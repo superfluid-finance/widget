@@ -9,12 +9,12 @@ import {
   TextField,
 } from "@mui/material";
 import { FC } from "react";
-import { Network, networks } from "@/networkDefinitions";
+import { Network, networks } from "../../networkDefinitions";
 import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material";
 import { SxProps } from "@mui/material";
 import { Autocomplete } from "@mui/material";
-import tokenList from "@/tokenList";
+import tokenList from "../../tokenList";
 import { TokenInfo } from "@uniswap/token-lists";
 
 export type WidgetData = {

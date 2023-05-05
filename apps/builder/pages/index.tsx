@@ -4,12 +4,12 @@ import { useTheme } from "@mui/material";
 import { Box } from "@mui/material";
 import WidgetPreview, {
   WidgetProps,
-} from "@/components/widget-preview/WidgetPreview";
+} from "../src/components/widget-preview/WidgetPreview";
 import { Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { NullableObject } from "@/types/general";
-import { networks } from "@/networkDefinitions";
-import tokenList from "@/tokenList";
+import { NullableObject } from "../src/types/general";
+import { networks } from "../src/networkDefinitions";
+import tokenList from "../src/tokenList";
 import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material";
