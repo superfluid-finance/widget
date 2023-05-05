@@ -28,8 +28,8 @@
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "^18.2.5",
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
     "typescript": "latest"
   }
 }
