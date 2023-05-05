@@ -15,7 +15,7 @@ type Props = {
 
 export function CommandHandlerProvider({ children }: Props) {
   const [commands, setCommands] = useState<ReadonlyArray<Command>>([]);
-  const [transactions, setTransactions] = useState<ReadonlyArray<TransactionState>>([]);
+  const [transactions] = useState<ReadonlyArray<TransactionState>>([]);
   const [status, setStatus] = useState<CommandHandlerState["status"]>("idle");
 
   const handle = useCallback(() => {

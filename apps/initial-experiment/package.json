@@ -1,6 +1,6 @@
 {
   "name": "initial-experiment",
-  "version": "5.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -33,7 +33,7 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "^7.44.0-rc.0",
+    "react-hook-form": "^7.44.0-rc.1",
     "wagmi": "^0.12.12",
     "zod": "^3.21.4"
   },

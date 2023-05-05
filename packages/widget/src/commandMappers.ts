@@ -34,15 +34,15 @@ export const useMapCommandsToContractWrites: UseMapCommandsToContractWrites = (
   return useMemo(() => {
     const calls: ContractWrite[] = [];
 
-    // for (const command of commands) {
-    //   if (command.title === "Auto-Wrap") {
-    //     calls.push(...mapEnableAutoWrapCommand(command));
-    //   } else if (command.title === "Wrap") {
-    //     calls.push(...mapWrapIntoSuperTokensCommand(command));
-    //   } else if (command.title === "Subscribe") {
-    //     calls.push(...mapSubscribeCommand(command));
-    //   }
-    // }
+    for (const command of commands) {
+      if (command.title === "Enable Auto-Wrap") {
+        calls.push(...mapEnableAutoWrapCommand(command));
+      } else if (command.title === "Wrap into Super Tokens") {
+        calls.push(...mapWrapIntoSuperTokensCommand(command));
+      } else if (command.title === "Send Stream") {
+        calls.push(...mapSubscribeCommand(command));
+      }
+    }
 
     return calls;
   }, [commands]);

@@ -1,20 +1,13 @@
 import {
-  Box,
   List,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Stack,
 } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
 import { useMapCommandsToContractWrites } from "./commandMappers";
-import { Command } from "./commands";
 import CircleIcon from "@mui/icons-material/Circle";
-
-type Props = Readonly<{
-  commands: Command[];
-}>;
 
 export function Transactions() {
   const { commands } = useCommandHandler(); // Cleaner to pass with props.

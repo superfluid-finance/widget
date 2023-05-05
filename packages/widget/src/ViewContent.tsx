@@ -4,7 +4,7 @@ import CheckoutFormProvider from "./FormProvider";
 import { CommandHandlerProvider } from "./CommandHandlerProvider";
 import { CheckoutSummary } from "./CheckoutSummary";
 import { Transactions } from "./Transactions";
-import { AppBar, Box, Container, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Container, IconButton, Toolbar } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export function ViewContent() {

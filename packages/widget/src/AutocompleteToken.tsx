@@ -1,7 +1,5 @@
 import {
   Autocomplete,
-  Avatar,
-  Box,
   Stack,
   TextField,
   Typography,
