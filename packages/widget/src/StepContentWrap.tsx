@@ -1,17 +1,21 @@
 import {
+  Avatar,
   Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
   Stack,
   StepContent,
+  Switch,
   TextField,
+  Typography,
 } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import { useMemo } from "react";
 import { useStepper } from "./StepperContext";
 import { useCheckout } from "./CheckoutContext";
+import { TokenAvatar } from "./TokenAvatar";
 
 export default function StepContentWrap() {
   const { tokenList } = useCheckout();
@@ -63,14 +67,24 @@ export default function StepContentWrap() {
                   onChange={onChange}
                   onBlur={onBlur}
                   InputProps={{
-                    endAdornment: <span>{underlyingToken?.symbol}</span>,
+                    endAdornment: underlyingToken && (
+                      <Stack direction="row" alignItems="center" spacing={1}>
+                        <TokenAvatar tokenInfo={underlyingToken} />
+                        <Typography>{underlyingToken.symbol}</Typography>
+                      </Stack>
+                    ),
                   }}
                 />
                 <TextField
                   disabled
                   value={value}
                   InputProps={{
-                    endAdornment: <span>{superToken?.symbol}</span>,
+                    endAdornment: superToken && (
+                      <Stack direction="row" alignItems="center" spacing={1}>
+                        <TokenAvatar tokenInfo={superToken} />
+                        <Typography>{superToken.symbol}</Typography>
+                      </Stack>
+                    ),
                   }}
                 />
               </FormGroup>
@@ -82,7 +96,7 @@ export default function StepContentWrap() {
             render={({ field: { value, onChange, onBlur } }) => (
               <FormControlLabel
                 control={
-                  <Checkbox
+                  <Switch
                     checked={value ?? false}
                     onChange={onChange}
                     onBlur={onBlur}
