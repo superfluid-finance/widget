@@ -19,7 +19,7 @@ export function FormEffects() {
     });
   }, [network]);
 
-  // Reset wrap amount when payment option (i.e. the token) changes.
+  // Reset wrap things when payment option (i.e. the token) changes.
   useEffect(() => {
     resetField("wrapAmountEther", {
       keepDirty: true,

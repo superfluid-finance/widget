@@ -45,8 +45,8 @@ export default function StepContentPaymentOption() {
             if (isPenultimateStep()) {
               handleSubmit((values) => {
                 const commands = formValuesToCommands(
-                  values as ValidFormValues
-                ); // TODO(KK): This is better in next version of react-hook-form.
+                  values as ValidFormValues // TODO(KK): This is better in next version of react-hook-form.
+                );
                 setCommands(commands);
                 handleNext();
               })();
@@ -58,6 +58,6 @@ export default function StepContentPaymentOption() {
           Continue
         </Button>
       </Stack>
-    </StepContent>
+    </StepContent>  
   );
 }

@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import {
   CommandHandlerContext,
   CommandHandlerState,
+  TransactionState,
 } from "./CommandHandlerContext";
 import { Command } from "./commands";
 import { Children } from "./utils";
@@ -14,10 +15,15 @@ type Props = {
 
 export function CommandHandlerProvider({ children }: Props) {
   const [commands, setCommands] = useState<ReadonlyArray<Command>>([]);
+  const [transactions, setTransactions] = useState<ReadonlyArray<TransactionState>>([]);
   const [status, setStatus] = useState<CommandHandlerState["status"]>("idle");
 
   const handle = useCallback(() => {
-    setStatus("handling");
+    if (status === "idle") {
+      setStatus("handling");
+    } else {
+      throw new Error("Cannot handle when not idle.");
+    }
   }, []);
 
   const cancelHandling = useCallback(() => {
@@ -30,6 +36,7 @@ export function CommandHandlerProvider({ children }: Props) {
 
   const contextValue: CommandHandlerState = {
     commands,
+    transactions,
     status,
     setCommands,
     handle,
