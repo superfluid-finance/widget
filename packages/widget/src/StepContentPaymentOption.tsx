@@ -2,13 +2,15 @@ import { Box, Button, Stack, StepContent } from "@mui/material";
 import AutocompleteToken from "./AutocompleteToken";
 import AutocompleteNetwork from "./AutocompleteNetwork";
 import { useFormContext } from "react-hook-form";
-import { DraftFormValues } from "./formValues";
+import { DraftFormValues, ValidFormValues } from "./formValues";
 import { useStepper } from "./StepperContext";
+import { formValuesToCommands } from "./formValuesToCommands";
+import { useCommandHandler } from "./CommandHandlerContext";
 
 export default function StepContentPaymentOption() {
-  const { handleNext } = useStepper();
-  const { watch } = useFormContext<DraftFormValues>();
-
+  const { handleNext, isPenultimateStep } = useStepper();
+  const { setCommands } = useCommandHandler();
+  const { watch, handleSubmit } = useFormContext<DraftFormValues>();
   const [network, paymentOptionWithTokenInfo] = watch([
     "network",
     "paymentOptionWithTokenInfo",
@@ -36,7 +38,23 @@ export default function StepContentPaymentOption() {
             <AutocompleteToken />
           </Box>
         </Stack>
-        <Button disabled={!isStepComplete} variant="contained" onClick={handleNext}>
+        <Button
+          disabled={!isStepComplete}
+          variant="contained"
+          onClick={() => {
+            if (isPenultimateStep()) {
+              handleSubmit((values) => {
+                const commands = formValuesToCommands(
+                  values as ValidFormValues
+                ); // TODO(KK): This is better in next version of react-hook-form.
+                setCommands(commands);
+                handleNext();
+              })();
+            } else {
+              handleNext();
+            }
+          }}
+        >
           Continue
         </Button>
       </Stack>

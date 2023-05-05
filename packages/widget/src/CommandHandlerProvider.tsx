@@ -16,17 +16,13 @@ export function CommandHandlerProvider({ children }: Props) {
   const [commands, setCommands] = useState<ReadonlyArray<Command>>([]);
   const [status, setStatus] = useState<CommandHandlerState["status"]>("idle");
 
-  const handleCommands = useCallback((newCommands: ReadonlyArray<Command>) => {
+  const handle = useCallback(() => {
     setStatus("handling");
-    setCommands(newCommands);
-    // Perform any additional operations with the commands here.
-    // setStatus("success");
   }, []);
 
   const cancelHandling = useCallback(() => {
     if (status === "handling") {
       setStatus("idle");
-      setCommands([]);
     } else {
       throw new Error("Cannot cancel handling when not handling.");
     }
@@ -35,7 +31,8 @@ export function CommandHandlerProvider({ children }: Props) {
   const contextValue: CommandHandlerState = {
     commands,
     status,
-    handleCommands,
+    setCommands,
+    handle,
     cancelHandling
   };
 

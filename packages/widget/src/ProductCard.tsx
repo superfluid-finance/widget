@@ -7,7 +7,7 @@ export default function ProductCard() {
   } = useCheckout();
 
   return (
-    <Card>
+    <Card sx={{ m: 3 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}

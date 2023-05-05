@@ -28,12 +28,17 @@ export function StepperProvider({ children, totalSteps, initialStep = 0 }: Props
     return activeStep === totalSteps - 1;
   }, [activeStep, totalSteps]);
 
+  const isPenultimateStep = useCallback(() => {
+    return activeStep === totalSteps - 2;
+  }, [activeStep, totalSteps]);
+
   const contextValue = {
     activeStep,
     setActiveStep,
     handleNext,
     handleBack,
     isLastStep,
+    isPenultimateStep,
     totalSteps,
   };
 

@@ -1,8 +1,16 @@
-import { Autocomplete, Box, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Avatar,
+  Box,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues";
 import { useCheckout } from "./CheckoutContext";
+import { TokenAvatar } from "./TokenAvatar";
 
 export default function AutocompleteToken() {
   const { paymentOptionWithTokenInfoList } = useCheckout();
@@ -35,12 +43,22 @@ export default function AutocompleteToken() {
           }
           options={autocompleteOptions}
           autoHighlight
-          getOptionLabel={(option) => option.superToken.symbol}
+          getOptionLabel={(option) =>
+            `${option.paymentOption.flowRate.amountEther} ${option.superToken.symbol}/${option.paymentOption.flowRate.period}`
+          }
           renderOption={(props, option) => (
-            <Box component="li" {...props}>
-              {option.paymentOption.flowRate.amountEther}{" "}
-              {option.superToken.symbol}/{option.paymentOption.flowRate.period}
-            </Box>
+            <Stack
+              {...props}
+              component="li"
+              direction="row"
+              alignItems="center"
+              spacing={1}
+            >
+              <TokenAvatar tokenInfo={option.superToken} />
+              <Typography>
+                {`${option.paymentOption.flowRate.amountEther} ${option.superToken.symbol}/${option.paymentOption.flowRate.period}`}
+              </Typography>
+            </Stack>
           )}
           renderInput={(params) => <TextField {...params} label="Token" />}
           onChange={(_event, newValue) => onChange(newValue)}
