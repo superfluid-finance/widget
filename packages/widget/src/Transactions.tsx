@@ -35,7 +35,6 @@ export function Transactions() {
           </ListItem>
         ))}
       </List>
-
     </Stack>
   );
 }

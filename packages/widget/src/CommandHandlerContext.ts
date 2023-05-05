@@ -4,7 +4,8 @@ import { Command } from "./commands";
 export type CommandHandlerState = {
   commands: ReadonlyArray<Command>;
   status: "idle" | "handling" | "success";
-  handleCommands: (commands: ReadonlyArray<Command>) => void;
+  setCommands: (commands: ReadonlyArray<Command>) => void;
+  handle: () => void;
   cancelHandling: () => void;
 };
 

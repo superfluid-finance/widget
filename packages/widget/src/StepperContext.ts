@@ -6,6 +6,7 @@ export type StepperContextValue = {
   handleNext: () => void;
   handleBack: () => void;
   isLastStep: () => boolean;
+  isPenultimateStep: () => boolean;
   totalSteps: number;
 };
 
