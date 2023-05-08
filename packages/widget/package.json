@@ -20,7 +20,7 @@
     "ethers": "^5.7.2",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "^v7.44.0-rc.1",
+    "react-hook-form": "^v7.44.0-rc.3",
     "superfluid-checkout-core": "workspace:*",
     "wagmi": "^0.12.12",
     "zod": "^3.21.4"
