@@ -1,18 +1,9 @@
-import { useState } from "react";
-import { Stack } from "@mui/material";
-import { useTheme } from "@mui/material";
-import { Box } from "@mui/material";
-import WidgetPreview, {
-  WidgetProps,
-} from "../src/components/widget-preview/WidgetPreview";
-import { Typography } from "@mui/material";
+import { Box, MenuItem, Select, SelectChangeEvent, Stack, Typography, useTheme } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { NullableObject } from "../src/types/general";
 import { networks } from "../src/networkDefinitions";
 import tokenList from "../src/tokenList";
-import { Select } from "@mui/material";
-import { MenuItem } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material";
+import { NullableObject } from "../src/types/general";
+import WidgetPreview, { WidgetProps } from "../src/components/widget-preview/WidgetPreview";
 
 export default function Home() {
   const theme = useTheme();
@@ -32,24 +23,24 @@ export default function Home() {
         networks,
         tokens: tokenList.tokens,
       },
-      customStyle: {
-        root: {
-          width: 500,
-          px: 4,
-          py: 4,
-        },
-      },
+      // customStyle: {
+      //   root: {
+      //     width: 500,
+      //     px: 4,
+      //     py: 4,
+      //   },
+      // },
     },
   });
 
   const { watch, control, getValues } = formMethods;
 
-  const handleChange = (event: SelectChangeEvent<typeof selectedNetworks>) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedNetworks(typeof value === "string" ? value.split(",") : value);
-  };
+  // const handleChange = (event: SelectChangeEvent<typeof selectedNetworks>) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setSelectedNetworks(typeof value === "string" ? value.split(",") : value);
+  // };
 
   return (
     <Stack direction="row">
@@ -66,13 +57,14 @@ export default function Home() {
               control={control}
               name="data.networks"
               render={() => (
-                <Select multiple value={selectedNetworks}>
-                  {networks.map((network) => (
-                    <MenuItem value={network.name} key={network.chainId}>
-                      {network.name}
-                    </MenuItem>
-                  ))}
-                </Select>
+                <></>
+                // <Select multiple value={selectedNetworks}>
+                //   {networks.map((network) => (
+                //     <MenuItem value={network.name} key={network.chainId}>
+                //       {network.name}
+                //     </MenuItem>
+                //   ))}
+                // </Select>
               )}
             />
           </Stack>

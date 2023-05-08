@@ -42,10 +42,10 @@ export type WidgetStyle = {
 
 export type WidgetProps = {
   data: WidgetData;
-  customStyle: WidgetStyle;
+  // customStyle: WidgetStyle;
 };
 
-const WidgetPreview: FC<WidgetProps> = ({ data, customStyle }) => {
+const WidgetPreview: FC<WidgetProps> = ({ data }) => {
   const [selectedNetworks, setSelectedNetworks] = useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof selectedNetworks>) => {
@@ -56,7 +56,7 @@ const WidgetPreview: FC<WidgetProps> = ({ data, customStyle }) => {
   };
 
   return (
-    <Card sx={{ ...customStyle.root }}>
+    <Card>
       <Stack direction="column">
         <Typography variant="h6" pb={2}>
           {data.productName}
