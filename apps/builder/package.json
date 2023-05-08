@@ -22,7 +22,7 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "^7.44.0-rc.0",
+    "react-hook-form": "^7.44.0-rc.3",
     "zod": "^3.21.4"
   },
   "devDependencies": {
