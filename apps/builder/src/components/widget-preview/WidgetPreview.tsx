@@ -8,13 +8,11 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { Network, networks } from "../../networkDefinitions";
 import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material";
-import { SxProps } from "@mui/material";
 import { Autocomplete } from "@mui/material";
-import tokenList from "../../tokenList";
 import { TokenInfo } from "@uniswap/token-lists";
 
 export type WidgetData = {
@@ -32,12 +30,9 @@ export type WidgetData = {
 };
 
 export type WidgetStyle = {
-  root: {
-    width: number;
-    px: number;
-    py: number;
-  };
-  input: SxProps<Theme>;
+  width: number;
+  px: number;
+  py: number;
 };
 
 export type WidgetProps = {
@@ -46,17 +41,25 @@ export type WidgetProps = {
 };
 
 const WidgetPreview: FC<WidgetProps> = ({ data }) => {
-  const [selectedNetworks, setSelectedNetworks] = useState<string[]>([]);
+  const [selectedNetwork, setSelectedNetwork] = useState<string>("");
 
-  const handleChange = (event: SelectChangeEvent<typeof selectedNetworks>) => {
+  const handleChange = (event: SelectChangeEvent<typeof selectedNetwork>) => {
     const {
       target: { value },
     } = event;
-    setSelectedNetworks(typeof value === "string" ? value.split(",") : value);
+
+    setSelectedNetwork(value);
   };
 
+  const autoCompleteTokenOptions = useMemo(() => {
+    const network = data.networks.find(({ name }) => name === selectedNetwork);
+    return data.tokens.filter((token) => {
+      return token.chainId === network?.chainId;
+    });
+  }, [selectedNetwork, data.networks]);
+
   return (
-    <Card>
+    <Card sx={{ width: 500, p: 4 }}>
       <Stack direction="column">
         <Typography variant="h6" pb={2}>
           {data.productName}
@@ -74,7 +77,7 @@ const WidgetPreview: FC<WidgetProps> = ({ data }) => {
 
           <Stack>
             <Typography>{data.labels.network}</Typography>
-            <Select multiple value={selectedNetworks} onChange={handleChange}>
+            <Select value={selectedNetwork} onChange={handleChange}>
               {data.networks.map((network) => (
                 <MenuItem value={network.name} key={network.chainId}>
                   {network.name}
@@ -88,10 +91,17 @@ const WidgetPreview: FC<WidgetProps> = ({ data }) => {
             <Autocomplete
               disablePortal
               id="network-select"
-              options={data.tokens.map((token) => token.symbol)}
-              renderInput={(params) => (
-                <TextField {...params} label="SuperToken" />
+              options={autoCompleteTokenOptions}
+              getOptionLabel={(option) => `${option.name} (${option.symbol})`}
+              renderOption={(props, option) => (
+                <Typography
+                  {...props}
+                  key={`${option.symbol}-${option.chainId}`}
+                >
+                  {option.symbol}
+                </Typography>
               )}
+              renderInput={(params) => <TextField {...params} />}
             />
           </Stack>
 
