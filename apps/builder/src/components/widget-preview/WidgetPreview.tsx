@@ -40,6 +40,12 @@ export type WidgetProps = {
   // customStyle: WidgetStyle;
 };
 
+const renderToken = (token: TokenInfo) => {
+  const raw = `${token.name} (${token.symbol})`;
+
+  return raw.replace(/[^a-zA-Z0-9\s]g/, "");
+};
+
 const WidgetPreview: FC<WidgetProps> = ({ data }) => {
   const [selectedNetwork, setSelectedNetwork] = useState<string>("");
 
@@ -92,13 +98,13 @@ const WidgetPreview: FC<WidgetProps> = ({ data }) => {
               disablePortal
               id="network-select"
               options={autoCompleteTokenOptions}
-              getOptionLabel={(option) => `${option.name} (${option.symbol})`}
+              getOptionLabel={renderToken}
               renderOption={(props, option) => (
                 <Typography
                   {...props}
                   key={`${option.symbol}-${option.chainId}`}
                 >
-                  {option.symbol}
+                  {renderToken(option)}
                 </Typography>
               )}
               renderInput={(params) => <TextField {...params} />}
