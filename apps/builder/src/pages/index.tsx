@@ -1,19 +1,30 @@
 import {
+  Autocomplete,
   Box,
+  Button,
+  Drawer,
+  IconButton,
   MenuItem,
   Select,
   SelectChangeEvent,
   Stack,
+  Step,
+  StepButton,
+  StepContent,
+  Stepper,
   TextField,
   Typography,
   useTheme,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { networks } from "../networkDefinitions";
-import tokenList from "../tokenList";
 import WidgetPreview, {
   WidgetProps,
 } from "../components/widget-preview/WidgetPreview";
+import { useState } from "react";
+import CancelIcon from "@mui/icons-material/Cancel";
+
+import SelectPaymentOption from "../components/widget-preview/SelectPaymentOption";
 
 const labelStyle = {
   fontWeight: 500,
@@ -21,38 +32,30 @@ const labelStyle = {
 
 export default function Home() {
   const theme = useTheme();
+  const [activeStep, setActiveStep] = useState(0);
 
   const formMethods = useForm<WidgetProps, any, WidgetProps>({
     defaultValues: {
       data: {
         productName: "Product Name",
+        productDesc: "Product Description",
+        paymentOptions: [],
         labels: {
-          from: "From",
-          to: "To",
-          network: "Select Network",
-          token: "SuperToken",
-          amount: "Amount",
+          paymentOption: "Pay with",
           send: "Send",
         },
-        networks,
-        tokens: tokenList.tokens,
       },
     },
   });
 
   const { watch, control, getValues, setValue } = formMethods;
 
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = event;
-
-    const selectedNetworks = networks.filter((network) =>
-      value.includes(network.name)
-    );
-
-    setValue("data.networks", selectedNetworks);
-  };
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: "data.paymentOptions", // unique name for your Field Array
+    }
+  );
 
   const [data] = watch(["data"]);
 
@@ -60,7 +63,7 @@ export default function Home() {
     <Stack direction="row">
       <Stack
         sx={{
-          width: 400,
+          width: 1000,
           height: "100vh",
         }}
       >
@@ -68,63 +71,148 @@ export default function Home() {
           <Typography variant="h6" sx={labelStyle}>
             Widget Customization
           </Typography>
-          <Stack direction="column" gap={0.5}>
-            <Typography sx={labelStyle}>Product name</Typography>
-            <Controller
-              control={control}
-              name="data.productName"
-              render={({ field: { value, onChange } }) => (
-                <TextField value={value} onChange={onChange} />
-              )}
-            />
-          </Stack>
-          <Stack direction="column" gap={0.5}>
-            <Typography sx={labelStyle}>Allowed networks</Typography>
-            <Controller
-              control={control}
-              name="data.networks"
-              render={({ field: { value } }) => (
-                <Select
-                  multiple
-                  value={value.map(({ name }) => name)}
-                  onChange={handleChange}
-                >
-                  {networks.map((network) => (
-                    <MenuItem value={network.name} key={network.chainId}>
-                      {network.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
-            />
-          </Stack>
-          <Stack direction="column" gap={0.5}>
-            <Typography sx={labelStyle}>Labels</Typography>
-            {(Object.keys(data.labels) as (keyof typeof data.labels)[]).map(
-              (label) => (
-                <Controller
-                  control={control}
-                  name={`data.labels.${label}`}
-                  render={({ field: { value, onChange } }) => (
-                    <Stack
-                      direction="row"
-                      sx={{
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                      gap={1}
-                    >
-                      <Typography sx={{ minWidth: 75, pl: 1 }}>
-                        {label}:
-                      </Typography>
+          <Stepper activeStep={activeStep} orientation="vertical">
+            <Step>
+              <StepButton>Product Name</StepButton>
+              <StepContent>
+                <Stack direction="column" gap={1}>
+                  <Controller
+                    control={control}
+                    name="data.productName"
+                    render={({ field: { value, onChange } }) => (
+                      <TextField value={value} onChange={onChange} />
+                    )}
+                  />
+                  <Button
+                    disabled={!data.productName}
+                    variant="contained"
+                    onClick={() =>
+                      setActiveStep((activeStep) => activeStep + 1)
+                    }
+                  >
+                    Next
+                  </Button>
+                </Stack>
+              </StepContent>
+            </Step>
+            <Step>
+              <StepButton>Product Description</StepButton>
+              <StepContent>
+                <Stack direction="column" gap={1}>
+                  <Controller
+                    control={control}
+                    name="data.productDesc"
+                    render={({ field: { value, onChange } }) => (
+                      <TextField value={value} onChange={onChange} />
+                    )}
+                  />
+                  <Button
+                    disabled={!data.productDesc}
+                    variant="contained"
+                    onClick={() =>
+                      setActiveStep((activeStep) => activeStep + 1)
+                    }
+                  >
+                    Next
+                  </Button>
+                </Stack>
+              </StepContent>
+            </Step>
 
-                      <TextField fullWidth value={value} onChange={onChange} />
-                    </Stack>
-                  )}
-                />
-              )
-            )}
-          </Stack>
+            <Step>
+              <StepButton>Payment Options</StepButton>
+              <StepContent>
+                <Stack direction="column" gap={1}>
+                  <Controller
+                    control={control}
+                    name="data.paymentOptions"
+                    render={() => <SelectPaymentOption onAdd={append} />}
+                  />
+                  <Stack direction="column">
+                    <Typography variant="subtitle2">
+                      Added Payment Options
+                    </Typography>
+
+                    <Box mx={1}>
+                      {fields.length ? (
+                        fields.map(({ network, superToken }, i) => (
+                          <Stack
+                            key={`${superToken.address}-${network.chainId}-${i}`}
+                            direction="row"
+                            sx={{
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Typography variant="caption">{`${i + 1}. ${
+                              superToken.name
+                            } (${superToken.symbol}) on ${
+                              network.name
+                            }`}</Typography>
+                            <IconButton size="small" onClick={() => remove(i)}>
+                              <CancelIcon />
+                            </IconButton>
+                          </Stack>
+                        ))
+                      ) : (
+                        <Typography variant="caption">- None</Typography>
+                      )}
+                    </Box>
+                  </Stack>
+                  <Button
+                    sx={{ mt: 2 }}
+                    variant="contained"
+                    disabled={data.paymentOptions.length === 0}
+                    onClick={() =>
+                      setActiveStep((activeStep) => activeStep + 1)
+                    }
+                  >
+                    Next
+                  </Button>
+                </Stack>
+              </StepContent>
+            </Step>
+            <Step>
+              <StepButton
+                onClick={() => setActiveStep((activeStep) => activeStep + 1)}
+              >
+                Labels
+              </StepButton>
+              <StepContent>
+                <Stack direction="column" gap={1}>
+                  {(
+                    Object.keys(data.labels) as (keyof typeof data.labels)[]
+                  ).map((label) => (
+                    <Controller
+                      key={label}
+                      control={control}
+                      name={`data.labels.${label}`}
+                      render={({ field: { value, onChange } }) => (
+                        <Stack
+                          direction="row"
+                          sx={{
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                          gap={1}
+                        >
+                          <Typography sx={{ minWidth: 150, pl: 1 }}>
+                            {label}:
+                          </Typography>
+
+                          <TextField
+                            fullWidth
+                            value={value}
+                            onChange={onChange}
+                          />
+                        </Stack>
+                      )}
+                    />
+                  ))}
+                </Stack>
+              </StepContent>
+            </Step>
+          </Stepper>
         </Stack>
       </Stack>
       <Box
