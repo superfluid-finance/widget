@@ -48,6 +48,7 @@ const renderToken = (token: TokenInfo) => {
 
 const WidgetPreview: FC<WidgetProps> = ({ data }) => {
   const [selectedNetwork, setSelectedNetwork] = useState<string>("");
+  const [selectedToken, setSelectedToken] = useState<TokenInfo | null>(null);
 
   const handleChange = (event: SelectChangeEvent<typeof selectedNetwork>) => {
     const {
@@ -63,6 +64,10 @@ const WidgetPreview: FC<WidgetProps> = ({ data }) => {
       return token.chainId === network?.chainId;
     });
   }, [selectedNetwork, data.networks]);
+
+  useEffect(() => {
+    setSelectedToken(null);
+  }, [selectedNetwork]);
 
   return (
     <Card sx={{ width: 500, p: 4 }}>
@@ -95,6 +100,8 @@ const WidgetPreview: FC<WidgetProps> = ({ data }) => {
           <Stack>
             <Typography>{data.labels.token}</Typography>
             <Autocomplete
+              value={selectedToken}
+              onChange={(_, value) => setSelectedToken(value)}
               disablePortal
               id="network-select"
               options={autoCompleteTokenOptions}
