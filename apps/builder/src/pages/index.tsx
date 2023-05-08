@@ -1,9 +1,9 @@
 import { Box, MenuItem, Select, SelectChangeEvent, Stack, Typography, useTheme } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { networks } from "../src/networkDefinitions";
-import tokenList from "../src/tokenList";
-import { NullableObject } from "../src/types/general";
-import WidgetPreview, { WidgetProps } from "../src/components/widget-preview/WidgetPreview";
+import { networks } from "../networkDefinitions";
+import tokenList from "../tokenList";
+import { NullableObject } from "../types/general";
+import WidgetPreview, { WidgetProps } from "../components/widget-preview/WidgetPreview";
 
 export default function Home() {
   const theme = useTheme();
