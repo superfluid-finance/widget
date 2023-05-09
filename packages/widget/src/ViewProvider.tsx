@@ -4,6 +4,7 @@ import {
   Drawer,
   IconButton,
   ModalProps,
+  Paper,
   Toolbar,
 } from "@mui/material";
 import { ViewContent } from "./ViewContent";

@@ -25,11 +25,17 @@ import WidgetPreview, {
   WidgetProps,
   layouts,
 } from "../components/widget-preview/WidgetPreview";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import SelectPaymentOption from "../components/widget-preview/SelectPaymentOption";
-import { ChainId, CheckoutProvider, PaymentOption, ProductDetails, SupportedNetwork } from "superfluid-checkout-widget";
+import {
+  ChainId,
+  CheckoutProvider,
+  PaymentOption,
+  ProductDetails,
+  SupportedNetwork,
+} from "superfluid-checkout-widget";
 import tokenList from "../tokenList";
 
 const labelStyle = {
@@ -67,21 +73,31 @@ export default function Home() {
 
   const [data] = watch(["data"]);
 
-  const productDetails: ProductDetails = useMemo(() => ({
-    name: data.productName,
-    description: data.productDesc
-  }), [data.productName, data.productDesc]);
+  const productDetails: ProductDetails = useMemo(
+    () => ({
+      name: data.productName,
+      description: data.productDesc,
+    }),
+    [data.productName, data.productDesc]
+  );
 
-  const paymentOptions: PaymentOption[] = useMemo(() => (data.paymentOptions.map(x => ({
-    chainId: x.network.chainId as ChainId,
-    superToken: {
-      address: x.superToken.address as `0x${string}`,
-    },
-    flowRate: {
-      amountEther: "1",
-      period: "month"
-    },
-  }))), [])
+  const paymentOptions: PaymentOption[] = useMemo(
+    () =>
+      data.paymentOptions.map((x) => ({
+        chainId: x.network.chainId as ChainId,
+        superToken: {
+          address: x.superToken.address as `0x${string}`,
+        },
+        flowRate: {
+          amountEther: "1",
+          period: "month",
+        },
+      })),
+    [data.paymentOptions]
+  );
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   return (
     <Stack direction="row">
@@ -291,13 +307,15 @@ export default function Home() {
           justifyContent: "center",
         }}
       >
+        {mounted && (
           <CheckoutProvider
             productDetails={productDetails}
             paymentOptions={paymentOptions}
             tokenList={tokenList}
             type="page"
           />
-        <WidgetPreview {...getValues()} drawer={{ isOpen: isDrawerOpen }} />
+        )}
+        {/* <WidgetPreview {...getValues()} drawer={{ isOpen: isDrawerOpen }} /> */}
       </Box>
     </Stack>
   );
