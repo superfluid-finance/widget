@@ -4,12 +4,16 @@ import CheckoutFormProvider from "./FormProvider";
 import { CommandHandlerProvider } from "./CommandHandlerProvider";
 import { CheckoutSummary } from "./CheckoutSummary";
 import { Transactions } from "./Transactions";
-import { AppBar, Box, Container, IconButton, Toolbar } from "@mui/material";
+import { AppBar, Box, Container, IconButton, Toolbar, useTheme } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export function ViewContent() {
+  const theme = useTheme();
+
   return (
-    <Container maxWidth="md" disableGutters>
+    <Container maxWidth="md" disableGutters sx={{
+      bgcolor: theme.palette.background.default // TODO: Think if this is best.
+    }}>
       <CheckoutFormProvider>
         <ProductCard />
         <CommandHandlerProvider>
