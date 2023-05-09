@@ -26,7 +26,7 @@ export const WidgetContent: FC<WidgetContentProps> = ({
     useWidgetContext();
 
   return (
-    <Stack direction="column" gap={2}>
+    <Stack direction="column" gap={2} sx={{ width: "100%" }}>
       <Stack>
         <Typography variant="h6">{productName}</Typography>
         <Typography variant="caption">{productDesc}</Typography>
