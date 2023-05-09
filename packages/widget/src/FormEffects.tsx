@@ -15,7 +15,7 @@ export function FormEffects() {
     resetField("paymentOptionWithTokenInfo", {
       keepDirty: true,
       keepTouched: true,
-      keepError: true,
+      keepError: false,
     });
   }, [network]);
 
@@ -24,12 +24,12 @@ export function FormEffects() {
     resetField("wrapAmountEther", {
       keepDirty: true,
       keepTouched: true,
-      keepError: true,
+      keepError: false,
     });
     resetField("enableAutoWrap", {
       keepDirty: true,
       keepTouched: true,
-      keepError: true,
+      keepError: false,
     });
   }, [paymentOptionWithTokenInfo]);
 
