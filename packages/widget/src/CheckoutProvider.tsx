@@ -41,7 +41,7 @@ export function CheckoutProvider({
         return supportedNetwork;
       })
       .filter((x): x is SupportedNetwork => x !== null);
-  }, [paymentOptions]);
+  }, [paymentOptions]); 
 
   // Derive autocomplete options from the payment options.
   const paymentOptionWithTokenInfoList = useMemo<
