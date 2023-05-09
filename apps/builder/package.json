@@ -23,6 +23,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.44.0-rc.3",
+    "superfluid-checkout-widget": "workspace:^",
     "zod": "^3.21.4"
   },
   "devDependencies": {
