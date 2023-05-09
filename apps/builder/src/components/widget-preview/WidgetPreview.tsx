@@ -8,7 +8,7 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import { FC, useEffect, useMemo } from "react";
+import { FC, createContext, useContext, useEffect, useMemo } from "react";
 import { Network, networks } from "../../networkDefinitions";
 import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material";
@@ -16,6 +16,10 @@ import { Autocomplete } from "@mui/material";
 import { TokenInfo } from "@uniswap/token-lists";
 import { BigNumber } from "ethers";
 import { PaymentOption } from "./SelectPaymentOption";
+import WidgetDialog from "./WidgetDialog";
+import { WidgetContentProps } from "./WidgetContent";
+import WidgetDrawer from "./WidgetDrawer";
+import WidgetFullScreen from "./WidgetFullScreen";
 
 export type PaymentInterval =
   | "second"
@@ -26,6 +30,10 @@ export type PaymentInterval =
   | "month"
   | "year";
 
+export const layouts = ["dialog", "drawer", "fullscreen"] as const;
+
+export type Layout = (typeof layouts)[number];
+
 export type WidgetData = {
   productName: string;
   productDesc: string;
@@ -34,29 +42,56 @@ export type WidgetData = {
     paymentOption: string;
     send: string;
   };
-  networks: Network[];
-  tokens: TokenInfo[];
+  layout: Layout;
 };
 
-export type WidgetStyle = {
-  width: number;
-  px: number;
-  py: number;
+export type WidgetState = {
+  selectedPaymentOption: string;
+  onPaymentOptionSelect: (event: SelectChangeEvent<string>) => void;
 };
 
+export const WidgetContext = createContext<WidgetProps["data"]>({
+  productName: "Product Name",
+  productDesc: "Product Description",
+  paymentOptions: [],
+  labels: {
+    paymentOption: "Pay with",
+    send: "Send",
+  },
+  layout: "dialog",
+});
+
+export const useWidgetContext = () => useContext(WidgetContext);
+
+const getWidgetLayout = (
+  layout: WidgetProps["data"]["layout"],
+  props: WidgetContentProps,
+  drawerProps: {
+    isOpen: boolean;
+  }
+) => {
+  switch (layout) {
+    case "dialog":
+      return <WidgetDialog {...props} />;
+    case "drawer":
+      return <WidgetDrawer {...props} {...drawerProps} />;
+    case "fullscreen":
+      return <WidgetFullScreen {...props} />;
+    default:
+      return <WidgetDialog {...props} />;
+  }
+};
 export type WidgetProps = {
   data: WidgetData;
-  // customStyle: WidgetStyle;
+  drawer: {
+    isOpen: boolean;
+  };
 };
-
-const renderPaymentOption = (paymentOption: PaymentOption) =>
-  `${paymentOption.superToken.name} (${paymentOption.superToken.symbol}) on ${paymentOption.network.name}`;
-
-const WidgetPreview: FC<WidgetProps> = ({ data }) => {
+const WidgetPreview: FC<WidgetProps> = ({ data, drawer }) => {
   const [selectedPaymentOption, setSelectedPaymentOption] =
     useState<string>("");
 
-  const handleChange = (
+  const handlePaymentOptionSelect = (
     event: SelectChangeEvent<typeof selectedPaymentOption>
   ) => {
     const {
@@ -65,33 +100,15 @@ const WidgetPreview: FC<WidgetProps> = ({ data }) => {
     setSelectedPaymentOption(value);
   };
 
+  const widgetContentProps: WidgetContentProps = {
+    selectedPaymentOption: selectedPaymentOption,
+    onPaymentOptionSelect: handlePaymentOptionSelect,
+  };
+
   return (
-    <Card sx={{ width: 500, p: 4 }}>
-      <Stack direction="column" gap={2}>
-        <Stack>
-          <Typography variant="h6">{data.productName}</Typography>
-          <Typography variant="caption">{data.productDesc}</Typography>
-        </Stack>
-
-        <Stack direction="column" gap={2}>
-          <Stack>
-            <Typography>{data.labels.paymentOption}</Typography>
-            <Select value={selectedPaymentOption} onChange={handleChange}>
-              {data.paymentOptions.map((option, i) => (
-                <MenuItem
-                  key={`${option.superToken.address}-${option.network.chainId}-${i}`}
-                  value={`${option.superToken.address}-${option.network.chainId}`}
-                >
-                  {renderPaymentOption(option)}
-                </MenuItem>
-              ))}
-            </Select>
-          </Stack>
-
-          <Button variant="contained">{data.labels.send}</Button>
-        </Stack>
-      </Stack>
-    </Card>
+    <WidgetContext.Provider value={data}>
+      {getWidgetLayout(data.layout, widgetContentProps, drawer)}
+    </WidgetContext.Provider>
   );
 };
 

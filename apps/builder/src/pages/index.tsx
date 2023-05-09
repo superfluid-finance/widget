@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   Drawer,
+  FormControl,
+  FormControlLabel,
   IconButton,
   MenuItem,
   Select,
@@ -12,6 +14,7 @@ import {
   StepButton,
   StepContent,
   Stepper,
+  Switch,
   TextField,
   Typography,
   useTheme,
@@ -20,6 +23,7 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { networks } from "../networkDefinitions";
 import WidgetPreview, {
   WidgetProps,
+  layouts,
 } from "../components/widget-preview/WidgetPreview";
 import { useState } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -33,6 +37,7 @@ const labelStyle = {
 export default function Home() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const formMethods = useForm<WidgetProps, any, WidgetProps>({
     defaultValues: {
@@ -44,6 +49,7 @@ export default function Home() {
           paymentOption: "Pay with",
           send: "Send",
         },
+        layout: "dialog",
       },
     },
   });
@@ -63,7 +69,7 @@ export default function Home() {
     <Stack direction="row">
       <Stack
         sx={{
-          width: 1000,
+          width: 600,
           height: "100vh",
         }}
       >
@@ -71,9 +77,52 @@ export default function Home() {
           <Typography variant="h6" sx={labelStyle}>
             Widget Customization
           </Typography>
+
+          {data.layout === "drawer" && (
+            <FormControlLabel
+              label="Toggle Drawer"
+              control={
+                <Switch
+                  value={isDrawerOpen}
+                  onClick={() => setDrawerOpen((isOpen) => !isOpen)}
+                />
+              }
+            />
+          )}
+
           <Stepper activeStep={activeStep} orientation="vertical">
             <Step>
-              <StepButton>Product Name</StepButton>
+              <StepButton onClick={() => setActiveStep(0)}>Variant</StepButton>
+              <StepContent>
+                <Stack direction="column" gap={1}>
+                  <Controller
+                    control={control}
+                    name="data.layout"
+                    render={({ field: { value, onChange } }) => (
+                      <Select value={value} onChange={onChange} fullWidth>
+                        {layouts.map((layout) => (
+                          <MenuItem value={layout} key={layout}>
+                            {layout}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  ></Controller>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      setActiveStep((activeStep) => activeStep + 1)
+                    }
+                  >
+                    Next
+                  </Button>
+                </Stack>
+              </StepContent>
+            </Step>
+            <Step>
+              <StepButton onClick={() => setActiveStep(1)}>
+                Product Name
+              </StepButton>
               <StepContent>
                 <Stack direction="column" gap={1}>
                   <Controller
@@ -96,7 +145,9 @@ export default function Home() {
               </StepContent>
             </Step>
             <Step>
-              <StepButton>Product Description</StepButton>
+              <StepButton onClick={() => setActiveStep(2)}>
+                Product Description
+              </StepButton>
               <StepContent>
                 <Stack direction="column" gap={1}>
                   <Controller
@@ -120,7 +171,9 @@ export default function Home() {
             </Step>
 
             <Step>
-              <StepButton>Payment Options</StepButton>
+              <StepButton onClick={() => setActiveStep(3)}>
+                Payment Options
+              </StepButton>
               <StepContent>
                 <Stack direction="column" gap={1}>
                   <Controller
@@ -173,11 +226,7 @@ export default function Home() {
               </StepContent>
             </Step>
             <Step>
-              <StepButton
-                onClick={() => setActiveStep((activeStep) => activeStep + 1)}
-              >
-                Labels
-              </StepButton>
+              <StepButton onClick={() => setActiveStep(4)}>Labels</StepButton>
               <StepContent>
                 <Stack direction="column" gap={1}>
                   {(
@@ -224,7 +273,7 @@ export default function Home() {
           justifyContent: "center",
         }}
       >
-        <WidgetPreview {...getValues()} />
+        <WidgetPreview {...getValues()} drawer={{ isOpen: isDrawerOpen }} />
       </Box>
     </Stack>
   );
