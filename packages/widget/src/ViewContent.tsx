@@ -11,7 +11,7 @@ export function ViewContent() {
   const theme = useTheme();
 
   return (
-    <Container maxWidth="md" disableGutters sx={{
+    <Container maxWidth="sm" disableGutters sx={{
       bgcolor: theme.palette.background.default // TODO: Think if this is best.
     }}>
       <CheckoutFormProvider>
