@@ -1,25 +1,15 @@
-import { Card } from "@mui/material";
-import {
-  Button,
-  Select,
-  MenuItem,
-  Stack,
-  Theme,
-  Typography,
-  TextField,
-} from "@mui/material";
 import { FC, createContext, useContext, useEffect, useMemo } from "react";
-import { Network, networks } from "../../networkDefinitions";
 import { useState } from "react";
-import { SelectChangeEvent } from "@mui/material";
-import { Autocomplete } from "@mui/material";
-import { TokenInfo } from "@uniswap/token-lists";
-import { BigNumber } from "ethers";
-import { PaymentOption } from "./SelectPaymentOption";
-import WidgetDialog from "./WidgetDialog";
-import { WidgetContentProps } from "./WidgetContent";
-import WidgetDrawer from "./WidgetDrawer";
-import WidgetFullScreen from "./WidgetFullScreen";
+import { Button, SelectChangeEvent } from "@mui/material";
+
+import { PaymentOption as SelectPaymentOption } from "./SelectPaymentOption";
+import {
+  ChainId,
+  CheckoutProvider,
+  PaymentOption,
+  ProductDetails,
+} from "superfluid-checkout-widget";
+import tokenList from "../../tokenList";
 
 export type PaymentInterval =
   | "second"
@@ -30,14 +20,14 @@ export type PaymentInterval =
   | "month"
   | "year";
 
-export const layouts = ["dialog", "drawer", "fullscreen"] as const;
+export const layouts = ["dialog", "drawer", "full-screen", "page"] as const;
 
 export type Layout = (typeof layouts)[number];
 
 export type WidgetData = {
   productName: string;
   productDesc: string;
-  paymentOptions: PaymentOption[];
+  paymentOptions: SelectPaymentOption[];
   labels: {
     paymentOption: string;
     send: string;
@@ -63,51 +53,65 @@ export const WidgetContext = createContext<WidgetProps["data"]>({
 
 export const useWidgetContext = () => useContext(WidgetContext);
 
-const getWidgetLayout = (
-  layout: WidgetProps["data"]["layout"],
-  props: WidgetContentProps,
-  drawerProps: {
-    isOpen: boolean;
-  }
+const switchLayout = (
+  layout: Layout,
+  productDetails: ProductDetails,
+  paymentOptions: PaymentOption[]
 ) => {
-  switch (layout) {
-    case "dialog":
-      return <WidgetDialog {...props} />;
-    case "drawer":
-      return <WidgetDrawer {...props} {...drawerProps} />;
-    case "fullscreen":
-      return <WidgetFullScreen {...props} />;
-    default:
-      return <WidgetDialog {...props} />;
-  }
+  return layout === "page" ? (
+    <CheckoutProvider
+      productDetails={productDetails}
+      paymentOptions={paymentOptions}
+      tokenList={tokenList}
+      type={layout}
+    />
+  ) : (
+    <CheckoutProvider
+      productDetails={productDetails}
+      paymentOptions={paymentOptions}
+      tokenList={tokenList}
+      type={layout}
+    >
+      {({ openModal }) => (
+        <Button onClick={() => openModal()}>{`Open ${layout}`}</Button>
+      )}
+    </CheckoutProvider>
+  );
 };
+
 export type WidgetProps = {
   data: WidgetData;
-  drawer: {
-    isOpen: boolean;
-  };
 };
-const WidgetPreview: FC<WidgetProps> = ({ data, drawer }) => {
-  const [selectedPaymentOption, setSelectedPaymentOption] =
-    useState<string>("");
+const WidgetPreview: FC<WidgetProps> = ({ data }) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-  const handlePaymentOptionSelect = (
-    event: SelectChangeEvent<typeof selectedPaymentOption>
-  ) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedPaymentOption(value);
-  };
+  const productDetails: ProductDetails = useMemo(
+    () => ({
+      name: data.productName,
+      description: data.productDesc,
+    }),
+    [data.productName, data.productDesc]
+  );
 
-  const widgetContentProps: WidgetContentProps = {
-    selectedPaymentOption: selectedPaymentOption,
-    onPaymentOptionSelect: handlePaymentOptionSelect,
-  };
+  const paymentOptions: PaymentOption[] = useMemo(
+    () =>
+      data.paymentOptions.map((x) => ({
+        chainId: x.network.chainId as ChainId,
+        superToken: {
+          address: x.superToken.address as `0x${string}`,
+        },
+        flowRate: {
+          amountEther: "1",
+          period: "month",
+        },
+      })),
+    [data.paymentOptions]
+  );
 
   return (
     <WidgetContext.Provider value={data}>
-      {getWidgetLayout(data.layout, widgetContentProps, drawer)}
+      {mounted && switchLayout(data.layout, productDetails, paymentOptions)}
     </WidgetContext.Provider>
   );
 };

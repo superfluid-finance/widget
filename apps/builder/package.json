@@ -15,6 +15,7 @@
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
+    "@mui/lab": "5.0.0-alpha.125",
     "@mui/material": "latest",
     "@uniswap/token-lists": "1.0.0-beta.31",
     "clsx": "^1.2.1",
