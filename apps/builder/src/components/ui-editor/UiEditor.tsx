@@ -33,36 +33,6 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
           )}
         />
       </Stack>
-      <Stack direction="column">
-        <Typography variant="subtitle2">Labels</Typography>
-        <Stack direction="column" gap={1}>
-          {(Object.keys(data.labels) as (keyof typeof data.labels)[]).map(
-            (label) => (
-              <Controller
-                key={label}
-                control={control}
-                name={`data.labels.${label}`}
-                render={({ field: { value, onChange } }) => (
-                  <Stack
-                    direction="row"
-                    sx={{
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                    gap={1}
-                  >
-                    <Typography sx={{ minWidth: 150, pl: 1 }}>
-                      {label}:
-                    </Typography>
-
-                    <TextField fullWidth value={value} onChange={onChange} />
-                  </Stack>
-                )}
-              />
-            )
-          )}
-        </Stack>
-      </Stack>
     </Stack>
   );
 };
