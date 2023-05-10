@@ -65,12 +65,20 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
 
   const [recipient, setRecipient] = useState("");
 
+  const filteredNetworks = useMemo(
+    () =>
+      networks.filter((network) =>
+        tokenList.tokens.find(({ chainId }) => network.chainId === chainId)
+      ),
+    []
+  );
+
   const handleNetworkSelect = (event: SelectChangeEvent<string>) => {
     const {
       target: { value },
     } = event;
 
-    const network = networks.find(({ name }) => name === value);
+    const network = filteredNetworks.find(({ name }) => name === value);
 
     if (network) {
       setSelectedNetwork(network);
@@ -106,7 +114,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
             onChange={handleNetworkSelect}
             fullWidth
           >
-            {networks.map((network) => (
+            {filteredNetworks.map((network) => (
               <MenuItem value={network.name} key={`${network.chainId}`}>
                 {network.name}
               </MenuItem>
