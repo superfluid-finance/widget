@@ -30,7 +30,7 @@ export default function Stepper() {
           ]
         : []),
       {
-        buttonText: "Review the transaction",
+        buttonText: "Review the transaction(s)",
         optional: false,
         content: StepContentReview,
       },

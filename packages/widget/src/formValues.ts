@@ -18,7 +18,7 @@ export type PaymentOptionWithTokenInfo = z.infer<
 >;
 
 export const checkoutFormSchema = z.object({
-  senderAddress: addressSchema,
+  accountAddress: addressSchema,
   network: supportedNetworkSchema,
   paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
   wrapAmountEther: etherAmountSchema,

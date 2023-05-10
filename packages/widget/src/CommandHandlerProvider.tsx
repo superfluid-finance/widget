@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import {
   CommandHandlerContext,
   CommandHandlerState,
-  TransactionState,
+  ContractWriteState,
 } from "./CommandHandlerContext";
 import { Command } from "./commands";
 import { Children } from "./utils";
@@ -15,7 +15,7 @@ type Props = {
 
 export function CommandHandlerProvider({ children }: Props) {
   const [commands, setCommands] = useState<ReadonlyArray<Command>>([]);
-  const [transactions] = useState<ReadonlyArray<TransactionState>>([]);
+  const [transactions] = useState<ReadonlyArray<ContractWriteState>>([]);
   const [status, setStatus] = useState<CommandHandlerState["status"]>("idle");
 
   const handle = useCallback(() => {
@@ -36,7 +36,7 @@ export function CommandHandlerProvider({ children }: Props) {
 
   const contextValue: CommandHandlerState = {
     commands,
-    transactions,
+    contractWrites: transactions,
     status,
     setCommands,
     handle,

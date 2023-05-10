@@ -4,6 +4,7 @@ import { ChainId, TimePeriod, autoWrapStrategyAddress } from "superfluid-checkou
 export type EnableAutoWrapCommand = {
   title: "Enable Auto-Wrap";
   chainId: keyof typeof autoWrapStrategyAddress;
+  accountAddress: Address;
   superTokenAddress: Address;
   underlyingTokenAddress: Address;
 };
@@ -11,6 +12,7 @@ export type EnableAutoWrapCommand = {
 export type WrapIntoSuperTokensCommand = {
   title: "Wrap into Super Tokens";
   chainId: ChainId;
+  accountAddress: Address;
   superTokenAddress: Address;
   underlyingTokenAddress: Address;
   amountEther: string;
@@ -20,7 +22,7 @@ export type SendStreamCommand = {
   title: "Send Stream";
   chainId: ChainId;
   superTokenAddress: Address;
-  senderAddress: Address;
+  accountAddress: Address;
   receiverAddress: Address;
   flowRate: {
     amountEther: string;

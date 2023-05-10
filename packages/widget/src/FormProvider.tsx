@@ -10,7 +10,7 @@ type Props = {
 
 export default function CheckoutFormProvider({ children }: Props) {
   const defaultValues: DraftFormValues = {
-    senderAddress: null,
+    accountAddress: null,
     network: null,
     paymentOptionWithTokenInfo: null,
     wrapAmountEther: "",

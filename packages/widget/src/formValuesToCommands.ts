@@ -10,7 +10,7 @@ export const formValuesToCommands = (
 ): ReadonlyArray<Command> => {
   const {
     network: { id: chainId },
-    senderAddress,
+    accountAddress,
     receiverAddress,
     wrapAmountEther,
     enableAutoWrap,
@@ -29,6 +29,7 @@ export const formValuesToCommands = (
         title: "Wrap into Super Tokens",
         chainId: chainId,
         superTokenAddress,
+        accountAddress,
         underlyingTokenAddress,
         amountEther: wrapAmountEther, // TODO(KK): Decimals need to be accounted somewhere!
       });
@@ -39,6 +40,7 @@ export const formValuesToCommands = (
         title: "Enable Auto-Wrap",
         chainId,
         superTokenAddress,
+        accountAddress,
         underlyingTokenAddress,
       });
     }
@@ -48,7 +50,7 @@ export const formValuesToCommands = (
     title: "Send Stream",
     chainId,
     superTokenAddress,
-    senderAddress,
+    accountAddress,
     receiverAddress,
     flowRate: paymentOption.flowRate,
   });

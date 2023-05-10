@@ -32,30 +32,30 @@ export const useMapCommandsToContractWrites: UseMapCommandsToContractWrites = (
   commands
 ) => {
   return useMemo(() => {
-    const calls: ContractWrite[] = [];
+    const result: ContractWrite[] = [];
 
     for (const command of commands) {
       if (command.title === "Enable Auto-Wrap") {
-        calls.push(...mapEnableAutoWrapCommand(command));
+        result.push(...mapEnableAutoWrapCommand(command));
       } else if (command.title === "Wrap into Super Tokens") {
-        calls.push(...mapWrapIntoSuperTokensCommand(command));
+        result.push(...mapWrapIntoSuperTokensCommand(command));
       } else if (command.title === "Send Stream") {
-        calls.push(...mapSubscribeCommand(command));
+        result.push(...mapSubscribeCommand(command));
       }
     }
 
-    return calls;
+    return result;
   }, [commands]);
 };
 
 const mapEnableAutoWrapCommand: UseMapCommandToContractWrites<
   EnableAutoWrapCommand
 > = (command: EnableAutoWrapCommand) => {
-  const calls = [];
+  const result = [];
 
   // title: "Authorize Auto-Wrap to Wrap Tokens"
 
-  calls.push(
+  result.push(
     extractContractWrite({
       abi: erc20ABI,
       functionName: "approve",
@@ -66,7 +66,7 @@ const mapEnableAutoWrapCommand: UseMapCommandToContractWrites<
 
   // title: "Enable Auto-Wrap"
 
-  calls.push(
+  result.push(
     extractContractWrite({
       abi: autoWrapManagerABI,
       address: autoWrapManagerAddress[command.chainId],
@@ -82,17 +82,17 @@ const mapEnableAutoWrapCommand: UseMapCommandToContractWrites<
     })
   );
 
-  return calls;
+  return result;
 };
 
 export const mapWrapIntoSuperTokensCommand: UseMapCommandToContractWrites<
   WrapIntoSuperTokensCommand
 > = (command: WrapIntoSuperTokensCommand) => {
-  const calls = [];
+  const result = [];
 
   // title: "Authorize Superfluid to Wrap Tokens",
 
-  calls.push(
+  result.push(
     extractContractWrite({
       abi: erc20ABI,
       functionName: "approve",
@@ -104,7 +104,7 @@ export const mapWrapIntoSuperTokensCommand: UseMapCommandToContractWrites<
 
   // title: "Wrap Into Super Token",
 
-  calls.push(
+  result.push(
     extractContractWrite({
       abi: superTokenABI,
       address: command.superTokenAddress,
@@ -114,17 +114,17 @@ export const mapWrapIntoSuperTokensCommand: UseMapCommandToContractWrites<
     })
   );
 
-  return calls;
+  return result;
 };
 
 export const mapSubscribeCommand: UseMapCommandToContractWrites<
   SendStreamCommand
 > = (command) => {
-  const calls = [];
+  const result = [];
 
   // title: "Subscribe",
 
-  calls.push(
+  result.push(
     extractContractWrite({
       abi: cfAv1ForwarderABI,
       address: cfAv1ForwarderAddress[command.chainId],
@@ -132,7 +132,7 @@ export const mapSubscribeCommand: UseMapCommandToContractWrites<
       functionName: "createFlow",
       args: [
         command.superTokenAddress,
-        command.senderAddress,
+        command.accountAddress,
         command.receiverAddress,
         utils
           .parseEther(command.flowRate.amountEther)
@@ -142,5 +142,5 @@ export const mapSubscribeCommand: UseMapCommandToContractWrites<
     })
   );
 
-  return calls;
+  return result;
 };
