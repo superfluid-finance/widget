@@ -37,8 +37,6 @@ export default function Home() {
 
   const { watch, control, getValues, setValue } = formMethods;
 
-  const [data] = watch(["data"]);
-
   return (
     <Stack direction="row">
       <Stack
@@ -59,10 +57,10 @@ export default function Home() {
             </TabList>
 
             <TabPanel value="ui">
-              <UiEditor control={control} />
+              <UiEditor control={control} watch={watch} />
             </TabPanel>
             <TabPanel value="payment">
-              <PaymentEditor control={control} />
+              <PaymentEditor control={control} watch={watch} />
             </TabPanel>
             <TabPanel value="export">
               <ExportEditor />

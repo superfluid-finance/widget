@@ -1,12 +1,11 @@
 import { Stack, TextField, Typography } from "@mui/material";
 import { FC } from "react";
-import { Control, Controller } from "react-hook-form";
-import { WidgetProps } from "../widget-preview/WidgetPreview";
+import { Controller } from "react-hook-form";
+import { EditorProps } from "../widget-preview/WidgetPreview";
 
-type UIEditorProps = {
-  control: Control<WidgetProps, any>;
-};
-const UiEditor: FC<UIEditorProps> = ({ control }) => {
+const UiEditor: FC<EditorProps> = ({ control, watch }) => {
+  const [data] = watch(["data"]);
+
   return (
     <Stack direction="column" gap={2}>
       <Stack direction="column" gap={1}>
@@ -33,6 +32,36 @@ const UiEditor: FC<UIEditorProps> = ({ control }) => {
             />
           )}
         />
+      </Stack>
+      <Stack direction="column">
+        <Typography variant="subtitle2">Labels</Typography>
+        <Stack direction="column" gap={1}>
+          {(Object.keys(data.labels) as (keyof typeof data.labels)[]).map(
+            (label) => (
+              <Controller
+                key={label}
+                control={control}
+                name={`data.labels.${label}`}
+                render={({ field: { value, onChange } }) => (
+                  <Stack
+                    direction="row"
+                    sx={{
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                    gap={1}
+                  >
+                    <Typography sx={{ minWidth: 150, pl: 1 }}>
+                      {label}:
+                    </Typography>
+
+                    <TextField fullWidth value={value} onChange={onChange} />
+                  </Stack>
+                )}
+              />
+            )
+          )}
+        </Stack>
       </Stack>
     </Stack>
   );

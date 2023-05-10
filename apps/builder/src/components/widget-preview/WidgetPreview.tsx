@@ -10,6 +10,7 @@ import {
   ProductDetails,
 } from "superfluid-checkout-widget";
 import tokenList from "../../tokenList";
+import { Control, UseFormWatch } from "react-hook-form";
 
 export type PaymentInterval =
   | "second"
@@ -21,6 +22,11 @@ export type PaymentInterval =
   | "year";
 
 export const layouts = ["dialog", "drawer", "full-screen", "page"] as const;
+
+export type EditorProps = {
+  control: Control<WidgetProps, any>;
+  watch: UseFormWatch<WidgetProps>;
+};
 
 export type Layout = (typeof layouts)[number];
 

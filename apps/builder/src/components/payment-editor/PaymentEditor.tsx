@@ -1,15 +1,11 @@
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Control, Controller, useFieldArray } from "react-hook-form";
-import { WidgetProps } from "../widget-preview/WidgetPreview";
+import { Controller, useFieldArray } from "react-hook-form";
+import { EditorProps } from "../widget-preview/WidgetPreview";
 import SelectPaymentOption from "../widget-preview/SelectPaymentOption";
 
-type PaymentEditorProps = {
-  control: Control<WidgetProps, any>;
-};
-
-const PaymentEditor: FC<PaymentEditorProps> = ({ control }) => {
+const PaymentEditor: FC<EditorProps> = ({ control }) => {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control,
@@ -58,37 +54,3 @@ const PaymentEditor: FC<PaymentEditorProps> = ({ control }) => {
 };
 
 export default PaymentEditor;
-
-// Labels
-
-/* <Stack direction="column" gap={1}>
-{(
-  Object.keys(data.labels) as (keyof typeof data.labels)[]
-).map((label) => (
-  <Controller
-    key={label}
-    control={control}
-    name={`data.labels.${label}`}
-    render={({ field: { value, onChange } }) => (
-      <Stack
-        direction="row"
-        sx={{
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-        gap={1}
-      >
-        <Typography sx={{ minWidth: 150, pl: 1 }}>
-          {label}:
-        </Typography>
-
-        <TextField
-          fullWidth
-          value={value}
-          onChange={onChange}
-        />
-      </Stack>
-    )}
-  />
-))}
-</Stack> */
