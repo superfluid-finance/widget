@@ -1,4 +1,4 @@
-import { Box, Stack, Tab, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Tab, Typography, colors, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Controller, useForm } from "react-hook-form";
 
@@ -22,22 +22,31 @@ export default function Home() {
 
   const formMethods = useForm<WidgetProps, any, WidgetProps>({
     defaultValues: {
-      data: {
-        productName: "Product Name",
-        productDesc: "Product Description",
-        paymentOptions: [],
-        labels: {
-          paymentOption: "Pay with",
-          send: "Send",
-        },
-        layout: "dialog",
+      productName: "Product Name",
+      productDesc: "Product Description",
+      paymentOptions: [],
+      displaySettings: {
+        buttonRadius: 4,
+        inputRadius: 4,
+        productImageURL: "",
+        logoURL: "",
+        fontFamily: "default",
+        primaryColor: colors.green[500],
+        secondaryColor: colors.blue[500],
       },
+      layout: "dialog",
     },
   });
 
   const { watch, control, getValues, setValue } = formMethods;
 
-  const [data] = watch(["data"]);
+  watch([
+    "productName",
+    "productDesc",
+    "paymentOptions",
+    "displaySettings",
+    "layout",
+  ]);
 
   return (
     <Stack direction="row">
@@ -59,10 +68,10 @@ export default function Home() {
             </TabList>
 
             <TabPanel value="ui">
-              <UiEditor control={control} />
+              <UiEditor control={control} watch={watch} />
             </TabPanel>
             <TabPanel value="payment">
-              <PaymentEditor control={control} />
+              <PaymentEditor control={control} watch={watch} />
             </TabPanel>
             <TabPanel value="export">
               <ExportEditor />
@@ -72,7 +81,7 @@ export default function Home() {
         <Stack mt="auto" p={2}>
           <Controller
             control={control}
-            name="data.layout"
+            name="layout"
             render={({ field: { value, onChange } }) => (
               <TabContext value={value}>
                 <TabList
