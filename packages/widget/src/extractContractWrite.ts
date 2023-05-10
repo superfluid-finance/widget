@@ -3,27 +3,23 @@ import {
   Abi,
   ExtractAbiFunction,
 } from "abitype";
-import { Signer } from "ethers";
 
 export type ContractWrite = PrepareWriteContractConfig;
 
 export const extractContractWrite = <
   TAbi extends Abi = Abi,
   TFunctionName extends string = string,
-  TChainId extends number = number,
-  TSigner extends Signer = Signer
+  TChainId extends number = number
 >(
-  getConfig: PrepareWriteContractConfig<TAbi, TFunctionName, TChainId, TSigner>
+  getConfig: Omit<PrepareWriteContractConfig<TAbi, TFunctionName, TChainId>, "walletClient">
 ): PrepareWriteContractConfig<
   [ExtractAbiFunction<TAbi, TFunctionName>],
   TFunctionName,
-  TChainId,
-  TSigner
+  TChainId
 > => {
   return getConfig as unknown as PrepareWriteContractConfig<
     [ExtractAbiFunction<TAbi, TFunctionName>],
     TFunctionName,
-    TChainId,
-    TSigner
+    TChainId
   >;
 };

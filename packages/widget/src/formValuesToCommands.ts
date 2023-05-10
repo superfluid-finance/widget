@@ -1,9 +1,7 @@
 import { Address } from "abitype";
 import { Command } from "./commands";
 import { ValidFormValues } from "./formValues";
-import { utils } from "ethers";
-
-const { parseEther } = utils;
+import { parseEther } from "viem";
 
 export const formValuesToCommands = (
   values: ValidFormValues
@@ -24,7 +22,7 @@ export const formValuesToCommands = (
 
   const commands: Command[] = [];
   if (underlyingTokenAddress) {
-    if (!wrapAmount.isZero()) {
+    if (wrapAmount !== 0n) {
       commands.push({
         title: "Wrap into Super Tokens",
         chainId: chainId,

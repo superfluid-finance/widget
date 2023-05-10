@@ -15,7 +15,7 @@ export type WrapIntoSuperTokensCommand = {
   accountAddress: Address;
   superTokenAddress: Address;
   underlyingTokenAddress: Address;
-  amountEther: string;
+  amountEther: `${number}`;
 };
 
 export type SendStreamCommand = {
@@ -25,7 +25,7 @@ export type SendStreamCommand = {
   accountAddress: Address;
   receiverAddress: Address;
   flowRate: {
-    amountEther: string;
+    amountEther: `${number}`;
     period: TimePeriod;
   };
 };

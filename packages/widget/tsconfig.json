@@ -1,8 +1,11 @@
 {
-  "extends": "tsconfig/react-library.json",
+  "extends": "tsconfig/base.json",
   "include": ["./src/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "lib": ["ESNext", "DOM"],
+    "jsx": "react-jsx",
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "target": "ES2020"
   }
 }

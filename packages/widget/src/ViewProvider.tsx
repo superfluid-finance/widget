@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Color,
   Dialog,
   Drawer,
   IconButton,
@@ -31,7 +30,7 @@ export type DisplaySettings = {
 export type CheckoutViewProps =
   | {
       type: "drawer" | "dialog" | "full-screen";
-      displaySettings: DisplaySettings;
+      // displaySettings: DisplaySettings;
 
       children: (state: Readonly<CheckoutViewState>) => Children;
     }

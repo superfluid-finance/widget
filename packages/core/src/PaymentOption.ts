@@ -11,7 +11,9 @@ export const tokenSchema = z.object({
   address: addressSchema,
 });
 
-export const etherAmountSchema = z.string();
+export const etherAmountSchema = z
+  .number()
+  .transform((x) => x.toString() as `${number}`);
 
 export const flowRateSchema = z.object({
   amountEther: etherAmountSchema,

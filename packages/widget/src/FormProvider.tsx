@@ -13,7 +13,7 @@ export default function CheckoutFormProvider({ children }: Props) {
     accountAddress: null,
     network: null,
     paymentOptionWithTokenInfo: null,
-    wrapAmountEther: "",
+    wrapAmountEther: "" as `${number}`,
     enableAutoWrap: false,
     receiverAddress: null,
   };

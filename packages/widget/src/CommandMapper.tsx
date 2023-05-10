@@ -14,11 +14,9 @@ import {
   mapTimePeriodToSeconds,
   superTokenABI,
 } from "superfluid-checkout-core";
-import { useEffect } from "react";
 import { extractContractWrite } from "./extractContractWrite";
-import { BigNumber, constants, utils } from "ethers";
-
-const { parseEther } = utils;
+import { MaxUint256 } from "./utils";
+import { parseEther } from "viem";
 
 export function EnableAutoWrapCommandMapper(cmd: EnableAutoWrapCommand) {
   const { data } = useContractReads({
@@ -44,9 +42,11 @@ export function EnableAutoWrapCommandMapper(cmd: EnableAutoWrapCommand) {
     ],
   });
 
-  const [wrapSchedule, allowance] = data ?? [];
+  const [wrapScheduleData, allowanceData] = data ?? [];
+  const wrapSchedule = wrapScheduleData?.result;
+  const allowance = allowanceData?.result;
 
-  const upperLimit = BigNumber.from("604800");
+  const upperLimit = 604800n;
 
   if (wrapSchedule) {
     if (wrapSchedule.strategy !== autoWrapStrategyAddress[cmd.chainId]) {
@@ -58,19 +58,19 @@ export function EnableAutoWrapCommandMapper(cmd: EnableAutoWrapCommand) {
           cmd.superTokenAddress,
           autoWrapStrategyAddress[cmd.chainId],
           cmd.underlyingTokenAddress,
-          BigNumber.from("3000000000"),
-          BigNumber.from("172800"),
-          BigNumber.from("604800"),
+          3000000000n,
+          172800n,
+          604800n,
         ],
       });
     }
 
-    if (allowance && allowance.lt(upperLimit)) {
+    if (allowance && allowance < upperLimit) {
       extractContractWrite({
         abi: erc20ABI,
         functionName: "approve",
         address: cmd.underlyingTokenAddress,
-        args: [autoWrapStrategyAddress[cmd.chainId], constants.MaxUint256],
+        args: [autoWrapStrategyAddress[cmd.chainId], MaxUint256],
       });
     }
   }
@@ -93,13 +93,13 @@ export function WrapIntoSuperTokensCommandMapper(
 
   const amount = parseEther(cmd.amountEther);
   if (allowance) {
-    if (allowance.lt(amount)) {
+    if (allowance < amount) {
       extractContractWrite({
         abi: erc20ABI,
         functionName: "approve",
         chainId: cmd.chainId,
         address: cmd.underlyingTokenAddress,
-        args: [cmd.superTokenAddress, constants.MaxUint256],
+        args: [cmd.superTokenAddress, MaxUint256],
       });
     }
 
@@ -126,6 +126,10 @@ export function SendStreamCommandMapper(cmd: SendStreamCommand) {
 
   // TODO(KK): Handle update
 
+  const flowRate =
+    parseEther(cmd.flowRate.amountEther) /
+    BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
+    
   extractContractWrite({
     abi: cfAv1ForwarderABI,
     address: cfAv1ForwarderAddress[cmd.chainId],
@@ -135,9 +139,7 @@ export function SendStreamCommandMapper(cmd: SendStreamCommand) {
       cmd.superTokenAddress,
       cmd.accountAddress,
       cmd.receiverAddress,
-      utils
-        .parseEther(cmd.flowRate.amountEther)
-        .div(mapTimePeriodToSeconds(cmd.flowRate.period)),
+      flowRate,
       "0x",
     ],
   });

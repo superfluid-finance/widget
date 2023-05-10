@@ -16,9 +16,8 @@ import {
   mapTimePeriodToSeconds,
   superTokenABI,
 } from "superfluid-checkout-core";
-import { BigNumber, constants, utils } from "ethers";
-
-const { parseEther } = utils;
+import { parseEther } from "viem";
+import { MaxUint256 } from "./utils";
 
 type UseMapCommandToContractWrites<TCommand extends Command> = (
   command: TCommand
@@ -60,7 +59,7 @@ const mapEnableAutoWrapCommand: UseMapCommandToContractWrites<
       abi: erc20ABI,
       functionName: "approve",
       address: command.underlyingTokenAddress,
-      args: [autoWrapStrategyAddress[command.chainId], constants.MaxUint256],
+      args: [autoWrapStrategyAddress[command.chainId], MaxUint256],
     })
   );
 
@@ -75,9 +74,9 @@ const mapEnableAutoWrapCommand: UseMapCommandToContractWrites<
         command.superTokenAddress,
         autoWrapStrategyAddress[command.chainId],
         command.underlyingTokenAddress,
-        BigNumber.from("3000000000"),
-        BigNumber.from("172800"),
-        BigNumber.from("604800"),
+        3000000000n,
+        172800n,
+        604800n,
       ],
     })
   );
@@ -98,7 +97,7 @@ export const mapWrapIntoSuperTokensCommand: UseMapCommandToContractWrites<
       functionName: "approve",
       chainId: command.chainId,
       address: command.underlyingTokenAddress,
-      args: [command.superTokenAddress, constants.MaxUint256],
+      args: [command.superTokenAddress, MaxUint256],
     })
   );
 
@@ -134,9 +133,8 @@ export const mapSubscribeCommand: UseMapCommandToContractWrites<
         command.superTokenAddress,
         command.accountAddress,
         command.receiverAddress,
-        utils
-          .parseEther(command.flowRate.amountEther)
-          .div(mapTimePeriodToSeconds(command.flowRate.period)),
+        parseEther(command.flowRate.amountEther) /
+          BigInt(mapTimePeriodToSeconds(command.flowRate.period)),
         "0x",
       ],
     })
