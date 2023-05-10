@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Color,
   Dialog,
   Drawer,
   IconButton,
@@ -8,7 +9,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import { ViewContent } from "./ViewContent";
-import { useCallback, useMemo, useState } from "react";
+import { CSSProperties, useCallback, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Children } from "./utils";
 
@@ -18,13 +19,26 @@ export type CheckoutViewState = {
   closeModal: () => void;
 };
 
+export type DisplaySettings = {
+  inputRadius: CSSProperties["borderRadius"];
+  buttonRadius: CSSProperties["borderRadius"];
+  fontFamily: string;
+  imageURL?: string;
+  logoURL?: string;
+  primaryColor: `#${string}`;
+  secondaryColor: `#${string}`;
+};
+
 export type CheckoutViewProps =
   | {
       type: "drawer" | "dialog" | "full-screen";
+      displaySettings: DisplaySettings;
+
       children: (state: Readonly<CheckoutViewState>) => Children;
     }
   | {
       type: "page";
+      displaySettings: DisplaySettings;
     };
 
 export function ViewProvider(props: CheckoutViewProps) {

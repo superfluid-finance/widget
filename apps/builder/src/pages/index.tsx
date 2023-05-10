@@ -1,4 +1,4 @@
-import { Box, Stack, Tab, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Tab, Typography, colors, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Controller, useForm } from "react-hook-form";
 
@@ -22,16 +22,19 @@ export default function Home() {
 
   const formMethods = useForm<WidgetProps, any, WidgetProps>({
     defaultValues: {
-      data: {
-        productName: "Product Name",
-        productDesc: "Product Description",
-        paymentOptions: [],
-        labels: {
-          paymentOption: "Pay with",
-          send: "Send",
-        },
-        layout: "dialog",
+      productName: "Product Name",
+      productDesc: "Product Description",
+      paymentOptions: [],
+      displaySettings: {
+        buttonRadius: 4,
+        inputRadius: 4,
+        imageURL: "",
+        logoURL: "",
+        fontFamily: "default",
+        primaryColor: colors.green[500],
+        secondaryColor: colors.blue[500],
       },
+      layout: "dialog",
     },
   });
 
@@ -70,7 +73,7 @@ export default function Home() {
         <Stack mt="auto" p={2}>
           <Controller
             control={control}
-            name="data.layout"
+            name="layout"
             render={({ field: { value, onChange } }) => (
               <TabContext value={value}>
                 <TabList

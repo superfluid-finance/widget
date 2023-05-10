@@ -1,6 +1,6 @@
 import { FC, createContext, useContext, useEffect, useMemo } from "react";
 import { useState } from "react";
-import { Button, SelectChangeEvent } from "@mui/material";
+import { Button, SelectChangeEvent, colors } from "@mui/material";
 
 import { PaymentOption as SelectPaymentOption } from "./SelectPaymentOption";
 import {
@@ -11,6 +11,7 @@ import {
 } from "superfluid-checkout-widget";
 import tokenList from "../../tokenList";
 import { Control, UseFormWatch } from "react-hook-form";
+import { DisplaySettings } from "superfluid-checkout-widget/src/ViewProvider";
 
 export type PaymentInterval =
   | "second"
@@ -30,14 +31,11 @@ export type EditorProps = {
 
 export type Layout = (typeof layouts)[number];
 
-export type WidgetData = {
+export type WidgetProps = {
   productName: string;
   productDesc: string;
   paymentOptions: SelectPaymentOption[];
-  labels: {
-    paymentOption: string;
-    send: string;
-  };
+  displaySettings: DisplaySettings;
   layout: Layout;
 };
 
@@ -46,15 +44,18 @@ export type WidgetState = {
   onPaymentOptionSelect: (event: SelectChangeEvent<string>) => void;
 };
 
-export const WidgetContext = createContext<WidgetProps["data"]>({
+export const WidgetContext = createContext<WidgetProps>({
   productName: "Product Name",
   productDesc: "Product Description",
   paymentOptions: [],
-  labels: {
-    paymentOption: "Pay with",
-    send: "Send",
-  },
   layout: "dialog",
+  displaySettings: {
+    buttonRadius: 4,
+    inputRadius: 4,
+    fontFamily: "fontfamily",
+    primaryColor: colors.green[500],
+    secondaryColor: colors.blue[500],
+  },
 });
 
 export const useWidgetContext = () => useContext(WidgetContext);
@@ -62,7 +63,8 @@ export const useWidgetContext = () => useContext(WidgetContext);
 const switchLayout = (
   layout: Layout,
   productDetails: ProductDetails,
-  paymentOptions: PaymentOption[]
+  paymentOptions: PaymentOption[],
+  displaySettings: DisplaySettings
 ) => {
   return layout === "page" ? (
     <CheckoutProvider
@@ -70,6 +72,7 @@ const switchLayout = (
       paymentOptions={paymentOptions}
       tokenList={tokenList}
       type={layout}
+      displaySettings={displaySettings}
     />
   ) : (
     <CheckoutProvider
@@ -77,6 +80,7 @@ const switchLayout = (
       paymentOptions={paymentOptions}
       tokenList={tokenList}
       type={layout}
+      displaySettings={displaySettings}
     >
       {({ openModal }) => (
         <Button onClick={() => openModal()}>{`Open ${layout}`}</Button>
@@ -85,24 +89,21 @@ const switchLayout = (
   );
 };
 
-export type WidgetProps = {
-  data: WidgetData;
-};
-const WidgetPreview: FC<WidgetProps> = ({ data }) => {
+const WidgetPreview: FC<WidgetProps> = (props) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   const productDetails: ProductDetails = useMemo(
     () => ({
-      name: data.productName,
-      description: data.productDesc,
+      name: props.productName,
+      description: props.productDesc,
     }),
-    [data.productName, data.productDesc]
+    [props.productName, props.productDesc]
   );
 
   const paymentOptions: PaymentOption[] = useMemo(
     () =>
-      data.paymentOptions.map((x) => ({
+      props.paymentOptions.map((x) => ({
         chainId: x.network.chainId as ChainId,
         superToken: {
           address: x.superToken.address as `0x${string}`,
@@ -112,12 +113,18 @@ const WidgetPreview: FC<WidgetProps> = ({ data }) => {
           period: "month",
         },
       })),
-    [data.paymentOptions]
+    [props.paymentOptions]
   );
 
   return (
-    <WidgetContext.Provider value={data}>
-      {mounted && switchLayout(data.layout, productDetails, paymentOptions)}
+    <WidgetContext.Provider value={props}>
+      {mounted &&
+        switchLayout(
+          props.layout,
+          productDetails,
+          paymentOptions,
+          props.displaySettings
+        )}
     </WidgetContext.Provider>
   );
 };
