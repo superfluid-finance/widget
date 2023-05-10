@@ -89,7 +89,7 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
       </Stack>
 
       <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">SecondaryColor color</Typography>
+        <Typography variant="subtitle2">Secondary color</Typography>
         <Stack direction="row" gap={1}>
           <Controller
             control={control}
