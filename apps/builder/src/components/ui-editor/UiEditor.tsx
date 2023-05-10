@@ -6,15 +6,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Controller } from "react-hook-form";
 import { EditorProps } from "../widget-preview/WidgetPreview";
-import AddIcon from "@mui/icons-material/Add";
-import theme from "../../theme";
 import ImageSelect from "../image-select/ImageSelect";
 
 const UiEditor: FC<EditorProps> = ({ control, watch }) => {
   const [displaySettings] = watch(["displaySettings"]);
+
+  const [selectedProductImage, setSelectedProductImage] = useState<File | null>(
+    null
+  );
+  const [selectedLogo, setSelectedLogo] = useState<File | null>(null);
 
   return (
     <Stack direction="column" gap={2}>
@@ -46,9 +49,20 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
       <Stack direction="row" gap={2}>
         <ImageSelect
           label="Product image"
-          onClick={() => console.log("product image")}
+          onClick={setSelectedProductImage}
+          onRemove={() => setSelectedProductImage(null)}
+          imageSrc={
+            selectedProductImage
+              ? URL.createObjectURL(selectedProductImage)
+              : ""
+          }
         />
-        <ImageSelect label="Logo" onClick={() => console.log(" logo")} />
+        <ImageSelect
+          label="Logo"
+          onClick={setSelectedLogo}
+          onRemove={() => setSelectedLogo(null)}
+          imageSrc={selectedLogo ? URL.createObjectURL(selectedLogo) : ""}
+        />
       </Stack>
       <Stack direction="column" gap={1}>
         <Typography variant="subtitle2">
