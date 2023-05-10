@@ -40,6 +40,14 @@ export default function Home() {
 
   const { watch, control, getValues, setValue } = formMethods;
 
+  watch([
+    "productName",
+    "productDesc",
+    "paymentOptions",
+    "displaySettings",
+    "layout",
+  ]);
+
   return (
     <Stack direction="row">
       <Stack

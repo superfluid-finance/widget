@@ -4,11 +4,7 @@ import { Controller } from "react-hook-form";
 import { EditorProps } from "../widget-preview/WidgetPreview";
 
 const UiEditor: FC<EditorProps> = ({ control, watch }) => {
-  const [productName, productDesc, displaySettings] = watch([
-    "productName",
-    "productDesc",
-    "displaySettings",
-  ]);
+  const [displaySettings] = watch(["displaySettings"]);
 
   return (
     <Stack direction="column" gap={2}>
