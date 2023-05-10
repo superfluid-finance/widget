@@ -1,45 +1,13 @@
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Drawer,
-  FormControl,
-  FormControlLabel,
-  IconButton,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  Step,
-  StepButton,
-  StepContent,
-  Stepper,
-  Switch,
-  Tab,
-  Tabs,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Stack, Tab, Typography, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { networks } from "../networkDefinitions";
+import { Controller, useForm } from "react-hook-form";
+
 import WidgetPreview, {
   WidgetProps,
   layouts,
 } from "../components/widget-preview/WidgetPreview";
-import { useEffect, useMemo, useState } from "react";
-import CancelIcon from "@mui/icons-material/Cancel";
+import { useState } from "react";
 
-import SelectPaymentOption from "../components/widget-preview/SelectPaymentOption";
-import {
-  ChainId,
-  CheckoutProvider,
-  PaymentOption,
-  ProductDetails,
-  SupportedNetwork,
-} from "superfluid-checkout-widget";
-import tokenList from "../tokenList";
 import UiEditor from "../components/ui-editor/UiEditor";
 import ExportEditor from "../components/export-editor/ExportEditor";
 import PaymentEditor from "../components/payment-editor/PaymentEditor";
