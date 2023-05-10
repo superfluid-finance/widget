@@ -1,7 +1,17 @@
-import { Box, Slider, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Slider,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { FC } from "react";
 import { Controller } from "react-hook-form";
 import { EditorProps } from "../widget-preview/WidgetPreview";
+import AddIcon from "@mui/icons-material/Add";
+import theme from "../../theme";
+import ImageSelect from "../image-select/ImageSelect";
 
 const UiEditor: FC<EditorProps> = ({ control, watch }) => {
   const [displaySettings] = watch(["displaySettings"]);
@@ -33,6 +43,13 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
           )}
         />
       </Stack>
+      <Stack direction="row" gap={2}>
+        <ImageSelect
+          label="Product image"
+          onClick={() => console.log("product image")}
+        />
+        <ImageSelect label="Logo" onClick={() => console.log(" logo")} />
+      </Stack>
       <Stack direction="column" gap={1}>
         <Typography variant="subtitle2">
           Field border-radius: {displaySettings.inputRadius}
@@ -55,6 +72,17 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
           name="displaySettings.buttonRadius"
           render={({ field: { value, onChange } }) => (
             <Slider step={1} value={Number(value)} onChange={onChange} />
+          )}
+        />
+      </Stack>
+
+      <Stack direction="column" gap={1}>
+        <Typography variant="subtitle2">Font Family</Typography>
+        <Controller
+          control={control}
+          name="displaySettings.fontFamily"
+          render={({ field: { value, onChange } }) => (
+            <TextField value={value} onChange={onChange} />
           )}
         />
       </Stack>
