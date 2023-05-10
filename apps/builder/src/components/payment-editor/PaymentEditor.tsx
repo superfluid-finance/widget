@@ -1,17 +1,8 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Control, Controller, useFieldArray } from "react-hook-form";
-import { WidgetProps, layouts } from "../widget-preview/WidgetPreview";
+import { WidgetProps } from "../widget-preview/WidgetPreview";
 import SelectPaymentOption from "../widget-preview/SelectPaymentOption";
 
 type PaymentEditorProps = {

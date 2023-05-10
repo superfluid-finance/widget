@@ -30,10 +30,12 @@ export type PaymentInterval = (typeof paymentIntervals)[number];
 export type PaymentOption = {
   network: Network;
   superToken: TokenInfo;
+  recipient: `0x${string}`;
 };
 
 const renderToken = (token: TokenInfo) => {
-  const raw = `${token.name} (${token.symbol})`;
+  const raw =
+    token.name && token.symbol ? `${token.name} (${token.symbol})` : "";
 
   return raw.replace(/[^a-zA-Z0-9\s]g/, "");
 };
@@ -42,13 +44,26 @@ type PaymentOptionSelectorProps = {
   onAdd: (paymentOption: PaymentOption) => void;
 };
 
+const defaultNetwork = {
+  name: "",
+  chainId: -1,
+  subgraphUrl: "",
+};
+
+const defaultToken = {
+  address: "",
+  chainId: -1,
+  decimals: 0,
+  name: "",
+  symbol: "",
+};
+
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
-  const [selectedNetwork, setSelectedNetwork] = useState<Network>({
-    name: "",
-    chainId: -1,
-    subgraphUrl: "",
-  });
-  const [selectedToken, setSelectedToken] = useState<TokenInfo | null>(null);
+  const [selectedNetwork, setSelectedNetwork] =
+    useState<Network>(defaultNetwork);
+  const [selectedToken, setSelectedToken] = useState<TokenInfo>(defaultToken);
+
+  const [recipient, setRecipient] = useState("");
 
   const handleNetworkSelect = (event: SelectChangeEvent<string>) => {
     const {
@@ -62,15 +77,12 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     }
   };
 
-  const handleAdd = ({
-    network,
-    superToken,
-  }: NullableObject<PaymentOption>) => {
+  const handleAdd = ({ network, superToken, recipient }: PaymentOption) => {
     if (!(network && superToken)) {
       return;
     }
 
-    onAdd({ network, superToken });
+    onAdd({ network, superToken, recipient });
   };
 
   const autoCompleteTokenOptions = useMemo(() => {
@@ -81,14 +93,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   }, [selectedNetwork, networks]);
 
   useEffect(() => {
-    setSelectedToken(null);
+    setSelectedToken(defaultToken);
   }, [selectedNetwork]);
 
   return (
     <Stack direction="column" gap={1}>
       <Stack direction="row" gap={2}>
         <Stack direction="column" flex={1}>
-          <Typography>Network</Typography>
+          <Typography variant="subtitle2">Network</Typography>
           <Select
             value={selectedNetwork.name}
             onChange={handleNetworkSelect}
@@ -102,11 +114,11 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
           </Select>
         </Stack>
         <Stack direction="column" flex={1}>
-          <Typography>SuperToken</Typography>
+          <Typography variant="subtitle2">SuperToken</Typography>
           <Autocomplete
             fullWidth
             value={selectedToken}
-            onChange={(_, value) => setSelectedToken(value)}
+            onChange={(_, value) => setSelectedToken(value!)}
             disablePortal
             id="network-select"
             options={autoCompleteTokenOptions}
@@ -121,10 +133,22 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         </Stack>
       </Stack>
 
+      <Stack direction="column" flex={1}>
+        <Typography variant="subtitle2">Recipient</Typography>
+        <TextField
+          value={recipient}
+          onChange={({ target }) => setRecipient(target.value)}
+        />
+      </Stack>
+
       <Button
-        disabled={!(selectedNetwork && selectedToken)}
+        disabled={!(selectedNetwork && selectedToken && recipient)}
         onClick={() =>
-          handleAdd({ network: selectedNetwork, superToken: selectedToken })
+          handleAdd({
+            network: selectedNetwork,
+            superToken: selectedToken,
+            recipient: recipient as `0x${string}`,
+          })
         }
       >
         Add
