@@ -28,7 +28,7 @@ export default function Home() {
       displaySettings: {
         buttonRadius: 4,
         inputRadius: 4,
-        imageURL: "",
+        productImageURL: "",
         logoURL: "",
         fontFamily: "default",
         primaryColor: colors.green[500],

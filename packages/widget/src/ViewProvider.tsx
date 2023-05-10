@@ -23,7 +23,7 @@ export type DisplaySettings = {
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
   fontFamily: string;
-  imageURL?: string;
+  productImageURL?: string;
   logoURL?: string;
   primaryColor: `#${string}`;
   secondaryColor: `#${string}`;
