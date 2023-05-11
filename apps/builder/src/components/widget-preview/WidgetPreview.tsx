@@ -53,8 +53,10 @@ export const WidgetContext = createContext<WidgetProps>({
     buttonRadius: 4,
     inputRadius: 4,
     fontFamily: "fontfamily",
+    primaryTextColor: colors.grey[900],
+    secondaryTextColor: colors.amber[700],
     primaryColor: colors.green[500],
-    secondaryColor: colors.blue[500],
+    secondaryColor: colors.common.white,
   },
 });
 

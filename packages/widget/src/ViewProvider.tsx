@@ -4,12 +4,15 @@ import {
   Drawer,
   IconButton,
   ModalProps,
+  ThemeProvider,
   Toolbar,
+  createTheme,
 } from "@mui/material";
 import { ViewContent } from "./ViewContent";
 import { CSSProperties, useCallback, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Children } from "./utils";
+import { DisplaySettings } from "@mui/icons-material";
 
 export type CheckoutViewState = {
   isOpen: boolean;
@@ -23,6 +26,8 @@ export type DisplaySettings = {
   fontFamily: string;
   productImageURL?: string;
   logoURL?: string;
+  primaryTextColor: `#${string}`;
+  secondaryTextColor: `#${string}`;
   primaryColor: `#${string}`;
   secondaryColor: `#${string}`;
 };
@@ -30,8 +35,7 @@ export type DisplaySettings = {
 export type CheckoutViewProps =
   | {
       type: "drawer" | "dialog" | "full-screen";
-      // displaySettings: DisplaySettings;
-
+      displaySettings: DisplaySettings;
       children: (state: Readonly<CheckoutViewState>) => Children;
     }
   | {
@@ -58,28 +62,63 @@ export function ViewProvider(props: CheckoutViewProps) {
     onClose: closeModal,
   };
 
+  const theme = createTheme({
+    palette: {
+      text: {
+        primary: props.displaySettings.primaryTextColor,
+        secondary: props.displaySettings.secondaryTextColor,
+      },
+      primary: { main: props.displaySettings.primaryColor },
+      secondary: { main: props.displaySettings.secondaryColor },
+    },
+    components: {
+      MuiStepIcon: {
+        styleOverrides: {
+          text: {
+            fill: props.displaySettings.secondaryColor,
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            borderRadius: props.displaySettings.inputRadius,
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            color: props.displaySettings.secondaryTextColor,
+            borderRadius: props.displaySettings.buttonRadius,
+          },
+        },
+      },
+    },
+  });
+
   switch (props.type) {
     case "dialog":
       return (
-        <>
+        <ThemeProvider theme={theme}>
           {props.children(viewState)}
           <Dialog {...modalProps}>
             <ViewContent />
           </Dialog>
-        </>
+        </ThemeProvider>
       );
     case "drawer":
       return (
-        <>
+        <ThemeProvider theme={theme}>
           {props.children(viewState)}
           <Drawer {...modalProps} anchor="right">
             <ViewContent />
           </Drawer>
-        </>
+        </ThemeProvider>
       );
     case "full-screen":
       return (
-        <>
+        <ThemeProvider theme={theme}>
           {props.children(viewState)}
           <Dialog {...modalProps} fullScreen>
             <AppBar sx={{ position: "relative" }}>
@@ -96,9 +135,13 @@ export function ViewProvider(props: CheckoutViewProps) {
             </AppBar>
             <ViewContent />
           </Dialog>
-        </>
+        </ThemeProvider>
       );
     default:
-      return <ViewContent />;
+      return (
+        <ThemeProvider theme={theme}>
+          <ViewContent />
+        </ThemeProvider>
+      );
   }
 }

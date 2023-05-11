@@ -9,7 +9,7 @@ const PaymentEditor: FC<EditorProps> = ({ control }) => {
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control,
-      name: "data.paymentOptions", // unique name for your Field Array
+      name: "paymentOptions", // unique name for your Field Array
     }
   );
 
@@ -18,7 +18,7 @@ const PaymentEditor: FC<EditorProps> = ({ control }) => {
       <Stack direction="column" gap={1}>
         <Controller
           control={control}
-          name="data.paymentOptions"
+          name="paymentOptions"
           render={() => <SelectPaymentOption onAdd={append} />}
         />
         <Stack direction="column">
