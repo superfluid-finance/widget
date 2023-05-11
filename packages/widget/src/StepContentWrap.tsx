@@ -1,5 +1,4 @@
 import {
-  Button,
   FormControlLabel,
   FormGroup,
   Stack,
@@ -9,23 +8,18 @@ import {
   Typography,
 } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
-import { DraftFormValues, ValidFormValues } from "./formValues";
+import { DraftFormValues } from "./formValues";
 import { useMemo } from "react";
-import { useStepper } from "./StepperContext";
 import { useCheckout } from "./CheckoutContext";
 import { TokenAvatar } from "./TokenAvatar";
-import { formValuesToCommands } from "./formValuesToCommands";
-import { useCommandHandler } from "./CommandHandlerContext";
+import { StepperContinueButton } from "./StepperContinueButton";
 
 export default function StepContentWrap() {
   const { tokenList } = useCheckout();
-  const { handleNext, isPenultimateStep } = useStepper();
-  const { setCommands } = useCommandHandler();
   const {
     control: c,
     watch,
     formState: { isValid, isValidating },
-    handleSubmit,
   } = useFormContext<DraftFormValues>();
   const [paymentOptionWithTokenInfo] = watch(["paymentOptionWithTokenInfo"]);
   const superToken = paymentOptionWithTokenInfo?.superToken;
@@ -112,25 +106,10 @@ export default function StepContentWrap() {
             )}
           />
         </Stack>
-        <Button
-          disabled={!isValid || isValidating}
-          variant="contained"
-          onClick={() => {
-            if (isPenultimateStep()) {
-              handleSubmit((values) => {
-                const commands = formValuesToCommands(
-                  values as ValidFormValues // TODO(KK): This is better in next version of react-hook-form.
-                );
-                setCommands(commands);
-                handleNext();
-              })();
-            } else {
-              handleNext();
-            }
-          }}
-        >
+
+        <StepperContinueButton disabled={!isValid || isValidating}>
           Continue
-        </Button>
+        </StepperContinueButton>
       </Stack>
     </StepContent>
   );

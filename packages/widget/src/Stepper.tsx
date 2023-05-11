@@ -6,6 +6,7 @@ import StepContentReview from "./StepContentReview";
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
+import { useAccount } from "wagmi";
 
 export default function Stepper() {
   const { watch, formState: { isValid } } = useFormContext<DraftFormValues>();

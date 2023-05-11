@@ -10,12 +10,13 @@ import {
   arbitrum,
   mainnet,
   gnosis,
+  Chain,
 } from "@wagmi/chains";
 
 export const chainIds = [
   5, 80001, 420, 421613, 43113, 100, 137, 10, 42161, 43114, 56, 1, 42220,
 ] as const;
-export type ChainId = typeof chainIds[number];
+export type ChainId = (typeof chainIds)[number];
 
 export const chainIdSchema = z.custom<ChainId>((value) => {
   return chainIds.some((x) => x === (Number(value) as ChainId));
@@ -32,9 +33,9 @@ export const supportedNetwork = {
   arbitrum,
   mainnet,
   gnosis,
-} as const;
+} as const satisfies Record<string, Chain>;
 
-export const supportedNetworks = [
+const supportedNetworks_ = [
   supportedNetwork.polygon,
   supportedNetwork.bsc,
   supportedNetwork.goerli,
@@ -47,10 +48,12 @@ export const supportedNetworks = [
   supportedNetwork.gnosis,
 ] as const;
 
+export const supportedNetworks = supportedNetworks_ as unknown as Chain[];
+
 export const supportedNetworkSchema = z
   .object({
     id: chainIdSchema,
   })
-  .transform((x) => x as typeof supportedNetworks[number]);
+  .transform((x) => x as (typeof supportedNetworks_)[number]);
 
 export type SupportedNetwork = z.infer<typeof supportedNetworkSchema>;
