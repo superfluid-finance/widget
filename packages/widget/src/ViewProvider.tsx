@@ -2,6 +2,7 @@ import {
   AppBar,
   Dialog,
   Drawer,
+  Fade,
   IconButton,
   ModalProps,
   Toolbar,
@@ -10,6 +11,7 @@ import { ViewContent } from "./ViewContent";
 import { CSSProperties, useCallback, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Children } from "./utils";
+import { useWeb3Modal } from "@web3modal/react";
 
 export type CheckoutViewState = {
   isOpen: boolean;
@@ -53,9 +55,12 @@ export function ViewProvider(props: CheckoutViewProps) {
     [isOpen, openModal, closeModal]
   );
 
+  const { isOpen: isWeb3ModalOpen } = useWeb3Modal();
+
   const modalProps: Omit<ModalProps, "children"> = {
-    open: isOpen,
+    open: isOpen && !isWeb3ModalOpen,
     onClose: closeModal,
+    keepMounted: true,
   };
 
   switch (props.type) {

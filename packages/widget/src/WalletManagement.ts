@@ -1,6 +1,6 @@
 import { WalletClient } from "viem";
 
-export interface WidgetWalletManagement {
+export interface WalletManagement {
   connect(): Promise<void>;
   walletClient?: WalletClient;
 }

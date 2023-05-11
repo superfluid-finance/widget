@@ -1,21 +1,22 @@
-import { Box, Button, Stack, StepContent } from "@mui/material";
+import { Box, Stack, StepContent } from "@mui/material";
 import AutocompleteToken from "./AutocompleteToken";
 import AutocompleteNetwork from "./AutocompleteNetwork";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues, ValidFormValues } from "./formValues";
-import { useStepper } from "./StepperContext";
-import { formValuesToCommands } from "./formValuesToCommands";
-import { useCommandHandler } from "./CommandHandlerContext";
+import { StepperContinueButton } from "./StepperContinueButton";
+import { useAccount } from "wagmi";
+import { useWeb3Modal } from "@web3modal/react";
 
 export default function StepContentPaymentOption() {
-  const { handleNext, isPenultimateStep } = useStepper();
-  const { setCommands } = useCommandHandler();
-  const { watch, handleSubmit } = useFormContext<DraftFormValues>();
+  const { watch } = useFormContext<DraftFormValues, ValidFormValues>();
   const [network, paymentOptionWithTokenInfo] = watch([
     "network",
     "paymentOptionWithTokenInfo",
   ]);
   const isStepComplete = !!network && !!paymentOptionWithTokenInfo;
+
+  const { isConnected } = useAccount();
+  const { open } = useWeb3Modal();
 
   return (
     <StepContent TransitionProps={{ unmountOnExit: false }}>
@@ -38,25 +39,12 @@ export default function StepContentPaymentOption() {
             <AutocompleteToken />
           </Box>
         </Stack>
-        <Button
+        <StepperContinueButton
           disabled={!isStepComplete}
-          variant="contained"
-          onClick={() => {
-            if (isPenultimateStep()) {
-              handleSubmit((values) => {
-                const commands = formValuesToCommands(
-                  values as ValidFormValues // TODO(KK): This is better in next version of react-hook-form.
-                );
-                setCommands(commands);
-                handleNext();
-              })();
-            } else {
-              handleNext();
-            }
-          }}
+          {...(!isConnected && { onClick: () => open() })}
         >
-          Continue
-        </Button>
+          {isConnected ? "Continue" : "Connect Wallet to Continue"}
+        </StepperContinueButton>
       </Stack>
     </StepContent>  
   );

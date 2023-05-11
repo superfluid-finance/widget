@@ -1,13 +1,10 @@
-import { PrepareWriteContractConfig } from "@wagmi/core";
 import { useEffect } from "react";
-import { Signer } from "ethers";
 import {
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-
-export type WagmiOverrides = PrepareWriteContractConfig["overrides"];
+import { ContractWrite } from "./extractContractWrite";
 
 export type ContractWriteResult = {
   write?: () => void;
@@ -19,32 +16,26 @@ export type ContractWriteResult = {
 };
 
 type ContractWriteHandlerProps = {
-  enabled: boolean;
-  signer: Signer;
-  contractWrite: PrepareWriteContractConfig;
+  contractWrite: ContractWrite;
   onChange: (result: ContractWriteResult) => void;
-  overrides?: WagmiOverrides;
 };
 
 export function ContractWriteHandler({
-  enabled,
-  signer,
   contractWrite,
-  onChange,
-  overrides,
+  onChange
 }: ContractWriteHandlerProps) {
   const {
     config,
     status: prepareStatus,
     isLoading: isPrepareLoading,
-  } = usePrepareContractWrite({ ...contractWrite, signer, overrides });
+  } = usePrepareContractWrite({ ...contractWrite });
 
   const {
     write,
     data,
     status: writeStatus,
     isLoading: isWriteLoading,
-  } = useContractWrite(config as any); // TODO(KK): Any way to get rid of the any?
+  } = useContractWrite(config);
 
   const { status: transactionStatus, isLoading: isTransactionLoading } =
     useWaitForTransaction({

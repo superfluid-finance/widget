@@ -11,10 +11,12 @@ import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
 import CircleIcon from "@mui/icons-material/Circle";
+import { useAccount } from "wagmi";
 
 export default function StepContentReview() {
+  const { isConnected } = useAccount();
   const {
-    formState: { isValid },
+    formState: { isValid, isValidating },
   } = useFormContext<ValidFormValues>();
   const { commands, handle } = useCommandHandler();
 
@@ -36,7 +38,7 @@ export default function StepContentReview() {
           </List>
         </Stack>
         <Button
-          disabled={!isValid}
+          disabled={!isValid || isValidating || !isConnected}
           variant="contained"
           fullWidth
           onClick={() => void handle()}

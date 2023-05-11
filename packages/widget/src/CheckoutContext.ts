@@ -15,7 +15,7 @@ export type SuperTokenInfo = TokenInfo & {
 
 export type CheckoutState = {
   superTokens: SuperTokenInfo[];
-  supportedNetworks: ReadonlyArray<SupportedNetwork>;
+  networks: ReadonlyArray<SupportedNetwork>;
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
 } & CheckoutConfig;
 
