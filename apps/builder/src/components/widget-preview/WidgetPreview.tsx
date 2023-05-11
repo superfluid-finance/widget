@@ -54,7 +54,7 @@ export const WidgetContext = createContext<WidgetProps>({
     inputRadius: 4,
     fontFamily: "fontfamily",
     primaryTextColor: colors.grey[900],
-    secondaryTextColor: colors.amber[700],
+    secondaryTextColor: colors.common.white,
     primaryColor: colors.green[500],
     secondaryColor: colors.common.white,
   },

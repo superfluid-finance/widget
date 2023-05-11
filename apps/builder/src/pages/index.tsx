@@ -32,7 +32,7 @@ export default function Home() {
         logoURL: "",
         fontFamily: "default",
         primaryTextColor: colors.grey[900],
-        secondaryTextColor: colors.amber[700],
+        secondaryTextColor: colors.common.white,
         primaryColor: colors.green[500],
         secondaryColor: colors.common.white,
       },
