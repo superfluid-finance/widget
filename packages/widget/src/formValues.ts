@@ -3,10 +3,17 @@ import {
   supportedNetworkSchema,
   etherAmountSchema,
   paymentOptionSchema,
+  SuperTokenExtension,
 } from "superfluid-checkout-core";
 import { z } from "zod";
-import { SuperTokenInfo } from "./CheckoutContext";
 import { UseFormReturn } from "react-hook-form";
+import { TokenInfo } from "@uniswap/token-lists";
+
+export type SuperTokenInfo = TokenInfo & {
+  extensions: {
+    superTokenInfo: SuperTokenExtension;
+  };
+};
 
 const paymentOptionWithTokenInfoSchema = z.object({
   paymentOption: paymentOptionSchema,

@@ -1,17 +1,35 @@
-import { FC, createContext, useContext, useEffect, useMemo } from "react";
+import {
+  CSSProperties,
+  FC,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { useState } from "react";
-import { Button, SelectChangeEvent, colors } from "@mui/material";
+import { Button, SelectChangeEvent, ThemeOptions, colors } from "@mui/material";
 
 import { PaymentOption as SelectPaymentOption } from "./SelectPaymentOption";
 import {
   ChainId,
-  CheckoutProvider,
+  CheckoutWidget,
   PaymentOption,
   ProductDetails,
 } from "superfluid-checkout-widget";
 import tokenList from "../../tokenList";
 import { Control, UseFormWatch } from "react-hook-form";
-import { DisplaySettings } from "superfluid-checkout-widget/src/ViewProvider";
+
+export type DisplaySettings = {
+  inputRadius: CSSProperties["borderRadius"];
+  buttonRadius: CSSProperties["borderRadius"];
+  fontFamily: string;
+  productImageURL?: string;
+  logoURL?: string;
+  primaryTextColor: `#${string}`;
+  secondaryTextColor: `#${string}`;
+  primaryColor: `#${string}`;
+  secondaryColor: `#${string}`;
+};
 
 export type PaymentInterval =
   | "second"
@@ -66,32 +84,33 @@ const switchLayout = (
   layout: Layout,
   productDetails: ProductDetails,
   paymentOptions: PaymentOption[],
-  displaySettings: DisplaySettings
+  theme: ThemeOptions
 ) => {
   return layout === "page" ? (
-    <CheckoutProvider
+    <CheckoutWidget
       productDetails={productDetails}
       paymentOptions={paymentOptions}
       tokenList={tokenList}
       type={layout}
-      displaySettings={displaySettings}
+      theme={theme}
     />
   ) : (
-    <CheckoutProvider
+    <CheckoutWidget
       productDetails={productDetails}
       paymentOptions={paymentOptions}
       tokenList={tokenList}
       type={layout}
-      displaySettings={displaySettings}
+      theme={theme}
     >
       {({ openModal }) => (
         <Button onClick={() => openModal()}>{`Open ${layout}`}</Button>
       )}
-    </CheckoutProvider>
+    </CheckoutWidget>
   );
 };
 
 const WidgetPreview: FC<WidgetProps> = (props) => {
+  const { displaySettings } = props;
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -118,15 +137,45 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     [props.paymentOptions]
   );
 
+  const theme = {
+    palette: {
+      text: {
+        primary: displaySettings.primaryTextColor,
+        secondary: displaySettings.secondaryTextColor,
+      },
+      primary: { main: displaySettings.primaryColor },
+      secondary: { main: displaySettings.secondaryColor },
+    },
+    components: {
+      MuiStepIcon: {
+        styleOverrides: {
+          text: {
+            fill: displaySettings.secondaryColor,
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            borderRadius: displaySettings.inputRadius,
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            color: displaySettings.secondaryTextColor,
+            borderRadius: displaySettings.buttonRadius,
+          },
+        },
+      },
+    },
+  };
+
   return (
     <WidgetContext.Provider value={props}>
       {mounted &&
-        switchLayout(
-          props.layout,
-          productDetails,
-          paymentOptions,
-          props.displaySettings
-        )}
+        switchLayout(props.layout, productDetails, paymentOptions, theme)}
     </WidgetContext.Provider>
   );
 };

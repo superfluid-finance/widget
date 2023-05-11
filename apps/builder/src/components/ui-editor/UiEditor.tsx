@@ -1,12 +1,10 @@
 import {
-  Box,
-  IconButton,
   Slider,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Controller } from "react-hook-form";
 import { EditorProps } from "../widget-preview/WidgetPreview";
 import ImageSelect from "../image-select/ImageSelect";
