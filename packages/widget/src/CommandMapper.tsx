@@ -1,5 +1,6 @@
 import { useContractRead, useContractReads } from "wagmi";
 import {
+  Command,
   EnableAutoWrapCommand,
   SendStreamCommand,
   WrapIntoSuperTokensCommand,
@@ -14,9 +15,21 @@ import {
   mapTimePeriodToSeconds,
   superTokenABI,
 } from "superfluid-checkout-core";
+import { useMemo } from "react";
 import { extractContractWrite } from "./extractContractWrite";
 import { MaxUint256 } from "./utils";
 import { parseEther } from "viem";
+
+export function CommandMapper(cmd: Command) {
+  switch (cmd.title) {
+    case "Enable Auto-Wrap":
+      return <EnableAutoWrapCommandMapper {...cmd} />;
+    case "Wrap into Super Tokens":
+      return <WrapIntoSuperTokensCommandMapper {...cmd} />;
+    case "Send Stream":
+      return <SendStreamCommandMapper {...cmd} />;
+  }
+}
 
 export function EnableAutoWrapCommandMapper(cmd: EnableAutoWrapCommand) {
   const { data } = useContractReads({
@@ -91,26 +104,28 @@ export function WrapIntoSuperTokensCommandMapper(
     args: [cmd.accountAddress, cmd.superTokenAddress],
   });
 
-  const amount = parseEther(cmd.amountEther);
-  if (allowance) {
-    if (allowance < amount) {
+  useMemo(() => {
+    const amount = parseEther(cmd.amountEther);
+    if (allowance) {
+      if (allowance < amount) {
+        extractContractWrite({
+          abi: erc20ABI,
+          functionName: "approve",
+          chainId: cmd.chainId,
+          address: cmd.underlyingTokenAddress,
+          args: [cmd.superTokenAddress, MaxUint256],
+        });
+      }
+
       extractContractWrite({
-        abi: erc20ABI,
-        functionName: "approve",
+        abi: superTokenABI,
+        address: cmd.superTokenAddress,
+        functionName: "upgrade", // TODO(KK): upgradeByEth
         chainId: cmd.chainId,
-        address: cmd.underlyingTokenAddress,
-        args: [cmd.superTokenAddress, MaxUint256],
+        args: [parseEther(cmd.amountEther)],
       });
     }
-
-    extractContractWrite({
-      abi: superTokenABI,
-      address: cmd.superTokenAddress,
-      functionName: "upgrade", // TODO(KK): upgradeByEth
-      chainId: cmd.chainId,
-      args: [parseEther(cmd.amountEther)],
-    });
-  }
+  }, [allowance]);
 
   return null;
 }
@@ -129,7 +144,7 @@ export function SendStreamCommandMapper(cmd: SendStreamCommand) {
   const flowRate =
     parseEther(cmd.flowRate.amountEther) /
     BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
-    
+
   extractContractWrite({
     abi: cfAv1ForwarderABI,
     address: cfAv1ForwarderAddress[cmd.chainId],
