@@ -2,7 +2,6 @@ import {
   AppBar,
   Dialog,
   Drawer,
-  Fade,
   IconButton,
   ModalProps,
   ThemeProvider,
@@ -34,16 +33,17 @@ export type DisplaySettings = {
   secondaryColor: `#${string}`;
 };
 
-export type CheckoutViewProps =
+export type CheckoutViewProps = {
+  displaySettings?: DisplaySettings;
+} & (
   | {
       type: "drawer" | "dialog" | "full-screen";
-      displaySettings: DisplaySettings;
       children: (state: Readonly<CheckoutViewState>) => Children;
     }
   | {
       type: "page";
-      displaySettings: DisplaySettings;
-    };
+    }
+);
 
 export function ViewProvider(props: CheckoutViewProps) {
   const [isOpen, setOpen] = useState(false);
@@ -67,40 +67,48 @@ export function ViewProvider(props: CheckoutViewProps) {
     keepMounted: true,
   };
 
-  const theme = createTheme({
-    palette: {
-      text: {
-        primary: props.displaySettings.primaryTextColor,
-        secondary: props.displaySettings.secondaryTextColor,
-      },
-      primary: { main: props.displaySettings.primaryColor },
-      secondary: { main: props.displaySettings.secondaryColor },
-    },
-    components: {
-      MuiStepIcon: {
-        styleOverrides: {
-          text: {
-            fill: props.displaySettings.secondaryColor,
+  const theme = createTheme(
+    props.displaySettings
+      ? {
+          palette: {
+            text: {
+              primary: props.displaySettings.primaryTextColor,
+              secondary: props.displaySettings.secondaryTextColor,
+            },
+            primary: { main: props.displaySettings.primaryColor },
+            secondary: { main: props.displaySettings.secondaryColor },
           },
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          root: {
-            borderRadius: props.displaySettings.inputRadius,
+          components: {
+            MuiStepIcon: {
+              styleOverrides: {
+                text: {
+                  fill: props.displaySettings.secondaryColor,
+                },
+              },
+            },
+            MuiOutlinedInput: {
+              styleOverrides: {
+                root: {
+                  borderRadius: props.displaySettings.inputRadius,
+                },
+              },
+            },
+            MuiButton: {
+              styleOverrides: {
+                root: {
+                  color: props.displaySettings.secondaryTextColor,
+                  borderRadius: props.displaySettings.buttonRadius,
+                },
+              },
+            },
           },
-        },
-      },
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            color: props.displaySettings.secondaryTextColor,
-            borderRadius: props.displaySettings.buttonRadius,
+        }
+      : {
+          palette: {
+            mode: "dark",
           },
-        },
-      },
-    },
-  });
+        }
+  );
 
   switch (props.type) {
     case "dialog":
