@@ -30,7 +30,6 @@ export type PaymentInterval = (typeof paymentIntervals)[number];
 export type PaymentOption = {
   network: Network;
   superToken: TokenInfo;
-  recipient: `0x${string}`;
 };
 
 const renderToken = (token: TokenInfo) => {
@@ -63,8 +62,6 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     useState<Network>(defaultNetwork);
   const [selectedToken, setSelectedToken] = useState<TokenInfo>(defaultToken);
 
-  const [recipient, setRecipient] = useState("");
-
   const filteredNetworks = useMemo(
     () =>
       networks.filter((network) =>
@@ -85,12 +82,12 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     }
   };
 
-  const handleAdd = ({ network, superToken, recipient }: PaymentOption) => {
+  const handleAdd = ({ network, superToken }: PaymentOption) => {
     if (!(network && superToken)) {
       return;
     }
 
-    onAdd({ network, superToken, recipient });
+    onAdd({ network, superToken });
   };
 
   const autoCompleteTokenOptions = useMemo(() => {
@@ -141,21 +138,12 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         </Stack>
       </Stack>
 
-      <Stack direction="column" flex={1}>
-        <Typography variant="subtitle2">Recipient</Typography>
-        <TextField
-          value={recipient}
-          onChange={({ target }) => setRecipient(target.value)}
-        />
-      </Stack>
-
       <Button
-        disabled={!(selectedNetwork && selectedToken && recipient)}
+        disabled={!(selectedNetwork && selectedToken)}
         onClick={() =>
           handleAdd({
             network: selectedNetwork,
-            superToken: selectedToken,
-            recipient: recipient as `0x${string}`,
+            superToken: selectedToken
           })
         }
       >

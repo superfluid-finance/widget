@@ -2,15 +2,14 @@ import {
   Button,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   Stack,
   StepContent,
+  Typography,
 } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
-import CircleIcon from "@mui/icons-material/Circle";
 import { useAccount } from "wagmi";
 
 export default function StepContentReview() {
@@ -25,16 +24,22 @@ export default function StepContentReview() {
       <Stack>
         <Stack direction="column" spacing={3}>
           <List sx={{ ml: 1.5 }}>
-            {commands.map((command) => (
-              <ListItem key={command.title}>
-                <Stack direction="row" alignItems="center">
-                  <ListItemIcon>
-                    <CircleIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={command.title} />
-                </Stack>
-              </ListItem>
-            ))}
+            {commands.map((cmd) => {
+              const { title, ...rest } = cmd;
+
+              return (
+                <ListItem key={title}>
+                  <ListItemText
+                    primary={title}
+                    secondary={
+                      <Typography component="pre" variant="body2">
+                        {JSON.stringify(rest, null, 2)}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              );
+            })}
           </List>
         </Stack>
         <Button

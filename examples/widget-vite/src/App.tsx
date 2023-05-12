@@ -1,7 +1,7 @@
 import "./App.css";
 import { CheckoutWidget } from "superfluid-checkout-widget";
 import productDetails from "./productDetails";
-import paymentOptions from "./paymentOptions";
+import paymentDetails from "./paymentDetails";
 import tokenList from "./tokenList";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <>
       <CheckoutWidget
         productDetails={productDetails}
-        paymentOptions={paymentOptions}
+        paymentDetails={paymentDetails}
         tokenList={tokenList}
         type="drawer"
       >
@@ -17,7 +17,7 @@ function App() {
       </CheckoutWidget>
       <CheckoutWidget
         productDetails={productDetails}
-        paymentOptions={paymentOptions}
+        paymentDetails={paymentDetails}
         tokenList={tokenList}
         type="dialog"
       >
@@ -25,7 +25,7 @@ function App() {
       </CheckoutWidget>
       <CheckoutWidget
         productDetails={productDetails}
-        paymentOptions={paymentOptions}
+        paymentDetails={paymentDetails}
         tokenList={tokenList}
         type="full-screen"
       >

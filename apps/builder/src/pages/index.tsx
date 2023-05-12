@@ -36,16 +36,17 @@ export default function Home() {
         primaryColor: colors.green[500],
         secondaryColor: colors.common.white,
       },
-      layout: "dialog",
+      layout: "page",
     },
   });
 
   const { watch, control } = formMethods;
 
-  const [productName, productDesc, paymentOptions, displaySettings, layout] =
+  const [productName, productDesc, paymentReceiver, paymentOptions, displaySettings, layout] =
     watch([
       "productName",
       "productDesc",
+      "paymentReceiver",
       "paymentOptions",
       "displaySettings",
       "layout",
@@ -110,10 +111,11 @@ export default function Home() {
       >
         <WidgetPreview
           {...{
-            displaySettings,
             productName,
             productDesc,
+            paymentReceiver,
             paymentOptions,
+            displaySettings,
             layout,
           }}
         />

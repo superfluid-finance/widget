@@ -1,8 +1,8 @@
 import { TokenList } from "@uniswap/token-lists";
-import { PaymentOption, ProductDetails } from "superfluid-checkout-core";
+import { PaymentDetails, ProductDetails } from "superfluid-checkout-core";
 
 export type CheckoutConfig = Readonly<{
     productDetails: ProductDetails
-    paymentOptions: PaymentOption[]
+    paymentDetails: PaymentDetails
     tokenList: TokenList
 }>

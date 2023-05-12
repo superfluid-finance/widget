@@ -14,11 +14,12 @@ type Props = CheckoutViewProps &
 
 export function CheckoutWidget({
   productDetails,
-  paymentOptions,
+  paymentDetails,
   tokenList,
   theme: theme_,
   ...viewProps
 }: Props) {
+  const { paymentOptions } = paymentDetails;
   // TODO: validate input
 
   // # Handle tokens
@@ -84,12 +85,12 @@ export function CheckoutWidget({
     () => ({
       superTokens,
       productDetails,
-      paymentOptions,
+      paymentDetails,
       tokenList,
       networks,
       paymentOptionWithTokenInfoList,
     }),
-    [productDetails, paymentOptions, tokenList, networks]
+    [productDetails, paymentDetails, tokenList, networks]
   );
 
   const theme = useMemo(() => createTheme(theme_), [theme_]);
