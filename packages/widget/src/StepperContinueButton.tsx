@@ -7,10 +7,7 @@ import { useCommandHandler } from "./CommandHandlerContext";
 
 export function StepperContinueButton(props: ButtonProps) {
   const { handleNext, isPenultimateStep } = useStepper();
-  const {
-    formState: { isValid },
-    handleSubmit,
-  } = useFormContext<ValidFormValues>();
+  const { handleSubmit } = useFormContext<ValidFormValues>();
   const { setCommands } = useCommandHandler();
 
   return (

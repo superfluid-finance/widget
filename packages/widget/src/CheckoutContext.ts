@@ -1,17 +1,9 @@
 import { createContext, useContext } from "react";
 import { CheckoutConfig } from "./CheckoutConfig";
-import { TokenInfo } from "@uniswap/token-lists";
 import {
-  SuperTokenExtension,
   SupportedNetwork,
 } from "superfluid-checkout-core";
-import { PaymentOptionWithTokenInfo } from "./formValues";
-
-export type SuperTokenInfo = TokenInfo & {
-  extensions: {
-    superTokenInfo: SuperTokenExtension;
-  };
-};
+import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 
 export type CheckoutState = {
   superTokens: SuperTokenInfo[];

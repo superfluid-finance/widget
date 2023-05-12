@@ -40,15 +40,16 @@ export default function Home() {
     },
   });
 
-  const { watch, control, getValues, setValue } = formMethods;
+  const { watch, control } = formMethods;
 
-  watch([
-    "productName",
-    "productDesc",
-    "paymentOptions",
-    "displaySettings",
-    "layout",
-  ]);
+  const [productName, productDesc, paymentOptions, displaySettings, layout] =
+    watch([
+      "productName",
+      "productDesc",
+      "paymentOptions",
+      "displaySettings",
+      "layout",
+    ]);
 
   return (
     <Stack direction="row">
@@ -107,7 +108,15 @@ export default function Home() {
           justifyContent: "center",
         }}
       >
-        <WidgetPreview {...getValues()} />
+        <WidgetPreview
+          {...{
+            displaySettings,
+            productName,
+            productDesc,
+            paymentOptions,
+            layout,
+          }}
+        />
       </Box>
     </Stack>
   );

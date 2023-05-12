@@ -1,21 +1,22 @@
 import { useMemo } from "react";
 import { CheckoutConfig } from "./CheckoutConfig";
-import {
-  CheckoutContext,
-  CheckoutState,
-  SuperTokenInfo,
-} from "./CheckoutContext";
+import { CheckoutContext, CheckoutState } from "./CheckoutContext";
 import { CheckoutViewProps, ViewProvider } from "./ViewProvider";
 import { SupportedNetwork, supportedNetworks } from "superfluid-checkout-core";
-import { PaymentOptionWithTokenInfo } from "./formValues";
+import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 import { WalletAndWagmiProvider } from "./WalletAndWagmiProvider";
+import { ThemeOptions, ThemeProvider, createTheme } from "@mui/material";
 
-type Props = CheckoutViewProps & CheckoutConfig;
+type Props = CheckoutViewProps &
+  CheckoutConfig & {
+    theme?: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
+  };
 
-export function CheckoutProvider({
+export function CheckoutWidget({
   productDetails,
   paymentOptions,
   tokenList,
+  theme: theme_,
   ...viewProps
 }: Props) {
   // TODO: validate input
@@ -32,10 +33,10 @@ export function CheckoutProvider({
 
   const networks = useMemo<ReadonlyArray<SupportedNetwork>>(() => {
     // TODO: In some cases, produces this error: Type 'Set<5 | 80001 | 420 | 421613 | 43113 | 100 | 137 | 10 | 42161 | 43114 | 56 | 1 | 42220>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
-    const uniqueChainIds = [...new Set(paymentOptions.map((x) => x.chainId))];
-    // const uniqueChainIds = paymentOptions
-    //   .map((x) => x.chainId)
-    //   .filter((chainId, index, self) => self.indexOf(chainId) === index);
+    // const uniqueChainIds = [...new Set(paymentOptions.map((x) => x.chainId))];
+    const uniqueChainIds = paymentOptions
+      .map((x) => x.chainId)
+      .filter((chainId, index, self) => self.indexOf(chainId) === index);
     return uniqueChainIds
       .map((chainId) => {
         const supportedNetwork = supportedNetworks.find(
@@ -91,11 +92,15 @@ export function CheckoutProvider({
     [productDetails, paymentOptions, tokenList, networks]
   );
 
+  const theme = useMemo(() => createTheme(theme_), [theme_]);
+
   return (
-    <WalletAndWagmiProvider>
-      <CheckoutContext.Provider value={checkoutState}>
-        <ViewProvider {...viewProps} />
-      </CheckoutContext.Provider>
-    </WalletAndWagmiProvider>
+    <CheckoutContext.Provider value={checkoutState}>
+      <WalletAndWagmiProvider>
+        <ThemeProvider theme={theme}>
+          <ViewProvider {...viewProps} />
+        </ThemeProvider>
+      </WalletAndWagmiProvider>
+    </CheckoutContext.Provider>
   );
 }

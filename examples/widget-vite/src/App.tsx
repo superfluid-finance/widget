@@ -1,5 +1,5 @@
 import "./App.css";
-import { CheckoutProvider } from "superfluid-checkout-widget";
+import { CheckoutWidget } from "superfluid-checkout-widget";
 import productDetails from "./productDetails";
 import paymentOptions from "./paymentOptions";
 import tokenList from "./tokenList";
@@ -7,23 +7,23 @@ import tokenList from "./tokenList";
 function App() {
   return (
     <>
-      <CheckoutProvider
+      <CheckoutWidget
         productDetails={productDetails}
         paymentOptions={paymentOptions}
         tokenList={tokenList}
         type="drawer"
       >
         {({ openModal }) => <button onClick={() => openModal()}>Drawer</button>}
-      </CheckoutProvider>
-      <CheckoutProvider
+      </CheckoutWidget>
+      <CheckoutWidget
         productDetails={productDetails}
         paymentOptions={paymentOptions}
         tokenList={tokenList}
         type="dialog"
       >
         {({ openModal }) => <button onClick={() => openModal()}>Dialog</button>}
-      </CheckoutProvider>
-      <CheckoutProvider
+      </CheckoutWidget>
+      <CheckoutWidget
         productDetails={productDetails}
         paymentOptions={paymentOptions}
         tokenList={tokenList}
@@ -32,7 +32,7 @@ function App() {
         {({ openModal }) => (
           <button onClick={() => openModal()}>Full-screen</button>
         )}
-      </CheckoutProvider>
+      </CheckoutWidget>
     </>
   );
 }
