@@ -26,7 +26,7 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
         />
       </Stack>
       <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">ProductDesctiption</Typography>
+        <Typography variant="subtitle2">ProductDescription</Typography>
         <Controller
           control={control}
           name="productDesc"
