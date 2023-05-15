@@ -6,9 +6,13 @@ import StepContentReview from "./StepContentReview";
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
+import { useAccount } from "wagmi";
 
 export default function Stepper() {
-  const { watch, formState: { isValid } } = useFormContext<DraftFormValues>();
+  const {
+    watch,
+    formState: { isValid },
+  } = useFormContext<DraftFormValues>();
   const paymentOptionWithTokenInfo = watch("paymentOptionWithTokenInfo");
 
   const steps = useMemo(
@@ -38,32 +42,41 @@ export default function Stepper() {
     [paymentOptionWithTokenInfo]
   );
 
+  const { isConnected } = useAccount();
+
   return (
     <StepperProvider
       totalSteps={steps.length}
       initialStep={isValid ? steps.length - 1 : 0}
     >
-      {({ activeStep, setActiveStep }) => (
-        <MUIStepper
-          orientation="vertical"
-          activeStep={activeStep}
-          sx={{ m: 2 }}
-        >
-          {steps.map((step, index) => {
-            return (
-              <Step key={index}>
-                <StepButton
-                  optional={step.optional ? "optional" : undefined}
-                  onClick={() => setActiveStep(index)}
-                >
-                  {step.buttonText}
-                </StepButton>
-                <step.content />
-              </Step>
-            );
-          })}
-        </MUIStepper>
-      )}
+      {({ activeStep, setActiveStep }) => {
+
+        if (activeStep !== 0 && !isConnected) {
+          setActiveStep(0);
+        }
+
+        return (
+          <MUIStepper
+            orientation="vertical"
+            activeStep={activeStep}
+            sx={{ m: 2 }}
+          >
+            {steps.map((step, index) => {
+              return (
+                <Step key={index}>
+                  <StepButton
+                    optional={step.optional ? "optional" : undefined}
+                    onClick={() => setActiveStep(index)}
+                  >
+                    {step.buttonText}
+                  </StepButton>
+                  <step.content />
+                </Step>
+              );
+            })}
+          </MUIStepper>
+        );
+      }}
     </StepperProvider>
   );
 }

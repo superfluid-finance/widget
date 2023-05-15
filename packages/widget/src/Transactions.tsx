@@ -3,7 +3,6 @@ import { useCommandHandler } from "./CommandHandlerContext";
 import { CommandMapper } from "./CommandMapper";
 import { ContractWriteHandler } from "./ContractWriteHandler";
 import ContractWriteButton from "./ContractWriteButton";
-import { useState } from "react";
 
 export function Transactions() {
   const { commands } = useCommandHandler(); // Cleaner to pass with props.

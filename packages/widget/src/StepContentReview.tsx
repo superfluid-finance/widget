@@ -10,14 +10,20 @@ import {
 import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
-import { useAccount } from "wagmi";
+import { useChainId, useSwitchNetwork } from "wagmi";
 
 export default function StepContentReview() {
-  const { isConnected } = useAccount();
   const {
     formState: { isValid, isValidating },
+    watch,
   } = useFormContext<ValidFormValues>();
   const { commands, handle } = useCommandHandler();
+
+  const expectedChainId = watch("network.id");
+  const chainId = useChainId();
+
+  const { switchNetwork } = useSwitchNetwork();
+  const needsToSwitchNetwork = expectedChainId !== chainId;
 
   return (
     <StepContent TransitionProps={{ unmountOnExit: false }}>
@@ -42,14 +48,24 @@ export default function StepContentReview() {
             })}
           </List>
         </Stack>
-        <Button
-          disabled={!isValid || isValidating || !isConnected}
-          variant="contained"
-          fullWidth
-          onClick={() => void handle()}
-        >
-          Subscribe
-        </Button>
+        {needsToSwitchNetwork ? (
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={() => switchNetwork?.(expectedChainId)}
+          >
+            Switch Network
+          </Button>
+        ) : (
+          <Button
+            disabled={!isValid || isValidating}
+            variant="contained"
+            fullWidth
+            onClick={() => void handle()}
+          >
+            Subscribe
+          </Button>
+        )}
       </Stack>
     </StepContent>
   );

@@ -33,7 +33,7 @@ export function ContractWriteHandler({
     error: prepareError,
     status: prepareStatus,
     isLoading: isPrepareLoading,
-  } = usePrepareContractWrite({ ...contractWrite, enabled: false });
+  } = usePrepareContractWrite({ ...contractWrite });
 
   if (isPrepareError) {
     console.log({
