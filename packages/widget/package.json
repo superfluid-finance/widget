@@ -12,7 +12,8 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
-    "@mui/icons-material": "latest",
+    "@mui/icons-material": "^5.0.0",
+    "@mui/lab": "5.0.0-alpha.129",
     "@uniswap/token-lists": "1.0.0-beta.31",
     "@wagmi/core": "^1.0.0",
     "@web3modal/ethereum": "^2.4.1",
@@ -28,7 +29,7 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
-    "@mui/material": "latest",
+    "@mui/material": "^5.0.0",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "tsconfig": "workspace:*",

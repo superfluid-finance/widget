@@ -1,36 +1,50 @@
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Stack,
-} from "@mui/material";
+import { List, ListItem, ListItemText, Stack } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
-import CircleIcon from "@mui/icons-material/Circle";
 import { CommandMapper } from "./CommandMapper";
+import { ContractWriteHandler } from "./ContractWriteHandler";
+import ContractWriteButton from "./ContractWriteButton";
+import { useState } from "react";
 
 export function Transactions() {
   const { commands } = useCommandHandler(); // Cleaner to pass with props.
 
   return (
     <Stack direction="column" spacing={3}>
-      <List sx={{ ml: 3 }}>
-        {commands.map((cmd, index) => (
-          <ListItem key={index}>
-            <Stack direction="row" alignItems="center">
-              <ListItemIcon>
-                <CircleIcon />
-              </ListItemIcon>
-              <ListItemText primary={cmd.title} />
-            </Stack>
-          </ListItem>
-        ))}
+      <List sx={{ ml: 3 }} disablePadding>
+        {commands.map((cmd, cmdIndex) => {
+          return (
+            <ListItem key={`${cmd.title}.${cmdIndex}`}>
+              <ListItemText
+                primary={cmd.title}
+                secondaryTypographyProps={{ component: "div" }}
+                secondary={
+                  <List disablePadding>
+                    <CommandMapper command={cmd}>
+                      {(contractWrites) =>
+                        contractWrites.map((contractWrite, writeIndex) => (
+                          <ListItem
+                            key={`${cmd.title}.${cmdIndex}.${writeIndex}`}
+                          >
+                            <ContractWriteHandler contractWrite={contractWrite}>
+                              {(result) => (
+                                <ContractWriteButton
+                                  data={contractWrite}
+                                  result={result}
+                                />
+                              )}
+                            </ContractWriteHandler>
+                          </ListItem>
+                        ))
+                      }
+                    </CommandMapper>
+                  </List>
+                }
+              />
+            </ListItem>
+          );
+        })}
       </List>
-      {commands.map((cmd, index) => (
-        <CommandMapper key={index} {...cmd} />
-      ))}
-      <Button>Transact</Button>
+      {/* <ContractWriteButton /> */}
     </Stack>
   );
 }

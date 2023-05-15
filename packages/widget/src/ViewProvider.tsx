@@ -46,7 +46,7 @@ export function ViewProvider(props: CheckoutViewProps) {
   const modalProps: Omit<ModalProps, "children"> = {
     open: isOpen && !isWeb3ModalOpen,
     onClose: closeModal,
-    keepMounted: true,
+    keepMounted: isOpen,
   };
 
   switch (props.type) {
