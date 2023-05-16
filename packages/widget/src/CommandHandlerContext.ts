@@ -1,12 +1,5 @@
 import { createContext, useContext } from "react";
 import { Command } from "./commands";
-import { ContractWrite } from "./extractContractWrite";
-
-export type ContractWriteState = {
-  command: Command;
-  contractWrite: ContractWrite;
-  status: "pending" | "success" | "error" | "waiting";
-}
 
 export type CommandHandlerState = {
   status: "idle" | "handling" | "success";
@@ -15,8 +8,6 @@ export type CommandHandlerState = {
   handle: () => void;
   success: () => void;
   cancelHandling: () => void;
-  contractWrites: ReadonlyArray<ContractWriteState>; // Probably move this away from here.
-  // addContractWrite: () => void;
 };
 
 export const CommandHandlerContext = createContext<CommandHandlerState | undefined>(

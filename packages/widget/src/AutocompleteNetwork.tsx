@@ -5,9 +5,9 @@ import { useCheckout } from "./CheckoutContext";
 
 export default function AutocompleteNetwork() {
   const { control: c } = useFormContext<DraftFormValues>();
-  const { networks: supportedNetworks } = useCheckout();
+  const { networks } = useCheckout();
 
-  const autocompleteOptions = supportedNetworks;
+  const autocompleteOptions = networks;
 
   return (
     <Controller

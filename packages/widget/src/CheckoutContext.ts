@@ -6,7 +6,7 @@ import {
 import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 
 export type CheckoutState = {
-  superTokens: SuperTokenInfo[];
+  superTokens: ReadonlyArray<SuperTokenInfo>;
   networks: ReadonlyArray<SupportedNetwork>;
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
 } & CheckoutConfig;
