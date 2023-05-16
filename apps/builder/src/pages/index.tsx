@@ -11,6 +11,8 @@ import { useState } from "react";
 import UiEditor from "../components/ui-editor/UiEditor";
 import ExportEditor from "../components/export-editor/ExportEditor";
 import ProductEditor from "../components/payment-editor/ProductEditor";
+import tokenListJSON from "@tokdaniel/superfluid-tokenlist";
+import { networks } from "../networkDefinitions";
 
 const labelStyle = {
   fontWeight: 500,
@@ -26,7 +28,14 @@ export default function Home() {
     defaultValues: {
       productName: "Product Name",
       productDesc: "Product Description",
-      paymentOptions: [],
+      paymentOptions: [
+        {
+          network: networks.find(
+            (network) => tokenListJSON.tokens[0].chainId === network.chainId
+          ),
+          superToken: tokenListJSON.tokens[0],
+        },
+      ],
       displaySettings: {
         buttonRadius: 4,
         inputRadius: 4,

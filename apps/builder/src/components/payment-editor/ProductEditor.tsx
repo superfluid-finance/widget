@@ -1,13 +1,11 @@
 import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
-import { FC, useState } from "react";
+import { FC } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Controller, useFieldArray } from "react-hook-form";
 import { EditorProps } from "../widget-preview/WidgetPreview";
-import SelectPaymentOption, {
-  PaymentOption,
-} from "../widget-preview/SelectPaymentOption";
-import { Network, networks } from "../../networkDefinitions";
-import tokenList, { SuperTokenInfo } from "@tokdaniel/superfluid-tokenlist";
+import SelectPaymentOption from "../widget-preview/SelectPaymentOption";
+import { Network } from "../../networkDefinitions";
+import { SuperTokenInfo } from "@tokdaniel/superfluid-tokenlist";
 
 type PaymentOptionViewProps = {
   superToken: SuperTokenInfo;
