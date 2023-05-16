@@ -17,17 +17,16 @@ import {
   PaymentOption,
   ProductDetails,
 } from "superfluid-checkout-widget";
-import tokenList from "../../tokenList";
 import { Control, UseFormWatch } from "react-hook-form";
+import tokenList from "@tokdaniel/superfluid-tokenlist";
 
 export type DisplaySettings = {
+  darkMode: boolean;
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
   fontFamily: string;
   productImageURL?: string;
   logoURL?: string;
-  primaryTextColor: `#${string}`;
-  secondaryTextColor: `#${string}`;
   primaryColor: `#${string}`;
   secondaryColor: `#${string}`;
 };
@@ -71,11 +70,10 @@ export const WidgetContext = createContext<WidgetProps>({
   paymentOptions: [],
   layout: "dialog",
   displaySettings: {
+    darkMode: false,
     buttonRadius: 4,
     inputRadius: 4,
     fontFamily: "fontfamily",
-    primaryTextColor: colors.grey[900],
-    secondaryTextColor: colors.common.white,
     primaryColor: colors.green[500],
     secondaryColor: colors.common.white,
   },
@@ -140,17 +138,17 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     [props.paymentOptions]
   );
 
-  const paymentDetails: PaymentDetails = useMemo<PaymentDetails>(() => ({
-    receiverAddress: props.paymentReceiver,
-    paymentOptions
-  }), [props.paymentReceiver, paymentOptions])
+  const paymentDetails: PaymentDetails = useMemo<PaymentDetails>(
+    () => ({
+      receiverAddress: props.paymentReceiver,
+      paymentOptions,
+    }),
+    [props.paymentReceiver, paymentOptions]
+  );
 
-  const theme = {
+  const theme: ThemeOptions = {
     palette: {
-      text: {
-        primary: displaySettings.primaryTextColor,
-        secondary: displaySettings.secondaryTextColor,
-      },
+      mode: displaySettings.darkMode ? "dark" : "light",
       primary: { main: displaySettings.primaryColor },
       secondary: { main: displaySettings.secondaryColor },
     },
@@ -172,7 +170,6 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
       MuiButton: {
         styleOverrides: {
           root: {
-            color: displaySettings.secondaryTextColor,
             borderRadius: displaySettings.buttonRadius,
           },
         },

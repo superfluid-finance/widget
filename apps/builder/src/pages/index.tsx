@@ -10,7 +10,7 @@ import { useState } from "react";
 
 import UiEditor from "../components/ui-editor/UiEditor";
 import ExportEditor from "../components/export-editor/ExportEditor";
-import PaymentEditor from "../components/payment-editor/PaymentEditor";
+import ProductEditor from "../components/payment-editor/ProductEditor";
 
 const labelStyle = {
   fontWeight: 500,
@@ -18,7 +18,9 @@ const labelStyle = {
 
 export default function Home() {
   const theme = useTheme();
-  const [activeTab, setActiveTab] = useState<"ui" | "payment" | "export">("ui");
+  const [activeTab, setActiveTab] = useState<"ui" | "product" | "export">(
+    "product"
+  );
 
   const formMethods = useForm<WidgetProps, any, WidgetProps>({
     defaultValues: {
@@ -31,8 +33,6 @@ export default function Home() {
         productImageURL: "",
         logoURL: "",
         fontFamily: "default",
-        primaryTextColor: colors.grey[900],
-        secondaryTextColor: colors.common.white,
         primaryColor: colors.green[500],
         secondaryColor: colors.common.white,
       },
@@ -42,15 +42,21 @@ export default function Home() {
 
   const { watch, control } = formMethods;
 
-  const [productName, productDesc, paymentReceiver, paymentOptions, displaySettings, layout] =
-    watch([
-      "productName",
-      "productDesc",
-      "paymentReceiver",
-      "paymentOptions",
-      "displaySettings",
-      "layout",
-    ]);
+  const [
+    productName,
+    productDesc,
+    paymentReceiver,
+    paymentOptions,
+    displaySettings,
+    layout,
+  ] = watch([
+    "productName",
+    "productDesc",
+    "paymentReceiver",
+    "paymentOptions",
+    "displaySettings",
+    "layout",
+  ]);
 
   return (
     <Stack direction="row">
@@ -66,16 +72,16 @@ export default function Home() {
           </Typography>
           <TabContext value={activeTab}>
             <TabList onChange={(_, value) => setActiveTab(value)}>
+              <Tab label="Product" value="product" />
               <Tab label="UI" value="ui" />
-              <Tab label="Payment" value="payment" />
               <Tab label="Export" value="export" />
             </TabList>
 
             <TabPanel value="ui">
               <UiEditor control={control} watch={watch} />
             </TabPanel>
-            <TabPanel value="payment">
-              <PaymentEditor control={control} watch={watch} />
+            <TabPanel value="product">
+              <ProductEditor control={control} watch={watch} />
             </TabPanel>
             <TabPanel value="export">
               <ExportEditor />
