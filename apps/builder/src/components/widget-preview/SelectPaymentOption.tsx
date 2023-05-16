@@ -95,7 +95,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     return tokenList.tokens.filter((token) => {
       return token.chainId === network?.chainId;
     });
-  }, [selectedNetwork, networks]);
+  }, [selectedNetwork]);
 
   useEffect(() => {
     setSelectedToken(defaultToken);
