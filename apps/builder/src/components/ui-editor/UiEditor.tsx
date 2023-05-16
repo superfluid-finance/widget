@@ -117,8 +117,9 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
               name="displaySettings.primaryColor"
               render={({ field: { value, onChange } }) => (
                 <MuiColorInput
+                  fallbackValue={"#000"}
                   format="hex"
-                  value={matchIsValidColor(value) ? value : "#000"}
+                  value={value}
                   onChange={onChange}
                 />
               )}
@@ -134,8 +135,9 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
               name="displaySettings.secondaryColor"
               render={({ field: { value, onChange } }) => (
                 <MuiColorInput
+                  fallbackValue={"#000"}
                   format="hex"
-                  value={matchIsValidColor(value) ? value : "#000"}
+                  value={value}
                   onChange={onChange}
                 />
               )}
@@ -164,8 +166,9 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
               name="displaySettings.primaryTextColor"
               render={({ field: { value, onChange } }) => (
                 <MuiColorInput
+                  fallbackValue={"#000"}
                   format="hex"
-                  value={matchIsValidColor(value) ? value : "#000"}
+                  value={value}
                   onChange={onChange}
                 />
               )}
@@ -181,8 +184,9 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
               name="displaySettings.secondaryTextColor"
               render={({ field: { value, onChange } }) => (
                 <MuiColorInput
+                  fallbackValue={"#000"}
                   format="hex"
-                  value={matchIsValidColor(value) ? value : "#000"}
+                  value={value}
                   onChange={onChange}
                 />
               )}
