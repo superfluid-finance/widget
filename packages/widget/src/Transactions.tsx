@@ -30,12 +30,7 @@ export function Transactions() {
                             key={`${cmd.title}.${cmdIndex}.${writeIndex}`}
                           >
                             <ContractWriteHandler contractWrite={contractWrite}>
-                              {(result) => (
-                                <ContractWriteButton
-                                  data={contractWrite}
-                                  result={result}
-                                />
-                              )}
+                              {(result) => <ContractWriteButton {...result} />}
                             </ContractWriteHandler>
                           </ListItem>
                         ))

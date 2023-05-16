@@ -1,25 +1,51 @@
-import { LoadingButton } from "@mui/lab"
-import { ContractWriteResult } from "./ContractWriteHandler";
-import { ContractWrite } from "./extractContractWrite";
+import { Alert, AlertTitle, LoadingButton } from "@mui/lab";
+import { ContractWriteResult2 } from "./ContractWriteHandler";
+import { Stack } from "@mui/material";
+import { BaseError } from "viem";
 
-export type ContractWriteButtonProps = {
-  data: ContractWrite;
-  result: ContractWriteResult;
-};
+export type ContractWriteButtonProps = ContractWriteResult2;
 
 export default function ContractWriteButton({
-  data: { functionName },
-  result: { write, isLoading },
+  contractWrite,
+  prepareResult,
+  writeResult,
+  transactionResult,
 }: ContractWriteButtonProps) {
+  const write = writeResult.write;
+  const isLoading =
+    prepareResult.isLoading ||
+    writeResult.isLoading ||
+    transactionResult.isLoading;
+  const error = (prepareResult.error ||
+    writeResult.error ||
+    transactionResult.error) as unknown as BaseError; // TODO(KK): move it away from here
+  const functionName = contractWrite.functionName;
+  const showButton = !transactionResult.isSuccess;
+
   return (
-    <LoadingButton
-      variant="contained"
-      fullWidth
-      disabled={!write}
-      onClick={() => write?.()}
-      loading={isLoading}
+    <Stack
+      direction="column"
+      spacing={2}
+      alignItems="stretch"
+      sx={{ width: "100%" }}
     >
-      {functionName}
-    </LoadingButton>
+      {error && (
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {error.shortMessage}
+        </Alert>
+      )}
+      {showButton && (
+        <LoadingButton
+          variant="contained"
+          fullWidth
+          disabled={!write}
+          onClick={() => write?.()}
+          loading={isLoading}
+        >
+          {functionName}
+        </LoadingButton>
+      )}
+    </Stack>
   );
 }

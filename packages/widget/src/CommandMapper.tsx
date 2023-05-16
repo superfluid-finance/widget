@@ -70,7 +70,7 @@ export function EnableAutoWrapCommandMapper({
 
   const contractWrites: ContractWrite[] = [];
 
-  if (wrapSchedule) {
+  if (wrapSchedule !== undefined) {
     if (wrapSchedule.strategy !== autoWrapStrategyAddress[cmd.chainId]) {
       contractWrites.push(
         extractContractWrite({
@@ -122,7 +122,7 @@ export function WrapIntoSuperTokensCommandMapper({
 
   const amount = parseEther(cmd.amountEther);
 
-  if (allowance) {
+  if (allowance !== undefined) {
     if (allowance < amount) {
       contractWrites.push(
         extractContractWrite({

@@ -16,10 +16,17 @@ export type ContractWriteResult = {
   isFinished: boolean;
 };
 
+export type ContractWriteResult2 = {
+  contractWrite: ContractWrite;
+  prepareResult: ReturnType<typeof usePrepareContractWrite>;
+  writeResult: ReturnType<typeof useContractWrite>;
+  transactionResult: ReturnType<typeof useWaitForTransaction>;
+}
+
 type ContractWriteHandlerProps = {
   contractWrite: ContractWrite;
-  onChange?: (result: ContractWriteResult) => void;
-  children?: (result: ContractWriteResult) => Children;
+  onChange?: (result: ContractWriteResult2) => void;
+  children?: (result: ContractWriteResult2) => Children;
 };
 
 export function ContractWriteHandler({
@@ -27,58 +34,24 @@ export function ContractWriteHandler({
   onChange,
   children,
 }: ContractWriteHandlerProps) {
-  const {
-    config,
-    isError: isPrepareError,
-    error: prepareError,
-    status: prepareStatus,
-    isLoading: isPrepareLoading,
-  } = usePrepareContractWrite({ ...contractWrite });
+  const prepareResult = usePrepareContractWrite({ ...contractWrite });
+  const writeResult = useContractWrite(prepareResult.config);
+  const transactionResult = useWaitForTransaction({
+    hash: writeResult.data?.hash,
+  });
 
-  if (isPrepareError) {
-    console.log({
-      isPrepareError,
-      prepareError,
-    });
-  }
-
-  const {
-    write,
-    data,
-    isError: isWriteError,
-    error: writeError,
-    status: writeStatus,
-    isLoading: isWriteLoading,
-  } = useContractWrite(config);
-
-  if (isWriteError) {
-    console.log({
-      isWriteError,
-      writeError,
-    });
-  }
-
-  const { status: transactionStatus, isLoading: isTransactionLoading } =
-    useWaitForTransaction({
-      hash: data?.hash,
-    });
-
-  const result = useMemo(
+  const result: ContractWriteResult2 = useMemo(
     () => ({
-      write,
-      prepareStatus,
-      writeStatus,
-      transactionStatus,
-      isLoading: isPrepareLoading || isWriteLoading || isTransactionLoading,
-      isFinished: transactionStatus === "success",
+      contractWrite,
+      prepareResult,
+      writeResult,
+      transactionResult
     }),
     [
-      write,
-      prepareStatus,
-      writeStatus,
-      isPrepareLoading,
-      isWriteLoading,
-      isTransactionLoading,
+      contractWrite,
+      prepareResult,
+      writeResult,
+      transactionResult
     ]
   );
 
