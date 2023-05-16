@@ -9,7 +9,7 @@ import {
 import { ViewContent } from "./ViewContent";
 import { useCallback, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { Children } from "./utils";
+import { ChildrenProp } from "./utils";
 import { useWeb3Modal } from "@web3modal/react";
 
 export type CheckoutViewState = {
@@ -21,7 +21,7 @@ export type CheckoutViewState = {
 export type CheckoutViewProps =
   | {
       type: "drawer" | "dialog" | "full-screen";
-      children: (state: Readonly<CheckoutViewState>) => Children;
+      children: (state: Readonly<CheckoutViewState>) => ChildrenProp;
     }
   | {
       type: "page";

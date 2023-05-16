@@ -3,12 +3,12 @@ import {
   useCallback
 } from "react";
 import { StepperContext, StepperContextValue } from "./StepperContext";
-import { Children } from "./utils";
+import { ChildrenProp } from "./utils";
 
 type Props = {
   children: (
     contextValue: StepperContextValue
-  ) => Children;
+  ) => ChildrenProp;
   totalSteps: number;
   initialStep?: number;
 };

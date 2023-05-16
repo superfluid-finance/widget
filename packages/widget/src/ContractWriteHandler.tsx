@@ -5,18 +5,9 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import { ContractWrite } from "./extractContractWrite";
-import { Children } from "./utils";
+import { ChildrenProp } from "./utils";
 
 export type ContractWriteResult = {
-  write?: () => void;
-  prepareStatus: "error" | "success" | "loading" | "idle";
-  writeStatus: "error" | "success" | "loading" | "idle";
-  transactionStatus: "error" | "success" | "loading" | "idle";
-  isLoading: boolean;
-  isFinished: boolean;
-};
-
-export type ContractWriteResult2 = {
   contractWrite: ContractWrite;
   prepareResult: ReturnType<typeof usePrepareContractWrite>;
   writeResult: ReturnType<typeof useContractWrite>;
@@ -25,8 +16,8 @@ export type ContractWriteResult2 = {
 
 type ContractWriteHandlerProps = {
   contractWrite: ContractWrite;
-  onChange?: (result: ContractWriteResult2) => void;
-  children?: (result: ContractWriteResult2) => Children;
+  onChange?: (result: ContractWriteResult) => void;
+  children?: (result: ContractWriteResult) => ChildrenProp;
 };
 
 export function ContractWriteHandler({
@@ -40,7 +31,7 @@ export function ContractWriteHandler({
     hash: writeResult.data?.hash,
   });
 
-  const result: ContractWriteResult2 = useMemo(
+  const result: ContractWriteResult = useMemo(
     () => ({
       contractWrite,
       prepareResult,
@@ -57,6 +48,9 @@ export function ContractWriteHandler({
 
   useEffect(() => {
     onChange?.(result);
+    console.log({
+      result
+    })
   }, [result]);
 
   return <>{children?.(result)}</>;

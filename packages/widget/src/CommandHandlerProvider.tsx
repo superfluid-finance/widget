@@ -5,12 +5,12 @@ import {
   ContractWriteState,
 } from "./CommandHandlerContext";
 import { Command } from "./commands";
-import { Children } from "./utils";
+import { ChildrenProp } from "./utils";
 
 type Props = {
   children:
-    | ((contextValue: CommandHandlerState) => Children)
-    | Children;
+    | ((contextValue: CommandHandlerState) => ChildrenProp)
+    | ChildrenProp;
 };
 
 export function CommandHandlerProvider({ children }: Props) {

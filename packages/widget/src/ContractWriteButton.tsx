@@ -1,9 +1,9 @@
 import { Alert, AlertTitle, LoadingButton } from "@mui/lab";
-import { ContractWriteResult2 } from "./ContractWriteHandler";
+import { ContractWriteResult } from "./ContractWriteHandler";
 import { Stack } from "@mui/material";
 import { BaseError } from "viem";
 
-export type ContractWriteButtonProps = ContractWriteResult2;
+export type ContractWriteButtonProps = ContractWriteResult;
 
 export default function ContractWriteButton({
   contractWrite,
@@ -20,7 +20,8 @@ export default function ContractWriteButton({
     writeResult.error ||
     transactionResult.error) as unknown as BaseError; // TODO(KK): move it away from here
   const functionName = contractWrite.functionName;
-  const showButton = !transactionResult.isSuccess;
+
+  if (transactionResult.isSuccess) return null;
 
   return (
     <Stack
@@ -35,17 +36,15 @@ export default function ContractWriteButton({
           {error.shortMessage}
         </Alert>
       )}
-      {showButton && (
-        <LoadingButton
-          variant="contained"
-          fullWidth
-          disabled={!write}
-          onClick={() => write?.()}
-          loading={isLoading}
-        >
-          {functionName}
-        </LoadingButton>
-      )}
+      <LoadingButton
+        variant="contained"
+        fullWidth
+        disabled={!write}
+        onClick={() => write?.()}
+        loading={isLoading}
+      >
+        {functionName}
+      </LoadingButton>
     </Stack>
   );
 }

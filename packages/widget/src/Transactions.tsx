@@ -4,11 +4,6 @@ import { CommandMapper } from "./CommandMapper";
 import { ContractWriteHandler } from "./ContractWriteHandler";
 import ContractWriteButton from "./ContractWriteButton";
 
-// type TransactionState = {
-//   total: number
-//   active: number
-// }
-
 export function Transactions() {
   const { commands } = useCommandHandler(); // Cleaner to pass with props.
 
@@ -43,7 +38,6 @@ export function Transactions() {
           );
         })}
       </List>
-      {/* <ContractWriteButton /> */}
     </Stack>
   );
 }
