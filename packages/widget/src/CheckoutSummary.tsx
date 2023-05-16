@@ -1,9 +1,10 @@
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 
 export function CheckoutSummary() {
   return (
     <Stack>
-      <Button>Go to Superfluid Dashboard</Button>
+      <Typography variant="h1">Success!</Typography>
+      {/* <Button>Go to Superfluid Dashboard</Button> */}
     </Stack>
   );
 }

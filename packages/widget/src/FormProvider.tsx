@@ -1,12 +1,12 @@
 import { useForm, FormProvider as RHFFormProvider } from "react-hook-form";
 import { DraftFormValues, FormReturn as FormMethods } from "./formValues";
 import { DevTool } from "@hookform/devtools";
-import { Children } from "./utils";
+import { ChildrenProp } from "./utils";
 import { FormEffects } from "./FormEffects";
 import { useCheckout } from "./CheckoutContext";
 
 type Props = {
-  children: ((formMethods: FormMethods) => Children) | Children;
+  children: ((formMethods: FormMethods) => ChildrenProp) | ChildrenProp;
 };
 
 export default function CheckoutFormProvider({ children }: Props) {

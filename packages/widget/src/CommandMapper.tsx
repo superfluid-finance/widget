@@ -16,12 +16,12 @@ import {
   superTokenABI,
 } from "superfluid-checkout-core";
 import { ContractWrite, extractContractWrite } from "./extractContractWrite";
-import { Children, MaxUint256 } from "./utils";
+import { ChildrenProp, MaxUint256 } from "./utils";
 import { parseEther } from "viem";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
-  children?: (contractWrites: ContractWrite[]) => Children;
+  children?: (contractWrites: ContractWrite[]) => ChildrenProp;
 };
 
 export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
@@ -70,7 +70,7 @@ export function EnableAutoWrapCommandMapper({
 
   const contractWrites: ContractWrite[] = [];
 
-  if (wrapSchedule) {
+  if (wrapSchedule !== undefined) {
     if (wrapSchedule.strategy !== autoWrapStrategyAddress[cmd.chainId]) {
       contractWrites.push(
         extractContractWrite({
@@ -122,7 +122,7 @@ export function WrapIntoSuperTokensCommandMapper({
 
   const amount = parseEther(cmd.amountEther);
 
-  if (allowance) {
+  if (allowance !== undefined) {
     if (allowance < amount) {
       contractWrites.push(
         extractContractWrite({

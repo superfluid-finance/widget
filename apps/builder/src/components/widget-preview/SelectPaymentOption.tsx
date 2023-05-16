@@ -106,7 +106,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         token.chainId === network?.chainId && token.tags?.includes("supertoken")
       );
     });
-  }, [selectedNetwork, networks]);
+  }, [selectedNetwork]);
 
   useEffect(() => {
     setSelectedToken(defaultToken);

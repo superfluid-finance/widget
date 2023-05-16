@@ -5,12 +5,12 @@ import {
   ContractWriteState,
 } from "./CommandHandlerContext";
 import { Command } from "./commands";
-import { Children } from "./utils";
+import { ChildrenProp } from "./utils";
 
 type Props = {
   children:
-    | ((contextValue: CommandHandlerState) => Children)
-    | Children;
+    | ((contextValue: CommandHandlerState) => ChildrenProp)
+    | ChildrenProp;
 };
 
 export function CommandHandlerProvider({ children }: Props) {
@@ -34,13 +34,22 @@ export function CommandHandlerProvider({ children }: Props) {
     }
   }, [status]);
 
+  const success = useCallback(() => {
+    if (status === "handling") {
+      setStatus("success");
+    } else {
+      throw new Error("Cannot succeed when not yet handling.");
+    }
+  }, [status]);
+
   const contextValue: CommandHandlerState = {
     commands,
     contractWrites: transactions,
     status,
     setCommands,
     handle,
-    cancelHandling
+    cancelHandling,
+    success
   };
 
   return (

@@ -13,6 +13,7 @@ export type CommandHandlerState = {
   commands: ReadonlyArray<Command>;
   setCommands: (commands: ReadonlyArray<Command>) => void;
   handle: () => void;
+  success: () => void;
   cancelHandling: () => void;
   contractWrites: ReadonlyArray<ContractWriteState>; // Probably move this away from here.
   // addContractWrite: () => void;

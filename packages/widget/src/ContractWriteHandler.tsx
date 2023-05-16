@@ -5,85 +5,54 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import { ContractWrite } from "./extractContractWrite";
-import { Children } from "./utils";
+import { ChildrenProp } from "./utils";
 
 export type ContractWriteResult = {
-  write?: () => void;
-  prepareStatus: "error" | "success" | "loading" | "idle";
-  writeStatus: "error" | "success" | "loading" | "idle";
-  transactionStatus: "error" | "success" | "loading" | "idle";
-  isLoading: boolean;
-  isFinished: boolean;
-};
+  contractWrite: ContractWrite;
+  prepareResult: ReturnType<typeof usePrepareContractWrite>;
+  writeResult: ReturnType<typeof useContractWrite>;
+  transactionResult: ReturnType<typeof useWaitForTransaction>;
+}
 
 type ContractWriteHandlerProps = {
+  prepare: boolean;
   contractWrite: ContractWrite;
   onChange?: (result: ContractWriteResult) => void;
-  children?: (result: ContractWriteResult) => Children;
+  children?: (result: ContractWriteResult) => ChildrenProp;
 };
 
 export function ContractWriteHandler({
+  prepare,
   contractWrite,
   onChange,
   children,
 }: ContractWriteHandlerProps) {
-  const {
-    config,
-    isError: isPrepareError,
-    error: prepareError,
-    status: prepareStatus,
-    isLoading: isPrepareLoading,
-  } = usePrepareContractWrite({ ...contractWrite });
+  const prepareResult = usePrepareContractWrite(prepare ? { ...contractWrite } : undefined);
+  const writeResult = useContractWrite(prepareResult.config);
+  const transactionResult = useWaitForTransaction({
+    hash: writeResult.data?.hash,
+  });
 
-  if (isPrepareError) {
-    console.log({
-      isPrepareError,
-      prepareError,
-    });
-  }
-
-  const {
-    write,
-    data,
-    isError: isWriteError,
-    error: writeError,
-    status: writeStatus,
-    isLoading: isWriteLoading,
-  } = useContractWrite(config);
-
-  if (isWriteError) {
-    console.log({
-      isWriteError,
-      writeError,
-    });
-  }
-
-  const { status: transactionStatus, isLoading: isTransactionLoading } =
-    useWaitForTransaction({
-      hash: data?.hash,
-    });
-
-  const result = useMemo(
+  const result: ContractWriteResult = useMemo(
     () => ({
-      write,
-      prepareStatus,
-      writeStatus,
-      transactionStatus,
-      isLoading: isPrepareLoading || isWriteLoading || isTransactionLoading,
-      isFinished: transactionStatus === "success",
+      contractWrite,
+      prepareResult,
+      writeResult,
+      transactionResult
     }),
     [
-      write,
-      prepareStatus,
-      writeStatus,
-      isPrepareLoading,
-      isWriteLoading,
-      isTransactionLoading,
+      contractWrite,
+      prepareResult,
+      writeResult,
+      transactionResult
     ]
   );
 
   useEffect(() => {
     onChange?.(result);
+    console.log({
+      result
+    })
   }, [result]);
 
   return <>{children?.(result)}</>;
