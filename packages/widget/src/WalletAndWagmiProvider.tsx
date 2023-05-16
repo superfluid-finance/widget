@@ -13,8 +13,13 @@ const projectId = "952483bf7a0f5ace4c40eb53967f1368";
 const { publicClient } = configureChains(supportedNetworks, [
   w3mProvider({ projectId }),
 ]);
+
+console.log({
+  supportedNetworks
+})
+
 const wagmiConfig = createConfig({
-  autoConnect: true,
+  autoConnect: false,
   connectors: w3mConnectors({ projectId, version: 1, chains: supportedNetworks }),
   publicClient,
 });
@@ -24,8 +29,7 @@ export function WalletAndWagmiProvider({ children }: PropsWithChildren) {
   return (
     <>
       <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
-      {/* TODO(KK): weird version mismatch for ethereumClient */}
-      <Web3Modal projectId={projectId} ethereumClient={ethereumClient as any} />
+      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </>
   );
 }

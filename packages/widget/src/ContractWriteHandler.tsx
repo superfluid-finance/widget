@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import {
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
 import { ContractWrite } from "./extractContractWrite";
+import { Children } from "./utils";
 
 export type ContractWriteResult = {
   write?: () => void;
@@ -17,48 +18,73 @@ export type ContractWriteResult = {
 
 type ContractWriteHandlerProps = {
   contractWrite: ContractWrite;
-  onChange: (result: ContractWriteResult) => void;
+  onChange?: (result: ContractWriteResult) => void;
+  children?: (result: ContractWriteResult) => Children;
 };
 
 export function ContractWriteHandler({
   contractWrite,
-  onChange
+  onChange,
+  children,
 }: ContractWriteHandlerProps) {
   const {
     config,
+    isError: isPrepareError,
+    error: prepareError,
     status: prepareStatus,
     isLoading: isPrepareLoading,
   } = usePrepareContractWrite({ ...contractWrite });
 
+  if (isPrepareError) {
+    console.log({
+      isPrepareError,
+      prepareError,
+    });
+  }
+
   const {
     write,
     data,
+    isError: isWriteError,
+    error: writeError,
     status: writeStatus,
     isLoading: isWriteLoading,
   } = useContractWrite(config);
+
+  if (isWriteError) {
+    console.log({
+      isWriteError,
+      writeError,
+    });
+  }
 
   const { status: transactionStatus, isLoading: isTransactionLoading } =
     useWaitForTransaction({
       hash: data?.hash,
     });
 
-  useEffect(() => {
-    onChange({
+  const result = useMemo(
+    () => ({
       write,
       prepareStatus,
       writeStatus,
       transactionStatus,
       isLoading: isPrepareLoading || isWriteLoading || isTransactionLoading,
       isFinished: transactionStatus === "success",
-    });
-  }, [
-    write,
-    prepareStatus,
-    writeStatus,
-    isPrepareLoading,
-    isWriteLoading,
-    isTransactionLoading,
-  ]);
+    }),
+    [
+      write,
+      prepareStatus,
+      writeStatus,
+      isPrepareLoading,
+      isWriteLoading,
+      isTransactionLoading,
+    ]
+  );
 
-  return null;
+  useEffect(() => {
+    onChange?.(result);
+  }, [result]);
+
+  return <>{children?.(result)}</>;
 }

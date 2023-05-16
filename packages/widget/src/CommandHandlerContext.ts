@@ -15,6 +15,7 @@ export type CommandHandlerState = {
   handle: () => void;
   cancelHandling: () => void;
   contractWrites: ReadonlyArray<ContractWriteState>; // Probably move this away from here.
+  // addContractWrite: () => void;
 };
 
 export const CommandHandlerContext = createContext<CommandHandlerState | undefined>(

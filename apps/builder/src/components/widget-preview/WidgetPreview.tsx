@@ -13,6 +13,7 @@ import { PaymentOption as SelectPaymentOption } from "./SelectPaymentOption";
 import {
   ChainId,
   CheckoutWidget,
+  PaymentDetails,
   PaymentOption,
   ProductDetails,
 } from "superfluid-checkout-widget";
@@ -52,6 +53,7 @@ export type Layout = (typeof layouts)[number];
 export type WidgetProps = {
   productName: string;
   productDesc: string;
+  paymentReceiver: `0x${string}`;
   paymentOptions: SelectPaymentOption[];
   displaySettings: DisplaySettings;
   layout: Layout;
@@ -65,6 +67,7 @@ export type WidgetState = {
 export const WidgetContext = createContext<WidgetProps>({
   productName: "Product Name",
   productDesc: "Product Description",
+  paymentReceiver: "0x...",
   paymentOptions: [],
   layout: "dialog",
   displaySettings: {
@@ -83,13 +86,13 @@ export const useWidgetContext = () => useContext(WidgetContext);
 const switchLayout = (
   layout: Layout,
   productDetails: ProductDetails,
-  paymentOptions: PaymentOption[],
+  paymentDetails: PaymentDetails,
   theme: ThemeOptions
 ) => {
   return layout === "page" ? (
     <CheckoutWidget
       productDetails={productDetails}
-      paymentOptions={paymentOptions}
+      paymentDetails={paymentDetails}
       tokenList={tokenList}
       type={layout}
       theme={theme}
@@ -97,7 +100,7 @@ const switchLayout = (
   ) : (
     <CheckoutWidget
       productDetails={productDetails}
-      paymentOptions={paymentOptions}
+      paymentDetails={paymentDetails}
       tokenList={tokenList}
       type={layout}
       theme={theme}
@@ -137,6 +140,11 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     [props.paymentOptions]
   );
 
+  const paymentDetails: PaymentDetails = useMemo<PaymentDetails>(() => ({
+    receiverAddress: props.paymentReceiver,
+    paymentOptions
+  }), [props.paymentReceiver, paymentOptions])
+
   const theme = {
     palette: {
       text: {
@@ -175,7 +183,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
   return (
     <WidgetContext.Provider value={props}>
       {mounted &&
-        switchLayout(props.layout, productDetails, paymentOptions, theme)}
+        switchLayout(props.layout, productDetails, paymentDetails, theme)}
     </WidgetContext.Provider>
   );
 };

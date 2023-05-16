@@ -1,6 +1,6 @@
-import { LoadingButton } from "@mui/lab";
-import { ContractWrite } from "../extractContractWrite";
+import { LoadingButton } from "@mui/lab"
 import { ContractWriteResult } from "./ContractWriteHandler";
+import { ContractWrite } from "./extractContractWrite";
 
 export type ContractWriteButtonProps = {
   data: ContractWrite;
