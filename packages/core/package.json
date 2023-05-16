@@ -17,9 +17,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@wagmi/chains": "^0.2.19",
+    "@wagmi/chains": "^0.2.23",
     "@wagmi/cli": "^0.1.15",
-    "@wagmi/core": "^0.10.10",
+    "@wagmi/core": "^0.10.11",
     "abitype": "^0.7.1",
     "ethers": "^5.7.2",
     "zod": "^3.21.4"

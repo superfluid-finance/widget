@@ -1,10 +1,8 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CheckoutConfig } from "./CheckoutConfig";
 import { CheckoutContext, CheckoutState } from "./CheckoutContext";
 import { CheckoutViewProps, ViewProvider } from "./ViewProvider";
-import {
-  SupportedNetwork,
-} from "superfluid-checkout-core";
+import { SupportedNetwork } from "superfluid-checkout-core";
 import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 import { WalletAndWagmiProvider } from "./WalletAndWagmiProvider";
 import { ThemeOptions, ThemeProvider, createTheme } from "@mui/material";
@@ -57,6 +55,13 @@ export function CheckoutWidget({
   );
 
   const theme = useMemo(() => createTheme(theme_), [theme_]);
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => void setMounted(true), []);
+
+  if (!mounted) {
+    return null; // TODO: SEO.
+  }
 
   return (
     <CheckoutContext.Provider value={checkoutState}>

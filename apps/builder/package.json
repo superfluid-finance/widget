@@ -22,7 +22,7 @@
     "clsx": "^1.2.1",
     "ethers": "5.7.2",
     "mui-color-input": "^1.0.5",
-    "next": "latest",
+    "next": "^13.4.2",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.44.0-rc.3",
@@ -31,10 +31,10 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
-    "@types/node": "latest",
+    "@types/node": "^20.1.5",
     "@types/react": "latest",
     "eslint": "latest",
-    "eslint-config-next": "latest",
+    "eslint-config-next": "^13.4.2",
     "typescript": "latest"
   }
 }
