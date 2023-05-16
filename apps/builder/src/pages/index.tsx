@@ -42,7 +42,7 @@ export default function Home() {
         productImageURL: "",
         logoURL: "",
         fontFamily: "default",
-        primaryColor: colors.green[500],
+        primaryColor: colors.green[300],
         secondaryColor: colors.common.white,
       },
       layout: "page",
