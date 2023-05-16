@@ -1,6 +1,9 @@
 import {
+  FormControl,
+  FormControlLabel,
   Slider,
   Stack,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
@@ -15,31 +18,6 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
 
   return (
     <Stack direction="column" gap={2}>
-      <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">Product Name</Typography>
-        <Controller
-          control={control}
-          name="productName"
-          render={({ field: { value, onChange } }) => (
-            <TextField value={value} onChange={onChange} />
-          )}
-        />
-      </Stack>
-      <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">ProductDescription</Typography>
-        <Controller
-          control={control}
-          name="productDesc"
-          render={({ field: { value, onChange } }) => (
-            <TextField
-              multiline
-              minRows={4}
-              value={value}
-              onChange={onChange}
-            />
-          )}
-        />
-      </Stack>
       <Stack direction="row" gap={2}>
         <Controller
           control={control}
@@ -66,6 +44,22 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
               }
               onRemove={() => onChange({ target: { value: "" } })}
               imageSrc={value}
+            />
+          )}
+        />
+      </Stack>
+      <Stack>
+        <Controller
+          control={control}
+          name="displaySettings.darkMode"
+          render={({ field: { value, onChange } }) => (
+            <FormControlLabel
+              control={<Switch checked={value ?? false} onChange={onChange} />}
+              label={
+                <Typography variant="subtitle2">{`Dark mode: ${
+                  value ? "on" : "off"
+                }`}</Typography>
+              }
             />
           )}
         />
@@ -155,44 +149,6 @@ const UiEditor: FC<EditorProps> = ({ control, watch }) => {
             <TextField value={value} onChange={onChange} />
           )}
         />
-      </Stack>
-
-      <Stack direction="row" gap={1}>
-        <Stack direction="column" gap={1}>
-          <Typography variant="subtitle2">Primary Text color</Typography>
-          <Stack direction="row" gap={1}>
-            <Controller
-              control={control}
-              name="displaySettings.primaryTextColor"
-              render={({ field: { value, onChange } }) => (
-                <MuiColorInput
-                  fallbackValue={"#000"}
-                  format="hex"
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-            />
-          </Stack>
-        </Stack>
-
-        <Stack direction="column" gap={1}>
-          <Typography variant="subtitle2">Secondary Text color</Typography>
-          <Stack direction="row" gap={1}>
-            <Controller
-              control={control}
-              name="displaySettings.secondaryTextColor"
-              render={({ field: { value, onChange } }) => (
-                <MuiColorInput
-                  fallbackValue={"#000"}
-                  format="hex"
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-            />
-          </Stack>
-        </Stack>
       </Stack>
     </Stack>
   );

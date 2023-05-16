@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import tokenList from "../../tokenList";
+import tokenList, { SuperTokenInfo } from "@tokdaniel/superfluid-tokenlist";
 import { NullableObject } from "../../types/general";
 
 export const paymentIntervals = [
@@ -29,7 +29,7 @@ export type PaymentInterval = (typeof paymentIntervals)[number];
 
 export type PaymentOption = {
   network: Network;
-  superToken: TokenInfo;
+  superToken: SuperTokenInfo;
 };
 
 const renderToken = (token: TokenInfo) => {
@@ -49,23 +49,32 @@ const defaultNetwork = {
   subgraphUrl: "",
 };
 
-const defaultToken = {
+const defaultToken: SuperTokenInfo = {
   address: "",
   chainId: -1,
   decimals: 0,
   name: "",
   symbol: "",
+  extensions: {
+    superTokenInfo: {
+      type: "Pure",
+    },
+  },
 };
 
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [selectedNetwork, setSelectedNetwork] =
     useState<Network>(defaultNetwork);
-  const [selectedToken, setSelectedToken] = useState<TokenInfo>(defaultToken);
+  const [selectedToken, setSelectedToken] =
+    useState<SuperTokenInfo>(defaultToken);
 
   const filteredNetworks = useMemo(
     () =>
       networks.filter((network) =>
-        tokenList.tokens.find(({ chainId }) => network.chainId === chainId)
+        tokenList.tokens.find(
+          ({ chainId, tags }) =>
+            network.chainId === chainId && tags && tags.includes("supertoken")
+        )
       ),
     []
   );
@@ -93,7 +102,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const autoCompleteTokenOptions = useMemo(() => {
     const network = networks.find(({ name }) => name === selectedNetwork?.name);
     return tokenList.tokens.filter((token) => {
-      return token.chainId === network?.chainId;
+      return (
+        token.chainId === network?.chainId && token.tags?.includes("supertoken")
+      );
     });
   }, [selectedNetwork, networks]);
 
@@ -143,7 +154,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         onClick={() =>
           handleAdd({
             network: selectedNetwork,
-            superToken: selectedToken
+            superToken: selectedToken,
           })
         }
       >
