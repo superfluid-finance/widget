@@ -1,6 +1,6 @@
 import { Alert, AlertTitle, LoadingButton } from "@mui/lab";
 import { ContractWriteResult } from "./ContractWriteHandler";
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { BaseError } from "viem";
 
 export type ContractWriteButtonProps = ContractWriteResult;
@@ -21,7 +21,7 @@ export default function ContractWriteButton({
     transactionResult.error) as unknown as BaseError; // TODO(KK): move it away from here
   const functionName = contractWrite.functionName;
 
-  if (transactionResult.isSuccess) return null;
+  if (transactionResult.isSuccess) return <Button disabled fullWidth variant="contained" >Success!</Button>;
 
   return (
     <Stack

@@ -15,17 +15,19 @@ export type ContractWriteResult = {
 }
 
 type ContractWriteHandlerProps = {
+  prepare: boolean;
   contractWrite: ContractWrite;
   onChange?: (result: ContractWriteResult) => void;
   children?: (result: ContractWriteResult) => ChildrenProp;
 };
 
 export function ContractWriteHandler({
+  prepare,
   contractWrite,
   onChange,
   children,
 }: ContractWriteHandlerProps) {
-  const prepareResult = usePrepareContractWrite({ ...contractWrite });
+  const prepareResult = usePrepareContractWrite(prepare ? { ...contractWrite } : undefined);
   const writeResult = useContractWrite(prepareResult.config);
   const transactionResult = useWaitForTransaction({
     hash: writeResult.data?.hash,

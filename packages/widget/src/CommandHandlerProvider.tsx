@@ -34,13 +34,22 @@ export function CommandHandlerProvider({ children }: Props) {
     }
   }, [status]);
 
+  const success = useCallback(() => {
+    if (status === "handling") {
+      setStatus("success");
+    } else {
+      throw new Error("Cannot succeed when not yet handling.");
+    }
+  }, [status]);
+
   const contextValue: CommandHandlerState = {
     commands,
     contractWrites: transactions,
     status,
     setCommands,
     handle,
-    cancelHandling
+    cancelHandling,
+    success
   };
 
   return (
