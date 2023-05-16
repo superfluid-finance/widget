@@ -11,11 +11,6 @@ export function Transactions() {
   const [commandIndex, setCommandIndex] = useState(0);
   const [writeIndex, setWriteIndex] = useState(0);
 
-  console.log({
-    commandIndex,
-    writeIndex,
-  });
-
   return (
     <Stack direction="column" spacing={3}>
       <List sx={{ ml: 3 }} disablePadding>

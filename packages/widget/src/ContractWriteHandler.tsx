@@ -48,12 +48,7 @@ export function ContractWriteHandler({
     ]
   );
 
-  useEffect(() => {
-    onChange?.(result);
-    console.log({
-      result
-    })
-  }, [result]);
+  useEffect(() => void onChange?.(result), [result]);
 
   return <>{children?.(result)}</>;
 }
