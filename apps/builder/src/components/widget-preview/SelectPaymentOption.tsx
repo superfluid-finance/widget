@@ -1,7 +1,6 @@
-import { FC, MouseEvent, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { Network, networks } from "../../networkDefinitions";
 import { TokenInfo } from "@uniswap/token-lists";
-import { BigNumber } from "ethers";
 import {
   Autocomplete,
   Button,
@@ -13,23 +12,9 @@ import {
   Typography,
 } from "@mui/material";
 import tokenList, { SuperTokenInfo } from "@tokdaniel/superfluid-tokenlist";
-import { NullableObject } from "../../types/general";
-import { PaymentOptionWithTokenInfo } from "superfluid-checkout-widget/src/formValues";
-import { ChainId, SuperTokenExtension } from "superfluid-checkout-widget";
+import { ChainId, TimePeriod, timePeriods } from "superfluid-checkout-widget";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { WidgetProps } from "./WidgetPreview";
-
-export const paymentIntervals = [
-  "second",
-  "minute",
-  "hour",
-  "day",
-  "week",
-  "month",
-  "year",
-] as const;
-
-export type PaymentInterval = (typeof paymentIntervals)[number];
 
 export type PaymentOption = {
   network: Network;
@@ -72,6 +57,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [selectedToken, setSelectedToken] =
     useState<SuperTokenInfo>(defaultToken);
 
+  const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
+  const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("day");
+
   const filteredNetworks = useMemo(
     () =>
       networks.filter((network) =>
@@ -109,8 +97,8 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         },
         chainId: selectedToken.chainId as ChainId,
         flowRate: {
-          amountEther: "1",
-          period: "day",
+          amountEther: flowRateAmount,
+          period: flowRateInterval,
         },
       });
     }
@@ -165,7 +153,40 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
           />
         </Stack>
       </Stack>
+      <Stack direction="column">
+        <Typography variant="subtitle2">Flow Rate</Typography>
 
+        <Stack direction="row" gap={"-1px"}>
+          <TextField
+            fullWidth
+            value={flowRateAmount}
+            onChange={({ target }) =>
+              setFlowRateAmount(target.value as `${number}`)
+            }
+            InputProps={{
+              sx: {
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+              },
+            }}
+          />
+          <Select
+            value={flowRateInterval}
+            onChange={({ target }) =>
+              setFlowRateInterval(target.value as TimePeriod)
+            }
+            sx={{
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0,
+              marginLeft: "-1px",
+            }}
+          >
+            {timePeriods.map((interval) => (
+              <MenuItem value={interval}>/{interval}</MenuItem>
+            ))}
+          </Select>
+        </Stack>
+      </Stack>
       <Button
         disabled={!(selectedNetwork && selectedToken)}
         onClick={handleAdd}
