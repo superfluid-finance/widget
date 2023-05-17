@@ -1,9 +1,11 @@
 import {
   Button,
+  IconButton,
   MenuItem,
   Select,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
@@ -16,6 +18,7 @@ import {
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
 import usePinataIpfs from "../../hooks/usePinataIPFS";
 import { LoadingButton } from "@mui/lab";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 type ExportOption = "json" | "ipfs";
 
@@ -82,9 +85,20 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
       </LoadingButton>
 
       {ipfsHash && (
-        <Typography variant="subtitle2">
-          Available on IPFS at: <b>{`ipfs://${ipfsHash}`}</b>
-        </Typography>
+        <Stack direction="row">
+          <Typography variant="subtitle2">
+            Available on IPFS at: <b>{`ipfs://${ipfsHash}`}</b>
+          </Typography>
+          <Tooltip title="Check">
+            <IconButton
+              href={`https://ipfs.io/ipfs/${ipfsHash}`}
+              target="_blank"
+              size="large"
+            >
+              <OpenInNewIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       )}
     </Stack>
   );
