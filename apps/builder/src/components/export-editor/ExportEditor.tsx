@@ -55,7 +55,7 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
   const { publish, isLoading, ipfsHash } = usePinataIpfs(
     { pinataApiKey, pinataSecretApiKey },
     {
-      pinataMetadata: { name: "superfluid-widget" },
+      pinataMetadata: { name: `${json.productDetails.name}-superfluid-widget` },
     }
   );
 
