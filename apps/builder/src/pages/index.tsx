@@ -1,6 +1,6 @@
 import { Box, Stack, Tab, Typography, colors, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 
 import WidgetPreview, {
   WidgetProps,
@@ -11,8 +11,6 @@ import { useState } from "react";
 import UiEditor from "../components/ui-editor/UiEditor";
 import ExportEditor from "../components/export-editor/ExportEditor";
 import ProductEditor from "../components/payment-editor/ProductEditor";
-import tokenListJSON from "@tokdaniel/superfluid-tokenlist";
-import { networks } from "../networkDefinitions";
 
 const labelStyle = {
   fontWeight: 500,
@@ -26,43 +24,31 @@ export default function Home() {
 
   const formMethods = useForm<WidgetProps, any, WidgetProps>({
     defaultValues: {
-      productName: "Product Name",
-      productDesc: "Product Description",
-      paymentOptions: [
-        {
-          network: networks.find(
-            (network) => tokenListJSON.tokens[0].chainId === network.chainId
-          ),
-          superToken: tokenListJSON.tokens[0],
-        },
-      ],
-      displaySettings: {
-        buttonRadius: 4,
-        inputRadius: 4,
-        productImageURL: "",
-        logoURL: "",
-        fontFamily: "default",
-        primaryColor: colors.green[300],
-        secondaryColor: colors.common.white,
+      productDetails: {
+        name: "Product Name",
+        description: "Product Description",
+      },
+      paymentDetails: {
+        receiverAddress: "0x...",
+        paymentOptions: [],
       },
       layout: "page",
+      displaySettings: {
+        darkMode: false,
+        buttonRadius: 4,
+        inputRadius: 4,
+        fontFamily: "fontfamily",
+        primaryColor: colors.green[500],
+        secondaryColor: colors.common.white,
+      },
     },
   });
 
   const { watch, control } = formMethods;
 
-  const [
-    productName,
-    productDesc,
-    paymentReceiver,
-    paymentOptions,
-    displaySettings,
-    layout,
-  ] = watch([
-    "productName",
-    "productDesc",
-    "paymentReceiver",
-    "paymentOptions",
+  const [productDetails, paymentDetails, displaySettings, layout] = watch([
+    "productDetails",
+    "paymentDetails",
     "displaySettings",
     "layout",
   ]);
@@ -85,16 +71,17 @@ export default function Home() {
               <Tab label="UI" value="ui" />
               <Tab label="Export" value="export" />
             </TabList>
-
-            <TabPanel value="ui">
-              <UiEditor control={control} watch={watch} />
-            </TabPanel>
-            <TabPanel value="product">
-              <ProductEditor control={control} watch={watch} />
-            </TabPanel>
-            <TabPanel value="export">
-              <ExportEditor />
-            </TabPanel>
+            <FormProvider {...formMethods}>
+              <TabPanel value="ui">
+                <UiEditor />
+              </TabPanel>
+              <TabPanel value="product">
+                <ProductEditor />
+              </TabPanel>
+              <TabPanel value="export">
+                <ExportEditor />
+              </TabPanel>
+            </FormProvider>
           </TabContext>
         </Stack>
         <Stack mt="auto" p={2}>
@@ -126,10 +113,8 @@ export default function Home() {
       >
         <WidgetPreview
           {...{
-            productName,
-            productDesc,
-            paymentReceiver,
-            paymentOptions,
+            productDetails,
+            paymentDetails,
             displaySettings,
             layout,
           }}
