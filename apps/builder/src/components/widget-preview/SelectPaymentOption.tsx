@@ -182,7 +182,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
             }}
           >
             {timePeriods.map((interval) => (
-              <MenuItem value={interval}>/{interval}</MenuItem>
+              <MenuItem value={interval} key={interval}>
+                /{interval}
+              </MenuItem>
             ))}
           </Select>
         </Stack>
