@@ -139,7 +139,7 @@ const ExportEditor: FC = () => {
           }
         >
           <MenuItem value="json">Download JSON</MenuItem>
-          <MenuItem value="ipfs">Publish to IPFS</MenuItem>
+          <MenuItem value="ipfs">Publish to IPFS with Pinata</MenuItem>
         </Select>
       </Stack>
       {switchExportOption(selectedExportOption, json)}
