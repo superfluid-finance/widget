@@ -11,7 +11,8 @@ export function ViewContent() {
   const theme = useTheme();
 
   return (
-    <Container maxWidth="sm" disableGutters sx={{
+    <Container fixed disableGutters sx={{
+      width: theme.breakpoints.values.sm, // TODO(KK): Check with Mikk.
       bgcolor: theme.palette.background.default // TODO: Think if this is best.
     }}>
       <CheckoutFormProvider>

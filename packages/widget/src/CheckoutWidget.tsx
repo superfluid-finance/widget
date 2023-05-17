@@ -5,7 +5,12 @@ import { CheckoutViewProps, ViewProvider } from "./ViewProvider";
 import { SupportedNetwork } from "superfluid-checkout-core";
 import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 import { WalletAndWagmiProvider } from "./WalletAndWagmiProvider";
-import { ThemeOptions, ThemeProvider, createTheme } from "@mui/material";
+import {
+  CssBaseline,
+  ThemeOptions,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import { getSupportedNetworksFromPaymentOptions } from "./helpers/getSupportedNetworksFromPaymentOptions";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
 import { getSuperTokensFromTokenList } from "./helpers/getSuperTokensFromTokenList";
@@ -67,6 +72,7 @@ export function CheckoutWidget({
     <CheckoutContext.Provider value={checkoutState}>
       <WalletAndWagmiProvider>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <ViewProvider {...viewProps} />
         </ThemeProvider>
       </WalletAndWagmiProvider>
