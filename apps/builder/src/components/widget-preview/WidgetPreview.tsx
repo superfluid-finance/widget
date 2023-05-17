@@ -21,8 +21,8 @@ export type DisplaySettings = {
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
   fontFamily: string;
-  productImageURL?: string;
-  logoURL?: string;
+  productImageURL?: File;
+  logoURL?: File;
   primaryColor: `#${string}`;
   secondaryColor: `#${string}`;
 };

@@ -1,5 +1,5 @@
 import { Button, MenuItem, Select, Stack, Typography } from "@mui/material";
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { ExportJSON } from "../../types/export-json";
 import { useFormContext } from "react-hook-form";
 import {
@@ -35,6 +35,17 @@ const DownloadJsonButton: FC<{ json: ExportJSON }> = (json) => (
   </Button>
 );
 
+function getBase64(file: File, callback: (result: string) => void) {
+  var reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = function () {
+    callback(reader.result as string);
+  };
+  reader.onerror = function (error) {
+    console.log("Error: ", error);
+  };
+}
+
 const ExportEditor: FC = () => {
   const { watch } = useFormContext<WidgetProps>();
 
@@ -45,14 +56,38 @@ const ExportEditor: FC = () => {
     "layout",
   ]);
 
+  const [productImageBase64, setProductImageBase64] = useState<string>("");
+  const [logoBase64, setLogoBase64] = useState<string>("");
+
+  useEffect(() => {
+    if (displaySettings.productImageURL) {
+      getBase64(displaySettings.productImageURL, setProductImageBase64);
+    }
+
+    if (displaySettings.logoURL) {
+      getBase64(displaySettings.logoURL, setLogoBase64);
+    }
+  }, [productDetails, productImageBase64, logoBase64]);
+
   const json: ExportJSON = useMemo(
     () => ({
-      productDetails,
+      productDetails: {
+        ...productDetails,
+        image: productImageBase64,
+        // logo is missing from this type
+      },
       paymentDetails,
       layout,
       theme: mapDisplaySettingsToTheme(displaySettings),
     }),
-    [productDetails, paymentDetails, displaySettings, layout]
+    [
+      productDetails,
+      paymentDetails,
+      displaySettings,
+      layout,
+      productImageBase64,
+      logoBase64,
+    ]
   );
 
   const [selectedExportOption, setSelectedExportOption] =

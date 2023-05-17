@@ -27,11 +27,9 @@ const UiEditor: FC = () => {
           render={({ field: { value, onChange } }) => (
             <ImageSelect
               label="Product image"
-              onClick={(file) =>
-                onChange({ target: { value: URL.createObjectURL(file) } })
-              }
+              onClick={(file) => onChange({ target: { value: file } })}
               onRemove={() => onChange({ target: { value: "" } })}
-              imageSrc={value}
+              imageSrc={value ? URL.createObjectURL(value) : ""}
             />
           )}
         />
@@ -41,11 +39,9 @@ const UiEditor: FC = () => {
           render={({ field: { value, onChange } }) => (
             <ImageSelect
               label="Logo"
-              onClick={(file) =>
-                onChange({ target: { value: URL.createObjectURL(file) } })
-              }
+              onClick={(file) => onChange({ target: { value: file } })}
               onRemove={() => onChange({ target: { value: "" } })}
-              imageSrc={value}
+              imageSrc={value ? URL.createObjectURL(value) : ""}
             />
           )}
         />
