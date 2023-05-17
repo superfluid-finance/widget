@@ -60,7 +60,7 @@ const ImageSelect: FC<ImageSelectProps> = ({
             alignItems: "center",
           }}
         >
-          <img src={imageSrc} height={90} />
+          <img src={imageSrc} height={90} alt="not foundg" />
         </Box>
       ) : (
         <Button fullWidth sx={{ p: 0, m: 0 }} onClick={triggerFileUpload}>

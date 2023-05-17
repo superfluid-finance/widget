@@ -23,29 +23,25 @@ const UiEditor: FC = () => {
       <Stack direction="row" gap={2}>
         <Controller
           control={control}
-          name="displaySettings.productImageURL"
+          name="displaySettings.productImage"
           render={({ field: { value, onChange } }) => (
             <ImageSelect
               label="Product image"
-              onClick={(file) =>
-                onChange({ target: { value: URL.createObjectURL(file) } })
-              }
+              onClick={(file) => onChange({ target: { value: file } })}
               onRemove={() => onChange({ target: { value: "" } })}
-              imageSrc={value}
+              imageSrc={value ? URL.createObjectURL(value) : ""}
             />
           )}
         />
         <Controller
           control={control}
-          name="displaySettings.logoURL"
+          name="displaySettings.logo"
           render={({ field: { value, onChange } }) => (
             <ImageSelect
               label="Logo"
-              onClick={(file) =>
-                onChange({ target: { value: URL.createObjectURL(file) } })
-              }
+              onClick={(file) => onChange({ target: { value: file } })}
               onRemove={() => onChange({ target: { value: "" } })}
-              imageSrc={value}
+              imageSrc={value ? URL.createObjectURL(value) : ""}
             />
           )}
         />

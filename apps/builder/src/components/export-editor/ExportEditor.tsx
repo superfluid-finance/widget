@@ -1,11 +1,12 @@
 import { Button, MenuItem, Select, Stack, Typography } from "@mui/material";
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { ExportJSON } from "../../types/export-json";
 import { useFormContext } from "react-hook-form";
 import {
   WidgetProps,
   mapDisplaySettingsToTheme,
 } from "../widget-preview/WidgetPreview";
+import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
 
 type ExportOption = "json" | "ipfs";
 
@@ -23,7 +24,7 @@ const switchExportOption = (
   }
 };
 
-const DownloadJsonButton: FC<{ json: ExportJSON }> = (json) => (
+const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
   <Button
     variant="contained"
     href={URL.createObjectURL(
@@ -45,14 +46,29 @@ const ExportEditor: FC = () => {
     "layout",
   ]);
 
+  const [productImageBase64] = useReadAsBase64(displaySettings.productImage);
+  const [logoBase64] = useReadAsBase64(displaySettings.logo);
+
   const json: ExportJSON = useMemo(
     () => ({
-      productDetails,
+      productDetails: {
+        ...productDetails,
+        image: productImageBase64,
+        //@ts-ignore <- TODO: add logo image to productDetails
+        logo: logoBase64,
+      },
       paymentDetails,
       layout,
       theme: mapDisplaySettingsToTheme(displaySettings),
     }),
-    [productDetails, paymentDetails, displaySettings, layout]
+    [
+      productDetails,
+      paymentDetails,
+      displaySettings,
+      layout,
+      productImageBase64,
+      logoBase64,
+    ]
   );
 
   const [selectedExportOption, setSelectedExportOption] =

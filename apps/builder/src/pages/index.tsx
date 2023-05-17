@@ -1,4 +1,13 @@
-import { Box, Stack, Tab, Typography, colors, useTheme } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Tab,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+  colors,
+  useTheme,
+} from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
@@ -11,6 +20,10 @@ import { useState } from "react";
 import UiEditor from "../components/ui-editor/UiEditor";
 import ExportEditor from "../components/export-editor/ExportEditor";
 import ProductEditor from "../components/payment-editor/ProductEditor";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
+import WebAssetIcon from "@mui/icons-material/WebAsset";
+import WebIcon from "@mui/icons-material/Web";
 
 const labelStyle = {
   fontWeight: 500,
@@ -53,6 +66,8 @@ export default function Home() {
     "layout",
   ]);
 
+  console.log(layout);
+
   return (
     <Stack direction="row">
       <Stack
@@ -84,23 +99,6 @@ export default function Home() {
             </FormProvider>
           </TabContext>
         </Stack>
-        <Stack mt="auto" p={2}>
-          <Controller
-            control={control}
-            name="layout"
-            render={({ field: { value, onChange } }) => (
-              <TabContext value={value}>
-                <TabList
-                  onChange={(_, value) => onChange({ target: { value } })}
-                >
-                  {layouts.map((layout) => (
-                    <Tab value={layout} label={layout} key={layout} />
-                  ))}
-                </TabList>
-              </TabContext>
-            )}
-          ></Controller>
-        </Stack>
       </Stack>
       <Box
         sx={{
@@ -109,6 +107,7 @@ export default function Home() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          position: "relative",
         }}
       >
         <WidgetPreview
@@ -119,6 +118,49 @@ export default function Home() {
             layout,
           }}
         />
+        <Box
+          sx={{
+            position: "fixed",
+            left: "calc(50%-96px)",
+            backgroundColor: theme.palette.common.white,
+            bottom: 0,
+            borderRadius: 1,
+            zIndex: 100,
+          }}
+        >
+          <Controller
+            control={control}
+            name="layout"
+            render={({ field: { value, onChange } }) => (
+              <ToggleButtonGroup
+                value={value}
+                exclusive
+                onChange={(_, value) => onChange(value)}
+                sx={{
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                }}
+              >
+                <ToggleButton value="dialog" aria-label="dialog" title="Dialog">
+                  <WebAssetIcon />
+                </ToggleButton>
+                <ToggleButton value="drawer" aria-label="drawer" title="Drawer">
+                  <ViewSidebarIcon />
+                </ToggleButton>
+                <ToggleButton
+                  value="full-screen"
+                  aria-label="full-screen"
+                  title="Full Screen"
+                >
+                  <FullscreenIcon />
+                </ToggleButton>
+                <ToggleButton value="page" aria-label="page" title="Page">
+                  <WebIcon />
+                </ToggleButton>
+              </ToggleButtonGroup>
+            )}
+          />
+        </Box>
       </Box>
     </Stack>
   );

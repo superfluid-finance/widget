@@ -81,8 +81,8 @@ const ProductEditor: FC = () => {
           />
         </Stack>
       </Stack>
-      <Stack direction="column" gap={1}>
-        <Typography variant="subtitle1">Payment options</Typography>
+      <Stack direction="column" gap={2}>
+        <Typography variant="subtitle1">Payment details</Typography>
         <Stack direction="column" flex={1}>
           <Typography variant="subtitle2">
             Receiver (TODO: separate more clearly from token)
@@ -95,11 +95,15 @@ const ProductEditor: FC = () => {
             )}
           />
         </Stack>
-        <Controller
-          control={control}
-          name="paymentDetails.paymentOptions"
-          render={() => <SelectPaymentOption onAdd={append} />}
-        />
+        <Stack gap={2}>
+          <Typography variant="subtitle1">Add payment options</Typography>
+          <Controller
+            control={control}
+            name="paymentDetails.paymentOptions"
+            render={() => <SelectPaymentOption onAdd={append} />}
+          />
+        </Stack>
+
         <Stack direction="column">
           <Typography variant="subtitle2">Added Payment Options</Typography>
           <Typography>TODO: Needs fields to set flow rate</Typography>
