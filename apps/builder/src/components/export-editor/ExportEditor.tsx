@@ -7,8 +7,36 @@ import {
   mapDisplaySettingsToTheme,
 } from "../widget-preview/WidgetPreview";
 
+type ExportOption = "json" | "ipfs";
+
+const switchExportOption = (
+  selectedExportOption: ExportOption,
+  json: ExportJSON
+) => {
+  switch (selectedExportOption) {
+    case "json":
+      return <DownloadJsonButton json={json} />;
+    case "ipfs":
+      return <Typography>ipfs</Typography>;
+    default:
+      return <></>;
+  }
+};
+
+const DownloadJsonButton: FC<{ json: ExportJSON }> = (json) => (
+  <Button
+    variant="contained"
+    href={URL.createObjectURL(
+      new Blob([JSON.stringify(json)], { type: "application/json" })
+    )}
+    download={`widget.json`}
+  >
+    download json
+  </Button>
+);
+
 const ExportEditor: FC = () => {
-  const { control, watch } = useFormContext<WidgetProps>();
+  const { watch } = useFormContext<WidgetProps>();
 
   const [productDetails, paymentDetails, displaySettings, layout] = watch([
     "productDetails",
@@ -27,7 +55,8 @@ const ExportEditor: FC = () => {
     [productDetails, paymentDetails, displaySettings, layout]
   );
 
-  const [selectedExportOption, setSelectedExportOption] = useState("json");
+  const [selectedExportOption, setSelectedExportOption] =
+    useState<ExportOption>("json");
 
   return (
     <Stack gap={2}>
@@ -35,25 +64,15 @@ const ExportEditor: FC = () => {
         <Typography variant="subtitle2">Select export option</Typography>
         <Select
           value={selectedExportOption}
-          onChange={({ target }) => setSelectedExportOption(target.value)}
+          onChange={({ target }) =>
+            setSelectedExportOption(target.value as ExportOption)
+          }
         >
           <MenuItem value="json">Download JSON</MenuItem>
           <MenuItem value="ipfs">Publish to IPFS</MenuItem>
         </Select>
       </Stack>
-      {selectedExportOption === "json" ? (
-        <Button
-          variant="contained"
-          href={URL.createObjectURL(
-            new Blob([JSON.stringify(json)], { type: "application/json" })
-          )}
-          download={`widget.json`}
-        >
-          download json
-        </Button>
-      ) : (
-        "IPFS"
-      )}
+      {switchExportOption(selectedExportOption, json)}
     </Stack>
   );
 };
