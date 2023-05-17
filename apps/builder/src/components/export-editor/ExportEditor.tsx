@@ -6,6 +6,7 @@ import {
   WidgetProps,
   mapDisplaySettingsToTheme,
 } from "../widget-preview/WidgetPreview";
+import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
 
 type ExportOption = "json" | "ipfs";
 
@@ -56,25 +57,16 @@ const ExportEditor: FC = () => {
     "layout",
   ]);
 
-  const [productImageBase64, setProductImageBase64] = useState<string>("");
-  const [logoBase64, setLogoBase64] = useState<string>("");
-
-  useEffect(() => {
-    if (displaySettings.productImageURL) {
-      getBase64(displaySettings.productImageURL, setProductImageBase64);
-    }
-
-    if (displaySettings.logoURL) {
-      getBase64(displaySettings.logoURL, setLogoBase64);
-    }
-  }, [productDetails, productImageBase64, logoBase64]);
+  const [productImageBase64] = useReadAsBase64(displaySettings.productImage);
+  const [logoBase64] = useReadAsBase64(displaySettings.logo);
 
   const json: ExportJSON = useMemo(
     () => ({
       productDetails: {
         ...productDetails,
         image: productImageBase64,
-        // logo is missing from this type
+        //@ts-ignore <- TODO: add logo image to productDetails
+        logo: logoBase64,
       },
       paymentDetails,
       layout,

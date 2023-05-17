@@ -23,7 +23,7 @@ const UiEditor: FC = () => {
       <Stack direction="row" gap={2}>
         <Controller
           control={control}
-          name="displaySettings.productImageURL"
+          name="displaySettings.productImage"
           render={({ field: { value, onChange } }) => (
             <ImageSelect
               label="Product image"
@@ -35,7 +35,7 @@ const UiEditor: FC = () => {
         />
         <Controller
           control={control}
-          name="displaySettings.logoURL"
+          name="displaySettings.logo"
           render={({ field: { value, onChange } }) => (
             <ImageSelect
               label="Logo"
