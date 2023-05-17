@@ -22,20 +22,6 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 type ExportOption = "json" | "ipfs";
 
-const switchExportOption = (
-  selectedExportOption: ExportOption,
-  json: ExportJSON
-) => {
-  switch (selectedExportOption) {
-    case "json":
-      return <DownloadJsonButton json={json} />;
-    case "ipfs":
-      return <IpfsPublish json={json} />;
-    default:
-      return <></>;
-  }
-};
-
 const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
   <Button
     variant="contained"
@@ -102,6 +88,20 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
       )}
     </Stack>
   );
+};
+
+const switchExportOption = (
+  selectedExportOption: ExportOption,
+  json: ExportJSON
+) => {
+  switch (selectedExportOption) {
+    case "json":
+      return <DownloadJsonButton json={json} />;
+    case "ipfs":
+      return <IpfsPublish json={json} />;
+    default:
+      return <></>;
+  }
 };
 
 const ExportEditor: FC = () => {
