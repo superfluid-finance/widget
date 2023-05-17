@@ -24,7 +24,7 @@ const switchExportOption = (
   }
 };
 
-const DownloadJsonButton: FC<{ json: ExportJSON }> = (json) => (
+const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
   <Button
     variant="contained"
     href={URL.createObjectURL(
@@ -35,17 +35,6 @@ const DownloadJsonButton: FC<{ json: ExportJSON }> = (json) => (
     download json
   </Button>
 );
-
-function getBase64(file: File, callback: (result: string) => void) {
-  var reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = function () {
-    callback(reader.result as string);
-  };
-  reader.onerror = function (error) {
-    console.log("Error: ", error);
-  };
-}
 
 const ExportEditor: FC = () => {
   const { watch } = useFormContext<WidgetProps>();
