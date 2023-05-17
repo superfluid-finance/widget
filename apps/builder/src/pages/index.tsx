@@ -124,6 +124,7 @@ export default function Home() {
             left: "calc(50%-96px)",
             backgroundColor: theme.palette.common.white,
             bottom: 0,
+            borderRadius: 1,
             zIndex: 100,
           }}
         >
