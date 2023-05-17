@@ -9,15 +9,11 @@ import {
 import { useState } from "react";
 import { Button, SelectChangeEvent, ThemeOptions, colors } from "@mui/material";
 
-import { PaymentOption as SelectPaymentOption } from "./SelectPaymentOption";
 import {
-  ChainId,
   CheckoutWidget,
   PaymentDetails,
-  PaymentOption,
   ProductDetails,
 } from "superfluid-checkout-widget";
-import { Control, UseFormWatch } from "react-hook-form";
 import tokenList from "@tokdaniel/superfluid-tokenlist";
 
 export type DisplaySettings = {
@@ -42,18 +38,11 @@ export type PaymentInterval =
 
 export const layouts = ["dialog", "drawer", "full-screen", "page"] as const;
 
-export type EditorProps = {
-  control: Control<WidgetProps, any>;
-  watch: UseFormWatch<WidgetProps>;
-};
-
 export type Layout = (typeof layouts)[number];
 
 export type WidgetProps = {
-  productName: string;
-  productDesc: string;
-  paymentReceiver: `0x${string}`;
-  paymentOptions: SelectPaymentOption[];
+  productDetails: ProductDetails;
+  paymentDetails: PaymentDetails;
   displaySettings: DisplaySettings;
   layout: Layout;
 };
@@ -64,10 +53,14 @@ export type WidgetState = {
 };
 
 export const WidgetContext = createContext<WidgetProps>({
-  productName: "Product Name",
-  productDesc: "Product Description",
-  paymentReceiver: "0x...",
-  paymentOptions: [],
+  productDetails: {
+    name: "Product Name",
+    description: "Product Description",
+  },
+  paymentDetails: {
+    receiverAddress: "0x...",
+    paymentOptions: [],
+  },
   layout: "dialog",
   displaySettings: {
     darkMode: false,
@@ -110,77 +103,49 @@ const switchLayout = (
   );
 };
 
+export const mapDisplaySettingsToTheme = (
+  displaySettings: DisplaySettings
+): ThemeOptions => ({
+  palette: {
+    mode: displaySettings.darkMode ? "dark" : "light",
+    primary: { main: displaySettings.primaryColor },
+    secondary: { main: displaySettings.secondaryColor },
+  },
+  components: {
+    MuiStepIcon: {
+      styleOverrides: {
+        text: {
+          fill: displaySettings.secondaryColor,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: displaySettings.inputRadius,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: displaySettings.buttonRadius,
+        },
+      },
+    },
+  },
+});
+
 const WidgetPreview: FC<WidgetProps> = (props) => {
-  const { displaySettings } = props;
+  const { displaySettings, paymentDetails, productDetails, layout } = props;
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const productDetails: ProductDetails = useMemo(
-    () => ({
-      name: props.productName,
-      description: props.productDesc,
-    }),
-    [props.productName, props.productDesc]
-  );
-
-  const paymentOptions: PaymentOption[] = useMemo(
-    () =>
-      props.paymentOptions.map((x) => ({
-        chainId: x.network.chainId as ChainId,
-        superToken: {
-          address: x.superToken.address as `0x${string}`,
-        },
-        flowRate: {
-          amountEther: "1",
-          period: "month",
-        },
-      })),
-    [props.paymentOptions]
-  );
-
-  const paymentDetails: PaymentDetails = useMemo<PaymentDetails>(
-    () => ({
-      receiverAddress: props.paymentReceiver,
-      paymentOptions,
-    }),
-    [props.paymentReceiver, paymentOptions]
-  );
-
-  const theme: ThemeOptions = {
-    palette: {
-      mode: displaySettings.darkMode ? "dark" : "light",
-      primary: { main: displaySettings.primaryColor },
-      secondary: { main: displaySettings.secondaryColor },
-    },
-    components: {
-      MuiStepIcon: {
-        styleOverrides: {
-          text: {
-            fill: displaySettings.secondaryColor,
-          },
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          root: {
-            borderRadius: displaySettings.inputRadius,
-          },
-        },
-      },
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            borderRadius: displaySettings.buttonRadius,
-          },
-        },
-      },
-    },
-  };
+  const theme: ThemeOptions = mapDisplaySettingsToTheme(displaySettings);
 
   return (
     <WidgetContext.Provider value={props}>
-      {mounted &&
-        switchLayout(props.layout, productDetails, paymentDetails, theme)}
+      {mounted && switchLayout(layout, productDetails, paymentDetails, theme)}
     </WidgetContext.Provider>
   );
 };

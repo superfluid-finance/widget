@@ -8,12 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import { FC } from "react";
-import { Controller } from "react-hook-form";
-import { EditorProps } from "../widget-preview/WidgetPreview";
+import { Controller, useFormContext } from "react-hook-form";
 import ImageSelect from "../image-select/ImageSelect";
-import { MuiColorInput, matchIsValidColor } from "mui-color-input";
+import { MuiColorInput } from "mui-color-input";
+import { WidgetProps } from "../widget-preview/WidgetPreview";
 
-const UiEditor: FC<EditorProps> = ({ control, watch }) => {
+const UiEditor: FC = () => {
+  const { control, watch } = useFormContext<WidgetProps>();
+
   const [displaySettings] = watch(["displaySettings"]);
 
   return (

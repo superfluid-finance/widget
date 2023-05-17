@@ -14,6 +14,10 @@ import {
 } from "@mui/material";
 import tokenList, { SuperTokenInfo } from "@tokdaniel/superfluid-tokenlist";
 import { NullableObject } from "../../types/general";
+import { PaymentOptionWithTokenInfo } from "superfluid-checkout-widget/src/formValues";
+import { ChainId, SuperTokenExtension } from "superfluid-checkout-widget";
+import { UseFieldArrayAppend } from "react-hook-form";
+import { WidgetProps } from "./WidgetPreview";
 
 export const paymentIntervals = [
   "second",
@@ -40,7 +44,7 @@ const renderToken = (token: TokenInfo) => {
 };
 
 type PaymentOptionSelectorProps = {
-  onAdd: (paymentOption: PaymentOption) => void;
+  onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
 };
 
 const defaultNetwork = {
@@ -91,12 +95,25 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     }
   };
 
-  const handleAdd = ({ network, superToken }: PaymentOption) => {
-    if (!(network && superToken)) {
+  const handleAdd = () => {
+    if (!selectedToken) {
       return;
     }
 
-    onAdd({ network, superToken });
+    const network = networks.find((n) => n.chainId === selectedToken.chainId);
+
+    if (network) {
+      onAdd({
+        superToken: {
+          address: selectedToken.address as `0x${string}`,
+        },
+        chainId: selectedToken.chainId as ChainId,
+        flowRate: {
+          amountEther: "1",
+          period: "day",
+        },
+      });
+    }
   };
 
   const autoCompleteTokenOptions = useMemo(() => {
@@ -151,12 +168,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
 
       <Button
         disabled={!(selectedNetwork && selectedToken)}
-        onClick={() =>
-          handleAdd({
-            network: selectedNetwork,
-            superToken: selectedToken,
-          })
-        }
+        onClick={handleAdd}
       >
         Add
       </Button>

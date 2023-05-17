@@ -1,45 +1,54 @@
 import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
 import { FC } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Controller, useFieldArray } from "react-hook-form";
-import { EditorProps } from "../widget-preview/WidgetPreview";
+import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import SelectPaymentOption from "../widget-preview/SelectPaymentOption";
-import { Network } from "../../networkDefinitions";
-import { SuperTokenInfo } from "@tokdaniel/superfluid-tokenlist";
+import { networks } from "../../networkDefinitions";
+import { ChainId } from "superfluid-checkout-widget";
+import tokenListJSON from "@tokdaniel/superfluid-tokenlist";
+import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 type PaymentOptionViewProps = {
-  superToken: SuperTokenInfo;
-  network: Network;
+  superToken: { address: `0x${string}` };
+  chainId: ChainId;
   index: number;
   remove: (index: number) => void;
 };
 
 const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   superToken,
-  network,
+  chainId,
   index,
   remove,
-}) => (
-  <Stack
-    direction="row"
-    sx={{
-      alignItems: "center",
-      justifyContent: "space-between",
-    }}
-  >
-    <Typography variant="caption">{`${index + 1}. ${superToken.name} (${
-      superToken.symbol
-    }) on ${network.name}`}</Typography>
-    <IconButton size="small" onClick={() => remove(index)}>
-      <CancelIcon />
-    </IconButton>
-  </Stack>
-);
+}) => {
+  const network = networks.find((n) => n.chainId === chainId);
+  const token = Object.values(tokenListJSON.tokens).find(
+    (token) => token.address === superToken.address
+  );
+  return (
+    <Stack
+      direction="row"
+      sx={{
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <Typography variant="caption">{`${index + 1}. ${token?.name} (${
+        token?.symbol
+      }) on ${network?.name}`}</Typography>
+      <IconButton size="small" onClick={() => remove(index)}>
+        <CancelIcon />
+      </IconButton>
+    </Stack>
+  );
+};
 
-const ProductEditor: FC<EditorProps> = ({ control }) => {
+const ProductEditor: FC = () => {
+  const { control } = useFormContext<WidgetProps>();
+
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "paymentOptions", // unique name for your Field Array
+    name: "paymentDetails.paymentOptions", // unique name for your Field Array
   });
 
   return (
@@ -50,7 +59,7 @@ const ProductEditor: FC<EditorProps> = ({ control }) => {
           <Typography variant="subtitle2">Product Name</Typography>
           <Controller
             control={control}
-            name="productName"
+            name="productDetails.name"
             render={({ field: { value, onChange } }) => (
               <TextField value={value} onChange={onChange} />
             )}
@@ -60,7 +69,7 @@ const ProductEditor: FC<EditorProps> = ({ control }) => {
           <Typography variant="subtitle2">ProductDescription</Typography>
           <Controller
             control={control}
-            name="productDesc"
+            name="productDetails.description"
             render={({ field: { value, onChange } }) => (
               <TextField
                 multiline
@@ -80,7 +89,7 @@ const ProductEditor: FC<EditorProps> = ({ control }) => {
           </Typography>
           <Controller
             control={control}
-            name="paymentReceiver"
+            name="paymentDetails.receiverAddress"
             render={({ field: { value, onChange, onBlur } }) => (
               <TextField value={value} onChange={onChange} onBlur={onBlur} />
             )}
@@ -88,7 +97,7 @@ const ProductEditor: FC<EditorProps> = ({ control }) => {
         </Stack>
         <Controller
           control={control}
-          name="paymentOptions"
+          name="paymentDetails.paymentOptions"
           render={() => <SelectPaymentOption onAdd={append} />}
         />
         <Stack direction="column">
@@ -96,11 +105,11 @@ const ProductEditor: FC<EditorProps> = ({ control }) => {
           <Typography>TODO: Needs fields to set flow rate</Typography>
           <Box mx={1}>
             {fields.length ? (
-              fields.map(({ network, superToken }, i) => (
+              fields.map(({ superToken, chainId }, i) => (
                 <PaymentOptionView
-                  key={`${superToken.address}-${network.chainId}-${i}`}
+                  key={`${superToken.address}-${i}`}
                   superToken={superToken}
-                  network={network}
+                  chainId={chainId}
                   index={i}
                   remove={remove}
                 />
