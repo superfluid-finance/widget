@@ -1,24 +1,91 @@
 {
   "productDetails": {
-    "name": "Product Nameasd",
-    "description": "Product Description",
-    "image": null,
-    "logo": null
+    "name": "SuperFancy Product",
+    "description": "Product Description of SuperFancy Product",
+    "image": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2aWV3Qm94PSIwIDAgNDAwIDQwMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzg0IDM4MzsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGVsbGlwc2Ugc3R5bGU9InN0cm9rZTogcmdiKDAsIDAsIDApOyBzdHJva2Utd2lkdGg6IDBweDsgZmlsbDogcmdiKDI1MiwgMjU1LCA4Mik7IiBjeD0iMjAwIiBjeT0iMjAwIiByeD0iMjAwIiByeT0iMjAwLjAwMSIvPgogIDxwYXRoIGQ9Ik0gMzAwIDEwMCBMIDEwMCAxMDAgTCAxMDAgMzAwIEwgMzAwIDMwMCBMIDMwMCAyMzAuMTgzIEwgMjY2Ljc4OSAyMzAuMTgzIEMgMjU1LjM1MyAyNTUuNjY1IDIyOS42MDggMjczLjM2OCAyMDAuMTU3IDI3My4zNjggQyAxNTkuNTMgMjczLjM2OCAxMjYuNjMyIDI0MC4xNTcgMTI2LjYzMiAxOTkuODQzIEMgMTI2LjU3OSAxNTkuNTMgMTU5LjUzIDEyNi42MzIgMjAwLjE1NyAxMjYuNjMyIEMgMjMwLjE4MyAxMjYuNjMyIDI1NS45MjYgMTQ0LjkwOSAyNjcuMzYyIDE3MC45NjYgTCAzMDAgMTcwLjk2NiBMIDMwMCAxMDAgWiIgc3R5bGU9IiIvPgo8L3N2Zz4=",
+    "logo": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2aWV3Qm94PSIwIDAgNDAwIDQwMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzg0IDM4MzsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGVsbGlwc2Ugc3R5bGU9InN0cm9rZTogcmdiKDAsIDAsIDApOyBzdHJva2Utd2lkdGg6IDBweDsgZmlsbDogcmdiKDI1MiwgMjU1LCA4Mik7IiBjeD0iMjAwIiBjeT0iMjAwIiByeD0iMjAwIiByeT0iMjAwLjAwMSIvPgogIDxwYXRoIGQ9Ik0gMzAwIDEwMCBMIDEwMCAxMDAgTCAxMDAgMzAwIEwgMzAwIDMwMCBMIDMwMCAyMzAuMTgzIEwgMjY2Ljc4OSAyMzAuMTgzIEMgMjU1LjM1MyAyNTUuNjY1IDIyOS42MDggMjczLjM2OCAyMDAuMTU3IDI3My4zNjggQyAxNTkuNTMgMjczLjM2OCAxMjYuNjMyIDI0MC4xNTcgMTI2LjYzMiAxOTkuODQzIEMgMTI2LjU3OSAxNTkuNTMgMTU5LjUzIDEyNi42MzIgMjAwLjE1NyAxMjYuNjMyIEMgMjMwLjE4MyAxMjYuNjMyIDI1NS45MjYgMTQ0LjkwOSAyNjcuMzYyIDE3MC45NjYgTCAzMDAgMTcwLjk2NiBMIDMwMCAxMDAgWiIgc3R5bGU9IiIvPgo8L3N2Zz4="
   },
-  "paymentDetails": { "receiverAddress": "0x...", "paymentOptions": [] },
-  "layout": "drawer",
+  "paymentDetails": {
+    "receiverAddress": "0xdf3d1C11752B35A5a3d984cC86E5A535745412Fe",
+    "paymentOptions": [
+      {
+        "superToken": {
+          "address": "0x6689a8f4fdad6712888682c9ce81b26762389f40"
+        },
+        "chainId": 100,
+        "flowRate": { "amountEther": "1000", "period": "day" }
+      },
+      {
+        "superToken": {
+          "address": "0x63e62989d9eb2d37dfdb1f93a22f063635b07d51"
+        },
+        "chainId": 100,
+        "flowRate": { "amountEther": "1000", "period": "day" }
+      },
+      {
+        "superToken": {
+          "address": "0x12c294107772b10815307c05989dabd71c21670e"
+        },
+        "chainId": 137,
+        "flowRate": { "amountEther": "1000", "period": "day" }
+      },
+      {
+        "superToken": {
+          "address": "0xbd80cfa9d93a87d1bb895f810ea348e496611cd4"
+        },
+        "chainId": 10,
+        "flowRate": { "amountEther": "1000", "period": "day" }
+      },
+      {
+        "superToken": {
+          "address": "0x9638ec1d29dfa9835fdb7fa74b5b77b14d6ac77e"
+        },
+        "chainId": 10,
+        "flowRate": { "amountEther": "1000", "period": "day" }
+      },
+      {
+        "superToken": {
+          "address": "0x8430f084b939208e2eded1584889c9a66b90562f"
+        },
+        "chainId": 10,
+        "flowRate": { "amountEther": "1000", "period": "day" }
+      },
+      {
+        "superToken": {
+          "address": "0xbe916845d8678b5d2f7ad79525a62d7c08abba7e"
+        },
+        "chainId": 43114,
+        "flowRate": { "amountEther": "1000", "period": "day" }
+      },
+      {
+        "superToken": {
+          "address": "0x744786ab00ed5a0b77ca754eb6f3ec0607c7fa79"
+        },
+        "chainId": 56,
+        "flowRate": { "amountEther": "1000", "period": "day" }
+      },
+      {
+        "superToken": {
+          "address": "0x529a4116f160c833c61311569d6b33dff41fd657"
+        },
+        "chainId": 56,
+        "flowRate": { "amountEther": "1000", "period": "day" }
+      }
+    ]
+  },
+  "layout": "dialog",
   "theme": {
     "palette": {
       "mode": "light",
       "primary": { "main": "#4caf50" },
-      "secondary": { "main": "#fff" }
+      "secondary": { "main": "#123abc" }
     },
     "components": {
-      "MuiStepIcon": { "styleOverrides": { "text": { "fill": "#fff" } } },
+      "MuiStepIcon": { "styleOverrides": { "text": { "fill": "#123abc" } } },
       "MuiOutlinedInput": {
-        "styleOverrides": { "root": { "borderRadius": 22 } }
+        "styleOverrides": { "root": { "borderRadius": 17 } }
       },
-      "MuiButton": { "styleOverrides": { "root": { "borderRadius": 17 } } }
+      "MuiButton": { "styleOverrides": { "root": { "borderRadius": 4 } } }
     }
   }
 }
