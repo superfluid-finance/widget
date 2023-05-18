@@ -1,4 +1,4 @@
-import "superfluid-checkout-widget/dist/src/WebComponent.js"
+import "superfluid-checkout-widget/dist/WebComponent.js"
 import tokenList from "./tokenList.json"
 import widgetProps from './widgetProps'
 
