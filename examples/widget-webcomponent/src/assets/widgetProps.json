@@ -1,0 +1,24 @@
+{
+  "productDetails": {
+    "name": "Product Nameasd",
+    "description": "Product Description",
+    "image": null,
+    "logo": null
+  },
+  "paymentDetails": { "receiverAddress": "0x...", "paymentOptions": [] },
+  "layout": "page",
+  "theme": {
+    "palette": {
+      "mode": "light",
+      "primary": { "main": "#4caf50" },
+      "secondary": { "main": "#fff" }
+    },
+    "components": {
+      "MuiStepIcon": { "styleOverrides": { "text": { "fill": "#fff" } } },
+      "MuiOutlinedInput": {
+        "styleOverrides": { "root": { "borderRadius": 22 } }
+      },
+      "MuiButton": { "styleOverrides": { "root": { "borderRadius": 17 } } }
+    }
+  }
+}
