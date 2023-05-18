@@ -16,16 +16,28 @@ class SuperfluidWidget extends HTMLElement {
     const mountPoint = document.createElement("span");
     this.attachShadow({ mode: "open" }).appendChild(mountPoint);
 
-    if (
-      !(
-        this.productDetails &&
-        this.paymentDetails &&
-        this.tokenList &&
-        this.theme &&
-        this.type
-      )
-    ) {
-      throw new Error("Missing required attributes");
+    const productDetails = this.getAttribute("productDetails");
+    const paymentDetails = this.getAttribute("paymentDetails");
+    const tokenList = this.getAttribute("tokenList");
+    const theme = this.getAttribute("theme");
+    const type = this.getAttribute("type");
+
+    if (!(productDetails && paymentDetails && tokenList && theme && type)) {
+      throw new Error(
+        `Missing required attributes ${JSON.stringify({
+          productDetails,
+          paymentDetails,
+          tokenList,
+          theme,
+          type,
+        })}`
+      );
+    } else {
+      this.productDetails = JSON.parse(productDetails);
+      this.paymentDetails = JSON.parse(paymentDetails);
+      this.tokenList = JSON.parse(tokenList);
+      this.theme = JSON.parse(theme);
+      this.type = type as typeof this.type;
     }
 
     ReactDom.render(
