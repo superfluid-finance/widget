@@ -6,7 +6,7 @@
     "logo": null
   },
   "paymentDetails": { "receiverAddress": "0x...", "paymentOptions": [] },
-  "layout": "page",
+  "layout": "drawer",
   "theme": {
     "palette": {
       "mode": "light",
