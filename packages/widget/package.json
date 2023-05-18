@@ -7,10 +7,7 @@
   "types": "src/index.d.ts",
   "scripts": {
     "watch": "tsc -w -p ./tsconfig.json",
-    "build": "rimraf dist && tsc -p ./tsconfig.json",
-    "rollup:bundle": "rollup -c",
-    "rollup:types": "rollup -c rollup-types.config.js",
-    "rollup": "pnpm build && pnpm rollup:bundle && pnpm rollup:types"
+    "build": "rimraf dist && tsc -p ./tsconfig.json"
   },
   "dependencies": {
     "@emotion/react": "latest",
