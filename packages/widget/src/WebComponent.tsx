@@ -1,4 +1,4 @@
-import * as ReactDom from "react-dom";
+import { createRoot } from "react-dom/client";
 import { CheckoutWidget } from "./CheckoutWidget";
 import { PaymentDetails, ProductDetails } from "superfluid-checkout-core";
 import { Theme } from "@mui/material";
@@ -11,6 +11,7 @@ class SuperfluidWidget extends HTMLElement {
   tokenList!: TokenList;
   theme!: Theme;
   type!: "drawer" | "dialog" | "full-screen" | "page";
+  trigger!: string;
 
   connectedCallback() {
     const mountPoint = document.createElement("span");
@@ -21,8 +22,18 @@ class SuperfluidWidget extends HTMLElement {
     const tokenList = this.getAttribute("tokenList");
     const theme = this.getAttribute("theme");
     const type = this.getAttribute("type");
+    const trigger = this.getAttribute("trigger");
 
-    if (!(productDetails && paymentDetails && tokenList && theme && type)) {
+    if (
+      !(
+        productDetails &&
+        paymentDetails &&
+        tokenList &&
+        theme &&
+        type &&
+        trigger
+      )
+    ) {
       throw new Error(
         `Missing required attributes ${JSON.stringify({
           productDetails,
@@ -30,6 +41,7 @@ class SuperfluidWidget extends HTMLElement {
           tokenList,
           theme,
           type,
+          trigger,
         })}`
       );
     } else {
@@ -38,9 +50,10 @@ class SuperfluidWidget extends HTMLElement {
       this.tokenList = JSON.parse(tokenList);
       this.theme = JSON.parse(theme);
       this.type = type as typeof this.type;
+      this.trigger = trigger;
     }
 
-    ReactDom.render(
+    createRoot(mountPoint).render(
       this.type === "page" ? (
         <CheckoutWidget
           productDetails={this.productDetails}
@@ -57,13 +70,20 @@ class SuperfluidWidget extends HTMLElement {
           theme={this.theme}
           type={this.type}
         >
-          {({ openModal }) => (
-            <button onClick={() => openModal()}>Full-screen</button>
-          )}
-        </CheckoutWidget>
-      ),
+          {({ openModal }) => {
+            const target = document.querySelector<HTMLButtonElement>(
+              this.trigger
+            );
 
-      mountPoint
+            if (target) {
+              target.onclick = openModal;
+              return <></>;
+            }
+
+            return <button onClick={() => openModal()}>Open</button>;
+          }}
+        </CheckoutWidget>
+      )
     );
   }
 }
