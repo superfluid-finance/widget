@@ -2,7 +2,8 @@ import { Address } from "abitype";
 import { ChainId, TimePeriod, autoWrapStrategyAddress } from "superfluid-checkout-core";
 
 export type EnableAutoWrapCommand = {
-  title: "Enable Auto-Wrap";
+  id: string;
+  type: "Enable Auto-Wrap";
   chainId: keyof typeof autoWrapStrategyAddress;
   accountAddress: Address;
   superTokenAddress: Address;
@@ -10,7 +11,8 @@ export type EnableAutoWrapCommand = {
 };
 
 export type WrapIntoSuperTokensCommand = {
-  title: "Wrap into Super Tokens";
+  id: string;
+  type: "Wrap into Super Tokens";
   chainId: ChainId;
   accountAddress: Address;
   superTokenAddress: Address;
@@ -19,7 +21,8 @@ export type WrapIntoSuperTokensCommand = {
 };
 
 export type SendStreamCommand = {
-  title: "Send Stream";
+  id: string;
+  type: "Send Stream";
   chainId: ChainId;
   superTokenAddress: Address;
   accountAddress: Address;

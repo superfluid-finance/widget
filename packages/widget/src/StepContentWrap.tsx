@@ -106,7 +106,6 @@ export default function StepContentWrap() {
             )}
           />
         </Stack>
-
         <StepperContinueButton disabled={!isValid || isValidating}>
           Continue
         </StepperContinueButton>

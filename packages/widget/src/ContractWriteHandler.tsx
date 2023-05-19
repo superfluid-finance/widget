@@ -27,7 +27,7 @@ export function ContractWriteHandler({
   onChange,
   children,
 }: ContractWriteHandlerProps) {
-  const prepareResult = usePrepareContractWrite(prepare ? { ...contractWrite } : undefined);
+  const prepareResult = usePrepareContractWrite(prepare ? contractWrite: undefined);
   const writeResult = useContractWrite(prepareResult.config);
   const transactionResult = useWaitForTransaction({
     hash: writeResult.data?.hash,
@@ -41,10 +41,10 @@ export function ContractWriteHandler({
       transactionResult
     }),
     [
-      contractWrite,
-      prepareResult,
-      writeResult,
-      transactionResult
+      contractWrite.id,
+      prepareResult.status,
+      writeResult.status,
+      transactionResult.status
     ]
   );
 

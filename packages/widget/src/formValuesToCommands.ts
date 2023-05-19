@@ -2,6 +2,7 @@ import { Address } from "abitype";
 import { Command } from "./commands";
 import { ValidFormValues } from "./formValues";
 import { parseEther } from "viem";
+import { nanoid } from "nanoid";
 
 export const formValuesToCommands = (
   values: ValidFormValues
@@ -24,7 +25,8 @@ export const formValuesToCommands = (
   if (underlyingTokenAddress) {
     if (wrapAmount !== 0n) {
       commands.push({
-        title: "Wrap into Super Tokens",
+        id: nanoid(),
+        type: "Wrap into Super Tokens",
         chainId: chainId,
         superTokenAddress,
         accountAddress,
@@ -35,7 +37,8 @@ export const formValuesToCommands = (
 
     if (enableAutoWrap) {
       commands.push({
-        title: "Enable Auto-Wrap",
+        id: nanoid(),
+        type: "Enable Auto-Wrap",
         chainId,
         superTokenAddress,
         accountAddress,
@@ -45,7 +48,8 @@ export const formValuesToCommands = (
   }
 
   commands.push({
-    title: "Send Stream",
+    id: nanoid(),
+    type: "Send Stream",
     chainId,
     superTokenAddress,
     accountAddress,

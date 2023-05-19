@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import { useAccount } from "wagmi";
+import { StepContentTransactions } from "./StepContentTransactions";
 
 export default function Stepper() {
   const {
@@ -20,7 +21,7 @@ export default function Stepper() {
       {
         buttonText: "Select network and token",
         optional: false,
-        content: StepContentPaymentOption,
+        Content: StepContentPaymentOption,
       },
       // Add wrap step only when Super Token has an underlying token.
       ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
@@ -29,14 +30,19 @@ export default function Stepper() {
             {
               buttonText: "Wrap",
               optional: true,
-              content: StepContentWrap,
+              Content: StepContentWrap,
             },
           ]
         : []),
       {
-        buttonText: "Review the transaction(s)",
+        buttonText: "Review the subscription",
         optional: false,
-        content: StepContentReview,
+        Content: StepContentReview,
+      },
+      {
+        buttonText: "Confirm the transaction(s)",
+        optional: false,
+        Content: StepContentTransactions,
       },
     ],
     [paymentOptionWithTokenInfo]
@@ -50,7 +56,7 @@ export default function Stepper() {
       initialStep={isValid ? steps.length - 1 : 0}
     >
       {({ activeStep, setActiveStep }) => {
-
+        // TODO(KK): Check if React whines over this.
         if (activeStep !== 0 && !isConnected) {
           setActiveStep(0);
         }
@@ -62,6 +68,7 @@ export default function Stepper() {
             sx={{ m: 2 }}
           >
             {steps.map((step, index) => {
+              const { Content } = step;
               return (
                 <Step key={index}>
                   <StepButton
@@ -70,7 +77,7 @@ export default function Stepper() {
                   >
                     {step.buttonText}
                   </StepButton>
-                  <step.content />
+                  <Content />
                 </Step>
               );
             })}
