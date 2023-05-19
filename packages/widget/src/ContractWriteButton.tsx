@@ -37,6 +37,7 @@ export default function ContractWriteButton({
         </Alert>
       )}
       <LoadingButton
+        size="large"
         variant="contained"
         fullWidth
         disabled={!write}

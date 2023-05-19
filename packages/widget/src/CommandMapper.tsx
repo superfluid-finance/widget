@@ -220,7 +220,7 @@ export function SendStreamCommandMapper({
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
 
-    if (existingFlowRate) {
+    if (existingFlowRate !== undefined) {
       if (existingFlowRate > 0n) {
         const updatedFlowRate = existingFlowRate + flowRate;
 
