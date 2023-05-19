@@ -24,19 +24,19 @@
     "clsx": "^1.2.1",
     "ethers": "5.7.2",
     "mui-color-input": "^1.0.5",
-    "next": "^13.4.2",
+    "next": "^13.4.3",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "^7.44.0-rc.3",
+    "react-hook-form": "7.44.0-rc.3",
     "superfluid-checkout-widget": "workspace:^",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
-    "@types/node": "^20.1.5",
+    "@types/node": "^20.2.1",
     "@types/react": "latest",
     "eslint": "latest",
-    "eslint-config-next": "^13.4.2",
+    "eslint-config-next": "^13.4.3",
     "typescript": "latest"
   }
 }
