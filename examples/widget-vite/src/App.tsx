@@ -1,5 +1,5 @@
 import "./App.css";
-import { CheckoutWidget } from "superfluid-checkout-widget/dist";
+import { CheckoutWidget } from "superfluid-checkout-widget";
 import productDetails from "./productDetails";
 import paymentDetails from "./paymentDetails";
 import tokenList from "./tokenList";

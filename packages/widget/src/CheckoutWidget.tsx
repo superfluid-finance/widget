@@ -1,11 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
-import { CheckoutConfig } from "./CheckoutConfig";
+import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { CheckoutContext, CheckoutState } from "./CheckoutContext";
 import { CheckoutViewProps, ViewProvider } from "./ViewProvider";
 import { SupportedNetwork } from "superfluid-checkout-core";
-import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
+import {
+  PaymentOptionWithTokenInfo,
+  SuperTokenInfo,
+  checkoutFormSchema,
+} from "./formValues";
 import { WalletAndWagmiProvider } from "./WalletAndWagmiProvider";
 import {
+  Alert,
+  AlertTitle,
   ThemeOptions,
   ThemeProvider,
   createTheme,
@@ -14,7 +20,7 @@ import { getSupportedNetworksFromPaymentOptions } from "./helpers/getSupportedNe
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
 import { getSuperTokensFromTokenList } from "./helpers/getSuperTokensFromTokenList";
 
-type Props = CheckoutViewProps &
+export type CheckoutWidgetProps = CheckoutViewProps &
   CheckoutConfig & {
     theme?: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
   };
@@ -25,10 +31,8 @@ export function CheckoutWidget({
   tokenList,
   theme: theme_,
   ...viewProps
-}: Props) {
+}: CheckoutWidgetProps) {
   const { paymentOptions } = paymentDetails;
-
-  // TODO: validate input
 
   const superTokens: ReadonlyArray<SuperTokenInfo> = useMemo(
     () => getSuperTokensFromTokenList(tokenList),
@@ -67,12 +71,24 @@ export function CheckoutWidget({
     return null; // TODO: SEO.
   }
 
+  const validationResult = checoutConfigSchema.safeParse({
+    productDetails,
+    paymentDetails,
+  });
+
   return (
     <CheckoutContext.Provider value={checkoutState}>
       <WalletAndWagmiProvider>
         <ThemeProvider theme={theme}>
           {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
-          <ViewProvider {...viewProps} />
+          {validationResult.success ? (
+            <ViewProvider {...viewProps} />
+          ) : (
+            <Alert severity="error">
+              <AlertTitle>Input Error</AlertTitle>
+              {JSON.stringify(validationResult.error, null, 2)}
+            </Alert>
+          )}
         </ThemeProvider>
       </WalletAndWagmiProvider>
     </CheckoutContext.Provider>
