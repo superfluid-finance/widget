@@ -1,0 +1,19 @@
+{
+  "name": "widget-webcomponent-example",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "superfluid-checkout-widget": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4",
+    "vite": "^4.3.6"
+  }
+}

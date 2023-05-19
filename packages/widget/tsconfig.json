@@ -4,8 +4,10 @@
   "exclude": ["node_modules"],
   "compilerOptions": {
     "jsx": "react-jsx",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "module": "ESNext",
-    "target": "ES2020"
+    "target": "ES2020",
+    "outDir": "./dist",
+    "declaration": true
   }
 }

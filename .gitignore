@@ -193,3 +193,4 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/vercel,nextjs,react,visualstudiocode,webstorm,turbo
 
+packages/widget/dist

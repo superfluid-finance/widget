@@ -7,7 +7,7 @@
   "types": "src/index.d.ts",
   "scripts": {
     "watch": "tsc -w -p ./tsconfig.json",
-    "build": "tsc --build --clean"
+    "build": "rimraf dist && tsc -p ./tsconfig.json"
   },
   "dependencies": {
     "@emotion/react": "latest",
@@ -33,9 +33,15 @@
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
     "@mui/material": "^5.13.0",
+    "@rollup/plugin-multi-entry": "^6.0.0",
+    "@rollup/plugin-terser": "^0.4.3",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "rimraf": "^5.0.1",
+    "rollup": "^3.22.0",
+    "rollup-plugin-dts": "^5.3.0",
     "tsconfig": "workspace:*",
+    "tsup": "^6.7.0",
     "typescript": "latest"
   },
   "peerDependencies": {
