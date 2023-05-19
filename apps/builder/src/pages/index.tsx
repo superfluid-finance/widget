@@ -66,8 +66,6 @@ export default function Home() {
     "layout",
   ]);
 
-  console.log(layout);
-
   return (
     <Stack direction="row">
       <Stack
