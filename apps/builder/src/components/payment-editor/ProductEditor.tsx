@@ -85,7 +85,7 @@ const ProductEditor: FC = () => {
         <Typography variant="subtitle1">Payment details</Typography>
         <Stack direction="column" flex={1}>
           <Typography variant="subtitle2">
-            Receiver (TODO: separate more clearly from token)
+            Default Receiver
           </Typography>
           <Controller
             control={control}
@@ -106,7 +106,6 @@ const ProductEditor: FC = () => {
 
         <Stack direction="column">
           <Typography variant="subtitle2">Added Payment Options</Typography>
-          <Typography>TODO: Needs fields to set flow rate</Typography>
           <Box mx={1}>
             {fields.length ? (
               fields.map(({ superToken, chainId }, i) => (
