@@ -19,7 +19,7 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "watch": "tsc -w -p ./tsconfig.json",
-    "build": "rimraf dist && tsc -p ./tsconfig.json"
+    "build": "tsc -p ./tsconfig.json"
   },
   "dependencies": {
     "@emotion/react": "latest",
