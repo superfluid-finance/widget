@@ -12,6 +12,7 @@ export function StepperContinueButton(props: ButtonProps) {
 
   return (
     <Button
+      size="large"
       variant="contained"
       onClick={() => {
         const isStepBeforeReview = activeStep === totalSteps - 3;

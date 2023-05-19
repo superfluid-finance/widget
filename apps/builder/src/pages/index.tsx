@@ -35,15 +35,36 @@ export default function Home() {
     "product"
   );
 
-  const formMethods = useForm<WidgetProps, any, WidgetProps>({
+  const formMethods = useForm<WidgetProps>({
     defaultValues: {
       productDetails: {
         name: "Product Name",
         description: "Product Description",
       },
       paymentDetails: {
-        receiverAddress: "0x...",
-        paymentOptions: [],
+        receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+        paymentOptions: [
+          {
+            chainId: 5,
+            superToken: {
+              address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a" as const
+            },
+            flowRate: {
+              amountEther: "1" as `${number}`,
+              period: "month",
+            },
+          },
+          {
+            chainId: 5,
+            superToken: {
+              address: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa" as const
+            },
+            flowRate: {
+              amountEther: "1" as `${number}`,
+              period: "month",
+            },
+          },
+        ],
       },
       layout: "page",
       displaySettings: {
@@ -65,8 +86,6 @@ export default function Home() {
     "displaySettings",
     "layout",
   ]);
-
-  console.log(layout);
 
   return (
     <Stack direction="row">

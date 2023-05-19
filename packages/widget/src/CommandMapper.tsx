@@ -19,6 +19,7 @@ import { ContractWrite, extractContractWrite } from "./extractContractWrite";
 import { ChildrenProp, MaxUint256 } from "./utils";
 import { parseEther } from "viem";
 import { useEffect, useMemo } from "react";
+import { useCheckout } from "./CheckoutContext";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
@@ -124,45 +125,66 @@ export function WrapIntoSuperTokensCommandMapper({
   onMapped,
   children,
 }: CommandMapperProps<WrapIntoSuperTokensCommand>) {
-  // TODO(KK): Get token, check if native asset
+  const { getSuperToken } = useCheckout();
 
-  const { data: allowance, isSuccess } = useContractRead({
-    chainId: cmd.chainId,
-    address: cmd.underlyingTokenAddress,
-    abi: erc20ABI,
-    functionName: "allowance",
-    args: [cmd.accountAddress, cmd.superTokenAddress],
-  });
+  const superToken = getSuperToken(cmd.superTokenAddress);
+  const isNativeAssetSuperToken =
+    superToken.extensions.superTokenInfo.type === "Native Asset";
+
+  const { data: allowance, isSuccess } = useContractRead(
+    !isNativeAssetSuperToken
+      ? {
+          chainId: cmd.chainId,
+          address: cmd.underlyingTokenAddress,
+          abi: erc20ABI,
+          functionName: "allowance",
+          args: [cmd.accountAddress, cmd.superTokenAddress],
+        }
+      : undefined
+  );
 
   const amount = parseEther(cmd.amountEther);
 
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
 
-    if (allowance !== undefined) {
-      if (allowance < amount) {
-        contractWrites_.push(
-          extractContractWrite({
-            commandId: cmd.id,
-            chainId: cmd.chainId,
-            abi: erc20ABI,
-            functionName: "approve",
-            address: cmd.underlyingTokenAddress,
-            args: [cmd.superTokenAddress, MaxUint256],
-          })
-        );
-      }
-
+    if (isNativeAssetSuperToken) {
       contractWrites_.push(
         extractContractWrite({
           commandId: cmd.id,
           chainId: cmd.chainId,
           abi: superTokenABI,
           address: cmd.superTokenAddress,
-          functionName: "upgrade", // TODO(KK): upgradeByEth
+          functionName: "upgradeByEth",
           args: [parseEther(cmd.amountEther)],
         })
       );
+    } else {
+      if (allowance !== undefined) {
+        if (allowance < amount) {
+          contractWrites_.push(
+            extractContractWrite({
+              commandId: cmd.id,
+              chainId: cmd.chainId,
+              abi: erc20ABI,
+              functionName: "approve",
+              address: cmd.underlyingTokenAddress,
+              args: [cmd.superTokenAddress, MaxUint256],
+            })
+          );
+        }
+
+        contractWrites_.push(
+          extractContractWrite({
+            commandId: cmd.id,
+            chainId: cmd.chainId,
+            abi: superTokenABI,
+            address: cmd.superTokenAddress,
+            functionName: "upgrade",
+            args: [parseEther(cmd.amountEther)],
+          })
+        );
+      }
     }
 
     return contractWrites_;
@@ -181,7 +203,7 @@ export function SendStreamCommandMapper({
   onMapped,
   children,
 }: CommandMapperProps<SendStreamCommand>) {
-  const { isSuccess } = useContractRead({
+  const { isSuccess, data: existingFlowRate } = useContractRead({
     chainId: cmd.chainId,
     address: cfAv1ForwarderAddress[cmd.chainId],
     abi: cfAv1ForwarderABI,
@@ -198,22 +220,47 @@ export function SendStreamCommandMapper({
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
 
-    contractWrites_.push(
-      extractContractWrite({
-        commandId: cmd.id,
-        abi: cfAv1ForwarderABI,
-        address: cfAv1ForwarderAddress[cmd.chainId],
-        chainId: cmd.chainId,
-        functionName: "createFlow",
-        args: [
-          cmd.superTokenAddress,
-          cmd.accountAddress,
-          cmd.receiverAddress,
-          flowRate,
-          "0x",
-        ],
-      })
-    );
+    if (existingFlowRate !== undefined) {
+      if (existingFlowRate > 0n) {
+        const updatedFlowRate = existingFlowRate + flowRate;
+
+        // TODO(KK): Is this the right behaviour, to update the flow rate?
+        contractWrites_.push(
+          extractContractWrite({
+            commandId: cmd.id,
+            abi: cfAv1ForwarderABI,
+            address: cfAv1ForwarderAddress[cmd.chainId],
+            chainId: cmd.chainId,
+            functionName: "updateFlow",
+            args: [
+              cmd.superTokenAddress,
+              cmd.accountAddress,
+              cmd.receiverAddress,
+              updatedFlowRate,
+              "0x",
+            ],
+          })
+        );
+      } else {
+        contractWrites_.push(
+          extractContractWrite({
+            commandId: cmd.id,
+            abi: cfAv1ForwarderABI,
+            address: cfAv1ForwarderAddress[cmd.chainId],
+            chainId: cmd.chainId,
+            functionName: "createFlow",
+            args: [
+              cmd.superTokenAddress,
+              cmd.accountAddress,
+              cmd.receiverAddress,
+              flowRate,
+              "0x",
+            ],
+          })
+        );
+      }
+    }
+
     return contractWrites_;
   }, [cmd.id, isSuccess]);
 

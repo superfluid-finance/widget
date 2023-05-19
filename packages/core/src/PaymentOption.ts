@@ -12,7 +12,16 @@ export const tokenSchema = z.object({
 });
 
 export const etherAmountSchema = z
-  .number()
+  .string()
+  .refine(
+    (value) => {
+      const parsed = Number(value);
+      return !isNaN(parsed) && String(parsed) === value;
+    },
+    {
+      message: "Must be a string representing a number",
+    }
+  )
   .transform((x) => x.toString() as `${number}`);
 
 export const flowRateSchema = z.object({

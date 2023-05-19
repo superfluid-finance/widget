@@ -60,6 +60,7 @@ export default function StepContentReview() {
         </Stack>
         {needsToSwitchNetwork ? (
           <Button
+            size="large"
             variant="contained"
             fullWidth
             onClick={() => switchNetwork?.(expectedChainId)}
