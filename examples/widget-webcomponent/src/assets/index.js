@@ -1,6 +1,6 @@
-import "superfluid-checkout-widget/dist/WebComponent.js";
+import "superfluid-checkout-widget/webcomponent";
 import tokenList from "./tokenList.json";
-import widgetProps from "./widgetProps";
+import widgetProps from "./widgetProps.json";
 
 window.addEventListener("DOMContentLoaded", () => {
   console.log(tokenList, widgetProps);

@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import tokenList, { SuperTokenInfo } from "@tokdaniel/superfluid-tokenlist";
+import tokenList, { SuperTokenInfo } from "@tokdaniel/supertokenlist";
 import { ChainId, TimePeriod, timePeriods } from "superfluid-checkout-widget";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { WidgetProps } from "./WidgetPreview";
