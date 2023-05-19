@@ -6,3 +6,7 @@ export type ChildrenProp = PropsWithChildren["children"];
 export const MaxUint256 = BigInt(
   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
 );
+
+export function isDefined<T>(value: T | undefined | null): value is T {
+  return value !== undefined && value !== null;
+}

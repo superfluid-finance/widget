@@ -6,7 +6,6 @@ import { SupportedNetwork } from "superfluid-checkout-core";
 import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 import { WalletAndWagmiProvider } from "./WalletAndWagmiProvider";
 import {
-  CssBaseline,
   ThemeOptions,
   ThemeProvider,
   createTheme,
@@ -72,7 +71,7 @@ export function CheckoutWidget({
     <CheckoutContext.Provider value={checkoutState}>
       <WalletAndWagmiProvider>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
+          {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
           <ViewProvider {...viewProps} />
         </ThemeProvider>
       </WalletAndWagmiProvider>

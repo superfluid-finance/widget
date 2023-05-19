@@ -6,21 +6,23 @@ import { formValuesToCommands } from "./formValuesToCommands";
 import { useCommandHandler } from "./CommandHandlerContext";
 
 export function StepperContinueButton(props: ButtonProps) {
-  const { handleNext, isPenultimateStep } = useStepper();
+  const { handleNext, activeStep, totalSteps } = useStepper();
   const { handleSubmit } = useFormContext<ValidFormValues>();
-  const { setCommands } = useCommandHandler();
+  const { submitCommands } = useCommandHandler();
 
   return (
     <Button
       variant="contained"
       onClick={() => {
-        if (isPenultimateStep()) {
+        const isStepBeforeReview = activeStep === totalSteps - 3;
+        if (isStepBeforeReview) {
           handleSubmit((values) => {
             const commands = formValuesToCommands(
               values as ValidFormValues // TODO(KK): This is better in next version of react-hook-form.
             );
-            setCommands(commands);
+            submitCommands(commands);
             handleNext();
+            // TODO(KK): reset? isDirty check?
           })();
         } else {
           handleNext();

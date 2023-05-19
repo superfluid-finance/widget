@@ -18,14 +18,16 @@ import {
 import { ContractWrite, extractContractWrite } from "./extractContractWrite";
 import { ChildrenProp, MaxUint256 } from "./utils";
 import { parseEther } from "viem";
+import { useEffect, useMemo } from "react";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
-  children?: (contractWrites: ContractWrite[]) => ChildrenProp;
+  onMapped?: (contractWrites: ReadonlyArray<ContractWrite>) => void;
+  children?: (contractWrites: ReadonlyArray<ContractWrite>) => ChildrenProp;
 };
 
 export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
-  switch (cmd.title) {
+  switch (cmd.type) {
     case "Enable Auto-Wrap":
       return <EnableAutoWrapCommandMapper command={cmd} {...props} />;
     case "Wrap into Super Tokens":
@@ -37,9 +39,10 @@ export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
 
 export function EnableAutoWrapCommandMapper({
   command: cmd,
+  onMapped,
   children,
 }: CommandMapperProps<EnableAutoWrapCommand>) {
-  const { data } = useContractReads({
+  const { data, isSuccess } = useContractReads({
     contracts: [
       {
         chainId: cmd.chainId,
@@ -68,49 +71,62 @@ export function EnableAutoWrapCommandMapper({
 
   const upperLimit = 604800n;
 
-  const contractWrites: ContractWrite[] = [];
+  const contractWrites = useMemo(() => {
+    const contractWrites_: ContractWrite[] = [];
 
-  if (wrapSchedule !== undefined) {
-    if (wrapSchedule.strategy !== autoWrapStrategyAddress[cmd.chainId]) {
-      contractWrites.push(
-        extractContractWrite({
-          abi: autoWrapManagerABI,
-          address: autoWrapManagerAddress[cmd.chainId],
-          functionName: "createWrapSchedule",
-          args: [
-            cmd.superTokenAddress,
-            autoWrapStrategyAddress[cmd.chainId],
-            cmd.underlyingTokenAddress,
-            3000000000n,
-            172800n,
-            604800n,
-          ],
-        })
-      );
-    }
+    if (wrapSchedule !== undefined) {
+      if (wrapSchedule.strategy !== autoWrapStrategyAddress[cmd.chainId]) {
+        contractWrites_.push(
+          extractContractWrite({
+            commandId: cmd.id,
+            chainId: cmd.chainId,
+            abi: autoWrapManagerABI,
+            address: autoWrapManagerAddress[cmd.chainId],
+            functionName: "createWrapSchedule",
+            args: [
+              cmd.superTokenAddress,
+              autoWrapStrategyAddress[cmd.chainId],
+              cmd.underlyingTokenAddress,
+              3000000000n,
+              172800n,
+              604800n,
+            ],
+          })
+        );
+      }
 
-    if (allowance && allowance < upperLimit) {
-      contractWrites.push(
-        extractContractWrite({
-          abi: erc20ABI,
-          functionName: "approve",
-          address: cmd.underlyingTokenAddress,
-          args: [autoWrapStrategyAddress[cmd.chainId], MaxUint256],
-        })
-      );
+      if (allowance && allowance < upperLimit) {
+        contractWrites_.push(
+          extractContractWrite({
+            commandId: cmd.id,
+            chainId: cmd.chainId,
+            abi: erc20ABI,
+            functionName: "approve",
+            address: cmd.underlyingTokenAddress,
+            args: [autoWrapStrategyAddress[cmd.chainId], MaxUint256],
+          })
+        );
+      }
     }
-  }
+    return contractWrites_;
+  }, [cmd.id, isSuccess]);
+
+  useEffect(
+    () => (isSuccess ? onMapped?.(contractWrites) : void 0),
+    [contractWrites]
+  );
 
   return <>{children?.(contractWrites)}</>;
 }
 
 export function WrapIntoSuperTokensCommandMapper({
   command: cmd,
+  onMapped,
   children,
 }: CommandMapperProps<WrapIntoSuperTokensCommand>) {
   // TODO(KK): Get token, check if native asset
 
-  const { data: allowance } = useContractRead({
+  const { data: allowance, isSuccess } = useContractRead({
     chainId: cmd.chainId,
     address: cmd.underlyingTokenAddress,
     abi: erc20ABI,
@@ -118,42 +134,54 @@ export function WrapIntoSuperTokensCommandMapper({
     args: [cmd.accountAddress, cmd.superTokenAddress],
   });
 
-  const contractWrites: ContractWrite[] = [];
-
   const amount = parseEther(cmd.amountEther);
 
-  if (allowance !== undefined) {
-    if (allowance < amount) {
-      contractWrites.push(
+  const contractWrites = useMemo(() => {
+    const contractWrites_: ContractWrite[] = [];
+
+    if (allowance !== undefined) {
+      if (allowance < amount) {
+        contractWrites_.push(
+          extractContractWrite({
+            commandId: cmd.id,
+            chainId: cmd.chainId,
+            abi: erc20ABI,
+            functionName: "approve",
+            address: cmd.underlyingTokenAddress,
+            args: [cmd.superTokenAddress, MaxUint256],
+          })
+        );
+      }
+
+      contractWrites_.push(
         extractContractWrite({
-          abi: erc20ABI,
-          functionName: "approve",
+          commandId: cmd.id,
           chainId: cmd.chainId,
-          address: cmd.underlyingTokenAddress,
-          args: [cmd.superTokenAddress, MaxUint256],
+          abi: superTokenABI,
+          address: cmd.superTokenAddress,
+          functionName: "upgrade", // TODO(KK): upgradeByEth
+          args: [parseEther(cmd.amountEther)],
         })
       );
     }
 
-    contractWrites.push(
-      extractContractWrite({
-        abi: superTokenABI,
-        address: cmd.superTokenAddress,
-        functionName: "upgrade", // TODO(KK): upgradeByEth
-        chainId: cmd.chainId,
-        args: [parseEther(cmd.amountEther)],
-      })
-    );
-  }
+    return contractWrites_;
+  }, [cmd.id, isSuccess]);
+
+  useEffect(
+    () => (isSuccess ? onMapped?.(contractWrites) : void 0),
+    [contractWrites]
+  );
 
   return <>{children?.(contractWrites)}</>;
 }
 
 export function SendStreamCommandMapper({
   command: cmd,
+  onMapped,
   children,
 }: CommandMapperProps<SendStreamCommand>) {
-  const {} = useContractRead({
+  const { isSuccess } = useContractRead({
     chainId: cmd.chainId,
     address: cfAv1ForwarderAddress[cmd.chainId],
     abi: cfAv1ForwarderABI,
@@ -167,22 +195,31 @@ export function SendStreamCommandMapper({
     parseEther(cmd.flowRate.amountEther) /
     BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
 
-  const contractWrites: ContractWrite[] = [];
+  const contractWrites = useMemo(() => {
+    const contractWrites_: ContractWrite[] = [];
 
-  contractWrites.push(
-    extractContractWrite({
-      abi: cfAv1ForwarderABI,
-      address: cfAv1ForwarderAddress[cmd.chainId],
-      chainId: cmd.chainId,
-      functionName: "createFlow",
-      args: [
-        cmd.superTokenAddress,
-        cmd.accountAddress,
-        cmd.receiverAddress,
-        flowRate,
-        "0x",
-      ],
-    })
+    contractWrites_.push(
+      extractContractWrite({
+        commandId: cmd.id,
+        abi: cfAv1ForwarderABI,
+        address: cfAv1ForwarderAddress[cmd.chainId],
+        chainId: cmd.chainId,
+        functionName: "createFlow",
+        args: [
+          cmd.superTokenAddress,
+          cmd.accountAddress,
+          cmd.receiverAddress,
+          flowRate,
+          "0x",
+        ],
+      })
+    );
+    return contractWrites_;
+  }, [cmd.id, isSuccess]);
+
+  useEffect(
+    () => (isSuccess ? onMapped?.(contractWrites) : void 0),
+    [contractWrites]
   );
 
   return <>{children?.(contractWrites)}</>;

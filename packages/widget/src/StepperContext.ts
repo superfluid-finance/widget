@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 export type StepperContextValue = {
   activeStep: number;
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+  setActiveStep: (activeStep: number) => void;
   handleNext: () => void;
   handleBack: () => void;
   isLastStep: () => boolean;

@@ -14,10 +14,10 @@ export default function StepContentPaymentOption() {
     "paymentOptionWithTokenInfo",
   ]);
   const isStepComplete = !!network && !!paymentOptionWithTokenInfo;
-
+  
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
-
+  
   return (
     <StepContent TransitionProps={{ unmountOnExit: false }}>
       <Stack

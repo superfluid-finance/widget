@@ -1,57 +1,108 @@
-import { useState, useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import {
   CommandHandlerContext,
-  CommandHandlerState
+  CommandHandlerContextValue,
 } from "./CommandHandlerContext";
+import { ChildrenProp, isDefined } from "./utils";
+import { ContractWriteHandler } from "./ContractWriteHandler";
+import { CommandMapper } from "./CommandMapper";
+import { useNetwork } from "wagmi";
 import { Command } from "./commands";
-import { ChildrenProp } from "./utils";
+import { useCommandHandlerReducer } from "./commandHandlingReducer";
 
 type Props = {
   children:
-    | ((contextValue: CommandHandlerState) => ChildrenProp)
+    | ((contextValue: CommandHandlerContextValue) => ChildrenProp)
     | ChildrenProp;
 };
 
 export function CommandHandlerProvider({ children }: Props) {
-  const [commands, setCommands] = useState<ReadonlyArray<Command>>([]);
-  const [status, setStatus] = useState<CommandHandlerState["status"]>("idle");
+  const [{ status, commands, sessionId }, dispatch] =
+    useCommandHandlerReducer();
 
-  const handle = useCallback(() => {
-    if (status === "idle") {
-      setStatus("handling");
-    } else {
-      throw new Error("Cannot handle when not idle.");
-    }
-  }, []);
+  const [contractWrites, contractWriteResults] = useMemo(() => {
+    const contractWrites_ = commands
+      .map((x) => x.contractWrites)
+      .flat()
+      .filter(isDefined);
 
-  const cancelHandling = useCallback(() => {
-    if (status === "handling") {
-      setStatus("idle");
-    } else {
-      throw new Error("Cannot cancel handling when not handling.");
-    }
-  }, [status]);
+    const contractWritesResults_ = contractWrites_
+      .map((x) => x.result)
+      .filter(isDefined);
 
-  const success = useCallback(() => {
-    if (status === "handling") {
-      setStatus("success");
-    } else {
-      throw new Error("Cannot succeed when not yet handling.");
-    }
-  }, [status]);
+    return [contractWrites_, contractWritesResults_];
+  }, [commands]);
 
-  const contextValue: CommandHandlerState = {
-    commands,
-    status,
-    setCommands,
-    handle,
-    cancelHandling,
-    success
-  };
+  const writeIndex = contractWriteResults.filter(
+    (x) => x.transactionResult.isSuccess
+  ).length;
+
+  const submitCommands = useCallback(
+    (commands: ReadonlyArray<Command>) =>
+      void dispatch({ type: "set commands", payload: commands }),
+    [dispatch]
+  );
+  const reset = useCallback(() => void dispatch({ type: "reset" }), [dispatch]);
+  const handle = useCallback(
+    () => void dispatch({ type: "initiate" }),
+    [dispatch]
+  );
+
+  const contextValue = useMemo(
+    () => ({
+      status,
+      commands,
+      contractWrites,
+      contractWriteResults,
+      sessionId,
+      submitCommands,
+      reset,
+      writeIndex,
+      handle,
+    }),
+    [status, commands, contractWrites, contractWriteResults, sessionId]
+  );
+
+  // TODO(KK): do this properly
+  const chainId = commands[0]?.chainId;
+  const { chain } = useNetwork();
+  const isRightChain = chainId === chain?.id;
 
   return (
     <CommandHandlerContext.Provider value={contextValue}>
       {typeof children === "function" ? children(contextValue) : children}
+      {commands.map((cmd, commandIndex_) => (
+        <CommandMapper
+          key={commandIndex_}
+          command={cmd}
+          onMapped={(x) =>
+            void dispatch({
+              type: "set contract writes",
+              payload: {
+                commandId: cmd.id,
+                contractWrites: x,
+              },
+            })
+          }
+        />
+      ))}
+      {contractWrites.map((contractWrite, writeIndex_) => (
+        <ContractWriteHandler
+          key={writeIndex_}
+          prepare={isRightChain && writeIndex_ === writeIndex}
+          contractWrite={contractWrite}
+          onChange={(result) =>
+            void dispatch({
+              type: "set contract write result",
+              payload: {
+                commandId: contractWrite.commandId,
+                writeId: contractWrite.id,
+                result,
+              },
+            })
+          }
+        />
+      ))}
     </CommandHandlerContext.Provider>
   );
 }
