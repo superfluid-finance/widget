@@ -24,6 +24,7 @@ import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import WebAssetIcon from "@mui/icons-material/WebAsset";
 import WebIcon from "@mui/icons-material/Web";
+import { faker } from '@faker-js/faker';
 
 const labelStyle = {
   fontWeight: 500,
@@ -38,8 +39,8 @@ export default function Home() {
   const formMethods = useForm<WidgetProps>({
     defaultValues: {
       productDetails: {
-        name: "Product Name",
-        description: "Product Description",
+        name: `${faker.commerce.productName()}`,
+        description: `${faker.commerce.productDescription()}`,
       },
       paymentDetails: {
         receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",

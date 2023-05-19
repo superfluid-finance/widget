@@ -14,6 +14,7 @@
     "@emotion/react": "latest",
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
+    "@faker-js/faker": "^8.0.1",
     "@mui/icons-material": "latest",
     "@mui/lab": "5.0.0-alpha.125",
     "@mui/material": "latest",
