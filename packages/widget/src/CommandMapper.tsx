@@ -19,6 +19,7 @@ import { ContractWrite, extractContractWrite } from "./extractContractWrite";
 import { ChildrenProp, MaxUint256 } from "./utils";
 import { parseEther } from "viem";
 import { useEffect, useMemo } from "react";
+import { useCheckout } from "./CheckoutContext";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
@@ -124,45 +125,66 @@ export function WrapIntoSuperTokensCommandMapper({
   onMapped,
   children,
 }: CommandMapperProps<WrapIntoSuperTokensCommand>) {
-  // TODO(KK): Get token, check if native asset
+  const { getSuperToken } = useCheckout();
 
-  const { data: allowance, isSuccess } = useContractRead({
-    chainId: cmd.chainId,
-    address: cmd.underlyingTokenAddress,
-    abi: erc20ABI,
-    functionName: "allowance",
-    args: [cmd.accountAddress, cmd.superTokenAddress],
-  });
+  const superToken = getSuperToken(cmd.superTokenAddress);
+  const isNativeAssetSuperToken =
+    superToken.extensions.superTokenInfo.type === "Native Asset";
+
+  const { data: allowance, isSuccess } = useContractRead(
+    !isNativeAssetSuperToken
+      ? {
+          chainId: cmd.chainId,
+          address: cmd.underlyingTokenAddress,
+          abi: erc20ABI,
+          functionName: "allowance",
+          args: [cmd.accountAddress, cmd.superTokenAddress],
+        }
+      : undefined
+  );
 
   const amount = parseEther(cmd.amountEther);
 
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
 
-    if (allowance !== undefined) {
-      if (allowance < amount) {
-        contractWrites_.push(
-          extractContractWrite({
-            commandId: cmd.id,
-            chainId: cmd.chainId,
-            abi: erc20ABI,
-            functionName: "approve",
-            address: cmd.underlyingTokenAddress,
-            args: [cmd.superTokenAddress, MaxUint256],
-          })
-        );
-      }
-
+    if (isNativeAssetSuperToken) {
       contractWrites_.push(
         extractContractWrite({
           commandId: cmd.id,
           chainId: cmd.chainId,
           abi: superTokenABI,
           address: cmd.superTokenAddress,
-          functionName: "upgrade", // TODO(KK): upgradeByEth
+          functionName: "upgradeByEth",
           args: [parseEther(cmd.amountEther)],
         })
       );
+    } else {
+      if (allowance !== undefined) {
+        if (allowance < amount) {
+          contractWrites_.push(
+            extractContractWrite({
+              commandId: cmd.id,
+              chainId: cmd.chainId,
+              abi: erc20ABI,
+              functionName: "approve",
+              address: cmd.underlyingTokenAddress,
+              args: [cmd.superTokenAddress, MaxUint256],
+            })
+          );
+        }
+
+        contractWrites_.push(
+          extractContractWrite({
+            commandId: cmd.id,
+            chainId: cmd.chainId,
+            abi: superTokenABI,
+            address: cmd.superTokenAddress,
+            functionName: "upgrade", // TODO(KK): upgradeByEth
+            args: [parseEther(cmd.amountEther)],
+          })
+        );
+      }
     }
 
     return contractWrites_;

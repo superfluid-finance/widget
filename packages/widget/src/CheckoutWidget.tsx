@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { CheckoutContext, CheckoutState } from "./CheckoutContext";
 import { CheckoutViewProps, ViewProvider } from "./ViewProvider";
@@ -19,6 +19,7 @@ import {
 import { getSupportedNetworksFromPaymentOptions } from "./helpers/getSupportedNetworksFromPaymentOptions";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
 import { getSuperTokensFromTokenList } from "./helpers/getSuperTokensFromTokenList";
+import { Address } from "viem";
 
 export type CheckoutWidgetProps = CheckoutViewProps &
   CheckoutConfig & {
@@ -50,8 +51,17 @@ export function CheckoutWidget({
       [superTokens, paymentOptions]
     );
 
+  const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>((address: Address) => {
+    const superToken = superTokens.find(x => x.address.toLowerCase() === address.toLowerCase());
+    if (!superToken) {
+      throw new Error("Super Token not found from token list.");
+    }
+    return superToken;
+  }, [superTokens]); // TODO(KK): memoize
+
   const checkoutState = useMemo<CheckoutState>(
     () => ({
+      getSuperToken,
       superTokens,
       productDetails,
       paymentDetails,

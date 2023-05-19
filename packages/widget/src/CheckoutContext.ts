@@ -4,8 +4,10 @@ import {
   SupportedNetwork,
 } from "superfluid-checkout-core";
 import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
+import { Address } from "viem";
 
 export type CheckoutState = {
+  getSuperToken: (address: Address) => SuperTokenInfo;
   superTokens: ReadonlyArray<SuperTokenInfo>;
   networks: ReadonlyArray<SupportedNetwork>;
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
