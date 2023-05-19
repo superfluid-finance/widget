@@ -14,7 +14,7 @@ import {
   PaymentDetails,
   ProductDetails,
 } from "superfluid-checkout-widget";
-import tokenList from "@tokdaniel/superfluid-tokenlist";
+import tokenList from "@tokdaniel/supertokenlist";
 
 export type DisplaySettings = {
   darkMode: boolean;

@@ -5,7 +5,7 @@ import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import SelectPaymentOption from "../widget-preview/SelectPaymentOption";
 import { networks } from "../../networkDefinitions";
 import { ChainId } from "superfluid-checkout-widget";
-import tokenListJSON from "@tokdaniel/superfluid-tokenlist";
+import tokenList from "@tokdaniel/supertokenlist";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 type PaymentOptionViewProps = {
@@ -22,7 +22,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   remove,
 }) => {
   const network = networks.find((n) => n.chainId === chainId);
-  const token = Object.values(tokenListJSON.tokens).find(
+  const token = Object.values(tokenList.tokens).find(
     (token) => token.address === superToken.address
   );
   return (
