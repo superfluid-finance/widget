@@ -180,7 +180,7 @@ export function WrapIntoSuperTokensCommandMapper({
             chainId: cmd.chainId,
             abi: superTokenABI,
             address: cmd.superTokenAddress,
-            functionName: "upgrade", // TODO(KK): upgradeByEth
+            functionName: "upgrade",
             args: [parseEther(cmd.amountEther)],
           })
         );
@@ -203,7 +203,7 @@ export function SendStreamCommandMapper({
   onMapped,
   children,
 }: CommandMapperProps<SendStreamCommand>) {
-  const { isSuccess } = useContractRead({
+  const { isSuccess, data: existingFlowRate } = useContractRead({
     chainId: cmd.chainId,
     address: cfAv1ForwarderAddress[cmd.chainId],
     abi: cfAv1ForwarderABI,
@@ -220,22 +220,47 @@ export function SendStreamCommandMapper({
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
 
-    contractWrites_.push(
-      extractContractWrite({
-        commandId: cmd.id,
-        abi: cfAv1ForwarderABI,
-        address: cfAv1ForwarderAddress[cmd.chainId],
-        chainId: cmd.chainId,
-        functionName: "createFlow",
-        args: [
-          cmd.superTokenAddress,
-          cmd.accountAddress,
-          cmd.receiverAddress,
-          flowRate,
-          "0x",
-        ],
-      })
-    );
+    if (existingFlowRate) {
+      if (existingFlowRate > 0n) {
+        const updatedFlowRate = existingFlowRate + flowRate;
+
+        // TODO(KK): Is this the right behaviour, to update the flow rate?
+        contractWrites_.push(
+          extractContractWrite({
+            commandId: cmd.id,
+            abi: cfAv1ForwarderABI,
+            address: cfAv1ForwarderAddress[cmd.chainId],
+            chainId: cmd.chainId,
+            functionName: "updateFlow",
+            args: [
+              cmd.superTokenAddress,
+              cmd.accountAddress,
+              cmd.receiverAddress,
+              updatedFlowRate,
+              "0x",
+            ],
+          })
+        );
+      } else {
+        contractWrites_.push(
+          extractContractWrite({
+            commandId: cmd.id,
+            abi: cfAv1ForwarderABI,
+            address: cfAv1ForwarderAddress[cmd.chainId],
+            chainId: cmd.chainId,
+            functionName: "createFlow",
+            args: [
+              cmd.superTokenAddress,
+              cmd.accountAddress,
+              cmd.receiverAddress,
+              flowRate,
+              "0x",
+            ],
+          })
+        );
+      }
+    }
+
     return contractWrites_;
   }, [cmd.id, isSuccess]);
 
