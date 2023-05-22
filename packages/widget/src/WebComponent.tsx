@@ -53,37 +53,37 @@ class SuperfluidWidget extends HTMLElement {
       this.trigger = trigger;
     }
 
-    createRoot(mountPoint).render(
-      this.type === "page" ? (
-        <CheckoutWidget
-          productDetails={this.productDetails}
-          paymentDetails={this.paymentDetails}
-          tokenList={this.tokenList}
-          theme={this.theme}
-          type={this.type}
-        />
-      ) : (
-        <CheckoutWidget
-          productDetails={this.productDetails}
-          paymentDetails={this.paymentDetails}
-          tokenList={this.tokenList}
-          theme={this.theme}
-          type={this.type}
-        >
-          {({ openModal }) => {
-            const target = document.querySelector<HTMLButtonElement>(
-              this.trigger
-            );
+    createRoot(mountPoint).render(null
+      // this.type === "page" ? (
+      //   <CheckoutWidget
+      //     productDetails={this.productDetails}
+      //     paymentDetails={this.paymentDetails}
+      //     tokenList={this.tokenList}
+      //     theme={this.theme}
+      //     type={this.type}
+      //   />
+      // ) : (
+      //   <CheckoutWidget
+      //     productDetails={this.productDetails}
+      //     paymentDetails={this.paymentDetails}
+      //     tokenList={this.tokenList}
+      //     theme={this.theme}
+      //     type={this.type}
+      //   >
+      //     {({ openModal }) => {
+      //       const target = document.querySelector<HTMLButtonElement>(
+      //         this.trigger
+      //       );
 
-            if (target) {
-              target.onclick = openModal;
-              return <></>;
-            }
+      //       if (target) {
+      //         target.onclick = openModal;
+      //         return <></>;
+      //       }
 
-            return <button onClick={() => openModal()}>Open</button>;
-          }}
-        </CheckoutWidget>
-      )
+      //       return <button onClick={() => openModal()}>Open</button>;
+      //     }}
+      //   </CheckoutWidget>
+      // )
     );
   }
 }

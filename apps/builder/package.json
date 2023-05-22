@@ -28,7 +28,10 @@
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "7.44.0-rc.3",
-    "@superfluid-finance/widget": "workspace:^",
+    "@web3modal/ethereum": "^2.4.1",
+    "@web3modal/react": "^2.4.1",
+    "@superfluid-finance/widget": "workspace:*",
+    "wagmi": "^1.0.5",
     "zod": "^3.21.4"
   },
   "devDependencies": {

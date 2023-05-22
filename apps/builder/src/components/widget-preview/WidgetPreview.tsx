@@ -13,8 +13,10 @@ import {
   CheckoutWidget,
   PaymentDetails,
   ProductDetails,
+  WalletManager,
 } from "@superfluid-finance/widget";
 import tokenList from "@tokdaniel/supertokenlist";
+import { useWeb3Modal } from "@web3modal/react";
 
 export type DisplaySettings = {
   darkMode: boolean;
@@ -78,7 +80,8 @@ const switchLayout = (
   layout: Layout,
   productDetails: ProductDetails,
   paymentDetails: PaymentDetails,
-  theme: ThemeOptions
+  theme: ThemeOptions,
+  walletManager: WalletManager
 ) => {
   return layout === "page" ? (
     <CheckoutWidget
@@ -87,6 +90,7 @@ const switchLayout = (
       tokenList={tokenList}
       type={layout}
       theme={theme}
+      walletManager={walletManager}
     />
   ) : (
     <CheckoutWidget
@@ -95,6 +99,7 @@ const switchLayout = (
       tokenList={tokenList}
       type={layout}
       theme={theme}
+      walletManager={walletManager}
     >
       {({ openModal }) => (
         <Button onClick={() => openModal()}>{`Open ${layout}`}</Button>
@@ -138,6 +143,16 @@ export const mapDisplaySettingsToTheme = (
 
 const WidgetPreview: FC<WidgetProps> = (props) => {
   const { displaySettings, paymentDetails, productDetails, layout } = props;
+
+  const { open, isOpen } = useWeb3Modal();
+  const walletManager = useMemo(
+    () => ({
+      open,
+      isOpen,
+    }),
+    [open, isOpen]
+  );
+
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -145,7 +160,14 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
 
   return (
     <WidgetContext.Provider value={props}>
-      {mounted && switchLayout(layout, productDetails, paymentDetails, theme)}
+      {mounted &&
+        switchLayout(
+          layout,
+          productDetails,
+          paymentDetails,
+          theme,
+          walletManager
+        )}
     </WidgetContext.Provider>
   );
 };

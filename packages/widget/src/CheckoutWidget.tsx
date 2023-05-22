@@ -6,9 +6,7 @@ import { SupportedNetwork } from "superfluid-checkout-core";
 import {
   PaymentOptionWithTokenInfo,
   SuperTokenInfo,
-  checkoutFormSchema,
 } from "./formValues";
-import { WalletAndWagmiProvider } from "./WalletAndWagmiProvider";
 import {
   Alert,
   AlertTitle,
@@ -20,9 +18,11 @@ import { getSupportedNetworksFromPaymentOptions } from "./helpers/getSupportedNe
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
 import { getSuperTokensFromTokenList } from "./helpers/getSuperTokensFromTokenList";
 import { Address } from "viem";
+import { WalletManager } from "./WalletManager";
 
 export type CheckoutWidgetProps = CheckoutViewProps &
   CheckoutConfig & {
+    walletManager: WalletManager,
     theme?: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
   };
 
@@ -31,6 +31,7 @@ export function CheckoutWidget({
   paymentDetails,
   tokenList,
   theme: theme_,
+  walletManager,
   ...viewProps
 }: CheckoutWidgetProps) {
   const { paymentOptions } = paymentDetails;
@@ -40,6 +41,7 @@ export function CheckoutWidget({
     [tokenList]
   ); // TODO: Worry about consumer having to keep the token list reference unchanged.
 
+  // TODO: Check if network is configured in wagmi.
   const networks: ReadonlyArray<SupportedNetwork> = useMemo(
     () => getSupportedNetworksFromPaymentOptions(paymentOptions),
     [paymentOptions]
@@ -68,8 +70,9 @@ export function CheckoutWidget({
       tokenList,
       networks,
       paymentOptionWithTokenInfoList,
+      walletManager
     }),
-    [superTokens, productDetails, paymentDetails, tokenList, networks]
+    [superTokens, productDetails, paymentDetails, tokenList, networks, walletManager]
   );
 
   const theme = useMemo(() => createTheme(theme_), [theme_]);
@@ -88,7 +91,6 @@ export function CheckoutWidget({
 
   return (
     <CheckoutContext.Provider value={checkoutState}>
-      <WalletAndWagmiProvider>
         <ThemeProvider theme={theme}>
           {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
           {validationResult.success ? (
@@ -100,7 +102,6 @@ export function CheckoutWidget({
             </Alert>
           )}
         </ThemeProvider>
-      </WalletAndWagmiProvider>
     </CheckoutContext.Provider>
   );
 }

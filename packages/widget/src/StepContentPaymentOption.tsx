@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { DraftFormValues, ValidFormValues } from "./formValues";
 import { StepperContinueButton } from "./StepperContinueButton";
 import { useAccount } from "wagmi";
-import { useWeb3Modal } from "@web3modal/react";
+import { useCheckout } from "./CheckoutContext";
 
 export default function StepContentPaymentOption() {
   const { watch } = useFormContext<DraftFormValues, ValidFormValues>();
@@ -14,10 +14,12 @@ export default function StepContentPaymentOption() {
     "paymentOptionWithTokenInfo",
   ]);
   const isStepComplete = !!network && !!paymentOptionWithTokenInfo;
-  
+
   const { isConnected } = useAccount();
-  const { open } = useWeb3Modal();
-  
+  const {
+    walletManager: { open: openWalletManager },
+  } = useCheckout();
+
   return (
     <StepContent TransitionProps={{ unmountOnExit: false }}>
       <Stack
@@ -41,11 +43,11 @@ export default function StepContentPaymentOption() {
         </Stack>
         <StepperContinueButton
           disabled={!isStepComplete}
-          {...(!isConnected && { onClick: () => open() })}
+          {...(!isConnected && { onClick: () => openWalletManager() })}
         >
           {isConnected ? "Continue" : "Connect Wallet to Continue"}
         </StepperContinueButton>
       </Stack>
-    </StepContent>  
+    </StepContent>
   );
 }

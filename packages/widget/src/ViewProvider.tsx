@@ -10,7 +10,7 @@ import { ViewContent } from "./ViewContent";
 import { useCallback, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { ChildrenProp } from "./utils";
-import { useWeb3Modal } from "@web3modal/react";
+import { useCheckout } from "./CheckoutContext";
 
 export type CheckoutViewState = {
   isOpen: boolean;
@@ -41,10 +41,10 @@ export function ViewProvider(props: CheckoutViewProps) {
     [isOpen, openModal, closeModal]
   );
 
-  const { isOpen: isWeb3ModalOpen } = useWeb3Modal();
+  const { walletManager: { isOpen: isWalletManagerOpen } } = useCheckout();
 
   const modalProps: Omit<ModalProps, "children"> = {
-    open: isOpen && !isWeb3ModalOpen,
+    open: isOpen && !isWalletManagerOpen,
     onClose: closeModal,
     keepMounted: isOpen,
   };
