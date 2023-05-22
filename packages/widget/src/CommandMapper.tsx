@@ -211,8 +211,6 @@ export function SendStreamCommandMapper({
     args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
   });
 
-  // TODO(KK): Handle update
-
   const flowRate =
     parseEther(cmd.flowRate.amountEther) /
     BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));

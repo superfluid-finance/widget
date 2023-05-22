@@ -2,7 +2,7 @@ import { ContractWriteResult } from "./ContractWriteHandler";
 import { Command } from "./commands";
 import { ContractWrite } from "./extractContractWrite";
 
-export type State = Idle | Pending | Initiated;
+export type State = Idle | Pending | Initiated | Success;
 
 type Idle = {
   status: "idle";
@@ -17,7 +17,21 @@ type Pending = {
 };
 
 type Initiated = {
-  status: "initiated" | "success";
+  status: "initiated";
+  commands: ReadonlyArray<
+    Command & {
+      contractWrites: ReadonlyArray<
+        ContractWrite & {
+          result: ContractWriteResult;
+        }
+      >;
+    }
+  >;
+  sessionId: string;
+};
+
+type Success = {
+  status: "success";
   commands: ReadonlyArray<
     Command & {
       contractWrites: ReadonlyArray<

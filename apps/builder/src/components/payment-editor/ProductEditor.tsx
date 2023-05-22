@@ -66,7 +66,7 @@ const ProductEditor: FC = () => {
           />
         </Stack>
         <Stack direction="column" gap={1}>
-          <Typography variant="subtitle2">ProductDescription</Typography>
+          <Typography variant="subtitle2">Product Description</Typography>
           <Controller
             control={control}
             name="productDetails.description"

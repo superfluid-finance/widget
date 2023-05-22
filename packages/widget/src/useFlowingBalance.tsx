@@ -35,7 +35,7 @@ const useFlowingBalance = (
     return () => window.cancelAnimationFrame(animationFrameId);
   }, [startingBalance, startingBalanceDate.getTime(), flowRate]);
 
-  return { flowingBalance };
+  return flowingBalance;
 };
 
 export default useFlowingBalance;

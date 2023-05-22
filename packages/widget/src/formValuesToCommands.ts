@@ -55,7 +55,7 @@ export const formValuesToCommands = (
     accountAddress,
     receiverAddress,
     flowRate: paymentOption.flowRate,
-  });
+  })
 
   return Object.freeze(commands);
 };

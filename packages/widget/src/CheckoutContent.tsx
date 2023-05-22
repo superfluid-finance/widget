@@ -1,33 +1,24 @@
 import ProductCard from "./ProductCard";
 import Stepper from "./Stepper";
 import CheckoutFormProvider from "./FormProvider";
-import { CommandHandlerProvider } from "./CommandHandlerProvider";
 import { CheckoutSummary } from "./CheckoutSummary";
 import { Transactions } from "./Transactions";
 import {
   AppBar,
   Box,
-  Container,
+  Card,
+  CardContent,
   IconButton,
   Toolbar,
-  useTheme,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { CommandHandlerProvider } from "./CommandHandlerProvider";
 
-export function ViewContent() {
-  const theme = useTheme();
-
+export function CheckoutContent() {
   return (
-    <Container
-      fixed
-      disableGutters
-      sx={{
-        width: theme.breakpoints.values.sm, // TODO(KK): Check with Mikk.
-        bgcolor: theme.palette.background.default, // TODO: Think if this is best.
-      }}
-    >
-      <CheckoutFormProvider>
-        <ProductCard />
+    <CheckoutFormProvider>
+      <ProductCard />
+      <Card sx={{ m: 3 }}>
         <CommandHandlerProvider>
           {({ status }) => {
             switch (status) {
@@ -47,13 +38,13 @@ export function ViewContent() {
                     >
                       <Toolbar>
                         <IconButton
-                        edge="start"
-                        color="inherit"
-                        // onClick={reset}
-                        aria-label="back"
-                      >
-                        <ArrowBackIcon />
-                      </IconButton>
+                          edge="start"
+                          color="inherit"
+                          // onClick={reset}
+                          aria-label="back"
+                        >
+                          <ArrowBackIcon />
+                        </IconButton>
                       </Toolbar>
                     </AppBar>
                     <Transactions />
@@ -62,7 +53,7 @@ export function ViewContent() {
             }
           }}
         </CommandHandlerProvider>
-      </CheckoutFormProvider>
-    </Container>
+      </Card>
+    </CheckoutFormProvider>
   );
 }

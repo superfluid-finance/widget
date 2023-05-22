@@ -37,3 +37,5 @@ export type Command =
   | EnableAutoWrapCommand
   | WrapIntoSuperTokensCommand
   | SendStreamCommand;
+
+// export type CommandArray = Readonly<[ ...Command[], SendStreamCommand ]>;

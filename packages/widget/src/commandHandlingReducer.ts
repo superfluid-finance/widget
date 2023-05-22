@@ -1,6 +1,6 @@
 import { castDraft } from "immer";
 import { useImmerReducer } from "use-immer";
-import { State } from "./CommandHandlerStateTree";
+import { State } from "./CommandHandlerState";
 import { nanoid } from "nanoid";
 import { Command } from "./commands";
 import { ContractWrite } from "./extractContractWrite";

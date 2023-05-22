@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { Command } from "./commands";
 import { ContractWrite } from "./extractContractWrite";
 import { ContractWriteResult } from "./ContractWriteHandler";
-import { CommandHandlingAggregate, State } from "./CommandHandlerStateTree";
+import { CommandHandlingAggregate, State } from "./CommandHandlerState";
 
 // TODO(KK): nested structure
 export type CommandHandlerContextValue = {

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
   CommandHandlerContext,
   CommandHandlerContextValue,
@@ -47,6 +47,13 @@ export function CommandHandlerProvider({ children }: Props) {
     () => void dispatch({ type: "initiate" }),
     [dispatch]
   );
+
+  // TODO: hackish for demo purposes
+  useEffect(() => {
+    if (writeIndex > 0 && writeIndex === contractWriteResults.length) {
+      dispatch({ type: "succeed" });
+    }
+  }, [writeIndex]);
 
   const contextValue = useMemo(
     () => ({

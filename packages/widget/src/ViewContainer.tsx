@@ -1,14 +1,16 @@
 import {
   AppBar,
+  Container,
+  ContainerProps,
   Dialog,
   Drawer,
   IconButton,
   ModalProps,
   Toolbar,
+  useTheme,
 } from "@mui/material";
-import { ViewContent } from "./ViewContent";
+import { CheckoutContent } from "./CheckoutContent";
 import { useCallback, useMemo, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import { ChildrenProp } from "./utils";
 import { useCheckout } from "./CheckoutContext";
 
@@ -27,7 +29,9 @@ export type CheckoutViewProps =
       type: "page";
     };
 
-export function ViewProvider(props: CheckoutViewProps) {
+export function ViewContainer(props: CheckoutViewProps) {
+  const theme = useTheme();
+
   const [isOpen, setOpen] = useState(false);
   const openModal = useCallback(() => setOpen(true), [setOpen]);
   const closeModal = useCallback(() => setOpen(false), [setOpen]);
@@ -41,12 +45,22 @@ export function ViewProvider(props: CheckoutViewProps) {
     [isOpen, openModal, closeModal]
   );
 
-  const { walletManager: { isOpen: isWalletManagerOpen } } = useCheckout();
+  const {
+    walletManager: { isOpen: isWalletManagerOpen },
+  } = useCheckout();
 
   const modalProps: Omit<ModalProps, "children"> = {
     open: isOpen && !isWalletManagerOpen,
     onClose: closeModal,
     keepMounted: isOpen,
+  };
+
+  const containerProps: ContainerProps = {
+    fixed: true,
+    disableGutters: true,
+    sx: {
+      width: theme.breakpoints.values.sm, // TODO(KK): Check with Mikk.
+    },
   };
 
   switch (props.type) {
@@ -55,7 +69,9 @@ export function ViewProvider(props: CheckoutViewProps) {
         <>
           {props.children(viewState)}
           <Dialog {...modalProps}>
-            <ViewContent />
+            <Container {...containerProps}>
+              <CheckoutContent />
+            </Container>
           </Dialog>
         </>
       );
@@ -64,7 +80,9 @@ export function ViewProvider(props: CheckoutViewProps) {
         <>
           {props.children(viewState)}
           <Drawer {...modalProps} anchor="right">
-            <ViewContent />
+            <Container {...containerProps}>
+              <CheckoutContent />
+            </Container>
           </Drawer>
         </>
       );
@@ -81,15 +99,22 @@ export function ViewProvider(props: CheckoutViewProps) {
                   onClick={closeModal}
                   aria-label="close"
                 >
-                  <CloseIcon />
+                  X 
+                  {/* <CloseIcon /> // TODO: weird bug with builder */}
                 </IconButton>
               </Toolbar>
             </AppBar>
-            <ViewContent />
+            <Container {...containerProps}>
+              <CheckoutContent />
+            </Container>
           </Dialog>
         </>
       );
     default:
-      return <ViewContent />;
+      return (
+        <Container {...containerProps}>
+          <CheckoutContent />
+        </Container>
+      );
   }
 }

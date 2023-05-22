@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { CheckoutContext, CheckoutState } from "./CheckoutContext";
-import { CheckoutViewProps, ViewProvider } from "./ViewProvider";
+import { CheckoutViewProps, ViewContainer } from "./ViewContainer";
 import { SupportedNetwork } from "superfluid-checkout-core";
 import {
   PaymentOptionWithTokenInfo,
@@ -77,13 +77,6 @@ export function CheckoutWidget({
 
   const theme = useMemo(() => createTheme(theme_), [theme_]);
 
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => void setMounted(true), []);
-
-  if (!mounted) {
-    return null; // TODO: SEO.
-  }
-
   const validationResult = checoutConfigSchema.safeParse({
     productDetails,
     paymentDetails,
@@ -94,7 +87,7 @@ export function CheckoutWidget({
         <ThemeProvider theme={theme}>
           {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
           {validationResult.success ? (
-            <ViewProvider {...viewProps} />
+            <ViewContainer {...viewProps} />
           ) : (
             <Alert severity="error">
               <AlertTitle>Input Error</AlertTitle>
