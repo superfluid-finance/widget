@@ -1,4 +1,4 @@
-import { PaymentDetails } from "superfluid-checkout-widget";
+import { PaymentDetails } from "@superfluid-finance/widget";
 import paymentOptions from "./paymentOptions";
 
 const paymentDetails: PaymentDetails = {

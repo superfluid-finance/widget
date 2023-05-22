@@ -4,7 +4,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import SelectPaymentOption from "../widget-preview/SelectPaymentOption";
 import { networks } from "../../networkDefinitions";
-import { ChainId } from "superfluid-checkout-widget";
+import { ChainId } from "@superfluid-finance/widget";
 import tokenList from "@tokdaniel/supertokenlist";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 

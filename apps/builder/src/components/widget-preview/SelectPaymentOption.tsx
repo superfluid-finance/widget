@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import tokenList, { SuperTokenInfo } from "@tokdaniel/supertokenlist";
-import { ChainId, TimePeriod, timePeriods } from "superfluid-checkout-widget";
+import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { WidgetProps } from "./WidgetPreview";
 

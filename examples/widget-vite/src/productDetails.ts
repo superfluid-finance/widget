@@ -1,4 +1,4 @@
-import { ProductDetails } from "superfluid-checkout-widget";
+import { ProductDetails } from "@superfluid-finance/widget";
 
 const productDetails: ProductDetails = {
     name: "Superfluid Funscription",

@@ -13,7 +13,7 @@ import {
   CheckoutWidget,
   PaymentDetails,
   ProductDetails,
-} from "superfluid-checkout-widget";
+} from "@superfluid-finance/widget";
 import tokenList from "@tokdaniel/supertokenlist";
 
 export type DisplaySettings = {

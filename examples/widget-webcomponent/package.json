@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "superfluid-checkout-widget": "workspace:*"
+    "@superfluid-finance/widget": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.4",

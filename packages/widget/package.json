@@ -1,5 +1,5 @@
 {
-  "name": "superfluid-checkout-widget",
+  "name": "@superfluid-finance/widget",
   "private": true,
   "version": "0.0.1",
   "type": "module",

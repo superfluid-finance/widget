@@ -1,4 +1,4 @@
-import { PaymentDetails, ProductDetails } from "superfluid-checkout-widget";
+import { PaymentDetails, ProductDetails } from "@superfluid-finance/widget";
 import { Layout } from "../components/widget-preview/WidgetPreview";
 import { ThemeOptions } from "@mui/material";
 

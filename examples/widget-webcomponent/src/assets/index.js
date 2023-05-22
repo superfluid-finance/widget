@@ -1,4 +1,4 @@
-import "superfluid-checkout-widget/webcomponent";
+import "@superfluid-finance/widget/webcomponent";
 import tokenList from "./tokenList.json";
 import widgetProps from "./widgetProps.json";
 
