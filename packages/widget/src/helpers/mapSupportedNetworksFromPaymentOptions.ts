@@ -4,7 +4,7 @@ import {
   supportedNetworks,
 } from "superfluid-checkout-core";
 
-export function getSupportedNetworksFromPaymentOptions(
+export function mapSupportedNetworksFromPaymentOptions(
   paymentOptions: ReadonlyArray<PaymentOption>
 ): ReadonlyArray<SupportedNetwork> {
   // TODO: In some cases, produces this error: Type 'Set<5 | 80001 | 420 | 421613 | 43113 | 100 | 137 | 10 | 42161 | 43114 | 56 | 1 | 42220>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.

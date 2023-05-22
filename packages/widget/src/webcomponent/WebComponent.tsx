@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { CheckoutWidget } from "./CheckoutWidget";
+import { CheckoutWidget } from "../CheckoutWidget";
 import { PaymentDetails, ProductDetails } from "superfluid-checkout-core";
 import { Theme } from "@mui/material";
 import { TokenList } from "@uniswap/token-lists";

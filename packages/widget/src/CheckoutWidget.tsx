@@ -14,9 +14,9 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
-import { getSupportedNetworksFromPaymentOptions } from "./helpers/getSupportedNetworksFromPaymentOptions";
+import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
-import { getSuperTokensFromTokenList } from "./helpers/getSuperTokensFromTokenList";
+import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList";
 import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
 
@@ -37,13 +37,13 @@ export function CheckoutWidget({
   const { paymentOptions } = paymentDetails;
 
   const superTokens: ReadonlyArray<SuperTokenInfo> = useMemo(
-    () => getSuperTokensFromTokenList(tokenList),
+    () => filterSuperTokensFromTokenList(tokenList),
     [tokenList]
   ); // TODO: Worry about consumer having to keep the token list reference unchanged.
 
   // TODO: Check if network is configured in wagmi.
   const networks: ReadonlyArray<SupportedNetwork> = useMemo(
-    () => getSupportedNetworksFromPaymentOptions(paymentOptions),
+    () => mapSupportedNetworksFromPaymentOptions(paymentOptions),
     [paymentOptions]
   );
 

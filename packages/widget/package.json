@@ -7,12 +7,12 @@
   "types": "src/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./webcomponent": "./dist/WebComponent.js"
+    "./webcomponent": "./dist/webcomponent/WebComponent.js"
   },
   "typesVersions": {
     "*": {
       "webcomponent": [
-        "dist/WebComponent.d.ts"
+        "dist/webcomponent/WebComponent.d.ts"
       ]
     }
   },
