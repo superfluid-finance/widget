@@ -2,20 +2,20 @@
   "name": "superfluid-checkout-core",
   "version": "0.0.1",
   "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "type": "module",
-  "main": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
     "./wagmi": "./src/wagmi-generated.ts"
   },
+  "main": "src/index.ts",
   "scripts": {
-    "watch": "tsc -w -p ./tsconfig.json",
     "build": "tsc --build --clean",
-    "wagmi-generate": "wagmi generate"
+    "wagmi-generate": "wagmi generate",
+    "watch": "tsc -w -p ./tsconfig.json"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@wagmi/chains": "^0.2.23",
     "@wagmi/cli": "^0.1.15",

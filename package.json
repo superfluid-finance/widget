@@ -4,7 +4,8 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "sort-package-jsons": "npx sort-package-json \"**/package.json\" \"!**/node_modules/**\" --check"
   },
   "devDependencies": {
     "eslint": "^8.40.0",
