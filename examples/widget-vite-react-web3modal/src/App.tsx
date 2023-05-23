@@ -1,8 +1,10 @@
 import "./App.css";
-import { SuperfluidWidget, supportedNetworks } from "@superfluid-finance/widget";
+import {
+  SuperfluidWidget,
+  supportedNetworks,
+} from "@superfluid-finance/widget";
 import productDetails from "./productDetails";
 import paymentDetails from "./paymentDetails";
-import tokenList from "./tokenList";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { Web3Modal, useWeb3Modal } from "@web3modal/react";
 import {
@@ -11,6 +13,7 @@ import {
   w3mProvider,
 } from "@web3modal/ethereum";
 import { useMemo } from "react";
+import superTokenList from "@tokdaniel/supertokenlist";
 
 const projectId = "952483bf7a0f5ace4c40eb53967f1368";
 
@@ -45,7 +48,7 @@ function App() {
         <SuperfluidWidget
           productDetails={productDetails}
           paymentDetails={paymentDetails}
-          tokenList={tokenList}
+          tokenList={superTokenList}
           type="drawer"
           walletManager={walletManager}
         >
@@ -56,7 +59,7 @@ function App() {
         <SuperfluidWidget
           productDetails={productDetails}
           paymentDetails={paymentDetails}
-          tokenList={tokenList}
+          tokenList={superTokenList}
           type="dialog"
           walletManager={walletManager}
         >
@@ -67,7 +70,7 @@ function App() {
         <SuperfluidWidget
           productDetails={productDetails}
           paymentDetails={paymentDetails}
-          tokenList={tokenList}
+          tokenList={superTokenList}
           type="full-screen"
           walletManager={walletManager}
         >
