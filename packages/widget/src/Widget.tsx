@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
-import { CheckoutContext, CheckoutState } from "./CheckoutContext";
-import { CheckoutViewProps, ViewContainer } from "./ViewContainer";
+import { WidgetContext, WidgetContextValue } from "./WidgetContext";
+import { ViewProps, ViewContainer } from "./ViewContainer";
 import { SupportedNetwork } from "superfluid-checkout-core";
 import {
   PaymentOptionWithTokenInfo,
@@ -20,20 +20,20 @@ import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromT
 import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
 
-export type CheckoutWidgetProps = CheckoutViewProps &
+export type WidgetProps = ViewProps &
   CheckoutConfig & {
     walletManager: WalletManager,
     theme?: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
   };
 
-export function CheckoutWidget({
+export function SuperfluidWidget({
   productDetails,
   paymentDetails,
   tokenList,
   theme: theme_,
   walletManager,
   ...viewProps
-}: CheckoutWidgetProps) {
+}: WidgetProps) {
   const { paymentOptions } = paymentDetails;
 
   const superTokens: ReadonlyArray<SuperTokenInfo> = useMemo(
@@ -61,7 +61,7 @@ export function CheckoutWidget({
     return superToken;
   }, [superTokens]); // TODO(KK): memoize
 
-  const checkoutState = useMemo<CheckoutState>(
+  const checkoutState = useMemo<WidgetContextValue>(
     () => ({
       getSuperToken,
       superTokens,
@@ -83,7 +83,7 @@ export function CheckoutWidget({
   });
 
   return (
-    <CheckoutContext.Provider value={checkoutState}>
+    <WidgetContext.Provider value={checkoutState}>
         <ThemeProvider theme={theme}>
           {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
           {validationResult.success ? (
@@ -95,6 +95,6 @@ export function CheckoutWidget({
             </Alert>
           )}
         </ThemeProvider>
-    </CheckoutContext.Provider>
+    </WidgetContext.Provider>
   );
 }

@@ -4,4 +4,20 @@ Superfluid Widget is the best way to start receiving ongoing real-time payments 
 
 ## Installation
 
+```tsx
+<WagmiConfig config={wagmiConfig}>
+  <CheckoutWidget
+    productDetails={productDetails}
+    paymentDetails={paymentDetails}
+    tokenList={tokenList}
+    type="dialog"
+    walletManager={walletManager}
+  >
+    {({ openModal }) => (
+      <button onClick={() => openModal()}>Open Superfluid Widget</button>
+    )}
+  </CheckoutWidget>
+</WagmiConfig>
+```
+
 ## Getting Started

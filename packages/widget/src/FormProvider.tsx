@@ -3,14 +3,14 @@ import { DraftFormValues, FormReturn as FormMethods } from "./formValues";
 import { DevTool } from "@hookform/devtools";
 import { ChildrenProp } from "./utils";
 import { FormEffects } from "./FormEffects";
-import { useCheckout } from "./CheckoutContext";
+import { useWidget } from "./WidgetContext";
 
 type Props = {
   children: ((formMethods: FormMethods) => ChildrenProp) | ChildrenProp;
 };
 
 export default function CheckoutFormProvider({ children }: Props) {
-  const { paymentDetails } = useCheckout();
+  const { paymentDetails } = useWidget();
 
   const defaultValues: DraftFormValues = {
     accountAddress: null,

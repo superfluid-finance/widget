@@ -12,31 +12,31 @@ import {
 import { CheckoutContent } from "./CheckoutContent";
 import { useCallback, useMemo, useState } from "react";
 import { ChildrenProp } from "./utils";
-import { useCheckout } from "./CheckoutContext";
+import { useWidget } from "./WidgetContext";
 
-export type CheckoutViewState = {
+export type ModalState = {
   isOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
 };
 
-export type CheckoutViewProps =
+export type ViewProps =
   | {
       type: "drawer" | "dialog" | "full-screen";
-      children: (state: Readonly<CheckoutViewState>) => ChildrenProp;
+      children: (modal: Readonly<ModalState>) => ChildrenProp;
     }
   | {
       type: "page";
     };
 
-export function ViewContainer(props: CheckoutViewProps) {
+export function ViewContainer(props: ViewProps) {
   const theme = useTheme();
 
   const [isOpen, setOpen] = useState(false);
   const openModal = useCallback(() => setOpen(true), [setOpen]);
   const closeModal = useCallback(() => setOpen(false), [setOpen]);
 
-  const viewState = useMemo<CheckoutViewState>(
+  const viewState = useMemo<ModalState>(
     () => ({
       isOpen,
       openModal,
@@ -47,7 +47,7 @@ export function ViewContainer(props: CheckoutViewProps) {
 
   const {
     walletManager: { isOpen: isWalletManagerOpen },
-  } = useCheckout();
+  } = useWidget();
 
   const modalProps: Omit<ModalProps, "children"> = {
     open: isOpen && !isWalletManagerOpen,

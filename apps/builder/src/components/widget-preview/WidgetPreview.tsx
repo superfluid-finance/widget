@@ -10,7 +10,7 @@ import { useState } from "react";
 import { Button, SelectChangeEvent, ThemeOptions, colors } from "@mui/material";
 
 import {
-  CheckoutWidget,
+  SuperfluidWidget,
   PaymentDetails,
   ProductDetails,
   WalletManager,
@@ -84,7 +84,7 @@ const switchLayout = (
   walletManager: WalletManager
 ) => {
   return layout === "page" ? (
-    <CheckoutWidget
+    <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
       tokenList={tokenList}
@@ -93,7 +93,7 @@ const switchLayout = (
       walletManager={walletManager}
     />
   ) : (
-    <CheckoutWidget
+    <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
       tokenList={tokenList}
@@ -104,7 +104,7 @@ const switchLayout = (
       {({ openModal }) => (
         <Button onClick={() => openModal()}>{`Open ${layout}`}</Button>
       )}
-    </CheckoutWidget>
+    </SuperfluidWidget>
   );
 };
 

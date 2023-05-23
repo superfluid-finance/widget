@@ -7,7 +7,6 @@ import {
   AppBar,
   Box,
   Card,
-  CardContent,
   IconButton,
   Toolbar,
 } from "@mui/material";

@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { DraftFormValues, ValidFormValues } from "./formValues";
 import { StepperContinueButton } from "./StepperContinueButton";
 import { useAccount } from "wagmi";
-import { useCheckout } from "./CheckoutContext";
+import { useWidget } from "./WidgetContext";
 
 export default function StepContentPaymentOption() {
   const { watch } = useFormContext<DraftFormValues, ValidFormValues>();
@@ -18,7 +18,7 @@ export default function StepContentPaymentOption() {
   const { isConnected } = useAccount();
   const {
     walletManager: { open: openWalletManager },
-  } = useCheckout();
+  } = useWidget();
 
   return (
     <StepContent TransitionProps={{ unmountOnExit: false }}>

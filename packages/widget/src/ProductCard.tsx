@@ -1,12 +1,12 @@
 import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
-import { useCheckout } from "./CheckoutContext";
+import { useWidget } from "./WidgetContext";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 
 export default function ProductCard() {
   const {
     productDetails: { name, description, imageURI: imageURI_ },
-  } = useCheckout();
+  } = useWidget();
 
   const { watch } = useFormContext<DraftFormValues>();
   const [network, paymentOptionWithTokenInfo] = watch([

@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { CheckoutWidget } from "../CheckoutWidget";
+import { SuperfluidWidget as SuperfluidWidget_ } from "../Widget";
 import { PaymentDetails, ProductDetails } from "superfluid-checkout-core";
 import { Theme } from "@mui/material";
 import { TokenList } from "@uniswap/token-lists";
@@ -55,7 +55,7 @@ class SuperfluidWidget extends HTMLElement {
 
     createRoot(mountPoint).render(null
       // this.type === "page" ? (
-      //   <CheckoutWidget
+      //   <SuperfluidWidget_
       //     productDetails={this.productDetails}
       //     paymentDetails={this.paymentDetails}
       //     tokenList={this.tokenList}
@@ -63,7 +63,7 @@ class SuperfluidWidget extends HTMLElement {
       //     type={this.type}
       //   />
       // ) : (
-      //   <CheckoutWidget
+      //   <SuperfluidWidget_
       //     productDetails={this.productDetails}
       //     paymentDetails={this.paymentDetails}
       //     tokenList={this.tokenList}
@@ -82,7 +82,7 @@ class SuperfluidWidget extends HTMLElement {
 
       //       return <button onClick={() => openModal()}>Open</button>;
       //     }}
-      //   </CheckoutWidget>
+      //   </SuperfluidWidget_>
       // )
     );
   }

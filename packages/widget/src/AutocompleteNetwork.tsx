@@ -1,11 +1,11 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
-import { useCheckout } from "./CheckoutContext";
+import { useWidget } from "./WidgetContext";
 
 export default function AutocompleteNetwork() {
   const { control: c } = useFormContext<DraftFormValues>();
-  const { networks } = useCheckout();
+  const { networks } = useWidget();
 
   const autocompleteOptions = networks;
 

@@ -7,11 +7,11 @@ import {
 import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues";
-import { useCheckout } from "./CheckoutContext";
+import { useWidget } from "./WidgetContext";
 import { TokenAvatar } from "./TokenAvatar";
 
 export default function AutocompleteToken() {
-  const { paymentOptionWithTokenInfoList } = useCheckout();
+  const { paymentOptionWithTokenInfoList } = useWidget();
   const { control: c, watch } = useFormContext<DraftFormValues>();
   const [network] = watch(["network"]);
 

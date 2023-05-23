@@ -7,7 +7,7 @@ import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
 
-export type CheckoutState = {
+export type WidgetContextValue = {
   getSuperToken: (address: Address) => SuperTokenInfo;
   superTokens: ReadonlyArray<SuperTokenInfo>;
   networks: ReadonlyArray<SupportedNetwork>;
@@ -15,12 +15,12 @@ export type CheckoutState = {
   walletManager: WalletManager;
 } & CheckoutConfig;
 
-export const CheckoutContext = createContext<CheckoutState | undefined>(
+export const WidgetContext = createContext<WidgetContextValue | undefined>(
   undefined
 );
 
-export function useCheckout(): CheckoutState {
-  const context = useContext(CheckoutContext);
+export function useWidget(): WidgetContextValue {
+  const context = useContext(WidgetContext);
 
   if (!context) {
     throw new Error("useCheckout must be used within a CheckoutProvider");

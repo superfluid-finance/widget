@@ -19,7 +19,7 @@ import { ContractWrite, extractContractWrite } from "./extractContractWrite";
 import { ChildrenProp, MaxUint256 } from "./utils";
 import { parseEther } from "viem";
 import { useEffect, useMemo } from "react";
-import { useCheckout } from "./CheckoutContext";
+import { useWidget } from "./WidgetContext";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
@@ -125,7 +125,7 @@ export function WrapIntoSuperTokensCommandMapper({
   onMapped,
   children,
 }: CommandMapperProps<WrapIntoSuperTokensCommand>) {
-  const { getSuperToken } = useCheckout();
+  const { getSuperToken } = useWidget();
 
   const superToken = getSuperToken(cmd.superTokenAddress);
   const isNativeAssetSuperToken =

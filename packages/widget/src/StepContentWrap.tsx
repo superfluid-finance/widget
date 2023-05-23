@@ -10,12 +10,12 @@ import {
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import { useMemo } from "react";
-import { useCheckout } from "./CheckoutContext";
+import { useWidget } from "./WidgetContext";
 import { TokenAvatar } from "./TokenAvatar";
 import { StepperContinueButton } from "./StepperContinueButton";
 
 export default function StepContentWrap() {
-  const { tokenList } = useCheckout();
+  const { tokenList } = useWidget();
   const {
     control: c,
     watch,
