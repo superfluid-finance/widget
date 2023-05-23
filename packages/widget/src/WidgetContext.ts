@@ -1,8 +1,6 @@
 import { createContext, useContext } from "react";
 import { CheckoutConfig } from "./CheckoutConfig";
-import {
-  SupportedNetwork,
-} from "superfluid-checkout-core";
+import { SupportedNetwork } from "superfluid-checkout-core";
 import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
@@ -13,6 +11,7 @@ export type WidgetContextValue = {
   networks: ReadonlyArray<SupportedNetwork>;
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
   walletManager: WalletManager;
+  imageURI?: string;
 } & CheckoutConfig;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(

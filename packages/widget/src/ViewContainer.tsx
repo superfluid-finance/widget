@@ -53,6 +53,9 @@ export function ViewContainer(props: ViewProps) {
     open: isOpen && !isWalletManagerOpen,
     onClose: closeModal,
     keepMounted: isOpen,
+    sx: {
+      borderRadius: theme.shape.borderRadius,
+    },
   };
 
   const containerProps: ContainerProps = {
@@ -99,8 +102,7 @@ export function ViewContainer(props: ViewProps) {
                   onClick={closeModal}
                   aria-label="close"
                 >
-                  X 
-                  {/* <CloseIcon /> // TODO: weird bug with builder */}
+                  X{/* <CloseIcon /> // TODO: weird bug with builder */}
                 </IconButton>
               </Toolbar>
             </AppBar>

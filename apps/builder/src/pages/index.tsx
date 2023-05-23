@@ -24,7 +24,7 @@ import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import WebAssetIcon from "@mui/icons-material/WebAsset";
 import WebIcon from "@mui/icons-material/Web";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 const labelStyle = {
   fontWeight: 500,
@@ -41,6 +41,7 @@ export default function Home() {
       productDetails: {
         name: `${faker.commerce.productName()}`,
         description: `${faker.commerce.productDescription()}`,
+        imageURI: "https://picsum.photos/200/200",
       },
       paymentDetails: {
         receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
@@ -48,7 +49,7 @@ export default function Home() {
           {
             chainId: 5,
             superToken: {
-              address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a" as const
+              address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a" as const,
             },
             flowRate: {
               amountEther: "1" as `${number}`,
@@ -58,7 +59,7 @@ export default function Home() {
           {
             chainId: 5,
             superToken: {
-              address: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa" as const
+              address: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa" as const,
             },
             flowRate: {
               amountEther: "1" as `${number}`,
@@ -70,6 +71,7 @@ export default function Home() {
       layout: "page",
       displaySettings: {
         darkMode: false,
+        containerRadius: 4,
         buttonRadius: 4,
         inputRadius: 4,
         fontFamily: "fontfamily",

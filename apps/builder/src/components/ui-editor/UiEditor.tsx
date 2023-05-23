@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import ImageSelect from "../image-select/ImageSelect";
 import { MuiColorInput } from "mui-color-input";
@@ -23,17 +23,19 @@ const UiEditor: FC = () => {
       <Stack direction="row" gap={2}>
         <Controller
           control={control}
-          name="displaySettings.productImage"
+          name="productDetails.imageURI"
           render={({ field: { value, onChange } }) => (
             <ImageSelect
               label="Product image"
-              onClick={(file) => onChange({ target: { value: file } })}
+              onClick={(file) =>
+                onChange({ target: { value: URL.createObjectURL(file) } })
+              }
               onRemove={() => onChange({ target: { value: "" } })}
-              imageSrc={value ? URL.createObjectURL(value) : ""}
+              imageSrc={value}
             />
           )}
         />
-        <Controller
+        {/* <Controller
           control={control}
           name="displaySettings.logo"
           render={({ field: { value, onChange } }) => (
@@ -44,7 +46,7 @@ const UiEditor: FC = () => {
               imageSrc={value ? URL.createObjectURL(value) : ""}
             />
           )}
-        />
+        /> */}
       </Stack>
       <Stack>
         <Controller
@@ -58,6 +60,24 @@ const UiEditor: FC = () => {
                   value ? "on" : "off"
                 }`}</Typography>
               }
+            />
+          )}
+        />
+      </Stack>
+      <Stack direction="column" gap={1}>
+        <Typography variant="subtitle2">
+          Container border-radius: {displaySettings.containerRadius}
+        </Typography>
+        <Controller
+          control={control}
+          name="displaySettings.containerRadius"
+          render={({ field: { value, onChange } }) => (
+            <Slider
+              step={1}
+              min={0}
+              max={50}
+              value={Number(value)}
+              onChange={onChange}
             />
           )}
         />

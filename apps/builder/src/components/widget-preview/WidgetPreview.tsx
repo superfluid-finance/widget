@@ -20,11 +20,10 @@ import { useWeb3Modal } from "@web3modal/react";
 
 export type DisplaySettings = {
   darkMode: boolean;
+  containerRadius?: number;
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
   fontFamily: string;
-  productImage?: File;
-  logo?: File;
   primaryColor: `#${string}`;
   secondaryColor: `#${string}`;
 };
@@ -58,6 +57,7 @@ export const WidgetContext = createContext<WidgetProps>({
   productDetails: {
     name: "Product Name",
     description: "Product Description",
+    imageURI: "https://picsum.photos/200/200",
   },
   paymentDetails: {
     receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
@@ -66,6 +66,7 @@ export const WidgetContext = createContext<WidgetProps>({
   layout: "dialog",
   displaySettings: {
     darkMode: false,
+    containerRadius: 4,
     buttonRadius: 4,
     inputRadius: 4,
     fontFamily: "fontfamily",
@@ -109,12 +110,16 @@ const switchLayout = (
 };
 
 export const mapDisplaySettingsToTheme = (
+  layout: Layout,
   displaySettings: DisplaySettings
 ): ThemeOptions => ({
   palette: {
     mode: displaySettings.darkMode ? "dark" : "light",
     primary: { main: displaySettings.primaryColor },
     secondary: { main: displaySettings.secondaryColor },
+  },
+  shape: {
+    borderRadius: displaySettings.containerRadius,
   },
   components: {
     MuiStepIcon: {
@@ -156,7 +161,10 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const theme: ThemeOptions = mapDisplaySettingsToTheme(displaySettings);
+  const theme: ThemeOptions = mapDisplaySettingsToTheme(
+    layout,
+    displaySettings
+  );
 
   return (
     <WidgetContext.Provider value={props}>
