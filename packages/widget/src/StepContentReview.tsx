@@ -68,7 +68,7 @@ export default function StepContentReview() {
             Switch Network
           </Button>
         ) : (
-          <StepperContinueButton disabled={!isValid || isValidating}>Subscribe</StepperContinueButton>
+          <StepperContinueButton disabled={!isValid || isValidating}>Continue</StepperContinueButton>
           // <Button
           //   disabled={!isValid || isValidating}
           //   variant="contained"

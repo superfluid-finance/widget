@@ -44,7 +44,7 @@ export default function ContractWriteButton({
         onClick={() => write?.()}
         loading={isLoading}
       >
-        {functionName}
+        Confirm ({functionName})
       </LoadingButton>
     </Stack>
   );

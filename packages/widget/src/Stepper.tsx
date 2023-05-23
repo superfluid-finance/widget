@@ -28,14 +28,14 @@ export default function Stepper() {
         .underlyingTokenAddress
         ? [
             {
-              buttonText: "Wrap",
+              buttonText: "Wrap into Super Token",
               optional: true,
               Content: StepContentWrap,
             },
           ]
         : []),
       {
-        buttonText: "Review the subscription",
+        buttonText: "Review the transaction(s)",
         optional: false,
         Content: StepContentReview,
       },

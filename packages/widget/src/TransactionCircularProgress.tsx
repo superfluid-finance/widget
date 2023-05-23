@@ -2,13 +2,15 @@ import {
   Box,
   CircularProgress,
   CircularProgressProps,
+  Typography,
 } from "@mui/material";
-import { PropsWithChildren } from "react";
 
-export function CircularProgressWithLabel({
-  children,
-  ...props
-}: PropsWithChildren<CircularProgressProps>) {
+type Props = CircularProgressProps & {
+  index: number;
+  total: number;
+};
+
+export function TransactionCircularProgress({ index, total, ...props }: Props) {
   return (
     <Box position="relative" display="inline-flex">
       <CircularProgress variant="indeterminate" {...props} />
@@ -22,7 +24,11 @@ export function CircularProgressWithLabel({
         alignItems="center"
         justifyContent="center"
       >
-        {children}
+        {total > 1 && (
+          <Typography variant="caption" component="div" color="text.secondary">
+            {index + 1}/{total}
+          </Typography>
+        )}
       </Box>
     </Box>
   );

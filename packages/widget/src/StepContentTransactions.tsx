@@ -1,7 +1,7 @@
 import { Box, Stack, StepContent, Typography } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
 import ContractWriteButton from "./ContractWriteButton";
-import { CircularProgressWithLabel } from "./CircularProgressWithLabel";
+import { TransactionCircularProgress } from "./TransactionCircularProgress";
 
 export function StepContentTransactions() {
   const { contractWrites, contractWriteResults, writeIndex } =
@@ -14,23 +14,15 @@ export function StepContentTransactions() {
     <StepContent>
       <Stack
         direction="column"
-        alignItems="stretch"
+        alignItems="center"
         justifyContent="space-around"
         spacing={3}
       >
-        <Box>
-          <CircularProgressWithLabel size={100}>
-            {total > 1 && (
-              <Typography
-                variant="caption"
-                component="div"
-                color="text.secondary"
-              >
-                {writeIndex + 1}/{total}
-              </Typography>
-            )}
-          </CircularProgressWithLabel>
-        </Box>
+        <TransactionCircularProgress
+          size={100}
+          index={writeIndex}
+          total={total}
+        />
         {result && <ContractWriteButton {...result} />}
       </Stack>
     </StepContent>
