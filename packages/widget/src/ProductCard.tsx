@@ -17,7 +17,7 @@ export default function ProductCard() {
   const imageURI = imageURI_ ?? "https://picsum.photos/200/200"; // TODO(KK): remove lorem
 
   return (
-    <Card sx={{ m: 3 }}>
+    <Card variant="outlined" sx={{ m: 3 }}>
       {imageURI && (
         // TODO(KK): Figure out size. Ask Mikk
         <CardMedia
