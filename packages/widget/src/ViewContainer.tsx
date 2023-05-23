@@ -13,6 +13,10 @@ import { CheckoutContent } from "./CheckoutContent";
 import { useCallback, useMemo, useState } from "react";
 import { ChildrenProp } from "./utils";
 import { useWidget } from "./WidgetContext";
+import Close from "@mui/icons-material/Close";
+import { normalizeIcon } from "./helpers/normalizeIcon";
+
+const CloseIcon = normalizeIcon(Close);
 
 export type ModalState = {
   isOpen: boolean;
@@ -102,7 +106,7 @@ export function ViewContainer(props: ViewProps) {
                   onClick={closeModal}
                   aria-label="close"
                 >
-                  X{/* <CloseIcon /> // TODO: weird bug with builder */}
+                  <CloseIcon />
                 </IconButton>
               </Toolbar>
             </AppBar>

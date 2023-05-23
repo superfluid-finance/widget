@@ -26,7 +26,7 @@ const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
   <Button
     variant="contained"
     href={URL.createObjectURL(
-      new Blob([JSON.stringify(json)], { type: "application/json" })
+      new Blob([JSON.stringify(json, null, 2)], { type: "application/json" })
     )}
     download={`widget.json`}
   >
