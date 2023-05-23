@@ -5,7 +5,7 @@ import { DraftFormValues } from "./formValues";
 
 export default function ProductCard() {
   const {
-    productDetails: { name, description, imageURI: imageURI_ },
+    productDetails: { name, description, imageURI },
   } = useWidget();
 
   const { watch } = useFormContext<DraftFormValues>();
@@ -14,12 +14,9 @@ export default function ProductCard() {
     "paymentOptionWithTokenInfo",
   ]);
 
-  const imageURI = imageURI_ ?? "https://picsum.photos/200/200"; // TODO(KK): remove lorem
-
   return (
     <Card variant="outlined" sx={{ m: 3 }}>
       {imageURI && (
-        // TODO(KK): Figure out size. Ask Mikk
         <CardMedia
           sx={{ height: 140 }}
           image={imageURI}
@@ -42,7 +39,9 @@ export default function ProductCard() {
             {paymentOptionWithTokenInfo &&
               `${paymentOptionWithTokenInfo.paymentOption.flowRate.amountEther} ${paymentOptionWithTokenInfo.superToken.symbol}/${paymentOptionWithTokenInfo.paymentOption.flowRate.period}`}
           </Typography>
-          <Typography variant="h6" component="span">{network?.name}</Typography>
+          <Typography variant="h6" component="span">
+            {network?.name}
+          </Typography>
         </Stack>
       </CardContent>
     </Card>

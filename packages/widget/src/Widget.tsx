@@ -3,10 +3,7 @@ import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext";
 import { ViewProps, ViewContainer } from "./ViewContainer";
 import { SupportedNetwork } from "superfluid-checkout-core";
-import {
-  PaymentOptionWithTokenInfo,
-  SuperTokenInfo,
-} from "./formValues";
+import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 import {
   Alert,
   AlertTitle,
@@ -22,7 +19,7 @@ import { WalletManager } from "./WalletManager";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {
-    walletManager: WalletManager,
+    walletManager: WalletManager;
     theme?: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
   };
 
@@ -53,13 +50,18 @@ export function SuperfluidWidget({
       [superTokens, paymentOptions]
     );
 
-  const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>((address: Address) => {
-    const superToken = superTokens.find(x => x.address.toLowerCase() === address.toLowerCase());
-    if (!superToken) {
-      throw new Error("Super Token not found from token list.");
-    }
-    return superToken;
-  }, [superTokens]); // TODO(KK): memoize
+  const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>(
+    (address: Address) => {
+      const superToken = superTokens.find(
+        (x) => x.address.toLowerCase() === address.toLowerCase()
+      );
+      if (!superToken) {
+        throw new Error("Super Token not found from token list.");
+      }
+      return superToken;
+    },
+    [superTokens]
+  ); // TODO(KK): memoize
 
   const checkoutState = useMemo<WidgetContextValue>(
     () => ({
@@ -70,9 +72,16 @@ export function SuperfluidWidget({
       tokenList,
       networks,
       paymentOptionWithTokenInfoList,
-      walletManager
+      walletManager,
     }),
-    [superTokens, productDetails, paymentDetails, tokenList, networks, walletManager]
+    [
+      superTokens,
+      productDetails,
+      paymentDetails,
+      tokenList,
+      networks,
+      walletManager,
+    ]
   );
 
   const theme = useMemo(() => createTheme(theme_), [theme_]);
@@ -84,17 +93,17 @@ export function SuperfluidWidget({
 
   return (
     <WidgetContext.Provider value={checkoutState}>
-        <ThemeProvider theme={theme}>
-          {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
-          {validationResult.success ? (
-            <ViewContainer {...viewProps} />
-          ) : (
-            <Alert severity="error">
-              <AlertTitle>Input Error</AlertTitle>
-              {JSON.stringify(validationResult.error, null, 2)}
-            </Alert>
-          )}
-        </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
+        {validationResult.success ? (
+          <ViewContainer {...viewProps} />
+        ) : (
+          <Alert severity="error">
+            <AlertTitle>Input Error</AlertTitle>
+            {JSON.stringify(validationResult.error, null, 2)}
+          </Alert>
+        )}
+      </ThemeProvider>
     </WidgetContext.Provider>
   );
 }

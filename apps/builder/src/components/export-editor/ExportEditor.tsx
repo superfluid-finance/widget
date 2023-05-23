@@ -26,7 +26,7 @@ const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
   <Button
     variant="contained"
     href={URL.createObjectURL(
-      new Blob([JSON.stringify(json)], { type: "application/json" })
+      new Blob([JSON.stringify(json, null, 2)], { type: "application/json" })
     )}
     download={`widget.json`}
   >
@@ -114,20 +114,19 @@ const ExportEditor: FC = () => {
     "layout",
   ]);
 
-  const [productImageBase64] = useReadAsBase64(displaySettings.productImage);
-  const [logoBase64] = useReadAsBase64(displaySettings.logo);
+  const [productImageBase64] = useReadAsBase64(productDetails.imageURI);
+  // const [logoBase64] = useReadAsBase64(displaySettings.logo);
 
   const json: ExportJSON = useMemo(
     () => ({
       productDetails: {
         ...productDetails,
         image: productImageBase64,
-        //@ts-ignore <- TODO: add logo image to productDetails
-        logo: logoBase64,
+        // logo: logoBase64,
       },
       paymentDetails,
       layout,
-      theme: mapDisplaySettingsToTheme(displaySettings),
+      theme: mapDisplaySettingsToTheme(layout, displaySettings),
     }),
     [
       productDetails,
@@ -135,7 +134,7 @@ const ExportEditor: FC = () => {
       displaySettings,
       layout,
       productImageBase64,
-      logoBase64,
+      //   logoBase64,
     ]
   );
 
