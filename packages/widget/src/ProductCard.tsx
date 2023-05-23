@@ -15,7 +15,7 @@ export default function ProductCard() {
   ]);
 
   return (
-    <Card sx={{ m: 3 }}>
+    <Card variant="outlined" sx={{ m: 3 }}>
       {imageURI && (
         <CardMedia
           sx={{ height: 140 }}

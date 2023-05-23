@@ -17,7 +17,7 @@ export function CheckoutContent() {
   return (
     <CheckoutFormProvider>
       <ProductCard />
-      <Card sx={{ m: 3 }}>
+      <Card variant="outlined" sx={{ m: 3 }}>
         <CommandHandlerProvider>
           {({ status }) => {
             switch (status) {
