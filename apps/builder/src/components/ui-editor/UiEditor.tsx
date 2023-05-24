@@ -168,6 +168,7 @@ const UiEditor: FC = () => {
           render={({ field: { value, onChange } }) => (
             <Autocomplete
               value={value}
+              loading={fonts.length === 0}
               disablePortal
               id="combo-box-demo"
               options={fonts}
