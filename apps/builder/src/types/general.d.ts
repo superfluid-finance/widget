@@ -9,3 +9,18 @@ export type ObjectKeys<T> = T extends object
   : T extends Array<any> | string
   ? string[]
   : never;
+
+export type Font = {
+  family: string;
+  variants: string[];
+  subsets: string[];
+  version: string;
+  lastModified: string;
+  files: {
+    regular: string;
+    italic: string;
+  };
+  category: string;
+  kind: string;
+  menu: string;
+};

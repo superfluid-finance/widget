@@ -47,6 +47,7 @@ export default function Home() {
         defaultReceiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
         paymentOptions: [
           {
+            receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
             chainId: 5,
             superToken: {
               address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a" as const,
@@ -57,6 +58,7 @@ export default function Home() {
             },
           },
           {
+            receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
             chainId: 5,
             superToken: {
               address: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa" as const,
@@ -74,7 +76,10 @@ export default function Home() {
         containerRadius: 4,
         buttonRadius: 4,
         inputRadius: 4,
-        fontFamily: "fontfamily",
+        font: {
+          config: null,
+          kind: "",
+        },
         primaryColor: colors.green[500],
         secondaryColor: colors.common.white,
       },

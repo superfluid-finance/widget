@@ -8,6 +8,7 @@ import {
 } from "react";
 import { useState } from "react";
 import { Button, SelectChangeEvent, ThemeOptions, colors } from "@mui/material";
+import type { Font, NullableObject } from "../../types/general";
 
 import {
   SuperfluidWidget,
@@ -17,13 +18,17 @@ import {
 } from "@superfluid-finance/widget";
 import tokenList from "@superfluid-finance/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
+import useFontLoader from "../../hooks/useFontLoader";
 
 export type DisplaySettings = {
   darkMode: boolean;
   containerRadius?: number;
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
-  fontFamily: string;
+  font: {
+    config: Font | null;
+    kind: string;
+  };
   primaryColor: `#${string}`;
   secondaryColor: `#${string}`;
 };
@@ -69,7 +74,10 @@ export const WidgetContext = createContext<WidgetProps>({
     containerRadius: 4,
     buttonRadius: 4,
     inputRadius: 4,
-    fontFamily: "fontfamily",
+    font: {
+      config: null,
+      kind: "",
+    },
     primaryColor: colors.green[500],
     secondaryColor: colors.common.white,
   },
@@ -113,6 +121,13 @@ export const mapDisplaySettingsToTheme = (
   layout: Layout,
   displaySettings: DisplaySettings
 ): ThemeOptions => ({
+  ...(displaySettings.font.config
+    ? {
+        typography: {
+          fontFamily: `${displaySettings.font.config.family}, ${displaySettings.font.kind}`,
+        },
+      }
+    : {}),
   palette: {
     mode: displaySettings.darkMode ? "dark" : "light",
     primary: { main: displaySettings.primaryColor },
@@ -165,6 +180,8 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     layout,
     displaySettings
   );
+
+  useFontLoader(displaySettings);
 
   return (
     <WidgetContext.Provider value={props}>
