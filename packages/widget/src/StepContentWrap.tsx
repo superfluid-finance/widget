@@ -13,16 +13,18 @@ import { useMemo } from "react";
 import { useWidget } from "./WidgetContext";
 import { TokenAvatar } from "./TokenAvatar";
 import { StepperContinueButton } from "./StepperContinueButton";
+import { Address } from "viem";
 
 export default function StepContentWrap() {
-  const { tokenList } = useWidget();
   const {
     control: c,
     watch,
     formState: { isValid, isValidating },
   } = useFormContext<DraftFormValues>();
   const [paymentOptionWithTokenInfo] = watch(["paymentOptionWithTokenInfo"]);
+  
   const superToken = paymentOptionWithTokenInfo?.superToken;
+  const { getUnderlyingToken } = useWidget();
 
   // Find the underlying token of the Super Token.
   const underlyingToken = useMemo(() => {
@@ -35,12 +37,8 @@ export default function StepContentWrap() {
       return undefined;
     }
 
-    const underlyingTokenAddressLowerCased =
-      superTokenInfo.underlyingTokenAddress.toLowerCase();
-    return tokenList.tokens.find(
-      (x) => x.address.toLowerCase() === underlyingTokenAddressLowerCased
-    );
-  }, [superToken]);
+    return getUnderlyingToken(superTokenInfo.underlyingTokenAddress! as Address); // TODO: Get rid of this bang and cast
+  }, [superToken, getUnderlyingToken]);
 
   return (
     <StepContent TransitionProps={{ unmountOnExit: false }}>

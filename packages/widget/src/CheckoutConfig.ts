@@ -1,4 +1,4 @@
-import { TokenList } from "@uniswap/token-lists";
+import { SuperTokenList } from "@superfluid-finance/tokenlist";
 import {
   paymentDetailsSchema,
   productDetailsSchema,
@@ -11,5 +11,5 @@ export const checoutConfigSchema = z.object({
 });
 
 export type CheckoutConfig = z.infer<typeof checoutConfigSchema> & {
-  readonly tokenList: TokenList; // TODO: move to zod schema
+  readonly tokenList: SuperTokenList; // TODO: move to zod schema
 };

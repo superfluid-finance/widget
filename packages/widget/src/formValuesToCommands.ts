@@ -18,7 +18,7 @@ export const formValuesToCommands = (
 
   const superTokenAddress = superToken.address as Address;
   const underlyingTokenAddress =
-    superToken.extensions.superTokenInfo.underlyingTokenAddress;
+    superToken.extensions.superTokenInfo.underlyingTokenAddress as Address; // TODO: handle this in Token List?
 
   const commands: Command[] = [];
   if (underlyingTokenAddress) {

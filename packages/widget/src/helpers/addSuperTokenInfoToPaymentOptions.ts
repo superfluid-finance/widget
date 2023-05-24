@@ -1,5 +1,6 @@
 import { PaymentOption } from "superfluid-checkout-core";
-import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "../formValues";
+import { PaymentOptionWithTokenInfo } from "../formValues";
+import { SuperTokenInfo } from "@superfluid-finance/tokenlist";
 
 export function addSuperTokenInfoToPaymentOptions(
   superTokens: ReadonlyArray<SuperTokenInfo>,

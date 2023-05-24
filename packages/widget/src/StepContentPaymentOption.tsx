@@ -16,6 +16,11 @@ export default function StepContentPaymentOption() {
   const isStepComplete = !!network && !!paymentOptionWithTokenInfo;
 
   const { isConnected } = useAccount();
+
+  console.log({
+    isConnected
+  })
+
   const {
     walletManager: { open: openWalletManager },
   } = useWidget();

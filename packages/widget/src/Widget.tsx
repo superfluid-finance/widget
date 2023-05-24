@@ -3,7 +3,7 @@ import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext";
 import { ViewProps, ViewContainer } from "./ViewContainer";
 import { SupportedNetwork, supportedNetworks } from "superfluid-checkout-core";
-import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
+import { PaymentOptionWithTokenInfo } from "./formValues";
 import {
   Alert,
   AlertTitle,
@@ -16,6 +16,8 @@ import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoTo
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList";
 import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
+import { SuperTokenInfo } from "@superfluid-finance/tokenlist";
+import { TokenInfo } from "@uniswap/token-lists";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {
@@ -33,7 +35,7 @@ export function SuperfluidWidget({
 }: WidgetProps) {
   const { paymentOptions } = paymentDetails;
 
-  const superTokens: ReadonlyArray<SuperTokenInfo> = useMemo(
+  const { superTokens, underlyingTokens } = useMemo(
     () => filterSuperTokensFromTokenList(tokenList),
     [tokenList]
   ); // TODO: Worry about consumer having to keep the token list reference unchanged.
@@ -63,6 +65,19 @@ export function SuperfluidWidget({
     [superTokens]
   ); // TODO(KK): memoize
 
+  const getUnderlyingToken = useCallback<(address: Address) => TokenInfo>(
+    (address: Address) => {
+      const underlyingToken = underlyingTokens.find(
+        (x) => x.address.toLowerCase() === address.toLowerCase()
+      );
+      if (!underlyingToken) {
+        throw new Error("Super Token not found from token list.");
+      }
+      return underlyingToken;
+    },
+    [underlyingTokens]
+  ); // TODO(KK): memoize
+
   const getNetwork = useCallback<(chainId: number) => SupportedNetwork>(
     (chainId: number) => {
       const network = supportedNetworks.find((x) => x.id === chainId);
@@ -78,6 +93,7 @@ export function SuperfluidWidget({
     () => ({
       getNetwork,
       getSuperToken,
+      getUnderlyingToken,
       superTokens,
       productDetails,
       paymentDetails,

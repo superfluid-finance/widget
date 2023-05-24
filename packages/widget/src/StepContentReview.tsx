@@ -13,6 +13,7 @@ import { useCommandHandler } from "./CommandHandlerContext";
 import { useChainId, useSwitchNetwork } from "wagmi";
 import { useMemo } from "react";
 import { StepperContinueButton } from "./StepperContinueButton";
+import { CommandPreview } from "./previews/previews";
 
 export default function StepContentReview() {
   const {
@@ -46,12 +47,7 @@ export default function StepContentReview() {
               return (
                 <ListItem key={title}>
                   <ListItemText
-                    primary={title}
-                    secondary={
-                      <Typography component="pre" variant="body2">
-                        {JSON.stringify(rest, null, 2)}
-                      </Typography>
-                    }
+                    primary={<CommandPreview command={cmd} />}
                   />
                 </ListItem>
               );

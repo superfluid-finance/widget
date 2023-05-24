@@ -3,17 +3,10 @@ import {
   supportedNetworkSchema,
   etherAmountSchema,
   paymentOptionSchema,
-  SuperTokenExtension,
 } from "superfluid-checkout-core";
 import { z } from "zod";
 import { UseFormReturn } from "react-hook-form";
-import { TokenInfo } from "@uniswap/token-lists";
-
-export type SuperTokenInfo = TokenInfo & {
-  extensions: {
-    superTokenInfo: SuperTokenExtension;
-  };
-};
+import { SuperTokenInfo } from "@superfluid-finance/tokenlist";
 
 const paymentOptionWithTokenInfoSchema = z.object({
   paymentOption: paymentOptionSchema,
@@ -29,7 +22,7 @@ export const checkoutFormSchema = z.object({
   network: supportedNetworkSchema,
   paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
   wrapAmountEther: etherAmountSchema,
-  enableAutoWrap: z.boolean()
+  enableAutoWrap: z.boolean(),
 });
 
 export type ValidFormValues = z.infer<typeof checkoutFormSchema>;
