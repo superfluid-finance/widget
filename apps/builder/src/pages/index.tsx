@@ -77,7 +77,7 @@ export default function Home() {
         buttonRadius: 4,
         inputRadius: 4,
         font: {
-          family: undefined,
+          config: undefined,
           kind: undefined,
         },
         primaryColor: colors.green[500],

@@ -8,7 +8,7 @@ import {
 } from "react";
 import { useState } from "react";
 import { Button, SelectChangeEvent, ThemeOptions, colors } from "@mui/material";
-import type { Font } from "../../types/general";
+import type { Font, NullableObject } from "../../types/general";
 
 import {
   SuperfluidWidget,
@@ -25,8 +25,8 @@ export type DisplaySettings = {
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
   font: {
-    family?: Font;
-    kind?: string;
+    config: Font | null;
+    kind: string;
   };
   primaryColor: `#${string}`;
   secondaryColor: `#${string}`;
@@ -74,8 +74,8 @@ export const WidgetContext = createContext<WidgetProps>({
     buttonRadius: 4,
     inputRadius: 4,
     font: {
-      family: undefined,
-      kind: undefined,
+      config: null,
+      kind: "",
     },
     primaryColor: colors.green[500],
     secondaryColor: colors.common.white,
@@ -120,6 +120,15 @@ export const mapDisplaySettingsToTheme = (
   layout: Layout,
   displaySettings: DisplaySettings
 ): ThemeOptions => ({
+  ...(displaySettings.font.config
+    ? {
+        typography: {
+          fontFamily: `${displaySettings.font.config.family}, ${
+            displaySettings.font.kind ?? "sans-serif"
+          }`,
+        },
+      }
+    : {}),
   palette: {
     mode: displaySettings.darkMode ? "dark" : "light",
     primary: { main: displaySettings.primaryColor },
@@ -129,6 +138,22 @@ export const mapDisplaySettingsToTheme = (
     borderRadius: displaySettings.containerRadius,
   },
   components: {
+    ...(displaySettings.font.config
+      ? {
+          MuiCssBaseline: {
+            styleOverrides: `
+        @font-face {
+          font-family: ${displaySettings.font.config.family};
+          font-style: normal;
+          font-display: swap;
+          font-weight: 400;
+          src: local('${displaySettings.font.config.family}'), local('${displaySettings.font.config.family}, ${displaySettings.font.kind}'), url(${displaySettings.font.config?.files.regular}) format('ttf');
+          unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+        }
+      `,
+          },
+        }
+      : {}),
     MuiStepIcon: {
       styleOverrides: {
         text: {
@@ -155,6 +180,7 @@ export const mapDisplaySettingsToTheme = (
 
 const WidgetPreview: FC<WidgetProps> = (props) => {
   const { displaySettings, paymentDetails, productDetails, layout } = props;
+  console.log(displaySettings.font);
 
   const { open, isOpen } = useWeb3Modal();
   const walletManager = useMemo(
