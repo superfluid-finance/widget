@@ -1,5 +1,5 @@
 import "@superfluid-finance/widget/webcomponent";
-import tokenList from "./tokenList.json";
+import tokenList from "@superfluid-finance/tokenlist";
 import widgetProps from "./widgetProps.json";
 
 window.addEventListener("DOMContentLoaded", () => {
