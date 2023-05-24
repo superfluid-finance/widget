@@ -17,11 +17,12 @@ export const formValuesToCommands = (
   const wrapAmount = parseEther(wrapAmountEther ? wrapAmountEther : "0");
 
   const superTokenAddress = superToken.address as Address;
-  const underlyingTokenAddress =
-    superToken.extensions.superTokenInfo.underlyingTokenAddress as Address; // TODO: handle this in Token List?
 
   const commands: Command[] = [];
-  if (underlyingTokenAddress) {
+  if (superToken.extensions.superTokenInfo.type === "Wrapper") {
+    const underlyingTokenAddress =
+      superToken.extensions.superTokenInfo.underlyingTokenAddress;
+
     if (wrapAmount !== 0n) {
       commands.push({
         id: nanoid(),
@@ -54,7 +55,7 @@ export const formValuesToCommands = (
     accountAddress,
     receiverAddress: paymentOption.receiverAddress,
     flowRate: paymentOption.flowRate,
-  })
+  });
 
   return Object.freeze(commands);
 };
