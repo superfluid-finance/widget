@@ -173,7 +173,7 @@ const UiEditor: FC = () => {
               options={fonts}
               onChange={(_, value) => {
                 setValue("displaySettings.font.kind", value?.category ?? "");
-                onChange(value ?? undefined);
+                onChange(value);
               }}
               getOptionLabel={(option) =>
                 `${option.family}, ${option.category}`
