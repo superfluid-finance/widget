@@ -1,8 +1,7 @@
 import { z } from "zod";
-import { addressSchema, paymentOptionSchema } from "./PaymentOption";
+import { paymentOptionSchema } from "./PaymentOption";
 
 export const paymentDetailsSchema = z.object({
-  receiverAddress: addressSchema,
   paymentOptions: z.array(paymentOptionSchema).min(1),
 });
 

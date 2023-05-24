@@ -10,7 +10,6 @@ export const formValuesToCommands = (
   const {
     network: { id: chainId },
     accountAddress,
-    receiverAddress,
     wrapAmountEther,
     enableAutoWrap,
     paymentOptionWithTokenInfo: { paymentOption, superToken },
@@ -53,7 +52,7 @@ export const formValuesToCommands = (
     chainId,
     superTokenAddress,
     accountAddress,
-    receiverAddress,
+    receiverAddress: paymentOption.receiverAddress,
     flowRate: paymentOption.flowRate,
   })
 

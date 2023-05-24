@@ -29,8 +29,7 @@ export const checkoutFormSchema = z.object({
   network: supportedNetworkSchema,
   paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
   wrapAmountEther: etherAmountSchema,
-  enableAutoWrap: z.boolean(),
-  receiverAddress: addressSchema,
+  enableAutoWrap: z.boolean()
 });
 
 export type ValidFormValues = z.infer<typeof checkoutFormSchema>;

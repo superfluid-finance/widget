@@ -30,6 +30,7 @@ export const flowRateSchema = z.object({
 });
 
 export const paymentOptionSchema = z.object({
+  receiverAddress: addressSchema,
   chainId: chainIdSchema,
   superToken: tokenSchema,
   flowRate: flowRateSchema,

@@ -44,7 +44,7 @@ export default function Home() {
         imageURI: "https://picsum.photos/200/200",
       },
       paymentDetails: {
-        receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+        defaultReceiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
         paymentOptions: [
           {
             chainId: 5,

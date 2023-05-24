@@ -29,6 +29,7 @@ const renderToken = (token: TokenInfo) => {
 };
 
 type PaymentOptionSelectorProps = {
+  defaultReceiverAddress: `0x${string}`;
   onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
 };
 
@@ -51,7 +52,7 @@ const defaultToken: SuperTokenInfo = {
   },
 };
 
-const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
+const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd, defaultReceiverAddress }) => {
   const [selectedNetwork, setSelectedNetwork] =
     useState<Network>(defaultNetwork);
   const [selectedToken, setSelectedToken] =
@@ -92,6 +93,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
 
     if (network) {
       onAdd({
+        receiverAddress: defaultReceiverAddress,
         superToken: {
           address: selectedToken.address as `0x${string}`,
         },

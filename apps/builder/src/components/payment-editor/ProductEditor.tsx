@@ -44,12 +44,14 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
 };
 
 const ProductEditor: FC = () => {
-  const { control } = useFormContext<WidgetProps>();
+  const { control, watch } = useFormContext<WidgetProps>();
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "paymentDetails.paymentOptions", // unique name for your Field Array
   });
+
+  const defaultReceiverAddress = watch("paymentDetails.defaultReceiverAddress");
 
   return (
     <Stack gap={1}>
@@ -84,12 +86,10 @@ const ProductEditor: FC = () => {
       <Stack direction="column" gap={2}>
         <Typography variant="subtitle1">Payment details</Typography>
         <Stack direction="column" flex={1}>
-          <Typography variant="subtitle2">
-            Default Receiver
-          </Typography>
+          <Typography variant="subtitle2">Default Receiver</Typography>
           <Controller
             control={control}
-            name="paymentDetails.receiverAddress"
+            name="paymentDetails.defaultReceiverAddress"
             render={({ field: { value, onChange, onBlur } }) => (
               <TextField value={value} onChange={onChange} onBlur={onBlur} />
             )}
@@ -100,7 +100,12 @@ const ProductEditor: FC = () => {
           <Controller
             control={control}
             name="paymentDetails.paymentOptions"
-            render={() => <SelectPaymentOption onAdd={append} />}
+            render={() => (
+              <SelectPaymentOption
+                onAdd={append}
+                defaultReceiverAddress={defaultReceiverAddress as `0x${string}`}
+              />
+            )}
           />
         </Stack>
 

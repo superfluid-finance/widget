@@ -3,22 +3,18 @@ import { DraftFormValues, FormReturn as FormMethods } from "./formValues";
 import { DevTool } from "@hookform/devtools";
 import { ChildrenProp } from "./utils";
 import { FormEffects } from "./FormEffects";
-import { useWidget } from "./WidgetContext";
 
 type Props = {
   children: ((formMethods: FormMethods) => ChildrenProp) | ChildrenProp;
 };
 
 export default function CheckoutFormProvider({ children }: Props) {
-  const { paymentDetails } = useWidget();
-
   const defaultValues: DraftFormValues = {
     accountAddress: null,
     network: null,
     paymentOptionWithTokenInfo: null,
     wrapAmountEther: "" as `${number}`,
     enableAutoWrap: false,
-    receiverAddress: paymentDetails.receiverAddress,
   };
 
   const formMethods: FormMethods = useForm({
