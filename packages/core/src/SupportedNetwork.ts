@@ -48,12 +48,13 @@ const supportedNetworks_ = [
   supportedNetwork.gnosis,
 ] as const;
 
-export const supportedNetworks = supportedNetworks_ as unknown as Chain[];
-
 export const supportedNetworkSchema = z
   .object({
     id: chainIdSchema,
   })
   .transform((x) => x as (typeof supportedNetworks_)[number]);
 
-export type SupportedNetwork = z.infer<typeof supportedNetworkSchema>;
+export type SupportedNetwork = z.infer<typeof supportedNetworkSchema> & Chain;
+
+export const supportedNetworks = supportedNetworks_ as unknown as SupportedNetwork[];
+

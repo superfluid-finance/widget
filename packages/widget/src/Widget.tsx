@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext";
 import { ViewProps, ViewContainer } from "./ViewContainer";
-import { SupportedNetwork } from "superfluid-checkout-core";
+import { SupportedNetwork, supportedNetworks } from "superfluid-checkout-core";
 import { PaymentOptionWithTokenInfo, SuperTokenInfo } from "./formValues";
 import {
   Alert,
@@ -63,8 +63,20 @@ export function SuperfluidWidget({
     [superTokens]
   ); // TODO(KK): memoize
 
+  const getNetwork = useCallback<(chainId: number) => SupportedNetwork>(
+    (chainId: number) => {
+      const network = supportedNetworks.find((x) => x.id === chainId);
+      if (!network) {
+        throw new Error("Network not found from supported networks.");
+      }
+      return network;
+    },
+    []
+  ); // TODO(KK): memoize
+
   const checkoutState = useMemo<WidgetContextValue>(
     () => ({
+      getNetwork,
       getSuperToken,
       superTokens,
       productDetails,
