@@ -76,7 +76,10 @@ export default function Home() {
         containerRadius: 4,
         buttonRadius: 4,
         inputRadius: 4,
-        fontFamily: "fontfamily",
+        font: {
+          family: undefined,
+          kind: undefined,
+        },
         primaryColor: colors.green[500],
         secondaryColor: colors.common.white,
       },

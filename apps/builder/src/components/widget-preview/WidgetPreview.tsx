@@ -8,6 +8,7 @@ import {
 } from "react";
 import { useState } from "react";
 import { Button, SelectChangeEvent, ThemeOptions, colors } from "@mui/material";
+import type { Font } from "../../types/general";
 
 import {
   SuperfluidWidget,
@@ -23,7 +24,10 @@ export type DisplaySettings = {
   containerRadius?: number;
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
-  fontFamily: string;
+  font: {
+    family?: Font;
+    kind?: string;
+  };
   primaryColor: `#${string}`;
   secondaryColor: `#${string}`;
 };
@@ -69,7 +73,10 @@ export const WidgetContext = createContext<WidgetProps>({
     containerRadius: 4,
     buttonRadius: 4,
     inputRadius: 4,
-    fontFamily: "fontfamily",
+    font: {
+      family: undefined,
+      kind: undefined,
+    },
     primaryColor: colors.green[500],
     secondaryColor: colors.common.white,
   },

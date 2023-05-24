@@ -1,22 +1,28 @@
 import {
+  Autocomplete,
   FormControl,
   FormControlLabel,
+  MenuItem,
+  Select,
   Slider,
   Stack,
   Switch,
   TextField,
   Typography,
 } from "@mui/material";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import ImageSelect from "../image-select/ImageSelect";
 import { MuiColorInput } from "mui-color-input";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
+import { Font } from "../../types/general";
+import useFonts from "../../hooks/useFonts";
 
 const UiEditor: FC = () => {
   const { control, watch } = useFormContext<WidgetProps>();
 
   const [displaySettings] = watch(["displaySettings"]);
+  const fonts = useFonts();
 
   return (
     <Stack direction="column" gap={2}>
@@ -162,9 +168,20 @@ const UiEditor: FC = () => {
         <Typography variant="subtitle2">Font Family</Typography>
         <Controller
           control={control}
-          name="displaySettings.fontFamily"
+          name="displaySettings.font.family"
           render={({ field: { value, onChange } }) => (
-            <TextField value={value} onChange={onChange} />
+            <Autocomplete
+              value={value}
+              disablePortal
+              id="combo-box-demo"
+              options={fonts}
+              onChange={(_, value) => onChange(value ?? undefined)}
+              getOptionLabel={(option) =>
+                `${option.family}, ${option.category}`
+              }
+              fullWidth
+              renderInput={(params) => <TextField {...params} />}
+            />
           )}
         />
       </Stack>
