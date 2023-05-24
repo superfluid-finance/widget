@@ -123,7 +123,7 @@ export const mapDisplaySettingsToTheme = (
   ...(displaySettings.font.config
     ? {
         typography: {
-          fontFamily: `${displaySettings.font.config.family}`,
+          fontFamily: `${displaySettings.font.config.family}, ${displaySettings.font.kind}`,
         },
       }
     : {}),
@@ -136,21 +136,6 @@ export const mapDisplaySettingsToTheme = (
     borderRadius: displaySettings.containerRadius,
   },
   components: {
-    ...(displaySettings.font.config
-      ? {
-          MuiCssBaseline: {
-            styleOverrides: `
-        @font-face {
-          font-family: ${displaySettings.font.config.family};
-          font-style: normal;
-          font-display: swap;
-          font-weight: 400;
-          src: url(${displaySettings.font.config?.files.regular}) format('ttf');
-        }
-      `,
-          },
-        }
-      : {}),
     MuiStepIcon: {
       styleOverrides: {
         text: {
@@ -177,7 +162,6 @@ export const mapDisplaySettingsToTheme = (
 
 const WidgetPreview: FC<WidgetProps> = (props) => {
   const { displaySettings, paymentDetails, productDetails, layout } = props;
-  console.log(displaySettings.font);
 
   const { open, isOpen } = useWeb3Modal();
   const walletManager = useMemo(
@@ -195,6 +179,19 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     layout,
     displaySettings
   );
+
+  console.log(displaySettings);
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = `https://fonts.googleapis.com/css2?family=${displaySettings.font.config?.family}:wght@400;500&display=swap`;
+    document.head.appendChild(link);
+
+    return () => {
+      link.remove();
+    };
+  }, [displaySettings.font.config?.family]);
 
   return (
     <WidgetContext.Provider value={props}>

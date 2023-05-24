@@ -171,6 +171,9 @@ const UiEditor: FC = () => {
               disablePortal
               id="combo-box-demo"
               options={fonts}
+              isOptionEqualToValue={(option, value) =>
+                option.family === value.family
+              }
               onChange={(_, value) => {
                 setValue("displaySettings.font.kind", value?.category ?? "");
                 onChange(value);

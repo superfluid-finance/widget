@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext";
 import { ViewProps, ViewContainer } from "./ViewContainer";
