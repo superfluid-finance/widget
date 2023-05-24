@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [".env", "**/.env.*local"],
+  "globalEnv": ["NEXT_PUBLIC_GOOGLE_FONTS_API_KEY"],
+  "globalDependencies": ["**/.env.*local"],
   "pipeline": {
     "clean": {
       "cache": false
