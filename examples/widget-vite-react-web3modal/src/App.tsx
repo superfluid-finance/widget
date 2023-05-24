@@ -13,7 +13,7 @@ import {
   w3mProvider,
 } from "@web3modal/ethereum";
 import { useMemo } from "react";
-import superTokenList from "@tokdaniel/supertokenlist";
+import superTokenList from "@superfluid-finance/tokenlist";
 
 const projectId = "952483bf7a0f5ace4c40eb53967f1368";
 

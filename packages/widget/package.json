@@ -37,23 +37,23 @@
     "react-hook-form": "7.44.0-rc.3",
     "superfluid-checkout-core": "workspace:*",
     "use-immer": "^0.9.0",
-    "viem": "^0.3.31",
+    "viem": "^0.3.36",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
-    "@mui/material": "^5.13.1",
+    "@mui/material": "^5.13.2",
     "@rollup/plugin-multi-entry": "^6.0.0",
     "@rollup/plugin-terser": "^0.4.3",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "rimraf": "^5.0.1",
-    "rollup": "^3.22.0",
+    "rollup": "^3.23.0",
     "rollup-plugin-dts": "^5.3.0",
     "tsconfig": "workspace:*",
     "tsup": "^6.7.0",
     "typescript": "latest",
-    "wagmi": "^1.0.5"
+    "wagmi": "^1.0.6"
   },
   "peerDependencies": {
     "@mui/material": "latest",
