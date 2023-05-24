@@ -5,7 +5,7 @@ import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import SelectPaymentOption from "../widget-preview/SelectPaymentOption";
 import { networks } from "../../networkDefinitions";
 import { ChainId } from "@superfluid-finance/widget";
-import tokenList from "@tokdaniel/supertokenlist";
+import tokenList from "@superfluid-finance/tokenlist";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 type PaymentOptionViewProps = {

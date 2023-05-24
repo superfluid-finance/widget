@@ -15,7 +15,7 @@ import {
   ProductDetails,
   WalletManager,
 } from "@superfluid-finance/widget";
-import tokenList from "@tokdaniel/supertokenlist";
+import tokenList from "@superfluid-finance/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 
 export type DisplaySettings = {
