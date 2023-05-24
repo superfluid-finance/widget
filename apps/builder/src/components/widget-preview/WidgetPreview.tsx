@@ -18,6 +18,7 @@ import {
 } from "@superfluid-finance/widget";
 import tokenList from "@superfluid-finance/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
+import useFontLoader from "../../hooks/useFontLoader";
 
 export type DisplaySettings = {
   darkMode: boolean;
@@ -180,18 +181,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     displaySettings
   );
 
-  console.log(displaySettings);
-
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = `https://fonts.googleapis.com/css2?family=${displaySettings.font.config?.family}:wght@400;500&display=swap`;
-    document.head.appendChild(link);
-
-    return () => {
-      link.remove();
-    };
-  }, [displaySettings.font.config?.family]);
+  useFontLoader(displaySettings);
 
   return (
     <WidgetContext.Provider value={props}>
