@@ -78,7 +78,7 @@ export default function Home() {
         inputRadius: 4,
         font: {
           config: null,
-          kind: null,
+          kind: "",
         },
         primaryColor: colors.green[500],
         secondaryColor: colors.common.white,
