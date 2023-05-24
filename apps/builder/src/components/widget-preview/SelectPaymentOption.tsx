@@ -52,7 +52,11 @@ const defaultToken: SuperTokenInfo = {
   },
 };
 
-const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd, defaultReceiverAddress }) => {
+const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
+  onAdd,
+  defaultReceiverAddress,
+}) => {
+  const [receiver, setReceiver] = useState<`0x${string}` | "">("");
   const [selectedNetwork, setSelectedNetwork] =
     useState<Network>(defaultNetwork);
   const [selectedToken, setSelectedToken] =
@@ -93,7 +97,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd, defaultRec
 
     if (network) {
       onAdd({
-        receiverAddress: defaultReceiverAddress,
+        receiverAddress: receiver === "" ? defaultReceiverAddress : receiver,
         superToken: {
           address: selectedToken.address as `0x${string}`,
         },
@@ -121,6 +125,13 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd, defaultRec
 
   return (
     <Stack direction="column" gap={1}>
+      <Stack>
+        <Typography variant="subtitle2">Receiver</Typography>
+        <TextField
+          value={receiver}
+          onChange={({ target }) => setReceiver(target.value as `0x${string}`)}
+        />
+      </Stack>
       <Stack direction="row" gap={2}>
         <Stack direction="column" flex={1}>
           <Typography variant="subtitle2">Network</Typography>
