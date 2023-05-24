@@ -5,11 +5,12 @@ import {
   SendStreamCommand,
   WrapIntoSuperTokensCommand,
 } from "../commands";
-import Close from "@mui/icons-material/Close";
+import UpgradeIcon_ from "@mui/icons-material/Upgrade";
 import { normalizeIcon } from "../helpers/normalizeIcon";
 import { useWidget } from "../WidgetContext";
+import { TokenAvatar } from "../TokenAvatar";
 
-const CloseIcon = normalizeIcon(Close);
+const UpgradeIcon = normalizeIcon(UpgradeIcon_);
 
 export function CommandPreview({ command: cmd }: { command: Command }) {
   switch (cmd.type) {
@@ -33,17 +34,52 @@ export function WrapIntoSuperTokensPreview({
   const underlyingToken = getUnderlyingToken(cmd.underlyingTokenAddress);
 
   return (
-    <Stack
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-      spacing={3}
-    >
-      <Stack component={Paper}>{underlyingToken.symbol}</Stack>
-      <Paper>
-        <CloseIcon />
-      </Paper>
-      <Stack component={Paper}>{superToken.symbol}</Stack>
+    <Stack direction="column" alignItems="center" spacing={3}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={3}
+      >
+        <Stack direction="column" alignItems="center" spacing={2}>
+          <Typography>You are wrapping</Typography>
+          <Stack
+            component={Paper}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            spacing={1}
+            sx={{ px: 3, py: 1 }}
+          >
+            <TokenAvatar tokenInfo={underlyingToken} />
+            <Typography>{cmd.amountEther}</Typography>
+            <Typography>{underlyingToken.symbol}</Typography>
+          </Stack>
+        </Stack>
+
+        <Stack component={Paper} sx={{ p: 1 }}>
+          <UpgradeIcon sx={{ transform: "rotate(90deg)" }} />
+        </Stack>
+
+        <Stack direction="column" alignItems="center" spacing={1}>
+          <Typography>You are receiving</Typography>
+          <Stack
+            component={Paper}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            spacing={1}
+            sx={{ px: 3, py: 1 }}
+          >
+            <TokenAvatar tokenInfo={superToken} />
+            <Typography>{cmd.amountEther}</Typography>
+            <Typography>{superToken.symbol}</Typography>
+          </Stack>
+        </Stack>
+      </Stack>
+      <Typography>
+        1 {underlyingToken.symbol} = 1 {superToken.symbol}
+      </Typography>
     </Stack>
   );
 }
