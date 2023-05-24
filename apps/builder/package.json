@@ -20,7 +20,7 @@
     "@mui/material": "latest",
     "@pinata/sdk": "^2.1.0",
     "@superfluid-finance/widget": "workspace:*",
-    "@tokdaniel/supertokenlist": "^1.0.0",
+    "@superfluid-finance/tokenlist": "^1.0.0",
     "@uniswap/token-lists": "1.0.0-beta.31",
     "@web3modal/ethereum": "^2.4.1",
     "@web3modal/react": "^2.4.1",

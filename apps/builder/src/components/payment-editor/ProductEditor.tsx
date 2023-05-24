@@ -5,7 +5,7 @@ import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import SelectPaymentOption from "../widget-preview/SelectPaymentOption";
 import { networks } from "../../networkDefinitions";
 import { ChainId } from "@superfluid-finance/widget";
-import tokenList from "@tokdaniel/supertokenlist";
+import tokenList from "@superfluid-finance/tokenlist";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 type PaymentOptionViewProps = {
@@ -84,9 +84,7 @@ const ProductEditor: FC = () => {
       <Stack direction="column" gap={2}>
         <Typography variant="subtitle1">Payment details</Typography>
         <Stack direction="column" flex={1}>
-          <Typography variant="subtitle2">
-            Default Receiver
-          </Typography>
+          <Typography variant="subtitle2">Default Receiver</Typography>
           <Controller
             control={control}
             name="paymentDetails.receiverAddress"
