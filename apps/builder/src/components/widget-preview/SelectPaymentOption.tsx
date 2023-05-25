@@ -3,11 +3,15 @@ import { Network, networks } from "../../networkDefinitions";
 import { TokenInfo } from "@uniswap/token-lists";
 import {
   Autocomplete,
+  Badge,
+  Box,
   Button,
+  Chip,
   MenuItem,
   Select,
   SelectChangeEvent,
   Stack,
+  SvgIcon,
   TextField,
   Typography,
 } from "@mui/material";
@@ -15,6 +19,7 @@ import tokenList, { SuperTokenInfo } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { WidgetProps } from "./WidgetPreview";
+import Image from "next/image";
 
 export type PaymentOption = {
   network: Network;
@@ -37,6 +42,7 @@ const defaultNetwork = {
   name: "",
   chainId: -1,
   subgraphUrl: "",
+  logoUrl: "",
 };
 
 const defaultToken: SuperTokenInfo = {
@@ -142,7 +148,36 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           >
             {filteredNetworks.map((network) => (
               <MenuItem value={network.name} key={`${network.chainId}`}>
-                {network.name}
+                <Stack
+                  direction="row"
+                  gap={1}
+                  sx={{ alignItems: "center", width: "100%" }}
+                >
+                  <Image
+                    src={network.logoUrl}
+                    alt={network.name}
+                    width={24}
+                    height={24}
+                  />
+                  <Stack
+                    direction="row"
+                    sx={{
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flex: 1,
+                    }}
+                  >
+                    {network.name}
+                    {network.isTestnet && (
+                      <Chip
+                        variant="filled"
+                        color="primary"
+                        label="test"
+                        size="small"
+                      />
+                    )}
+                  </Stack>
+                </Stack>
               </MenuItem>
             ))}
           </Select>
@@ -153,14 +188,21 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             fullWidth
             value={selectedToken}
             onChange={(_, value) => setSelectedToken(value!)}
-            disablePortal
-            id="network-select"
+            id="token-select"
             options={autoCompleteTokenOptions}
             getOptionLabel={renderToken}
             renderOption={(props, option) => (
-              <Typography {...props} key={`${option.symbol}-${option.chainId}`}>
-                {renderToken(option)}
-              </Typography>
+              <Stack direction="row" gap={1} sx={{ alignItems: "center" }}>
+                {option.logoURI && (
+                  <Image src={option.logoURI} width={24} height={24} alt="" />
+                )}
+                <Typography
+                  {...props}
+                  key={`${option.symbol}-${option.chainId}`}
+                >
+                  {renderToken(option)}
+                </Typography>
+              </Stack>
             )}
             renderInput={(params) => <TextField {...params} />}
           />
