@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   output: "export",
+  images: {
+    unoptimized: true,
+  },
   transpilePackages: ["@superfluid-finance/widget"],
   webpack: (config) => {
     config.resolve.fallback = { fs: false, net: false, tls: false };

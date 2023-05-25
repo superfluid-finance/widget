@@ -42,6 +42,7 @@ const defaultNetwork = {
   name: "",
   chainId: -1,
   subgraphUrl: "",
+  logoUrl: "",
 };
 
 const defaultToken: SuperTokenInfo = {
@@ -187,14 +188,21 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             fullWidth
             value={selectedToken}
             onChange={(_, value) => setSelectedToken(value!)}
-            disablePortal
-            id="network-select"
+            id="token-select"
             options={autoCompleteTokenOptions}
             getOptionLabel={renderToken}
             renderOption={(props, option) => (
-              <Typography {...props} key={`${option.symbol}-${option.chainId}`}>
-                {renderToken(option)}
-              </Typography>
+              <Stack direction="row" gap={1} sx={{ alignItems: "center" }}>
+                {option.logoURI && (
+                  <Image src={option.logoURI} width={24} height={24} alt="" />
+                )}
+                <Typography
+                  {...props}
+                  key={`${option.symbol}-${option.chainId}`}
+                >
+                  {renderToken(option)}
+                </Typography>
+              </Stack>
             )}
             renderInput={(params) => <TextField {...params} />}
           />
