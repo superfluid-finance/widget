@@ -4,10 +4,12 @@ import { TokenInfo } from "@uniswap/token-lists";
 import {
   Autocomplete,
   Button,
+  Chip,
   MenuItem,
   Select,
   SelectChangeEvent,
   Stack,
+  SvgIcon,
   TextField,
   Typography,
 } from "@mui/material";
@@ -15,6 +17,7 @@ import tokenList, { SuperTokenInfo } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { WidgetProps } from "./WidgetPreview";
+import Image from "next/image";
 
 export type PaymentOption = {
   network: Network;
@@ -142,7 +145,15 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           >
             {filteredNetworks.map((network) => (
               <MenuItem value={network.name} key={`${network.chainId}`}>
-                {network.name}
+                <Stack direction="row" gap={2} sx={{ alignItems: "center" }}>
+                  <Image
+                    src={network.logoUrl}
+                    alt={network.name}
+                    width={24}
+                    height={24}
+                  />
+                  {network.name}
+                </Stack>
               </MenuItem>
             ))}
           </Select>
