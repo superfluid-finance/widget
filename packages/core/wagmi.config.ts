@@ -77,7 +77,11 @@ export default defineConfig({
       ],
     }),
     actions({
-      prepareWriteContract: true,
+      prepareWriteContract: false,
+      readContract: false,
+      watchContractEvent: false,
+      getContract: false,
+      writeContract: false,
     }),
   ],
 });
