@@ -3,6 +3,8 @@ import { Network, networks } from "../../networkDefinitions";
 import { TokenInfo } from "@uniswap/token-lists";
 import {
   Autocomplete,
+  Badge,
+  Box,
   Button,
   Chip,
   MenuItem,
@@ -145,14 +147,35 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           >
             {filteredNetworks.map((network) => (
               <MenuItem value={network.name} key={`${network.chainId}`}>
-                <Stack direction="row" gap={2} sx={{ alignItems: "center" }}>
+                <Stack
+                  direction="row"
+                  gap={1}
+                  sx={{ alignItems: "center", width: "100%" }}
+                >
                   <Image
                     src={network.logoUrl}
                     alt={network.name}
                     width={24}
                     height={24}
                   />
-                  {network.name}
+                  <Stack
+                    direction="row"
+                    sx={{
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flex: 1,
+                    }}
+                  >
+                    {network.name}
+                    {network.isTestnet && (
+                      <Chip
+                        variant="filled"
+                        color="primary"
+                        label="test"
+                        size="small"
+                      />
+                    )}
+                  </Stack>
                 </Stack>
               </MenuItem>
             ))}
