@@ -256,6 +256,9 @@ importers:
       abitype:
         specifier: ^0.7.1
         version: 0.7.1(typescript@5.0.4)(zod@3.21.4)
+      blockies-ts:
+        specifier: ^1.0.0
+        version: 1.0.0
       immer:
         specifier: ^10.0.2
         version: 10.0.2
@@ -3361,6 +3364,10 @@ packages:
       buffer: 6.0.3
       inherits: 2.0.4
       readable-stream: 3.6.2
+    dev: false
+
+  /blockies-ts@1.0.0:
+    resolution: {integrity: sha512-mL9NO/FjYbFjaSDA5tw/qkUwEXrBG1bHSoPhAFG9CAzDaHTwQHzvYByAYUBmnqYciFsJvdxWKGtyOLgaSKoUkA==}
     dev: false
 
   /bn.js@4.12.0:

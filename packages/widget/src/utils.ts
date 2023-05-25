@@ -21,3 +21,18 @@ export function useStateWithDep<T>(defaultValue: T) {
 
   return [value, setValue] as const;
 }
+
+export function shortenHex(address: string, length = 4) {
+  return `${address.substring(0, 2 + length)}...${address.substring(
+    address.length - length,
+    address.length
+  )}`;
+}
+
+export async function copyToClipboard(text: string) {
+  if ("clipboard" in navigator) {
+    return await navigator.clipboard.writeText(text);
+  } else {
+    return document.execCommand("copy", true, text);
+  }
+}

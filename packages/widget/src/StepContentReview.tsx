@@ -42,16 +42,12 @@ export default function StepContentReview() {
       <Stack>
         <Stack direction="column" spacing={3}>
           <List sx={{ ml: 1.5 }}>
-            {commands.map((cmd) => {
-              const { type: title, ...rest } = cmd;
-              return (
-                <ListItem key={title}>
-                  <ListItemText
-                    primary={<CommandPreview command={cmd} />}
-                  />
-                </ListItem>
-              );
-            })}
+            {commands.map((cmd) => (
+              <ListItem key={cmd.id}>
+                <ListItemText
+                  primary={<CommandPreview command={cmd} />} />
+              </ListItem>
+            ))}
           </List>
         </Stack>
         {needsToSwitchNetwork ? (

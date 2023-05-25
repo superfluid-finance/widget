@@ -1,4 +1,4 @@
-import { Card, Paper, Stack, Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 import {
   Command,
   EnableAutoWrapCommand,
@@ -9,7 +9,11 @@ import UpgradeIcon_ from "@mui/icons-material/Upgrade";
 import { normalizeIcon } from "../helpers/normalizeIcon";
 import { useWidget } from "../WidgetContext";
 import { TokenAvatar } from "../TokenAvatar";
+import { AccountAddressCard } from "../AccountAddressCard";
+import NorthEastIcon_ from "@mui/icons-material/NorthEast";
+import { useBalance } from "wagmi";
 
+const NorthEastIcon = normalizeIcon(NorthEastIcon_);
 const UpgradeIcon = normalizeIcon(UpgradeIcon_);
 
 export function CommandPreview({ command: cmd }: { command: Command }) {
@@ -40,6 +44,7 @@ export function WrapIntoSuperTokensPreview({
         alignItems="center"
         justifyContent="space-between"
         spacing={3}
+        width="100%"
       >
         <Stack direction="column" alignItems="center" spacing={2}>
           <Typography>You are wrapping</Typography>
@@ -101,9 +106,40 @@ export function SendStreamPreview({
 }: {
   command: SendStreamCommand;
 }) {
+  // TODO: get balance with wagmi
+
+  const { getSuperToken } = useWidget();
+  const superToken = getSuperToken(cmd.superTokenAddress);
+
+  const { data: tokenBalance } = useBalance({
+    token: cmd.superTokenAddress,
+    address: cmd.accountAddress,
+    chainId: cmd.chainId,
+    formatUnits: "ether"
+  });
+
   return (
-    <Typography component="pre" variant="body2">
-      {JSON.stringify(cmd, null, 2)}
-    </Typography>
+    <Stack direction="column" alignItems="center" spacing={3} width="100%">
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={3}
+        width="100%"
+      >
+        <Stack>
+          <Typography>Sender</Typography>
+          <AccountAddressCard address={cmd.accountAddress} />
+        </Stack>
+        <Stack component={Paper} sx={{ p: 1 }}>
+          <NorthEastIcon />
+        </Stack>
+        <Stack>
+          <Typography>Receiver</Typography>
+          <AccountAddressCard address={cmd.receiverAddress} />
+        </Stack>
+      </Stack>
+      <Typography>Balance: {tokenBalance?.formatted} {superToken.symbol}</Typography>
+    </Stack>
   );
 }

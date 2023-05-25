@@ -19,7 +19,8 @@ export function CheckoutSummary() {
     parseEther(sendStreamCommand.flowRate.amountEther) /
     BigInt(mapTimePeriodToSeconds(sendStreamCommand.flowRate.period));
 
-  // hack
+  // TODO: hack
+  // TODO: do the flowing balance animation with a speed-up
   const date = useMemo(() => new Date(), []);
   const flowingBalance = useFlowingBalance(0n, date, flowRate);
 
@@ -27,6 +28,8 @@ export function CheckoutSummary() {
     () => getSuperToken(sendStreamCommand.superTokenAddress),
     [sendStreamCommand.superTokenAddress]
   );
+
+  // TODO: add merchant link
 
   return (
     <Stack sx={{ m: 3 }}>
