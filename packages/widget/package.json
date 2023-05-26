@@ -1,15 +1,15 @@
 {
   "name": "@superfluid-finance/widget",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
     "./webcomponent": "./dist/webcomponent/WebComponent.js"
   },
-  "main": "src/index.ts",
-  "types": "src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "typesVersions": {
     "*": {
       "webcomponent": [
@@ -18,6 +18,9 @@
     }
   },
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "watch": "tsc -w -p ./tsconfig.json",
