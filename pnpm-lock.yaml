@@ -86,8 +86,8 @@ importers:
         specifier: latest
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: 7.44.0-rc.3
-        version: 7.44.0-rc.3(react@18.2.0)
+        specifier: ^7.44.0
+        version: 7.44.0(react@18.2.0)
       wagmi:
         specifier: ^1.0.8
         version: 1.0.8(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.37)(zod@3.21.4)
@@ -272,8 +272,8 @@ importers:
         specifier: latest
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: 7.44.0-rc.3
-        version: 7.44.0-rc.3(react@18.2.0)
+        specifier: ^7.44.0
+        version: 7.44.0(react@18.2.0)
       superfluid-checkout-core:
         specifier: workspace:*
         version: link:../core
@@ -6463,8 +6463,8 @@ packages:
       react: 18.2.0
       scheduler: 0.23.0
 
-  /react-hook-form@7.44.0-rc.3(react@18.2.0):
-    resolution: {integrity: sha512-IcNWDLO7uBDk07AfAvd+Urvtgk1mxLAVW1VyQKzCVTcDlt4cdyd83iuzo8nRv5SQkWjFmnEz9Y4zCs0duoVMwg==}
+  /react-hook-form@7.44.0(react@18.2.0):
+    resolution: {integrity: sha512-OkQ/Q9+iB0YeBg4o6zCCY6oSw1jECwj7AMiGNIeLyzQZOQ16PCbqbAEj8FNviJvOs70C7lFWLump/ziHzHTNCQ==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18

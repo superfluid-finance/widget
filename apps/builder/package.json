@@ -30,7 +30,7 @@
     "next": "^13.4.4",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "7.44.0-rc.3",
+    "react-hook-form": "^7.44.0",
     "wagmi": "^1.0.8",
     "zod": "^3.21.4"
   },
