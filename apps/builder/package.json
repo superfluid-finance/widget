@@ -14,7 +14,7 @@
     "@emotion/react": "latest",
     "@emotion/server": "latest",
     "@emotion/styled": "latest",
-    "@faker-js/faker": "^8.0.1",
+    "@faker-js/faker": "^8.0.2",
     "@mui/icons-material": "latest",
     "@mui/lab": "5.0.0-alpha.125",
     "@mui/material": "latest",
@@ -27,19 +27,19 @@
     "clsx": "^1.2.1",
     "ethers": "5.7.2",
     "mui-color-input": "^1.0.5",
-    "next": "^13.4.3",
+    "next": "^13.4.4",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "7.44.0-rc.3",
-    "wagmi": "^1.0.6",
+    "wagmi": "^1.0.8",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
-    "@types/node": "^20.2.3",
+    "@types/node": "^20.2.5",
     "@types/react": "latest",
     "eslint": "latest",
-    "eslint-config-next": "^13.4.3",
+    "eslint-config-next": "^13.4.4",
     "typescript": "latest"
   }
 }

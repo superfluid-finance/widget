@@ -17,7 +17,7 @@
     "@web3modal/react": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "wagmi": "^1.0.6"
+    "wagmi": "^1.0.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.7",
@@ -29,6 +29,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.5",
     "typescript": "^5.0.4",
-    "vite": "^4.3.8"
+    "vite": "^4.3.9"
   }
 }
