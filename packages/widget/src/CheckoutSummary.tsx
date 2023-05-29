@@ -9,7 +9,10 @@ import { useWidget } from "./WidgetContext";
 import FlowingBalance from "./FlowingBalance";
 
 export function CheckoutSummary() {
-  const { getSuperToken } = useWidget();
+  const {
+    getSuperToken,
+    productDetails: { successURL = "https://superfluid.finance" }, // TODO: remove the default
+  } = useWidget();
   const { commands } = useCommandHandler();
 
   const sendStreamCommand = commands.find(
@@ -20,9 +23,9 @@ export function CheckoutSummary() {
     parseEther(sendStreamCommand.flowRate.amountEther) /
     BigInt(mapTimePeriodToSeconds(sendStreamCommand.flowRate.period));
 
-  // TODO: hack
-  // TODO: do the flowing balance animation with a speed-up
-  const startingBalance = 0n;
+    // TODO: do the flowing balance animation with a speed-up
+    const startingBalance = 0n;
+    // TODO: hackish
   const startingBalanceDate = useMemo(() => new Date(), []);
 
   const superToken = useMemo(
@@ -61,9 +64,23 @@ export function CheckoutSummary() {
 
       <Divider sx={{ my: 3 }} />
 
-      <Button fullWidth variant="outlined">
-        Go to Superfluid Dashboard
-      </Button>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="stretch"
+        spacing={1}
+      >
+        {/* // TODO: Should these be target blank? */}
+        {successURL && (
+          <Button fullWidth variant="contained" href={successURL}>
+            {/* // TODO: Make text configurable? */}
+            Continue to Merchant
+          </Button>
+        )}
+        <Button fullWidth variant="outlined" href="https://app.superfluid.finance" target="_blank">
+          Open Superfluid Dashboard
+        </Button>
+      </Stack>
     </Stack>
   );
 }
