@@ -3,16 +3,43 @@ import { DraftFormValues, FormReturn as FormMethods } from "./formValues";
 import { DevTool } from "@hookform/devtools";
 import { ChildrenProp } from "./utils";
 import { FormEffects } from "./FormEffects";
+import { useNetwork } from "wagmi";
+import { useWidget } from "./WidgetContext";
+import { useEffect, useMemo } from "react";
 
 type Props = {
   children: ((formMethods: FormMethods) => ChildrenProp) | ChildrenProp;
 };
 
 export default function CheckoutFormProvider({ children }: Props) {
+  const { chain } = useNetwork();
+  const { networks, paymentOptionWithTokenInfoList } = useWidget();
+
+  const defaultNetwork = useMemo(
+    () => networks.find((network) => network.id === chain?.id) ?? null,
+    [chain, networks]
+  );
+
+  const defaultPaymentOption = useMemo(() => {
+    if (!defaultNetwork) {
+      return null;
+    }
+
+    const networkPaymentOptions = paymentOptionWithTokenInfoList.filter(
+      (x) => x.paymentOption.chainId === defaultNetwork.id
+    );
+
+    if (networkPaymentOptions.length === 1) {
+      return networkPaymentOptions[0];
+    }
+
+    return null;
+  }, [defaultNetwork, paymentOptionWithTokenInfoList]);
+
   const defaultValues: DraftFormValues = {
     accountAddress: null,
-    network: null,
-    paymentOptionWithTokenInfo: null,
+    network: defaultNetwork,
+    paymentOptionWithTokenInfo: defaultPaymentOption,
     wrapAmountEther: "" as `${number}`,
     enableAutoWrap: false,
   };
