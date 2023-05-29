@@ -18,6 +18,7 @@ import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
 import { SuperTokenInfo } from "@superfluid-finance/tokenlist";
 import { TokenInfo } from "@uniswap/token-lists";
+import memoize from "lodash.memoize";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {
@@ -53,7 +54,7 @@ export function SuperfluidWidget({
     );
 
   const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>(
-    (address: Address) => {
+    memoize((address: Address) => {
       const superToken = superTokens.find(
         (x) => x.address.toLowerCase() === address.toLowerCase()
       );
@@ -61,12 +62,12 @@ export function SuperfluidWidget({
         throw new Error("Super Token not found from token list.");
       }
       return superToken;
-    },
+    }),
     [superTokens]
-  ); // TODO(KK): memoize
+  );
 
   const getUnderlyingToken = useCallback<(address: Address) => TokenInfo>(
-    (address: Address) => {
+    memoize((address: Address) => {
       const underlyingToken = underlyingTokens.find(
         (x) => x.address.toLowerCase() === address.toLowerCase()
       );
@@ -74,20 +75,20 @@ export function SuperfluidWidget({
         throw new Error("Super Token not found from token list.");
       }
       return underlyingToken;
-    },
+    }),
     [underlyingTokens]
-  ); // TODO(KK): memoize
+  );
 
   const getNetwork = useCallback<(chainId: number) => SupportedNetwork>(
-    (chainId: number) => {
+    memoize((chainId: number) => {
       const network = supportedNetworks.find((x) => x.id === chainId);
       if (!network) {
         throw new Error("Network not found from supported networks.");
       }
       return network;
-    },
+    }),
     []
-  ); // TODO(KK): memoize
+  );
 
   const checkoutState = useMemo<WidgetContextValue>(
     () => ({

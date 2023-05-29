@@ -65,7 +65,7 @@ export default function Stepper() {
   const { isConnected } = useAccount();
 
   // TODO: clean up the orientation logic.
-  const orientation: Orientation = "vertical";
+  const orientation: Orientation = "vertical" as Orientation;
   const container = React.useRef(null);
 
   return (

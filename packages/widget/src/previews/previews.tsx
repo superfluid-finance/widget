@@ -106,8 +106,6 @@ export function SendStreamPreview({
 }: {
   command: SendStreamCommand;
 }) {
-  // TODO: get balance with wagmi
-
   const { getSuperToken } = useWidget();
   const superToken = getSuperToken(cmd.superTokenAddress);
 

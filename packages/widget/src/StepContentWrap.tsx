@@ -2,7 +2,6 @@ import {
   FormControlLabel,
   FormGroup,
   Stack,
-  StepContent,
   Switch,
   TextField,
   Typography,
@@ -13,7 +12,6 @@ import { useMemo } from "react";
 import { useWidget } from "./WidgetContext";
 import { TokenAvatar } from "./TokenAvatar";
 import { StepperContinueButton } from "./StepperContinueButton";
-import { Address } from "viem";
 
 export default function StepContentWrap() {
   const {
@@ -37,9 +35,7 @@ export default function StepContentWrap() {
       return undefined;
     }
 
-    return getUnderlyingToken(
-      superTokenInfo.underlyingTokenAddress! as Address
-    ); // TODO: Get rid of this bang and cast
+    return getUnderlyingToken(superTokenInfo.underlyingTokenAddress);
   }, [superToken, getUnderlyingToken]);
 
   return (

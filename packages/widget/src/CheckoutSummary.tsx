@@ -22,9 +22,9 @@ export function CheckoutSummary() {
     parseEther(sendStreamCommand.flowRate.amountEther) /
     BigInt(mapTimePeriodToSeconds(sendStreamCommand.flowRate.period));
 
-    // TODO: do the flowing balance animation with a speed-up
-    const startingBalance = 0n;
-    // TODO: hackish
+  // TODO: do the flowing balance animation with a speed-up
+  const startingBalance = 0n;
+  // TODO: hackish, use transaction date instead
   const startingBalanceDate = useMemo(() => new Date(), []);
 
   const superToken = useMemo(
@@ -74,7 +74,12 @@ export function CheckoutSummary() {
             Continue to Merchant
           </Button>
         )}
-        <Button fullWidth variant="outlined" href="https://app.superfluid.finance" target="_blank">
+        <Button
+          fullWidth
+          variant="outlined"
+          href="https://app.superfluid.finance"
+          target="_blank"
+        >
           Open Superfluid Dashboard
         </Button>
       </Stack>
