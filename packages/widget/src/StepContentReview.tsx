@@ -4,8 +4,7 @@ import {
   ListItem,
   ListItemText,
   Stack,
-  StepContent,
-  Typography,
+  StepContent
 } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
@@ -38,7 +37,6 @@ export default function StepContentReview() {
   const needsToSwitchNetwork = expectedChainId !== chainId;
 
   return (
-    <StepContent TransitionProps={{ unmountOnExit: true }}>
       <Stack>
         <Stack direction="column" spacing={3}>
           <List sx={{ ml: 1.5 }}>
@@ -73,6 +71,5 @@ export default function StepContentReview() {
           // </Button>
         )}
       </Stack>
-    </StepContent>
   );
 }

@@ -22,7 +22,6 @@ export default function StepContentPaymentOption() {
   } = useWidget();
 
   return (
-    <StepContent TransitionProps={{ unmountOnExit: false }}>
       <Stack
         direction="column"
         alignItems="stretch"
@@ -49,6 +48,5 @@ export default function StepContentPaymentOption() {
           {isConnected ? "Continue" : "Connect Wallet to Continue"}
         </StepperContinueButton>
       </Stack>
-    </StepContent>
   );
 }

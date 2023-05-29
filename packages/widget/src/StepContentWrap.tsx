@@ -22,7 +22,7 @@ export default function StepContentWrap() {
     formState: { isValid, isValidating },
   } = useFormContext<DraftFormValues>();
   const [paymentOptionWithTokenInfo] = watch(["paymentOptionWithTokenInfo"]);
-  
+
   const superToken = paymentOptionWithTokenInfo?.superToken;
   const { getUnderlyingToken } = useWidget();
 
@@ -37,77 +37,77 @@ export default function StepContentWrap() {
       return undefined;
     }
 
-    return getUnderlyingToken(superTokenInfo.underlyingTokenAddress! as Address); // TODO: Get rid of this bang and cast
+    return getUnderlyingToken(
+      superTokenInfo.underlyingTokenAddress! as Address
+    ); // TODO: Get rid of this bang and cast
   }, [superToken, getUnderlyingToken]);
 
   return (
-    <StepContent TransitionProps={{ unmountOnExit: false }}>
+    <Stack
+      direction="column"
+      alignItems="stretch"
+      justifyContent="space-around"
+      spacing={3}
+    >
       <Stack
         direction="column"
         alignItems="stretch"
         justifyContent="space-around"
-        spacing={3}
+        spacing={1}
       >
-        <Stack
-          direction="column"
-          alignItems="stretch"
-          justifyContent="space-around"
-          spacing={1}
-        >
-          <Controller
-            control={c}
-            name="wrapAmountEther"
-            render={({ field: { value, onChange, onBlur } }) => (
-              <FormGroup>
-                <TextField
-                  value={value}
+        <Controller
+          control={c}
+          name="wrapAmountEther"
+          render={({ field: { value, onChange, onBlur } }) => (
+            <FormGroup>
+              <TextField
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                InputProps={{
+                  endAdornment: underlyingToken && (
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                      <TokenAvatar tokenInfo={underlyingToken} />
+                      <Typography>{underlyingToken.symbol}</Typography>
+                    </Stack>
+                  ),
+                }}
+              />
+              <TextField
+                disabled
+                value={value}
+                InputProps={{
+                  endAdornment: superToken && (
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                      <TokenAvatar tokenInfo={superToken} />
+                      <Typography>{superToken.symbol}</Typography>
+                    </Stack>
+                  ),
+                }}
+              />
+            </FormGroup>
+          )}
+        />
+        <Controller
+          control={c}
+          name="enableAutoWrap"
+          render={({ field: { value, onChange, onBlur } }) => (
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={value ?? false}
                   onChange={onChange}
                   onBlur={onBlur}
-                  InputProps={{
-                    endAdornment: underlyingToken && (
-                      <Stack direction="row" alignItems="center" spacing={1}>
-                        <TokenAvatar tokenInfo={underlyingToken} />
-                        <Typography>{underlyingToken.symbol}</Typography>
-                      </Stack>
-                    ),
-                  }}
                 />
-                <TextField
-                  disabled
-                  value={value}
-                  InputProps={{
-                    endAdornment: superToken && (
-                      <Stack direction="row" alignItems="center" spacing={1}>
-                        <TokenAvatar tokenInfo={superToken} />
-                        <Typography>{superToken.symbol}</Typography>
-                      </Stack>
-                    ),
-                  }}
-                />
-              </FormGroup>
-            )}
-          />
-          <Controller
-            control={c}
-            name="enableAutoWrap"
-            render={({ field: { value, onChange, onBlur } }) => (
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={value ?? false}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                  />
-                }
-                label="Enable Auto-Wrap"
-              />
-            )}
-          />
-        </Stack>
-        <StepperContinueButton disabled={!isValid || isValidating}>
-          Continue
-        </StepperContinueButton>
+              }
+              label="Enable Auto-Wrap"
+            />
+          )}
+        />
       </Stack>
-    </StepContent>
+      <StepperContinueButton disabled={!isValid || isValidating}>
+        Continue
+      </StepperContinueButton>
+    </Stack>
   );
 }

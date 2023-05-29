@@ -1,6 +1,5 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
-import useFlowingBalance from "./useFlowingBalance";
 import { parseEther } from "viem";
 import { mapTimePeriodToSeconds } from "superfluid-checkout-core";
 import { SendStreamCommand } from "./commands";
@@ -32,8 +31,6 @@ export function CheckoutSummary() {
     () => getSuperToken(sendStreamCommand.superTokenAddress),
     [sendStreamCommand.superTokenAddress]
   );
-
-  // TODO: add merchant link
 
   return (
     <Stack sx={{ m: 3 }}>

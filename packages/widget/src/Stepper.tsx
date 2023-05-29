@@ -1,9 +1,19 @@
-import { Stepper as MUIStepper, Step, StepButton } from "@mui/material";
+import {
+  Box,
+  Container,
+  Stepper as MUIStepper,
+  Orientation,
+  Portal,
+  Step,
+  StepButton,
+  StepContent,
+  StepperProps,
+} from "@mui/material";
 import { StepperProvider } from "./StepperProvider";
 import StepContentPaymentOption from "./StepContentPaymentOption";
 import StepContentWrap from "./StepContentWrap";
 import StepContentReview from "./StepContentReview";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import { useAccount } from "wagmi";
@@ -20,6 +30,7 @@ export default function Stepper() {
     () => [
       {
         buttonText: "Select network and token",
+        shortText: "Network & Token",
         optional: false,
         Content: StepContentPaymentOption,
       },
@@ -29,6 +40,7 @@ export default function Stepper() {
         ? [
             {
               buttonText: "Wrap into Super Token",
+              shortText: "Wrap",
               optional: true,
               Content: StepContentWrap,
             },
@@ -36,11 +48,13 @@ export default function Stepper() {
         : []),
       {
         buttonText: "Review the transaction(s)",
+        shortText: "Review",
         optional: false,
         Content: StepContentReview,
       },
       {
         buttonText: "Confirm the transaction(s)",
+        shortText: "Confirm",
         optional: false,
         Content: StepContentTransactions,
       },
@@ -50,40 +64,68 @@ export default function Stepper() {
 
   const { isConnected } = useAccount();
 
-  return (
-    <StepperProvider
-      totalSteps={steps.length}
-      initialStep={isValid ? steps.length - 1 : 0}
-    >
-      {({ activeStep, setActiveStep }) => {
-        // TODO(KK): Check if React whines over this.
-        if (activeStep !== 0 && !isConnected) {
-          setActiveStep(0);
-        }
+  // TODO: clean up the orientation logic.
+  const orientation: Orientation = "vertical";
+  const container = React.useRef(null);
 
-        return (
-          <MUIStepper
-            orientation="vertical"
-            activeStep={activeStep}
-            sx={{ m: 2 }}
-          >
-            {steps.map((step, index) => {
-              const { Content } = step;
-              return (
-                <Step key={index}>
-                  <StepButton
-                    optional={step.optional ? "optional" : undefined}
-                    onClick={() => setActiveStep(index)}
-                  >
-                    {step.buttonText}
-                  </StepButton>
-                  <Content />
-                </Step>
-              );
-            })}
-          </MUIStepper>
-        );
-      }}
-    </StepperProvider>
+  return (
+    <>
+      <StepperProvider
+        totalSteps={steps.length}
+        initialStep={isValid ? steps.length - 1 : 0}
+      >
+        {({ activeStep, setActiveStep }) => {
+          // TODO(KK): Check if React whines over this.
+          if (activeStep !== 0 && !isConnected) {
+            setActiveStep(0);
+          }
+
+          return (
+            <>
+              <MUIStepper
+                orientation={orientation}
+                activeStep={activeStep}
+                sx={{ m: 2 }}
+              >
+                {steps.map((step, index) => {
+                  const { Content: Content_ } = step;
+
+                  const Content =
+                    orientation === "vertical" ? (
+                      <StepContent>
+                        <Content_ />
+                      </StepContent>
+                    ) : activeStep === index ? (
+                      <Portal container={container.current}>
+                        <Content_ />
+                      </Portal>
+                    ) : null;
+
+                  const labelText =
+                    orientation === "vertical"
+                      ? step.buttonText
+                      : step.shortText;
+
+                  return (
+                    <Step key={index}>
+                      <StepButton
+                        optional={step.optional ? "optional" : undefined}
+                        onClick={() => setActiveStep(index)}
+                      >
+                        {labelText}
+                      </StepButton>
+                      {Content}
+                    </Step>
+                  );
+                })}
+              </MUIStepper>
+              {orientation === "horizontal" && (
+                <Container ref={container} sx={{ my: 2 }}></Container>
+              )}
+            </>
+          );
+        }}
+      </StepperProvider>
+    </>
   );
 }

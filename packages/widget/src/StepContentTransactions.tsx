@@ -11,20 +11,18 @@ export function StepContentTransactions() {
   const result = contractWriteResults[writeIndex];
 
   return (
-    <StepContent>
-      <Stack
-        direction="column"
-        alignItems="center"
-        justifyContent="space-around"
-        spacing={3}
-      >
-        <TransactionCircularProgress
-          size={100}
-          index={writeIndex}
-          total={total}
-        />
-        {result && <ContractWriteButton {...result} />}
-      </Stack>
-    </StepContent>
+    <Stack
+      direction="column"
+      alignItems="center"
+      justifyContent="space-around"
+      spacing={3}
+    >
+      <TransactionCircularProgress
+        size={100}
+        index={writeIndex}
+        total={total}
+      />
+      {result && <ContractWriteButton {...result} />}
+    </Stack>
   );
 }
