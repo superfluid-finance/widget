@@ -1,8 +1,7 @@
-import ProductCard from "./ProductCard";
+import CheckoutProduct from "./CheckoutProduct";
 import Stepper from "./Stepper";
-import CheckoutFormProvider from "./FormProvider";
+import FormProvider from "./FormProvider";
 import { CheckoutSummary } from "./CheckoutSummary";
-import { Transactions } from "./Transactions";
 import {
   AppBar,
   Box,
@@ -15,8 +14,8 @@ import { CommandHandlerProvider } from "./CommandHandlerProvider";
 
 export function CheckoutContent() {
   return (
-    <CheckoutFormProvider>
-      <ProductCard />
+    <FormProvider>
+      <CheckoutProduct />
       <Card variant="outlined" sx={{ m: 3 }}>
         <CommandHandlerProvider>
           {({ status }) => {
@@ -27,32 +26,10 @@ export function CheckoutContent() {
                 return <Stepper />;
               case "success":
                 return <CheckoutSummary />;
-              default:
-                return (
-                  <Box>
-                    <AppBar
-                      sx={{ position: "relative" }}
-                      color="transparent"
-                      elevation={0}
-                    >
-                      <Toolbar>
-                        <IconButton
-                          edge="start"
-                          color="inherit"
-                          // onClick={reset}
-                          aria-label="back"
-                        >
-                          <ArrowBackIcon />
-                        </IconButton>
-                      </Toolbar>
-                    </AppBar>
-                    <Transactions />
-                  </Box>
-                );
             }
           }}
         </CommandHandlerProvider>
       </Card>
-    </CheckoutFormProvider>
+    </FormProvider>
   );
 }

@@ -33,7 +33,7 @@ export type ViewProps =
       type: "page";
     };
 
-export function ViewContainer(props: ViewProps) {
+export function WidgetView(props: ViewProps) {
   const theme = useTheme();
 
   const [isOpen, setOpen] = useState(false);

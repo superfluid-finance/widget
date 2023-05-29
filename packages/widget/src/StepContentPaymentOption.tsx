@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
-import AutocompleteToken from "./AutocompleteToken";
-import AutocompleteNetwork from "./AutocompleteNetwork";
+import TokenAutocomplete from "./TokenAutocomplete";
+import NetworkAutocomplete from "./NetworkAutocomplete";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues, ValidFormValues } from "./formValues";
 import { StepperContinueButton } from "./StepperContinueButton";
@@ -35,10 +35,10 @@ export default function StepContentPaymentOption() {
           spacing={1}
         >
           <Box sx={{ width: "100%" }}>
-            <AutocompleteNetwork />
+            <NetworkAutocomplete />
           </Box>
           <Box sx={{ width: "100%" }}>
-            <AutocompleteToken />
+            <TokenAutocomplete />
           </Box>
         </Stack>
         <StepperContinueButton

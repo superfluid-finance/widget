@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
 import ContractWriteButton from "./ContractWriteButton";
-import { TransactionCircularProgress } from "./TransactionCircularProgress";
+import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress";
 
 export function StepContentTransactions() {
   const { contractWrites, contractWriteResults, writeIndex } =
@@ -17,7 +17,7 @@ export function StepContentTransactions() {
       justifyContent="space-around"
       spacing={3}
     >
-      <TransactionCircularProgress
+      <ContractWriteCircularProgress
         size={100}
         index={writeIndex}
         total={total}

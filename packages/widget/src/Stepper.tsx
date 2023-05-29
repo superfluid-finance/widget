@@ -14,7 +14,7 @@ import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import { useAccount } from "wagmi";
-import { StepContentTransactions } from "./StepContentTransactions";
+import { StepContentTransactions } from "./StepContentConfirm";
 import { useWidget } from "./WidgetContext";
 
 export default function Stepper() {

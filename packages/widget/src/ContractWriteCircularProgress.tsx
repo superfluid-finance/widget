@@ -10,7 +10,7 @@ type Props = CircularProgressProps & {
   total: number;
 };
 
-export function TransactionCircularProgress({ index, total, ...props }: Props) {
+export function ContractWriteCircularProgress({ index, total, ...props }: Props) {
   return (
     <Box position="relative" display="inline-flex">
       <CircularProgress variant="indeterminate" {...props} />

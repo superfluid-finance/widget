@@ -4,7 +4,7 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { ContractWrite } from "./extractContractWrite";
+import { ContractWrite } from "./ContractWrite";
 import { ChildrenProp } from "./utils";
 
 export type ContractWriteResult = {
@@ -14,19 +14,19 @@ export type ContractWriteResult = {
   transactionResult: ReturnType<typeof useWaitForTransaction>;
 }
 
-type ContractWriteHandlerProps = {
+type ContractWriteManagerProps = {
   prepare: boolean;
   contractWrite: ContractWrite;
   onChange?: (result: ContractWriteResult) => void;
   children?: (result: ContractWriteResult) => ChildrenProp;
 };
 
-export function ContractWriteHandler({
+export function ContractWriteManager({
   prepare,
   contractWrite,
   onChange,
   children,
-}: ContractWriteHandlerProps) {
+}: ContractWriteManagerProps) {
   const prepareResult = usePrepareContractWrite(prepare ? contractWrite: undefined);
   const writeResult = useContractWrite(prepareResult.config);
   const transactionResult = useWaitForTransaction({

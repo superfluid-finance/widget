@@ -1,6 +1,6 @@
-import { ContractWriteResult } from "./ContractWriteHandler";
+import { ContractWriteResult } from "./ContractWriteManager";
 import { Command } from "./commands";
-import { ContractWrite } from "./extractContractWrite";
+import { ContractWrite } from "./ContractWrite";
 
 export type State = Idle | Pending | Initiated | Success;
 

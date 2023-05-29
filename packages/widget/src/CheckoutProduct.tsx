@@ -3,7 +3,7 @@ import { useWidget } from "./WidgetContext";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 
-export default function ProductCard() {
+export default function CheckoutProduct() {
   const {
     productDetails: { name, description, imageURI },
   } = useWidget();

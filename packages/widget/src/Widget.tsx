@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext";
-import { ViewProps, ViewContainer } from "./ViewContainer";
+import { ViewProps, WidgetView } from "./WidgetView";
 import { SupportedNetwork, supportedNetworks } from "superfluid-checkout-core";
 import { PaymentOptionWithTokenInfo } from "./formValues";
 import {
@@ -138,7 +138,7 @@ export function SuperfluidWidget({
       <ThemeProvider theme={theme}>
         {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
         {validationResult.success ? (
-          <ViewContainer {...viewProps} />
+          <WidgetView {...viewProps} />
         ) : (
           <Alert severity="error">
             <AlertTitle>Input Error</AlertTitle>

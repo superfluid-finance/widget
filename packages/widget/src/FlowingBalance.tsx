@@ -6,6 +6,7 @@ import { useSignificantFlowingDecimal } from "./useSignificantFlowingDecimal";
 import { formatEther } from "viem";
 import { toFixedUsingString } from "./utils";
 
+// TODO: re-use with useFlowingBalance?
 type FlowingBalanceProps = {
   startingBalance: bigint;
   startingBalanceDate: Date;

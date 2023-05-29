@@ -5,13 +5,13 @@ import { ChildrenProp } from "./utils";
 import { FormEffects } from "./FormEffects";
 import { useNetwork } from "wagmi";
 import { useWidget } from "./WidgetContext";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 type Props = {
   children: ((formMethods: FormMethods) => ChildrenProp) | ChildrenProp;
 };
 
-export default function CheckoutFormProvider({ children }: Props) {
+export default function FormProvider({ children }: Props) {
   const { chain } = useNetwork();
   const { networks, paymentOptionWithTokenInfoList } = useWidget();
 

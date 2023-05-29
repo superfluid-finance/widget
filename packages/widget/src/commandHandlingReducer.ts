@@ -3,8 +3,8 @@ import { useImmerReducer } from "use-immer";
 import { State } from "./CommandHandlerState";
 import { nanoid } from "nanoid";
 import { Command } from "./commands";
-import { ContractWrite } from "./extractContractWrite";
-import { ContractWriteResult } from "./ContractWriteHandler";
+import { ContractWrite } from "./ContractWrite";
+import { ContractWriteResult } from "./ContractWriteManager";
 
 export type Action =
   | { type: "reset" }

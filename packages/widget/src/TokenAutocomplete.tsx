@@ -10,7 +10,7 @@ import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues";
 import { useWidget } from "./WidgetContext";
 import { TokenAvatar } from "./TokenAvatar";
 
-export default function AutocompleteToken() {
+export default function TokenAutocomplete() {
   const { paymentOptionWithTokenInfoList } = useWidget();
   const { control: c, watch } = useFormContext<DraftFormValues>();
   const [network] = watch(["network"]);

@@ -4,7 +4,7 @@ import {
   CommandHandlerContextValue,
 } from "./CommandHandlerContext";
 import { ChildrenProp, isDefined } from "./utils";
-import { ContractWriteHandler } from "./ContractWriteHandler";
+import { ContractWriteManager } from "./ContractWriteManager";
 import { CommandMapper } from "./CommandMapper";
 import { useNetwork } from "wagmi";
 import { Command } from "./commands";
@@ -94,7 +94,7 @@ export function CommandHandlerProvider({ children }: Props) {
         />
       ))}
       {contractWrites.map((contractWrite, writeIndex_) => (
-        <ContractWriteHandler
+        <ContractWriteManager
           key={writeIndex_}
           prepare={isRightChain && writeIndex_ === writeIndex}
           contractWrite={contractWrite}

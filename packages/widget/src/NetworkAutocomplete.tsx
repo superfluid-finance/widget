@@ -3,7 +3,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import { useWidget } from "./WidgetContext";
 
-export default function AutocompleteNetwork() {
+export default function NetworkAutocomplete() {
   const { control: c } = useFormContext<DraftFormValues>();
   const { networks } = useWidget();
 

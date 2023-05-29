@@ -15,7 +15,7 @@ import {
   mapTimePeriodToSeconds,
   superTokenABI,
 } from "superfluid-checkout-core";
-import { ContractWrite, extractContractWrite } from "./extractContractWrite";
+import { ContractWrite, createContractWrite } from "./ContractWrite";
 import { ChildrenProp, MaxUint256 } from "./utils";
 import { parseEther } from "viem";
 import { useEffect, useMemo } from "react";
@@ -78,7 +78,7 @@ export function EnableAutoWrapCommandMapper({
     if (wrapSchedule !== undefined) {
       if (wrapSchedule.strategy !== autoWrapStrategyAddress[cmd.chainId]) {
         contractWrites_.push(
-          extractContractWrite({
+          createContractWrite({
             commandId: cmd.id,
             chainId: cmd.chainId,
             abi: autoWrapManagerABI,
@@ -98,7 +98,7 @@ export function EnableAutoWrapCommandMapper({
 
       if (allowance && allowance < upperLimit) {
         contractWrites_.push(
-          extractContractWrite({
+          createContractWrite({
             commandId: cmd.id,
             chainId: cmd.chainId,
             abi: erc20ABI,
@@ -150,7 +150,7 @@ export function WrapIntoSuperTokensCommandMapper({
 
     if (isNativeAssetSuperToken) {
       contractWrites_.push(
-        extractContractWrite({
+        createContractWrite({
           commandId: cmd.id,
           chainId: cmd.chainId,
           abi: superTokenABI,
@@ -163,7 +163,7 @@ export function WrapIntoSuperTokensCommandMapper({
       if (allowance !== undefined) {
         if (allowance < amount) {
           contractWrites_.push(
-            extractContractWrite({
+            createContractWrite({
               commandId: cmd.id,
               chainId: cmd.chainId,
               abi: erc20ABI,
@@ -175,7 +175,7 @@ export function WrapIntoSuperTokensCommandMapper({
         }
 
         contractWrites_.push(
-          extractContractWrite({
+          createContractWrite({
             commandId: cmd.id,
             chainId: cmd.chainId,
             abi: superTokenABI,
@@ -224,7 +224,7 @@ export function SendStreamCommandMapper({
 
         // TODO(KK): Is this the right behaviour, to update the flow rate?
         contractWrites_.push(
-          extractContractWrite({
+          createContractWrite({
             commandId: cmd.id,
             abi: cfAv1ForwarderABI,
             address: cfAv1ForwarderAddress[cmd.chainId],
@@ -241,7 +241,7 @@ export function SendStreamCommandMapper({
         );
       } else {
         contractWrites_.push(
-          extractContractWrite({
+          createContractWrite({
             commandId: cmd.id,
             abi: cfAv1ForwarderABI,
             address: cfAv1ForwarderAddress[cmd.chainId],

@@ -8,7 +8,7 @@ export type ContractWrite = ContractFunctionConfig & {
   commandId: string;
 };
 
-export const extractContractWrite = ({
+export const createContractWrite = ({
   commandId,
   abi,
   functionName,
