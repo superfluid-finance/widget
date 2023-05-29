@@ -15,10 +15,12 @@ export default function CheckoutFormProvider({ children }: Props) {
   const { chain } = useNetwork();
   const { networks, paymentOptionWithTokenInfoList } = useWidget();
 
-  const defaultNetwork = useMemo(
-    () => networks.find((network) => network.id === chain?.id) ?? null,
-    [chain, networks]
-  );
+  const defaultNetwork = useMemo(() => {
+    if (networks.length === 1) {
+      return networks[0];
+    }
+    return networks.find((network) => network.id === chain?.id) ?? null;
+  }, [chain, networks]);
 
   const defaultPaymentOption = useMemo(() => {
     if (!defaultNetwork) {
