@@ -18,9 +18,7 @@ export function StepperContinueButton(props: ButtonProps) {
         const isStepBeforeReview = activeStep === totalSteps - 3;
         if (isStepBeforeReview) {
           handleSubmit((values) => {
-            const commands = formValuesToCommands(
-              values as ValidFormValues // TODO(KK): This is better in next version of react-hook-form.
-            );
+            const commands = formValuesToCommands(values);
             submitCommands(commands);
             handleNext();
             // TODO(KK): reset? isDirty check?

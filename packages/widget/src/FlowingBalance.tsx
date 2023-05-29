@@ -4,7 +4,7 @@ import useFlowingBalance, {
 } from "./useFlowingBalance";
 import { useSignificantFlowingDecimal } from "./useSignificantFlowingDecimal";
 import { formatEther } from "viem";
-import { toFixedUsingStrings } from "./utils";
+import { toFixedUsingString } from "./utils";
 
 type FlowingBalanceProps = {
   startingBalance: bigint;
@@ -31,7 +31,7 @@ export default memo(function FlowingBalance({
   return (
     <>
       {decimalPlaces
-        ? toFixedUsingStrings(formatEther(flowingBalance), decimalPlaces)
+        ? toFixedUsingString(formatEther(flowingBalance), decimalPlaces)
         : formatEther(flowingBalance)}
     </>
   );

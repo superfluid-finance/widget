@@ -41,7 +41,7 @@ export const absoluteValue = (n: bigint) => {
   return n >= 0 ? n : -n;
 };
 
-export function toFixedUsingStrings(numStr: string, decimalPlaces: number) {
+export function toFixedUsingString(numStr: string, decimalPlaces: number) {
   const [wholePart, decimalPart] = numStr.split('.');
 
   if (!decimalPart || decimalPart.length <= decimalPlaces) {

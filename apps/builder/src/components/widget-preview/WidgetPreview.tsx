@@ -21,6 +21,7 @@ import { useWeb3Modal } from "@web3modal/react";
 import useFontLoader from "../../hooks/useFontLoader";
 
 export type DisplaySettings = {
+  stepperOrientation: "vertical" | "horizontal";
   darkMode: boolean;
   containerRadius?: number;
   inputRadius: CSSProperties["borderRadius"];
@@ -70,6 +71,7 @@ export const WidgetContext = createContext<WidgetProps>({
   },
   layout: "dialog",
   displaySettings: {
+    stepperOrientation: "vertical",
     darkMode: false,
     containerRadius: 4,
     buttonRadius: 4,
@@ -90,7 +92,8 @@ const switchLayout = (
   productDetails: ProductDetails,
   paymentDetails: PaymentDetails,
   theme: ThemeOptions,
-  walletManager: WalletManager
+  walletManager: WalletManager,
+  stepperOrientation: "vertical" | "horizontal"
 ) => {
   return layout === "page" ? (
     <SuperfluidWidget
@@ -100,6 +103,7 @@ const switchLayout = (
       type={layout}
       theme={theme}
       walletManager={walletManager}
+      stepper={{ orientation: stepperOrientation }}
     />
   ) : (
     <SuperfluidWidget
@@ -109,6 +113,7 @@ const switchLayout = (
       type={layout}
       theme={theme}
       walletManager={walletManager}
+      stepper={{ orientation: stepperOrientation }}
     >
       {({ openModal }) => (
         <Button onClick={() => openModal()}>{`Open ${layout}`}</Button>
@@ -191,7 +196,8 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
           productDetails,
           paymentDetails,
           theme,
-          walletManager
+          walletManager,
+          displaySettings.stepperOrientation
         )}
     </WidgetContext.Provider>
   );

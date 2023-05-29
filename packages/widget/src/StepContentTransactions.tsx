@@ -1,4 +1,4 @@
-import { Box, Stack, StepContent, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
 import ContractWriteButton from "./ContractWriteButton";
 import { TransactionCircularProgress } from "./TransactionCircularProgress";

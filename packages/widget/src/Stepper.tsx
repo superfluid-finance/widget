@@ -1,13 +1,10 @@
 import {
-  Box,
   Container,
   Stepper as MUIStepper,
-  Orientation,
   Portal,
   Step,
   StepButton,
   StepContent,
-  StepperProps,
 } from "@mui/material";
 import { StepperProvider } from "./StepperProvider";
 import StepContentPaymentOption from "./StepContentPaymentOption";
@@ -18,6 +15,7 @@ import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import { useAccount } from "wagmi";
 import { StepContentTransactions } from "./StepContentTransactions";
+import { useWidget } from "./WidgetContext";
 
 export default function Stepper() {
   const {
@@ -64,8 +62,10 @@ export default function Stepper() {
 
   const { isConnected } = useAccount();
 
-  // TODO: clean up the orientation logic.
-  const orientation: Orientation = "vertical" as Orientation;
+  const {
+    stepper: { orientation },
+  } = useWidget();
+
   const container = React.useRef(null);
 
   return (
@@ -119,9 +119,8 @@ export default function Stepper() {
                   );
                 })}
               </MUIStepper>
-              {orientation === "horizontal" && (
-                <Container ref={container} sx={{ my: 2 }}></Container>
-              )}
+              {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}
+              <Container ref={container} sx={{ my: 2 }}></Container>
             </>
           );
         }}

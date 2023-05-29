@@ -82,6 +82,7 @@ export default function Home() {
         },
         primaryColor: colors.green[500],
         secondaryColor: colors.common.white,
+        stepperOrientation: "vertical"
       },
     },
   });

@@ -6,6 +6,7 @@ import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
 import { TokenInfo } from "@uniswap/token-lists";
 import { SuperTokenInfo } from "@superfluid-finance/tokenlist";
+import { Orientation } from "@mui/material";
 
 export type WidgetContextValue = {
   getSuperToken: (address: Address) => SuperTokenInfo;
@@ -16,6 +17,9 @@ export type WidgetContextValue = {
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
   walletManager: WalletManager;
   imageURI?: string;
+  stepper: {
+    orientation: Orientation
+  }
 } & CheckoutConfig;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(

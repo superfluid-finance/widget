@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext";
 import { ViewProps, ViewContainer } from "./ViewContainer";
@@ -24,6 +24,9 @@ export type WidgetProps = ViewProps &
   CheckoutConfig & {
     walletManager: WalletManager;
     theme?: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
+    stepper?: {
+      orientation: "vertical" | "horizontal";
+    };
   };
 
 export function SuperfluidWidget({
@@ -32,6 +35,7 @@ export function SuperfluidWidget({
   tokenList,
   theme: theme_,
   walletManager,
+  stepper: stepper_ = { orientation: "vertical" },
   ...viewProps
 }: WidgetProps) {
   const { paymentOptions } = paymentDetails;
@@ -90,6 +94,13 @@ export function SuperfluidWidget({
     []
   );
 
+  const stepper = useMemo(
+    () => ({
+      orientation: stepper_.orientation,
+    }),
+    [stepper_.orientation]
+  );
+
   const checkoutState = useMemo<WidgetContextValue>(
     () => ({
       getNetwork,
@@ -102,6 +113,7 @@ export function SuperfluidWidget({
       networks,
       paymentOptionWithTokenInfoList,
       walletManager,
+      stepper,
     }),
     [
       superTokens,
@@ -110,6 +122,7 @@ export function SuperfluidWidget({
       tokenList,
       networks,
       walletManager,
+      stepper,
     ]
   );
 

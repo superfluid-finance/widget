@@ -5,6 +5,8 @@ import {
   Stack,
   Switch,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from "@mui/material";
 import { FC } from "react";
@@ -185,6 +187,40 @@ const UiEditor: FC = () => {
               fullWidth
               renderInput={(params) => <TextField {...params} />}
             />
+          )}
+        />
+      </Stack>
+
+      <Stack direction="column" gap={1}>
+        <Typography variant="subtitle2">Stepper</Typography>
+        <Controller
+          control={control}
+          name="displaySettings.stepperOrientation"
+          render={({ field: { value, onChange } }) => (
+            <ToggleButtonGroup
+              value={value}
+              exclusive
+              onChange={onChange}
+              sx={{
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+              }}
+            >
+              <ToggleButton
+                value="vertical"
+                aria-label="vertical stepper"
+                title="Choose vertical stepper"
+              >
+                Vertical
+              </ToggleButton>
+              <ToggleButton
+                value="horizontal"
+                aria-label="horizontal stepper"
+                title="Choose horizontal stepper"
+              >
+                Horizontal
+              </ToggleButton>
+            </ToggleButtonGroup>
           )}
         />
       </Stack>
