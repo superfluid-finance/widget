@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const ANIMATION_MINIMUM_STEP_TIME = 75;
+export const ANIMATION_MINIMUM_STEP_TIME = 40n;
 
 const useFlowingBalance = (
   startingBalance: bigint,

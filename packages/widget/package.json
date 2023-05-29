@@ -39,7 +39,7 @@
     "nanoid": "^4.0.2",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "7.44.0-rc.3",
+    "react-hook-form": "^7.44.0",
     "superfluid-checkout-core": "workspace:*",
     "use-immer": "^0.9.0",
     "viem": "^0.3.37",

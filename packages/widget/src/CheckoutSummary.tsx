@@ -1,11 +1,12 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
 import useFlowingBalance from "./useFlowingBalance";
-import { formatEther, parseEther } from "viem";
+import { parseEther } from "viem";
 import { mapTimePeriodToSeconds } from "superfluid-checkout-core";
 import { SendStreamCommand } from "./commands";
 import { useMemo } from "react";
 import { useWidget } from "./WidgetContext";
+import FlowingBalance from "./FlowingBalance";
 
 export function CheckoutSummary() {
   const { getSuperToken } = useWidget();
@@ -21,8 +22,8 @@ export function CheckoutSummary() {
 
   // TODO: hack
   // TODO: do the flowing balance animation with a speed-up
-  const date = useMemo(() => new Date(), []);
-  const flowingBalance = useFlowingBalance(0n, date, flowRate);
+  const startingBalance = 0n;
+  const startingBalanceDate = useMemo(() => new Date(), []);
 
   const superToken = useMemo(
     () => getSuperToken(sendStreamCommand.superTokenAddress),
@@ -49,13 +50,20 @@ export function CheckoutSummary() {
           You've streamed
         </Typography>
         <Typography variant="h5" component="span">
-          {formatEther(flowingBalance)} {superToken.symbol}
+          <FlowingBalance
+            flowRate={flowRate}
+            startingBalance={startingBalance}
+            startingBalanceDate={startingBalanceDate}
+          />{" "}
+          {superToken.symbol}
         </Typography>
       </Stack>
 
       <Divider sx={{ my: 3 }} />
 
-      <Button fullWidth variant="outlined">Go to Superfluid Dashboard</Button>
+      <Button fullWidth variant="outlined">
+        Go to Superfluid Dashboard
+      </Button>
     </Stack>
   );
 }

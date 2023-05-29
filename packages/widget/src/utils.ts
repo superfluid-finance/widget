@@ -36,3 +36,22 @@ export async function copyToClipboard(text: string) {
     return document.execCommand("copy", true, text);
   }
 }
+
+export const absoluteValue = (n: bigint) => {
+  return n >= 0 ? n : -n;
+};
+
+export function toFixedUsingStrings(numStr: string, decimalPlaces: number) {
+  const [wholePart, decimalPart] = numStr.split('.');
+
+  if (!decimalPart || decimalPart.length <= decimalPlaces) {
+    return numStr.padEnd(wholePart.length + 1 + decimalPlaces, '0');
+  }
+
+  const decimalPartBigInt = BigInt(decimalPart.slice(0, decimalPlaces + 1));
+  
+  const round = decimalPartBigInt % 10n >= 5n;
+  const roundedDecimal = decimalPartBigInt / 10n + (round ? 1n : 0n);
+
+  return wholePart + '.' + roundedDecimal.toString().padStart(decimalPlaces, '0');
+}
