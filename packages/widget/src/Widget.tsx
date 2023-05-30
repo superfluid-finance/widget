@@ -16,8 +16,7 @@ import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoTo
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList";
 import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
-import { SuperTokenInfo } from "@superfluid-finance/tokenlist";
-import { TokenInfo } from "@uniswap/token-lists";
+import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
 
 export type WidgetProps = ViewProps &

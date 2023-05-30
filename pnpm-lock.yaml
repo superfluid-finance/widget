@@ -53,14 +53,11 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0
       '@superfluid-finance/tokenlist':
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
-      '@uniswap/token-lists':
-        specifier: 1.0.0-beta.31
-        version: 1.0.0-beta.31
       '@web3modal/ethereum':
         specifier: ^2.4.1
         version: 2.4.1(@wagmi/core@1.0.8)(viem@0.3.39)
@@ -181,14 +178,11 @@ importers:
   examples/widget-vite-react-web3modal:
     dependencies:
       '@superfluid-finance/tokenlist':
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
-      '@uniswap/token-lists':
-        specifier: 1.0.0-beta.31
-        version: 1.0.0-beta.31
       '@web3modal/ethereum':
         specifier: ^2.4.1
         version: 2.4.1(@wagmi/core@1.0.8)(viem@0.3.39)
@@ -239,8 +233,8 @@ importers:
   examples/widget-webcomponent:
     dependencies:
       '@superfluid-finance/tokenlist':
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
@@ -309,11 +303,8 @@ importers:
         specifier: 5.0.0-alpha.132
         version: 5.0.0-alpha.132(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@mui/material@5.13.3)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@superfluid-finance/tokenlist':
-        specifier: ^1.0.1
-        version: 1.0.1
-      '@uniswap/token-lists':
-        specifier: 1.0.0-beta.31
-        version: 1.0.0-beta.31
+        specifier: ^1.0.2
+        version: 1.0.2
       abitype:
         specifier: ^0.8.5
         version: 0.8.5(typescript@5.0.4)(zod@3.21.4)
@@ -2089,8 +2080,10 @@ packages:
       '@stablelib/random': 1.0.2
       '@stablelib/wipe': 1.0.1
 
-  /@superfluid-finance/tokenlist@1.0.1:
-    resolution: {integrity: sha512-jzcoot554NzFggLOBNhIAwUv5ds/BeMFiIQdRvhvdi4zgFtjgQ+v69tNnsUfWhqgXRmmxtaRinOzI+/y4mXJYA==}
+  /@superfluid-finance/tokenlist@1.0.2:
+    resolution: {integrity: sha512-/JeIEv4wkEaXOH0M9c24gPLPQTdxdKqiD7UIc/IRQhPQ5A5oZs4bSpTsloWqZbFH4ZlqiIs1syR8jk+W3U+Kvg==}
+    dependencies:
+      '@uniswap/token-lists': 1.0.0-beta.31
     dev: false
 
   /@swc/helpers@0.5.1:

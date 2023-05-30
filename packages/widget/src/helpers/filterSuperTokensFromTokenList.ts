@@ -1,6 +1,5 @@
 import { produce } from "immer";
-import { TokenInfo } from "@uniswap/token-lists";
-import { SuperTokenList, SuperTokenInfo } from "@superfluid-finance/tokenlist";
+import { SuperTokenList, SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 
 type ReturnValue = Readonly<{
   superTokens: ReadonlyArray<SuperTokenInfo>;
