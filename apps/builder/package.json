@@ -26,12 +26,12 @@
     "@web3modal/react": "^2.4.1",
     "clsx": "^1.2.1",
     "ethers": "5.7.2",
-    "mui-color-input": "^1.0.5",
+    "mui-color-input": "^1.0.6",
     "next": "^13.4.4",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "^7.44.0",
-    "wagmi": "^1.0.8",
+    "react-hook-form": "^7.44.2",
+    "wagmi": "^1.0.9",
     "zod": "^3.21.4"
   },
   "devDependencies": {
