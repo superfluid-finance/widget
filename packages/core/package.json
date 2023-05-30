@@ -17,11 +17,10 @@
     "watch": "tsc -w -p ./tsconfig.json"
   },
   "dependencies": {
-    "@wagmi/chains": "^0.2.25",
-    "@wagmi/cli": "^0.1.15",
-    "@wagmi/core": "^0.10.11",
-    "abitype": "^0.7.1",
-    "ethers": "^5.7.2",
+    "@wagmi/chains": "^0.3.0",
+    "@wagmi/cli": "^1.0.0",
+    "@wagmi/core": "^1.0.0",
+    "abitype": "^0.8.5",
     "zod": "^3.21.4"
   },
   "devDependencies": {
