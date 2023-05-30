@@ -11,9 +11,9 @@
     "eslint": "^8.41.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^2.8.8",
-    "syncpack": "^9.8.6",
+    "syncpack": "^10.1.0",
     "turbo": "^1.9.9",
-    "typescript": "latest"
+    "typescript": "^5.0.4"
   },
   "packageManager": "pnpm@7.15.0",
   "name": "superfluid-checkout"
