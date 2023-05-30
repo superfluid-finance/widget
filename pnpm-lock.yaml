@@ -111,22 +111,22 @@ importers:
   apps/hosted-widget:
     dependencies:
       '@emotion/cache':
-        specifier: latest
+        specifier: ^11.11.0
         version: 11.11.0
       '@emotion/react':
-        specifier: latest
+        specifier: ^11.11.0
         version: 11.11.0(@types/react@18.2.7)(react@18.2.0)
       '@emotion/server':
-        specifier: latest
+        specifier: ^11.11.0
         version: 11.11.0
       '@emotion/styled':
-        specifier: latest
+        specifier: ^11.11.0
         version: 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
       '@mui/icons-material':
-        specifier: latest
+        specifier: ^5.11.16
         version: 5.11.16(@mui/material@5.13.3)(@types/react@18.2.7)(react@18.2.0)
       '@mui/material':
-        specifier: latest
+        specifier: ^5.13.3
         version: 5.13.3(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@superfluid-finance/tokenlist':
         specifier: ^1.0.2
@@ -144,13 +144,13 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1
       next:
-        specifier: latest
+        specifier: ^13.4.4
         version: 13.4.4(react-dom@18.2.0)(react@18.2.0)
       react:
-        specifier: latest
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: latest
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
         specifier: ^0.3.39
@@ -160,19 +160,19 @@ importers:
         version: 1.0.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.39)(zod@3.21.4)
     devDependencies:
       '@types/node':
-        specifier: latest
+        specifier: ^20.2.5
         version: 20.2.5
       '@types/react':
-        specifier: latest
+        specifier: ^18.2.7
         version: 18.2.7
       eslint:
-        specifier: latest
+        specifier: ^8.41.0
         version: 8.41.0
       eslint-config-next:
-        specifier: latest
+        specifier: ^13.4.4
         version: 13.4.4(eslint@8.41.0)(typescript@5.0.4)
       typescript:
-        specifier: latest
+        specifier: ^5.0.4
         version: 5.0.4
 
   examples/widget-vite-react-web3modal:
@@ -2133,7 +2133,7 @@ packages:
   /@types/connect@3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
-      '@types/node': 20.2.5
+      '@types/node': 12.20.55
 
   /@types/debug@4.1.8:
     resolution: {integrity: sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==}
@@ -2165,6 +2165,7 @@ packages:
 
   /@types/node@20.2.5:
     resolution: {integrity: sha512-JJulVEQXmiY9Px5axXHeYGLSjhkZEnD+MDPDGbCbIAbMslkKwmygtZFy1X6s/075Yo94sf8GuSlFfPzysQrWZQ==}
+    dev: true
 
   /@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -2208,7 +2209,7 @@ packages:
   /@types/ws@7.4.7:
     resolution: {integrity: sha512-JQbbmxZTZehdc2iszGKs5oC3NFnjeay7mtAWrdt7qNtAVK0g19muApzAy4bm9byz79xa2ZnO/BOBC2R8RC5Lww==}
     dependencies:
-      '@types/node': 20.2.5
+      '@types/node': 12.20.55
 
   /@typescript-eslint/eslint-plugin@5.59.8(@typescript-eslint/parser@5.59.8)(eslint@8.41.0)(typescript@5.0.4):
     resolution: {integrity: sha512-JDMOmhXteJ4WVKOiHXGCoB96ADWg9q7efPWHRViT/f09bA8XOMLAVHHju3l0MkZnG1izaWXYmgvQcUjTRcpShQ==}
