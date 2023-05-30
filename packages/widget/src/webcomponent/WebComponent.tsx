@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { SuperfluidWidget as SuperfluidWidget_ } from "../Widget";
 import { PaymentDetails, ProductDetails } from "superfluid-checkout-core";
 import { Theme } from "@mui/material";
-import { TokenList } from "@uniswap/token-lists";
+import { TokenList } from "@superfluid-finance/tokenlist";
 
 class SuperfluidWidget extends HTMLElement {
   mountPoint!: HTMLSpanElement;

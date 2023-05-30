@@ -1,5 +1,5 @@
 import { Avatar, AvatarProps } from "@mui/material";
-import { TokenInfo } from "@uniswap/token-lists";
+import { TokenInfo } from "@superfluid-finance/tokenlist";
 
 type Props = {
   tokenInfo: TokenInfo;

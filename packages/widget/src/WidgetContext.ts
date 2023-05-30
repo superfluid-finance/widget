@@ -4,8 +4,7 @@ import { ChainId, SupportedNetwork } from "superfluid-checkout-core";
 import { PaymentOptionWithTokenInfo } from "./formValues";
 import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
-import { TokenInfo } from "@uniswap/token-lists";
-import { SuperTokenInfo } from "@superfluid-finance/tokenlist";
+import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import { Orientation } from "@mui/material";
 
 export type WidgetContextValue = {
