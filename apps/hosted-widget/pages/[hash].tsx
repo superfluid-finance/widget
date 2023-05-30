@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 
 import { useRouter } from "next/router";
 import { NextPage } from "next";
-import useLoadFromIPFS from "../../src/hooks/useLoadFromIPFS";
+import useLoadFromIPFS from "../src/hooks/useLoadFromIPFS";
 import { Web3Modal, useWeb3Modal } from "@web3modal/react";
 import {
   EthereumClient,
@@ -12,7 +12,6 @@ import {
 } from "@web3modal/ethereum";
 import {
   SuperfluidWidget,
-  WalletManager,
   supportedNetworks,
 } from "@superfluid-finance/widget";
 import tokenList from "@superfluid-finance/tokenlist";
