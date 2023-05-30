@@ -1,0 +1,37 @@
+{
+  "name": "@superfluid-finance/hosted-widget",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+  },
+  "dependencies": {
+    "@emotion/cache": "latest",
+    "@emotion/react": "latest",
+    "@emotion/server": "latest",
+    "@emotion/styled": "latest",
+    "@mui/icons-material": "latest",
+    "@mui/material": "latest",
+    "@superfluid-finance/tokenlist": "^1.0.2",
+    "@superfluid-finance/widget": "workspace:*",
+    "@web3modal/ethereum": "^2.4.1",
+    "@web3modal/react": "^2.4.1",
+    "clsx": "^1.2.1",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "viem": "^0.3.39",
+    "wagmi": "^1.0.9"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "typescript": "latest"
+  }
+}
