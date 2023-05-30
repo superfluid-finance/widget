@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { CheckoutConfig } from "./CheckoutConfig";
-import { ChainId, SupportedNetwork } from "superfluid-checkout-core";
+import { ChainId, SupportedNetwork } from "./core";
 import { PaymentOptionWithTokenInfo } from "./formValues";
 import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
@@ -17,8 +17,8 @@ export type WidgetContextValue = {
   walletManager: WalletManager;
   imageURI?: string;
   stepper: {
-    orientation: Orientation
-  }
+    orientation: Orientation;
+  };
 } & CheckoutConfig;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(

@@ -14,7 +14,7 @@ import {
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
 
-const projectId = "952483bf7a0f5ace4c40eb53967f1368";
+const projectId = process.env.PROJECT_ID ?? "952483bf7a0f5ace4c40eb53967f1368";
 
 const { publicClient } = configureChains(supportedNetworks, [
   w3mProvider({ projectId }),

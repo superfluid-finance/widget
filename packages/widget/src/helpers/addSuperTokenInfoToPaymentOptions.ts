@@ -1,4 +1,4 @@
-import { PaymentOption } from "superfluid-checkout-core";
+import { PaymentOption } from "../core";
 import { PaymentOptionWithTokenInfo } from "../formValues";
 import { SuperTokenInfo } from "@superfluid-finance/tokenlist";
 

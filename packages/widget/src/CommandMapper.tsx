@@ -14,7 +14,7 @@ import {
   erc20ABI,
   mapTimePeriodToSeconds,
   superTokenABI,
-} from "superfluid-checkout-core";
+} from "./core";
 import { ContractWrite, createContractWrite } from "./ContractWrite";
 import { ChildrenProp, MaxUint256 } from "./utils";
 import { parseEther } from "viem";

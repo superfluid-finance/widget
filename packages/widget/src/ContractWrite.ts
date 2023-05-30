@@ -1,4 +1,4 @@
-import { ChainId } from "superfluid-checkout-core";
+import { ChainId } from "./core";
 import { ContractFunctionConfig } from "viem";
 import { nanoid } from "nanoid";
 

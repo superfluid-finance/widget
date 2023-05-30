@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext";
 import { ViewProps, WidgetView } from "./WidgetView";
-import { SupportedNetwork, supportedNetworks } from "superfluid-checkout-core";
+import { SupportedNetwork, supportedNetworks } from "./core";
 import { PaymentOptionWithTokenInfo } from "./formValues";
 import {
   Alert,

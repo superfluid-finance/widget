@@ -1,7 +1,7 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
 import { parseEther } from "viem";
-import { mapTimePeriodToSeconds } from "superfluid-checkout-core";
+import { mapTimePeriodToSeconds } from "./core";
 import { SendStreamCommand } from "./commands";
 import { useMemo } from "react";
 import { useWidget } from "./WidgetContext";

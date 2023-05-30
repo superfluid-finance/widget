@@ -1,9 +1,5 @@
 import { Address } from "abitype";
-import {
-  ChainId,
-  TimePeriod,
-  autoWrapStrategyAddress,
-} from "superfluid-checkout-core";
+import { ChainId, TimePeriod, autoWrapStrategyAddress } from "./core";
 
 export type WrapIntoSuperTokensCommand = {
   id: string;

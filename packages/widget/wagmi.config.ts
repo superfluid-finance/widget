@@ -1,8 +1,12 @@
 import { defineConfig } from "@wagmi/cli";
 import { etherscan, actions, erc } from "@wagmi/cli/plugins";
-import { superTokenABI } from "./src/superTokenABI";
+import { superTokenABI } from "./src/core/superTokenABI";
 import { Address } from "abitype";
-import { ChainId, chainIds, supportedNetwork } from "./src/SupportedNetwork";
+import {
+  ChainId,
+  chainIds,
+  supportedNetwork,
+} from "./src/core/SupportedNetwork";
 
 const {
   polygon,
@@ -44,7 +48,7 @@ export const autoWrapStrategyAddresses = {
 } as const;
 
 export default defineConfig({
-  out: "src/wagmi-generated.ts",
+  out: "./wagmi-generated.ts",
   contracts: [
     {
       name: "SuperToken",
