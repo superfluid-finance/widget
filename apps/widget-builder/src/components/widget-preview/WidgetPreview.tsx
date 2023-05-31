@@ -10,8 +10,7 @@ import { useState } from "react";
 import { Button, SelectChangeEvent, ThemeOptions, colors } from "@mui/material";
 import type { Font, NullableObject } from "../../types/general";
 
-import {
-  SuperfluidWidget,
+import SuperfluidWidget, {
   PaymentDetails,
   ProductDetails,
   WalletManager,

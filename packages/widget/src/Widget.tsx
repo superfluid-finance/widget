@@ -28,7 +28,7 @@ export type WidgetProps = ViewProps &
     };
   };
 
-export function SuperfluidWidget({
+export function Widget({
   productDetails,
   paymentDetails,
   tokenList,

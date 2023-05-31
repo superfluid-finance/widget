@@ -1,6 +1,5 @@
 import "./App.css";
-import {
-  SuperfluidWidget,
+import SuperfluidWidget, {
   supportedNetworks,
 } from "@superfluid-finance/widget";
 import productDetails from "./productDetails";

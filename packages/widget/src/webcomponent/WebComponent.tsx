@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { SuperfluidWidget as SuperfluidWidget_ } from "../Widget";
+import { Widget as SuperfluidWidget_ } from "../Widget";
 import { PaymentDetails, ProductDetails } from "../core";
 import { Theme } from "@mui/material";
 import { TokenList } from "@superfluid-finance/tokenlist";

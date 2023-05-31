@@ -10,8 +10,7 @@ import {
   w3mConnectors,
   w3mProvider,
 } from "@web3modal/ethereum";
-import {
-  SuperfluidWidget,
+import SuperfluidWidget, {
   supportedNetworks,
 } from "@superfluid-finance/widget";
 import tokenList from "@superfluid-finance/tokenlist";
