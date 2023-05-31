@@ -32,11 +32,14 @@ jobs:
       - name: Install Dependencies
         run: pnpm i
 
+      - name: Build Widget
+        run: pnpm build
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: packages/widget pnpm release
+          publish: cd packages/widget && pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
