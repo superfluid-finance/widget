@@ -25,7 +25,9 @@
     "build": "tsc -p ./tsconfig.json",
     "typedoc": "typedoc --out docs src/index.ts",
     "wagmi": "wagmi generate",
-    "watch": "tsc -w -p ./tsconfig.json"
+    "watch": "tsc -w -p ./tsconfig.json",
+    "changeset": "changeset",
+    "release": "pnpm build && changeset relsease"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
