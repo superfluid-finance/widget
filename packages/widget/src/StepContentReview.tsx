@@ -1,10 +1,4 @@
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Stack
-} from "@mui/material";
+import { Button, List, ListItem, ListItemText, Stack } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
@@ -39,13 +33,9 @@ export default function StepContentReview() {
   return (
     <Stack>
       <Stack direction="column" spacing={3}>
-        <List sx={{ ml: 1.5 }}>
-          {commands.map((cmd) => (
-            <ListItem key={cmd.id}>
-              <ListItemText primary={<CommandPreview command={cmd} />} />
-            </ListItem>
-          ))}
-        </List>
+        {commands.map((cmd) => (
+          <CommandPreview key={cmd.id} command={cmd} />
+        ))}
       </Stack>
       {needsToSwitchNetwork ? (
         <Button

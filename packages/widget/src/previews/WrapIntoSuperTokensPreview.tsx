@@ -1,7 +1,7 @@
 import { Paper, Stack, Typography } from "@mui/material";
-import { WrapIntoSuperTokensCommand } from "../commands";
-import { useWidget } from "../WidgetContext";
 import { TokenAvatar } from "../TokenAvatar";
+import { useWidget } from "../WidgetContext";
+import { WrapIntoSuperTokensCommand } from "../commands";
 import { UpgradeIcon } from "./CommandPreview";
 
 export function WrapIntoSuperTokensPreview({
@@ -15,23 +15,23 @@ export function WrapIntoSuperTokensPreview({
   const underlyingToken = getUnderlyingToken(cmd.underlyingTokenAddress);
 
   return (
-    <Stack direction="column" alignItems="center" spacing={3}>
+    <Stack direction="column" alignItems="center" spacing={2.25}>
       <Stack
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        spacing={3}
         width="100%"
+        gap={3}
       >
-        <Stack direction="column" alignItems="center" spacing={2}>
+        <Stack direction="column" textAlign="center" spacing={1.5} flex={1}>
           <Typography>You are wrapping</Typography>
           <Stack
             component={Paper}
             direction="column"
             alignItems="center"
             justifyContent="center"
-            spacing={1}
-            sx={{ px: 3, py: 1 }}
+            spacing={0.5}
+            sx={{ p: 1.5 }}
           >
             <TokenAvatar tokenInfo={underlyingToken} />
             <Typography>{cmd.amountEther}</Typography>
@@ -40,18 +40,18 @@ export function WrapIntoSuperTokensPreview({
         </Stack>
 
         <Stack component={Paper} sx={{ p: 1 }}>
-          <UpgradeIcon sx={{ transform: "rotate(90deg)" }} />
+          <UpgradeIcon fontSize="small" />
         </Stack>
 
-        <Stack direction="column" alignItems="center" spacing={1}>
+        <Stack direction="column" textAlign="center" spacing={1.5} flex={1}>
           <Typography>You are receiving</Typography>
           <Stack
             component={Paper}
             direction="column"
             alignItems="center"
             justifyContent="center"
-            spacing={1}
-            sx={{ px: 3, py: 1 }}
+            spacing={0.5}
+            sx={{ p: 1.5 }}
           >
             <TokenAvatar tokenInfo={superToken} />
             <Typography>{cmd.amountEther}</Typography>
