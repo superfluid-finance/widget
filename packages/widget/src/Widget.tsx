@@ -18,6 +18,8 @@ import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
+import { buildTheme } from "./theme";
+import { deepmerge } from "@mui/utils";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {
@@ -128,7 +130,11 @@ export function Widget({
     ]
   );
 
-  const theme = useMemo(() => createTheme(theme_), [theme_]);
+  const theme = useMemo(() => {
+    const defaultTheme = buildTheme(theme_?.palette?.mode || "light");
+    console.log({ defaultTheme, theme_ });
+    return deepmerge(defaultTheme, theme_);
+  }, [theme_]);
 
   const validationResult = checoutConfigSchema.safeParse({
     productDetails,

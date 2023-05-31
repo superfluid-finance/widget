@@ -32,9 +32,9 @@ export function SendStreamPreview({
         alignItems="center"
         width="100%"
       >
-        <Typography>Sender</Typography>
+        <Typography variant="body1">Sender</Typography>
         <Box />
-        <Typography>Receiver</Typography>
+        <Typography variant="body1">Receiver</Typography>
 
         <AccountAddressCard address={cmd.accountAddress} />
         <StreamIndicator />

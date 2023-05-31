@@ -2,7 +2,7 @@ import { Divider, Stack } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { StepperContinueButton } from "./StepperContinueButton";
 import { CommandPreview } from "./previews/CommandPreview";
 import { formValuesToCommands } from "./formValuesToCommands";
@@ -38,10 +38,10 @@ export default function StepContentReview() {
     <Stack>
       <Stack direction="column" spacing={3}>
         {commands.map((cmd, index) => (
-          <>
+          <Fragment key={cmd.id}>
             {index > 0 && <Divider />}
-            <CommandPreview key={cmd.id} command={cmd} />
-          </>
+            <CommandPreview command={cmd} />
+          </Fragment>
         ))}
       </Stack>
       <StepperContinueButton disabled={!isValid || isValidating}>

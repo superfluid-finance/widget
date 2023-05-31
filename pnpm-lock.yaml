@@ -333,6 +333,9 @@ importers:
       '@mui/lab':
         specifier: 5.0.0-alpha.132
         version: 5.0.0-alpha.132(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@mui/material@5.13.3)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/utils':
+        specifier: ^5.13.1
+        version: 5.13.1(react@18.2.0)
       '@superfluid-finance/tokenlist':
         specifier: ^1.0.2
         version: 1.0.2

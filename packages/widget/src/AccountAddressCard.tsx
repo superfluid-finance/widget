@@ -46,7 +46,9 @@ export function AccountAddressCard({ address }: { address: Address }) {
             <Typography title={checksumAddress}>
               {ensNameResult.data ?? shortenedAddress}
             </Typography>
+
             <IconButton
+              size="small"
               title="Copy address to clipboard"
               onClick={() =>
                 void copyToClipboard(checksumAddress).then((x) => {
@@ -55,7 +57,11 @@ export function AccountAddressCard({ address }: { address: Address }) {
                 })
               }
             >
-              {copied ? <CheckIcon color="success" /> : <ContentCopyIcon />}
+              {copied ? (
+                <CheckIcon fontSize="small" color="success" />
+              ) : (
+                <ContentCopyIcon fontSize="small" />
+              )}
             </IconButton>
           </Stack>
         )}

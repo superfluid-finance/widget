@@ -33,6 +33,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "5.0.0-alpha.132",
+    "@mui/utils": "^5.13.1",
     "@superfluid-finance/tokenlist": "^1.0.2",
     "abitype": "^0.8.5",
     "blockies-ts": "^1.0.0",
