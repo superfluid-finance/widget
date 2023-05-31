@@ -35,7 +35,10 @@ jobs:
       - name: Build Widget
         run: pnpm build
 
+      - name: Test Widget
+        run: pnpm test
+
       - name: Publish package to npm
-        run: npm publish packages/widget --access public
+        run: pnpm publish packages/widget --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
