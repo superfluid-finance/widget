@@ -1,6 +1,19 @@
 import { useEffect, useState } from "react";
 import { Font } from "../types/general";
 
+const FONT_WEIGHT_CONFIG = {
+  "400": "regular",
+  "500": "500",
+  "600": "600",
+};
+
+export const FONT_WEIGHTS = Object.keys(FONT_WEIGHT_CONFIG);
+const FONT_WEIGHT_VARIANTS = Object.values(FONT_WEIGHT_CONFIG);
+
+function fontHasRequiredWeights(font: Font): boolean {
+  return FONT_WEIGHT_VARIANTS.every((weight) => font.variants.includes(weight));
+}
+
 const useFonts = () => {
   const [fonts, setFonts] = useState<Font[]>([]);
 
@@ -13,7 +26,7 @@ const useFonts = () => {
       const { items } = await response.json();
 
       if (items) {
-        setFonts(items);
+        setFonts(items.filter(fontHasRequiredWeights));
       }
     };
 

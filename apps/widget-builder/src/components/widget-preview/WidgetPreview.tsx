@@ -72,9 +72,9 @@ export const WidgetContext = createContext<WidgetProps>({
   displaySettings: {
     stepperOrientation: "vertical",
     darkMode: false,
-    containerRadius: 4,
-    buttonRadius: 4,
-    inputRadius: 4,
+    containerRadius: 20,
+    buttonRadius: 10,
+    inputRadius: 10,
     font: {
       config: null,
       kind: "",

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { DisplaySettings } from "../components/widget-preview/WidgetPreview";
+import { FONT_WEIGHTS } from "./useFonts";
 
 const useFontLoader = (displaySettings: DisplaySettings) => {
   useEffect(() => {
@@ -7,7 +8,9 @@ const useFontLoader = (displaySettings: DisplaySettings) => {
 
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = `https://fonts.googleapis.com/css2?family=${displaySettings.font.config?.family}:wght@400;500&display=swap`;
+    link.href = `https://fonts.googleapis.com/css2?family=${
+      displaySettings.font.config?.family
+    }:wght@${FONT_WEIGHTS.join(";")}&display=swap`;
     document.head.appendChild(link);
 
     return () => {

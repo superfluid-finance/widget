@@ -73,16 +73,16 @@ export default function Home() {
       layout: "page",
       displaySettings: {
         darkMode: false,
-        containerRadius: 4,
-        buttonRadius: 4,
-        inputRadius: 4,
+        containerRadius: 20,
+        buttonRadius: 10,
+        inputRadius: 10,
         font: {
           config: null,
           kind: "",
         },
         primaryColor: colors.green[500],
         secondaryColor: colors.common.white,
-        stepperOrientation: "vertical"
+        stepperOrientation: "vertical",
       },
     },
   });
