@@ -37,7 +37,7 @@ jobs:
         uses: changesets/action@v1
         with:
           run: |
-            cd packages/widget
+            cwd packages/widget
           publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
