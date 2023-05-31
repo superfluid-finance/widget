@@ -330,8 +330,8 @@ importers:
         specifier: ^18.2.4
         version: 18.2.4
       '@wagmi/cli':
-        specifier: ^1.0.3
-        version: 1.0.3(typescript@5.0.4)(wagmi@1.0.9)
+        specifier: 1.0.2
+        version: 1.0.2(typescript@5.0.4)(wagmi@1.0.9)
       tsconfig:
         specifier: workspace:*
         version: link:../tsconfig
@@ -2256,13 +2256,13 @@ packages:
     dependencies:
       typescript: 5.0.4
 
-  /@wagmi/cli@1.0.3(typescript@5.0.4)(wagmi@1.0.9):
-    resolution: {integrity: sha512-SQP45utRvksQswnccVgRf6vYi0NMqO4UEY2Y/zT2NcJ9LEfhSZxoGAADMh2T/SR76pFlb6n/6dRIg4aRlt3q9w==}
+  /@wagmi/cli@1.0.2(typescript@5.0.4)(wagmi@1.0.9):
+    resolution: {integrity: sha512-kxmiOk6NONU/KEAwGMXkYMkEAsXTWbjhXNSwRcDJe8/IWjSh3f69d5FYJ+MHxEhqrndERgyy2u57jTQpevpSsQ==}
     engines: {node: '>=14'}
     hasBin: true
     peerDependencies:
       '@wagmi/core': '>=1.0.0'
-      typescript: ^5.0.4
+      typescript: '>=4.9.4'
       wagmi: '>=1.0.0'
     peerDependenciesMeta:
       '@wagmi/core':
@@ -2273,7 +2273,7 @@ packages:
         optional: true
     dependencies:
       '@wagmi/chains': 0.3.1(typescript@5.0.4)
-      abitype: 0.8.2(typescript@5.0.4)(zod@3.21.4)
+      abitype: 0.8.1(typescript@5.0.4)(zod@3.21.4)
       abort-controller: 3.0.0
       bundle-require: 3.1.2(esbuild@0.15.13)
       cac: 6.7.14

@@ -48,7 +48,7 @@ export const autoWrapStrategyAddresses = {
 } as const;
 
 export default defineConfig({
-  out: "./wagmi-generated.ts",
+  out: "./src/core/wagmi-generated.ts",
   contracts: [
     {
       name: "SuperToken",
