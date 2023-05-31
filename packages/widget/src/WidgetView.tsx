@@ -50,7 +50,7 @@ export function WidgetView(props: ViewProps) {
   );
 
   const {
-    walletManager: { isOpen: isWalletManagerOpen },
+    walletManager: { isConnectOpen: isWalletManagerOpen },
   } = useWidget();
 
   const modalProps: Omit<ModalProps, "children"> = {

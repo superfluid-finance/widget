@@ -18,7 +18,7 @@ export default function StepContentPaymentOption() {
   const { isConnected } = useAccount();
 
   const {
-    walletManager: { open: openWalletManager },
+    walletManager: { openConnect: openWalletManager },
   } = useWidget();
 
   return (
