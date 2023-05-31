@@ -1,6 +1,6 @@
 {
   "name": "@superfluid-finance/widget",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -19,16 +19,16 @@
   },
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
-    "build": "tsc -p ./tsconfig.json",
+    "build": "cp ../../README.md . && tsc -p ./tsconfig.json",
     "typedoc": "typedoc --out docs src/index.ts",
     "wagmi": "wagmi generate",
     "watch": "tsc -w -p ./tsconfig.json"
   },
   "dependencies": {
-    "@changesets/cli": "^2.26.1",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",

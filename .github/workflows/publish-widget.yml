@@ -32,11 +32,13 @@ jobs:
       - name: Install Dependencies
         run: pnpm i
 
-      - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMJS_TOKEN }}" > .npmrc
-
       - name: Build Widget
         run: pnpm build
 
+      - name: Authenticate with npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMJS_TOKEN }}" > .npmrc
+
       - name: Publish package to npm
-        run: pnpm publish --access public
+        run: pnpm publish --access public --no-git-checks
+        env:
+          NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
