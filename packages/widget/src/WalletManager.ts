@@ -5,9 +5,9 @@ export interface WalletManager {
   /**
    * A callback to open the wallet connecting view (e.g. a modal to connect the wallet).
    */
-  openConnect(): void;
+  open(): void;
   /**
    * Is the wallet connecting view open? If it is, we might want to hide the widget.
    */
-  isConnectOpen: boolean;
+  isOpen: boolean;
 }
