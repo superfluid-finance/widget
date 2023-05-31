@@ -84,7 +84,8 @@ export default function StepContentWrap() {
             </FormGroup>
           )}
         />
-        <Controller
+        {/* // TODO(KK): Handle Auto-Wrap */}
+        {/* <Controller
           control={c}
           name="enableAutoWrap"
           render={({ field: { value, onChange, onBlur } }) => (
@@ -99,7 +100,7 @@ export default function StepContentWrap() {
               label="Enable Auto-Wrap"
             />
           )}
-        />
+        /> */}
       </Stack>
       <StepperContinueButton disabled={!isValid || isValidating}>
         Continue
