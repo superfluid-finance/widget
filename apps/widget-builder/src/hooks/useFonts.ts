@@ -12,7 +12,9 @@ const useFonts = () => {
 
       const { items } = await response.json();
 
-      setFonts(items);
+      if (items) {
+        setFonts(items);
+      }
     };
 
     effect();
