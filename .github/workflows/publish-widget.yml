@@ -37,3 +37,5 @@ jobs:
 
       - name: Publish package to npm
         run: pnpm publish --access public
+        env:
+          NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
