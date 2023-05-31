@@ -19,7 +19,7 @@ import { useState } from "react";
 
 import UiEditor from "../components/ui-editor/UiEditor";
 import ExportEditor from "../components/export-editor/ExportEditor";
-import ProductEditor from "../components/payment-editor/ProductEditor";
+import ProductEditor from "../components/product-editor/ProductEditor";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import WebAssetIcon from "@mui/icons-material/WebAsset";

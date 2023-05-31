@@ -2,23 +2,28 @@ import { FC, useEffect, useMemo, useState } from "react";
 import { Network, networks } from "../../networkDefinitions";
 import {
   Autocomplete,
-  Badge,
-  Box,
   Button,
   Chip,
+  FormControlLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   Stack,
   SvgIcon,
+  Switch,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
-import tokenList, { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
+import tokenList, {
+  SuperTokenInfo,
+  TokenInfo,
+} from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { WidgetProps } from "./WidgetPreview";
 import Image from "next/image";
+import InfoIcon from "@mui/icons-material/Info";
 
 export type PaymentOption = {
   network: Network;
@@ -61,6 +66,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   onAdd,
   defaultReceiverAddress,
 }) => {
+  const theme = useTheme();
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
   const [selectedNetwork, setSelectedNetwork] =
     useState<Network>(defaultNetwork);
@@ -69,6 +75,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("day");
+  const [isReceiverDefault, setReceiverAsDefault] = useState(false);
 
   const filteredNetworks = useMemo(
     () =>
@@ -130,16 +137,18 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
   return (
     <Stack direction="column" gap={1}>
-      <Stack>
-        <Typography variant="subtitle2">Receiver</Typography>
-        <TextField
-          value={receiver}
-          onChange={({ target }) => setReceiver(target.value as `0x${string}`)}
-        />
-      </Stack>
       <Stack direction="row" gap={2}>
         <Stack direction="column" flex={1}>
-          <Typography variant="subtitle2">Network</Typography>
+          <Stack
+            direction="row"
+            sx={{ pl: 1, justifyContent: "space-between" }}
+          >
+            <Typography variant="subtitle2">Network</Typography>
+            <InfoIcon
+              fontSize="small"
+              sx={{ color: theme.palette.grey[600] }}
+            />
+          </Stack>
           <Select
             value={selectedNetwork.name}
             onChange={handleNetworkSelect}
@@ -182,7 +191,16 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           </Select>
         </Stack>
         <Stack direction="column" flex={1}>
-          <Typography variant="subtitle2">SuperToken</Typography>
+          <Stack
+            direction="row"
+            sx={{ pl: 1, justifyContent: "space-between" }}
+          >
+            <Typography variant="subtitle2">SuperToken</Typography>
+            <InfoIcon
+              fontSize="small"
+              sx={{ color: theme.palette.grey[600] }}
+            />
+          </Stack>
           <Autocomplete
             fullWidth
             value={selectedToken}
@@ -208,7 +226,10 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
         </Stack>
       </Stack>
       <Stack direction="column">
-        <Typography variant="subtitle2">Flow Rate</Typography>
+        <Stack direction="row" sx={{ pl: 1, justifyContent: "space-between" }}>
+          <Typography variant="subtitle2">Flow Rate</Typography>
+          <InfoIcon fontSize="small" sx={{ color: theme.palette.grey[600] }} />
+        </Stack>
 
         <Stack direction="row" gap={"-1px"}>
           <TextField
@@ -243,11 +264,47 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           </Select>
         </Stack>
       </Stack>
+      <Stack>
+        <Stack>
+          <Stack
+            direction="row"
+            sx={{ pl: 1, justifyContent: "space-between" }}
+          >
+            <Typography variant="subtitle2">Receiver</Typography>
+            <InfoIcon
+              fontSize="small"
+              sx={{ color: theme.palette.grey[600] }}
+            />
+          </Stack>
+          <TextField
+            value={receiver}
+            onChange={({ target }) =>
+              setReceiver(target.value as `0x${string}`)
+            }
+          />
+        </Stack>
+        <FormControlLabel
+          sx={{ py: 1 }}
+          control={
+            <Switch
+              checked={isReceiverDefault}
+              onChange={() => setReceiverAsDefault((val) => !val)}
+            />
+          }
+          label={
+            <Typography variant="subtitle2">
+              Use as default payment option
+            </Typography>
+          }
+        />
+      </Stack>
       <Button
+        color="primary"
+        variant="outlined"
         disabled={!(selectedNetwork && selectedToken)}
         onClick={handleAdd}
       >
-        Add
+        Add +
       </Button>
     </Stack>
   );
