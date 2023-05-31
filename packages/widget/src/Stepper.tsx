@@ -106,7 +106,9 @@ export default function Stepper() {
                             </StepContent>
                           ) : activeStep === index ? (
                             <Portal container={container.current}>
-                              <Content_ />
+                              <Box sx={{ m: 2 }}>
+                                <Content_ />
+                              </Box>
                             </Portal>
                           ) : null;
 
@@ -132,8 +134,11 @@ export default function Stepper() {
                 )}
               </Box>
             </Fade>
-            {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}
-            <Container ref={container}></Container>
+            {/* // Keep in sync with the stepper */}
+            <Fade in={isForm} appear={false} unmountOnExit={false}>
+              {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}
+              <Container ref={container} />
+            </Fade>
           </>
         );
       }}
