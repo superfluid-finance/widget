@@ -12,7 +12,9 @@ jobs:
   release:
     name: Publish Widget to NPM
     runs-on: ubuntu-latest
-    working-directory: packages/widgetg
+    defaults:
+      run:
+        working-directory: packages/widget
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
