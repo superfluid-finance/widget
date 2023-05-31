@@ -2,7 +2,7 @@ import { ContractWriteResult } from "./ContractWriteManager";
 import { Command } from "./commands";
 import { ContractWrite } from "./ContractWrite";
 
-export type State = Idle | Pending | Initiated | Success;
+export type State = Idle | Initialized | Handling;
 
 type Idle = {
   status: "idle";
@@ -10,14 +10,14 @@ type Idle = {
   sessionId: null;
 };
 
-type Pending = {
-  status: "pending";
+type Initialized = {
+  status: "initialized";
   commands: ReadonlyArray<CommandHandlingAggregate>;
   sessionId: null;
 };
 
-type Initiated = {
-  status: "initiated";
+type Handling = {
+  status: "handling";
   commands: ReadonlyArray<
     Command & {
       contractWrites: ReadonlyArray<
@@ -30,19 +30,20 @@ type Initiated = {
   sessionId: string;
 };
 
-type Success = {
-  status: "success";
-  commands: ReadonlyArray<
-    Command & {
-      contractWrites: ReadonlyArray<
-        ContractWrite & {
-          result: ContractWriteResult;
-        }
-      >;
-    }
-  >;
-  sessionId: string;
-};
+// TODO(KK): Consider if we need this.
+// type Success = {
+//   status: "success";
+//   commands: ReadonlyArray<
+//     Command & {
+//       contractWrites: ReadonlyArray<
+//         ContractWrite & {
+//           result: ContractWriteResult;
+//         }
+//       >;
+//     }
+//   >;
+//   sessionId: string;
+// };
 
 export type CommandHandlingAggregate = Command & {
   contractWrites?:

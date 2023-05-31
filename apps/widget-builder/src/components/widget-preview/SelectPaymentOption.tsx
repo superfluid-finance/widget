@@ -161,12 +161,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                   gap={1}
                   sx={{ alignItems: "center", width: "100%" }}
                 >
-                  <Image
-                    src={network.logoUrl}
-                    alt={network.name}
-                    width={24}
-                    height={24}
-                  />
+                  {network.logoUrl && (
+                    <Image
+                      src={network.logoUrl}
+                      alt={network.name}
+                      width={24}
+                      height={24}
+                    />
+                  )}
                   <Stack
                     direction="row"
                     sx={{

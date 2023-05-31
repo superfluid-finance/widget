@@ -24,8 +24,6 @@ export type Action =
         result: ContractWriteResult;
       };
     }
-  | { type: "succeed" }
-  | { type: "initiate" };
 
 export const useCommandHandlerReducer = () => useImmerReducer<
     State,
@@ -40,7 +38,7 @@ export const useCommandHandlerReducer = () => useImmerReducer<
           break;
         }
         case "set commands": {
-          draft.status = "pending";
+          draft.status = "initialized";
           draft.commands = castDraft(action.payload);
           draft.sessionId = null;
           break;
@@ -71,14 +69,6 @@ export const useCommandHandlerReducer = () => useImmerReducer<
           }
 
           contractWrite.result = castDraft(action.payload.result);
-          break;
-        }
-        case "succeed": {
-          draft.status = "success";
-          break;
-        }
-        case "initiate": {
-          draft.status = "initiated";
           break;
         }
       }

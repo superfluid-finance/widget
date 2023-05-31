@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import {
   CommandHandlerContext,
   CommandHandlerContextValue,
@@ -6,7 +6,6 @@ import {
 import { ChildrenProp, isDefined } from "./utils";
 import { ContractWriteManager } from "./ContractWriteManager";
 import { CommandMapper } from "./CommandMapper";
-import { useNetwork } from "wagmi";
 import { Command } from "./commands";
 import { useCommandHandlerReducer } from "./commandHandlingReducer";
 
@@ -43,17 +42,6 @@ export function CommandHandlerProvider({ children }: Props) {
     [dispatch]
   );
   const reset = useCallback(() => void dispatch({ type: "reset" }), [dispatch]);
-  const handle = useCallback(
-    () => void dispatch({ type: "initiate" }),
-    [dispatch]
-  );
-
-  // TODO: hackish for demo purposes
-  useEffect(() => {
-    if (writeIndex > 0 && writeIndex === contractWriteResults.length) {
-      dispatch({ type: "succeed" });
-    }
-  }, [writeIndex]);
 
   const contextValue = useMemo(
     () => ({
@@ -64,16 +52,10 @@ export function CommandHandlerProvider({ children }: Props) {
       sessionId,
       submitCommands,
       reset,
-      writeIndex,
-      handle,
+      writeIndex
     }),
     [status, commands, contractWrites, contractWriteResults, sessionId]
   );
-
-  // TODO(KK): do this properly
-  const chainId = commands[0]?.chainId;
-  const { chain } = useNetwork();
-  const isRightChain = chainId === chain?.id;
 
   return (
     <CommandHandlerContext.Provider value={contextValue}>
@@ -96,7 +78,7 @@ export function CommandHandlerProvider({ children }: Props) {
       {contractWrites.map((contractWrite, writeIndex_) => (
         <ContractWriteManager
           key={writeIndex_}
-          prepare={isRightChain && writeIndex_ === writeIndex}
+          prepare={writeIndex_ === writeIndex}
           contractWrite={contractWrite}
           onChange={(result) =>
             void dispatch({

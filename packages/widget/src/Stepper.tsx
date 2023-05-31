@@ -1,10 +1,13 @@
 import {
+  Box,
   Container,
+  Fade,
   Stepper as MUIStepper,
   Portal,
   Step,
   StepButton,
   StepContent,
+  Zoom,
 } from "@mui/material";
 import { StepperProvider } from "./StepperProvider";
 import StepContentPaymentOption from "./StepContentPaymentOption";
@@ -13,18 +16,18 @@ import StepContentReview from "./StepContentReview";
 import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
-import { useAccount } from "wagmi";
 import { StepContentTransactions } from "./StepContentConfirm";
-import { useWidget } from "./WidgetContext";
+import { CheckoutSummary } from "./CheckoutSummary";
 
 export default function Stepper() {
   const {
     watch,
     formState: { isValid },
   } = useFormContext<DraftFormValues>();
+
   const paymentOptionWithTokenInfo = watch("paymentOptionWithTokenInfo");
 
-  const steps = useMemo(
+  const visibleSteps = useMemo(
     () => [
       {
         buttonText: "Select network and token",
@@ -50,81 +53,94 @@ export default function Stepper() {
         optional: false,
         Content: StepContentReview,
       },
-      {
-        buttonText: "Confirm the transaction(s)",
-        shortText: "Confirm",
-        optional: false,
-        Content: StepContentTransactions,
-      },
     ],
     [paymentOptionWithTokenInfo]
   );
 
-  const { isConnected } = useAccount();
-
-  const {
-    stepper: { orientation },
-  } = useWidget();
-
   const container = React.useRef(null);
+  const totalSteps = visibleSteps.length + 2; // Add confirm and success.
 
   return (
-    <>
-      <StepperProvider
-        totalSteps={steps.length}
-        initialStep={isValid ? steps.length - 1 : 0}
-      >
-        {({ activeStep, setActiveStep }) => {
-          // TODO(KK): Check if React whines over this.
-          if (activeStep !== 0 && !isConnected) {
-            setActiveStep(0);
-          }
+    <StepperProvider
+      totalSteps={totalSteps}
+      initialStep={isValid ? visibleSteps.length - 1 : 0}
+    >
+      {({ activeStep, setActiveStep, orientation }) => {
+        const isTransacting = activeStep === totalSteps - 2;
+        const isFinished = activeStep === totalSteps - 1;
+        const isForm = !isTransacting && !isFinished;
 
-          return (
-            <>
-              <MUIStepper
-                orientation={orientation}
-                activeStep={activeStep}
-                sx={{ m: 2 }}
-              >
-                {steps.map((step, index) => {
-                  const { Content: Content_ } = step;
+        return (
+          <>
+            {isTransacting && (
+              <Fade in>
+                <Box sx={{ m: 3 }}>
+                  <StepContentTransactions />
+                </Box>
+              </Fade>
+            )}
+            {isFinished && (
+              <Zoom in={isFinished}>
+                <Box sx={{ m: 3 }}>
+                  <CheckoutSummary />
+                </Box>
+              </Zoom>
+            )}
+            <Fade in={isForm} appear={false}>
+              <Box>
+                {isForm && (
+                  <>
+                    <MUIStepper
+                      orientation={orientation}
+                      activeStep={activeStep}
+                      sx={{ m: 2 }}
+                    >
+                      {visibleSteps.map((step, index) => {
+                        const { Content: Content_ } = step;
 
-                  const Content =
-                    orientation === "vertical" ? (
-                      <StepContent>
-                        <Content_ />
-                      </StepContent>
-                    ) : activeStep === index ? (
-                      <Portal container={container.current}>
-                        <Content_ />
-                      </Portal>
-                    ) : null;
+                        const Content =
+                          orientation === "vertical" ? (
+                            <StepContent>
+                              <Content_ />
+                            </StepContent>
+                          ) : activeStep === index ? (
+                            <Portal container={container.current}>
+                              <Box sx={{ m: 2 }}>
+                                <Content_ />
+                              </Box>
+                            </Portal>
+                          ) : null;
 
-                  const labelText =
-                    orientation === "vertical"
-                      ? step.buttonText
-                      : step.shortText;
+                        const labelText =
+                          orientation === "vertical"
+                            ? step.buttonText
+                            : step.shortText;
 
-                  return (
-                    <Step key={index}>
-                      <StepButton
-                        optional={step.optional ? "optional" : undefined}
-                        onClick={() => setActiveStep(index)}
-                      >
-                        {labelText}
-                      </StepButton>
-                      {Content}
-                    </Step>
-                  );
-                })}
-              </MUIStepper>
+                        return (
+                          <Step key={index}>
+                            <StepButton
+                              optional={step.optional ? "optional" : undefined}
+                              onClick={() => setActiveStep(index)}
+                            >
+                              {labelText}
+                            </StepButton>
+                            {Content}
+                          </Step>
+                        );
+                      })}
+                    </MUIStepper>
+                  </>
+                )}
+              </Box>
+            </Fade>
+            {/* // Keep in sync with the stepper */}
+            <Fade in={isForm} appear={false} unmountOnExit={false}>
               {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}
-              <Container ref={container} sx={{ my: 2 }}></Container>
-            </>
-          );
-        }}
-      </StepperProvider>
-    </>
+              <Container ref={container} />
+            </Fade>
+          </>
+        );
+      }}
+    </StepperProvider>
   );
 }

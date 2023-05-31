@@ -1,25 +1,30 @@
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Stack
-} from "@mui/material";
+import { Stack } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
-import { useChainId, useSwitchNetwork } from "wagmi";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { StepperContinueButton } from "./StepperContinueButton";
 import { CommandPreview } from "./previews/CommandPreview";
+import { formValuesToCommands } from "./formValuesToCommands";
 
 export default function StepContentReview() {
   const {
+    getValues,
     formState: { isValid, isValidating },
-    watch,
   } = useFormContext<ValidFormValues>();
 
-  const { commands: commandAggregates } = useCommandHandler();
+  const { commands: commandAggregates, submitCommands } = useCommandHandler();
+
+  const [initialized, setInitialized] = useState(false);
+
+  // TODO(KK): Consider this logic...
+  if (!initialized) {
+    if (!isValid) 
+      throw new Error("Form should always be valid at this point.");
+
+    submitCommands(formValuesToCommands(getValues()));
+    setInitialized(true);
+  }
 
   const commands = useMemo(
     () =>
@@ -30,47 +35,16 @@ export default function StepContentReview() {
     [commandAggregates]
   );
 
-  const expectedChainId = watch("network.id");
-  const chainId = useChainId();
-
-  const { switchNetwork } = useSwitchNetwork();
-  const needsToSwitchNetwork = expectedChainId !== chainId;
-
   return (
     <Stack>
       <Stack direction="column" spacing={3}>
-        <List sx={{ ml: 1.5 }}>
-          {commands.map((cmd) => (
-            <ListItem key={cmd.id}>
-              <ListItemText primary={<CommandPreview command={cmd} />} />
-            </ListItem>
-          ))}
-        </List>
+        {commands.map((cmd) => (
+          <CommandPreview key={cmd.id} command={cmd} />
+        ))}
       </Stack>
-      {needsToSwitchNetwork ? (
-        <Button
-          size="large"
-          variant="contained"
-          fullWidth
-          onClick={() => switchNetwork?.(expectedChainId)}
-        >
-          Switch Network
-        </Button>
-      ) : (
-        <StepperContinueButton disabled={!isValid || isValidating}>
-          Continue
-        </StepperContinueButton>
-        // <Button
-        //   disabled={!isValid || isValidating}
-        //   variant="contained"
-        //   fullWidth
-        //   onClick={() => {
-        //     handle();
-        //   }}
-        // >
-        //   Subscribe
-        // </Button>
-      )}
+      <StepperContinueButton disabled={!isValid || isValidating}>
+        Continue
+      </StepperContinueButton>
     </Stack>
   );
 }

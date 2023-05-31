@@ -12,7 +12,6 @@ export type CommandHandlerContextValue = {
   contractWriteResults: ReadonlyArray<ContractWriteResult>;
   sessionId: string | null;
   submitCommands: (commands: ReadonlyArray<Command>) => void;
-  handle: () => void;
   writeIndex: number;
 };
 

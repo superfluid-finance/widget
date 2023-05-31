@@ -1,17 +1,20 @@
 import { useEffect, useMemo } from "react";
 import {
+  useChainId,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
 import { ContractWrite } from "./ContractWrite";
 import { ChildrenProp } from "./utils";
+import { BaseError } from "viem";
 
 export type ContractWriteResult = {
   contractWrite: ContractWrite;
   prepareResult: ReturnType<typeof usePrepareContractWrite>;
   writeResult: ReturnType<typeof useContractWrite>;
   transactionResult: ReturnType<typeof useWaitForTransaction>;
+  relevantError: BaseError | null; 
 }
 
 type ContractWriteManagerProps = {
@@ -22,11 +25,14 @@ type ContractWriteManagerProps = {
 };
 
 export function ContractWriteManager({
-  prepare,
+  prepare: _prepare,
   contractWrite,
   onChange,
   children,
 }: ContractWriteManagerProps) {
+  const chainId = useChainId();
+  const prepare = _prepare && contractWrite.chainId === chainId;
+
   const prepareResult = usePrepareContractWrite(prepare ? contractWrite: undefined);
   const writeResult = useContractWrite(prepareResult.config);
   const transactionResult = useWaitForTransaction({
@@ -38,7 +44,8 @@ export function ContractWriteManager({
       contractWrite,
       prepareResult,
       writeResult,
-      transactionResult
+      transactionResult,
+      relevantError: (transactionResult.error || writeResult.error || prepareResult.error) as unknown as BaseError
     }),
     [
       contractWrite.id,
