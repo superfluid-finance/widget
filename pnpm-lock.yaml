@@ -3,6 +3,10 @@ lockfileVersion: '6.0'
 importers:
 
   .:
+    dependencies:
+      '@changesets/cli':
+        specifier: ^2.26.1
+        version: 2.26.1
     devDependencies:
       eslint:
         specifier: ^8.41.0
