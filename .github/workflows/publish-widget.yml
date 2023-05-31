@@ -36,7 +36,7 @@ jobs:
         run: pnpm build
 
       - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMJS_TOKEN }}" > .npmrc
 
       - name: Publish package to npm
         run: pnpm publish --access public
