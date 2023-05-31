@@ -28,6 +28,9 @@ export type WidgetProps = ViewProps &
     };
   };
 
+/**
+ * The entrypoint to the Superfluid widget.
+ */
 export function Widget({
   productDetails,
   paymentDetails,
