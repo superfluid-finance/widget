@@ -41,7 +41,8 @@ export type Network = {
   chainId: number;
   subgraphUrl: string;
   isTestnet?: boolean;
-  logoUrl: string;
+  logoUrl?: string;
+  color?: string;
 };
 
 export const networks: Network[] = [
@@ -51,7 +52,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-goerli",
     isTestnet: true,
-    logoUrl: "/assets/network-icons/ethereum.svg",
+    color: "#9064ff",
   },
   {
     name: "Polygon Mumbai",
@@ -59,7 +60,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-mumbai",
     isTestnet: true,
-    logoUrl: "/assets/network-icons/polygon.svg",
+    color: "#3099f2",
   },
   {
     name: "Optimism Goerli",
@@ -67,7 +68,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-optimism-goerli",
     isTestnet: true,
-    logoUrl: "/assets/network-icons/optimism.svg",
+    color: "#ff0320",
   },
   {
     name: "Arbitrum Goerli",
@@ -75,7 +76,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-arbitrum-goerli",
     isTestnet: true,
-    logoUrl: "/assets/network-icons/arbitrum.svg",
+    color: "#2b374b",
   },
   {
     name: "Avalanche Fuji",
@@ -83,7 +84,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-avalanche-fuji",
     isTestnet: true,
-    logoUrl: "/assets/network-icons/avalanche.svg",
+    color: "#2b374b",
   },
   {
     name: "Gnosis Chain",
@@ -91,6 +92,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-xdai",
     logoUrl: "/assets/network-icons/gnosis.svg",
+    color: "#04795b",
   },
   {
     name: "Polygon",
@@ -98,6 +100,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-matic",
     logoUrl: "/assets/network-icons/polygon.svg",
+    color: "#7c3fe4",
   },
   {
     name: "Optimism",
@@ -105,6 +108,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-optimism-mainnet",
     logoUrl: "/assets/network-icons/optimism.svg",
+    color: "#ff0320",
   },
   {
     name: "Arbitrum One",
@@ -112,6 +116,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-arbitrum-one",
     logoUrl: "/assets/network-icons/arbitrum.svg",
+    color: "#2b374b",
   },
   {
     name: "Avalanche C",
@@ -119,13 +124,15 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-avalanche-c",
     logoUrl: "/assets/network-icons/avalanche.svg",
+    color: "#e84142",
   },
   {
     name: "BNB Smart Chain",
     chainId: 56,
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-bsc-mainnet",
-    logoUrl: "/assets/network-icons/binance-smart-chain.svg",
+    logoUrl: "/assets/network-icons/bnb.svg",
+    color: "#F0B90B",
   },
   {
     name: "Ethereum",
@@ -133,6 +140,7 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-eth-mainnet",
     logoUrl: "/assets/network-icons/ethereum.svg",
+    color: "#627EEA",
   },
   {
     name: "Celo",
@@ -140,5 +148,6 @@ export const networks: Network[] = [
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-celo-mainnet",
     logoUrl: "/assets/network-icons/celo.svg",
+    color: "#FCFF52",
   },
 ];

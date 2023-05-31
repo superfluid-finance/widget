@@ -6,6 +6,16 @@ module.exports = {
 
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        port: "",
+        pathname: "/superfluid-finance/**/*",
+      },
+    ],
+  },
   env: {
     NEXT_PUBLIC_GOOGLE_FONTS_API_KEY:
       process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY,
