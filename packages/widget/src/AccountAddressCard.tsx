@@ -58,9 +58,9 @@ export function AccountAddressCard({ address }: { address: Address }) {
               }
             >
               {copied ? (
-                <CheckIcon fontSize="small" color="success" />
+                <CheckIcon fontSize="inherit" color="success" />
               ) : (
-                <ContentCopyIcon fontSize="small" />
+                <ContentCopyIcon fontSize="inherit" />
               )}
             </IconButton>
           </Stack>

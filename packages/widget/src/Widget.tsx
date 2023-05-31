@@ -132,8 +132,9 @@ export function Widget({
 
   const theme = useMemo(() => {
     const defaultTheme = buildTheme(theme_?.palette?.mode || "light");
-    console.log({ defaultTheme, theme_ });
-    return deepmerge(defaultTheme, theme_);
+    // console.log({ defaultTheme, theme_ });
+    return deepmerge(defaultTheme, createTheme(theme_));
+    // return createTheme(theme_);
   }, [theme_]);
 
   const validationResult = checoutConfigSchema.safeParse({

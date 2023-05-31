@@ -281,6 +281,7 @@ const getCoreTheme = (theme: Theme): ThemeOptions => {
 };
 
 export function getThemedComponents(theme: Theme): ThemeOptions {
+  // This is used to handle light and dark themes
   const getModeStyle = getModeStyleCB(theme.palette.mode);
 
   const {
@@ -292,16 +293,7 @@ export function getThemedComponents(theme: Theme): ThemeOptions {
       MuiIconButton: {
         styleOverrides: {
           sizeSmall: {
-            width: "26px",
-            height: "26px",
             fontSize: pxToRem(16),
-          },
-        },
-      },
-      MuiIcon: {
-        styleOverrides: {
-          fontSizeSmall: {
-            fontSize: "1rem",
           },
         },
       },
