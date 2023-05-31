@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { ContractWriteResult } from "./ContractWriteManager";
-import { Alert, AlertTitle, Button, Stack } from "@mui/material";
-import { BaseError } from "viem";
+import { Button, Stack } from "@mui/material";
+import { useChainId, useSwitchNetwork } from "wagmi";
 
 export type ContractWriteButtonProps = ContractWriteResult;
 
@@ -18,18 +18,13 @@ export default function ContractWriteButton({
     writeResult.isLoading ||
     transactionResult.isLoading;
 
-  const error = (prepareResult.error ||
-    writeResult.error ||
-    transactionResult.error) as unknown as BaseError; // TODO(KK): move it away from here
-
   const functionName = contractWrite.functionName;
 
-  if (transactionResult.isSuccess)
-    return (
-      <Button disabled fullWidth variant="contained">
-        Success!
-      </Button>
-    );
+  const expectedChainId = contractWrite.chainId;
+  const chainId = useChainId();
+
+  const { switchNetwork } = useSwitchNetwork();
+  const needsToSwitchNetwork = expectedChainId !== chainId;
 
   return (
     <Stack
@@ -38,22 +33,27 @@ export default function ContractWriteButton({
       alignItems="stretch"
       sx={{ width: "100%" }}
     >
-      {error && (
-        <Alert severity="error">
-          <AlertTitle>Error</AlertTitle>
-          {error.shortMessage}
-        </Alert>
+      {needsToSwitchNetwork ? (
+        <Button
+          size="large"
+          variant="contained"
+          fullWidth
+          onClick={() => switchNetwork?.(expectedChainId)}
+        >
+          Switch Network
+        </Button>
+      ) : (
+        <LoadingButton
+          size="large"
+          variant="contained"
+          fullWidth
+          disabled={!write || transactionResult.isSuccess}
+          onClick={() => write?.()}
+          loading={isLoading}
+        >
+          Confirm ({functionName})
+        </LoadingButton>
       )}
-      <LoadingButton
-        size="large"
-        variant="contained"
-        fullWidth
-        disabled={!write}
-        onClick={() => write?.()}
-        loading={isLoading}
-      >
-        Confirm ({functionName})
-      </LoadingButton>
     </Stack>
   );
 }

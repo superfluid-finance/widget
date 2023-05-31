@@ -1,15 +1,7 @@
 import CheckoutProduct from "./CheckoutProduct";
 import Stepper from "./Stepper";
 import FormProvider from "./FormProvider";
-import { CheckoutSummary } from "./CheckoutSummary";
-import {
-  AppBar,
-  Box,
-  Card,
-  IconButton,
-  Toolbar,
-} from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Card } from "@mui/material";
 import { CommandHandlerProvider } from "./CommandHandlerProvider";
 
 export function CheckoutContent() {
@@ -18,16 +10,7 @@ export function CheckoutContent() {
       <CheckoutProduct />
       <Card variant="outlined" sx={{ m: 3 }}>
         <CommandHandlerProvider>
-          {({ status }) => {
-            switch (status) {
-              case "idle":
-              case "initiated":
-              case "pending":
-                return <Stepper />;
-              case "success":
-                return <CheckoutSummary />;
-            }
-          }}
+          <Stepper />
         </CommandHandlerProvider>
       </Card>
     </FormProvider>

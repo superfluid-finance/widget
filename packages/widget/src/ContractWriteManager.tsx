@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import {
+  useChainId,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
@@ -22,11 +23,14 @@ type ContractWriteManagerProps = {
 };
 
 export function ContractWriteManager({
-  prepare,
+  prepare: _prepare,
   contractWrite,
   onChange,
   children,
 }: ContractWriteManagerProps) {
+  const chainId = useChainId();
+  const prepare = _prepare && contractWrite.chainId === chainId;
+
   const prepareResult = usePrepareContractWrite(prepare ? contractWrite: undefined);
   const writeResult = useContractWrite(prepareResult.config);
   const transactionResult = useWaitForTransaction({

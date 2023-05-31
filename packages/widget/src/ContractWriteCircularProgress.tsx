@@ -13,7 +13,7 @@ type Props = CircularProgressProps & {
 export function ContractWriteCircularProgress({ index, total, ...props }: Props) {
   return (
     <Box position="relative" display="inline-flex">
-      <CircularProgress variant="indeterminate" {...props} />
+      <CircularProgress variant="determinate" value={index + 1 / total * 100} {...props} />
       <Box
         top={0}
         left={0}

@@ -83,6 +83,7 @@ export function CheckoutSummary() {
           Open Superfluid Dashboard
         </Button>
       </Stack>
+      
     </Stack>
   );
 }

@@ -1,19 +1,20 @@
-import {
-  useState,
-  useCallback
-} from "react";
+import { useState, useCallback, useEffect } from "react";
 import { StepperContext, StepperContextValue } from "./StepperContext";
 import { ChildrenProp } from "./utils";
+import { useAccount } from "wagmi";
+import { useWidget } from "./WidgetContext";
 
 type Props = {
-  children: (
-    contextValue: StepperContextValue
-  ) => ChildrenProp;
+  children: (contextValue: StepperContextValue) => ChildrenProp;
   totalSteps: number;
   initialStep?: number;
 };
 
-export function StepperProvider({ children, totalSteps, initialStep = 0 }: Props) {
+export function StepperProvider({
+  children,
+  totalSteps,
+  initialStep = 0,
+}: Props) {
   const [activeStep, setActiveStep] = useState(initialStep);
 
   const handleNext = useCallback(() => {
@@ -24,22 +25,25 @@ export function StepperProvider({ children, totalSteps, initialStep = 0 }: Props
     setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
   }, []);
 
-  const isLastStep = useCallback(() => {
-    return activeStep === totalSteps - 1;
-  }, [activeStep, totalSteps]);
+  const { isConnected } = useAccount();
 
-  const isPenultimateStep = useCallback(() => {
-    return activeStep === totalSteps - 2;
-  }, [activeStep, totalSteps]);
+  useEffect(() => {
+    if (!isConnected) {
+      setActiveStep(0);
+    }
+  }, [isConnected]);
+
+  const {
+    stepper: { orientation },
+  } = useWidget();
 
   const contextValue = {
-    activeStep,
+    activeStep: isConnected ? activeStep : 0,
     setActiveStep,
     handleNext,
     handleBack,
-    isLastStep,
-    isPenultimateStep,
     totalSteps,
+    orientation,
   };
 
   return (
