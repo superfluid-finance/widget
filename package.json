@@ -12,7 +12,7 @@
     "eslint-config-custom": "workspace:*",
     "prettier": "^2.8.8",
     "syncpack": "^10.1.0",
-    "turbo": "^1.9.9",
+    "turbo": "^1.10.0",
     "typescript": "^5.0.4"
   },
   "packageManager": "pnpm@7.15.0",
