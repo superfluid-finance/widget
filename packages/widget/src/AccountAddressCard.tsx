@@ -1,19 +1,12 @@
+import CheckCircleIcon_ from "@mui/icons-material/CheckCircle";
+import ContentCopyIcon_ from "@mui/icons-material/ContentCopy";
+import { Avatar, IconButton, Paper, Stack, Typography } from "@mui/material";
+import { create } from "blockies-ts";
+import { useState } from "react";
 import { Address } from "viem";
 import { AccountAddress } from "./AccountAddress";
-import {
-  Avatar,
-  Card,
-  CardContent,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { create } from "blockies-ts";
-import ContentCopyIcon_ from "@mui/icons-material/ContentCopy";
 import { normalizeIcon } from "./helpers/normalizeIcon";
 import { copyToClipboard } from "./utils";
-import CheckCircleIcon_ from "@mui/icons-material/CheckCircle";
-import { useState } from "react";
 
 const ContentCopyIcon = normalizeIcon(ContentCopyIcon_);
 const CheckIcon = normalizeIcon(CheckCircleIcon_);
@@ -21,8 +14,9 @@ const CheckIcon = normalizeIcon(CheckCircleIcon_);
 export function AccountAddressCard({ address }: { address: Address }) {
   const blockiesSrc = create({ seed: address.toLowerCase() }).toDataURL();
   const [copied, setCopied] = useState(false);
+
   return (
-    <Card>
+    <Paper sx={{ px: 2.25, py: 1.75 }}>
       <AccountAddress address={address}>
         {({
           ensAvatarResult,
@@ -31,7 +25,6 @@ export function AccountAddressCard({ address }: { address: Address }) {
           shortenedAddress,
         }) => (
           <Stack
-            component={CardContent}
             direction="row"
             alignItems="center"
             justifyContent="space-between"
@@ -67,6 +60,6 @@ export function AccountAddressCard({ address }: { address: Address }) {
           </Stack>
         )}
       </AccountAddress>
-    </Card>
+    </Paper>
   );
 }

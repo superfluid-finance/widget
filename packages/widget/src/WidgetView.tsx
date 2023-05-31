@@ -75,7 +75,7 @@ export function WidgetView(props: ViewProps) {
       return (
         <>
           {props.children(viewState)}
-          <Dialog {...modalProps}>
+          <Dialog {...modalProps} maxWidth="lg">
             <Container {...containerProps}>
               <CheckoutContent />
             </Container>

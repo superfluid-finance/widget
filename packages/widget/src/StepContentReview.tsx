@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
@@ -19,8 +19,7 @@ export default function StepContentReview() {
 
   // TODO(KK): Consider this logic...
   if (!initialized) {
-    if (!isValid) 
-      throw new Error("Form should always be valid at this point.");
+    if (!isValid) throw new Error("Form should always be valid at this point.");
 
     submitCommands(formValuesToCommands(getValues()));
     setInitialized(true);
@@ -38,8 +37,11 @@ export default function StepContentReview() {
   return (
     <Stack>
       <Stack direction="column" spacing={3}>
-        {commands.map((cmd) => (
-          <CommandPreview key={cmd.id} command={cmd} />
+        {commands.map((cmd, index) => (
+          <>
+            {index > 0 && <Divider />}
+            <CommandPreview key={cmd.id} command={cmd} />
+          </>
         ))}
       </Stack>
       <StepperContinueButton disabled={!isValid || isValidating}>

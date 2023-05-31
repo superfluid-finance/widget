@@ -1,10 +1,10 @@
-import { Paper, Stack, Typography } from "@mui/material";
+import { Box, Paper, Stack, Typography } from "@mui/material";
 import { SendStreamCommand } from "../commands";
 import { useWidget } from "../WidgetContext";
 import { AccountAddressCard } from "../AccountAddressCard";
 import { useBalance } from "wagmi";
 import { NorthEastIcon } from "./CommandPreview";
-
+import StreamIndicator from "../StreamIndicator";
 
 export function SendStreamPreview({
   command: cmd,
@@ -18,31 +18,32 @@ export function SendStreamPreview({
     token: cmd.superTokenAddress,
     address: cmd.accountAddress,
     chainId: cmd.chainId,
-    formatUnits: "ether"
+    formatUnits: "ether",
   });
 
   return (
     <Stack direction="column" alignItems="center" spacing={3} width="100%">
       <Stack
-        direction="row"
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr",
+          rowGap: 1.25,
+        }}
         alignItems="center"
-        justifyContent="space-between"
-        spacing={3}
         width="100%"
       >
-        <Stack>
-          <Typography>Sender</Typography>
-          <AccountAddressCard address={cmd.accountAddress} />
-        </Stack>
-        <Stack component={Paper} sx={{ p: 1 }}>
-          <NorthEastIcon />
-        </Stack>
-        <Stack>
-          <Typography>Receiver</Typography>
-          <AccountAddressCard address={cmd.receiverAddress} />
-        </Stack>
+        <Typography>Sender</Typography>
+        <Box />
+        <Typography>Receiver</Typography>
+
+        <AccountAddressCard address={cmd.accountAddress} />
+        <StreamIndicator />
+        <AccountAddressCard address={cmd.receiverAddress} />
       </Stack>
-      <Typography>Balance: {tokenBalance?.formatted} {superToken.symbol}</Typography>
+
+      <Typography>
+        Balance: {tokenBalance?.formatted} {superToken.symbol}
+      </Typography>
     </Stack>
   );
 }
