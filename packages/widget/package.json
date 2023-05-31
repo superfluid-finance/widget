@@ -27,6 +27,9 @@
     "wagmi": "wagmi generate",
     "watch": "tsc -w -p ./tsconfig.json"
   },
+  "publishConfig": {
+    "branch": "feature/widget-release"
+  },
   "dependencies": {
     "@changesets/cli": "^2.26.1",
     "@emotion/react": "^11.11.0",
