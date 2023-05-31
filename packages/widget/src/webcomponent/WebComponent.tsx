@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { SuperfluidWidget as SuperfluidWidget_ } from "../Widget";
-import { PaymentDetails, ProductDetails } from "superfluid-checkout-core";
+import { PaymentDetails, ProductDetails } from "../core";
 import { Theme } from "@mui/material";
 import { TokenList } from "@superfluid-finance/tokenlist";
 
@@ -53,7 +53,8 @@ class SuperfluidWidget extends HTMLElement {
       this.trigger = trigger;
     }
 
-    createRoot(mountPoint).render(null
+    createRoot(mountPoint).render(
+      null
       // this.type === "page" ? (
       //   <SuperfluidWidget_
       //     productDetails={this.productDetails}

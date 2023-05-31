@@ -19,7 +19,7 @@ import { useMemo } from "react";
 
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
 
-const projectId = "952483bf7a0f5ace4c40eb53967f1368";
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "952483bf7a0f5ace4c40eb53967f1368";
 
 const { publicClient } = configureChains(supportedNetworks, [
   w3mProvider({ projectId }),

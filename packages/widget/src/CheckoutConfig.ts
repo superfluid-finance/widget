@@ -1,8 +1,5 @@
 import { SuperTokenList } from "@superfluid-finance/tokenlist";
-import {
-  paymentDetailsSchema,
-  productDetailsSchema,
-} from "superfluid-checkout-core";
+import { paymentDetailsSchema, productDetailsSchema } from "./core";
 import { z } from "zod";
 
 export const checoutConfigSchema = z.object({

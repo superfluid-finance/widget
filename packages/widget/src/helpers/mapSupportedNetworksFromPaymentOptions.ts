@@ -1,8 +1,4 @@
-import {
-  PaymentOption,
-  SupportedNetwork,
-  supportedNetworks,
-} from "superfluid-checkout-core";
+import { PaymentOption, SupportedNetwork, supportedNetworks } from "../core";
 
 export function mapSupportedNetworksFromPaymentOptions(
   paymentOptions: ReadonlyArray<PaymentOption>

@@ -1,17 +1,26 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["NEXT_PUBLIC_GOOGLE_FONTS_API_KEY"],
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
-    "clean": {
-      "cache": false
-    },
-    "clean:build": {
-      "cache": false
-    },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**"]
+    },
+    "@superfluid-finance/widget#build": {
+      "outputs": ["dist/**", "docs/**"]
+    },
+    "@superfluid-finance/widget-builder#build": {
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "NEXT_PUBLIC_GOOGLE_FONTS_API_KEY",
+        "NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID"
+      ]
+    },
+    "@superfluid-finance/hosted-widget#build": {
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID"
+      ]
     },
     "lint": {},
     "dev": {

@@ -3,7 +3,7 @@ import {
   supportedNetworkSchema,
   etherAmountSchema,
   paymentOptionSchema,
-} from "superfluid-checkout-core";
+} from "./core";
 import { z } from "zod";
 import { UseFormReturn } from "react-hook-form";
 import { SuperTokenInfo } from "@superfluid-finance/tokenlist";

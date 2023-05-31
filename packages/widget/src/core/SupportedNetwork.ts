@@ -11,7 +11,7 @@ import {
   mainnet,
   gnosis,
   Chain,
-} from "@wagmi/chains";
+} from "wagmi/chains";
 
 export const chainIds = [
   5, 80001, 420, 421613, 43113, 100, 137, 10, 42161, 43114, 56, 1, 42220,
