@@ -321,9 +321,6 @@ importers:
 
   packages/widget:
     dependencies:
-      '@changesets/cli':
-        specifier: ^2.26.1
-        version: 2.26.1
       '@emotion/react':
         specifier: ^11.11.0
         version: 11.11.0(@types/react@18.2.7)(react@18.2.0)
