@@ -14,7 +14,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import tokenList, { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
+import tokenList, {
+  SuperTokenInfo,
+  TokenInfo,
+} from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { WidgetProps } from "./WidgetPreview";
@@ -152,12 +155,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                   gap={1}
                   sx={{ alignItems: "center", width: "100%" }}
                 >
-                  <Image
-                    src={network.logoUrl}
-                    alt={network.name}
-                    width={24}
-                    height={24}
-                  />
+                  {network.logoUrl && (
+                    <Image
+                      src={network.logoUrl}
+                      alt={network.name}
+                      width={24}
+                      height={24}
+                    />
+                  )}
                   <Stack
                     direction="row"
                     sx={{
