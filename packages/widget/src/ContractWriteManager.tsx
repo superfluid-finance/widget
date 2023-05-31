@@ -7,12 +7,14 @@ import {
 } from "wagmi";
 import { ContractWrite } from "./ContractWrite";
 import { ChildrenProp } from "./utils";
+import { BaseError } from "viem";
 
 export type ContractWriteResult = {
   contractWrite: ContractWrite;
   prepareResult: ReturnType<typeof usePrepareContractWrite>;
   writeResult: ReturnType<typeof useContractWrite>;
   transactionResult: ReturnType<typeof useWaitForTransaction>;
+  relevantError: 
 }
 
 type ContractWriteManagerProps = {
@@ -42,7 +44,8 @@ export function ContractWriteManager({
       contractWrite,
       prepareResult,
       writeResult,
-      transactionResult
+      transactionResult,
+      relevantError: (transactionResult.error || writeResult.error || prepareResult.error) as unknown as BaseError
     }),
     [
       contractWrite.id,

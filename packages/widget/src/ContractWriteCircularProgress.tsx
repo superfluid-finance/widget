@@ -19,7 +19,7 @@ export function ContractWriteCircularProgress({
     <Box position="relative" display="inline-flex">
       <CircularProgress
         variant="determinate"
-        value={(index + 1 / total) * 100}
+        value={((index + 1) / total) * 100}
         {...props}
       />
       <Box

@@ -3,8 +3,8 @@ import {
   AlertTitle,
   AppBar,
   Box,
-  Chip,
   IconButton,
+  Paper,
   Stack,
   Toolbar,
   Typography,
@@ -31,14 +31,7 @@ export function StepContentTransactions() {
   }
 
   const total = contractWrites.length;
-  const result = contractWriteResults[writeIndex];
-
-  // TODO(KK): Could solve the case cleaner where writeIndex goes out of bounds.
-  const error =
-    result &&
-    ((result.prepareResult.error ||
-      result.writeResult.error ||
-      result.transactionResult.error) as unknown as BaseError);
+  const currentResult = contractWriteResults[writeIndex];
 
   return (
     <Box>
@@ -81,13 +74,43 @@ export function StepContentTransactions() {
             />
           )}
         </Stack>
-        {error && (
+        {contractWriteResults.map(
+          ({
+            contractWrite: { id, functionName },
+            relevantError,
+            transactionResult,
+            writeResult,
+          }) => {
+            return (
+              <Paper key={id} sx={{ p: 1 }}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Typography>{functionName}</Typography>
+                  <Typography>
+                    {relevantError
+                      ? "Something went wrong."
+                      : transactionResult.isSuccess
+                      ? "Success"
+                      : writeResult?.isSuccess
+                      ? "Broadcasted..."
+                      : "Pending..."}
+                  </Typography>
+                </Stack>
+              </Paper>
+            );
+          }
+        )}
+        {currentResult?.relevantError && (
           <Alert severity="error">
             <AlertTitle>Error</AlertTitle>
-            {error.shortMessage}
+            {currentResult.relevantError.shortMessage}
           </Alert>
         )}
-        {result && <ContractWriteButton {...result} />}
+        {currentResult && <ContractWriteButton {...currentResult} />}
       </Stack>
     </Box>
   );

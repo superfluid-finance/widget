@@ -4,7 +4,6 @@ import {
   Fade,
   Stepper as MUIStepper,
   Portal,
-  Slide,
   Step,
   StepButton,
   StepContent,
