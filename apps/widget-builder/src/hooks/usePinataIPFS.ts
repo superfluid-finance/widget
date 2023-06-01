@@ -1,28 +1,28 @@
 import { useCallback, useState } from "react";
 
-import pinataSDK, { PinataConfig, PinataPinOptions } from "@pinata/sdk";
+import pinataSDK, { PinataPinOptions } from "@pinata/sdk";
 import { ExportJSON } from "../types/export-json";
 
-const usePinataIpfs = (config: PinataConfig, pinOptions: PinataPinOptions) => {
+const usePinataIpfs = (pinOptions: PinataPinOptions) => {
   const [isLoading, setIsLoading] = useState(false);
   const [ipfsHash, setIpfsHash] = useState<string>("");
 
-  const publish = useCallback(
-    async (data: ExportJSON) => {
-      const pinata = new pinataSDK(config);
+  const pinata = new pinataSDK({
+    pinataApiKey: process.env.NEXT_PUBLIC_PINATA_API_KEY,
+    pinataSecretApiKey: process.env.NEXT_PUBLIC_PINATA_API_SECRET,
+  });
 
-      try {
-        setIsLoading(true);
-        const response = await pinata.pinJSONToIPFS(data, pinOptions);
-        setIpfsHash(response.IpfsHash);
-      } catch (e) {
-        console.error(e);
-      }
+  const publish = useCallback(async (data: ExportJSON) => {
+    try {
+      setIsLoading(true);
+      const response = await pinata.pinJSONToIPFS(data, pinOptions);
+      setIpfsHash(response.IpfsHash);
+    } catch (e) {
+      console.error(e);
+    }
 
-      setIsLoading(false);
-    },
-    [config]
-  );
+    setIsLoading(false);
+  }, []);
 
   return { publish, isLoading, ipfsHash };
 };

@@ -29,43 +29,24 @@ const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
       new Blob([JSON.stringify(json, null, 2)], { type: "application/json" })
     )}
     download={`widget.json`}
+    sx={{ color: "white" }}
   >
     download json
   </Button>
 );
 
 const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
-  const [pinataApiKey, setPinataApiKey] = useState<string>("");
-  const [pinataSecretApiKey, setPinataSecretApiKey] = useState<string>("");
-
-  const { publish, isLoading, ipfsHash } = usePinataIpfs(
-    { pinataApiKey, pinataSecretApiKey },
-    {
-      pinataMetadata: { name: `${json.productDetails.name}-superfluid-widget` },
-    }
-  );
+  const { publish, isLoading, ipfsHash } = usePinataIpfs({
+    pinataMetadata: { name: `${json.productDetails.name}-superfluid-widget` },
+  });
 
   return (
     <Stack direction="column" gap={2}>
-      <Stack gap={1}>
-        <Typography variant="subtitle2">Pinata API Key</Typography>
-        <TextField
-          value={pinataApiKey}
-          onChange={({ target }) => setPinataApiKey(target.value)}
-        />
-      </Stack>
-      <Stack>
-        <Typography variant="subtitle2">Pinata Secret</Typography>
-        <TextField
-          value={pinataSecretApiKey}
-          onChange={({ target }) => setPinataSecretApiKey(target.value)}
-        />
-      </Stack>
       <LoadingButton
         loading={isLoading}
         variant="contained"
-        disabled={!(pinataApiKey && pinataSecretApiKey)}
         onClick={() => publish(json)}
+        sx={{ color: "white" }}
       >
         Publish
       </LoadingButton>
@@ -77,7 +58,7 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
           </Typography>
           <Tooltip title="Check">
             <IconButton
-              href={`https://ipfs.io/ipfs/${ipfsHash}`}
+              href={`https://cloudflare-ipfs.com/ipfs/${ipfsHash}`}
               target="_blank"
               size="large"
             >
@@ -152,7 +133,7 @@ const ExportEditor: FC = () => {
           }
         >
           <MenuItem value="json">Download JSON</MenuItem>
-          <MenuItem value="ipfs">Publish to IPFS with Pinata</MenuItem>
+          <MenuItem value="ipfs">Publish to IPFS</MenuItem>
         </Select>
       </Stack>
       {switchExportOption(selectedExportOption, json)}

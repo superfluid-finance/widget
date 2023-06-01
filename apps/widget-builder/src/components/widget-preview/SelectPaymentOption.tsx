@@ -76,7 +76,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
     useState<SuperTokenInfo>(defaultToken);
 
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
-  const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("day");
+  const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
 
   const filteredNetworks = useMemo(
