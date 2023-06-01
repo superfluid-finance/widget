@@ -36,9 +36,6 @@ const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
 );
 
 const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
-  const [pinataApiKey, setPinataApiKey] = useState<string>("");
-  const [pinataSecretApiKey, setPinataSecretApiKey] = useState<string>("");
-
   const { publish, isLoading, ipfsHash } = usePinataIpfs({
     pinataMetadata: { name: `${json.productDetails.name}-superfluid-widget` },
   });
@@ -61,7 +58,7 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
           </Typography>
           <Tooltip title="Check">
             <IconButton
-              href={`https://ipfs.io/ipfs/${ipfsHash}`}
+              href={`https://cloudflare-ipfs.com/ipfs/${ipfsHash}`}
               target="_blank"
               size="large"
             >
