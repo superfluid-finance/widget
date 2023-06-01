@@ -27,7 +27,6 @@ export default function ContractWriteButton({
   return (
     <Stack
       direction="column"
-      spacing={2}
       alignItems="stretch"
       sx={{ width: "100%" }}
     >

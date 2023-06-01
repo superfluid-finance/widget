@@ -14,7 +14,7 @@ export type ContractWriteResult = {
   prepareResult: ReturnType<typeof usePrepareContractWrite>;
   writeResult: ReturnType<typeof useContractWrite>;
   transactionResult: ReturnType<typeof useWaitForTransaction>;
-  relevantError: BaseError | null; 
+  latestError: BaseError | null; 
 }
 
 type ContractWriteManagerProps = {
@@ -45,7 +45,7 @@ export function ContractWriteManager({
       prepareResult,
       writeResult,
       transactionResult,
-      relevantError: (transactionResult.error || writeResult.error || prepareResult.error) as unknown as BaseError
+      latestError: (transactionResult.error || writeResult.error || prepareResult.error) as unknown as BaseError
     }),
     [
       contractWrite.id,

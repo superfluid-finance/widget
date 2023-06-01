@@ -1,5 +1,5 @@
 export type { WalletManager } from "./WalletManager";
-export { supportedNetworks, timePeriods } from "./core";
+export { supportedNetwork, supportedNetworks, timePeriods } from "./core";
 
 export type * from "./core";
 export * from "@superfluid-finance/tokenlist"; // Re-export Token List.

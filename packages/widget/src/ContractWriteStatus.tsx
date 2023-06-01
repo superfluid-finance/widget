@@ -9,20 +9,21 @@ import {
 import { ContractWriteResult } from "./ContractWriteManager";
 import CircleIcon_ from "@mui/icons-material/Circle";
 import { normalizeIcon } from "./helpers/normalizeIcon";
+import { BaseError } from "viem";
 
 export const CircleIcon = normalizeIcon(CircleIcon_);
 
 export function ContractWriteStatus(result: ContractWriteResult) {
   const {
     contractWrite: { id, commandId, displayTitle },
-    relevantError,
     transactionResult,
     writeResult,
+    latestError,
   } = result;
 
   const theme = useTheme();
 
-  const borderColor = relevantError
+  const borderColor = latestError
     ? theme.palette.error.main
     : transactionResult.isSuccess
     ? theme.palette.success.main
@@ -55,7 +56,7 @@ export function ContractWriteStatus(result: ContractWriteResult) {
             </Avatar>
           }
           label={
-            relevantError
+            latestError
               ? "Something went wrong."
               : transactionResult.isSuccess
               ? "Completed"

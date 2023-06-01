@@ -31,8 +31,8 @@ export function ContractWriteCircularProgress({
       />
       <CircularProgress
         disableShrink
-        variant={index === 0 ? "indeterminate" : "determinate"}
-        value={(index / total) * 100}
+        variant={total === 1 ? "indeterminate" : "determinate"}
+        value={index === 0 ? 4 : (index / total) * 100}
         sx={{
           animationDuration: theme.transitions.duration.complex,
           color: theme.palette.primary.dark,
@@ -53,7 +53,7 @@ export function ContractWriteCircularProgress({
         justifyContent="center"
       >
         {total > 1 && (
-          <Typography variant="caption" component="div" color="text.secondary">
+          <Typography variant="body2" component="div" fontWeight={600}>
             {index}/{total}
           </Typography>
         )}

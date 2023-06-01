@@ -6,13 +6,11 @@ import {
   Divider,
   Stack,
   Typography,
-  useTheme,
 } from "@mui/material";
-import { useWidget } from "./WidgetContext";
 import { useFormContext } from "react-hook-form";
-import { DraftFormValues } from "./formValues";
-import NetworkAvatar from "./NetworkAvatar";
 import NetworkBadge from "./NetworkBadge";
+import { useWidget } from "./WidgetContext";
+import { DraftFormValues } from "./formValues";
 
 export default function CheckoutProduct() {
   const {

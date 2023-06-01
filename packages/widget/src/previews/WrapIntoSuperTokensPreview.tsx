@@ -27,9 +27,13 @@ export function WrapIntoSuperTokensPreview({
         rowGap={1.25}
         columnGap={3}
       >
-        <Typography>You are wrapping</Typography>
+        <Typography variant="caption" fontWeight="medium">
+          You are wrapping
+        </Typography>
         <Box />
-        <Typography>You are receiving</Typography>
+        <Typography variant="caption" fontWeight="medium">
+          You are receiving
+        </Typography>
 
         <Stack
           component={Paper}
@@ -37,12 +41,13 @@ export function WrapIntoSuperTokensPreview({
           alignItems="center"
           justifyContent="center"
           flex={1}
-          spacing={0.5}
           sx={{ p: 1.5 }}
         >
           <TokenAvatar tokenInfo={underlyingToken} />
-          <Typography>{cmd.amountEther}</Typography>
-          <Typography>{underlyingToken.symbol}</Typography>
+          <Typography variant="body1" sx={{ mt: 0.5 }}>
+            {cmd.amountEther}
+          </Typography>
+          <Typography variant="caption">{underlyingToken.symbol}</Typography>
         </Stack>
 
         <Stack component={Paper} sx={{ p: 1 }}>
@@ -53,15 +58,16 @@ export function WrapIntoSuperTokensPreview({
           direction="column"
           alignItems="center"
           justifyContent="center"
-          spacing={0.5}
           sx={{ p: 1.5 }}
         >
           <TokenAvatar tokenInfo={superToken} />
-          <Typography>{cmd.amountEther}</Typography>
-          <Typography>{superToken.symbol}</Typography>
+          <Typography variant="body1" sx={{ mt: 0.5 }}>
+            {cmd.amountEther}
+          </Typography>
+          <Typography variant="caption">{superToken.symbol}</Typography>
         </Stack>
       </Stack>
-      <Typography>
+      <Typography variant="caption" fontWeight="medium">
         1 {underlyingToken.symbol} = 1 {superToken.symbol}
       </Typography>
     </Stack>

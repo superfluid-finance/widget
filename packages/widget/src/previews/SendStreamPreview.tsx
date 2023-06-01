@@ -32,16 +32,20 @@ export function SendStreamPreview({
         alignItems="center"
         width="100%"
       >
-        <Typography variant="body1">Sender</Typography>
+        <Typography variant="caption" fontWeight="medium">
+          Sender
+        </Typography>
         <Box />
-        <Typography variant="body1">Receiver</Typography>
+        <Typography variant="caption" fontWeight="medium">
+          Receiver
+        </Typography>
 
         <AccountAddressCard address={cmd.accountAddress} />
         <StreamIndicator />
         <AccountAddressCard address={cmd.receiverAddress} />
       </Stack>
 
-      <Typography>
+      <Typography variant="caption" fontWeight="medium">
         Balance: {tokenBalance?.formatted} {superToken.symbol}
       </Typography>
     </Stack>

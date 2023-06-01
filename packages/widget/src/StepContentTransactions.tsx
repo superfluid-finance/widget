@@ -73,19 +73,20 @@ export function StepContentTransactions() {
           justifyContent="space-around"
         >
           <ContractWriteCircularProgress
-            thickness={5}
-            size={75}
+            thickness={4}
+            size={80}
             index={writeIndex}
             total={total}
           />
         </Stack>
         {contractWriteResults.map(ContractWriteStatus)}
+        {/* // TODO(KK): We're not currently displaying the error anywhere.
         {currentResult?.relevantError && (
           <Alert severity="error">
             <AlertTitle>Error</AlertTitle>
             {currentResult.relevantError.shortMessage}
           </Alert>
-        )}
+        )} */}
         {currentResult && <ContractWriteButton {...currentResult} />}
       </Stack>
     </Box>
