@@ -26,6 +26,9 @@ import WebAssetIcon from "@mui/icons-material/WebAsset";
 import WebIcon from "@mui/icons-material/Web";
 import { faker } from "@faker-js/faker";
 import { supportedNetwork } from "@superfluid-finance/widget";
+import { relative } from "path";
+import Link from "next/link";
+import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 
 const labelStyle = {
   fontWeight: 500,
@@ -154,7 +157,7 @@ export default function Home() {
   ]);
 
   return (
-    <Stack direction="row">
+    <Stack direction="row" sx={{ position: "relative" }}>
       <Stack
         sx={{
           width: 600,
@@ -247,6 +250,7 @@ export default function Home() {
           />
         </Box>
       </Box>
+      <TermsAndPrivacy />
     </Stack>
   );
 }
