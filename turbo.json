@@ -15,8 +15,9 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"],
       "env": [
-        "NEXT_PUBLIC_GOOGLE_FONTS_API_KEY",
         "NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID",
+        "NEXT_PUBLIC_GOOGLE_FONTS_API_KEY",
+        "NEXT_PUBLIC_SEGMENT_WRITE_KEY",
         "NEXT_PUBLIC_PINATA_API_KEY",
         "NEXT_PUBLIC_PINATA_API_SECRET"
       ]
@@ -24,7 +25,10 @@
     "@superfluid-finance/hosted-widget#build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"],
-      "env": ["NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID"]
+      "env": [
+        "NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID", 
+        "NEXT_PUBLIC_SEGMENT_WRITE_KEY"
+      ]
     },
     "lint": {},
     "dev": {

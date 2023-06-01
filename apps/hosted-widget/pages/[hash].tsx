@@ -17,8 +17,12 @@ import tokenList from "@superfluid-finance/tokenlist";
 import { useMemo } from "react";
 
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
+import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
+import useWalletAnalytics from "../src/hooks/useWalletAnalytics";
 
-const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "952483bf7a0f5ace4c40eb53967f1368";
+const projectId =
+  process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ??
+  "952483bf7a0f5ace4c40eb53967f1368";
 
 const { publicClient } = configureChains(supportedNetworks, [
   w3mProvider({ projectId }),
@@ -73,8 +77,15 @@ const IPFSWidgetPage: NextPage = () => {
         </Box>
       </Container>
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+      <Analytics />
     </WagmiConfig>
   );
 };
 
 export default IPFSWidgetPage;
+
+function Analytics() {
+  const analyticsBrowser = useAnalyticsBrowser();
+  useWalletAnalytics({ analyticsBrowser });
+  return null;
+}
