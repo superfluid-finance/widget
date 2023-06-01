@@ -18,19 +18,19 @@ You can install the Superfluid Widget using your favorite package manager. Pleas
 ### NPM
 
 ```sh
-npm install --save @superfluid-finance/widget wagmi
+npm install --save @superfluid-finance/widget wagmi viem
 ```
 
 ### Yarn
 
 ```sh
-yarn add @superfluid-finance/widget wagmi
+yarn add @superfluid-finance/widget wagmi viem
 ```
 
 ### PNPM
 
 ```sh
-pnpm add @superfluid-finance/widget wagmi
+pnpm add @superfluid-finance/widget wagmi viem
 ```
 
 ## Usage
