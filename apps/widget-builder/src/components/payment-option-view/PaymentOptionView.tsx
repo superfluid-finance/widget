@@ -46,7 +46,6 @@ type PaymentOptionViewProps = {
   receiverAddress: `0x${string}`;
   chainId: ChainId;
   index: number;
-  isDefault?: boolean;
   remove: (index: number) => void;
 };
 
@@ -56,7 +55,6 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   receiverAddress,
   chainId,
   index,
-  isDefault = false,
   remove,
 }) => {
   const theme = useTheme();
@@ -69,35 +67,13 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
       direction="column"
       sx={{
         position: "relative",
-        ...(isDefault
-          ? {
-              border: `1.5px solid ${theme.palette.primary.main}`,
-            }
-          : {
-              border: `1.5px solid ${theme.palette.grey[100]}`,
-            }),
-
+        border: `1.5px solid ${theme.palette.grey[100]}`,
         borderRadius: 4,
         p: 2,
         alignItems: "center",
         justifyContent: "space-between",
       }}
     >
-      {isDefault && (
-        <Box
-          sx={{
-            px: 0.5,
-            position: "absolute",
-            backgroundColor: "white",
-            top: "-10px",
-
-            color: theme.palette.primary.main,
-          }}
-        >
-          <Typography fontSize="small">Default Payment Option</Typography>
-        </Box>
-      )}
-
       <Stack direction="column" gap={1} sx={{ width: "100%", mb: 2 }}>
         <PaymentOptionRow
           label="Network"
@@ -146,7 +122,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         sx={{ width: "100%", justifyContent: "center" }}
         gap={1}
       >
-        <Button
+        {/* <Button
           color="primary"
           variant="contained"
           size="small"
@@ -164,11 +140,11 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         >
           Edit
           <EditIcon sx={{ fontSize: 16, ml: 1 }} />
-        </Button>
+        </Button> */}
         <Button
+          fullWidth
           color="error"
           sx={{
-            width: "160px",
             color: theme.palette.error.main,
             backgroundColor: theme.palette.error.light,
             boxShadow: "none",

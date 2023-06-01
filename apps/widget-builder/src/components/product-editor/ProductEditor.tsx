@@ -20,7 +20,7 @@ import theme from "../../theme";
 import PaymentOptionView from "../payment-option-view/PaymentOptionView";
 
 const ProductEditor: FC = () => {
-  const { control, watch } = useFormContext<WidgetProps>();
+  const { control, watch, setValue } = useFormContext<WidgetProps>();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -68,6 +68,9 @@ const ProductEditor: FC = () => {
             <SelectPaymentOption
               onAdd={append}
               defaultReceiverAddress={defaultReceiverAddress as `0x${string}`}
+              setDefaultReceiver={(address: string) =>
+                setValue("paymentDetails.defaultReceiverAddress", address)
+              }
             />
           )}
         />
