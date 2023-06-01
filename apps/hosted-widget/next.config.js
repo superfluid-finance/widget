@@ -4,7 +4,7 @@ module.exports = {
     return [
       {
         source: "/",
-        destination: process.env.ROOT_REDIRECT_URL,
+        destination: process.env.ROOT_REDIRECT_URL ?? "https://www.superfluid.finance/subscriptions",
         permanent: false,
       },
     ];

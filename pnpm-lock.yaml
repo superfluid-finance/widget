@@ -372,9 +372,6 @@ importers:
       use-immer:
         specifier: ^0.9.0
         version: 0.9.0(immer@10.0.2)(react@18.2.0)
-      viem:
-        specifier: ^0.3.41
-        version: 0.3.41(typescript@5.0.4)(zod@3.21.4)
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -406,6 +403,9 @@ importers:
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
+      viem:
+        specifier: ~0.3.35
+        version: 0.3.41(typescript@5.0.4)(zod@3.21.4)
       wagmi:
         specifier: ^1.0.9
         version: 1.0.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(viem@0.3.41)(zod@3.21.4)
