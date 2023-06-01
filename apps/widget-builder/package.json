@@ -19,6 +19,7 @@
     "@mui/lab": "5.0.0-alpha.132",
     "@mui/material": "^5.13.3",
     "@pinata/sdk": "^2.1.0",
+    "@segment/analytics-next": "^1.51.7",
     "@superfluid-finance/tokenlist": "^1.0.2",
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.4.1",

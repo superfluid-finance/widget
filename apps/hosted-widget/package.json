@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.3",
+    "@segment/analytics-next": "^1.51.7",
     "@superfluid-finance/tokenlist": "^1.0.2",
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.4.1",
