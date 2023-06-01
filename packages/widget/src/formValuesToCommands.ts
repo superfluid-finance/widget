@@ -3,6 +3,7 @@ import { Command } from "./commands";
 import { ValidFormValues } from "./formValues";
 import { parseEther } from "viem";
 import { nanoid } from "nanoid";
+import { autoWrapStrategyAddress } from "./core";
 
 export const formValuesToCommands = (
   values: ValidFormValues
@@ -39,7 +40,7 @@ export const formValuesToCommands = (
       commands.push({
         id: nanoid(),
         type: "Enable Auto-Wrap",
-        chainId,
+        chainId: chainId as keyof typeof autoWrapStrategyAddress, // TODO(KK): validate the type in form schema
         superTokenAddress,
         accountAddress,
         underlyingTokenAddress,

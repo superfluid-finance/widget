@@ -1,52 +1,71 @@
 import { z } from "zod";
 import {
-  polygon,
-  bsc,
-  goerli,
-  polygonMumbai,
-  avalancheFuji,
-  avalanche,
-  optimism,
   arbitrum,
-  mainnet,
+  arbitrumGoerli,
+  avalanche,
+  avalancheFuji,
+  bsc,
+  celo,
   gnosis,
+  goerli,
+  mainnet,
+  optimism,
+  optimismGoerli,
+  polygon,
+  polygonMumbai,
   Chain,
 } from "wagmi/chains";
 
+export const supportedNetwork = {
+  arbitrum,
+  arbitrumGoerli,
+  avalanche,
+  avalancheFuji,
+  bsc,
+  celo,
+  gnosis,
+  goerli,
+  mainnet,
+  optimism,
+  optimismGoerli,
+  polygon,
+  polygonMumbai,
+} as const satisfies Record<string, Chain>;
+
 export const chainIds = [
-  5, 80001, 420, 421613, 43113, 100, 137, 10, 42161, 43114, 56, 1, 42220,
+  arbitrum.id,
+  arbitrumGoerli.id,
+  avalanche.id,
+  avalancheFuji.id,
+  bsc.id,
+  celo.id,
+  gnosis.id,
+  goerli.id,
+  mainnet.id,
+  optimism.id,
+  optimismGoerli.id,
+  polygon.id,
+  polygonMumbai.id,
 ] as const;
 export type ChainId = (typeof chainIds)[number];
+
+const supportedNetworks_ = [
+  supportedNetwork.arbitrum,
+  supportedNetwork.avalanche,
+  supportedNetwork.avalancheFuji,
+  supportedNetwork.bsc,
+  supportedNetwork.celo,
+  supportedNetwork.goerli,
+  supportedNetwork.gnosis,
+  supportedNetwork.mainnet,
+  supportedNetwork.optimism,
+  supportedNetwork.polygon,
+  supportedNetwork.polygonMumbai,
+] as const;
 
 export const chainIdSchema = z.custom<ChainId>((value) => {
   return chainIds.some((x) => x === (Number(value) as ChainId));
 });
-
-export const supportedNetwork = {
-  polygon,
-  bsc,
-  goerli,
-  polygonMumbai,
-  avalancheFuji,
-  avalanche,
-  optimism,
-  arbitrum,
-  mainnet,
-  gnosis,
-} as const satisfies Record<string, Chain>;
-
-const supportedNetworks_ = [
-  supportedNetwork.polygon,
-  supportedNetwork.bsc,
-  supportedNetwork.goerli,
-  supportedNetwork.polygonMumbai,
-  supportedNetwork.avalancheFuji,
-  supportedNetwork.avalanche,
-  supportedNetwork.optimism,
-  supportedNetwork.arbitrum,
-  supportedNetwork.mainnet,
-  supportedNetwork.gnosis,
-] as const;
 
 export const supportedNetworkSchema = z
   .object({
@@ -56,5 +75,5 @@ export const supportedNetworkSchema = z
 
 export type SupportedNetwork = z.infer<typeof supportedNetworkSchema> & Chain;
 
-export const supportedNetworks = supportedNetworks_ as unknown as SupportedNetwork[];
-
+export const supportedNetworks =
+  supportedNetworks_ as unknown as SupportedNetwork[];

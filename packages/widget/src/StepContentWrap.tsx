@@ -1,4 +1,5 @@
 import {
+  Button,
   FormControlLabel,
   FormGroup,
   Stack,
@@ -63,7 +64,7 @@ export default function StepContentWrap() {
                 onBlur={onBlur}
                 InputProps={{
                   endAdornment: underlyingToken && (
-                    <Stack direction="row" alignItems="center" spacing={1}>
+                    <Stack direction="row" alignItems="center" spacing={1} title={underlyingToken.address}>
                       <TokenAvatar tokenInfo={underlyingToken} />
                       <Typography>{underlyingToken.symbol}</Typography>
                     </Stack>
@@ -75,7 +76,7 @@ export default function StepContentWrap() {
                 value={value}
                 InputProps={{
                   endAdornment: superToken && (
-                    <Stack direction="row" alignItems="center" spacing={1}>
+                    <Stack direction="row" alignItems="center" spacing={1} title={superToken.address}>
                       <TokenAvatar tokenInfo={superToken} />
                       <Typography>{superToken.symbol}</Typography>
                     </Stack>
@@ -103,9 +104,24 @@ export default function StepContentWrap() {
           )}
         /> */}
       </Stack>
-      <StepperContinueButton disabled={!isValid || isValidating}>
-        Continue
-      </StepperContinueButton>
+
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="stretch"
+        spacing={1}
+      >
+        <StepperContinueButton disabled={!isValid || isValidating}>
+          Continue
+        </StepperContinueButton>
+        <Button
+          variant="text"
+          href="https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens"
+          target="_blank"
+        >
+          Why do I need to wrap tokens?
+        </Button>
+      </Stack>
     </Stack>
   );
 }

@@ -42,7 +42,7 @@ export default function Stepper() {
             {
               buttonText: "Wrap into Super Token",
               shortText: "Wrap",
-              optional: true,
+              optional: false,
               Content: StepContentWrap,
             },
           ]
@@ -58,7 +58,7 @@ export default function Stepper() {
   );
 
   const container = React.useRef(null);
-  const totalSteps = visibleSteps.length + 2; // Add confirm and success.
+  const totalSteps = visibleSteps.length + 2; // Add confirm and success. TODO(KK): not clean...
 
   return (
     <StepperProvider
