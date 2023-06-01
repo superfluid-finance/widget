@@ -8,63 +8,60 @@ import {
 } from "@mui/material/styles";
 import { deepmerge } from "@mui/utils";
 
+type ThemeMode = "light" | "dark";
+
 export const ELEVATION1_BG = `linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.03) 100%)`;
 
-export const buildTheme = (mode: "light" | "dark") => {
-  const themeCreate = createTheme({
-    palette: {
-      mode,
-    },
-  });
-
-  const themeWithDesignTokens = createTheme(getCoreTheme(themeCreate));
+export const buildThemeOptions = (mode: ThemeMode): ThemeOptions => {
+  const themeWithDesignTokens = getCoreTheme(mode);
 
   return deepmerge(
     themeWithDesignTokens,
-    getThemedComponents(themeWithDesignTokens)
+    getThemedComponents(mode, themeWithDesignTokens)
   );
 };
 
 const getModeStyleCB =
-  (mode: "light" | "dark") =>
+  (mode: ThemeMode) =>
   <T>(lightStyle: T, darkStyle: T): T =>
     mode === "dark" ? darkStyle : lightStyle;
 
-const getCoreTheme = (theme: Theme): ThemeOptions => {
-  const getModeStyle = getModeStyleCB(theme.palette.mode);
+type CoreThemeOptions = Required<
+  Pick<ThemeOptions, "palette" | "typography" | "shadows" | "transitions">
+>;
 
-  const {
-    typography: { pxToRem },
-  } = theme;
+const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
+  const getModeStyle = getModeStyleCB(mode);
 
   return {
     palette: {
-      mode: theme.palette.mode,
+      mode: mode,
+      contrastThreshold: 2.8, // 2.8 to allow white on Superfluid green
       text: {
         primary: getModeStyle("#12141ede", "#FFFFFFFF"),
         //   secondary: getModeStyle("#12141E99", "#FFFFFFC7"),
         //   disabled: getModeStyle("#12141E61", "#FFFFFF99"),
       },
-      primary: {
-        main: getModeStyle("#10BB35FF", "#10BB35FF"),
-        dark: getModeStyle("#0B8225FF", "#008900FF"),
-        light: getModeStyle("#3FC85DFF", "#5FEF66FF"),
-        contrastText: getModeStyle("#FFFFFFFF", "#FFFFFFDE"),
-      },
-      secondary: {
-        main: getModeStyle("#12141e61", "#ffffff99"),
-        dark: getModeStyle("#AEAEAEFF", "#AEAEAEFF"),
-        light: getModeStyle("#FFFFFFFF", "#FFFFFFFF"),
-        contrastText: getModeStyle("#FFFFFFFF", "#FFFFFFDE"),
-      },
-      action: {
-        active: getModeStyle("#8292AD8A", "#FFFFFF8F"),
-        hover: getModeStyle("#8292AD0A", "#FFFFFF14"),
-        selected: getModeStyle("#8292AD14", "#FFFFFF29"),
-        disabled: getModeStyle("#8292AD42", "#FFFFFF4D"),
-        disabledBackground: getModeStyle("#8292AD1F", "#FFFFFF1F"),
-        focus: getModeStyle("#8292AD1F", "#FFFFFF1F"),
-      },
+      // primary: {
+      //   main: getModeStyle("#10BB35FF", "#10BB35FF"),
+      //   dark: getModeStyle("#0B8225FF", "#008900FF"),
+      //   light: getModeStyle("#3FC85DFF", "#5FEF66FF"),
+      //   contrastText: getModeStyle("#FFFFFFFF", "#FFFFFFDE"),
+      // },
+      // secondary: {
+      //   main: getModeStyle("#12141e61", "#ffffff99"),
+      //   dark: getModeStyle("#AEAEAEFF", "#AEAEAEFF"),
+      //   light: getModeStyle("#FFFFFFFF", "#FFFFFFFF"),
+      //   contrastText: getModeStyle("#FFFFFFFF", "#FFFFFFDE"),
+      // },
+      // action: {
+      //   active: getModeStyle("#8292AD8A", "#FFFFFF8F"),
+      //   hover: getModeStyle("#8292AD0A", "#FFFFFF14"),
+      //   selected: getModeStyle("#8292AD14", "#FFFFFF29"),
+      //   disabled: getModeStyle("#8292AD42", "#FFFFFF4D"),
+      //   disabledBackground: getModeStyle("#8292AD1F", "#FFFFFF1F"),
+      //   focus: getModeStyle("#8292AD1F", "#FFFFFF1F"),
+      // },
       error: {
         main: getModeStyle("#D22525FF", "#F2685BFF"),
         dark: getModeStyle("#B80015FF", "#B80015FF"),
@@ -100,67 +97,63 @@ const getCoreTheme = (theme: Theme): ThemeOptions => {
       htmlFontSize: 16,
 
       h1: {
-        fontSize: pxToRem(62),
+        fontSize: "3.875rem",
         fontWeight: 500,
         lineHeight: 1,
       },
 
       h2: {
-        fontSize: pxToRem(42),
+        fontSize: "2.625rem",
         fontWeight: 500,
         lineHeight: 1,
       },
 
       h3: {
-        fontSize: pxToRem(32),
+        fontSize: "2rem",
         fontWeight: 500,
         lineHeight: 1.25,
       },
 
       h4: {
-        fontSize: pxToRem(28),
+        fontSize: "1.75rem",
         fontWeight: 500,
         lineHeight: 1.25,
       },
 
       h5: {
-        fontSize: pxToRem(24),
+        fontSize: "1.5rem",
         fontWeight: 500,
         lineHeight: 1.25,
       },
 
       subtitle1: {
-        fontSize: pxToRem(20),
+        fontSize: "1.25rem",
         fontWeight: 500,
         lineHeight: 1.5,
       },
 
       subtitle2: {
-        fontSize: pxToRem(18),
+        fontSize: "1.125rem",
         fontWeight: 400,
         lineHeight: 1.5,
       },
 
       body1: {
-        fontSize: pxToRem(16),
+        fontSize: "1rem",
         fontWeight: 500,
         lineHeight: 1.5,
       },
 
       body2: {
-        fontSize: pxToRem(16),
+        fontSize: "1rem",
         fontWeight: 400,
         lineHeight: 1.5,
       },
 
       caption: {
-        fontSize: pxToRem(14),
+        fontSize: "0.875rem",
         lineHeight: 1.25,
         fontWeight: 400,
-      },
-
-      overline: {
-        letterSpacing: pxToRem(1),
       },
     },
     // TODO: Only elevation 1 is used, find a way to overwrite only the first one.
@@ -280,20 +273,26 @@ const getCoreTheme = (theme: Theme): ThemeOptions => {
   };
 };
 
-export function getThemedComponents(theme: Theme): ThemeOptions {
+export function getThemedComponents(
+  mode: ThemeMode,
+  coreThemeOptions: CoreThemeOptions // Core config can be used in components
+): ThemeOptions {
   // This is used to handle light and dark themes
-  const getModeStyle = getModeStyleCB(theme.palette.mode);
-
-  const {
-    typography: { pxToRem },
-  } = theme;
+  const getModeStyle = getModeStyleCB(mode);
 
   return {
     components: {
       MuiIconButton: {
         styleOverrides: {
           sizeSmall: {
-            fontSize: pxToRem(16),
+            fontSize: "1rem",
+          },
+        },
+      },
+      MuiAvatar: {
+        styleOverrides: {
+          rounded: {
+            borderRadius: "5px",
           },
         },
       },
