@@ -52,19 +52,16 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
       </LoadingButton>
 
       {ipfsHash && (
-        <Stack direction="row">
-          <Typography variant="subtitle2">
-            Available on IPFS at: <b>{`ipfs://${ipfsHash}`}</b>
-          </Typography>
-          <Tooltip title="Check">
-            <IconButton
-              href={`https://cloudflare-ipfs.com/ipfs/${ipfsHash}`}
-              target="_blank"
-              size="large"
-            >
-              <OpenInNewIcon />
-            </IconButton>
-          </Tooltip>
+        <Stack direction="row" sx={{ alignItems: "center" }}>
+          <Typography variant="body2">Go to our hosted widget:</Typography>
+
+          <IconButton
+            href={`https://superfluid-hosted-widget.vercel.app/${ipfsHash}`}
+            target="_blank"
+            size="large"
+          >
+            <OpenInNewIcon />
+          </IconButton>
         </Stack>
       )}
     </Stack>
@@ -128,12 +125,13 @@ const ExportEditor: FC = () => {
         <Typography variant="subtitle2">Select export option</Typography>
         <Select
           value={selectedExportOption}
+          defaultValue="ipfs"
           onChange={({ target }) =>
             setSelectedExportOption(target.value as ExportOption)
           }
         >
+          <MenuItem value="ipfs">Publish to IPFS to get a hosted link</MenuItem>
           <MenuItem value="json">Download JSON</MenuItem>
-          <MenuItem value="ipfs">Publish to IPFS</MenuItem>
         </Select>
       </Stack>
       {switchExportOption(selectedExportOption, json)}
