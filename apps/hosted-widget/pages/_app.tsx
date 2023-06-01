@@ -1,11 +1,14 @@
-import * as React from 'react';
-import Head from 'next/head';
-import { AppProps } from 'next/app';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { CacheProvider, EmotionCache } from '@emotion/react';
-import theme from '../src/theme';
-import createEmotionCache from '../src/createEmotionCache';
+import * as React from "react";
+import Head from "next/head";
+import { AppProps } from "next/app";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import theme from "../src/theme";
+import createEmotionCache from "../src/createEmotionCache";
+import { Box } from "@mui/material";
+import Link from "next/link";
+import TermsAndPrivacy from "../src/components/terms-and-privacy/TermsAndPrivacy";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -26,6 +29,7 @@ export default function MyApp(props: MyAppProps) {
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
+      <TermsAndPrivacy />
     </CacheProvider>
   );
 }
