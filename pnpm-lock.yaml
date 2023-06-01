@@ -182,8 +182,8 @@ importers:
   examples/widget-vite-react-rainbowkit:
     dependencies:
       '@rainbow-me/rainbowkit':
-        specifier: ^1.0.1
-        version: 1.0.1(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)(viem@0.3.41)(wagmi@1.0.9)
+        specifier: ^1.0.0
+        version: 1.0.0(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)(viem@0.3.41)(wagmi@1.0.9)
       '@superfluid-finance/tokenlist':
         specifier: ^1.0.2
         version: 1.0.2
@@ -2053,14 +2053,14 @@ packages:
   /@popperjs/core@2.11.8:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
-  /@rainbow-me/rainbowkit@1.0.1(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)(viem@0.3.41)(wagmi@1.0.9):
-    resolution: {integrity: sha512-P+2lgHaN5X84K1e+MARUydyhYRS+nStN4H470QloBBWP5UsidHZpSJGd4qi0WFtfR6zBff96N6kmsfJo7PjFhQ==}
+  /@rainbow-me/rainbowkit@1.0.0(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)(viem@0.3.41)(wagmi@1.0.9):
+    resolution: {integrity: sha512-XZBa7P1mlmNTuMa0iEw2D9wKKQjjh8iDhWGtvsyQZFBDqorOxc1/5Wy352p6kSC9J7s4P9sG3FwHnTGxJPaHmQ==}
     engines: {node: '>=12.4'}
     peerDependencies:
       react: '>=17'
       react-dom: '>=17'
       viem: ~0.3.19
-      wagmi: ~1.0.1
+      wagmi: ^1.0.1
     dependencies:
       '@vanilla-extract/css': 1.9.1
       '@vanilla-extract/dynamic': 2.0.2
