@@ -117,7 +117,7 @@ const ExportEditor: FC = () => {
   );
 
   const [selectedExportOption, setSelectedExportOption] =
-    useState<ExportOption>("json");
+    useState<ExportOption>("ipfs");
 
   return (
     <Stack gap={2}>
