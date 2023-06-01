@@ -12,6 +12,7 @@ import {
   SvgIcon,
   Switch,
   TextField,
+  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -21,7 +22,7 @@ import tokenList, {
 } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
 import { UseFieldArrayAppend, UseFormSetValue } from "react-hook-form";
-import { WidgetProps } from "./WidgetPreview";
+import { WidgetProps } from "../widget-preview/WidgetPreview";
 import Image from "next/image";
 import InfoIcon from "@mui/icons-material/Info";
 
@@ -61,6 +62,20 @@ const defaultToken: SuperTokenInfo = {
       type: "Pure",
     },
   },
+};
+
+type InputInfoProps = {
+  tooltip: string;
+};
+
+const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
+  const theme = useTheme();
+
+  return (
+    <Tooltip title={tooltip}>
+      <InfoIcon fontSize="small" sx={{ color: theme.palette.grey[600] }} />
+    </Tooltip>
+  );
 };
 
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
@@ -150,10 +165,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             sx={{ pl: 1, justifyContent: "space-between" }}
           >
             <Typography variant="subtitle2">Network</Typography>
-            <InfoIcon
-              fontSize="small"
-              sx={{ color: theme.palette.grey[600] }}
-            />
+            <InputInfo tooltip="Select the network you'd like to request payment on" />
           </Stack>
           <Select
             value={selectedNetwork.name}
@@ -204,10 +216,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             sx={{ pl: 1, justifyContent: "space-between" }}
           >
             <Typography variant="subtitle2">SuperToken</Typography>
-            <InfoIcon
-              fontSize="small"
-              sx={{ color: theme.palette.grey[600] }}
-            />
+            <InputInfo tooltip="Select the SuperToken you'd like to request payment in" />
           </Stack>
           <Autocomplete
             fullWidth
@@ -236,7 +245,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
       <Stack direction="column">
         <Stack direction="row" sx={{ pl: 1, justifyContent: "space-between" }}>
           <Typography variant="subtitle2">Flow Rate</Typography>
-          <InfoIcon fontSize="small" sx={{ color: theme.palette.grey[600] }} />
+          <InputInfo tooltip="Set the amount of tokens per month for the payment" />
         </Stack>
 
         <Stack direction="row" gap={"-1px"}>
@@ -279,10 +288,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             sx={{ pl: 1, justifyContent: "space-between" }}
           >
             <Typography variant="subtitle2">Receiver</Typography>
-            <InfoIcon
-              fontSize="small"
-              sx={{ color: theme.palette.grey[600] }}
-            />
+            <InputInfo tooltip="Set your wallet or multisig address on the relevant network" />
           </Stack>
           <TextField
             value={receiver}

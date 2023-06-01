@@ -11,7 +11,7 @@ import {
 import { FC } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
-import SelectPaymentOption from "../widget-preview/SelectPaymentOption";
+import SelectPaymentOption from "../select-payment-option/SelectPaymentOption";
 import { networks } from "../../networkDefinitions";
 import { ChainId } from "@superfluid-finance/widget";
 import tokenList from "@superfluid-finance/tokenlist";
