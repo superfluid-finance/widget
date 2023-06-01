@@ -73,8 +73,8 @@ export function StepContentTransactions() {
           justifyContent="space-around"
         >
           <ContractWriteCircularProgress
-            thickness={5}
-            size={75}
+            thickness={4}
+            size={80}
             index={writeIndex}
             total={total}
           />
