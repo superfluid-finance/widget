@@ -44,6 +44,7 @@ export default function StepContentWrap() {
       alignItems="stretch"
       justifyContent="space-around"
       spacing={3}
+      sx={{ pt: 3 }}
     >
       <Stack
         direction="column"
@@ -55,7 +56,7 @@ export default function StepContentWrap() {
           control={c}
           name="wrapAmountEther"
           render={({ field: { value, onChange, onBlur } }) => (
-            <FormGroup>
+            <Stack gap={1}>
               <TextField
                 value={value}
                 onChange={onChange}
@@ -81,7 +82,7 @@ export default function StepContentWrap() {
                   ),
                 }}
               />
-            </FormGroup>
+            </Stack>
           )}
         />
         {/* // TODO(KK): Handle Auto-Wrap */}

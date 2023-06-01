@@ -6,6 +6,7 @@ import {
   Theme,
   ThemeOptions,
 } from "@mui/material/styles";
+import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { deepmerge } from "@mui/utils";
 
 type ThemeMode = "light" | "dark";
@@ -280,6 +281,8 @@ export function getThemedComponents(
   // This is used to handle light and dark themes
   const getModeStyle = getModeStyleCB(mode);
 
+  const typography = coreThemeOptions.typography as TypographyOptions;
+
   return {
     components: {
       MuiIconButton: {
@@ -300,6 +303,14 @@ export function getThemedComponents(
         styleOverrides: {
           root: {
             border: `1px solid ${coreThemeOptions.palette.divider}`,
+          },
+        },
+      },
+      MuiStepButton: {
+        styleOverrides: {
+          root: {
+            ...typography.subtitle2,
+            fontWeight: 500,
           },
         },
       },

@@ -22,31 +22,32 @@ export default function StepContentPaymentOption() {
   } = useWidget();
 
   return (
+    <Stack
+      direction="column"
+      alignItems="stretch"
+      justifyContent="space-around"
+      spacing={3}
+      sx={{ pt: 3 }}
+    >
       <Stack
-        direction="column"
-        alignItems="stretch"
-        justifyContent="space-around"
-        spacing={3}
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={1}
       >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          spacing={1}
-        >
-          <Box sx={{ width: "100%" }}>
-            <NetworkAutocomplete />
-          </Box>
-          <Box sx={{ width: "100%" }}>
-            <TokenAutocomplete />
-          </Box>
-        </Stack>
-        <StepperContinueButton
-          disabled={!isStepComplete}
-          {...(!isConnected && { onClick: () => openWalletManager() })}
-        >
-          {isConnected ? "Continue" : "Connect Wallet to Continue"}
-        </StepperContinueButton>
+        <Box sx={{ width: "100%" }}>
+          <NetworkAutocomplete />
+        </Box>
+        <Box sx={{ width: "100%" }}>
+          <TokenAutocomplete />
+        </Box>
       </Stack>
+      <StepperContinueButton
+        disabled={!isStepComplete}
+        {...(!isConnected && { onClick: () => openWalletManager() })}
+      >
+        {isConnected ? "Continue" : "Connect Wallet to Continue"}
+      </StepperContinueButton>
+    </Stack>
   );
 }
