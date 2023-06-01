@@ -1,62 +1,80 @@
 import { AnalyticsBrowser } from "@segment/analytics-next";
-import { useEffect, useMemo, useState } from "react";
-import { useAccount, useChainId } from "wagmi";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Address, useAccount, useNetwork } from "wagmi";
 
 const NOT_CONNECTED = {
   isConnected: false,
-  address: undefined,
-  chainId: undefined,
-};
+} as const;
 
 const useWalletAnalytics = ({
   analyticsBrowser,
 }: {
   analyticsBrowser: AnalyticsBrowser;
 }) => {
-  const { address, isConnected } = useAccount();
-  const chainId = useChainId();
-  const { track, identify, reset } = analyticsBrowser;
+  const {
+    connector: activeConnector,
+    isConnected,
+    address: activeAccountAddress,
+  } = useAccount();
+  const { chain: activeChain } = useNetwork();
+  const { track, reset } = analyticsBrowser;
 
-  const current = useMemo(
-    () =>
-      isConnected
-        ? {
-            address,
-            isConnected,
-            chainId,
-          }
-        : NOT_CONNECTED,
-    [address, isConnected, chainId]
+  const identify = useCallback(
+    (wallet: { isConnected: true; address: Address }) =>
+      analyticsBrowser.identify(wallet.address, {
+        walletAddress: wallet.address,
+      }),
+    [analyticsBrowser]
   );
 
-  const [previous, setPrevious] = useState<typeof current>(NOT_CONNECTED);
+  const currentWallet = useMemo(
+    () => ({
+      ...(isConnected && activeConnector && activeAccountAddress
+        ? ({
+            isConnected: true,
+            address: activeAccountAddress,
+            connector: activeConnector.name,
+            connectorId: activeConnector.id,
+            ...(activeChain
+              ? {
+                  network: activeChain.name,
+                  networkId: activeChain.id,
+                }
+              : {}),
+          } as const)
+        : NOT_CONNECTED),
+    }),
+    [isConnected, activeConnector, activeAccountAddress, activeChain]
+  );
+
+  const [prevWallet, setPrevWallet] = useState<typeof currentWallet>(NOT_CONNECTED);
 
   useEffect(() => {
-    if (current === previous) {
+    if (currentWallet === prevWallet) {
       return;
     }
 
-    if (current.isConnected !== previous.isConnected) {
-      if (current.isConnected) {
-        track("Wallet Connected", current).then(() => identify(current));
+    if (currentWallet.isConnected !== prevWallet.isConnected) {
+      if (currentWallet.isConnected) {
+        track("Wallet Connected", currentWallet).then(() => identify(currentWallet));
       } else {
-        track("Wallet Disconnected", current).then(() => reset());
+        track("Wallet Disconnected", currentWallet).then(() => reset());
       }
     } else {
-      if (current.isConnected && previous.isConnected) {
-        if (current.chainId != previous.chainId) {
-          track("Wallet Network Changed", current);
+      if (currentWallet.isConnected && prevWallet.isConnected) {
+        if (currentWallet.networkId != prevWallet.networkId) {
+          track("Wallet Network Changed", currentWallet);
         }
-        if (current.address != previous.address) {
-          track("Wallet Account Changed", current)
+        if (currentWallet.address != prevWallet.address) {
+          track("Wallet Account Changed", currentWallet)
             .then(() => reset()) // Reset before not to associate next identification with previous wallet address.
-            .then(() => identify(current));
+            .then(() => identify(currentWallet));
         }
       }
     }
 
-    setPrevious(current);
-  }, [current]);
+    setPrevWallet(currentWallet);
+  }, [currentWallet]);
 };
 
 export default useWalletAnalytics;
