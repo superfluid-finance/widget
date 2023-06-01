@@ -1,9 +1,3 @@
-import { useCallback, useMemo } from "react";
-import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
-import { WidgetContext, WidgetContextValue } from "./WidgetContext";
-import { ViewProps, WidgetView } from "./WidgetView";
-import { SupportedNetwork, supportedNetworks } from "./core";
-import { PaymentOptionWithTokenInfo } from "./formValues";
 import {
   Alert,
   AlertTitle,
@@ -11,15 +5,21 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
-import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions";
-import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
-import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList";
-import { Address } from "viem";
-import { WalletManager } from "./WalletManager";
+import { deepmerge } from "@mui/utils";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
-import { buildTheme } from "./theme";
-import { deepmerge } from "@mui/utils";
+import { useCallback, useMemo } from "react";
+import { Address } from "viem";
+import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
+import { WalletManager } from "./WalletManager";
+import { WidgetContext, WidgetContextValue } from "./WidgetContext";
+import { ViewProps, WidgetView } from "./WidgetView";
+import { SupportedNetwork, supportedNetworks } from "./core";
+import { PaymentOptionWithTokenInfo } from "./formValues";
+import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
+import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList";
+import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions";
+import { buildThemeOptions } from "./theme";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {
@@ -131,10 +131,11 @@ export function Widget({
   );
 
   const theme = useMemo(() => {
-    const defaultTheme = buildTheme(theme_?.palette?.mode || "light");
-    // console.log({ defaultTheme, theme_ });
-    return deepmerge(defaultTheme, createTheme(theme_));
-    // return createTheme(theme_);
+    const defaultThemeOptions = buildThemeOptions(
+      theme_?.palette?.mode || "light"
+    );
+    const themeOptions = deepmerge(defaultThemeOptions, theme_);
+    return createTheme(themeOptions);
   }, [theme_]);
 
   const validationResult = checoutConfigSchema.safeParse({
