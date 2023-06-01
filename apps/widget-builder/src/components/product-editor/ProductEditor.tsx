@@ -32,7 +32,7 @@ const ProductEditor: FC = () => {
   return (
     <Stack gap={1}>
       <Stack mb={4} gap={2}>
-        <Typography variant="subtitle1">Product details</Typography>
+        <Typography variant="h6">Payment Configuration</Typography>
         <Stack direction="column" gap={1}>
           <Typography variant="subtitle2">Product Name</Typography>
           <Controller
@@ -60,6 +60,7 @@ const ProductEditor: FC = () => {
         </Stack>
       </Stack>
       <Stack direction="column" gap={2}>
+        <Typography variant="h6">Add Payment Options</Typography>
         <Controller
           control={control}
           name="paymentDetails.paymentOptions"
@@ -71,14 +72,18 @@ const ProductEditor: FC = () => {
           )}
         />
 
-        <Divider />
+        <Divider sx={{ my: 4 }} />
 
         <Stack direction="column">
           <Stack
             direction="row"
-            sx={{ px: 2, mb: 1, justifyContent: "space-between" }}
+            sx={{
+              mb: 2,
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
           >
-            <Typography variant="subtitle2">Payment Details Summary</Typography>
+            <Typography variant="h6">Payment Details Summary</Typography>
             <Typography
               variant="subtitle2"
               sx={{ color: theme.palette.grey[500] }}
@@ -93,7 +98,7 @@ const ProductEditor: FC = () => {
                 ({ superToken, chainId, flowRate, receiverAddress }, i) => (
                   <PaymentOptionView
                     key={`${superToken.address}-${i}`}
-                    flowRate={`${flowRate.amountEther}/ ${flowRate.period}`}
+                    flowRate={`${flowRate.amountEther} / ${flowRate.period}`}
                     receiverAddress={receiverAddress}
                     superToken={superToken}
                     chainId={chainId}
