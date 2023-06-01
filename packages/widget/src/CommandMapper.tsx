@@ -173,7 +173,7 @@ export function WrapIntoSuperTokensCommandMapper({
           contractWrites_.push(
             createContractWrite({
               commandId: cmd.id,
-              displayTitle: `Approve Superfluid Protocol to spend your ${
+              displayTitle: `Approve Superfluid to spend your ${
                 getUnderlyingToken(cmd.underlyingTokenAddress).symbol
               }`,
               chainId: cmd.chainId,

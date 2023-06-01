@@ -3,6 +3,8 @@ import {
   CircularProgress,
   CircularProgressProps,
   Typography,
+  circularProgressClasses,
+  useTheme,
 } from "@mui/material";
 
 type Props = CircularProgressProps & {
@@ -15,11 +17,29 @@ export function ContractWriteCircularProgress({
   total,
   ...props
 }: Props) {
+  const theme = useTheme();
   return (
     <Box position="relative" display="inline-flex">
       <CircularProgress
         variant="determinate"
-        value={((index + 1) / total) * 100}
+        sx={{
+          color: theme.palette.primary.light,
+          position: "absolute",
+        }}
+        value={100}
+        {...props}
+      />
+      <CircularProgress
+        disableShrink
+        variant={index === 0 ? "indeterminate" : "determinate"}
+        value={(index / total) * 100}
+        sx={{
+          animationDuration: theme.transitions.duration.complex,
+          color: theme.palette.primary.dark,
+          [`& .${circularProgressClasses.circle}`]: {
+            strokeLinecap: "round",
+          },
+        }}
         {...props}
       />
       <Box
@@ -34,7 +54,7 @@ export function ContractWriteCircularProgress({
       >
         {total > 1 && (
           <Typography variant="caption" component="div" color="text.secondary">
-            {index + 1}/{total}
+            {index}/{total}
           </Typography>
         )}
       </Box>

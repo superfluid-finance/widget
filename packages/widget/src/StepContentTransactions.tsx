@@ -4,7 +4,6 @@ import {
   AppBar,
   Box,
   IconButton,
-  Paper,
   Stack,
   Toolbar,
   Typography,
@@ -15,40 +14,11 @@ import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress";
 import { useStepper } from "./StepperContext";
 import ArrowBackIcon_ from "@mui/icons-material/ArrowBack";
 import { normalizeIcon } from "./helpers/normalizeIcon";
-import { ContractWriteResult } from "./ContractWriteManager";
+import CloseIcon_ from "@mui/icons-material/Close";
+import { ContractWriteStatus } from "./ContractWriteStatus";
 
 const ArrowBackIcon = normalizeIcon(ArrowBackIcon_);
-
-function ContractWriteStatus(result: ContractWriteResult) {
-  const {
-    contractWrite: { id, commandId, displayTitle },
-    relevantError,
-    transactionResult,
-    writeResult,
-  } = result;
-
-  return (
-    <Paper key={id} sx={{ p: 1 }}>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={2}
-      >
-        <Typography>{displayTitle}</Typography>
-        <Typography>
-          {relevantError
-            ? "Something went wrong."
-            : transactionResult.isSuccess
-            ? "Success"
-            : writeResult?.isSuccess
-            ? "Broadcasted..."
-            : "Pending..."}
-        </Typography>
-      </Stack>
-    </Paper>
-  );
-}
+const CloseIcon = normalizeIcon(CloseIcon_);
 
 export function StepContentTransactions() {
   const { handleBack, handleNext } = useStepper();
@@ -73,8 +43,13 @@ export function StepContentTransactions() {
             color="inherit"
             onClick={handleBack}
             aria-label="back"
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+            }}
           >
-            <ArrowBackIcon />
+            <CloseIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -97,13 +72,12 @@ export function StepContentTransactions() {
           alignItems="center"
           justifyContent="space-around"
         >
-          {total > 1 && (
-            <ContractWriteCircularProgress
-              size={100}
-              index={writeIndex}
-              total={total}
-            />
-          )}
+          <ContractWriteCircularProgress
+            thickness={5}
+            size={75}
+            index={writeIndex}
+            total={total}
+          />
         </Stack>
         {contractWriteResults.map(ContractWriteStatus)}
         {currentResult?.relevantError && (
