@@ -81,6 +81,7 @@ export const networkAssetsConf = [
 
 export interface NetworkAvatarProps {
   network: SupportedNetwork;
+  useNetworkBackgroundColor?: boolean,
   AvatarProps?: Partial<AvatarProps>;
 }
 
@@ -93,14 +94,12 @@ const NetworkAvatar: FC<NetworkAvatarProps> = ({
   }, [network]);
 
   const { sx: AvatarSx = {} } = AvatarProps;
-  console.log("AvatarSX", { AvatarSx });
+
   return (
     <Avatar
       src={networkAssetConf?.logoUrl}
-      variant="rounded"
       {...AvatarProps}
       sx={{
-        objectFit: "contain",
         backgroundColor: networkAssetConf?.color,
         ...AvatarSx,
       }}
