@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:main": "turbo run dev --filter=!./examples/*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "sort-package-jsons": "npx sort-package-json \"**/package.json\" \"!**/node_modules/**\" --check"
