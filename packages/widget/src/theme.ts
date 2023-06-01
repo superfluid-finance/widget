@@ -36,7 +36,7 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
   return {
     palette: {
       mode: mode,
-      contrastThreshold: 2.8, // 2.8 to allow white on Superfluid green
+      contrastThreshold: 2.7, // 2.8 to allow white on Superfluid green
       text: {
         primary: getModeStyle("#12141ede", "#FFFFFFFF"),
         //   secondary: getModeStyle("#12141E99", "#FFFFFFC7"),
