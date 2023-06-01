@@ -1,4 +1,4 @@
-import CheckCircleIcon_ from "@mui/icons-material/CheckCircle";
+import CheckIcon_ from "@mui/icons-material/Check";
 import ContentCopyIcon_ from "@mui/icons-material/ContentCopy";
 import { Avatar, IconButton, Paper, Stack, Typography } from "@mui/material";
 import { create } from "blockies-ts";
@@ -9,7 +9,7 @@ import { normalizeIcon } from "./helpers/normalizeIcon";
 import { copyToClipboard } from "./utils";
 
 const ContentCopyIcon = normalizeIcon(ContentCopyIcon_);
-const CheckIcon = normalizeIcon(CheckCircleIcon_);
+const CheckIcon = normalizeIcon(CheckIcon_);
 
 export function AccountAddressCard({ address }: { address: Address }) {
   const blockiesSrc = create({ seed: address.toLowerCase() }).toDataURL();
@@ -56,9 +56,12 @@ export function AccountAddressCard({ address }: { address: Address }) {
                   setTimeout(() => setCopied(false), 1000);
                 })
               }
+              sx={{
+                "&:hover": { color: (theme) => theme.palette.primary.main },
+              }}
             >
               {copied ? (
-                <CheckIcon fontSize="inherit" color="success" />
+                <CheckIcon fontSize="inherit" color="primary" />
               ) : (
                 <ContentCopyIcon fontSize="inherit" />
               )}

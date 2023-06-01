@@ -102,9 +102,9 @@ export function EnableAutoWrapCommandMapper({
         contractWrites_.push(
           createContractWrite({
             commandId: cmd.id,
-            displayTitle: `Approve Auto-Wrap to spend your ${
+            displayTitle: `Approve ${
               getUnderlyingToken(cmd.underlyingTokenAddress).symbol
-            }`,
+            } Allowance`,
             chainId: cmd.chainId,
             abi: erc20ABI,
             functionName: "approve",
@@ -173,9 +173,9 @@ export function WrapIntoSuperTokensCommandMapper({
           contractWrites_.push(
             createContractWrite({
               commandId: cmd.id,
-              displayTitle: `Approve Superfluid to spend your ${
+              displayTitle: `Approve ${
                 getUnderlyingToken(cmd.underlyingTokenAddress).symbol
-              }`,
+              } Allowance`,
               chainId: cmd.chainId,
               abi: erc20ABI,
               functionName: "approve",

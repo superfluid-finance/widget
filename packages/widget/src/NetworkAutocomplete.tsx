@@ -1,7 +1,8 @@
-import { Autocomplete, Box, TextField } from "@mui/material";
+import { Autocomplete, Box, Stack, TextField, Typography } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import { useWidget } from "./WidgetContext";
+import NetworkAvatar from "./NetworkAvatar";
 
 export default function NetworkAutocomplete() {
   const { control: c } = useFormContext<DraftFormValues>();
@@ -21,11 +22,39 @@ export default function NetworkAutocomplete() {
           autoHighlight
           getOptionLabel={(option) => option.name}
           renderOption={(props, option) => (
-            <Box component="li" {...props}>
-              {option.name}
-            </Box>
+            <Stack
+              {...props}
+              component="li"
+              direction="row"
+              alignItems="center"
+              spacing={1}
+            >
+              <NetworkAvatar
+                network={option}
+                AvatarProps={{
+                  sx: { width: 32, height: 32 },
+                }}
+              />
+              <Typography>{option.name}</Typography>
+            </Stack>
           )}
-          renderInput={(params) => <TextField {...params} label="Network" />}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: value ? (
+                  <NetworkAvatar
+                    network={value}
+                    AvatarProps={{
+                      sx: { width: 32, height: 32 }, // TODO(KK): this is duplicated above
+                    }}
+                  />
+                ) : null,
+              }}
+              label="Network"
+            />
+          )}
           onChange={(_event, newValue) => onChange(newValue)}
           onBlur={onBlur}
         />

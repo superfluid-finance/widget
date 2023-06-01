@@ -1,9 +1,4 @@
-import {
-  Autocomplete,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Autocomplete, Stack, TextField, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues";
@@ -41,9 +36,7 @@ export default function TokenAutocomplete() {
           }
           options={autocompleteOptions}
           autoHighlight
-          getOptionLabel={(option) =>
-            `${option.paymentOption.flowRate.amountEther} ${option.superToken.symbol}/${option.paymentOption.flowRate.period}`
-          }
+          getOptionLabel={(option) => option.superToken.symbol}
           renderOption={(props, option) => (
             <Stack
               {...props}
@@ -58,7 +51,18 @@ export default function TokenAutocomplete() {
               </Typography>
             </Stack>
           )}
-          renderInput={(params) => <TextField {...params} label="Token" />}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: value ? (
+                  <TokenAvatar tokenInfo={value.superToken} />
+                ) : null,
+              }}
+              label="Token"
+            />
+          )}
           onChange={(_event, newValue) => onChange(newValue)}
           onBlur={onBlur}
         />
