@@ -43,7 +43,7 @@ export function AccountAddressCard({ address }: { address: Address }) {
                 src={blockiesSrc}
               />
             )}
-            <Typography title={checksumAddress}>
+            <Typography variant="body1" title={checksumAddress}>
               {ensNameResult.data ?? shortenedAddress}
             </Typography>
 

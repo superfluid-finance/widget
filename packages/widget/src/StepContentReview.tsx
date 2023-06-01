@@ -35,7 +35,7 @@ export default function StepContentReview() {
   );
 
   return (
-    <Stack>
+    <Stack sx={{ pt: 3 }} gap={3}>
       <Stack direction="column" spacing={3}>
         {commands.map((cmd, index) => (
           <Fragment key={cmd.id}>
