@@ -40,9 +40,9 @@ export default function Stepper() {
         .type === "Wrapper"
         ? [
             {
-              buttonText: "Wrap into Super Token",
+              buttonText: "Wrap to Super Tokens",
               shortText: "Wrap",
-              optional: false,
+              optional: true,
               Content: StepContentWrap,
             },
           ]

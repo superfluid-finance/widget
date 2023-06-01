@@ -34,10 +34,25 @@ export function FormEffects() {
       keepTouched: true,
       keepError: false,
     });
+    if (
+      paymentOptionWithTokenInfo &&
+      paymentOptionWithTokenInfo.superToken.extensions.superTokenInfo.type !==
+        "Pure"
+    ) {
+      setValue(
+        "wrapAmountEther",
+        paymentOptionWithTokenInfo.paymentOption.flowRate.amountEther,
+        {
+          shouldValidate: true,
+          shouldDirty: true,
+          shouldTouch: false,
+        }
+      );
+    }
   }, [paymentOptionWithTokenInfo]);
 
   const { address } = useAccount();
-  
+
   useEffect(() => {
     if (address) {
       setValue("accountAddress", address, {
