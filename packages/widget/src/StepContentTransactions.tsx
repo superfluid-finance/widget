@@ -12,12 +12,43 @@ import {
 import { useCommandHandler } from "./CommandHandlerContext";
 import ContractWriteButton from "./ContractWriteButton";
 import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress";
-import { BaseError } from "viem";
 import { useStepper } from "./StepperContext";
 import ArrowBackIcon_ from "@mui/icons-material/ArrowBack";
 import { normalizeIcon } from "./helpers/normalizeIcon";
+import { ContractWriteResult } from "./ContractWriteManager";
 
 const ArrowBackIcon = normalizeIcon(ArrowBackIcon_);
+
+function ContractWriteStatus(result: ContractWriteResult) {
+  const {
+    contractWrite: { id, commandId, displayTitle },
+    relevantError,
+    transactionResult,
+    writeResult,
+  } = result;
+
+  return (
+    <Paper key={id} sx={{ p: 1 }}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={2}
+      >
+        <Typography>{displayTitle}</Typography>
+        <Typography>
+          {relevantError
+            ? "Something went wrong."
+            : transactionResult.isSuccess
+            ? "Success"
+            : writeResult?.isSuccess
+            ? "Broadcasted..."
+            : "Pending..."}
+        </Typography>
+      </Stack>
+    </Paper>
+  );
+}
 
 export function StepContentTransactions() {
   const { handleBack, handleNext } = useStepper();
@@ -74,36 +105,7 @@ export function StepContentTransactions() {
             />
           )}
         </Stack>
-        {contractWriteResults.map(
-          ({
-            contractWrite: { id, functionName },
-            relevantError,
-            transactionResult,
-            writeResult,
-          }) => {
-            return (
-              <Paper key={id} sx={{ p: 1 }}>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <Typography>{functionName}</Typography>
-                  <Typography>
-                    {relevantError
-                      ? "Something went wrong."
-                      : transactionResult.isSuccess
-                      ? "Success"
-                      : writeResult?.isSuccess
-                      ? "Broadcasted..."
-                      : "Pending..."}
-                  </Typography>
-                </Stack>
-              </Paper>
-            );
-          }
-        )}
+        {contractWriteResults.map(ContractWriteStatus)}
         {currentResult?.relevantError && (
           <Alert severity="error">
             <AlertTitle>Error</AlertTitle>

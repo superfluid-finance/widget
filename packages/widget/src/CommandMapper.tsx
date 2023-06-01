@@ -43,6 +43,7 @@ export function EnableAutoWrapCommandMapper({
   onMapped,
   children,
 }: CommandMapperProps<EnableAutoWrapCommand>) {
+  const { getUnderlyingToken } = useWidget();
   const { data, isSuccess } = useContractReads({
     contracts: [
       {
@@ -80,6 +81,7 @@ export function EnableAutoWrapCommandMapper({
         contractWrites_.push(
           createContractWrite({
             commandId: cmd.id,
+            displayTitle: "Enable Auto-Wrap",
             chainId: cmd.chainId,
             abi: autoWrapManagerABI,
             address: autoWrapManagerAddress[cmd.chainId],
@@ -100,6 +102,9 @@ export function EnableAutoWrapCommandMapper({
         contractWrites_.push(
           createContractWrite({
             commandId: cmd.id,
+            displayTitle: `Approve Auto-Wrap to spend your ${
+              getUnderlyingToken(cmd.underlyingTokenAddress).symbol
+            }`,
             chainId: cmd.chainId,
             abi: erc20ABI,
             functionName: "approve",
@@ -125,7 +130,7 @@ export function WrapIntoSuperTokensCommandMapper({
   onMapped,
   children,
 }: CommandMapperProps<WrapIntoSuperTokensCommand>) {
-  const { getSuperToken } = useWidget();
+  const { getSuperToken, getUnderlyingToken } = useWidget();
 
   const superToken = getSuperToken(cmd.superTokenAddress);
   const isNativeAssetSuperToken =
@@ -152,6 +157,9 @@ export function WrapIntoSuperTokensCommandMapper({
       contractWrites_.push(
         createContractWrite({
           commandId: cmd.id,
+          displayTitle: `Wrap into ${
+            getUnderlyingToken(cmd.underlyingTokenAddress).symbol
+          }`,
           chainId: cmd.chainId,
           abi: superTokenABI,
           address: cmd.superTokenAddress,
@@ -165,6 +173,9 @@ export function WrapIntoSuperTokensCommandMapper({
           contractWrites_.push(
             createContractWrite({
               commandId: cmd.id,
+              displayTitle: `Approve Superfluid Protocol to spend your ${
+                getUnderlyingToken(cmd.underlyingTokenAddress).symbol
+              }`,
               chainId: cmd.chainId,
               abi: erc20ABI,
               functionName: "approve",
@@ -177,6 +188,9 @@ export function WrapIntoSuperTokensCommandMapper({
         contractWrites_.push(
           createContractWrite({
             commandId: cmd.id,
+            displayTitle: `Wrap ${
+              getSuperToken(cmd.superTokenAddress).symbol
+            } into ${getUnderlyingToken(cmd.underlyingTokenAddress).symbol}`,
             chainId: cmd.chainId,
             abi: superTokenABI,
             address: cmd.superTokenAddress,
@@ -226,6 +240,7 @@ export function SendStreamCommandMapper({
         contractWrites_.push(
           createContractWrite({
             commandId: cmd.id,
+            displayTitle: "Modify Stream",
             abi: cfAv1ForwarderABI,
             address: cfAv1ForwarderAddress[cmd.chainId],
             chainId: cmd.chainId,
@@ -243,6 +258,7 @@ export function SendStreamCommandMapper({
         contractWrites_.push(
           createContractWrite({
             commandId: cmd.id,
+            displayTitle: "Send Stream",
             abi: cfAv1ForwarderABI,
             address: cfAv1ForwarderAddress[cmd.chainId],
             chainId: cmd.chainId,

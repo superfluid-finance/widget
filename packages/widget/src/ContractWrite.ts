@@ -4,25 +4,26 @@ import { nanoid } from "nanoid";
 
 export type ContractWrite = ContractFunctionConfig & {
   id: string;
-  chainId: ChainId | number;
   commandId: string;
+  displayTitle: string;
+  chainId: ChainId | number;
 };
 
 export const createContractWrite = ({
   commandId,
+  displayTitle,
+  chainId,
   abi,
   functionName,
-  chainId,
   address,
   args,
-}: Omit<ContractWrite, "id">): ContractWrite => {
-  return {
-    commandId,
-    id: nanoid(),
-    abi,
-    functionName,
-    chainId,
-    address,
-    args,
-  };
-};
+}: Omit<ContractWrite, "id">): ContractWrite => ({
+  id: nanoid(),
+  commandId,
+  displayTitle,
+  chainId,
+  abi,
+  functionName,
+  address,
+  args,
+});

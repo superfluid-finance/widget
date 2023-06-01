@@ -89,7 +89,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
           size="small"
           sx={{
             width: "160px",
-            color: theme.palette.primary.main,
+            color: "theme.palette.primary.main",
             backgroundColor: theme.palette.primary.light,
             boxShadow: "none",
             textTransform: "none",

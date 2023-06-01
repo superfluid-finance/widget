@@ -18,8 +18,6 @@ export default function ContractWriteButton({
     writeResult.isLoading ||
     transactionResult.isLoading;
 
-  const functionName = contractWrite.functionName;
-
   const expectedChainId = contractWrite.chainId;
   const chainId = useChainId();
 
@@ -51,7 +49,7 @@ export default function ContractWriteButton({
           onClick={() => write?.()}
           loading={isLoading}
         >
-          Confirm ({functionName})
+          {contractWrite.displayTitle}
         </LoadingButton>
       )}
     </Stack>

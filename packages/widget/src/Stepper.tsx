@@ -16,7 +16,7 @@ import StepContentReview from "./StepContentReview";
 import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
-import { StepContentTransactions } from "./StepContentConfirm";
+import { StepContentTransactions } from "./StepContentTransactions";
 import { CheckoutSummary } from "./CheckoutSummary";
 
 export default function Stepper() {
