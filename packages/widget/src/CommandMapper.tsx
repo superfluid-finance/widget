@@ -189,8 +189,8 @@ export function WrapIntoSuperTokensCommandMapper({
           createContractWrite({
             commandId: cmd.id,
             displayTitle: `Wrap ${
-              getSuperToken(cmd.superTokenAddress).symbol
-            } into ${getUnderlyingToken(cmd.underlyingTokenAddress).symbol}`,
+              getUnderlyingToken(cmd.underlyingTokenAddress).symbol
+            } into ${getSuperToken(cmd.superTokenAddress).symbol}`,
             chainId: cmd.chainId,
             abi: superTokenABI,
             address: cmd.superTokenAddress,
