@@ -12,6 +12,7 @@ import { useWidget } from "./WidgetContext";
 import { useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
 import NetworkAvatar from "./NetworkAvatar";
+import NetworkBadge from "./NetworkBadge";
 
 export default function CheckoutProduct() {
   const {
@@ -25,7 +26,7 @@ export default function CheckoutProduct() {
   ]);
 
   return (
-    <Card variant="outlined" sx={{ display: "flex", m: 3 }}>
+    <Card component={Stack} flexDirection="row">
       {imageURI && (
         <CardMedia
           sx={{ minWidth: "calc(100% / 3)" }}
@@ -33,7 +34,7 @@ export default function CheckoutProduct() {
           title="product image"
         />
       )}
-      <CardContent>
+      <CardContent sx={{ position: "relative", px: 2.25, pt: 5, pb: 4 }}>
         <Box>
           <Typography gutterBottom variant="h5" component="div">
             {name}
@@ -64,7 +65,19 @@ export default function CheckoutProduct() {
             </Typography>
           </Stack>
         </Box>
-        {network && <NetworkAvatar network={network} />}
+
+        {network && (
+          <NetworkBadge
+            network={network}
+            AvatarProps={{
+              sx: {
+                position: "absolute",
+                top: 0,
+                right: "32px",
+              },
+            }}
+          />
+        )}
       </CardContent>
     </Card>
   );
