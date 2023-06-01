@@ -32,7 +32,11 @@ export default function CheckoutProduct() {
           title="product image"
         />
       )}
-      <CardContent sx={{ position: "relative", px: 2.25, pt: 5, pb: 4 }}>
+      <CardContent
+        component={Stack}
+        gap={1}
+        sx={{ position: "relative", px: 2.25, pt: 5, pb: 4 }}
+      >
         <Box>
           <Typography gutterBottom variant="h5" component="div">
             {name}
@@ -45,23 +49,24 @@ export default function CheckoutProduct() {
         <Divider />
 
         <Box>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            fontWeight="medium"
-          >
+          <Typography variant="body1" color="text.secondary">
             Pay in Stream
           </Typography>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Typography variant="h6" component="span">
-              {paymentOptionWithTokenInfo &&
-                `${paymentOptionWithTokenInfo.paymentOption.flowRate.amountEther} ${paymentOptionWithTokenInfo.superToken.symbol}/${paymentOptionWithTokenInfo.paymentOption.flowRate.period}`}
-            </Typography>
-          </Stack>
+          {paymentOptionWithTokenInfo && (
+            <Stack direction="row" alignItems="center" gap={1}>
+              <Typography variant="h2" component="span">
+                {paymentOptionWithTokenInfo.paymentOption.flowRate.amountEther}
+              </Typography>
+              <Stack direction="column">
+                <Typography variant="caption" color="text.secondary">
+                  {paymentOptionWithTokenInfo.superToken.symbol}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  per {paymentOptionWithTokenInfo.paymentOption.flowRate.period}
+                </Typography>
+              </Stack>
+            </Stack>
+          )}
         </Box>
 
         {network && (
