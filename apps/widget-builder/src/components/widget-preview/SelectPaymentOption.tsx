@@ -20,7 +20,7 @@ import tokenList, {
   TokenInfo,
 } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
-import { UseFieldArrayAppend } from "react-hook-form";
+import { UseFieldArrayAppend, UseFormSetValue } from "react-hook-form";
 import { WidgetProps } from "./WidgetPreview";
 import Image from "next/image";
 import InfoIcon from "@mui/icons-material/Info";
@@ -40,6 +40,7 @@ const renderToken = (token: TokenInfo) => {
 type PaymentOptionSelectorProps = {
   defaultReceiverAddress: `0x${string}`;
   onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
+  setDefaultReceiver: (address: string) => void;
 };
 
 const defaultNetwork = {
@@ -65,6 +66,7 @@ const defaultToken: SuperTokenInfo = {
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   onAdd,
   defaultReceiverAddress,
+  setDefaultReceiver,
 }) => {
   const theme = useTheme();
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
@@ -103,6 +105,10 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   const handleAdd = () => {
     if (!selectedToken) {
       return;
+    }
+
+    if (isReceiverDefault) {
+      setDefaultReceiver(receiver);
     }
 
     const network = networks.find((n) => n.chainId === selectedToken.chainId);
