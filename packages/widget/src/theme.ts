@@ -314,6 +314,13 @@ export function getThemedComponents(
           },
         },
       },
+      MuiAppBar: {
+        styleOverrides: {
+          root: {
+            border: "none",
+          },
+        },
+      },
     },
 
     shape: {

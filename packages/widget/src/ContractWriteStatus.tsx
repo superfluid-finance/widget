@@ -1,19 +1,14 @@
-import {
-  Avatar,
-  Chip,
-  Paper,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { ContractWriteResult } from "./ContractWriteManager";
 import CircleIcon_ from "@mui/icons-material/Circle";
+import { Paper, Stack, Typography, useTheme } from "@mui/material";
+import { ContractWriteResult } from "./ContractWriteManager";
 import { normalizeIcon } from "./helpers/normalizeIcon";
-import { BaseError } from "viem";
 
 export const CircleIcon = normalizeIcon(CircleIcon_);
 
-export function ContractWriteStatus(result: ContractWriteResult) {
+export function ContractWriteStatus(
+  result: ContractWriteResult,
+  index: number
+) {
   const {
     contractWrite: { id, commandId, displayTitle },
     transactionResult,
@@ -36,8 +31,7 @@ export function ContractWriteStatus(result: ContractWriteResult) {
       variant="outlined"
       key={id}
       sx={{
-        py: 1.25,
-        px: 2,
+        p: 1.25,
         borderColor: borderColor,
       }}
     >
@@ -47,25 +41,21 @@ export function ContractWriteStatus(result: ContractWriteResult) {
         alignItems="center"
         spacing={2}
       >
-        <Typography>{displayTitle}</Typography>
-        <Chip
-          variant="outlined"
-          avatar={
-            <Avatar sx={{ bgcolor: "transparent" }}>
-              <CircleIcon sx={{ color: borderColor, width: 20, height: 20 }} />
-            </Avatar>
-          }
-          label={
-            latestError
+        <Typography variant="body2">{`${
+          index + 1
+        }. ${displayTitle}`}</Typography>
+        <Stack direction="row" gap={0.75}>
+          <CircleIcon sx={{ color: borderColor, width: 20, height: 20 }} />
+          <Typography variant="body2">
+            {latestError
               ? "Something went wrong."
               : transactionResult.isSuccess
               ? "Completed"
               : writeResult?.isSuccess
               ? "In progress"
-              : "Not started"
-          }
-          sx={{ border: 0 }}
-        />
+              : "Not started"}
+          </Typography>
+        </Stack>
       </Stack>
     </Paper>
   );
