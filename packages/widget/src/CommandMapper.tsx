@@ -157,7 +157,7 @@ export function WrapIntoSuperTokensCommandMapper({
       contractWrites_.push(
         createContractWrite({
           commandId: cmd.id,
-          displayTitle: `Wrap into ${
+          displayTitle: `Wrap to ${
             getUnderlyingToken(cmd.underlyingTokenAddress).symbol
           }`,
           chainId: cmd.chainId,
