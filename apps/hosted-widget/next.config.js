@@ -4,7 +4,7 @@ module.exports = {
     return [
       {
         source: "/",
-        destination: "https://superfluid-widget-builder.vercel.app",
+        destination: process.env.ROOT_REDIRECT_URL,
         permanent: false,
       },
     ];
