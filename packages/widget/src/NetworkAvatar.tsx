@@ -79,7 +79,7 @@ export const networkAssetsConf = [
   },
 ];
 
-interface NetworkAvatarProps {
+export interface NetworkAvatarProps {
   network: SupportedNetwork;
   AvatarProps?: Partial<AvatarProps>;
 }
@@ -93,7 +93,7 @@ const NetworkAvatar: FC<NetworkAvatarProps> = ({
   }, [network]);
 
   const { sx: AvatarSx = {} } = AvatarProps;
-
+  console.log("AvatarSX", { AvatarSx });
   return (
     <Avatar
       src={networkAssetConf?.logoUrl}

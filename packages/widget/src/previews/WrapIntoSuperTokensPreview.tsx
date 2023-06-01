@@ -1,4 +1,4 @@
-import { Paper, Stack, Typography } from "@mui/material";
+import { Box, Paper, Stack, Typography } from "@mui/material";
 import { TokenAvatar } from "../TokenAvatar";
 import { useWidget } from "../WidgetContext";
 import { WrapIntoSuperTokensCommand } from "../commands";
@@ -17,46 +17,48 @@ export function WrapIntoSuperTokensPreview({
   return (
     <Stack direction="column" alignItems="center" spacing={2.25}>
       <Stack
-        direction="row"
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr",
+          width: "100%",
+        }}
         alignItems="center"
-        justifyContent="space-between"
-        width="100%"
-        gap={3}
+        textAlign="center"
+        rowGap={1.25}
+        columnGap={3}
       >
-        <Stack direction="column" textAlign="center" spacing={1.5} flex={1}>
-          <Typography>You are wrapping</Typography>
-          <Stack
-            component={Paper}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            spacing={0.5}
-            sx={{ p: 1.5 }}
-          >
-            <TokenAvatar tokenInfo={underlyingToken} />
-            <Typography>{cmd.amountEther}</Typography>
-            <Typography>{underlyingToken.symbol}</Typography>
-          </Stack>
+        <Typography>You are wrapping</Typography>
+        <Box />
+        <Typography>You are receiving</Typography>
+
+        <Stack
+          component={Paper}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          flex={1}
+          spacing={0.5}
+          sx={{ p: 1.5 }}
+        >
+          <TokenAvatar tokenInfo={underlyingToken} />
+          <Typography>{cmd.amountEther}</Typography>
+          <Typography>{underlyingToken.symbol}</Typography>
         </Stack>
 
         <Stack component={Paper} sx={{ p: 1 }}>
           <UpgradeIcon fontSize="small" />
         </Stack>
-
-        <Stack direction="column" textAlign="center" spacing={1.5} flex={1}>
-          <Typography>You are receiving</Typography>
-          <Stack
-            component={Paper}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            spacing={0.5}
-            sx={{ p: 1.5 }}
-          >
-            <TokenAvatar tokenInfo={superToken} />
-            <Typography>{cmd.amountEther}</Typography>
-            <Typography>{superToken.symbol}</Typography>
-          </Stack>
+        <Stack
+          component={Paper}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          spacing={0.5}
+          sx={{ p: 1.5 }}
+        >
+          <TokenAvatar tokenInfo={superToken} />
+          <Typography>{cmd.amountEther}</Typography>
+          <Typography>{superToken.symbol}</Typography>
         </Stack>
       </Stack>
       <Typography>

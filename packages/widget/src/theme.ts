@@ -296,6 +296,13 @@ export function getThemedComponents(
           },
         },
       },
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            border: `1px solid ${coreThemeOptions.palette.divider}`,
+          },
+        },
+      },
     },
 
     shape: {
