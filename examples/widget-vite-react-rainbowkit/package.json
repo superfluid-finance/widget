@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@rainbow-me/rainbowkit": "^1.0.0",
+    "@rainbow-me/rainbowkit": "^1.0.1",
     "@superfluid-finance/tokenlist": "^1.0.2",
     "@superfluid-finance/widget": "workspace:*",
     "react": "^18.2.0",
