@@ -131,7 +131,7 @@ export default function Home() {
       <Box
         sx={{
           width: "100%",
-          backgroundColor: theme.palette.grey[900],
+          backgroundColor: theme.palette.grey[50],
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
