@@ -19,6 +19,7 @@ import { useMemo } from "react";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
 import useWalletAnalytics from "../src/hooks/useWalletAnalytics";
+import Image from "next/image";
 
 const projectId =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ??
@@ -52,7 +53,25 @@ const IPFSWidgetPage: NextPage = () => {
 
   const { data, loading, error } = useLoadFromIPFS(query.hash as string);
 
-  if (loading && data === null) return <div>Loading...</div>;
+  if (loading && data === null)
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Image
+          src="/superfluid-loader.gif"
+          alt="loading"
+          width={200}
+          height={200}
+        />
+      </Box>
+    );
 
   return (
     <WagmiConfig config={wagmiConfig}>
