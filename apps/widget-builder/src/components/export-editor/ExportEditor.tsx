@@ -56,7 +56,7 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
           <Typography variant="body2">Go to our hosted widget:</Typography>
 
           <IconButton
-            href={`https://superfluid-hosted-widget.vercel.app/${ipfsHash}`}
+            href={`${process.env.NEXT_PUBLIC_EXPORT_BASE_URL}/${ipfsHash}`}
             target="_blank"
             size="large"
           >
