@@ -36,7 +36,7 @@
   "lint-staged": {
     "*.{js,ts,tsx}": [
       "pnpm format",
-      "eslint"
+      "eslint --fix"
     ]
   }
 }
