@@ -19,26 +19,26 @@
     "@mui/lab": "5.0.0-alpha.132",
     "@mui/material": "^5.13.3",
     "@pinata/sdk": "^2.1.0",
-    "@segment/analytics-next": "^1.51.7",
+    "@segment/analytics-next": "^1.52.0",
     "@superfluid-finance/tokenlist": "^1.0.2",
     "@superfluid-finance/widget": "workspace:*",
-    "@web3modal/ethereum": "^2.4.1",
-    "@web3modal/react": "^2.4.1",
+    "@web3modal/ethereum": "^2.4.2",
+    "@web3modal/react": "^2.4.2",
     "clsx": "^1.2.1",
     "mui-color-input": "^1.0.6",
     "next": "^13.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.44.2",
-    "wagmi": "^1.0.9",
+    "react-hook-form": "^7.44.3",
+    "wagmi": "^1.1.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
     "@types/node": "^20.2.5",
     "@types/react": "^18.2.7",
-    "eslint": "^8.41.0",
+    "eslint": "^8.42.0",
     "eslint-config-next": "^13.4.4",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.3"
   }
 }
