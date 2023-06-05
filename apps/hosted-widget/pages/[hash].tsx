@@ -20,6 +20,7 @@ import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
 import useWalletAnalytics from "../src/hooks/useWalletAnalytics";
 import Image from "next/image";
+import { Fade } from "@mui/material";
 
 const projectId =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ??
@@ -64,12 +65,14 @@ const IPFSWidgetPage: NextPage = () => {
           justifyContent: "center",
         }}
       >
-        <Image
-          src="/superfluid-loader.gif"
-          alt="loading"
-          width={100}
-          height={100}
-        />
+        <Fade in={true} timeout={{ enter: 1000 }}>
+          <Image
+            src="/superfluid-loader.gif"
+            alt="loading"
+            width={100}
+            height={100}
+          />
+        </Fade>
       </Box>
     );
 
