@@ -7,3 +7,5 @@ if [ "$branch" = "master" ]; then
   echo "You can't commit directly to master branch"
   exit 1
 fi
+
+exec < /dev/tty && git cz --hook || true
