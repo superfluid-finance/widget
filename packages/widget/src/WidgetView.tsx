@@ -66,7 +66,7 @@ export function WidgetView(props: ViewProps) {
     fixed: true,
     disableGutters: true,
     sx: {
-      width: "620px", // TODO(KK): Check with Mikk.
+      width: "610px", // TODO(KK): Check with Mikk.
     },
   };
 
