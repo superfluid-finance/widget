@@ -19,16 +19,18 @@ import tokenList from "@superfluid-finance/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import useFontLoader from "../../hooks/useFontLoader";
 
+export interface FontSettings {
+  family: string;
+  category: string;
+}
+
 export type DisplaySettings = {
   stepperOrientation: "vertical" | "horizontal";
   darkMode: boolean;
   containerRadius?: number;
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
-  font: {
-    config: Font | null;
-    kind: string;
-  };
+  font: FontSettings | null;
   primaryColor: `#${string}`;
   secondaryColor: `#${string}`;
 };
@@ -76,8 +78,8 @@ export const WidgetContext = createContext<WidgetProps>({
     buttonRadius: 10,
     inputRadius: 10,
     font: {
-      config: null,
-      kind: "",
+      family: "Noto Sans",
+      category: "sans-serif",
     },
     primaryColor: colors.green[500],
     secondaryColor: colors.common.white,
@@ -125,10 +127,10 @@ export const mapDisplaySettingsToTheme = (
   layout: Layout,
   displaySettings: DisplaySettings
 ): ThemeOptions => ({
-  ...(displaySettings.font.config
+  ...(displaySettings.font
     ? {
         typography: {
-          fontFamily: `${displaySettings.font.config.family}, ${displaySettings.font.kind}`,
+          fontFamily: `'${displaySettings.font.family}', '${displaySettings.font.category}'`,
         },
       }
     : {}),
@@ -185,7 +187,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     displaySettings
   );
 
-  useFontLoader(displaySettings);
+  useFontLoader(displaySettings.font?.family);
 
   return (
     <WidgetContext.Provider value={props}>
