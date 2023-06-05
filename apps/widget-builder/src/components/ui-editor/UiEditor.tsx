@@ -9,18 +9,18 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
+import { MuiColorInput } from "mui-color-input";
 import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import useFontOptions from "../../hooks/useFontOptions";
 import ImageSelect from "../image-select/ImageSelect";
-import { MuiColorInput } from "mui-color-input";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
-import useFonts from "../../hooks/useFontOptions";
 
 const UiEditor: FC = () => {
-  const { control, watch, setValue } = useFormContext<WidgetProps>();
+  const { control, watch } = useFormContext<WidgetProps>();
 
   const [displaySettings] = watch(["displaySettings"]);
-  const fonts = useFonts();
+  const fontOptions = useFontOptions();
 
   return (
     <Stack direction="column" gap={2}>
@@ -170,9 +170,9 @@ const UiEditor: FC = () => {
           render={({ field: { value, onChange } }) => (
             <Autocomplete
               value={value}
-              loading={fonts.length === 0}
+              loading={fontOptions.length === 0}
               disablePortal
-              options={fonts}
+              options={fontOptions}
               isOptionEqualToValue={(option, value) =>
                 option.family === value.family
               }
