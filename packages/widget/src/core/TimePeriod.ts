@@ -15,4 +15,4 @@ export const mapTimePeriodToSeconds = (timePeriod: TimePeriod) => {
   }
 };
 
-export type TimePeriod = typeof timePeriods[number];
+export type TimePeriod = (typeof timePeriods)[number];

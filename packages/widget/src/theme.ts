@@ -97,7 +97,7 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
       fontSize: 16,
       htmlFontSize: 16,
       button: {
-        textTransform: "none"
+        textTransform: "none",
       },
 
       h1: {

@@ -23,12 +23,10 @@ export type Action =
         writeId: string;
         result: ContractWriteResult;
       };
-    }
+    };
 
-export const useCommandHandlerReducer = () => useImmerReducer<
-    State,
-    Action
-  >(
+export const useCommandHandlerReducer = () =>
+  useImmerReducer<State, Action>(
     (draft, action) => {
       switch (action.type) {
         case "reset": {
@@ -48,7 +46,10 @@ export const useCommandHandlerReducer = () => useImmerReducer<
             (x) => x.id === action.payload.commandId
           );
 
-          if (!command) throw new Error(`Command not found with ID: ${action.payload.commandId}`);
+          if (!command)
+            throw new Error(
+              `Command not found with ID: ${action.payload.commandId}`
+            );
 
           command.contractWrites = castDraft(action.payload.contractWrites);
           break;
@@ -58,7 +59,10 @@ export const useCommandHandlerReducer = () => useImmerReducer<
             .find((x) => x.id === action.payload.commandId)
             ?.contractWrites?.find((x) => x.id === action.payload.writeId);
 
-          if (!contractWrite) throw new Error(`ContractWrite not found with ID: ${action.payload.commandId}.${action.payload.writeId}`);
+          if (!contractWrite)
+            throw new Error(
+              `ContractWrite not found with ID: ${action.payload.commandId}.${action.payload.writeId}`
+            );
 
           // Initialize session when first transaction invoked.
           if (

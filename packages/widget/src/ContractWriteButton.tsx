@@ -25,11 +25,7 @@ export default function ContractWriteButton({
   const needsToSwitchNetwork = expectedChainId !== chainId;
 
   return (
-    <Stack
-      direction="column"
-      alignItems="stretch"
-      sx={{ width: "100%" }}
-    >
+    <Stack direction="column" alignItems="stretch" sx={{ width: "100%" }}>
       {needsToSwitchNetwork ? (
         <Button
           size="large"
