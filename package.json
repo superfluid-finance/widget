@@ -24,6 +24,6 @@
   },
   "packageManager": "pnpm@7.15.0",
   "husky": {
-    "pre-push": "pnpm lint"
+    "pre-commit": "pnpm lint"
   }
 }
