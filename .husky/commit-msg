@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-sed -i 's/^npx.*/& "$1"/' .husky/commit-msg
+npx --no -- commitlint --edit $1

@@ -8,5 +8,4 @@ if [ "$branch" = "master" ]; then
   exit 1
 fi
 
-exec < /dev/tty && node_modules/.bin/cz --hook || true
 
