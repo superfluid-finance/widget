@@ -1,5 +1,6 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-npx commitlint --edit $1
-
+if [ $2 == "template" ]; then
+  exec < /dev/tty && npx cz --hook || true
+fig
