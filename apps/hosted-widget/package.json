@@ -16,23 +16,23 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.3",
-    "@segment/analytics-next": "^1.51.7",
+    "@segment/analytics-next": "^1.52.0",
     "@superfluid-finance/tokenlist": "^1.0.2",
     "@superfluid-finance/widget": "workspace:*",
-    "@web3modal/ethereum": "^2.4.1",
-    "@web3modal/react": "^2.4.1",
+    "@web3modal/ethereum": "^2.4.2",
+    "@web3modal/react": "^2.4.2",
     "clsx": "^1.2.1",
     "next": "^13.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "^0.3.41",
-    "wagmi": "^1.0.9"
+    "viem": "^0.3.50",
+    "wagmi": "^1.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
     "@types/react": "^18.2.7",
-    "eslint": "^8.41.0",
+    "eslint": "^8.42.0",
     "eslint-config-next": "^13.4.4",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.3"
   }
 }

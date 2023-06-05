@@ -1,5 +1,4 @@
 packages:
-  - "architecture/*"
   - "examples/*"
   - "packages/*"
   - "apps/*"
