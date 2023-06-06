@@ -297,20 +297,17 @@ export function getThemedComponents(
           },
         },
       },
-      MuiIcon: {
+      MuiSvgIcon: {
         styleOverrides: {
-          // root: {},
           fontSizeSmall: {
-            width: "1.5rem",
-            height: "1.5rem", // 18px
+            fontSize: "1.25rem",
           },
-          // fontSizeLarge: {},
         },
       },
       MuiIconButton: {
         styleOverrides: {
           sizeSmall: {
-            fontSize: "1rem",
+            fontSize: "1.125rem",
           },
         },
       },

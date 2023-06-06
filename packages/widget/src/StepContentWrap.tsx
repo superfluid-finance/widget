@@ -38,7 +38,7 @@ const WrapCard: FC<WrapCardProps> = ({
         alignItems: "center",
         px: 2.5,
         py: 1.5,
-        rowGap: 1,
+        rowGap: 0.75,
       }}
     >
       {children}
@@ -155,7 +155,10 @@ export default function StepContentWrap() {
               />
             </WrapCard>
 
-            <Stack component={Paper} sx={{ p: 1, transform: "rotate(90deg)" }}>
+            <Stack
+              component={Paper}
+              sx={{ p: 0.75, my: -1.25, transform: "rotate(90deg)" }}
+            >
               <UpgradeIcon fontSize="small" />
             </Stack>
 
