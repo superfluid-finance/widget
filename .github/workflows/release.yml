@@ -1,29 +1,39 @@
-name: Release
-
+name: Main
 on:
   push:
-    branches:
-      - master
+    branches: [main]
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  release:
-    name: Release
+  changesets:
+    name: Changesets
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js 16
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
         with:
-          node-version: 16
+          fetch-depth: 0
+          submodules: true
 
-      - name: Install Dependencies
-        run: pnpm install
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Create Release Pull Request
+      - name: Create version pull request or publish to npm
+        id: changesets
         uses: changesets/action@v1
+        with:
+          title: "chore: version packages"
+          commit: "chore: version packages"
+          publish: pnpm changeset:release
+          version: pnpm changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish CJS bundle to npm
+        if: steps.changesets.outputs.published == 'true'
+        run: pnpm cjs:release '${{ steps.changesets.outputs.publishedPackages }}'
