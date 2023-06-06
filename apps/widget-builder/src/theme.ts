@@ -1,8 +1,15 @@
-import { Roboto } from "next/font/google";
+import { Noto_Sans, Roboto } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 import { red, lightGreen } from "@mui/material/colors";
 
 export const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
+});
+
+export const widgetFont = Noto_Sans({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
