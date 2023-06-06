@@ -1,23 +1,77 @@
 import {
+  Box,
   Button,
   FormControlLabel,
   FormGroup,
+  Input,
   Paper,
   Stack,
   Switch,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
-import { useMemo } from "react";
+import { FC, PropsWithChildren, useMemo } from "react";
 import { useWidget } from "./WidgetContext";
 import { TokenAvatar } from "./TokenAvatar";
 import { StepperContinueButton } from "./StepperContinueButton";
 import { Address, useBalance } from "wagmi";
 import { UpgradeIcon } from "./previews/CommandPreview";
+import { TokenInfo } from "@superfluid-finance/tokenlist";
+
+interface WrapCardProps extends PropsWithChildren {
+  token?: TokenInfo;
+  formattedTokenBalance?: string;
+}
+const WrapCard: FC<WrapCardProps> = ({
+  children,
+  token,
+  formattedTokenBalance,
+}) => {
+  return (
+    <Paper
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "1fr auto",
+        alignItems: "center",
+        px: 2.5,
+        py: 1.5,
+        rowGap: 1,
+      }}
+    >
+      {children}
+
+      {token && (
+        <Stack
+          component={Paper}
+          variant="outlined"
+          direction="row"
+          alignItems="center"
+          gap={0.5}
+          title={token.address}
+          sx={{ pl: 1.25, pr: 2, py: 1, borderRadius: 0.5 }}
+        >
+          <TokenAvatar tokenInfo={token} sx={{ width: 24, height: 24 }} />
+          <Typography variant="body1">{token.symbol}</Typography>
+        </Stack>
+      )}
+
+      <Box />
+
+      {formattedTokenBalance && (
+        <Typography variant="caption" align="right" color="text.secondary">
+          {`Balance: ${approximateIfDecimal(formattedTokenBalance)}`}
+        </Typography>
+      )}
+    </Paper>
+  );
+};
 
 export default function StepContentWrap() {
+  const theme = useTheme();
+
   const {
     control: c,
     watch,
@@ -77,88 +131,57 @@ export default function StepContentWrap() {
       spacing={3}
       sx={{ pt: 3 }}
     >
-      <Stack
-        direction="column"
-        alignItems="stretch"
-        justifyContent="space-around"
-        spacing={1}
-      >
-        <Controller
-          control={c}
-          name="wrapAmountEther"
-          render={({ field: { value, onChange, onBlur } }) => (
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              gap={3}
+      <Controller
+        control={c}
+        name="wrapAmountEther"
+        render={({ field: { value, onChange, onBlur } }) => (
+          <Stack direction="column" justifyContent="center" alignItems="center">
+            <WrapCard
+              token={underlyingToken}
+              formattedTokenBalance={underlyingTokenBalance?.formatted}
             >
-              <TextField
+              <Input
+                disableUnderline
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
                 placeholder="0"
-                helperText={
-                  underlyingTokenBalance ? (
-                    <Typography fontSize="inherit" align="right">
-                      Balance:{" "}
-                      {approximateIfDecimal(underlyingTokenBalance.formatted)}
-                    </Typography>
-                  ) : null
-                }
-                InputProps={{
-                  endAdornment: underlyingToken && (
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      spacing={1}
-                      title={underlyingToken.address}
-                    >
-                      <TokenAvatar tokenInfo={underlyingToken} />
-                      <Typography>{underlyingToken.symbol}</Typography>
-                    </Stack>
-                  ),
+                inputProps={{
+                  sx: {
+                    p: 0,
+                    ...theme.typography.h4,
+                  },
                 }}
               />
-              <Stack component={Paper} sx={{ p: 1, mb: 3 }}>
-                <UpgradeIcon fontSize="small" />
-              </Stack>
+            </WrapCard>
 
-              <TextField
-                disabled
+            <Stack component={Paper} sx={{ p: 1, transform: "rotate(90deg)" }}>
+              <UpgradeIcon fontSize="small" />
+            </Stack>
+
+            <WrapCard
+              token={superToken}
+              formattedTokenBalance={superTokenBalance?.formatted}
+            >
+              <Input
+                disableUnderline
                 value={value}
+                onChange={onChange}
+                onBlur={onBlur}
                 placeholder="0"
-                helperText={
-                  superTokenBalance ? (
-                    <Typography
-                      fontSize="inherit"
-                      color="text.secondary"
-                      align="right"
-                    >
-                      Balance:{" "}
-                      {approximateIfDecimal(superTokenBalance.formatted)}
-                    </Typography>
-                  ) : null
-                }
-                InputProps={{
-                  endAdornment: superToken && (
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      spacing={1}
-                      title={superToken.address}
-                    >
-                      <TokenAvatar tokenInfo={superToken} />
-                      <Typography>{superToken.symbol}</Typography>
-                    </Stack>
-                  ),
+                inputProps={{
+                  sx: {
+                    p: 0,
+                    ...theme.typography.h4,
+                  },
                 }}
               />
-            </Stack>
-          )}
-        />
-        {/* // TODO(KK): Handle Auto-Wrap */}
-        {/* <Controller
+            </WrapCard>
+          </Stack>
+        )}
+      />
+      {/* // TODO(KK): Handle Auto-Wrap */}
+      {/* <Controller
           control={c}
           name="enableAutoWrap"
           render={({ field: { value, onChange, onBlur } }) => (
@@ -174,7 +197,6 @@ export default function StepContentWrap() {
             />
           )}
         /> */}
-      </Stack>
 
       <Stack
         direction="column"

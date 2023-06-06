@@ -281,6 +281,13 @@ export function getThemedComponents(
 
   return {
     components: {
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            fontVariantNumeric: "tabular-nums",
+          },
+        },
+      },
       MuiButton: {
         styleOverrides: {
           sizeLarge: {
@@ -288,6 +295,16 @@ export function getThemedComponents(
             paddingTop: "0.75rem",
             paddingBottom: "0.75rem",
           },
+        },
+      },
+      MuiIcon: {
+        styleOverrides: {
+          // root: {},
+          fontSizeSmall: {
+            width: "1.5rem",
+            height: "1.5rem", // 18px
+          },
+          // fontSizeLarge: {},
         },
       },
       MuiIconButton: {

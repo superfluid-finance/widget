@@ -49,9 +49,11 @@ export function WrapIntoSuperTokensPreview({
           </Typography>
           <Typography variant="caption">{underlyingToken.symbol}</Typography>
         </Stack>
+
         <Stack component={Paper} sx={{ p: 1 }}>
           <UpgradeIcon fontSize="small" />
         </Stack>
+
         <Stack
           component={Paper}
           direction="column"
