@@ -8,7 +8,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "sort-package-jsons": "npx sort-package-json \"**/package.json\" \"!**/node_modules/**\" --check",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "changeset:release": "pnpm build && changeset publish",
+    "changeset:version": "changeset version && pnpm install --lockfile-only"
   },
   "dependencies": {
     "@changesets/cli": "^2.26.1"
