@@ -14,8 +14,8 @@ export type ContractWriteResult = {
   prepareResult: ReturnType<typeof usePrepareContractWrite>;
   writeResult: ReturnType<typeof useContractWrite>;
   transactionResult: ReturnType<typeof useWaitForTransaction>;
-  latestError: BaseError | null; 
-}
+  latestError: BaseError | null;
+};
 
 type ContractWriteManagerProps = {
   prepare: boolean;
@@ -33,7 +33,9 @@ export function ContractWriteManager({
   const chainId = useChainId();
   const prepare = _prepare && contractWrite.chainId === chainId;
 
-  const prepareResult = usePrepareContractWrite(prepare ? contractWrite: undefined);
+  const prepareResult = usePrepareContractWrite(
+    prepare ? contractWrite : undefined
+  );
   const writeResult = useContractWrite(prepareResult.config);
   const transactionResult = useWaitForTransaction({
     hash: writeResult.data?.hash,
@@ -45,13 +47,15 @@ export function ContractWriteManager({
       prepareResult,
       writeResult,
       transactionResult,
-      latestError: (transactionResult.error || writeResult.error || prepareResult.error) as unknown as BaseError
+      latestError: (transactionResult.error ||
+        writeResult.error ||
+        prepareResult.error) as unknown as BaseError,
     }),
     [
       contractWrite.id,
       prepareResult.status,
       writeResult.status,
-      transactionResult.status
+      transactionResult.status,
     ]
   );
 
