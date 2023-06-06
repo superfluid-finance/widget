@@ -1,11 +1,4 @@
-import {
-  alpha,
-  createTheme,
-  darken,
-  lighten,
-  Theme,
-  ThemeOptions,
-} from "@mui/material/styles";
+import { ThemeOptions } from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { deepmerge } from "@mui/utils";
 
@@ -288,6 +281,15 @@ export function getThemedComponents(
 
   return {
     components: {
+      MuiButton: {
+        styleOverrides: {
+          sizeLarge: {
+            fontSize: "1rem",
+            paddingTop: "0.75rem",
+            paddingBottom: "0.75rem",
+          },
+        },
+      },
       MuiIconButton: {
         styleOverrides: {
           sizeSmall: {

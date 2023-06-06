@@ -91,7 +91,7 @@ export default function StepContentWrap() {
               direction="row"
               justifyContent="center"
               alignItems="center"
-              spacing={3}
+              gap={3}
             >
               <TextField
                 value={value}
@@ -120,9 +120,10 @@ export default function StepContentWrap() {
                   ),
                 }}
               />
-              <Stack component={Paper} sx={{ p: 1 }}>
+              <Stack component={Paper} sx={{ p: 1, mb: 3 }}>
                 <UpgradeIcon fontSize="small" />
               </Stack>
+
               <TextField
                 disabled
                 value={value}
