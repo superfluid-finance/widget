@@ -2,9 +2,9 @@ name: Publish Widget to NPM
 
 on:
   workflow_dispatch:
-#   push:
-#     branches:
-#       - main
+  push:
+    branches:
+      - changeset-release/master
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
