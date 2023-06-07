@@ -16,7 +16,7 @@ jobs:
       contents: read
       pull-requests: write
     timeout-minutes: 5
-g
+
     steps:
       - uses: actions/checkout@v3
         with:
