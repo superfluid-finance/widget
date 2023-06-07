@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: writeg
       pull-requests: write
     timeout-minutes: 5
 
