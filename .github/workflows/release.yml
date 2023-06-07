@@ -13,7 +13,10 @@ jobs:
     name: Changesets
     runs-on: ubuntu-latest
     timeout-minutes: 5
-gi
+    permissions:
+      contents: read
+      pull-requests: write
+
     steps:
       - uses: actions/checkout@v3
         with:
