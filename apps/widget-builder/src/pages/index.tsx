@@ -138,7 +138,7 @@ export default function Home() {
           family: "Noto Sans",
           category: "sans-serif",
         },
-        primaryColor: colors.green[500],
+        primaryColor: "#1DB227",
         secondaryColor: colors.common.white,
         stepperOrientation: "vertical",
       },

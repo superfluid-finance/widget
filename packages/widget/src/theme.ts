@@ -1,11 +1,4 @@
-import {
-  alpha,
-  createTheme,
-  darken,
-  lighten,
-  Theme,
-  ThemeOptions,
-} from "@mui/material/styles";
+import { ThemeOptions } from "@mui/material/styles";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { deepmerge } from "@mui/utils";
 
@@ -288,10 +281,33 @@ export function getThemedComponents(
 
   return {
     components: {
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            fontVariantNumeric: "tabular-nums",
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          sizeLarge: {
+            fontSize: "1rem",
+            paddingTop: "0.75rem",
+            paddingBottom: "0.75rem",
+          },
+        },
+      },
+      MuiSvgIcon: {
+        styleOverrides: {
+          fontSizeSmall: {
+            fontSize: "1.25rem",
+          },
+        },
+      },
       MuiIconButton: {
         styleOverrides: {
           sizeSmall: {
-            fontSize: "1rem",
+            fontSize: "1.125rem",
           },
         },
       },

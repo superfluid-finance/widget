@@ -1,6 +1,14 @@
 import CheckIcon_ from "@mui/icons-material/Check";
 import ContentCopyIcon_ from "@mui/icons-material/ContentCopy";
-import { Avatar, IconButton, Paper, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  IconButton,
+  Paper,
+  PaperProps,
+  Stack,
+  SxProps,
+  Typography,
+} from "@mui/material";
 import { create } from "blockies-ts";
 import { useState } from "react";
 import { Address } from "viem";
@@ -11,12 +19,23 @@ import { copyToClipboard } from "./utils";
 const ContentCopyIcon = normalizeIcon(ContentCopyIcon_);
 const CheckIcon = normalizeIcon(CheckIcon_);
 
-export function AccountAddressCard({ address }: { address: Address }) {
+interface AccountAddressCardProps {
+  address: Address;
+  PaperProps?: PaperProps;
+}
+
+export function AccountAddressCard({
+  address,
+  PaperProps = { sx: {} },
+}: AccountAddressCardProps) {
   const blockiesSrc = create({ seed: address.toLowerCase() }).toDataURL();
   const [copied, setCopied] = useState(false);
 
   return (
-    <Paper sx={{ px: 2.25, py: 1.75 }}>
+    <Paper
+      {...PaperProps}
+      sx={{ px: 2.25, py: 1.75, borderRadius: 0.75, ...PaperProps.sx }}
+    >
       <AccountAddress address={address}>
         {({
           ensAvatarResult,
@@ -24,26 +43,23 @@ export function AccountAddressCard({ address }: { address: Address }) {
           checksumAddress,
           shortenedAddress,
         }) => (
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            spacing={1}
-          >
+          <Stack direction="row" alignItems="center" gap={1}>
             {ensAvatarResult.data ? (
               <Avatar
                 alt="ENS avatar"
                 variant="rounded"
                 src={ensAvatarResult.data}
+                sx={{ width: 24, height: 24 }}
               />
             ) : (
               <Avatar
                 alt="generated blockie avatar"
                 variant="rounded"
                 src={blockiesSrc}
+                sx={{ width: 24, height: 24 }}
               />
             )}
-            <Typography variant="body1" title={checksumAddress}>
+            <Typography variant="body1" title={checksumAddress} flex={1}>
               {ensNameResult.data ?? shortenedAddress}
             </Typography>
 

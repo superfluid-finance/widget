@@ -13,7 +13,7 @@ const NetworkBadge: FC<NetworkAvatarProps> = ({
         // TODO(KK): why pixels?
         width: "32px",
         height: "32px",
-        borderRadius: "8px",
+        borderRadius: 0.4,
         fontSize: "1.2rem",
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
