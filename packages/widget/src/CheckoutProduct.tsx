@@ -27,7 +27,7 @@ export default function CheckoutProduct() {
     <Card component={Stack} flexDirection="row">
       {imageURI && (
         <CardMedia
-          sx={{ minWidth: "calc(100% / 3)" }}
+          sx={{ minWidth: "calc(100% / 3)", borderRadius: 1 }}
           image={imageURI}
           title="product image"
         />
