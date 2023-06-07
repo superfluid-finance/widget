@@ -1,11 +1,13 @@
-import { Button, Divider, Stack, Typography } from "@mui/material";
-import { useCommandHandler } from "./CommandHandlerContext";
-import { parseEther } from "viem";
-import { mapTimePeriodToSeconds } from "./core";
-import { SendStreamCommand } from "./commands";
+import { Button, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
-import { useWidget } from "./WidgetContext";
+import { parseEther } from "viem";
+import { AccountAddressCard } from "./AccountAddressCard";
+import { useCommandHandler } from "./CommandHandlerContext";
 import FlowingBalance from "./FlowingBalance";
+import StreamIndicator from "./StreamIndicator";
+import { useWidget } from "./WidgetContext";
+import { SendStreamCommand } from "./commands";
+import { mapTimePeriodToSeconds } from "./core";
 
 export function CheckoutSummary() {
   const {
@@ -29,7 +31,7 @@ export function CheckoutSummary() {
 
   const superToken = useMemo(
     () => getSuperToken(sendStreamCommand.superTokenAddress),
-    [sendStreamCommand.superTokenAddress]
+    [sendStreamCommand.superTokenAddress, getSuperToken]
   );
 
   return (
@@ -43,23 +45,44 @@ export function CheckoutSummary() {
         </Typography>
       </Stack>
 
-      <Divider sx={{ my: 3 }} />
-
-      <Stack direction="column" alignItems="center">
+      <Stack direction="column" alignItems="center" sx={{ mt: 3 }}>
         <Typography variant="body2" color="text.secondary">
-          You've streamed
+          {`You've streamed`}
         </Typography>
-        <Typography variant="h5" component="span">
-          <FlowingBalance
-            flowRate={flowRate}
-            startingBalance={startingBalance}
-            startingBalanceDate={startingBalanceDate}
-          />{" "}
-          {superToken.symbol}
-        </Typography>
+        <Stack direction="row" alignItems="end" gap={0.5}>
+          <Typography variant="h4" component="span">
+            <FlowingBalance
+              flowRate={flowRate}
+              startingBalance={startingBalance}
+              startingBalanceDate={startingBalanceDate}
+            />{" "}
+          </Typography>
+          <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5 }}>
+            {superToken.symbol}
+          </Typography>
+        </Stack>
       </Stack>
 
-      <Divider sx={{ my: 3 }} />
+      <Stack
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr",
+          mt: 3,
+          mb: 4,
+        }}
+        alignItems="center"
+        width="100%"
+      >
+        <AccountAddressCard
+          address={sendStreamCommand.accountAddress}
+          PaperProps={{ sx: { zIndex: 2 } }}
+        />
+        <StreamIndicator sx={{ mx: -1, zIndex: 0 }} />
+        <AccountAddressCard
+          address={sendStreamCommand.receiverAddress}
+          PaperProps={{ sx: { zIndex: 2 } }}
+        />
+      </Stack>
 
       <Stack
         direction="column"
@@ -69,13 +92,14 @@ export function CheckoutSummary() {
       >
         {/* // TODO: Should these be target blank? */}
         {successURL && (
-          <Button fullWidth variant="contained" href={successURL}>
+          <Button fullWidth variant="contained" size="large" href={successURL}>
             {/* // TODO: Make text configurable? */}
             Continue to Merchant
           </Button>
         )}
         <Button
           fullWidth
+          size="large"
           variant="outlined"
           href="https://app.superfluid.finance"
           target="_blank"
@@ -83,7 +107,6 @@ export function CheckoutSummary() {
           Open Superfluid Dashboard
         </Button>
       </Stack>
-      
     </Stack>
   );
 }

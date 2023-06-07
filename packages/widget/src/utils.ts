@@ -42,18 +42,20 @@ export const absoluteValue = (n: bigint) => {
 };
 
 export function toFixedUsingString(numStr: string, decimalPlaces: number) {
-  const [wholePart, decimalPart] = numStr.split('.');
+  const [wholePart, decimalPart] = numStr.split(".");
 
   if (!decimalPart || decimalPart.length <= decimalPlaces) {
-    return numStr.padEnd(wholePart.length + 1 + decimalPlaces, '0');
+    return numStr.padEnd(wholePart.length + 1 + decimalPlaces, "0");
   }
 
   const decimalPartBigInt = BigInt(decimalPart.slice(0, decimalPlaces + 1));
-  
+
   const round = decimalPartBigInt % 10n >= 5n;
   const roundedDecimal = decimalPartBigInt / 10n + (round ? 1n : 0n);
 
-  return wholePart + '.' + roundedDecimal.toString().padStart(decimalPlaces, '0');
+  return (
+    wholePart + "." + roundedDecimal.toString().padStart(decimalPlaces, "0")
+  );
 }
 
 /**
@@ -65,5 +67,5 @@ export function toFixedUsingString(numStr: string, decimalPlaces: number) {
  * //   ^? type Result = { a: string; b: string; c: number; d: bigint }
  */
 export type Prettify<T> = {
-  [K in keyof T]: T[K]
-} & {}
+  [K in keyof T]: T[K];
+} & {};

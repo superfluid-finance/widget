@@ -10,7 +10,9 @@ export type StepperContextValue = {
   orientation: Orientation;
 };
 
-export const StepperContext = createContext<StepperContextValue | undefined>(undefined);
+export const StepperContext = createContext<StepperContextValue | undefined>(
+  undefined
+);
 
 export const useStepper = (): StepperContextValue => {
   const context = useContext(StepperContext);

@@ -47,7 +47,8 @@ const useWalletAnalytics = ({
     [isConnected, activeConnector, activeAccountAddress, activeChain]
   );
 
-  const [prevWallet, setPrevWallet] = useState<typeof currentWallet>(NOT_CONNECTED);
+  const [prevWallet, setPrevWallet] =
+    useState<typeof currentWallet>(NOT_CONNECTED);
 
   useEffect(() => {
     if (currentWallet === prevWallet) {
@@ -56,7 +57,9 @@ const useWalletAnalytics = ({
 
     if (currentWallet.isConnected !== prevWallet.isConnected) {
       if (currentWallet.isConnected) {
-        track("Wallet Connected", currentWallet).then(() => identify(currentWallet));
+        track("Wallet Connected", currentWallet).then(() =>
+          identify(currentWallet)
+        );
       } else {
         track("Wallet Disconnected", currentWallet).then(() => reset());
       }

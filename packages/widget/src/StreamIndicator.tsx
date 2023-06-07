@@ -1,14 +1,17 @@
-import { Box, styled } from "@mui/material";
+import { Box, SxProps, styled } from "@mui/material";
 import { FC } from "react";
 
 const StreamGif = styled("img")(() => ({
-  height: "30px",
+  height: 32,
 }));
-interface StreamIndicatorProps {}
 
-const StreamIndicator: FC<StreamIndicatorProps> = ({}) => {
-  return <StreamGif src={GIF_BASE64} />;
-};
+interface StreamIndicatorProps {
+  sx?: SxProps;
+}
+
+const StreamIndicator: FC<StreamIndicatorProps> = ({ sx }) => (
+  <StreamGif src={GIF_BASE64} sx={sx} />
+);
 
 export default StreamIndicator;
 

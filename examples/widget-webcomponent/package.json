@@ -6,11 +6,10 @@
   "scripts": {
     "build": "tsc && vite build",
     "dev": "vite",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@superfluid-finance/tokenlist": "^1.0.2",
+    "@superfluid-finance/tokenlist": "^1.1.0",
     "@superfluid-finance/widget": "workspace:*"
   },
   "devDependencies": {

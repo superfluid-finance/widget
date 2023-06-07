@@ -52,7 +52,7 @@ export function CommandHandlerProvider({ children }: Props) {
       sessionId,
       submitCommands,
       reset,
-      writeIndex
+      writeIndex,
     }),
     [status, commands, contractWrites, contractWriteResults, sessionId]
   );

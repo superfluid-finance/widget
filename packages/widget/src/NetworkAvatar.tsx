@@ -81,7 +81,7 @@ export const networkAssetsConf = [
 
 export interface NetworkAvatarProps {
   network: SupportedNetwork;
-  useNetworkBackgroundColor?: boolean,
+  useNetworkBackgroundColor?: boolean;
   AvatarProps?: Partial<AvatarProps>;
 }
 

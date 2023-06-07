@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Font } from "../types/general";
+import { FontSettings } from "../components/widget-preview/WidgetPreview";
 
 const FONT_WEIGHT_CONFIG = {
   "400": "regular",
@@ -14,8 +15,12 @@ function fontHasRequiredWeights(font: Font): boolean {
   return FONT_WEIGHT_VARIANTS.every((weight) => font.variants.includes(weight));
 }
 
-const useFonts = () => {
-  const [fonts, setFonts] = useState<Font[]>([]);
+function mapFontSettings(font: Font): FontSettings {
+  return { family: font.family, category: font.category };
+}
+
+const useFontOptions = () => {
+  const [fontOptions, setFontOptions] = useState<FontSettings[]>([]);
 
   useEffect(() => {
     const effect = async () => {
@@ -26,14 +31,16 @@ const useFonts = () => {
       const { items } = await response.json();
 
       if (items) {
-        setFonts(items.filter(fontHasRequiredWeights));
+        setFontOptions(
+          items.filter(fontHasRequiredWeights).map(mapFontSettings)
+        );
       }
     };
 
     effect();
   }, []);
 
-  return fonts;
+  return fontOptions;
 };
 
-export default useFonts;
+export default useFontOptions;

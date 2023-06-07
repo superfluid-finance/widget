@@ -41,7 +41,7 @@ To use the Superfluid Widget in your React application, you need to follow these
 
 ```tsx
 import { WagmiConfig } from "wagmi";
-import SuperfluidWidget from '@superfluid-finance/widget';
+import SuperfluidWidget from "@superfluid-finance/widget";
 ```
 
 2. Wrap your application with `WagmiConfig` and include the `CheckoutWidget` component.
@@ -73,22 +73,20 @@ You can find examples of various use cases in the `examples` folder of this repo
 Superfluid Widget can be easily customized to fit your application's look and feel. The widget is built using MUI, so you can customize its appearance by passing the `theme` object to the `WagmiConfig` component. You can reference the [default Material-UI theme](https://mui.com/material-ui/customization/default-theme/) for available customization options.
 
 ```tsx
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 
 const customTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#ff9800',
+      main: "#ff9800",
     },
     secondary: {
-      main: '#f44336',
+      main: "#f44336",
     },
   },
 });
 
-<SuperfluidWidget theme={customTheme}>
-  {/* ... */}
-</SuperfluidWidget>;
+<SuperfluidWidget theme={customTheme}>{/* ... */}</SuperfluidWidget>;
 ```
 
 ## Contributing

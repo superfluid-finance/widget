@@ -1,38 +1,12 @@
 import "./App.css";
-import SuperfluidWidget, {
-  supportedNetworks,
-} from "@superfluid-finance/widget";
+import SuperfluidWidget from "@superfluid-finance/widget";
 import productDetails from "./productDetails";
 import paymentDetails from "./paymentDetails";
-import { WagmiConfig, configureChains, createConfig } from "wagmi";
+import { WagmiConfig } from "wagmi";
 
 import superTokenList from "@superfluid-finance/tokenlist";
-import {
-  ConnectButton,
-  RainbowKitProvider,
-  getDefaultWallets,
-} from "@rainbow-me/rainbowkit";
-import { publicProvider } from "wagmi/providers/public";
-
-const walletConnectProjectId = "952483bf7a0f5ace4c40eb53967f1368";
-
-const { chains, publicClient, webSocketPublicClient } = configureChains(
-  supportedNetworks,
-  [publicProvider()]
-);
-
-const { connectors } = getDefaultWallets({
-  appName: "My wagmi + RainbowKit App",
-  chains,
-  projectId: walletConnectProjectId,
-});
-
-export const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-  webSocketPublicClient,
-});
+import { ConnectButton, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { wagmiConfig, chains } from "./wagmi";
 
 export default function App() {
   return (

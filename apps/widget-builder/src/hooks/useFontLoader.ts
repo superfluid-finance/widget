@@ -1,22 +1,22 @@
 import { useEffect } from "react";
 import { DisplaySettings } from "../components/widget-preview/WidgetPreview";
-import { FONT_WEIGHTS } from "./useFonts";
+import { FONT_WEIGHTS } from "./useFontOptions";
 
-const useFontLoader = (displaySettings: DisplaySettings) => {
+const useFontLoader = (fontFamily?: string) => {
   useEffect(() => {
-    if (displaySettings.font.config?.family === undefined) return;
+    if (!fontFamily) return;
 
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = `https://fonts.googleapis.com/css2?family=${
-      displaySettings.font.config?.family
-    }:wght@${FONT_WEIGHTS.join(";")}&display=swap`;
+    link.href = `https://fonts.googleapis.com/css2?family=${fontFamily}:wght@${FONT_WEIGHTS.join(
+      ";"
+    )}&display=swap`;
     document.head.appendChild(link);
 
     return () => {
       link.remove();
     };
-  }, [displaySettings.font.config?.family]);
+  }, [fontFamily]);
 };
 
 export default useFontLoader;

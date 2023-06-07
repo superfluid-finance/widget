@@ -1,3 +1,4 @@
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Box,
   Stack,
@@ -8,27 +9,24 @@ import {
   colors,
   useTheme,
 } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
+import { useState } from "react";
 import WidgetPreview, {
   WidgetProps,
-  layouts,
 } from "../components/widget-preview/WidgetPreview";
-import { useState } from "react";
 
-import UiEditor from "../components/ui-editor/UiEditor";
-import ExportEditor from "../components/export-editor/ExportEditor";
-import ProductEditor from "../components/product-editor/ProductEditor";
+import { faker } from "@faker-js/faker";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
-import WebAssetIcon from "@mui/icons-material/WebAsset";
 import WebIcon from "@mui/icons-material/Web";
-import { faker } from "@faker-js/faker";
+import WebAssetIcon from "@mui/icons-material/WebAsset";
 import { supportedNetwork } from "@superfluid-finance/widget";
-import { relative } from "path";
-import Link from "next/link";
+import ExportEditor from "../components/export-editor/ExportEditor";
+import ProductEditor from "../components/product-editor/ProductEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
+import UiEditor from "../components/ui-editor/UiEditor";
+import { widgetFont } from "../theme";
 
 const labelStyle = {
   fontWeight: 500,
@@ -137,10 +135,10 @@ export default function Home() {
         buttonRadius: 10,
         inputRadius: 10,
         font: {
-          config: null,
-          kind: "",
+          family: "Noto Sans",
+          category: "sans-serif",
         },
-        primaryColor: colors.green[500],
+        primaryColor: "#1DB227",
         secondaryColor: colors.common.white,
         stepperOrientation: "vertical",
       },

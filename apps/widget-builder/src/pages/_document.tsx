@@ -21,19 +21,30 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
     <Html lang="en" className={roboto.className}>
       <Head>
-        <title>Superfluid | Checkout Builder</title>
+        <title>Superfluid Checkout Builder | Web3 Subscriptions Toolkit</title>
         <meta
           name="description"
-          content="The most versatile toolkit for web3 subscriptions"
+          content="Superfluid Subscriptions enable web3 services to eliminate merchant fees, accept recurring crypto payments, grow their user base, and seamlessly generate revenue."
         />
-        <meta property="og:title" content="Superfluid | Checkout Builder" />
+        <meta
+          name="image"
+          content="https://strapi-website-assets.s3.eu-west-2.amazonaws.com/superfluid_subscriptions_release_light_v2_b53d22277d.png"
+        />
+        <meta
+          name="keywords"
+          content="Superfluid, Subscriptions, Web3, Payments, Checkout"
+        />
+        <meta
+          property="og:title"
+          content="Superfluid Checkout Builder | Web3 Subscriptions Toolkit"
+        />
         <meta
           property="og:description"
-          content="The most versatile toolkit for web3 subscriptions"
+          content="Superfluid Subscriptions enable web3 services to eliminate merchant fees, accept recurring crypto payments, grow their user base, and seamlessly generate revenue."
         />
         <meta
           property="og:image"
-          content="https://strapi-website-assets.s3.eu-west-2.amazonaws.com/logo_f7186351bf.svg"
+          content="https://strapi-website-assets.s3.eu-west-2.amazonaws.com/superfluid_subscriptions_release_light_v2_b53d22277d.png"
         />
         {/* PWA primary color */}
 

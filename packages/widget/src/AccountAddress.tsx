@@ -17,7 +17,10 @@ type Props = {
 
 export function AccountAddress({ children, address }: Props) {
   const checksumAddress = useMemo(() => getAddress(address), [address]);
-  const shortenedAddress = useMemo(() => shortenHex(checksumAddress), [checksumAddress]);
+  const shortenedAddress = useMemo(
+    () => shortenHex(checksumAddress),
+    [checksumAddress]
+  );
 
   const ensNameResult = useEnsName({
     address: checksumAddress,
@@ -32,7 +35,7 @@ export function AccountAddress({ children, address }: Props) {
     ensNameResult,
     ensAvatarResult,
     checksumAddress,
-    shortenedAddress
+    shortenedAddress,
   };
 
   return <>{children(result)}</>;
