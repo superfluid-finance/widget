@@ -13,7 +13,7 @@ jobs:
     name: Changesets
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pull-requests: write
     timeout-minutes: 5
 
