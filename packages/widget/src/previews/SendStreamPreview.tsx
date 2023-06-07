@@ -40,9 +40,15 @@ export function SendStreamPreview({
           Receiver
         </Typography>
 
-        <AccountAddressCard address={cmd.accountAddress} />
-        <StreamIndicator />
-        <AccountAddressCard address={cmd.receiverAddress} />
+        <AccountAddressCard
+          address={cmd.accountAddress}
+          PaperProps={{ sx: { zIndex: 2 } }}
+        />
+        <StreamIndicator sx={{ mx: -1, zIndex: 0 }} />
+        <AccountAddressCard
+          address={cmd.receiverAddress}
+          PaperProps={{ sx: { zIndex: 2 } }}
+        />
       </Stack>
 
       <Typography variant="caption" fontWeight="medium">

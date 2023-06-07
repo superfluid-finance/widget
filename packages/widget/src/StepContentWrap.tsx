@@ -180,6 +180,14 @@ export default function StepContentWrap() {
                 }}
               />
             </WrapCard>
+
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ mt: 0.75, alignSelf: "start" }}
+            >
+              We recommend wrapping at least 1 month of the subscription amount.
+            </Typography>
           </Stack>
         )}
       />

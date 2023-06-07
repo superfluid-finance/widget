@@ -41,7 +41,7 @@ export function WrapIntoSuperTokensPreview({
           alignItems="center"
           justifyContent="center"
           flex={1}
-          sx={{ p: 1.5 }}
+          sx={{ p: 1.5, borderRadius: 0.75 }}
         >
           <TokenAvatar tokenInfo={underlyingToken} />
           <Typography variant="body1" sx={{ mt: 0.5 }}>
@@ -59,7 +59,7 @@ export function WrapIntoSuperTokensPreview({
           direction="column"
           alignItems="center"
           justifyContent="center"
-          sx={{ p: 1.5 }}
+          sx={{ p: 1.5, borderRadius: 0.75 }}
         >
           <TokenAvatar tokenInfo={superToken} />
           <Typography variant="body1" sx={{ mt: 0.5 }}>
