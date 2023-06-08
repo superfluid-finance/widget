@@ -1,4 +1,4 @@
-name: Main
+name: Release
 on:
   workflow_dispatch:
   push:
@@ -12,6 +12,10 @@ jobs:
   changesets:
     name: Changesets
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     timeout-minutes: 5
 
     steps:
@@ -19,6 +23,10 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -33,4 +41,4 @@ jobs:
           version: pnpm changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
