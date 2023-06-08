@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 importers:
 
@@ -9607,6 +9611,39 @@ packages:
       - supports-color
       - utf-8-validate
       - zod
+
+  /wagmi@1.1.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@0.3.50):
+    resolution: {integrity: sha512-nuAaDOwRN/eexC92/Xvt2c8SPOCZK/IjAg4k+x2LFC3snyxEUKCZlPcRfRruafxg7b5Nr0NjP8rlXoUZitParg==}
+    peerDependencies:
+      react: '>=17.0.0'
+      typescript: '>=5.0.4'
+      viem: ~0.3.35
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@tanstack/query-sync-storage-persister': 4.29.11
+      '@tanstack/react-query': 4.29.12(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/react-query-persist-client': 4.29.12(@tanstack/react-query@4.29.12)
+      '@wagmi/core': 1.1.0(react@18.2.0)(typescript@5.1.3)(viem@0.3.50)
+      abitype: 0.8.7(typescript@5.1.3)(zod@3.21.4)
+      react: 18.2.0
+      typescript: 5.1.3
+      use-sync-external-store: 1.2.0(react@18.2.0)
+      viem: 0.3.50(typescript@5.1.3)(zod@3.21.4)
+    transitivePeerDependencies:
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - immer
+      - lokijs
+      - react-dom
+      - react-native
+      - supports-color
+      - utf-8-validate
+      - zod
+    dev: false
 
   /wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}

@@ -21,6 +21,8 @@ import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
 import useWalletAnalytics from "../src/hooks/useWalletAnalytics";
 import Image from "next/image";
 import { Fade } from "@mui/material";
+import useFontLoader from "../src/hooks/useFontLoader";
+import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 const projectId =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ??
@@ -53,6 +55,18 @@ const IPFSWidgetPage: NextPage = () => {
   );
 
   const { data, loading, error } = useLoadFromIPFS(query.hash as string);
+
+  const fontFamily = useMemo(() => {
+    const typography = data?.theme?.typography as TypographyOptions;
+
+    if (typography?.fontFamily) {
+      return typography.fontFamily;
+    }
+
+    return undefined;
+  }, [data]);
+
+  const font = useFontLoader(fontFamily);
 
   if (loading && data === null)
     return (
