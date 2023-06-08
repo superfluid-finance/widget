@@ -21,6 +21,7 @@ import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
 import useWalletAnalytics from "../src/hooks/useWalletAnalytics";
 import Image from "next/image";
 import { Fade } from "@mui/material";
+import useFontLoader from "../src/hooks/useFontLoader";
 
 const projectId =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ??
@@ -53,6 +54,8 @@ const IPFSWidgetPage: NextPage = () => {
   );
 
   const { data, loading, error } = useLoadFromIPFS(query.hash as string);
+
+  const font = useFontLoader(data?.displaySettings.font);
 
   if (loading && data === null)
     return (
