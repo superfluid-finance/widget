@@ -93,7 +93,8 @@ export default function Stepper() {
                     <MUIStepper
                       orientation={orientation}
                       activeStep={activeStep}
-                      sx={{ m: 2 }}
+                      connector={null}
+                      sx={{ mx: 3.5, mb: 3, mt: 2 }}
                     >
                       {visibleSteps.map((step, index) => {
                         const { Content: Content_ } = step;

@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { parseEther } from "viem";
 import { AccountAddressCard } from "./AccountAddressCard";
@@ -8,6 +8,7 @@ import StreamIndicator from "./StreamIndicator";
 import { useWidget } from "./WidgetContext";
 import { SendStreamCommand } from "./commands";
 import { mapTimePeriodToSeconds } from "./core";
+import SuccessImage from "./SuccessImage";
 
 export function CheckoutSummary() {
   const {
@@ -45,7 +46,9 @@ export function CheckoutSummary() {
         </Typography>
       </Stack>
 
-      <Stack direction="column" alignItems="center" sx={{ mt: 3 }}>
+      <SuccessImage sx={{ mx: "auto", my: 3 }} />
+
+      <Stack direction="column" alignItems="center">
         <Typography variant="body2" color="text.secondary">
           {`You've streamed`}
         </Typography>

@@ -1,8 +1,24 @@
 import { ThemeOptions } from "@mui/material/styles";
+
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { deepmerge } from "@mui/utils";
 
 type ThemeMode = "light" | "dark";
+
+interface TypographyCustomVariants {
+  label: React.CSSProperties;
+}
+
+declare module "@mui/material/styles" {
+  interface TypographyVariants extends TypographyCustomVariants {}
+  interface TypographyVariantsOptions extends TypographyCustomVariants {}
+}
+
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    label: true;
+  }
+}
 
 export const ELEVATION1_BG = `linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.03) 100%)`;
 
@@ -20,9 +36,10 @@ const getModeStyleCB =
   <T>(lightStyle: T, darkStyle: T): T =>
     mode === "dark" ? darkStyle : lightStyle;
 
-type CoreThemeOptions = Required<
-  Pick<ThemeOptions, "palette" | "typography" | "shadows" | "transitions">
->;
+interface CoreThemeOptions
+  extends Required<Pick<ThemeOptions, "palette" | "shadows" | "transitions">> {
+  typography: TypographyOptions;
+}
 
 const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
   const getModeStyle = getModeStyleCB(mode);
@@ -33,7 +50,7 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
       contrastThreshold: 2.7, // 2.8 to allow white on Superfluid green
       text: {
         primary: getModeStyle("#12141ede", "#FFFFFFFF"),
-        //   secondary: getModeStyle("#12141E99", "#FFFFFFC7"),
+        secondary: getModeStyle("#656E78", "#FFFFFFC7"),
         //   disabled: getModeStyle("#12141E61", "#FFFFFF99"),
       },
       // primary: {
@@ -150,6 +167,12 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
       caption: {
         fontSize: "0.875rem",
         lineHeight: 1.25,
+        fontWeight: 400,
+      },
+
+      label: {
+        fontSize: "0.75rem",
+        lineHeight: 1.5,
         fontWeight: 400,
       },
     },
@@ -325,11 +348,41 @@ export function getThemedComponents(
           },
         },
       },
+      MuiStepContent: {
+        styleOverrides: {
+          root: {
+            borderLeft: "none",
+            margin: 0,
+            padding: 0,
+          },
+        },
+      },
       MuiStepButton: {
         styleOverrides: {
           root: {
+            marginBottom: 0,
+            marginTop: 0,
+          },
+        },
+      },
+      MuiStepIcon: {
+        styleOverrides: {
+          text: {
+            ...coreThemeOptions.typography.label,
+          },
+        },
+      },
+      MuiStepLabel: {
+        styleOverrides: {
+          labelContainer: {
+            ...typography.caption,
+          },
+          label: {
             ...typography.subtitle2,
             fontWeight: 500,
+            "&.Mui-completed": {
+              color: coreThemeOptions.palette.text?.secondary,
+            },
           },
         },
       },
