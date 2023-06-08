@@ -15,6 +15,7 @@ import { DraftFormValues } from "./formValues";
 export default function CheckoutProduct() {
   const {
     productDetails: { name, description, imageURI },
+    layout: { elevated },
   } = useWidget();
 
   const { watch } = useFormContext<DraftFormValues>();
@@ -24,7 +25,11 @@ export default function CheckoutProduct() {
   ]);
 
   return (
-    <Card component={Stack} flexDirection="row">
+    <Card
+      component={Stack}
+      flexDirection="row"
+      variant={elevated ? "elevation" : "outlined"}
+    >
       {imageURI && (
         <CardMedia
           sx={{ minWidth: "calc(100% / 3)", borderRadius: 1 }}

@@ -1,3 +1,4 @@
+import Close from "@mui/icons-material/Close";
 import {
   AppBar,
   Container,
@@ -9,12 +10,11 @@ import {
   Toolbar,
   useTheme,
 } from "@mui/material";
-import { CheckoutContent } from "./CheckoutContent";
 import { useCallback, useMemo, useState } from "react";
-import { ChildrenProp } from "./utils";
+import { CheckoutContent } from "./CheckoutContent";
 import { useWidget } from "./WidgetContext";
-import Close from "@mui/icons-material/Close";
 import { normalizeIcon } from "./helpers/normalizeIcon";
+import { ChildrenProp } from "./utils";
 
 const CloseIcon = normalizeIcon(Close);
 
@@ -66,7 +66,7 @@ export function WidgetView(props: ViewProps) {
     fixed: true,
     disableGutters: true,
     sx: {
-      width: "628px", // TODO(KK): Check with Mikk. This should be handled after element sizes are fixed in the layout
+      width: "580px", // TODO(KK): Check with Mikk. This should be handled after element sizes are fixed in the layout
     },
   };
 

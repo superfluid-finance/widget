@@ -19,6 +19,9 @@ export type WidgetContextValue = {
   stepper: {
     orientation: Orientation;
   };
+  layout: {
+    elevated: boolean;
+  };
 } & CheckoutConfig;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(

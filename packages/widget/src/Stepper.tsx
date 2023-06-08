@@ -74,7 +74,7 @@ export default function Stepper() {
           <>
             {isTransacting && (
               <Fade in>
-                <Box sx={{ m: 3 }}>
+                <Box sx={{ mx: 3, mb: 3, mt: 2 }}>
                   <StepContentTransactions />
                 </Box>
               </Fade>
@@ -134,6 +134,7 @@ export default function Stepper() {
                 )}
               </Box>
             </Fade>
+
             {/* // Keep in sync with the stepper */}
             <Fade in={isForm} appear={false} unmountOnExit={false}>
               {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}

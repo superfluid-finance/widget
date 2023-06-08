@@ -1,23 +1,13 @@
-import {
-  Alert,
-  AlertTitle,
-  AppBar,
-  Box,
-  IconButton,
-  Stack,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import CloseIcon_ from "@mui/icons-material/Close";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
 import ContractWriteButton from "./ContractWriteButton";
 import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress";
-import { useStepper } from "./StepperContext";
-import ArrowBackIcon_ from "@mui/icons-material/ArrowBack";
-import { normalizeIcon } from "./helpers/normalizeIcon";
-import CloseIcon_ from "@mui/icons-material/Close";
 import { ContractWriteStatus } from "./ContractWriteStatus";
+import { useStepper } from "./StepperContext";
+import { normalizeIcon } from "./helpers/normalizeIcon";
+import { useEffect } from "react";
 
-const ArrowBackIcon = normalizeIcon(ArrowBackIcon_);
 const CloseIcon = normalizeIcon(CloseIcon_);
 
 export function StepContentTransactions() {
@@ -26,42 +16,38 @@ export function StepContentTransactions() {
   const { contractWrites, contractWriteResults, writeIndex } =
     useCommandHandler(); // Cleaner to pass with props.
 
-  if (writeIndex > 0 && writeIndex === contractWriteResults.length) {
-    // TODO(KK): Check for success statuses. Maybe if not everything is a success, provide an explicit continue button.
-    handleNext(); // i.e. all transactions handled
-  }
+  useEffect(() => {
+    if (writeIndex > 0 && writeIndex === contractWriteResults.length) {
+      // TODO(KK): Check for success statuses. Maybe if not everything is a success, provide an explicit continue button.
+      handleNext(); // i.e. all transactions handled
+    }
+  }, [writeIndex, contractWriteResults, handleNext]);
 
   const total = contractWrites.length;
   const currentResult = contractWriteResults[writeIndex];
 
   return (
     <Box>
-      <AppBar sx={{ position: "relative" }} color="transparent" elevation={0}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={handleBack}
-            aria-label="back"
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <Stack alignItems="end">
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={handleBack}
+          aria-label="back"
+          sx={{ mr: -1 }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </Stack>
       <Stack
         direction="column"
-        spacing={2}
+        gap={2.25}
         alignItems="stretch"
         sx={{ width: "100%" }}
       >
         <Stack direction="column" alignItems="center">
           <Typography variant="h5" component="span">
-            You're almost there!
+            {`You're almost there!`}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Send the transactions from your wallet to finish your purchase.
@@ -79,7 +65,7 @@ export function StepContentTransactions() {
             total={total}
           />
         </Stack>
-        {contractWriteResults.map(ContractWriteStatus)}
+        <Stack gap={1}>{contractWriteResults.map(ContractWriteStatus)}</Stack>
         {/* // TODO(KK): We're not currently displaying the error anywhere.
         {currentResult?.relevantError && (
           <Alert severity="error">

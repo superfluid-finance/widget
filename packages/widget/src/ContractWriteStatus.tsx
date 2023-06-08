@@ -31,31 +31,25 @@ export function ContractWriteStatus(
       variant="outlined"
       key={id}
       sx={{
-        p: 1.25,
+        p: 1.5,
         borderColor: borderColor,
+        borderRadius: "10px",
       }}
     >
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={2}
-      >
-        <Typography variant="body2">{`${
+      <Stack direction="row" alignItems="center" gap={0.75}>
+        <Typography flex={1} variant="body2">{`${
           index + 1
         }. ${displayTitle}`}</Typography>
-        <Stack direction="row" gap={0.75}>
-          <CircleIcon sx={{ color: borderColor, width: 20, height: 20 }} />
-          <Typography variant="body2">
-            {latestError
-              ? "Something went wrong."
-              : transactionResult.isSuccess
-              ? "Completed"
-              : writeResult?.isSuccess
-              ? "In progress"
-              : "Not started"}
-          </Typography>
-        </Stack>
+        <CircleIcon sx={{ color: borderColor, width: 12, height: 12 }} />
+        <Typography variant="body2">
+          {latestError
+            ? "Something went wrong."
+            : transactionResult.isSuccess
+            ? "Completed"
+            : writeResult?.isSuccess
+            ? "In progress"
+            : "Not started"}
+        </Typography>
       </Stack>
     </Paper>
   );

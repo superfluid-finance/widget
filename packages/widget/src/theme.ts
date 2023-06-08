@@ -370,6 +370,10 @@ export function getThemedComponents(
           text: {
             ...coreThemeOptions.typography.label,
           },
+          root: {
+            width: "1.5rem",
+            height: "1.5rem",
+          },
         },
       },
       MuiStepLabel: {
