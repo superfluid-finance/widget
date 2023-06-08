@@ -18,7 +18,7 @@ const useFontLoader = (fontFamily?: string) => {
     link.rel = "stylesheet";
     link.href = `https://fonts.googleapis.com/css2?family=${fontFamily
       .split(",")[0]
-      .replace("'", "")
+      .replace(/'/g, "")
       .trim()}:wght@${FONT_WEIGHTS.join(";")}&display=swap`;
     document.head.appendChild(link);
 
