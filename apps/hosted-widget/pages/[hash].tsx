@@ -59,7 +59,11 @@ const IPFSWidgetPage: NextPage = () => {
   const fontFamily = useMemo(() => {
     const typography = data?.theme?.typography as TypographyOptions;
 
-    return typography.fontFamily;
+    if (typography?.fontFamily) {
+      return typography.fontFamily;
+    }
+
+    return undefined;
   }, [data]);
 
   const font = useFontLoader(fontFamily);
