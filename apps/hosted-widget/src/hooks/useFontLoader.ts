@@ -10,7 +10,7 @@ const FONT_WEIGHT_CONFIG = {
 
 export const FONT_WEIGHTS = Object.keys(FONT_WEIGHT_CONFIG);
 
-const useFontLoader = (fontFamily?: TypographyOptions["fontFamily"]) => {
+const useFontLoader = (fontFamily?: string) => {
   useEffect(() => {
     if (!fontFamily) return;
 
