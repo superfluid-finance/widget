@@ -41,8 +41,6 @@ export default function Home() {
 
   const { widgetProps, demoMode, toggleDemoMode } = useDemoMode();
 
-  console.log(widgetProps);
-
   const formMethods = useForm<WidgetProps>({
     values: widgetProps,
   });
