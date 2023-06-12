@@ -20,20 +20,20 @@
     "@sentry/nextjs": "^7.54.0",
     "@superfluid-finance/tokenlist": "^1.1.0",
     "@superfluid-finance/widget": "workspace:*",
-    "@web3modal/ethereum": "^2.4.3",
-    "@web3modal/react": "^2.4.3",
+    "@web3modal/ethereum": "^2.4.5",
+    "@web3modal/react": "^2.4.5",
     "clsx": "^1.2.1",
-    "next": "^13.4.4",
+    "next": "^13.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "^1.0.0",
+    "viem": "^1.0.5",
     "wagmi": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^20.2.5",
-    "@types/react": "^18.2.9",
+    "@types/node": "^20.3.0",
+    "@types/react": "^18.2.11",
     "eslint": "^8.42.0",
-    "eslint-config-next": "^13.4.4",
+    "eslint-config-next": "^13.4.5",
     "typescript": "^5.1.3"
   }
 }
