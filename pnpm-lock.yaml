@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -88,7 +92,7 @@ importers:
         version: 1.0.5(typescript@5.1.3)(zod@3.21.4)
       wagmi:
         specifier: ^1.1.1
-        version: 1.1.1(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)(zod@3.21.4)
+        version: 1.1.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)
     devDependencies:
       '@types/node':
         specifier: ^20.3.0
@@ -216,7 +220,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       wagmi:
         specifier: ^1.1.1
-        version: 1.1.1(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)(zod@3.21.4)
+        version: 1.1.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@0.3.50)
     devDependencies:
       '@types/react':
         specifier: ^18.2.11
@@ -271,7 +275,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       wagmi:
         specifier: ^1.1.1
-        version: 1.1.1(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)(zod@3.21.4)
+        version: 1.1.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)
     devDependencies:
       '@types/react':
         specifier: ^18.2.11
@@ -388,9 +392,6 @@ importers:
         specifier: ^3.21.4
         version: 3.21.4
     devDependencies:
-      '@hookform/devtools':
-        specifier: ^4.3.1
-        version: 4.3.1(@types/react@18.2.11)(react-dom@18.2.0)(react@18.2.0)
       '@mui/material':
         specifier: ^5.13.4
         version: 5.13.4(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.11)(react-dom@18.2.0)(react@18.2.0)
@@ -2128,7 +2129,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-remove-scroll: 2.5.4(@types/react@18.2.11)(react@18.2.0)
       viem: 0.3.50(typescript@5.1.3)(zod@3.21.4)
-      wagmi: 1.1.1(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)(zod@3.21.4)
+      wagmi: 1.1.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@0.3.50)
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -2213,13 +2214,13 @@ packages:
     resolution: {integrity: sha512-bcKpo1oj54hGholplGLpqPHRbIsnbixFtc06nwuNM5/dwSXOq/AAYoIBRsBmnZJSdfeNW5rnff7NTAz3ZCqR9Q==}
     dependencies:
       '@noble/curves': 1.0.0
-      '@noble/hashes': 1.3.0
+      '@noble/hashes': 1.3.1
       '@scure/base': 1.1.1
 
   /@scure/bip39@1.2.0:
     resolution: {integrity: sha512-SX/uKq52cuxm4YFXWFaVByaSHJh2w3BnokVSeUJVCv6K7WulT9u2BuNRBhuFl8vAuYnzx9bEu9WgpcNYTrYieg==}
     dependencies:
-      '@noble/hashes': 1.3.0
+      '@noble/hashes': 1.3.1
       '@scure/base': 1.1.1
 
   /@segment/analytics-core@1.3.0:
@@ -3993,6 +3994,78 @@ packages:
       - utf-8-validate
     dev: true
 
+  /@wagmi/connectors@2.1.1(@wagmi/chains@1.1.0)(react@18.2.0)(typescript@5.1.3)(viem@0.3.50):
+    resolution: {integrity: sha512-xUOsg95uzurQwAxH+TqOi2ZNhF472wC4Fl49NT/N5jRA3hdi0L+nZR2a63k2SGDSge6jaejaErK7g8nzl0O3Ww==}
+    peerDependencies:
+      '@wagmi/chains': '>=1.0.0'
+      typescript: '>=5.0.4'
+      viem: '>=0.3.35'
+    peerDependenciesMeta:
+      '@wagmi/chains':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@coinbase/wallet-sdk': 3.6.6
+      '@ledgerhq/connect-kit-loader': 1.0.2
+      '@safe-global/safe-apps-provider': 0.15.2
+      '@safe-global/safe-apps-sdk': 7.11.0
+      '@wagmi/chains': 1.1.0(typescript@5.1.3)
+      '@walletconnect/ethereum-provider': 2.7.8(@web3modal/standalone@2.4.3)
+      '@walletconnect/legacy-provider': 2.0.0
+      '@web3modal/standalone': 2.4.3(react@18.2.0)
+      abitype: 0.8.7(typescript@5.1.3)(zod@3.21.4)
+      eventemitter3: 4.0.7
+      typescript: 5.1.3
+      viem: 0.3.50(typescript@5.1.3)(zod@3.21.4)
+    transitivePeerDependencies:
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - lokijs
+      - react
+      - supports-color
+      - utf-8-validate
+      - zod
+    dev: false
+
+  /@wagmi/connectors@2.1.1(@wagmi/chains@1.1.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5):
+    resolution: {integrity: sha512-xUOsg95uzurQwAxH+TqOi2ZNhF472wC4Fl49NT/N5jRA3hdi0L+nZR2a63k2SGDSge6jaejaErK7g8nzl0O3Ww==}
+    peerDependencies:
+      '@wagmi/chains': '>=1.0.0'
+      typescript: '>=5.0.4'
+      viem: '>=0.3.35'
+    peerDependenciesMeta:
+      '@wagmi/chains':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@coinbase/wallet-sdk': 3.6.6
+      '@ledgerhq/connect-kit-loader': 1.0.2
+      '@safe-global/safe-apps-provider': 0.15.2
+      '@safe-global/safe-apps-sdk': 7.11.0
+      '@wagmi/chains': 1.1.0(typescript@5.1.3)
+      '@walletconnect/ethereum-provider': 2.7.8(@web3modal/standalone@2.4.3)
+      '@walletconnect/legacy-provider': 2.0.0
+      '@web3modal/standalone': 2.4.3(react@18.2.0)
+      abitype: 0.8.7(typescript@5.1.3)(zod@3.21.4)
+      eventemitter3: 4.0.7
+      typescript: 5.1.3
+      viem: 1.0.5(typescript@5.1.3)(zod@3.21.4)
+    transitivePeerDependencies:
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - lokijs
+      - react
+      - supports-color
+      - utf-8-validate
+      - zod
+    dev: false
+
   /@wagmi/connectors@2.1.1(@wagmi/chains@1.1.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)(zod@3.21.4):
     resolution: {integrity: sha512-xUOsg95uzurQwAxH+TqOi2ZNhF472wC4Fl49NT/N5jRA3hdi0L+nZR2a63k2SGDSge6jaejaErK7g8nzl0O3Ww==}
     peerDependencies:
@@ -4055,6 +4128,64 @@ packages:
       - supports-color
       - utf-8-validate
       - zod
+
+  /@wagmi/core@1.1.1(react@18.2.0)(typescript@5.1.3)(viem@0.3.50):
+    resolution: {integrity: sha512-nEg/TIfX8youSBU+qmecIQVyVCOJxPaOHoavr3lbXTa6LZd/PvJ9jEPbl1Ho//KoAI4pqoE59wky0vydgygF0g==}
+    peerDependencies:
+      typescript: '>=5.0.4'
+      viem: '>=0.3.35'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@wagmi/chains': 1.1.0(typescript@5.1.3)
+      '@wagmi/connectors': 2.1.1(@wagmi/chains@1.1.0)(react@18.2.0)(typescript@5.1.3)(viem@0.3.50)
+      abitype: 0.8.7(typescript@5.1.3)(zod@3.21.4)
+      eventemitter3: 4.0.7
+      typescript: 5.1.3
+      viem: 0.3.50(typescript@5.1.3)(zod@3.21.4)
+      zustand: 4.3.8(immer@10.0.2)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - immer
+      - lokijs
+      - react
+      - supports-color
+      - utf-8-validate
+      - zod
+    dev: false
+
+  /@wagmi/core@1.1.1(react@18.2.0)(typescript@5.1.3)(viem@1.0.5):
+    resolution: {integrity: sha512-nEg/TIfX8youSBU+qmecIQVyVCOJxPaOHoavr3lbXTa6LZd/PvJ9jEPbl1Ho//KoAI4pqoE59wky0vydgygF0g==}
+    peerDependencies:
+      typescript: '>=5.0.4'
+      viem: '>=0.3.35'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@wagmi/chains': 1.1.0(typescript@5.1.3)
+      '@wagmi/connectors': 2.1.1(@wagmi/chains@1.1.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)
+      abitype: 0.8.7(typescript@5.1.3)(zod@3.21.4)
+      eventemitter3: 4.0.7
+      typescript: 5.1.3
+      viem: 1.0.5(typescript@5.1.3)(zod@3.21.4)
+      zustand: 4.3.8(immer@10.0.2)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - immer
+      - lokijs
+      - react
+      - supports-color
+      - utf-8-validate
+      - zod
+    dev: false
 
   /@walletconnect/core@2.7.8:
     resolution: {integrity: sha512-Ptp1Jo9hv5mtrQMF/iC/RF/KHmYfO79DBLj77AV4PnJ5z6J0MRYepPKXKFEirOXR4OKCT5qCrPOiRtGvtNI+sg==}
@@ -4397,7 +4528,7 @@ packages:
       '@wagmi/core': '>=1'
       viem: '>=1'
     dependencies:
-      '@wagmi/core': 1.1.1(immer@10.0.2)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)(zod@3.21.4)
+      '@wagmi/core': 1.1.1(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)
       viem: 1.0.5(typescript@5.1.3)(zod@3.21.4)
     dev: false
 
@@ -9646,6 +9777,72 @@ packages:
       - utf-8-validate
       - zod
 
+  /wagmi@1.1.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@0.3.50):
+    resolution: {integrity: sha512-UjLUhISsYIuzPBLfSxeHp6VsTeGs/EGxaS9JBer7OhM/qtMEVKgugzPtNia4aqkMKcA+OBEsSMINY3fHHOafAA==}
+    peerDependencies:
+      react: '>=17.0.0'
+      typescript: '>=5.0.4'
+      viem: '>=0.3.35'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@tanstack/query-sync-storage-persister': 4.29.11
+      '@tanstack/react-query': 4.29.12(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/react-query-persist-client': 4.29.12(@tanstack/react-query@4.29.12)
+      '@wagmi/core': 1.1.1(react@18.2.0)(typescript@5.1.3)(viem@0.3.50)
+      abitype: 0.8.7(typescript@5.1.3)(zod@3.21.4)
+      react: 18.2.0
+      typescript: 5.1.3
+      use-sync-external-store: 1.2.0(react@18.2.0)
+      viem: 0.3.50(typescript@5.1.3)(zod@3.21.4)
+    transitivePeerDependencies:
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - immer
+      - lokijs
+      - react-dom
+      - react-native
+      - supports-color
+      - utf-8-validate
+      - zod
+    dev: false
+
+  /wagmi@1.1.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(viem@1.0.5):
+    resolution: {integrity: sha512-UjLUhISsYIuzPBLfSxeHp6VsTeGs/EGxaS9JBer7OhM/qtMEVKgugzPtNia4aqkMKcA+OBEsSMINY3fHHOafAA==}
+    peerDependencies:
+      react: '>=17.0.0'
+      typescript: '>=5.0.4'
+      viem: '>=0.3.35'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@tanstack/query-sync-storage-persister': 4.29.11
+      '@tanstack/react-query': 4.29.12(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/react-query-persist-client': 4.29.12(@tanstack/react-query@4.29.12)
+      '@wagmi/core': 1.1.1(react@18.2.0)(typescript@5.1.3)(viem@1.0.5)
+      abitype: 0.8.7(typescript@5.1.3)(zod@3.21.4)
+      react: 18.2.0
+      typescript: 5.1.3
+      use-sync-external-store: 1.2.0(react@18.2.0)
+      viem: 1.0.5(typescript@5.1.3)(zod@3.21.4)
+    transitivePeerDependencies:
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - immer
+      - lokijs
+      - react-dom
+      - react-native
+      - supports-color
+      - utf-8-validate
+      - zod
+    dev: false
+
   /watchpack@2.4.0:
     resolution: {integrity: sha512-Lcvm7MGST/4fup+ifyKi2hjyIAwcdI4HRgtvTpIUxBRhB+RFtUh8XtDOxUfctVCnhVi+QQj49i91OyvzkJl6cg==}
     engines: {node: '>=10.13.0'}
@@ -9921,7 +10118,3 @@ packages:
       immer: 10.0.2
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
