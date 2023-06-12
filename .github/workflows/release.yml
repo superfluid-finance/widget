@@ -2,7 +2,7 @@ name: Release
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [master]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
