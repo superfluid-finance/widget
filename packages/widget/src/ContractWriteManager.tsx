@@ -44,7 +44,9 @@ export function ContractWriteManager({
   const result: ContractWriteResult = useMemo(
     () => ({
       contractWrite,
-      prepareResult,
+      prepareResult: prepareResult as ReturnType<
+        typeof usePrepareContractWrite
+      >, // TODO(KK): weird type mismatch
       writeResult,
       transactionResult,
       latestError: (transactionResult.error ||
