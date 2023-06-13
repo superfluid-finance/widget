@@ -1,4 +1,4 @@
-import { Box, SxProps, styled } from "@mui/material";
+import { SxProps, styled } from "@mui/material";
 import { FC } from "react";
 
 const StreamGif = styled("img")(() => ({

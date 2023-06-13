@@ -6,7 +6,6 @@ import {
   Paper,
   PaperProps,
   Stack,
-  SxProps,
   Typography,
 } from "@mui/material";
 import { create } from "blockies-ts";
