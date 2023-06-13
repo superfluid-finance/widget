@@ -106,6 +106,7 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
     typography: {
       fontSize: 16,
       htmlFontSize: 16,
+
       button: {
         textTransform: "none",
       },

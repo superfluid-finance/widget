@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  CardProps,
   Divider,
   Stack,
   Typography,
@@ -12,7 +13,11 @@ import NetworkBadge from "./NetworkBadge";
 import { useWidget } from "./WidgetContext";
 import { DraftFormValues } from "./formValues";
 
-export default function CheckoutProduct() {
+interface CheckoutProductProps {
+  CardProps?: CardProps;
+}
+
+export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
   const {
     productDetails: { name, description, imageURI },
     layout: { elevated },
@@ -29,6 +34,7 @@ export default function CheckoutProduct() {
       component={Stack}
       flexDirection="row"
       variant={elevated ? "elevation" : "outlined"}
+      {...CardProps}
     >
       {imageURI && (
         <CardMedia

@@ -63,11 +63,7 @@ export function WidgetView(props: ViewProps) {
   };
 
   const containerProps: ContainerProps = {
-    fixed: true,
     disableGutters: true,
-    sx: {
-      width: "580px", // TODO(KK): Check with Mikk. This should be handled after element sizes are fixed in the layout
-    },
   };
 
   switch (props.type) {

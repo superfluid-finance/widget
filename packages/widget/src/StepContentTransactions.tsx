@@ -1,12 +1,12 @@
 import CloseIcon_ from "@mui/icons-material/Close";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useCommandHandler } from "./CommandHandlerContext";
 import ContractWriteButton from "./ContractWriteButton";
 import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress";
 import { ContractWriteStatus } from "./ContractWriteStatus";
 import { useStepper } from "./StepperContext";
 import { normalizeIcon } from "./helpers/normalizeIcon";
-import { useEffect } from "react";
 
 const CloseIcon = normalizeIcon(CloseIcon_);
 
@@ -45,14 +45,14 @@ export function StepContentTransactions() {
         alignItems="stretch"
         sx={{ width: "100%" }}
       >
-        <Stack direction="column" alignItems="center">
+        <Box textAlign="center">
           <Typography variant="h5" component="span">
             {`You're almost there!`}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Send the transactions from your wallet to finish your purchase.
           </Typography>
-        </Stack>
+        </Box>
         <Stack
           direction="column"
           alignItems="center"
