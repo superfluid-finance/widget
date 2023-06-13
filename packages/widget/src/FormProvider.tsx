@@ -1,6 +1,5 @@
 import { useForm, FormProvider as RHFFormProvider } from "react-hook-form";
 import { DraftFormValues, FormReturn as FormMethods } from "./formValues";
-import { DevTool } from "@hookform/devtools";
 import { ChildrenProp } from "./utils";
 import { FormEffects } from "./FormEffects";
 import { useNetwork } from "wagmi";
@@ -54,7 +53,6 @@ export default function FormProvider({ children }: Props) {
     <RHFFormProvider {...formMethods}>
       {typeof children === "function" ? children(formMethods) : children}
       <FormEffects />
-      <DevTool control={formMethods.control} placement="bottom-left" />
     </RHFFormProvider>
   );
 }
