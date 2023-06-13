@@ -15,7 +15,7 @@
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.13.4",
+    "@mui/material": "^5.13.5",
     "@segment/analytics-next": "^1.53.0",
     "@sentry/nextjs": "^7.54.0",
     "@superfluid-finance/tokenlist": "^1.1.0",
@@ -26,12 +26,12 @@
     "next": "^13.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "^1.0.5",
-    "wagmi": "^1.1.1"
+    "viem": "^1.0.6",
+    "wagmi": "^1.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20.3.0",
-    "@types/react": "^18.2.11",
+    "@types/node": "^20.3.1",
+    "@types/react": "^18.2.12",
     "eslint": "^8.42.0",
     "eslint-config-next": "^13.4.5",
     "typescript": "^5.1.3"
