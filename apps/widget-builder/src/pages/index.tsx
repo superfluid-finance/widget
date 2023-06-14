@@ -14,17 +14,15 @@ import {
 } from "@mui/material";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import WidgetPreview, {
   WidgetProps,
 } from "../components/widget-preview/WidgetPreview";
 
-import { faker } from "@faker-js/faker";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import WebIcon from "@mui/icons-material/Web";
 import WebAssetIcon from "@mui/icons-material/WebAsset";
-import { supportedNetwork } from "@superfluid-finance/widget";
 import ExportEditor from "../components/export-editor/ExportEditor";
 import ProductEditor from "../components/product-editor/ProductEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";

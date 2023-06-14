@@ -32,7 +32,7 @@ const CodeEditor: FC<CodeEditorProps> = ({ value, setValue }) => {
         onChange={updateValue}
         height="100vh"
         defaultLanguage="json"
-        defaultValue={JSON.stringify(value, null, 2)}
+        value={JSON.stringify(value, null, 2)}
         onMount={handleEditorDidMount}
       />
     </>
