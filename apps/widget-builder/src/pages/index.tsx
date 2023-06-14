@@ -2,7 +2,6 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Box,
   Button,
-  Drawer,
   FormControlLabel,
   Stack,
   Switch,
@@ -14,10 +13,11 @@ import {
 } from "@mui/material";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import WidgetPreview, {
   WidgetProps,
 } from "../components/widget-preview/WidgetPreview";
+import { SuperfluidButton } from "@superfluid-finance/widget/components";
 
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
@@ -28,9 +28,7 @@ import ProductEditor from "../components/product-editor/ProductEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
 import useDemoMode from "../hooks/useDemoMode";
-import ConfigEditor from "../components/config-editor/ConfigEditor";
 import CodeIcon from "@mui/icons-material/Code";
-import CloseIcon from "@mui/icons-material/Close";
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
 
 const labelStyle = {
