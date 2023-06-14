@@ -72,12 +72,9 @@ importers:
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
-      '@wagmi/core':
-        specifier: ^1.2.0
-        version: 1.2.0(react@18.2.0)(typescript@5.1.3)(viem@1.0.6)
       '@web3modal/ethereum':
         specifier: ^2.4.5
-        version: 2.4.5(@wagmi/core@1.2.0)(viem@1.0.6)
+        version: 2.4.5(viem@1.0.6)
       '@web3modal/react':
         specifier: ^2.4.5
         version: 2.4.5(react-dom@18.2.0)(react@18.2.0)
@@ -157,12 +154,9 @@ importers:
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
-      '@wagmi/core':
-        specifier: ^1.2.0
-        version: 1.2.0(immer@10.0.2)(react@18.2.0)(typescript@5.1.3)(viem@1.0.6)(zod@3.21.4)
       '@web3modal/ethereum':
         specifier: ^2.4.5
-        version: 2.4.5(@wagmi/core@1.2.0)(viem@1.0.6)
+        version: 2.4.5(viem@1.0.6)
       '@web3modal/react':
         specifier: ^2.4.5
         version: 2.4.5(react-dom@18.2.0)(react@18.2.0)
@@ -276,12 +270,9 @@ importers:
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
-      '@wagmi/core':
-        specifier: ^1.2.0
-        version: 1.2.0(react@18.2.0)(typescript@5.1.3)(viem@1.0.6)
       '@web3modal/ethereum':
         specifier: ^2.4.5
-        version: 2.4.5(@wagmi/core@1.2.0)(viem@1.0.6)
+        version: 2.4.5(viem@1.0.6)
       '@web3modal/react':
         specifier: ^2.4.5
         version: 2.4.5(react-dom@18.2.0)(react@18.2.0)
@@ -4428,13 +4419,12 @@ packages:
     transitivePeerDependencies:
       - react
 
-  /@web3modal/ethereum@2.4.5(@wagmi/core@1.2.0)(viem@1.0.6):
+  /@web3modal/ethereum@2.4.5(viem@1.0.6):
     resolution: {integrity: sha512-IXz2xWwQvdnwyd0pJjhdYXdmYmrzvPnRH1MtapcX9+a0SyqRkCOovjc9vu2YsLLX/+eFRL9810KJzbjV8FCLJw==}
     peerDependencies:
       '@wagmi/core': '>=1'
       viem: '>=1'
     dependencies:
-      '@wagmi/core': 1.2.0(react@18.2.0)(typescript@5.1.3)(viem@1.0.6)
       viem: 1.0.6(typescript@5.1.3)(zod@3.21.4)
     dev: false
 
