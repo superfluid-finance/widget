@@ -1,4 +1,4 @@
-import { Button, ButtonTypeMap, colors, keyframes } from "@mui/material";
+import { Button, ButtonTypeMap, colors } from "@mui/material";
 import { FC } from "react";
 import SuperfluidLogo from "../SuperfluidLogo";
 
@@ -16,6 +16,7 @@ const SuperfluidButton: FC<SuperfluidButtonProps> = ({
   return (
     <Button
       {...props}
+      target="_blank"
       variant="contained"
       href={widgetUrl}
       sx={{
