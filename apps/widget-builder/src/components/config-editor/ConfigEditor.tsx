@@ -72,15 +72,13 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   }
 
   return (
-    <>
-      <Editor
-        onChange={updateValue}
-        height="100vh"
-        defaultLanguage="json"
-        value={JSON.stringify(value, null, 2)}
-        onMount={handleEditorDidMount}
-      />
-    </>
+    <Editor
+      onChange={updateValue}
+      height="100vh"
+      defaultLanguage="json"
+      value={JSON.stringify(value, null, 2)}
+      onMount={handleEditorDidMount}
+    />
   );
 };
 
