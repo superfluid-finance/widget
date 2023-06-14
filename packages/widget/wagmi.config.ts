@@ -1,7 +1,7 @@
 import { defineConfig } from "@wagmi/cli";
 import { etherscan, actions, erc } from "@wagmi/cli/plugins";
 import { superTokenABI } from "./src/core/superTokenABI";
-import { Address } from "abitype";
+import { Address } from "viem";
 import {
   ChainId,
   chainIds,
