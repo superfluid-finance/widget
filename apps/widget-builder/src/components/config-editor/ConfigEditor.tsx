@@ -51,7 +51,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
         },
       ],
     });
-  });
+  }, [monaco]);
 
   function handleEditorDidMount(editor: any, monaco: Monaco) {
     editorRef.current = editor;
