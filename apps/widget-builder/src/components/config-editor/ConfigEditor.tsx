@@ -51,6 +51,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   useEffect(() => {
     monaco?.languages.json.jsonDefaults.setDiagnosticsOptions({
       validate: true,
+      schemaValidation: "error",
       schemas: [
         {
           uri: "https://superfluid.finance/widget",
