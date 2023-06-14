@@ -62,6 +62,8 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
 
     try {
       const updatedValue = JSON.parse(value) as WidgetProps;
+      schema.parse(updatedValue);
+
       setValue("productDetails", updatedValue.productDetails);
       setValue("displaySettings", updatedValue.displaySettings);
       setValue("layout", updatedValue.layout);
