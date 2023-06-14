@@ -1,4 +1,4 @@
-import { Address } from "abitype";
+import { Address } from "viem";
 import { z } from "zod";
 import { timePeriods } from "./TimePeriod";
 import { chainIdSchema } from "./SupportedNetwork";
