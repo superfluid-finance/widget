@@ -33,7 +33,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
     "wagmi": "^1.1.1",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zod-to-json-schema": "^3.21.1"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
