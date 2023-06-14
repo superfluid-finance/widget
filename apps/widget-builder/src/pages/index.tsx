@@ -1,6 +1,8 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Box,
+  Button,
+  Drawer,
   FormControlLabel,
   Stack,
   Switch,
@@ -28,6 +30,9 @@ import ProductEditor from "../components/product-editor/ProductEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
 import useDemoMode from "../hooks/useDemoMode";
+import CodeEditor from "../components/code-editor/CodeEditor";
+import CodeIcon from "@mui/icons-material/Code";
+import CloseIcon from "@mui/icons-material/Close";
 
 const labelStyle = {
   fontWeight: 500,
@@ -45,7 +50,7 @@ export default function Home() {
     values: widgetProps,
   });
 
-  const { watch, control } = formMethods;
+  const { watch, control, getValues, setValue } = formMethods;
 
   const [productDetails, paymentDetails, displaySettings, layout] = watch([
     "productDetails",
@@ -53,6 +58,8 @@ export default function Home() {
     "displaySettings",
     "layout",
   ]);
+
+  const [isCodeEditorOpen, setCodeEditorOpen] = useState(false);
 
   return (
     <Stack direction="row" sx={{ position: "relative" }}>
@@ -159,6 +166,39 @@ export default function Home() {
         </Box>
       </Box>
       <TermsAndPrivacy />
+      <Box sx={{ position: "absolute", top: 0, right: 0 }}>
+        <Button
+          variant="text"
+          onClick={() => setCodeEditorOpen((isOpen) => !isOpen)}
+          startIcon={<CodeIcon />}
+        >
+          Config Editor
+        </Button>
+      </Box>
+      <Drawer
+        open={isCodeEditorOpen}
+        onClose={() => setCodeEditorOpen(false)}
+        keepMounted={true}
+        anchor="right"
+        PaperProps={{
+          sx: { width: 500 },
+        }}
+      >
+        <Box py={2}>
+          <Typography variant="h6" textAlign="center">
+            Current Config
+          </Typography>
+        </Box>
+
+        <CodeEditor value={getValues()} setValue={setValue} />
+        <Button
+          onClick={() => setCodeEditorOpen(false)}
+          variant="text"
+          endIcon={<CloseIcon />}
+        >
+          Close
+        </Button>
+      </Drawer>
     </Stack>
   );
 }
