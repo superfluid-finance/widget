@@ -28,9 +28,10 @@ import ProductEditor from "../components/product-editor/ProductEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
 import useDemoMode from "../hooks/useDemoMode";
-import CodeEditor from "../components/code-editor/CodeEditor";
+import ConfigEditor from "../components/config-editor/ConfigEditor";
 import CodeIcon from "@mui/icons-material/Code";
 import CloseIcon from "@mui/icons-material/Close";
+import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
 
 const labelStyle = {
   fontWeight: 500,
@@ -57,7 +58,7 @@ export default function Home() {
     "layout",
   ]);
 
-  const [isCodeEditorOpen, setCodeEditorOpen] = useState(false);
+  const [isConfigEditorOpen, setConfigEditorOpen] = useState(false);
 
   return (
     <Stack direction="row" sx={{ position: "relative" }}>
@@ -167,36 +168,18 @@ export default function Home() {
       <Box sx={{ position: "absolute", top: 0, right: 0 }}>
         <Button
           variant="text"
-          onClick={() => setCodeEditorOpen((isOpen) => !isOpen)}
+          onClick={() => setConfigEditorOpen((isOpen) => !isOpen)}
           startIcon={<CodeIcon />}
         >
           Config Editor
         </Button>
       </Box>
-      <Drawer
-        open={isCodeEditorOpen}
-        onClose={() => setCodeEditorOpen(false)}
-        keepMounted={true}
-        anchor="right"
-        PaperProps={{
-          sx: { width: 500 },
-        }}
-      >
-        <Box py={2}>
-          <Typography variant="h6" textAlign="center">
-            Current Config
-          </Typography>
-        </Box>
-
-        <CodeEditor value={getValues()} setValue={setValue} />
-        <Button
-          onClick={() => setCodeEditorOpen(false)}
-          variant="text"
-          endIcon={<CloseIcon />}
-        >
-          Close
-        </Button>
-      </Drawer>
+      <ConfigEditorDrawer
+        getValues={getValues}
+        setValue={setValue}
+        isOpen={isConfigEditorOpen}
+        setIsOpen={setConfigEditorOpen}
+      />
     </Stack>
   );
 }

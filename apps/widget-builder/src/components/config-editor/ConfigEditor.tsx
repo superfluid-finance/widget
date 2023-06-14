@@ -3,12 +3,12 @@ import { Editor, Monaco } from "@monaco-editor/react";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 import { UseFormSetValue } from "react-hook-form";
 
-type CodeEditorProps = {
+type ConfigEditorProps = {
   value: WidgetProps;
   setValue: UseFormSetValue<WidgetProps>;
 };
 
-const CodeEditor: FC<CodeEditorProps> = ({ value, setValue }) => {
+const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   const editorRef = useRef(null);
 
   function handleEditorDidMount(editor: any, monaco: Monaco) {
@@ -39,4 +39,4 @@ const CodeEditor: FC<CodeEditorProps> = ({ value, setValue }) => {
   );
 };
 
-export default CodeEditor;
+export default ConfigEditor;
