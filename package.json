@@ -10,7 +10,7 @@
     "clean": "npm-run-all -p clean:*",
     "clean:next": "rimraf --glob './**/.next'",
     "clean:node-modules": "rimraf --glob '**/node_modules'",
-    "clean:out": "rimraf --glob './**/out'",
+    "clean:dist": "rimraf --glob './**/dist'",
     "dev": "turbo run dev",
     "dev:main": "turbo run dev --filter=!./examples/*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
