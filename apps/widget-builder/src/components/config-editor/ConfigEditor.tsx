@@ -17,7 +17,7 @@ type ConfigEditorProps = {
 const schema = z.object({
   productDetails: productDetailsSchema,
   paymentDetails: z.object({
-    defaultReceiverAddress: z.string().startsWith("0x"),
+    defaultReceiverAddress: z.string().startsWith("0x").length(42),
     ...paymentDetailsSchema.shape,
   }),
   layout: z.enum(["dialog", "drawer", "full-screen", "page"]),
@@ -31,8 +31,16 @@ const schema = z.object({
       family: z.string(),
       category: z.string(),
     }),
-    primaryColor: z.string(),
-    secondaryColor: z.string(),
+    primaryColor: z
+      .string()
+      .length(4)
+      .or(z.string().length(7))
+      .and(z.string().startsWith("#")),
+    secondaryColor: z
+      .string()
+      .length(4)
+      .or(z.string().length(7))
+      .and(z.string().startsWith("#")),
   }),
 });
 
