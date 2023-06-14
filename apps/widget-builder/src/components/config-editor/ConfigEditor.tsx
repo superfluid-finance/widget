@@ -18,12 +18,15 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   function updateValue(value?: string) {
     if (!value) return;
 
-    const updatedValue = JSON.parse(value) as WidgetProps;
-
-    setValue("productDetails", updatedValue.productDetails);
-    setValue("displaySettings", updatedValue.displaySettings);
-    setValue("layout", updatedValue.layout);
-    setValue("paymentDetails", updatedValue.paymentDetails);
+    try {
+      const updatedValue = JSON.parse(value) as WidgetProps;
+      setValue("productDetails", updatedValue.productDetails);
+      setValue("displaySettings", updatedValue.displaySettings);
+      setValue("layout", updatedValue.layout);
+      setValue("paymentDetails", updatedValue.paymentDetails);
+    } catch (e) {
+      console.error(e, "Invalid JSON");
+    }
   }
 
   return (
