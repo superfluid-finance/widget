@@ -45,7 +45,13 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
 
   return (
     <Card variant={elevated ? "elevation" : "outlined"} {...CardProps}>
-      <Paper component={Stack} variant="outlined" flexDirection="row" gap={2}>
+      <Paper
+        component={Stack}
+        variant="outlined"
+        flexDirection="row"
+        gap={2}
+        sx={{ m: "-1px" }}
+      >
         {imageURI && (
           <CardMedia
             sx={{ minWidth: "calc(100% / 3)", borderRadius: 1 }}
@@ -57,7 +63,12 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
           component={Stack}
           gap={1}
           flex={1}
-          sx={{ position: "relative", pl: 0, pr: 5, py: 4 }}
+          sx={{
+            position: "relative",
+            pl: imageURI ? 0 : 3.5,
+            pr: imageURI ? 5 : 3.5,
+            py: 4,
+          }}
         >
           <Typography gutterBottom variant="h5" component="div">
             {name}

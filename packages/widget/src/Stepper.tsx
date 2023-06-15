@@ -94,7 +94,7 @@ export default function Stepper() {
                       orientation={orientation}
                       activeStep={activeStep}
                       connector={null}
-                      sx={{ mx: 3.5, mb: 3, mt: 2 }}
+                      // sx={{ mx: 3.5, mb: 3, mt: 2 }}
                     >
                       {visibleSteps.map((step, index) => {
                         const { Content: Content_ } = step;

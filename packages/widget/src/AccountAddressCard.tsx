@@ -72,6 +72,7 @@ export function AccountAddressCard({
                 })
               }
               sx={{
+                m: -0.5,
                 "&:hover": { color: (theme) => theme.palette.primary.main },
               }}
             >

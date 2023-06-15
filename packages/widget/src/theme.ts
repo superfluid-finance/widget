@@ -349,20 +349,32 @@ export function getThemedComponents(
           },
         },
       },
+      MuiStep: {
+        styleOverrides: {
+          vertical: {
+            borderBottom: "1px solid",
+            borderColor: coreThemeOptions.palette.divider,
+            ":last-child": {
+              border: "none",
+            },
+          },
+        },
+      },
       MuiStepContent: {
         styleOverrides: {
           root: {
             borderLeft: "none",
-            margin: 0,
             padding: 0,
+            marginLeft: 28,
+            marginRight: 28,
           },
         },
       },
       MuiStepButton: {
         styleOverrides: {
-          root: {
-            marginBottom: 0,
-            marginTop: 0,
+          vertical: {
+            margin: 0,
+            padding: 0,
           },
         },
       },
@@ -379,6 +391,13 @@ export function getThemedComponents(
       },
       MuiStepLabel: {
         styleOverrides: {
+          vertical: {
+            paddingTop: 24,
+            paddingBottom: 24,
+            paddingLeft: 28,
+            paddingRight: 28,
+            height: 28,
+          },
           labelContainer: {
             ...typography.caption,
           },
