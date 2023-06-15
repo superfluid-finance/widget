@@ -18,6 +18,7 @@ const SuperfluidButton: FC<SuperfluidButtonProps> = ({
       {...props}
       target="_blank"
       variant="contained"
+      size="large"
       href={widgetUrl}
       sx={{
         color: "white",
