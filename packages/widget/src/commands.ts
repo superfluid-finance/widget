@@ -1,4 +1,4 @@
-import { Address } from "abitype";
+import { Address } from "viem";
 import { ChainId, TimePeriod, autoWrapStrategyAddress } from "./core";
 
 export type WrapIntoSuperTokensCommand = {
