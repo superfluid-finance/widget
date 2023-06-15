@@ -99,7 +99,7 @@ const ExportEditor: FC = () => {
     () => ({
       productDetails: {
         ...productDetails,
-        image: productImageBase64,
+        imageURI: productImageBase64 ?? "",
         // logo: logoBase64,
       },
       paymentDetails,
