@@ -89,7 +89,7 @@ const ExportEditor: FC = () => {
     "productDetails",
     "paymentDetails",
     "displaySettings",
-    "layout",
+    "type",
   ]);
 
   const [productImageBase64] = useReadAsBase64(productDetails.imageURI);
@@ -99,12 +99,12 @@ const ExportEditor: FC = () => {
     () => ({
       productDetails: {
         ...productDetails,
-        image: productImageBase64,
+        imageURI: productImageBase64 as string,
         // logo: logoBase64,
       },
       paymentDetails,
       layout,
-      theme: mapDisplaySettingsToTheme(layout, displaySettings),
+      theme: mapDisplaySettingsToTheme(displaySettings),
     }),
     [
       productDetails,

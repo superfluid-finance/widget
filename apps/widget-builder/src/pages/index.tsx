@@ -17,7 +17,6 @@ import { useState } from "react";
 import WidgetPreview, {
   WidgetProps,
 } from "../components/widget-preview/WidgetPreview";
-import { SuperfluidButton } from "@superfluid-finance/widget/components";
 
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
@@ -49,11 +48,11 @@ export default function Home() {
 
   const { watch, control, getValues, setValue } = formMethods;
 
-  const [productDetails, paymentDetails, displaySettings, layout] = watch([
+  const [productDetails, paymentDetails, displaySettings, type] = watch([
     "productDetails",
     "paymentDetails",
     "displaySettings",
-    "layout",
+    "type",
   ]);
 
   const [isConfigEditorOpen, setConfigEditorOpen] = useState(false);
@@ -115,7 +114,7 @@ export default function Home() {
             productDetails,
             paymentDetails,
             displaySettings,
-            layout,
+            type,
           }}
         />
         <Box
@@ -130,7 +129,7 @@ export default function Home() {
         >
           <Controller
             control={control}
-            name="layout"
+            name="type"
             render={({ field: { value, onChange } }) => (
               <ToggleButtonGroup
                 value={value}
@@ -173,7 +172,7 @@ export default function Home() {
         </Button>
       </Box>
       <ConfigEditorDrawer
-        getValues={getValues}
+        value={getValues()}
         setValue={setValue}
         isOpen={isConfigEditorOpen}
         setIsOpen={setConfigEditorOpen}
