@@ -92,7 +92,9 @@ const ExportEditor: FC = () => {
     "layout",
   ]);
 
-  const [productImageBase64] = useReadAsBase64(productDetails.imageURI);
+  const { base64: productImageBase64 } = useReadAsBase64(
+    productDetails.imageURI
+  );
   // const [logoBase64] = useReadAsBase64(displaySettings.logo);
 
   const json: ExportJSON = useMemo(
