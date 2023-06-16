@@ -1,5 +1,9 @@
 import { useRef, FC, useEffect } from "react";
-import { Editor, Monaco, useMonaco } from "@monaco-editor/react";
+import MonacoEditor, {
+  EditorProps,
+  useMonaco,
+  OnMount,
+} from "@monaco-editor/react";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 import { UseFormSetValue } from "react-hook-form";
 import {
@@ -8,6 +12,8 @@ import {
 } from "@superfluid-finance/widget";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { z } from "zod";
+
+type StandaloneCodeEditor = Parameters<OnMount>[0];
 
 type ConfigEditorProps = {
   value: WidgetProps;
@@ -45,7 +51,7 @@ const schema = z.object({
 });
 
 const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
-  const editorRef = useRef(null);
+  const editorRef = useRef<StandaloneCodeEditor>(null);
   const monaco = useMonaco();
 
   useEffect(() => {
@@ -62,9 +68,9 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
     });
   }, [monaco]);
 
-  function handleEditorDidMount(editor: any, monaco: Monaco) {
+  const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
-  }
+  };
 
   function updateValue(value?: string) {
     if (!value) return;
@@ -83,12 +89,15 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   }
 
   return (
-    <Editor
+    <MonacoEditor
       onChange={updateValue}
       height="100vh"
       defaultLanguage="json"
       value={JSON.stringify(value, null, 2)}
       onMount={handleEditorDidMount}
+      options={{
+        minimap: { enabled: false },
+      }}
     />
   );
 };
