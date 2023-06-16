@@ -1,5 +1,5 @@
 import { useRef, FC, useEffect, useMemo } from "react";
-import { Editor, Monaco, useMonaco } from "@monaco-editor/react";
+import MonacoEditor, { useMonaco, OnMount } from "@monaco-editor/react";
 import {
   paymentDetailsSchema,
   productDetailsSchema,
@@ -14,6 +14,8 @@ import {
 import { ThemeOptions } from "@mui/material";
 import { UseFormSetValue } from "react-hook-form";
 
+type StandaloneCodeEditor = Parameters<OnMount>[0];
+
 type ConfigEditorProps = {
   value: WidgetProps;
   setValue: UseFormSetValue<WidgetProps>;
@@ -27,7 +29,7 @@ const schema = z.object({
 });
 
 const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
-  const editorRef = useRef(null);
+  const editorRef = useRef<StandaloneCodeEditor>(null);
   const monaco = useMonaco();
 
   useEffect(() => {
@@ -44,9 +46,9 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
     });
   }, [monaco]);
 
-  function handleEditorDidMount(editor: any, monaco: Monaco) {
+  const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
-  }
+  };
 
   function updateValue(value?: string) {
     if (!value) return;
@@ -79,12 +81,15 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   );
 
   return (
-    <Editor
+    <MonacoEditor
       onChange={updateValue}
       height="100vh"
       defaultLanguage="json"
       value={JSON.stringify(valueWithTheme, null, 2)}
       onMount={handleEditorDidMount}
+      options={{
+        minimap: { enabled: false },
+      }}
     />
   );
 };
