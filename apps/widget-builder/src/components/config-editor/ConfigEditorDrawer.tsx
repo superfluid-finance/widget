@@ -1,21 +1,21 @@
 import { Box, Button, Drawer, Typography } from "@mui/material";
 import { FC } from "react";
 import ConfigEditor from "./ConfigEditor";
-import { WidgetProps } from "../widget-preview/WidgetPreview";
 import { UseFormSetValue } from "react-hook-form";
 import CloseIcon from "@mui/icons-material/Close";
+import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 type ConfigEditorDrawerProps = {
   isOpen: boolean;
+  value: WidgetProps;
   setIsOpen: (isOpen: boolean) => void;
-  getValues: () => WidgetProps;
   setValue: UseFormSetValue<WidgetProps>;
 };
 
 export const ConfigEditorDrawer: FC<ConfigEditorDrawerProps> = ({
   isOpen,
   setIsOpen,
-  getValues,
+  value,
   setValue,
 }) => {
   return (
@@ -34,7 +34,7 @@ export const ConfigEditorDrawer: FC<ConfigEditorDrawerProps> = ({
         </Typography>
       </Box>
 
-      <ConfigEditor value={getValues()} setValue={setValue} />
+      <ConfigEditor value={value} setValue={setValue} />
       <Button
         onClick={() => setIsOpen(false)}
         variant="text"

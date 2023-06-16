@@ -1,17 +1,18 @@
-import { useRef, FC, useEffect } from "react";
-import MonacoEditor, {
-  EditorProps,
-  useMonaco,
-  OnMount,
-} from "@monaco-editor/react";
-import { WidgetProps } from "../widget-preview/WidgetPreview";
-import { UseFormSetValue } from "react-hook-form";
+import { useRef, FC, useEffect, useMemo } from "react";
+import MonacoEditor, { useMonaco, OnMount } from "@monaco-editor/react";
 import {
   paymentDetailsSchema,
   productDetailsSchema,
 } from "@superfluid-finance/widget";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { z } from "zod";
+import {
+  WidgetProps,
+  mapDisplaySettingsToTheme,
+  mapThemeToDisplaySettings,
+} from "../widget-preview/WidgetPreview";
+import { ThemeOptions } from "@mui/material";
+import { UseFormSetValue } from "react-hook-form";
 
 type StandaloneCodeEditor = Parameters<OnMount>[0];
 
@@ -22,32 +23,9 @@ type ConfigEditorProps = {
 
 const schema = z.object({
   productDetails: productDetailsSchema,
-  paymentDetails: z.object({
-    defaultReceiverAddress: z.string().startsWith("0x").length(42),
-    ...paymentDetailsSchema.shape,
-  }),
-  layout: z.enum(["dialog", "drawer", "full-screen", "page"]),
-  displaySettings: z.object({
-    stepperOrientation: z.enum(["vertical", "horizontal"]),
-    darkMode: z.boolean(),
-    containerRadius: z.number().optional(),
-    inputRadius: z.string().or(z.number()),
-    buttonRadius: z.string().or(z.number()),
-    font: z.object({
-      family: z.string(),
-      category: z.string(),
-    }),
-    primaryColor: z
-      .string()
-      .length(4)
-      .or(z.string().length(7))
-      .and(z.string().startsWith("#")),
-    secondaryColor: z
-      .string()
-      .length(4)
-      .or(z.string().length(7))
-      .and(z.string().startsWith("#")),
-  }),
+  paymentDetails: paymentDetailsSchema,
+  type: z.enum(["dialog", "drawer", "full-screen", "page"]),
+  theme: z.any(),
 });
 
 const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
@@ -76,24 +54,38 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
     if (!value) return;
 
     try {
-      const updatedValue = JSON.parse(value) as WidgetProps;
+      const updatedValue: Omit<WidgetProps, "displaySettings"> & {
+        theme: ThemeOptions;
+      } = JSON.parse(value);
       schema.parse(updatedValue);
 
       setValue("productDetails", updatedValue.productDetails);
-      setValue("displaySettings", updatedValue.displaySettings);
-      setValue("layout", updatedValue.layout);
+      setValue(
+        "displaySettings",
+        mapThemeToDisplaySettings(updatedValue.theme)
+      );
+      setValue("type", updatedValue.type);
       setValue("paymentDetails", updatedValue.paymentDetails);
     } catch (e) {
       console.error(e, "Invalid JSON");
     }
   }
 
+  const valueWithTheme = useMemo(
+    () => ({
+      ...value,
+      displaySettings: undefined,
+      theme: mapDisplaySettingsToTheme(value.displaySettings),
+    }),
+    [value]
+  );
+
   return (
     <MonacoEditor
       onChange={updateValue}
       height="100vh"
       defaultLanguage="json"
-      value={JSON.stringify(value, null, 2)}
+      value={JSON.stringify(valueWithTheme, null, 2)}
       onMount={handleEditorDidMount}
       options={{
         minimap: { enabled: false },

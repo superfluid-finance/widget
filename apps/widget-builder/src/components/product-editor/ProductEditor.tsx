@@ -27,8 +27,6 @@ const ProductEditor: FC = () => {
     name: "paymentDetails.paymentOptions", // unique name for your Field Array
   });
 
-  const defaultReceiverAddress = watch("paymentDetails.defaultReceiverAddress");
-
   return (
     <Stack gap={1}>
       <Stack mb={4} gap={2}>
@@ -64,15 +62,7 @@ const ProductEditor: FC = () => {
         <Controller
           control={control}
           name="paymentDetails.paymentOptions"
-          render={() => (
-            <SelectPaymentOption
-              onAdd={append}
-              defaultReceiverAddress={defaultReceiverAddress as `0x${string}`}
-              setDefaultReceiver={(address: string) =>
-                setValue("paymentDetails.defaultReceiverAddress", address)
-              }
-            />
-          )}
+          render={() => <SelectPaymentOption onAdd={append} />}
         />
 
         <Divider sx={{ my: 4 }} />
