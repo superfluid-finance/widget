@@ -6,11 +6,7 @@ import {
 } from "@superfluid-finance/widget";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { z } from "zod";
-import {
-  WidgetProps,
-  mapDisplaySettingsToTheme,
-  mapThemeToDisplaySettings,
-} from "../widget-preview/WidgetPreview";
+import { WidgetProps } from "../widget-preview/WidgetPreview";
 import { ThemeOptions } from "@mui/material";
 import { UseFormSetValue } from "react-hook-form";
 
@@ -60,10 +56,6 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
       schema.parse(updatedValue);
 
       setValue("productDetails", updatedValue.productDetails);
-      setValue(
-        "displaySettings",
-        mapThemeToDisplaySettings(updatedValue.theme)
-      );
       setValue("type", updatedValue.type);
       setValue("paymentDetails", updatedValue.paymentDetails);
     } catch (e) {
@@ -71,11 +63,10 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
     }
   }
 
-  const valueWithTheme = useMemo(
+  const valueWithoutTheme = useMemo(
     () => ({
       ...value,
       displaySettings: undefined,
-      theme: mapDisplaySettingsToTheme(value.displaySettings),
     }),
     [value]
   );
@@ -85,7 +76,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
       onChange={updateValue}
       height="100vh"
       defaultLanguage="json"
-      value={JSON.stringify(valueWithTheme, null, 2)}
+      value={JSON.stringify(valueWithoutTheme, null, 2)}
       onMount={handleEditorDidMount}
       options={{
         minimap: { enabled: false },

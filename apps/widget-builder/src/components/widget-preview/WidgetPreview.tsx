@@ -122,27 +122,6 @@ const switchLayout = (
   );
 };
 
-export const mapThemeToDisplaySettings = (
-  theme: ThemeOptions
-): DisplaySettings => ({
-  darkMode: theme?.palette?.mode === "dark",
-  // We know these exist, but mui typings don't
-  // @ts-ignore
-  primaryColor: theme?.palette?.primary?.main,
-  // @ts-ignore
-  secondaryColor: theme?.palette?.secondary?.main,
-  containerRadius: theme.shape?.borderRadius,
-  inputRadius: theme.shape?.borderRadius,
-  buttonRadius: theme.shape?.borderRadius,
-  font: {
-    // @ts-ignore
-    family: theme.typography?.fontFamily.split(",")[0].replace(/'/g, ""),
-    // @ts-ignore
-    category: theme.typography?.fontFamily.split(",")[1].replace(/'/g, ""),
-  },
-  stepperOrientation: "vertical",
-});
-
 export const mapDisplaySettingsToTheme = (
   displaySettings: DisplaySettings
 ): ThemeOptions => ({
