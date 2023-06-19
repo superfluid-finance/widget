@@ -1,5 +1,12 @@
 # @superfluid-finance/hosted-widget
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [5914412]
+  - @superfluid-finance/widget@0.0.5
+
 ## 0.0.1
 
 ### Patch Changes
