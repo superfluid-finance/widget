@@ -1,6 +1,8 @@
 import {
   Box,
   Button,
+  Collapse,
+  Fade,
   FormControlLabel,
   FormGroup,
   Input,
@@ -13,7 +15,7 @@ import {
 } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { DraftFormValues } from "./formValues";
-import { FC, PropsWithChildren, useMemo } from "react";
+import { FC, PropsWithChildren, useMemo, useState } from "react";
 import { useWidget } from "./WidgetContext";
 import { TokenAvatar } from "./TokenAvatar";
 import { StepperContinueButton } from "./StepperContinueButton";
@@ -71,12 +73,14 @@ const WrapCard: FC<WrapCardProps> = ({
 
 export default function StepContentWrap() {
   const theme = useTheme();
+  const [focusedOnce, setFocusedOnce] = useState(false);
 
   const {
     control: c,
     watch,
     formState: { isValid, isValidating },
   } = useFormContext<DraftFormValues>();
+
   const [paymentOptionWithTokenInfo, accountAddress] = watch([
     "paymentOptionWithTokenInfo",
     "accountAddress",
@@ -123,6 +127,8 @@ export default function StepContentWrap() {
       : undefined
   );
 
+  const onInputFocus = () => setFocusedOnce(true);
+
   return (
     <Stack
       direction="column"
@@ -134,7 +140,10 @@ export default function StepContentWrap() {
       <Controller
         control={c}
         name="wrapAmountEther"
-        render={({ field: { value, onChange, onBlur } }) => (
+        render={({
+          field: { value, onChange, onBlur },
+          fieldState: { isTouched, isDirty },
+        }) => (
           <Stack direction="column" justifyContent="center" alignItems="center">
             <WrapCard
               token={underlyingToken}
@@ -145,6 +154,7 @@ export default function StepContentWrap() {
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
+                onFocus={onInputFocus}
                 placeholder="0"
                 inputProps={{
                   sx: {
@@ -171,6 +181,7 @@ export default function StepContentWrap() {
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
+                onFocus={onInputFocus}
                 placeholder="0"
                 inputProps={{
                   sx: {
@@ -180,14 +191,18 @@ export default function StepContentWrap() {
                 }}
               />
             </WrapCard>
-
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ mt: 0.75, alignSelf: "start" }}
-            >
-              We recommend wrapping at least 1 month of the subscription amount.
-            </Typography>
+            <Collapse in={focusedOnce || isTouched} timeout={400}>
+              <Fade in={focusedOnce || isTouched} timeout={400}>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ mt: 0.75, alignSelf: "start" }}
+                >
+                  We recommend wrapping at least 1 month of the subscription
+                  amount.
+                </Typography>
+              </Fade>
+            </Collapse>
           </Stack>
         )}
       />

@@ -96,7 +96,7 @@ export default function Stepper() {
               </Zoom>
             )}
 
-            <Fade in={isForm} appear={false}>
+            <Fade in={isForm} appear={false} unmountOnExit={false}>
               <Box>
                 {isForm && (
                   <MUIStepper
