@@ -23,12 +23,15 @@ import StepContentWrap from "./StepContentWrap";
 import { StepperProvider } from "./StepperProvider";
 import { DraftFormValues } from "./formValues";
 import ExpandIcon from "./ExpandIcon";
+import { useAccount } from "wagmi";
 
 export default function Stepper() {
   const {
     watch,
     formState: { isValid },
   } = useFormContext<DraftFormValues>();
+
+  const { isConnected } = useAccount();
 
   const paymentOptionWithTokenInfo = watch("paymentOptionWithTokenInfo");
 
@@ -97,7 +100,7 @@ export default function Stepper() {
               <Box>
                 {isForm && (
                   <MUIStepper
-                    nonLinear
+                    nonLinear={isConnected}
                     orientation={orientation}
                     activeStep={activeStep}
                     connector={
