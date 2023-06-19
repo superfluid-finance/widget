@@ -129,7 +129,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
             direction="row"
             alignItems="center"
             justifyContent="space-between"
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: collapsableDetails ? "pointer" : "initial" }}
             onClick={toggleDetails}
           >
             <Typography

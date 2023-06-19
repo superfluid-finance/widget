@@ -83,6 +83,7 @@ export default function Stepper() {
                 </Box>
               </Fade>
             )}
+
             {isFinished && (
               <Zoom in={isFinished}>
                 <Box sx={{ m: 3 }}>
@@ -90,6 +91,7 @@ export default function Stepper() {
                 </Box>
               </Zoom>
             )}
+
             <Fade in={isForm} appear={false}>
               <Box>
                 {isForm && (
@@ -109,9 +111,7 @@ export default function Stepper() {
                             </StepContent>
                           ) : activeStep === index ? (
                             <Portal container={container.current}>
-                              <Box sx={{ m: 2 }}>
-                                <Content_ />
-                              </Box>
+                              <Content_ />
                             </Portal>
                           ) : null;
 

@@ -71,29 +71,28 @@ const demoPaymentDetails: PaymentDetails & { defaultReceiverAddress: string } =
           period: "month",
         },
       } as const,
-      // Polygon Mumbai not included in Token List.
-      // {
-      //   receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
-      //   chainId: supportedNetwork.polygonMumbai.id,
-      //   superToken: {
-      //     address: "0x42bb40bf79730451b11f6de1cba222f17b87afd7", // fUSDCx
-      //   },
-      //   flowRate: {
-      //     amountEther: "1",
-      //     period: "month",
-      //   },
-      // } as const,
-      // {
-      //   receiverAddress: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // rebounder
-      //   chainId: supportedNetwork.polygonMumbai.id,
-      //   superToken: {
-      //     address: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // fDAIx
-      //   },
-      //   flowRate: {
-      //     amountEther: "1",
-      //     period: "month",
-      //   },
-      // } as const,
+      {
+        receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
+        chainId: supportedNetwork.polygonMumbai.id,
+        superToken: {
+          address: "0x42bb40bf79730451b11f6de1cba222f17b87afd7", // fUSDCx
+        },
+        flowRate: {
+          amountEther: "1",
+          period: "month",
+        },
+      } as const,
+      {
+        receiverAddress: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // rebounder
+        chainId: supportedNetwork.polygonMumbai.id,
+        superToken: {
+          address: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // fDAIx
+        },
+        flowRate: {
+          amountEther: "1",
+          period: "month",
+        },
+      } as const,
       {
         receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
         chainId: supportedNetwork.celo.id,

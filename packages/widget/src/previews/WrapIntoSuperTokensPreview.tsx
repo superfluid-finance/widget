@@ -24,8 +24,8 @@ export function WrapIntoSuperTokensPreview({
         }}
         alignItems="center"
         textAlign="center"
-        rowGap={1.25}
-        columnGap={3}
+        rowGap={1.5}
+        columnGap={4}
       >
         <Typography variant="caption" fontWeight="medium">
           You are wrapping
