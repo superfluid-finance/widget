@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 const readAsBase64 = (
   file: File,
-  onSuccess: Dispatch<SetStateAction<string | null>>,
+  onSuccess: Dispatch<SetStateAction<string>>,
   onError: Dispatch<SetStateAction<ProgressEvent<EventTarget> | undefined>>
 ) => {
   const reader = new FileReader();
@@ -16,7 +16,7 @@ const isFile = (target: File | string): target is File => {
 };
 
 export const useReadAsBase64 = (target?: File | string) => {
-  const [base64, setBase64] = useState<string | null>(null);
+  const [base64, setBase64] = useState<string>("");
   const [error, setError] = useState<ProgressEvent<EventTarget>>();
 
   useEffect(() => {
@@ -35,5 +35,8 @@ export const useReadAsBase64 = (target?: File | string) => {
     effect();
   }, [target]);
 
-  return [base64, error];
+  return {
+    base64,
+    error,
+  };
 };
