@@ -11,12 +11,15 @@ export function CheckoutContent() {
   const theme = useTheme();
   const {
     layout: { elevated },
+    stepper: { orientation },
   } = useWidget();
 
   const containerMediaQuery = useMemo(
     () =>
-      `@container wrapper (width >= ${theme.breakpoints.values.md}${theme.breakpoints.unit})`,
-    [theme]
+      orientation === "vertical"
+        ? `@container wrapper (width >= ${theme.breakpoints.values.md}${theme.breakpoints.unit})`
+        : "",
+    [theme, orientation]
   );
 
   return (

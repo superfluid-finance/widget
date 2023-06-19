@@ -7,6 +7,7 @@ import {
   Stack,
   Step,
   StepButton,
+  StepConnector,
   StepContent,
   StepIcon,
   StepLabel,
@@ -95,39 +96,42 @@ export default function Stepper() {
             <Fade in={isForm} appear={false}>
               <Box>
                 {isForm && (
-                  <>
-                    <MUIStepper
-                      orientation={orientation}
-                      activeStep={activeStep}
-                      connector={null}
-                    >
-                      {visibleSteps.map((step, index) => {
-                        const { Content: Content_ } = step;
+                  <MUIStepper
+                    nonLinear
+                    orientation={orientation}
+                    activeStep={activeStep}
+                    connector={
+                      orientation === "vertical" ? null : <StepConnector />
+                    }
+                  >
+                    {visibleSteps.map((step, index) => {
+                      const { Content: Content_ } = step;
 
-                        const Content =
-                          orientation === "vertical" ? (
-                            <StepContent>
-                              <Content_ />
-                            </StepContent>
-                          ) : activeStep === index ? (
-                            <Portal container={container.current}>
-                              <Content_ />
-                            </Portal>
-                          ) : null;
+                      const Content =
+                        orientation === "vertical" ? (
+                          <StepContent>
+                            <Content_ />
+                          </StepContent>
+                        ) : activeStep === index ? (
+                          <Portal container={container.current}>
+                            <Content_ />
+                          </Portal>
+                        ) : null;
 
-                        const labelText =
-                          orientation === "vertical"
-                            ? step.buttonText
-                            : step.shortText;
+                      const labelText =
+                        orientation === "vertical"
+                          ? step.buttonText
+                          : step.shortText;
 
-                        return (
-                          <Step key={index}>
-                            <StepButton
-                              optional={step.optional ? "optional" : undefined}
-                              onClick={() => setActiveStep(index)}
-                            >
-                              <StepLabel sx={{ position: "relative" }}>
-                                {labelText}
+                      return (
+                        <Step key={index}>
+                          <StepButton
+                            optional={step.optional ? "optional" : undefined}
+                            onClick={() => setActiveStep(index)}
+                          >
+                            <StepLabel sx={{ position: "relative" }}>
+                              {labelText}
+                              {orientation === "vertical" && (
                                 <ExpandIcon
                                   expanded={activeStep === index}
                                   sx={{
@@ -136,14 +140,14 @@ export default function Stepper() {
                                     right: 28,
                                   }}
                                 />
-                              </StepLabel>
-                            </StepButton>
-                            {Content}
-                          </Step>
-                        );
-                      })}
-                    </MUIStepper>
-                  </>
+                              )}
+                            </StepLabel>
+                          </StepButton>
+                          {Content}
+                        </Step>
+                      );
+                    })}
+                  </MUIStepper>
                 )}
               </Box>
             </Fade>
@@ -151,7 +155,7 @@ export default function Stepper() {
             {/* // Keep in sync with the stepper */}
             <Fade in={isForm} appear={false} unmountOnExit={false}>
               {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}
-              <Container ref={container} />
+              <Box ref={container} />
             </Fade>
           </>
         );
