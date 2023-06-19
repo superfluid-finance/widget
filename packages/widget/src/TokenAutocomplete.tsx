@@ -54,6 +54,10 @@ export default function TokenAutocomplete() {
           renderInput={(params) => (
             <TextField
               {...params}
+              inputProps={{
+                ...params.inputProps,
+                sx: { cursor: "pointer" },
+              }}
               InputProps={{
                 ...params.InputProps,
                 startAdornment: value ? (

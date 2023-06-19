@@ -1,10 +1,11 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { parseEther } from "viem";
 import { AccountAddressCard } from "./AccountAddressCard";
 import { useCommandHandler } from "./CommandHandlerContext";
 import FlowingBalance from "./FlowingBalance";
 import StreamIndicator from "./StreamIndicator";
+import SuccessImage from "./SuccessImage";
 import { useWidget } from "./WidgetContext";
 import { SendStreamCommand } from "./commands";
 import { mapTimePeriodToSeconds } from "./core";
@@ -35,7 +36,7 @@ export function CheckoutSummary() {
   );
 
   return (
-    <Stack sx={{ m: 3 }}>
+    <Box>
       <Stack direction="column" alignItems="center">
         <Typography variant="h5" component="span">
           Success!
@@ -45,7 +46,9 @@ export function CheckoutSummary() {
         </Typography>
       </Stack>
 
-      <Stack direction="column" alignItems="center" sx={{ mt: 3 }}>
+      <SuccessImage sx={{ mx: "auto", my: 3 }} />
+
+      <Stack direction="column" alignItems="center">
         <Typography variant="body2" color="text.secondary">
           {`You've streamed`}
         </Typography>
@@ -107,6 +110,6 @@ export function CheckoutSummary() {
           Open Superfluid Dashboard
         </Button>
       </Stack>
-    </Stack>
+    </Box>
   );
 }

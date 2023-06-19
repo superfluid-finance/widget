@@ -4,20 +4,24 @@ import {
   Fade,
   Stepper as MUIStepper,
   Portal,
+  Stack,
   Step,
   StepButton,
   StepContent,
+  StepIcon,
+  StepLabel,
   Zoom,
 } from "@mui/material";
-import { StepperProvider } from "./StepperProvider";
-import StepContentPaymentOption from "./StepContentPaymentOption";
-import StepContentWrap from "./StepContentWrap";
-import StepContentReview from "./StepContentReview";
 import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import { DraftFormValues } from "./formValues";
-import { StepContentTransactions } from "./StepContentTransactions";
 import { CheckoutSummary } from "./CheckoutSummary";
+import StepContentPaymentOption from "./StepContentPaymentOption";
+import StepContentReview from "./StepContentReview";
+import { StepContentTransactions } from "./StepContentTransactions";
+import StepContentWrap from "./StepContentWrap";
+import { StepperProvider } from "./StepperProvider";
+import { DraftFormValues } from "./formValues";
+import ExpandIcon from "./ExpandIcon";
 
 export default function Stepper() {
   const {
@@ -74,7 +78,7 @@ export default function Stepper() {
           <>
             {isTransacting && (
               <Fade in>
-                <Box sx={{ m: 3 }}>
+                <Box sx={{ mx: 3, mb: 3, mt: 2 }}>
                   <StepContentTransactions />
                 </Box>
               </Fade>
@@ -93,7 +97,7 @@ export default function Stepper() {
                     <MUIStepper
                       orientation={orientation}
                       activeStep={activeStep}
-                      sx={{ m: 2 }}
+                      connector={null}
                     >
                       {visibleSteps.map((step, index) => {
                         const { Content: Content_ } = step;
@@ -122,7 +126,17 @@ export default function Stepper() {
                               optional={step.optional ? "optional" : undefined}
                               onClick={() => setActiveStep(index)}
                             >
-                              {labelText}
+                              <StepLabel sx={{ position: "relative" }}>
+                                {labelText}
+                                <ExpandIcon
+                                  expanded={activeStep === index}
+                                  sx={{
+                                    position: "absolute",
+                                    top: "calc(50% - 0.5em)",
+                                    right: 28,
+                                  }}
+                                />
+                              </StepLabel>
                             </StepButton>
                             {Content}
                           </Step>
@@ -133,6 +147,7 @@ export default function Stepper() {
                 )}
               </Box>
             </Fade>
+
             {/* // Keep in sync with the stepper */}
             <Fade in={isForm} appear={false} unmountOnExit={false}>
               {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}

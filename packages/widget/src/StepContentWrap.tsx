@@ -129,7 +129,7 @@ export default function StepContentWrap() {
       alignItems="stretch"
       justifyContent="space-around"
       spacing={3}
-      sx={{ pt: 3 }}
+      sx={{ pt: 1, pb: 3, px: 3.5 }}
     >
       <Controller
         control={c}

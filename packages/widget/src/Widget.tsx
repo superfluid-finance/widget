@@ -118,6 +118,9 @@ export function Widget({
       paymentOptionWithTokenInfoList,
       walletManager,
       stepper,
+      layout: {
+        elevated: !["drawer", "dialog"].includes(viewProps.type),
+      },
     }),
     [
       superTokens,
@@ -127,6 +130,7 @@ export function Widget({
       networks,
       walletManager,
       stepper,
+      viewProps.type,
     ]
   );
 

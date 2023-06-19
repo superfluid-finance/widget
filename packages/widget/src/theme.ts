@@ -1,8 +1,24 @@
 import { ThemeOptions } from "@mui/material/styles";
+
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { deepmerge } from "@mui/utils";
 
 type ThemeMode = "light" | "dark";
+
+interface TypographyCustomVariants {
+  label: React.CSSProperties;
+}
+
+declare module "@mui/material/styles" {
+  interface TypographyVariants extends TypographyCustomVariants {}
+  interface TypographyVariantsOptions extends TypographyCustomVariants {}
+}
+
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    label: true;
+  }
+}
 
 export const ELEVATION1_BG = `linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.03) 100%)`;
 
@@ -20,9 +36,12 @@ const getModeStyleCB =
   <T>(lightStyle: T, darkStyle: T): T =>
     mode === "dark" ? darkStyle : lightStyle;
 
-type CoreThemeOptions = Required<
-  Pick<ThemeOptions, "palette" | "typography" | "shadows" | "transitions">
->;
+interface CoreThemeOptions
+  extends Required<
+    Pick<ThemeOptions, "palette" | "shadows" | "transitions" | "breakpoints">
+  > {
+  typography: TypographyOptions;
+}
 
 const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
   const getModeStyle = getModeStyleCB(mode);
@@ -30,32 +49,11 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
   return {
     palette: {
       mode: mode,
-      contrastThreshold: 2.7, // 2.8 to allow white on Superfluid green
+      contrastThreshold: 2.7, // 2.7 to allow white on Superfluid green
       text: {
         primary: getModeStyle("#12141ede", "#FFFFFFFF"),
-        //   secondary: getModeStyle("#12141E99", "#FFFFFFC7"),
-        //   disabled: getModeStyle("#12141E61", "#FFFFFF99"),
+        secondary: getModeStyle("#656E78", "#FFFFFFC7"),
       },
-      // primary: {
-      //   main: getModeStyle("#10BB35FF", "#10BB35FF"),
-      //   dark: getModeStyle("#0B8225FF", "#008900FF"),
-      //   light: getModeStyle("#3FC85DFF", "#5FEF66FF"),
-      //   contrastText: getModeStyle("#FFFFFFFF", "#FFFFFFDE"),
-      // },
-      // secondary: {
-      //   main: getModeStyle("#12141e61", "#ffffff99"),
-      //   dark: getModeStyle("#AEAEAEFF", "#AEAEAEFF"),
-      //   light: getModeStyle("#FFFFFFFF", "#FFFFFFFF"),
-      //   contrastText: getModeStyle("#FFFFFFFF", "#FFFFFFDE"),
-      // },
-      // action: {
-      //   active: getModeStyle("#8292AD8A", "#FFFFFF8F"),
-      //   hover: getModeStyle("#8292AD0A", "#FFFFFF14"),
-      //   selected: getModeStyle("#8292AD14", "#FFFFFF29"),
-      //   disabled: getModeStyle("#8292AD42", "#FFFFFF4D"),
-      //   disabledBackground: getModeStyle("#8292AD1F", "#FFFFFF1F"),
-      //   focus: getModeStyle("#8292AD1F", "#FFFFFF1F"),
-      // },
       error: {
         main: getModeStyle("#D22525FF", "#F2685BFF"),
         dark: getModeStyle("#B80015FF", "#B80015FF"),
@@ -89,6 +87,7 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
     typography: {
       fontSize: 16,
       htmlFontSize: 16,
+
       button: {
         textTransform: "none",
       },
@@ -150,6 +149,12 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
       caption: {
         fontSize: "0.875rem",
         lineHeight: 1.25,
+        fontWeight: 400,
+      },
+
+      label: {
+        fontSize: "0.75rem",
+        lineHeight: 1.5,
         fontWeight: 400,
       },
     },
@@ -267,6 +272,15 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
         leavingScreen: 195,
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 990,
+        lg: 1200,
+        xl: 1536,
+      },
+    },
   };
 };
 
@@ -325,11 +339,68 @@ export function getThemedComponents(
           },
         },
       },
-      MuiStepButton: {
+      MuiStep: {
+        styleOverrides: {
+          vertical: {
+            borderBottom: "1px solid",
+            borderColor: coreThemeOptions.palette.divider,
+            ":last-child": {
+              border: "none",
+            },
+          },
+        },
+      },
+      MuiStepContent: {
         styleOverrides: {
           root: {
+            borderLeft: "none",
+            padding: 0,
+            margin: 0,
+          },
+        },
+      },
+      MuiStepButton: {
+        styleOverrides: {
+          vertical: {
+            margin: 0,
+            padding: 0,
+          },
+        },
+      },
+      MuiStepIcon: {
+        styleOverrides: {
+          text: {
+            ...coreThemeOptions.typography.caption,
+            fontWeight: 500,
+          },
+          root: {
+            width: "1.5rem",
+            height: "1.5rem",
+          },
+          completed: {},
+        },
+      },
+      MuiStepLabel: {
+        styleOverrides: {
+          vertical: {
+            paddingTop: 24,
+            paddingBottom: 24,
+            paddingLeft: 28,
+            paddingRight: 28,
+            height: 28,
+          },
+          labelContainer: {
+            ...typography.caption,
+          },
+          label: {
             ...typography.subtitle2,
             fontWeight: 500,
+            "&.Mui-completed": {
+              color: coreThemeOptions.palette.text?.secondary,
+            },
+          },
+          root: {
+            width: "100%",
           },
         },
       },
