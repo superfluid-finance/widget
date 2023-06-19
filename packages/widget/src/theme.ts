@@ -355,8 +355,7 @@ export function getThemedComponents(
           root: {
             borderLeft: "none",
             padding: 0,
-            marginLeft: 28,
-            marginRight: 28,
+            margin: 0,
           },
         },
       },
