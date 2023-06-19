@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-interface SFLogoProps {}
+interface SuperfluidLogoProps {}
 
-const SFLogo: FC<SFLogoProps> = ({}) => {
+const SuperfluidLogo: FC<SuperfluidLogoProps> = ({}) => {
   return (
     <svg
       width="100"
@@ -87,4 +87,4 @@ const SFLogo: FC<SFLogoProps> = ({}) => {
   );
 };
 
-export default SFLogo;
+export default SuperfluidLogo;

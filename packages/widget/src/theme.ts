@@ -37,7 +37,9 @@ const getModeStyleCB =
     mode === "dark" ? darkStyle : lightStyle;
 
 interface CoreThemeOptions
-  extends Required<Pick<ThemeOptions, "palette" | "shadows" | "transitions">> {
+  extends Required<
+    Pick<ThemeOptions, "palette" | "shadows" | "transitions" | "breakpoints">
+  > {
   typography: TypographyOptions;
 }
 
@@ -47,32 +49,11 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
   return {
     palette: {
       mode: mode,
-      contrastThreshold: 2.7, // 2.8 to allow white on Superfluid green
+      contrastThreshold: 2.7, // 2.7 to allow white on Superfluid green
       text: {
         primary: getModeStyle("#12141ede", "#FFFFFFFF"),
         secondary: getModeStyle("#656E78", "#FFFFFFC7"),
-        //   disabled: getModeStyle("#12141E61", "#FFFFFF99"),
       },
-      // primary: {
-      //   main: getModeStyle("#10BB35FF", "#10BB35FF"),
-      //   dark: getModeStyle("#0B8225FF", "#008900FF"),
-      //   light: getModeStyle("#3FC85DFF", "#5FEF66FF"),
-      //   contrastText: getModeStyle("#FFFFFFFF", "#FFFFFFDE"),
-      // },
-      // secondary: {
-      //   main: getModeStyle("#12141e61", "#ffffff99"),
-      //   dark: getModeStyle("#AEAEAEFF", "#AEAEAEFF"),
-      //   light: getModeStyle("#FFFFFFFF", "#FFFFFFFF"),
-      //   contrastText: getModeStyle("#FFFFFFFF", "#FFFFFFDE"),
-      // },
-      // action: {
-      //   active: getModeStyle("#8292AD8A", "#FFFFFF8F"),
-      //   hover: getModeStyle("#8292AD0A", "#FFFFFF14"),
-      //   selected: getModeStyle("#8292AD14", "#FFFFFF29"),
-      //   disabled: getModeStyle("#8292AD42", "#FFFFFF4D"),
-      //   disabledBackground: getModeStyle("#8292AD1F", "#FFFFFF1F"),
-      //   focus: getModeStyle("#8292AD1F", "#FFFFFF1F"),
-      // },
       error: {
         main: getModeStyle("#D22525FF", "#F2685BFF"),
         dark: getModeStyle("#B80015FF", "#B80015FF"),
@@ -291,6 +272,15 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
         leavingScreen: 195,
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 990,
+        lg: 1200,
+        xl: 1536,
+      },
+    },
   };
 };
 
@@ -381,12 +371,14 @@ export function getThemedComponents(
       MuiStepIcon: {
         styleOverrides: {
           text: {
-            ...coreThemeOptions.typography.label,
+            ...coreThemeOptions.typography.caption,
+            fontWeight: 500,
           },
           root: {
             width: "1.5rem",
             height: "1.5rem",
           },
+          completed: {},
         },
       },
       MuiStepLabel: {
@@ -407,6 +399,9 @@ export function getThemedComponents(
             "&.Mui-completed": {
               color: coreThemeOptions.palette.text?.secondary,
             },
+          },
+          root: {
+            width: "100%",
           },
         },
       },

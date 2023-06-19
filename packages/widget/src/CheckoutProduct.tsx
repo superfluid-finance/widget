@@ -67,10 +67,17 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
             position: "relative",
             pl: imageURI ? 0 : 3.5,
             pr: imageURI ? 5 : 3.5,
-            py: 4,
+            pb: 4,
+            pt: 6,
           }}
         >
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            gutterBottom
+            variant="subtitle2"
+            color="text.secondary"
+            fontWeight={500}
+            component="div"
+          >
             {name}
           </Typography>
 
@@ -116,29 +123,31 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
         </Box>
       </Paper>
 
-      <Box sx={{ px: 3.5, pb: 2.5, pt: 2 }}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ cursor: "pointer" }}
-          onClick={toggleDetails}
-        >
-          <Typography
-            variant="subtitle2"
-            fontWeight={500}
-            color="text.secondary"
+      {description && (
+        <Box sx={{ px: 3.5, pb: 2.5, pt: 2 }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ cursor: "pointer" }}
+            onClick={toggleDetails}
           >
-            Details
-          </Typography>
-          {collapsableDetails && <ExpandIcon expanded={showDetails} />}
-        </Stack>
-        <Collapse in={!collapsableDetails || showDetails}>
-          <Typography variant="body2" color="text.secondary" sx={{ pt: 1 }}>
-            {description}
-          </Typography>
-        </Collapse>
-      </Box>
+            <Typography
+              variant="subtitle2"
+              fontWeight={500}
+              color="text.secondary"
+            >
+              Details
+            </Typography>
+            {collapsableDetails && <ExpandIcon expanded={showDetails} />}
+          </Stack>
+          <Collapse in={!collapsableDetails || showDetails}>
+            <Typography variant="body2" color="text.secondary" sx={{ pt: 1 }}>
+              {description}
+            </Typography>
+          </Collapse>
+        </Box>
+      )}
     </Card>
   );
 }

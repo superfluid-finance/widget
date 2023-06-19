@@ -1,15 +1,19 @@
-import { Paper, PaperProps, Stack, Typography } from "@mui/material";
+import { Link, Paper, PaperProps, Stack, Typography } from "@mui/material";
 import { FC, memo } from "react";
-import SFLogo from "./SFLogo";
+import SuperfluidLogo from "./SuperfluidLogo";
 
-const PoweredBySf: FC<PaperProps> = ({ sx = {} }) => (
+const PoweredBySuperfluid: FC<PaperProps> = ({ sx = {} }) => (
   <Paper
+    component={Link}
     variant="outlined"
+    href="https://superfluid.finance"
+    target="_blank"
     sx={{
       px: 4,
       py: 1.5,
       borderRadius: 0.5,
       background: "transparent",
+      textDecoration: "none",
       ...sx,
     }}
   >
@@ -17,9 +21,9 @@ const PoweredBySf: FC<PaperProps> = ({ sx = {} }) => (
       <Typography variant="body2" color="text.secondary">
         Powered by
       </Typography>
-      <SFLogo />
+      <SuperfluidLogo />
     </Stack>
   </Paper>
 );
 
-export default memo(PoweredBySf);
+export default memo(PoweredBySuperfluid);

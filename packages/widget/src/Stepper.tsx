@@ -4,9 +4,12 @@ import {
   Fade,
   Stepper as MUIStepper,
   Portal,
+  Stack,
   Step,
   StepButton,
   StepContent,
+  StepIcon,
+  StepLabel,
   Zoom,
 } from "@mui/material";
 import React, { useMemo } from "react";
@@ -18,6 +21,7 @@ import { StepContentTransactions } from "./StepContentTransactions";
 import StepContentWrap from "./StepContentWrap";
 import { StepperProvider } from "./StepperProvider";
 import { DraftFormValues } from "./formValues";
+import ExpandIcon from "./ExpandIcon";
 
 export default function Stepper() {
   const {
@@ -94,7 +98,6 @@ export default function Stepper() {
                       orientation={orientation}
                       activeStep={activeStep}
                       connector={null}
-                      // sx={{ mx: 3.5, mb: 3, mt: 2 }}
                     >
                       {visibleSteps.map((step, index) => {
                         const { Content: Content_ } = step;
@@ -123,7 +126,17 @@ export default function Stepper() {
                               optional={step.optional ? "optional" : undefined}
                               onClick={() => setActiveStep(index)}
                             >
-                              {labelText}
+                              <StepLabel sx={{ position: "relative" }}>
+                                {labelText}
+                                <ExpandIcon
+                                  expanded={activeStep === index}
+                                  sx={{
+                                    position: "absolute",
+                                    top: "calc(50% - 0.5em)",
+                                    right: 28,
+                                  }}
+                                />
+                              </StepLabel>
                             </StepButton>
                             {Content}
                           </Step>
