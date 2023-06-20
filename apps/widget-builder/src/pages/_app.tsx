@@ -20,16 +20,17 @@ const projectId =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ??
   "952483bf7a0f5ace4c40eb53967f1368";
 
-const { publicClient } = configureChains(supportedNetworks, [
+const { chains, publicClient } = configureChains(supportedNetworks, [
   w3mProvider({ projectId }),
 ]);
+export const wagmiChains = chains;
 
 const wagmiConfig = createConfig({
   autoConnect: false,
   connectors: w3mConnectors({
     projectId,
     version: 2,
-    chains: supportedNetworks,
+    chains: wagmiChains,
   }),
   publicClient,
 });

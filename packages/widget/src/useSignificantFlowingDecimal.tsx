@@ -4,15 +4,15 @@ import { absoluteValue } from "./utils";
 
 export const useSignificantFlowingDecimal = (
   flowRate: bigint,
-  animationStepTimeInMs: bigint
+  animationStepTimeInMs: number
 ): number | undefined =>
   useMemo(() => {
     if (flowRate === 0n) {
       return undefined;
     }
 
-    const ticksPerSecond = 1000n / animationStepTimeInMs;
-    const flowRatePerTick = flowRate / ticksPerSecond;
+    const ticksPerSecond = 1000 / animationStepTimeInMs;
+    const flowRatePerTick = flowRate / BigInt(ticksPerSecond);
 
     const [beforeEtherDecimal, afterEtherDecimal] =
       formatEther(flowRatePerTick).split(".");
@@ -29,6 +29,8 @@ export const useSignificantFlowingDecimal = (
       .toString()
       .replace(numberAfterDecimalWithoutLeadingZeroes.toString(), "").length; // We're basically counting the zeroes.
 
-    // If you want to add any extra here, check for 18 first, i.e. don't go over it.
-    return lengthToFirstSignificatDecimal;
+    if (lengthToFirstSignificatDecimal === 16) return 18; // Don't go over 18.
+
+    // This will usually have the last 3 numbers flowing smoothly.
+    return lengthToFirstSignificatDecimal + 2;
   }, [flowRate]);

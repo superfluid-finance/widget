@@ -16,7 +16,7 @@ export const wagmiConfig = createConfig({
   connectors: w3mConnectors({
     projectId: walletConnectProjectId,
     version: 2,
-    chains: supportedNetworks,
+    chains: wagmiChains,
   }),
   publicClient,
 });
