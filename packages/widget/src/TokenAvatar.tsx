@@ -10,13 +10,13 @@ export function TokenAvatar({ tokenInfo, ...AvatarProps }: Props) {
     <Avatar
       alt={`${tokenInfo.symbol} logo`}
       src={tokenInfo.logoURI}
-      sx={{ width: 32, height: 32 }}
+      sx={{ width: 24, height: 24 }}
       {...AvatarProps}
     />
   ) : (
     <Avatar
       alt={`${tokenInfo.symbol} logo`}
-      sx={{ width: 32, height: 32 }}
+      sx={{ width: 24, height: 24 }}
       {...AvatarProps}
     >
       {" "}

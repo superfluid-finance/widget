@@ -339,6 +339,14 @@ export function getThemedComponents(
           },
         },
       },
+      MuiStepper: {
+        styleOverrides: {
+          horizontal: {
+            justifyContent: "space-between",
+            marginBottom: 12,
+          },
+        },
+      },
       MuiStep: {
         styleOverrides: {
           vertical: {
@@ -347,6 +355,9 @@ export function getThemedComponents(
             ":last-child": {
               border: "none",
             },
+          },
+          horizontal: {
+            padding: 0,
           },
         },
       },
@@ -364,6 +375,11 @@ export function getThemedComponents(
           vertical: {
             margin: 0,
             padding: 0,
+          },
+          horizontal: {
+            margin: 0,
+            padding: 12,
+            width: "auto",
           },
         },
       },
@@ -398,9 +414,6 @@ export function getThemedComponents(
             "&.Mui-completed": {
               color: coreThemeOptions.palette.text?.secondary,
             },
-          },
-          root: {
-            width: "100%",
           },
         },
       },
