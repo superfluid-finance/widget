@@ -62,11 +62,16 @@ const WrapCard: FC<WrapCardProps> = ({
 
       <Box />
 
-      {formattedTokenBalance && (
-        <Typography variant="caption" align="right" color="text.secondary">
-          {`Balance: ${approximateIfDecimal(formattedTokenBalance)}`}
-        </Typography>
-      )}
+      <Typography
+        variant="caption"
+        align="right"
+        color="text.secondary"
+        sx={{ visibility: formattedTokenBalance ? "visible" : "hidden" }}
+      >
+        {`Balance: ${
+          formattedTokenBalance && approximateIfDecimal(formattedTokenBalance)
+        }`}
+      </Typography>
     </Paper>
   );
 };
@@ -142,7 +147,7 @@ export default function StepContentWrap() {
         name="wrapAmountEther"
         render={({
           field: { value, onChange, onBlur },
-          fieldState: { isTouched, isDirty },
+          fieldState: { isTouched },
         }) => (
           <Stack direction="column" justifyContent="center" alignItems="center">
             <WrapCard

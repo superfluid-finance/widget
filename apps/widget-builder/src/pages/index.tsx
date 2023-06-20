@@ -99,9 +99,9 @@ export default function Home() {
           width: "100%",
           backgroundColor: theme.palette.grey[50],
           display: "flex",
-          alignItems: "center",
           justifyContent: "center",
           position: "relative",
+          pt: "5vh",
         }}
       >
         <WidgetPreview
