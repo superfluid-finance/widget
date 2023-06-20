@@ -415,9 +415,6 @@ export function getThemedComponents(
               color: coreThemeOptions.palette.text?.secondary,
             },
           },
-          root: {
-            width: "100%",
-          },
         },
       },
       MuiAppBar: {

@@ -111,7 +111,9 @@ export default function Stepper() {
                             optional={step.optional ? "optional" : undefined}
                             onClick={() => setActiveStep(index)}
                           >
-                            <StepLabel sx={{ position: "relative" }}>
+                            <StepLabel
+                              sx={{ position: "relative", width: "100%" }}
+                            >
                               {labelText}
                               {orientation === "vertical" && (
                                 <ExpandIcon
@@ -135,10 +137,12 @@ export default function Stepper() {
             </Collapse>
 
             {/* // Keep in sync with the stepper */}
-            <Fade in={isForm} appear={false} unmountOnExit={false}>
-              {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}
-              <Box ref={container} />
-            </Fade>
+            <Collapse in={isForm} appear={false} unmountOnExit={false}>
+              <Fade in={isForm} appear={false} unmountOnExit={false}>
+                {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}
+                <Box ref={container} />
+              </Fade>
+            </Collapse>
 
             <Collapse in={isFinished} unmountOnExit>
               <Fade in={isFinished}>
