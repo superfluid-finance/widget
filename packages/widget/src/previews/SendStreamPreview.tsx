@@ -1,10 +1,10 @@
-import { Box, Paper, Stack, Typography } from "@mui/material";
-import { SendStreamCommand } from "../commands";
-import { useWidget } from "../WidgetContext";
-import { AccountAddressCard } from "../AccountAddressCard";
+import { Box, Stack, Typography } from "@mui/material";
 import { useBalance } from "wagmi";
-import { NorthEastIcon } from "./CommandPreview";
+import { AccountAddressCard } from "../AccountAddressCard";
 import StreamIndicator from "../StreamIndicator";
+import { useWidget } from "../WidgetContext";
+import { SendStreamCommand } from "../commands";
+import { CacheKey } from "../helpers/wagmiUtils";
 
 export function SendStreamPreview({
   command: cmd,
@@ -19,6 +19,7 @@ export function SendStreamPreview({
     address: cmd.accountAddress,
     chainId: cmd.chainId,
     formatUnits: "ether",
+    scopeKey: CacheKey.Balances,
   });
 
   return (

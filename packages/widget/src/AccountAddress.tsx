@@ -2,6 +2,7 @@ import { Address, getAddress } from "viem";
 import { ChildrenProp, shortenHex } from "./utils";
 import { useEnsAvatar, useEnsName } from "wagmi";
 import { useMemo } from "react";
+import { CacheKey } from "./helpers/wagmiUtils";
 
 type Results = {
   ensNameResult: ReturnType<typeof useEnsName>;
@@ -25,10 +26,13 @@ export function AccountAddress({ children, address }: Props) {
   const ensNameResult = useEnsName({
     address: checksumAddress,
     chainId: 1,
+    scopeKey: CacheKey.ENS,
   });
 
   const ensAvatarResult = useEnsAvatar(
-    ensNameResult.data ? { name: ensNameResult.data, chainId: 1 } : undefined
+    ensNameResult.data
+      ? { name: ensNameResult.data, chainId: 1, scopeKey: CacheKey.ENS }
+      : undefined
   );
 
   const result = {

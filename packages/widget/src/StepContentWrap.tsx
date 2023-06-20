@@ -3,25 +3,22 @@ import {
   Button,
   Collapse,
   Fade,
-  FormControlLabel,
-  FormGroup,
   Input,
   Paper,
   Stack,
-  Switch,
-  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
-import { Controller, useFormContext } from "react-hook-form";
-import { DraftFormValues } from "./formValues";
-import { FC, PropsWithChildren, useMemo, useState } from "react";
-import { useWidget } from "./WidgetContext";
-import { TokenAvatar } from "./TokenAvatar";
-import { StepperContinueButton } from "./StepperContinueButton";
-import { Address, useBalance } from "wagmi";
-import { UpgradeIcon } from "./previews/CommandPreview";
 import { TokenInfo } from "@superfluid-finance/tokenlist";
+import { FC, PropsWithChildren, useMemo, useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import { Address, useBalance } from "wagmi";
+import { StepperContinueButton } from "./StepperContinueButton";
+import { TokenAvatar } from "./TokenAvatar";
+import { useWidget } from "./WidgetContext";
+import { DraftFormValues } from "./formValues";
+import { CacheKey } from "./helpers/wagmiUtils";
+import { UpgradeIcon } from "./previews/CommandPreview";
 
 interface WrapCardProps extends PropsWithChildren {
   token?: TokenInfo;
@@ -117,6 +114,7 @@ export default function StepContentWrap() {
           address: accountAddress,
           chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
           formatUnits: "ether",
+          scopeKey: CacheKey.Balances,
         }
       : undefined
   );
@@ -128,6 +126,7 @@ export default function StepContentWrap() {
           address: accountAddress,
           chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
           formatUnits: "ether",
+          scopeKey: CacheKey.Balances,
         }
       : undefined
   );
