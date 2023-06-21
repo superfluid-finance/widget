@@ -27,7 +27,7 @@ export function CheckoutSummary() {
 
   // TODO: do the flowing balance animation with a speed-up
   const startingBalance = 0n;
-  // TODO: hackish, use transaction date instead
+  // TODO: Not correct to a second. Getting timestamp of when transaction was mined is a additional RPC call.
   const startingBalanceDate = useMemo(() => new Date(), []);
 
   const superToken = useMemo(

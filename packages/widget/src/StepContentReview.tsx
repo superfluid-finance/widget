@@ -2,7 +2,7 @@ import { Divider, Stack } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { StepperContinueButton } from "./StepperContinueButton";
 import { CommandPreview } from "./previews/CommandPreview";
 import { formValuesToCommands } from "./formValuesToCommands";
@@ -13,26 +13,17 @@ export default function StepContentReview() {
     formState: { isValid, isValidating },
   } = useFormContext<ValidFormValues>();
 
-  const { commands: commandAggregates, submitCommands } = useCommandHandler();
-
-  const [initialized, setInitialized] = useState(false);
+  const { submitCommands } = useCommandHandler();
 
   // TODO(KK): Consider this logic...
-  if (!initialized) {
+  // In essence, the Review step is given the orchestration control of mapping into commands and setting up a session.
+  const commands = useMemo(() => {
     if (!isValid) throw new Error("Form should always be valid at this point.");
 
-    submitCommands(formValuesToCommands(getValues()));
-    setInitialized(true);
-  }
+    return formValuesToCommands(getValues());
+  }, []);
 
-  const commands = useMemo(
-    () =>
-      commandAggregates.map((x) => {
-        const { contractWrites, ...command } = x;
-        return command;
-      }),
-    [commandAggregates]
-  );
+  useEffect(() => submitCommands(commands), [commands]);
 
   return (
     <Stack sx={{ pb: 3, px: 3.5 }} gap={3}>

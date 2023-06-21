@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { ContractWriteResult } from "./ContractWriteManager";
 import { Button, Stack } from "@mui/material";
-import { useChainId, useSwitchNetwork } from "wagmi";
+import { useChainId, useNetwork, useSwitchNetwork } from "wagmi";
 
 export type ContractWriteButtonProps = ContractWriteResult;
 
@@ -19,10 +19,9 @@ export default function ContractWriteButton({
     transactionResult.isLoading;
 
   const expectedChainId = contractWrite.chainId;
-  const chainId = useChainId();
-
+  const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
-  const needsToSwitchNetwork = expectedChainId !== chainId;
+  const needsToSwitchNetwork = expectedChainId !== chain?.id;
 
   return (
     <Stack direction="column" alignItems="stretch" sx={{ width: "100%" }}>

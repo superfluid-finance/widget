@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const ANIMATION_MINIMUM_STEP_TIME = 40n;
+export const ANIMATION_MINIMUM_STEP_TIME = 40;
 
 const useFlowingBalance = (
   startingBalance: bigint,
@@ -17,13 +17,16 @@ const useFlowingBalance = (
 
     const animationStep = (currentAnimationTimestamp: DOMHighResTimeStamp) => {
       animationFrameId = window.requestAnimationFrame(animationStep); // Set next frame ASAP, otherwise race-conditions might happen when trying to cancel.
-
       if (
         currentAnimationTimestamp - lastAnimationTimestamp >
         ANIMATION_MINIMUM_STEP_TIME
       ) {
-        const elapsedTime = BigInt(Date.now() - startingBalanceDate.getTime());
-        const flowingBalance_ = startingBalance + flowRate * elapsedTime;
+        const elapsedTimeInMilliseconds = BigInt(
+          Date.now() - startingBalanceDate.getTime()
+        );
+        const flowingBalance_ =
+          startingBalance + (flowRate * elapsedTimeInMilliseconds) / 1000n;
+
         setFlowingBalance(flowingBalance_);
 
         lastAnimationTimestamp = currentAnimationTimestamp;
