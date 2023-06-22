@@ -1,6 +1,6 @@
 {
   "name": "widget-vite-react-web3modal",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,12 +12,12 @@
   "dependencies": {
     "@superfluid-finance/tokenlist": "^1.1.0",
     "@superfluid-finance/widget": "workspace:*",
-    "@web3modal/ethereum": "^2.4.5",
-    "@web3modal/react": "^2.4.5",
+    "@web3modal/ethereum": "^2.4.7",
+    "@web3modal/react": "^2.4.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "^1.0.0",
-    "wagmi": "^1.0.0"
+    "viem": "^1.0.7",
+    "wagmi": "^1.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.12",
@@ -25,7 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
     "@vitejs/plugin-react": "^4.0.0",
-    "eslint": "^8.42.0",
+    "eslint": "^8.43.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.1",
     "typescript": "^5.1.3",

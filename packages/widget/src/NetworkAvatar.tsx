@@ -101,6 +101,9 @@ const NetworkAvatar: FC<NetworkAvatarProps> = ({
       {...AvatarProps}
       sx={{
         backgroundColor: networkAssetConf?.color,
+        width: 24,
+        height: 24,
+        fontSize: 16,
         ...AvatarSx,
       }}
     >

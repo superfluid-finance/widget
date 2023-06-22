@@ -30,6 +30,7 @@ export default function TokenAutocomplete() {
         <Autocomplete
           disabled={network === null}
           value={value}
+          disableClearable={!!value}
           isOptionEqualToValue={(option, value) =>
             option.paymentOption.superToken.address ===
             value.paymentOption.superToken.address
@@ -54,13 +55,18 @@ export default function TokenAutocomplete() {
           renderInput={(params) => (
             <TextField
               {...params}
+              inputProps={{
+                ...params.inputProps,
+                sx: { cursor: "pointer" },
+              }}
               InputProps={{
                 ...params.InputProps,
                 startAdornment: value ? (
                   <TokenAvatar tokenInfo={value.superToken} />
                 ) : null,
               }}
-              label="Token"
+              size="small"
+              placeholder="Token"
             />
           )}
           onChange={(_event, newValue) => onChange(newValue)}

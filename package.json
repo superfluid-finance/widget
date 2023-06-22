@@ -30,7 +30,7 @@
     "rimraf": "^5.0.1"
   },
   "devDependencies": {
-    "eslint": "^8.42.0",
+    "eslint": "^8.43.0",
     "eslint-config-custom": "workspace:*",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",

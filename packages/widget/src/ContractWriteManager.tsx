@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import {
-  useChainId,
   useContractWrite,
+  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
@@ -30,8 +30,8 @@ export function ContractWriteManager({
   onChange,
   children,
 }: ContractWriteManagerProps) {
-  const chainId = useChainId();
-  const prepare = _prepare && contractWrite.chainId === chainId;
+  const { chain } = useNetwork();
+  const prepare = _prepare && contractWrite.chainId === chain?.id;
 
   const prepareResult = usePrepareContractWrite(
     prepare ? contractWrite : undefined

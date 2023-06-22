@@ -27,7 +27,7 @@ export default function StepContentPaymentOption() {
       alignItems="stretch"
       justifyContent="space-around"
       spacing={3}
-      sx={{ pt: 3 }}
+      sx={{ pb: 3, px: 3.5 }}
     >
       <Stack
         direction="row"

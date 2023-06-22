@@ -1,23 +1,26 @@
 import {
   Box,
-  Container,
+  Collapse,
   Fade,
   Stepper as MUIStepper,
   Portal,
   Step,
   StepButton,
+  StepConnector,
   StepContent,
-  Zoom,
+  StepLabel,
 } from "@mui/material";
-import { StepperProvider } from "./StepperProvider";
-import StepContentPaymentOption from "./StepContentPaymentOption";
-import StepContentWrap from "./StepContentWrap";
-import StepContentReview from "./StepContentReview";
 import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import { DraftFormValues } from "./formValues";
-import { StepContentTransactions } from "./StepContentTransactions";
+import { useAccount } from "wagmi";
 import { CheckoutSummary } from "./CheckoutSummary";
+import ExpandIcon from "./ExpandIcon";
+import StepContentPaymentOption from "./StepContentPaymentOption";
+import StepContentReview from "./StepContentReview";
+import { StepContentTransactions } from "./StepContentTransactions";
+import StepContentWrap from "./StepContentWrap";
+import { StepperProvider } from "./StepperProvider";
+import { DraftFormValues } from "./formValues";
 
 export default function Stepper() {
   const {
@@ -69,75 +72,93 @@ export default function Stepper() {
         const isTransacting = activeStep === totalSteps - 2;
         const isFinished = activeStep === totalSteps - 1;
         const isForm = !isTransacting && !isFinished;
+        const visualActiveStep = Math.min(2, activeStep);
 
         return (
           <>
-            {isTransacting && (
-              <Fade in>
-                <Box sx={{ m: 3 }}>
-                  <StepContentTransactions />
+            <Collapse in={isForm} appear={false}>
+              <Fade in={isForm} appear={false}>
+                <Box>
+                  <MUIStepper
+                    orientation={orientation}
+                    activeStep={visualActiveStep}
+                    connector={
+                      orientation === "vertical" ? null : <StepConnector />
+                    }
+                  >
+                    {visibleSteps.map((step, index) => {
+                      const { Content: Content_ } = step;
+
+                      const Content =
+                        orientation === "vertical" ? (
+                          <StepContent>
+                            <Content_ />
+                          </StepContent>
+                        ) : activeStep === index ? (
+                          <Portal container={container.current}>
+                            <Content_ />
+                          </Portal>
+                        ) : null;
+
+                      const labelText =
+                        orientation === "vertical"
+                          ? step.buttonText
+                          : step.shortText;
+
+                      return (
+                        <Step key={index}>
+                          <StepButton
+                            optional={step.optional ? "optional" : undefined}
+                            onClick={() => setActiveStep(index)}
+                          >
+                            <StepLabel
+                              sx={{ position: "relative", width: "100%" }}
+                            >
+                              {labelText}
+                              {orientation === "vertical" && (
+                                <ExpandIcon
+                                  expanded={visualActiveStep === index}
+                                  sx={{
+                                    position: "absolute",
+                                    top: "calc(50% - 0.5em)",
+                                    right: 28,
+                                  }}
+                                />
+                              )}
+                            </StepLabel>
+                          </StepButton>
+                          {Content}
+                        </Step>
+                      );
+                    })}
+                  </MUIStepper>
                 </Box>
               </Fade>
-            )}
-            {isFinished && (
-              <Zoom in={isFinished}>
+            </Collapse>
+
+            {/* // Keep in sync with the stepper */}
+            <Collapse in={isForm} appear={false} unmountOnExit={false}>
+              <Fade in={isForm} appear={false} unmountOnExit={false}>
+                {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}
+                <Box ref={container} />
+              </Fade>
+            </Collapse>
+
+            <Collapse in={isFinished} unmountOnExit>
+              <Fade in={isFinished}>
                 <Box sx={{ m: 3 }}>
                   <CheckoutSummary />
                 </Box>
-              </Zoom>
-            )}
-            <Fade in={isForm} appear={false}>
-              <Box>
-                {isForm && (
-                  <>
-                    <MUIStepper
-                      orientation={orientation}
-                      activeStep={activeStep}
-                      sx={{ m: 2 }}
-                    >
-                      {visibleSteps.map((step, index) => {
-                        const { Content: Content_ } = step;
+              </Fade>
+            </Collapse>
 
-                        const Content =
-                          orientation === "vertical" ? (
-                            <StepContent>
-                              <Content_ />
-                            </StepContent>
-                          ) : activeStep === index ? (
-                            <Portal container={container.current}>
-                              <Box sx={{ m: 2 }}>
-                                <Content_ />
-                              </Box>
-                            </Portal>
-                          ) : null;
-
-                        const labelText =
-                          orientation === "vertical"
-                            ? step.buttonText
-                            : step.shortText;
-
-                        return (
-                          <Step key={index}>
-                            <StepButton
-                              optional={step.optional ? "optional" : undefined}
-                              onClick={() => setActiveStep(index)}
-                            >
-                              {labelText}
-                            </StepButton>
-                            {Content}
-                          </Step>
-                        );
-                      })}
-                    </MUIStepper>
-                  </>
-                )}
-              </Box>
-            </Fade>
-            {/* // Keep in sync with the stepper */}
-            <Fade in={isForm} appear={false} unmountOnExit={false}>
-              {/* TODO: Unmount if not horizontal stepper? Creates a race-condition in Builder, FYI. */}
-              <Container ref={container} />
-            </Fade>
+            <Collapse in={isTransacting} unmountOnExit>
+              <Fade in={isTransacting}>
+                <Box sx={{ mx: 3, mb: 3, mt: 2 }}>
+                  <StepContentTransactions />
+                </Box>
+              </Fade>
+            </Collapse>
           </>
         );
       }}

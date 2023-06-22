@@ -1,6 +1,6 @@
 {
   "name": "@superfluid-finance/widget-builder",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -21,28 +21,28 @@
     "@mui/material": "^5.13.5",
     "@pinata/sdk": "^2.1.0",
     "@segment/analytics-next": "^1.53.0",
-    "@sentry/nextjs": "^7.54.0",
+    "@sentry/nextjs": "^7.55.2",
     "@superfluid-finance/tokenlist": "^1.1.0",
     "@superfluid-finance/widget": "workspace:*",
-    "@web3modal/ethereum": "^2.4.5",
-    "@web3modal/react": "^2.4.5",
+    "@web3modal/ethereum": "^2.4.7",
+    "@web3modal/react": "^2.4.7",
     "clsx": "^1.2.1",
     "mui-color-input": "^1.0.6",
-    "next": "^13.4.5",
+    "next": "^13.4.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
-    "viem": "^1.0.0",
-    "wagmi": "^1.0.0",
-    "zod": "^3.0.0",
+    "viem": "^1.0.7",
+    "wagmi": "^1.2.0",
+    "zod": "^3.21.4",
     "zod-to-json-schema": "^3.21.1"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
     "@types/node": "^20.3.1",
     "@types/react": "^18.2.12",
-    "eslint": "^8.42.0",
-    "eslint-config-next": "^13.4.5",
+    "eslint": "^8.43.0",
+    "eslint-config-next": "^13.4.6",
     "typescript": "^5.1.3"
   }
 }

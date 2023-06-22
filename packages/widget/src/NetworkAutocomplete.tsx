@@ -17,6 +17,7 @@ export default function NetworkAutocomplete() {
       render={({ field: { value, onChange, onBlur } }) => (
         <Autocomplete
           value={value}
+          disableClearable={!!value}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           options={autocompleteOptions}
           autoHighlight
@@ -29,30 +30,25 @@ export default function NetworkAutocomplete() {
               alignItems="center"
               spacing={1}
             >
-              <NetworkAvatar
-                network={option}
-                AvatarProps={{
-                  sx: { width: 32, height: 32 },
-                }}
-              />
+              <NetworkAvatar network={option} />
               <Typography>{option.name}</Typography>
             </Stack>
           )}
           renderInput={(params) => (
             <TextField
               {...params}
+              inputProps={{
+                ...params.inputProps,
+                sx: { cursor: "pointer" },
+              }}
               InputProps={{
                 ...params.InputProps,
                 startAdornment: value ? (
-                  <NetworkAvatar
-                    network={value}
-                    AvatarProps={{
-                      sx: { width: 32, height: 32 }, // TODO(KK): this is duplicated above
-                    }}
-                  />
+                  <NetworkAvatar network={value} />
                 ) : null,
               }}
-              label="Network"
+              size="small"
+              placeholder="Network"
             />
           )}
           onChange={(_event, newValue) => onChange(newValue)}
