@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   FormGroup,
   Input,
+  Link,
   Paper,
   Stack,
   Switch,
@@ -92,7 +93,7 @@ export default function StepContentWrap() {
   ]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
-  const { getUnderlyingToken } = useWidget();
+  const { getUnderlyingToken, paymentDetails } = useWidget();
 
   // Find the underlying token of the Super Token.
   const underlyingToken = useMemo(() => {
@@ -131,6 +132,18 @@ export default function StepContentWrap() {
         }
       : undefined
   );
+
+  const showSkip = useMemo(() => {
+    if (!paymentOptionWithTokenInfo || !superTokenBalance) return;
+
+    console.log(
+      "VALUE",
+      superTokenBalance?.value,
+      paymentOptionWithTokenInfo.paymentOption.flowRate
+    );
+    // paymentOptionWithTokenInfo.paymentOption.flowRate
+    return !!superTokenBalance?.value;
+  }, [superTokenBalance]);
 
   const onInputFocus = () => setFocusedOnce(true);
 
@@ -229,22 +242,29 @@ export default function StepContentWrap() {
           )}
         /> */}
 
-      <Stack
-        direction="column"
-        justifyContent="center"
-        alignItems="stretch"
-        spacing={1}
-      >
-        <StepperContinueButton disabled={!isValid || isValidating}>
-          Continue
-        </StepperContinueButton>
-        <Button
-          variant="text"
+      <Stack direction="column" gap={2.5} textAlign="center">
+        <Stack
+          direction="column"
+          justifyContent="center"
+          alignItems="stretch"
+          gap={1.5}
+        >
+          <StepperContinueButton disabled={!isValid || isValidating}>
+            Continue
+          </StepperContinueButton>
+          {showSkip && (
+            <StepperContinueButton variant="outlined" color="primary">
+              Skip this step
+            </StepperContinueButton>
+          )}
+        </Stack>
+        <Link
+          underline="hover"
           href="https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens"
           target="_blank"
         >
           Why do I need to wrap tokens?
-        </Button>
+        </Link>
       </Stack>
     </Stack>
   );
