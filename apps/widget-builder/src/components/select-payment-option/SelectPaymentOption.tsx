@@ -1,15 +1,17 @@
-import { FC, useEffect, useMemo, useState } from "react";
-import { Network, networks } from "../../networkDefinitions";
+import InfoIcon from "@mui/icons-material/Info";
 import {
   Autocomplete,
+  Avatar,
   Button,
   Chip,
   FormControlLabel,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   MenuItem,
   Select,
   SelectChangeEvent,
   Stack,
-  SvgIcon,
   Switch,
   TextField,
   Tooltip,
@@ -21,10 +23,12 @@ import tokenList, {
   TokenInfo,
 } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
-import { UseFieldArrayAppend, UseFormSetValue } from "react-hook-form";
-import { WidgetProps } from "../widget-preview/WidgetPreview";
 import Image from "next/image";
-import InfoIcon from "@mui/icons-material/Info";
+import { FC, useEffect, useMemo, useState } from "react";
+import { UseFieldArrayAppend } from "react-hook-form";
+import { Network, networks } from "../../networkDefinitions";
+import InputWrapper from "../form/InputWrapper";
+import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 export type PaymentOption = {
   network: Network;
@@ -83,13 +87,12 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   defaultReceiverAddress,
   setDefaultReceiver,
 }) => {
-  const theme = useTheme();
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
   const [selectedNetwork, setSelectedNetwork] =
     useState<Network>(defaultNetwork);
   const [selectedToken, setSelectedToken] =
     useState<SuperTokenInfo>(defaultToken);
-
+  console.log("Selected token", selectedToken);
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
@@ -145,11 +148,10 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
   const autoCompleteTokenOptions = useMemo(() => {
     const network = networks.find(({ name }) => name === selectedNetwork?.name);
-    return tokenList.tokens.filter((token) => {
-      return (
+    return tokenList.tokens.filter(
+      (token) =>
         token.chainId === network?.chainId && token.tags?.includes("supertoken")
-      );
-    });
+    );
   }, [selectedNetwork]);
 
   useEffect(() => {
@@ -157,16 +159,12 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   }, [selectedNetwork]);
 
   return (
-    <Stack direction="column" gap={1}>
-      <Stack direction="row" gap={2}>
-        <Stack direction="column" flex={1}>
-          <Stack
-            direction="row"
-            sx={{ pl: 1, justifyContent: "space-between" }}
-          >
-            <Typography variant="subtitle2">Network</Typography>
-            <InputInfo tooltip="Select the network you'd like to request payment on" />
-          </Stack>
+    <Stack direction="column" gap={1.5}>
+      <Stack sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} gap={1.5}>
+        <InputWrapper
+          title="Network"
+          tooltip="Select the network you'd like to request payment on"
+        >
           <Select
             value={selectedNetwork.name}
             onChange={handleNetworkSelect}
@@ -180,11 +178,10 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                   sx={{ alignItems: "center", width: "100%" }}
                 >
                   {network.logoUrl && (
-                    <Image
+                    <Avatar
+                      sx={{ width: 24, height: 24 }}
                       src={network.logoUrl}
                       alt={network.name}
-                      width={24}
-                      height={24}
                     />
                   )}
                   <Stack
@@ -209,45 +206,68 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
               </MenuItem>
             ))}
           </Select>
-        </Stack>
-        <Stack direction="column" flex={1}>
-          <Stack
-            direction="row"
-            sx={{ pl: 1, justifyContent: "space-between" }}
-          >
-            <Typography variant="subtitle2">SuperToken</Typography>
-            <InputInfo tooltip="Select the SuperToken you'd like to request payment in" />
-          </Stack>
+        </InputWrapper>
+        <InputWrapper
+          title="Super Token"
+          tooltip="Select the SuperToken you'd like to request payment in"
+        >
           <Autocomplete
             fullWidth
             value={selectedToken}
             onChange={(_, value) => setSelectedToken(value!)}
             id="token-select"
             options={autoCompleteTokenOptions}
-            getOptionLabel={renderToken}
+            getOptionLabel={(token) => token.symbol}
+            componentsProps={{
+              popper: {
+                placement: "bottom-end",
+                sx: {
+                  width: "calc(80% - 48px) !important",
+                  mt: "2px !important",
+                },
+                disablePortal: true,
+              },
+            }}
             renderOption={(props, option) => (
-              <Stack direction="row" gap={1} sx={{ alignItems: "center" }}>
-                {option.logoURI && (
-                  <Image src={option.logoURI} width={24} height={24} alt="" />
-                )}
-                <Typography
-                  {...props}
-                  key={`${option.symbol}-${option.chainId}`}
-                >
-                  {renderToken(option)}
-                </Typography>
-              </Stack>
+              <ListItem {...props}>
+                <ListItemAvatar sx={{ width: 24, height: 24, minWidth: 40 }}>
+                  {option.logoURI && (
+                    <Avatar
+                      sx={{ width: 24, height: 24 }}
+                      src={option.logoURI}
+                    />
+                  )}
+                </ListItemAvatar>
+                <ListItemText
+                  primary={option.symbol}
+                  secondary={option.name}
+                  secondaryTypographyProps={{ variant: "caption" }}
+                  sx={{ m: 0 }}
+                />
+              </ListItem>
             )}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                InputProps={{
+                  ...params.InputProps,
+                  startAdornment: selectedToken?.logoURI && (
+                    <Avatar
+                      sx={{ width: 24, height: 24 }}
+                      src={selectedToken.logoURI}
+                    />
+                  ),
+                }}
+              />
+            )}
           />
-        </Stack>
+        </InputWrapper>
       </Stack>
-      <Stack direction="column">
-        <Stack direction="row" sx={{ pl: 1, justifyContent: "space-between" }}>
-          <Typography variant="subtitle2">Flow Rate</Typography>
-          <InputInfo tooltip="Set the amount of tokens per month for the payment" />
-        </Stack>
 
+      <InputWrapper
+        title="Flow Rate"
+        tooltip="Set the amount of tokens per month for the payment"
+      >
         <Stack direction="row" gap={"-1px"}>
           <TextField
             fullWidth
@@ -280,38 +300,28 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             ))}
           </Select>
         </Stack>
-      </Stack>
-      <Stack>
-        <Stack>
-          <Stack
-            direction="row"
-            sx={{ pl: 1, justifyContent: "space-between" }}
-          >
-            <Typography variant="subtitle2">Receiver</Typography>
-            <InputInfo tooltip="Set your wallet or multisig address on the relevant network" />
-          </Stack>
-          <TextField
-            value={receiver}
-            onChange={({ target }) =>
-              setReceiver(target.value as `0x${string}`)
-            }
-          />
-        </Stack>
-        <FormControlLabel
-          sx={{ py: 1 }}
-          control={
-            <Switch
-              checked={isReceiverDefault}
-              onChange={() => setReceiverAsDefault((val) => !val)}
-            />
-          }
-          label={
-            <Typography variant="subtitle2">
-              Use as default payment option
-            </Typography>
-          }
+      </InputWrapper>
+
+      <InputWrapper
+        title="Receiver"
+        tooltip="Set your wallet or multisig address on the relevant network"
+      >
+        <TextField
+          value={receiver}
+          onChange={({ target }) => setReceiver(target.value as `0x${string}`)}
         />
-      </Stack>
+      </InputWrapper>
+
+      <FormControlLabel
+        control={
+          <Switch
+            checked={isReceiverDefault}
+            onChange={() => setReceiverAsDefault((val) => !val)}
+          />
+        }
+        label={<Typography>Use as default payment option</Typography>}
+      />
+
       <Button
         color="primary"
         variant="outlined"

@@ -1,18 +1,17 @@
+import CloseIcon from "@mui/icons-material/Close";
 import {
-  Box,
   Button,
+  Paper,
   Stack,
   Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
+import superTokenList from "@superfluid-finance/tokenlist";
 import { ChainId } from "@superfluid-finance/widget";
+import Image from "next/image";
 import { FC, ReactNode } from "react";
 import { networks } from "../../networkDefinitions";
-import superTokenList from "@superfluid-finance/tokenlist";
-import EditIcon from "@mui/icons-material/Edit";
-import CloseIcon from "@mui/icons-material/Close";
-import Image from "next/image";
 
 type PaymentOptionRowProps = {
   label: string;
@@ -63,18 +62,8 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
     (token) => token.address === superToken.address
   );
   return (
-    <Stack
-      direction="column"
-      sx={{
-        position: "relative",
-        border: `1.5px solid ${theme.palette.grey[100]}`,
-        borderRadius: 4,
-        p: 2,
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <Stack direction="column" gap={1} sx={{ width: "100%", mb: 2 }}>
+    <Paper variant="outlined" sx={{ p: 2 }}>
+      <Stack direction="column" gap={1} sx={{ mb: 2 }}>
         <PaymentOptionRow
           label="Network"
           value={
@@ -160,7 +149,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
           <CloseIcon sx={{ fontSize: 16, ml: 1 }} />
         </Button>
       </Stack>
-    </Stack>
+    </Paper>
   );
 };
 
