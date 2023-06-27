@@ -24,7 +24,6 @@ const wagmiConfig = createConfig({
   autoConnect: false,
   connectors: w3mConnectors({
     projectId,
-    version: 2,
     chains: supportedNetworks,
   }),
   publicClient,
