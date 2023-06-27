@@ -54,8 +54,6 @@ export default function Home() {
   return (
     <Box sx={{ display: "flex", position: "relative", height: "100vh" }}>
       <Drawer
-        // p={2}
-        // gap={2}
         variant="permanent"
         anchor="left"
         sx={{
