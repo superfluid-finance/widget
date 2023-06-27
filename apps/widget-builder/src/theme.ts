@@ -38,6 +38,7 @@ const theme = createTheme({
       primary: "#000",
       secondary: "#656E78",
     },
+    divider: "#DBDEE2",
   },
   typography: {
     fontSize: 16,

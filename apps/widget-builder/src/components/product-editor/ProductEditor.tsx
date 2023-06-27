@@ -27,7 +27,11 @@ const ProductEditor: FC = () => {
             control={control}
             name="productDetails.name"
             render={({ field: { value, onChange } }) => (
-              <TextField value={value} onChange={onChange} />
+              <TextField
+                placeholder="Your Product Name"
+                value={value}
+                onChange={onChange}
+              />
             )}
           />
         </InputWrapper>
@@ -38,6 +42,7 @@ const ProductEditor: FC = () => {
             name="productDetails.description"
             render={({ field: { value, onChange } }) => (
               <TextField
+                placeholder="Your Product Description"
                 multiline
                 minRows={4}
                 value={value}

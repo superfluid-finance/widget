@@ -18,8 +18,8 @@ const demoProductDetails: ProductDetails = {
 };
 
 const defaultProductDetails: ProductDetails = {
-  name: "Your Product Name",
-  description: "Your Description",
+  name: "",
+  description: "",
   imageURI: "",
 };
 
