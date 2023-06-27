@@ -2,6 +2,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import {
   Autocomplete,
   Avatar,
+  Box,
   Button,
   Chip,
   FormControlLabel,
@@ -23,7 +24,6 @@ import tokenList, {
   TokenInfo,
 } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
-import Image from "next/image";
 import { FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { Network, networks } from "../../networkDefinitions";
@@ -268,7 +268,10 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
         title="Flow Rate"
         tooltip="Set the amount of tokens per month for the payment"
       >
-        <Stack direction="row" gap={"-1px"}>
+        <Stack
+          gap="-1px"
+          sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
+        >
           <TextField
             fullWidth
             value={flowRateAmount}
