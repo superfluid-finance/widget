@@ -72,7 +72,10 @@ const ImageSelect: FC<ImageSelectProps> = ({
             ref={inputRef}
             onChange={handleFileUpload}
           />
-          <Box
+          <Stack
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
             sx={{
               width: "100%",
               p: 0.5,
@@ -83,31 +86,29 @@ const ImageSelect: FC<ImageSelectProps> = ({
               height: 90,
             }}
           >
-            <Stack direction="column">
-              <Typography
-                variant="caption"
-                sx={{
-                  color: theme.palette.grey[500],
-                  textTransform: "none",
-                  textAlign: "left",
-                }}
-              >
-                Optional
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <AddIcon
-                  fontSize="large"
-                  sx={{ color: theme.palette.grey[700] }}
-                />
-              </Box>
-            </Stack>
-          </Box>
+            <Typography
+              variant="caption"
+              sx={{
+                color: theme.palette.grey[500],
+                textTransform: "none",
+                textAlign: "left",
+              }}
+            >
+              Optional
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <AddIcon
+                fontSize="large"
+                sx={{ color: theme.palette.grey[700] }}
+              />
+            </Box>
+          </Stack>
         </Button>
       )}
     </Stack>

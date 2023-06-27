@@ -57,7 +57,11 @@ export default function MyApp(props: MyAppProps) {
           <Component {...pageProps} />
           <Analytics />
         </WagmiConfig>
-        <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+        <Web3Modal
+          projectId={projectId}
+          ethereumClient={ethereumClient}
+          themeVariables={{ "--w3m-z-index": "1210" }}
+        />
       </ThemeProvider>
     </CacheProvider>
   );
