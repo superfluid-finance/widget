@@ -92,7 +92,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
     useState<Network>(defaultNetwork);
   const [selectedToken, setSelectedToken] =
     useState<SuperTokenInfo>(defaultToken);
-  console.log("Selected token", selectedToken);
+
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
