@@ -1,5 +1,12 @@
 # @superfluid-finance/widget
 
+## 0.0.7
+
+### Patch Changes
+
+- 6cf3940: Update dependencies
+- c15aa92: Update Superfluid Token List
+
 ## 0.0.6
 
 ### Patch Changes
