@@ -30,7 +30,7 @@ const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
     download={`widget.json`}
     sx={{ color: "white" }}
   >
-    download json
+    Download JSON
   </Button>
 );
 
