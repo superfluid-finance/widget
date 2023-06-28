@@ -62,7 +62,7 @@ export default function TokenAutocomplete() {
               InputProps={{
                 ...params.InputProps,
                 startAdornment: value ? (
-                  <TokenAvatar tokenInfo={value.superToken} />
+                  <TokenAvatar tokenInfo={value.superToken} sx={{ ml: 1 }} />
                 ) : null,
               }}
               size="small"

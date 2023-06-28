@@ -44,7 +44,10 @@ export default function NetworkAutocomplete() {
               InputProps={{
                 ...params.InputProps,
                 startAdornment: value ? (
-                  <NetworkAvatar network={value} />
+                  <NetworkAvatar
+                    network={value}
+                    AvatarProps={{ sx: { ml: 1 } }}
+                  />
                 ) : null,
               }}
               size="small"

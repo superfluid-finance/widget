@@ -1,6 +1,7 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Box,
+  Drawer,
   FormControlLabel,
   Stack,
   Switch,
@@ -27,9 +28,7 @@ import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
 import useDemoMode from "../hooks/useDemoMode";
 
-const labelStyle = {
-  fontWeight: 500,
-};
+const drawerWidth = "480px";
 
 export default function Home() {
   const theme = useTheme();
@@ -53,55 +52,67 @@ export default function Home() {
   ]);
 
   return (
-    <Stack direction="row" sx={{ position: "relative" }}>
-      <Stack
+    <Box sx={{ display: "flex", position: "relative", height: "100vh" }}>
+      <Drawer
+        variant="permanent"
+        anchor="left"
         sx={{
-          width: 600,
-          height: "100vh",
+          width: drawerWidth,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+          },
         }}
       >
-        <Stack direction="column" p={2} gap={2} sx={{ overflow: "auto" }}>
-          <Stack
-            direction="row"
-            sx={{ alignItems: "center", justifyContent: "space-between" }}
-            gap={1}
-          >
-            <Typography variant="h6" sx={labelStyle}>
-              Widget Customization
-            </Typography>
-            <FormControlLabel
-              control={<Switch checked={demoMode} onChange={toggleDemoMode} />}
-              label={<Typography variant="subtitle2">Demo mode</Typography>}
-            />
-          </Stack>
-          <TabContext value={activeTab}>
-            <TabList onChange={(_, value) => setActiveTab(value)}>
-              <Tab label="Product" value="product" />
-              <Tab label="UI" value="ui" />
-              <Tab label="Export" value="export" />
-            </TabList>
-            <FormProvider {...formMethods}>
-              <TabPanel value="ui">
-                <UiEditor />
-              </TabPanel>
-              <TabPanel value="product">
-                <ProductEditor />
-              </TabPanel>
-              <TabPanel value="export">
-                <ExportEditor />
-              </TabPanel>
-            </FormProvider>
-          </TabContext>
+        <Stack
+          direction="row"
+          sx={{
+            alignItems: "center",
+            justifyContent: "space-between",
+            px: 3.5,
+            pt: 3.5,
+            pb: 1,
+          }}
+          gap={1}
+        >
+          <Typography variant="subtitle1" fontWeight="500">
+            Widget Customization
+          </Typography>
+          <FormControlLabel
+            control={<Switch checked={demoMode} onChange={toggleDemoMode} />}
+            label={<Typography>Demo</Typography>}
+          />
         </Stack>
-      </Stack>
-      <Box
+
+        <TabContext value={activeTab}>
+          <TabList onChange={(_, value) => setActiveTab(value)} sx={{ px: 2 }}>
+            <Tab label="Product" value="product" />
+            <Tab label="UI" value="ui" />
+            <Tab label="Export" value="export" />
+          </TabList>
+          <FormProvider {...formMethods}>
+            <TabPanel value="ui">
+              <UiEditor />
+            </TabPanel>
+            <TabPanel value="product">
+              <ProductEditor />
+            </TabPanel>
+            <TabPanel value="export">
+              <ExportEditor />
+            </TabPanel>
+          </FormProvider>
+        </TabContext>
+      </Drawer>
+      <Stack
+        component="main"
+        alignItems="center"
         sx={{
-          width: "100%",
+          flexGrow: 1,
           backgroundColor: theme.palette.grey[50],
-          display: "flex",
-          justifyContent: "center",
           position: "relative",
-          pt: "5vh",
+          py: "8vh",
+          overflow: "auto",
         }}
       >
         <WidgetPreview
@@ -155,8 +166,8 @@ export default function Home() {
             )}
           />
         </Box>
-      </Box>
+      </Stack>
       <TermsAndPrivacy />
-    </Stack>
+    </Box>
   );
 }

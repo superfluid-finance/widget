@@ -1,23 +1,11 @@
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Divider, Stack, TextField, Typography } from "@mui/material";
 import { FC } from "react";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
-import SelectPaymentOption from "../select-payment-option/SelectPaymentOption";
-import { networks } from "../../networkDefinitions";
-import { ChainId } from "@superfluid-finance/widget";
-import tokenList from "@superfluid-finance/tokenlist";
-import { WidgetProps } from "../widget-preview/WidgetPreview";
 import theme from "../../theme";
+import InputWrapper from "../form/InputWrapper";
 import PaymentOptionView from "../payment-option-view/PaymentOptionView";
+import SelectPaymentOption from "../select-payment-option/SelectPaymentOption";
+import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 const ProductEditor: FC = () => {
   const { control, watch, setValue } = useFormContext<WidgetProps>();
@@ -32,24 +20,29 @@ const ProductEditor: FC = () => {
   return (
     <Stack gap={1}>
       <Stack mb={4} gap={2}>
-        <Typography variant="h6">Payment Configuration</Typography>
-        <Stack direction="column" gap={1}>
-          <Typography variant="subtitle2">Product Name</Typography>
+        <Typography variant="subtitle1">Payment Configuration</Typography>
+
+        <InputWrapper title="Product Name">
           <Controller
             control={control}
             name="productDetails.name"
             render={({ field: { value, onChange } }) => (
-              <TextField value={value} onChange={onChange} />
+              <TextField
+                placeholder="Your Product Name"
+                value={value}
+                onChange={onChange}
+              />
             )}
           />
-        </Stack>
-        <Stack direction="column" gap={1}>
-          <Typography variant="subtitle2">Product Description</Typography>
+        </InputWrapper>
+
+        <InputWrapper title="Product Description">
           <Controller
             control={control}
             name="productDetails.description"
             render={({ field: { value, onChange } }) => (
               <TextField
+                placeholder="Your Product Description"
                 multiline
                 minRows={4}
                 value={value}
@@ -57,10 +50,11 @@ const ProductEditor: FC = () => {
               />
             )}
           />
-        </Stack>
+        </InputWrapper>
       </Stack>
+
       <Stack direction="column" gap={2}>
-        <Typography variant="h6">Add Payment Options</Typography>
+        <Typography variant="subtitle1">Add Payment Options</Typography>
         <Controller
           control={control}
           name="paymentDetails.paymentOptions"
@@ -86,11 +80,8 @@ const ProductEditor: FC = () => {
               alignItems: "center",
             }}
           >
-            <Typography variant="h6">Payment Details Summary</Typography>
-            <Typography
-              variant="subtitle2"
-              sx={{ color: theme.palette.grey[500] }}
-            >
+            <Typography variant="subtitle1">Payment Details Summary</Typography>
+            <Typography sx={{ color: theme.palette.grey[500] }}>
               Added: {fields.length}
             </Typography>
           </Stack>

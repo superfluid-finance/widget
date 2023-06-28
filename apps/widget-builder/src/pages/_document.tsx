@@ -9,7 +9,7 @@ import Document, {
 } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import { AppType } from "next/app";
-import theme, { roboto } from "../theme";
+import theme, { notoSans } from "../theme";
 import createEmotionCache from "../createEmotionCache";
 import { MyAppProps } from "./_app";
 
@@ -19,7 +19,7 @@ interface MyDocumentProps extends DocumentProps {
 
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
-    <Html lang="en" className={roboto.className}>
+    <Html lang="en" className={notoSans.className}>
       <Head>
         <title>Superfluid Checkout Builder | Web3 Subscriptions Toolkit</title>
         <meta
