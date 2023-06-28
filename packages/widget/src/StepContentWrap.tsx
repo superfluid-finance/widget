@@ -1,28 +1,24 @@
 import {
   Box,
-  Button,
   Collapse,
   Fade,
-  FormControlLabel,
-  FormGroup,
   Input,
   Link,
   Paper,
   Stack,
-  Switch,
-  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
-import { Controller, useFormContext } from "react-hook-form";
-import { DraftFormValues } from "./formValues";
-import { FC, PropsWithChildren, useMemo, useState } from "react";
-import { useWidget } from "./WidgetContext";
-import { TokenAvatar } from "./TokenAvatar";
-import { StepperContinueButton } from "./StepperContinueButton";
-import { Address, useBalance } from "wagmi";
-import { UpgradeIcon } from "./previews/CommandPreview";
 import { TokenInfo } from "@superfluid-finance/tokenlist";
+import { FC, PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import { parseEther } from "viem";
+import { Address, useBalance } from "wagmi";
+import { StepperContinueButton } from "./StepperContinueButton";
+import { TokenAvatar } from "./TokenAvatar";
+import { useWidget } from "./WidgetContext";
+import { DraftFormValues } from "./formValues";
+import { UpgradeIcon } from "./previews/CommandPreview";
 
 interface WrapCardProps extends PropsWithChildren {
   token?: TokenInfo;
@@ -83,6 +79,7 @@ export default function StepContentWrap() {
 
   const {
     control: c,
+    setValue,
     watch,
     formState: { isValid, isValidating },
   } = useFormContext<DraftFormValues>();
@@ -93,7 +90,7 @@ export default function StepContentWrap() {
   ]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
-  const { getUnderlyingToken, paymentDetails } = useWidget();
+  const { getUnderlyingToken } = useWidget();
 
   // Find the underlying token of the Super Token.
   const underlyingToken = useMemo(() => {
@@ -134,16 +131,18 @@ export default function StepContentWrap() {
   );
 
   const showSkip = useMemo(() => {
-    if (!paymentOptionWithTokenInfo || !superTokenBalance) return;
+    if (!paymentOptionWithTokenInfo || !superTokenBalance) return false;
 
-    console.log(
-      "VALUE",
-      superTokenBalance?.value,
-      paymentOptionWithTokenInfo.paymentOption.flowRate
-    );
-    // paymentOptionWithTokenInfo.paymentOption.flowRate
-    return !!superTokenBalance?.value;
+    const flowRate = paymentOptionWithTokenInfo.paymentOption.flowRate;
+
+    if (!flowRate) return false;
+
+    const minAmount = parseEther(flowRate.amountEther);
+
+    return BigInt(superTokenBalance.value) > minAmount;
   }, [superTokenBalance]);
+
+  const onSkipWrapping = () => setValue("wrapAmountEther", "" as `${number}`);
 
   const onInputFocus = () => setFocusedOnce(true);
 
@@ -253,7 +252,11 @@ export default function StepContentWrap() {
             Continue
           </StepperContinueButton>
           {showSkip && (
-            <StepperContinueButton variant="outlined" color="primary">
+            <StepperContinueButton
+              variant="outlined"
+              color="primary"
+              onClick={onSkipWrapping}
+            >
               Skip this step
             </StepperContinueButton>
           )}
