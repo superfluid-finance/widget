@@ -40,7 +40,7 @@ jobs:
         run: xvfb-run pnpm playwright test
         env:
           BASE_URL: ${{ github.event.deployment_status.environment_url }}
-          CURRENTS_PROJECT_ID: ${{ secrets.WIDGET_CURRENTS_PROJECT_ID }}
+          CURRENTS_PROJECT_ID: 3TQU8o
           CURRENTS_RECORD_KEY: ${{ secrets.CURRENTS_RECORD_KEY }}
           CURRENTS_CI_BUILD_ID: ${{ github.repository }}-${{ github.run_id }}-${{ github.run_attempt}}
           WIDGET_WALLET_PRIVATE_KEY: ${{ secrets.WIDGET_WALLET_PRIVATE_KEY}}
