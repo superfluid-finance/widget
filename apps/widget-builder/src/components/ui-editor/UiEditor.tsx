@@ -15,6 +15,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import useFontOptions from "../../hooks/useFontOptions";
 import ImageSelect from "../image-select/ImageSelect";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
+import InputWrapper from "../form/InputWrapper";
 
 const UiEditor: FC = () => {
   const { control, watch } = useFormContext<WidgetProps>();
@@ -52,26 +53,22 @@ const UiEditor: FC = () => {
           )}
         /> */}
       </Stack>
-      <Stack>
-        <Controller
-          control={control}
-          name="displaySettings.darkMode"
-          render={({ field: { value, onChange } }) => (
-            <FormControlLabel
-              control={<Switch checked={value ?? false} onChange={onChange} />}
-              label={
-                <Typography variant="subtitle2">{`Dark mode: ${
-                  value ? "on" : "off"
-                }`}</Typography>
-              }
-            />
-          )}
-        />
-      </Stack>
-      <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">
-          Container border-radius: {displaySettings.containerRadius}
-        </Typography>
+      <Controller
+        control={control}
+        name="displaySettings.darkMode"
+        render={({ field: { value, onChange } }) => (
+          <FormControlLabel
+            control={<Switch checked={value ?? false} onChange={onChange} />}
+            label={
+              <Typography>{`Dark mode: ${value ? "on" : "off"}`}</Typography>
+            }
+          />
+        )}
+      />
+
+      <InputWrapper
+        title={`Container border-radius: ${displaySettings.containerRadius}`}
+      >
         <Controller
           control={control}
           name="displaySettings.containerRadius"
@@ -85,11 +82,10 @@ const UiEditor: FC = () => {
             />
           )}
         />
-      </Stack>
-      <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">
-          Field border-radius: {displaySettings.inputRadius}
-        </Typography>
+      </InputWrapper>
+      <InputWrapper
+        title={`Field border-radius: ${displaySettings.inputRadius}`}
+      >
         <Controller
           control={control}
           name="displaySettings.inputRadius"
@@ -103,12 +99,11 @@ const UiEditor: FC = () => {
             />
           )}
         />
-      </Stack>
+      </InputWrapper>
 
-      <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">
-          Button border-radius: {displaySettings.buttonRadius}
-        </Typography>
+      <InputWrapper
+        title={`Button border-radius: ${displaySettings.buttonRadius}`}
+      >
         <Controller
           control={control}
           name="displaySettings.buttonRadius"
@@ -122,48 +117,41 @@ const UiEditor: FC = () => {
             />
           )}
         />
-      </Stack>
+      </InputWrapper>
 
       <Stack direction="row" gap={1}>
-        <Stack direction="column" gap={1}>
-          <Typography variant="subtitle2">Primary color</Typography>
-          <Stack direction="row" gap={1}>
-            <Controller
-              control={control}
-              name="displaySettings.primaryColor"
-              render={({ field: { value, onChange } }) => (
-                <MuiColorInput
-                  fallbackValue={"#000"}
-                  format="hex"
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-            />
-          </Stack>
-        </Stack>
+        <InputWrapper title="Primary color">
+          <Controller
+            control={control}
+            name="displaySettings.primaryColor"
+            render={({ field: { value, onChange } }) => (
+              <MuiColorInput
+                fallbackValue={"#000"}
+                format="hex"
+                value={value}
+                onChange={onChange}
+              />
+            )}
+          />
+        </InputWrapper>
 
-        <Stack direction="column" gap={1}>
-          <Typography variant="subtitle2">Secondary color</Typography>
-          <Stack direction="row" gap={1}>
-            <Controller
-              control={control}
-              name="displaySettings.secondaryColor"
-              render={({ field: { value, onChange } }) => (
-                <MuiColorInput
-                  fallbackValue={"#000"}
-                  format="hex"
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-            />
-          </Stack>
-        </Stack>
+        <InputWrapper title="Secondary color">
+          <Controller
+            control={control}
+            name="displaySettings.secondaryColor"
+            render={({ field: { value, onChange } }) => (
+              <MuiColorInput
+                fallbackValue={"#000"}
+                format="hex"
+                value={value}
+                onChange={onChange}
+              />
+            )}
+          />
+        </InputWrapper>
       </Stack>
 
-      <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">Font Family</Typography>
+      <InputWrapper title="Font Family">
         <Controller
           control={control}
           name="displaySettings.font"
@@ -185,10 +173,9 @@ const UiEditor: FC = () => {
             />
           )}
         />
-      </Stack>
+      </InputWrapper>
 
-      <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">Stepper</Typography>
+      <InputWrapper title="Stepper">
         <Controller
           control={control}
           name="displaySettings.stepperOrientation"
@@ -219,7 +206,7 @@ const UiEditor: FC = () => {
             </ToggleButtonGroup>
           )}
         />
-      </Stack>
+      </InputWrapper>
     </Stack>
   );
 };
