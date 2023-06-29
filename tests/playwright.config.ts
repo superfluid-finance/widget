@@ -16,7 +16,7 @@ export default defineConfig({
   },
   timeout: 300000,
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: process.env.BASE_URL,
     trace: "on-first-retry",
     timezoneId: "Europe/Riga",
     viewport: { width: 1280, height: 720 },

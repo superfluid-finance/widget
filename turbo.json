@@ -39,7 +39,8 @@
         "CI",
         "METAMASK_VERSION",
         "HEADLESS_MODE",
-        "WIDGET_WALLET_PRIVATE_KEY"
+        "WIDGET_WALLET_PRIVATE_KEY",
+        "BASE_URL"
       ]
     },
     "lint": {},
