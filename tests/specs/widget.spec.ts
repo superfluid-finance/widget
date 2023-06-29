@@ -29,10 +29,9 @@ test.skip("Creating a flow", async ({ page }) => {
 
 test("Modifying a flow", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
+  await widgetPage.selectPaymentNetwork("Goerli");
+  await widgetPage.selectPaymentToken("fUSDCx");
   await widgetPage.connectWallet();
-  //   await widgetPage.selectPaymentNetwork("Goerli");
-  //   await widgetPage.selectPaymentToken("fUSDCx");
-  //   await widgetPage.clickContinueButton();
   await widgetPage.setWrapAmount("0");
   await widgetPage.clickContinueButton();
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
@@ -50,10 +49,9 @@ test("Modifying a flow", async ({ page }) => {
 
 test("Approving and wrapping tokens", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
+  await widgetPage.selectPaymentNetwork("Goerli");
+  await widgetPage.selectPaymentToken("fUSDCx");
   await widgetPage.connectWallet();
-  //   await widgetPage.selectPaymentNetwork("Goerli");
-  //   await widgetPage.selectPaymentToken("fUSDCx");
-  //   await widgetPage.clickContinueButton();
   await widgetPage.setWrapAmount("1");
   await widgetPage.clickContinueButton();
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
