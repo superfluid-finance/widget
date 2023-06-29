@@ -12,7 +12,16 @@ import {
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { z } from "zod";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
-import { AppBar, Stack, Toolbar, Typography, debounce } from "@mui/material";
+import {
+  Alert,
+  AppBar,
+  Box,
+  Snackbar,
+  Stack,
+  Toolbar,
+  Typography,
+  debounce,
+} from "@mui/material";
 import { UseFormSetValue } from "react-hook-form";
 
 type StandaloneCodeEditor = Parameters<OnMount>[0];
@@ -78,20 +87,23 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   }, []);
 
   const [saved, setSaved] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>();
+
   const debouncedSideEffect = useCallback(
     debounce((isJsonValid: boolean, editorValue: string) => {
+      setErrorMessage(null);
       if (isJsonValid) {
-        try {
-          const updatedValue = schema.parse(JSON.parse(editorValue));
-          setValue("productDetails", updatedValue.productDetails);
-          setValue("type", updatedValue.type);
-          setValue("paymentDetails", updatedValue.paymentDetails);
+        const parseResult = schema.safeParse(JSON.parse(editorValue));
+        if (parseResult.success) {
+          setValue("productDetails", parseResult.data.productDetails);
+          setValue("type", parseResult.data.type);
+          setValue("paymentDetails", parseResult.data.paymentDetails);
           setSaved(true);
           setTimeout(() => {
             setSaved(false);
           }, 1000);
-        } catch (e) {
-          console.error(e, "Invalid JSON");
+        } else {
+          setErrorMessage(parseResult.error.message);
         }
       }
     }, 250),
@@ -99,7 +111,9 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   );
 
   useEffect(() => {
-    debouncedSideEffect(isJsonValid, editorValue);
+    if (initialValue !== editorValue) {
+      debouncedSideEffect(isJsonValid, editorValue);
+    }
     return () => {
       debouncedSideEffect.clear();
     };
@@ -125,6 +139,19 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
           )}
         </Stack>
       </AppBar>
+      {errorMessage && (
+        <Snackbar
+          open={!!errorMessage}
+          autoHideDuration={5000}
+          ClickAwayListenerProps={{ mouseEvent: false }}
+          onClose={() => setErrorMessage(null)}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        >
+          <Alert variant="standard" severity="error">
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
       <MonacoEditor
         defaultLanguage="json"
         theme="vs-light"

@@ -96,6 +96,7 @@ export default function Home() {
             <Tab label="UI" value="ui" />
             <Tab label="Export" value="export" />
           </TabList>
+
           <FormProvider {...formMethods}>
             <TabPanel value="ui">
               <UiEditor />
