@@ -34,21 +34,13 @@ jobs:
           sudo apt-get install --no-install-recommends -y \
           fluxbox \
           xvfb          
-
-      - name: Run Playwright tests
-        run: |
-          Xvfb :0 -screen 0 1024x768x24 -listen tcp -ac &
-          fluxbox
-        env: 
-          DISPLAY: :0.0  
           
-
+        # https://playwright.dev/docs/next/ci#running-headed  
       - name: Run Playwright tests
-        run: pnpm playwright test
+        run: xvfb-run pnpm playwright test
         env:
           BASE_URL: ${{ github.event.deployment_status.environment_url }}
           CURRENTS_PROJECT_ID: ${{ secrets.WIDGET_CURRENTS_PROJECT_ID }}
           CURRENTS_RECORD_KEY: ${{ secrets.CURRENTS_RECORD_KEY }}
           CURRENTS_CI_BUILD_ID: ${{ github.repository }}-${{ github.run_id }}-${{ github.run_attempt}}
-          DISPLAY: :0.0
           CI: true
