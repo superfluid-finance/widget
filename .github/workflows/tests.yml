@@ -38,8 +38,13 @@ jobs:
       - name: Run Playwright tests
         run: |
           Xvfb :0 -screen 0 1024x768x24 -listen tcp -ac &
-          fluxbox &
-          pnpm playwright test
+          fluxbox
+        env: 
+          DISPLAY: :0.0  
+          
+
+      - name: Run Playwright tests
+        run: pnpm playwright test
         env:
           BASE_URL: ${{ github.event.deployment_status.environment_url }}
           CURRENTS_PROJECT_ID: ${{ secrets.WIDGET_CURRENTS_PROJECT_ID }}
