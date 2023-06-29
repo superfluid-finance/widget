@@ -18,6 +18,7 @@ import {
   WidgetProps,
   mapDisplaySettingsToTheme,
 } from "../widget-preview/WidgetPreview";
+import { SuperfluidButton } from "@superfluid-finance/widget/components";
 
 type ExportOption = "json" | "ipfs";
 
@@ -51,16 +52,15 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
       </LoadingButton>
 
       {ipfsHash && (
-        <Stack direction="row" sx={{ alignItems: "center" }}>
-          <Typography variant="body2">Go to our hosted widget:</Typography>
+        <Stack direction="column" sx={{ alignItems: "center", mt: 4 }} gap={2}>
+          <Typography variant="subtitle2" textAlign="center">
+            Your config is published to IPFS. Test it with our hosted widget:
+          </Typography>
 
-          <IconButton
-            href={`${process.env.NEXT_PUBLIC_EXPORT_BASE_URL}/${ipfsHash}`}
-            target="_blank"
-            size="large"
-          >
-            <OpenInNewIcon />
-          </IconButton>
+          <SuperfluidButton
+            fullWidth
+            widgetUrl={`${process.env.NEXT_PUBLIC_EXPORT_BASE_URL}/${ipfsHash}`}
+          />
         </Stack>
       )}
     </Stack>
@@ -88,7 +88,7 @@ const ExportEditor: FC = () => {
     "productDetails",
     "paymentDetails",
     "displaySettings",
-    "layout",
+    "type",
   ]);
 
   const { base64: productImageBase64 } = useReadAsBase64(
@@ -100,12 +100,12 @@ const ExportEditor: FC = () => {
     () => ({
       productDetails: {
         ...productDetails,
-        imageURI: productImageBase64 ?? "",
+        imageURI: productImageBase64,
         // logo: logoBase64,
       },
       paymentDetails,
       layout,
-      theme: mapDisplaySettingsToTheme(layout, displaySettings),
+      theme: mapDisplaySettingsToTheme(displaySettings),
     }),
     [
       productDetails,

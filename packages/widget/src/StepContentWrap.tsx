@@ -1,27 +1,24 @@
 import {
   Box,
-  Button,
   Collapse,
   Fade,
-  FormControlLabel,
-  FormGroup,
   Input,
+  Link,
   Paper,
   Stack,
-  Switch,
-  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
-import { Controller, useFormContext } from "react-hook-form";
-import { DraftFormValues } from "./formValues";
-import { FC, PropsWithChildren, useMemo, useState } from "react";
-import { useWidget } from "./WidgetContext";
-import { TokenAvatar } from "./TokenAvatar";
-import { StepperContinueButton } from "./StepperContinueButton";
-import { Address, useBalance } from "wagmi";
-import { UpgradeIcon } from "./previews/CommandPreview";
 import { TokenInfo } from "@superfluid-finance/tokenlist";
+import { FC, PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import { parseEther } from "viem";
+import { Address, useBalance } from "wagmi";
+import { StepperContinueButton } from "./StepperContinueButton";
+import { TokenAvatar } from "./TokenAvatar";
+import { useWidget } from "./WidgetContext";
+import { DraftFormValues } from "./formValues";
+import { UpgradeIcon } from "./previews/CommandPreview";
 
 interface WrapCardProps extends PropsWithChildren {
   token?: TokenInfo;
@@ -82,6 +79,7 @@ export default function StepContentWrap() {
 
   const {
     control: c,
+    setValue,
     watch,
     formState: { isValid, isValidating },
   } = useFormContext<DraftFormValues>();
@@ -131,6 +129,20 @@ export default function StepContentWrap() {
         }
       : undefined
   );
+
+  const showSkip = useMemo(() => {
+    if (!paymentOptionWithTokenInfo || !superTokenBalance) return false;
+
+    const flowRate = paymentOptionWithTokenInfo.paymentOption.flowRate;
+
+    if (!flowRate) return false;
+
+    const minAmount = parseEther(flowRate.amountEther);
+
+    return BigInt(superTokenBalance.value) > minAmount;
+  }, [superTokenBalance]);
+
+  const onSkipWrapping = () => setValue("wrapAmountEther", "" as `${number}`);
 
   const onInputFocus = () => setFocusedOnce(true);
 
@@ -229,22 +241,33 @@ export default function StepContentWrap() {
           )}
         /> */}
 
-      <Stack
-        direction="column"
-        justifyContent="center"
-        alignItems="stretch"
-        spacing={1}
-      >
-        <StepperContinueButton disabled={!isValid || isValidating}>
-          Continue
-        </StepperContinueButton>
-        <Button
-          variant="text"
+      <Stack direction="column" gap={2.5} textAlign="center">
+        <Stack
+          direction="column"
+          justifyContent="center"
+          alignItems="stretch"
+          gap={1.5}
+        >
+          <StepperContinueButton disabled={!isValid || isValidating}>
+            Continue
+          </StepperContinueButton>
+          {showSkip && (
+            <StepperContinueButton
+              variant="outlined"
+              color="primary"
+              onClick={onSkipWrapping}
+            >
+              Skip this step
+            </StepperContinueButton>
+          )}
+        </Stack>
+        <Link
+          underline="hover"
           href="https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens"
           target="_blank"
         >
           Why do I need to wrap tokens?
-        </Button>
+        </Link>
       </Stack>
     </Stack>
   );

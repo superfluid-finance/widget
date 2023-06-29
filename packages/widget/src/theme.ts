@@ -311,6 +311,13 @@ export function getThemedComponents(
           },
         },
       },
+      MuiLink: {
+        styleOverrides: {
+          root: {
+            ...typography.body1,
+          },
+        },
+      },
       MuiSvgIcon: {
         styleOverrides: {
           fontSizeSmall: {
@@ -393,7 +400,6 @@ export function getThemedComponents(
             width: "1.5rem",
             height: "1.5rem",
           },
-          completed: {},
         },
       },
       MuiStepLabel: {
@@ -403,17 +409,10 @@ export function getThemedComponents(
             paddingBottom: 24,
             paddingLeft: 28,
             paddingRight: 28,
-            height: 28,
-          },
-          labelContainer: {
-            ...typography.caption,
           },
           label: {
             ...typography.subtitle2,
             fontWeight: 500,
-            "&.Mui-completed": {
-              color: coreThemeOptions.palette.text?.secondary,
-            },
           },
         },
       },

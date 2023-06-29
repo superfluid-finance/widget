@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { faker } from "@faker-js/faker";
 import {
   PaymentDetails,
@@ -107,10 +107,8 @@ const demoPaymentDetails: PaymentDetails & { defaultReceiverAddress: string } =
     ],
   };
 
-const defaultPaymentDetails: PaymentDetails & {
-  defaultReceiverAddress: string;
-} = {
-  defaultReceiverAddress: "",
+const defaultPaymentDetails: PaymentDetails = {
+  // defaultReceiverAddress: "",
   paymentOptions: [
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
@@ -126,7 +124,7 @@ const defaultPaymentDetails: PaymentDetails & {
   ],
 };
 
-const layout: Layout = "page";
+const type: Layout = "page";
 
 const displaySettings: DisplaySettings = {
   darkMode: false,
@@ -155,13 +153,13 @@ const useDemoMode = () => {
         ? {
             productDetails: demoProductDetails,
             paymentDetails: demoPaymentDetails,
-            layout,
+            type,
             displaySettings,
           }
         : {
             productDetails: defaultProductDetails,
             paymentDetails: defaultPaymentDetails,
-            layout,
+            type,
             displaySettings,
           }),
     }),

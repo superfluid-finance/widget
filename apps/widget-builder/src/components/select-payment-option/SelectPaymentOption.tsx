@@ -44,9 +44,7 @@ const renderToken = (token: TokenInfo) => {
 };
 
 type PaymentOptionSelectorProps = {
-  defaultReceiverAddress: `0x${string}`;
   onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
-  setDefaultReceiver: (address: string) => void;
 };
 
 const defaultNetwork = {
@@ -83,11 +81,7 @@ const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
   );
 };
 
-const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
-  onAdd,
-  defaultReceiverAddress,
-  setDefaultReceiver,
-}) => {
+const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
   const [selectedNetwork, setSelectedNetwork] =
     useState<Network>(defaultNetwork);
@@ -127,15 +121,11 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
       return;
     }
 
-    if (isReceiverDefault) {
-      setDefaultReceiver(receiver);
-    }
-
     const network = networks.find((n) => n.chainId === selectedToken.chainId);
 
-    if (network) {
+    if (network && receiver) {
       onAdd({
-        receiverAddress: receiver === "" ? defaultReceiverAddress : receiver,
+        receiverAddress: receiver,
         superToken: {
           address: selectedToken.address as `0x${string}`,
         },

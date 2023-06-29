@@ -35,7 +35,6 @@ export default function Stepper() {
       {
         buttonText: "Select network and token",
         shortText: "Network & Token",
-        optional: false,
         Content: StepContentPaymentOption,
       },
       // Add wrap step only when Super Token has an underlying token.
@@ -45,7 +44,6 @@ export default function Stepper() {
             {
               buttonText: "Wrap to Super Tokens",
               shortText: "Wrap",
-              optional: true,
               Content: StepContentWrap,
             },
           ]
@@ -53,7 +51,6 @@ export default function Stepper() {
       {
         buttonText: "Review the transaction(s)",
         shortText: "Review",
-        optional: false,
         Content: StepContentReview,
       },
     ],
@@ -107,10 +104,7 @@ export default function Stepper() {
 
                       return (
                         <Step key={index}>
-                          <StepButton
-                            optional={step.optional ? "optional" : undefined}
-                            onClick={() => setActiveStep(index)}
-                          >
+                          <StepButton onClick={() => setActiveStep(index)}>
                             <StepLabel
                               sx={{ position: "relative", width: "100%" }}
                             >
