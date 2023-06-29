@@ -17,33 +17,28 @@ export const ConfigEditorDrawer: FC<ConfigEditorDrawerProps> = ({
   setIsOpen,
   value,
   setValue,
-}) => {
-  return (
-    <Drawer
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
-      keepMounted={true}
-      anchor="right"
-      PaperProps={{
-        sx: { width: 500 },
-      }}
-    >
-      <Box py={2}>
-        <Typography variant="h6" textAlign="center">
-          Current Config
-        </Typography>
-      </Box>
-
-      <ConfigEditor value={value} setValue={setValue} />
-      <Button
-        onClick={() => setIsOpen(false)}
-        variant="text"
-        endIcon={<CloseIcon />}
-      >
-        Close
-      </Button>
-    </Drawer>
-  );
-};
+}) => (
+  <Drawer
+    open={isOpen}
+    onClose={() => setIsOpen(false)}
+    keepMounted={true}
+    anchor="right"
+    PaperProps={{
+      sx: { width: "40%" },
+    }}
+    ModalProps={{
+      keepMounted: false,
+    }}
+  >
+    <ConfigEditor value={value} setValue={setValue} />
+    {/* <Button
+          onClick={() => setIsOpen(false)}
+          variant="text"
+          endIcon={<CloseIcon />}
+        >
+          Close
+        </Button> */}
+  </Drawer>
+);
 
 export default ConfigEditorDrawer;

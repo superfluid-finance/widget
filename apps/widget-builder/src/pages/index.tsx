@@ -173,13 +173,13 @@ export default function Home() {
         </Box>
       </Stack>
       <TermsAndPrivacy />
-      <Box sx={{ position: "absolute", top: 0, right: 0 }}>
+      <Box sx={{ position: "absolute", top: 5, right: 5 }}>
         <Button
           variant="text"
           onClick={() => setConfigEditorOpen((isOpen) => !isOpen)}
           startIcon={<CodeIcon />}
         >
-          Config Editor
+          JSON Editor
         </Button>
       </Box>
       <ConfigEditorDrawer

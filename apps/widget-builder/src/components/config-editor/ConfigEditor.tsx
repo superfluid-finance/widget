@@ -1,5 +1,10 @@
-import { useRef, FC, useEffect, useMemo } from "react";
-import MonacoEditor, { useMonaco, OnMount } from "@monaco-editor/react";
+import { useRef, FC, useEffect, useMemo, useCallback, useState } from "react";
+import MonacoEditor, {
+  useMonaco,
+  OnMount,
+  OnChange,
+  OnValidate,
+} from "@monaco-editor/react";
 import {
   paymentDetailsSchema,
   productDetailsSchema,
@@ -7,7 +12,7 @@ import {
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { z } from "zod";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
-import { ThemeOptions } from "@mui/material";
+import { AppBar, Stack, Toolbar, Typography, debounce } from "@mui/material";
 import { UseFormSetValue } from "react-hook-form";
 
 type StandaloneCodeEditor = Parameters<OnMount>[0];
@@ -21,7 +26,6 @@ const schema = z.object({
   productDetails: productDetailsSchema,
   paymentDetails: paymentDetailsSchema,
   type: z.enum(["dialog", "drawer", "full-screen", "page"]),
-  theme: z.any(),
 });
 
 const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
@@ -31,6 +35,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   useEffect(() => {
     monaco?.languages.json.jsonDefaults.setDiagnosticsOptions({
       validate: true,
+      allowComments: true,
       schemaValidation: "error",
       schemas: [
         {
@@ -42,46 +47,98 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
     });
   }, [monaco]);
 
-  const handleEditorDidMount: OnMount = (editor, monaco) => {
+  const handleEditorDidMount: OnMount = (editor, _monaco) => {
     editorRef.current = editor;
   };
 
-  function updateValue(value?: string) {
-    if (!value) return;
-
-    try {
-      const updatedValue: Omit<WidgetProps, "displaySettings"> & {
-        theme: ThemeOptions;
-      } = JSON.parse(value);
-      schema.parse(updatedValue);
-
-      setValue("productDetails", updatedValue.productDetails);
-      setValue("type", updatedValue.type);
-      setValue("paymentDetails", updatedValue.paymentDetails);
-    } catch (e) {
-      console.error(e, "Invalid JSON");
-    }
-  }
-
-  const valueWithoutTheme = useMemo(
-    () => ({
-      ...value,
-      displaySettings: undefined,
-    }),
+  const initialValue = useMemo(
+    () =>
+      JSON.stringify(
+        {
+          ...value,
+          displaySettings: undefined,
+        },
+        undefined,
+        2
+      ),
     [value]
   );
+  const [editorValue, setEditorValue] = useState<string>(initialValue);
+  const [isJsonValid, setIsJsonValid] = useState<boolean>(true);
+
+  const handleEditorValidate: OnValidate = useCallback((markers) => {
+    // If there are no errors in markers, the JSON is valid.
+    setIsJsonValid(
+      markers.every((marker) => marker.severity !== monaco.MarkerSeverity.Error)
+    );
+  }, []);
+
+  const handleEditorChange: OnChange = useCallback((value) => {
+    setEditorValue(value || "");
+  }, []);
+
+  const [saved, setSaved] = useState(false);
+  const debouncedSideEffect = useCallback(
+    debounce((isJsonValid: boolean, editorValue: string) => {
+      if (isJsonValid) {
+        try {
+          const updatedValue = schema.parse(JSON.parse(editorValue));
+          setValue("productDetails", updatedValue.productDetails);
+          setValue("type", updatedValue.type);
+          setValue("paymentDetails", updatedValue.paymentDetails);
+          setSaved(true);
+          setTimeout(() => {
+            setSaved(false);
+          }, 1000);
+        } catch (e) {
+          console.error(e, "Invalid JSON");
+        }
+      }
+    }, 250),
+    [setValue, setSaved]
+  );
+
+  useEffect(() => {
+    debouncedSideEffect(isJsonValid, editorValue);
+    return () => {
+      debouncedSideEffect.clear();
+    };
+  }, [editorValue, isJsonValid, debouncedSideEffect]);
 
   return (
-    <MonacoEditor
-      onChange={updateValue}
-      height="100vh"
-      defaultLanguage="json"
-      value={JSON.stringify(valueWithoutTheme, null, 2)}
-      onMount={handleEditorDidMount}
-      options={{
-        minimap: { enabled: false },
-      }}
-    />
+    <Stack height="100vh">
+      <AppBar position="relative">
+        <Stack
+          component={Toolbar}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={1}
+        >
+          <Typography variant="h6" component="h2" color="white">
+            JSON Editor
+          </Typography>
+          {saved && (
+            <Typography variant="caption" color="white">
+              Saved...
+            </Typography>
+          )}
+        </Stack>
+      </AppBar>
+      <MonacoEditor
+        defaultLanguage="json"
+        theme="vs-light"
+        onChange={handleEditorChange}
+        value={editorValue}
+        onValidate={handleEditorValidate}
+        onMount={handleEditorDidMount}
+        options={{
+          automaticLayout: true,
+          scrollBeyondLastLine: false,
+          minimap: { enabled: false },
+        }}
+      />
+    </Stack>
   );
 };
 
