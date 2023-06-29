@@ -29,7 +29,6 @@ const wagmiConfig = createConfig({
   autoConnect: false,
   connectors: w3mConnectors({
     projectId,
-    version: 2,
     chains: wagmiChains,
   }),
   publicClient,
@@ -57,7 +56,11 @@ export default function MyApp(props: MyAppProps) {
           <Component {...pageProps} />
           <Analytics />
         </WagmiConfig>
-        <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+        <Web3Modal
+          projectId={projectId}
+          ethereumClient={ethereumClient}
+          themeVariables={{ "--w3m-z-index": "1210" }}
+        />
       </ThemeProvider>
     </CacheProvider>
   );

@@ -6,18 +6,20 @@ type Props = {
 } & AvatarProps;
 
 export function TokenAvatar({ tokenInfo, ...AvatarProps }: Props) {
+  const { sx: AvatarSx = {} } = AvatarProps || {};
+
   return tokenInfo.logoURI ? (
     <Avatar
       alt={`${tokenInfo.symbol} logo`}
       src={tokenInfo.logoURI}
-      sx={{ width: 24, height: 24 }}
       {...AvatarProps}
+      sx={{ width: 24, height: 24, ...AvatarSx }}
     />
   ) : (
     <Avatar
       alt={`${tokenInfo.symbol} logo`}
-      sx={{ width: 24, height: 24 }}
       {...AvatarProps}
+      sx={{ width: 24, height: 24, ...AvatarSx }}
     >
       {" "}
     </Avatar>

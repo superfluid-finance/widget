@@ -1,15 +1,14 @@
+import AddIcon from "@mui/icons-material/Add";
+import CancelIcon from "@mui/icons-material/Cancel";
 import {
   Box,
   Button,
   IconButton,
-  Input,
   Stack,
   Typography,
   useTheme,
 } from "@mui/material";
-import { ChangeEvent, ChangeEventHandler, FC, useRef, useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import CancelIcon from "@mui/icons-material/Cancel";
+import { ChangeEvent, FC, useRef } from "react";
 
 type ImageSelectProps = {
   label: string;
@@ -44,7 +43,9 @@ const ImageSelect: FC<ImageSelectProps> = ({
         direction="row"
         sx={{ alignItems: "center", justifyContent: "space-between" }}
       >
-        <Typography variant="subtitle2">{label}</Typography>
+        <Typography variant="body1" fontWeight="500">
+          {label}
+        </Typography>
         {imageSrc && (
           <IconButton onClick={onRemove} size="small" sx={{ p: 0 }}>
             <CancelIcon data-testid="remove-image-button" />
@@ -77,7 +78,10 @@ const ImageSelect: FC<ImageSelectProps> = ({
             ref={inputRef}
             onChange={handleFileUpload}
           />
-          <Box
+          <Stack
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
             sx={{
               width: "100%",
               p: 0.5,
@@ -88,31 +92,29 @@ const ImageSelect: FC<ImageSelectProps> = ({
               height: 90,
             }}
           >
-            <Stack direction="column">
-              <Typography
-                variant="caption"
-                sx={{
-                  color: theme.palette.grey[500],
-                  textTransform: "none",
-                  textAlign: "left",
-                }}
-              >
-                Optional
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <AddIcon
-                  fontSize="large"
-                  sx={{ color: theme.palette.grey[700] }}
-                />
-              </Box>
-            </Stack>
-          </Box>
+            <Typography
+              variant="caption"
+              sx={{
+                color: theme.palette.grey[500],
+                textTransform: "none",
+                textAlign: "left",
+              }}
+            >
+              Optional
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <AddIcon
+                fontSize="large"
+                sx={{ color: theme.palette.grey[700] }}
+              />
+            </Box>
+          </Stack>
         </Button>
       )}
     </Stack>

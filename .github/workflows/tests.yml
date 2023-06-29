@@ -18,6 +18,7 @@ jobs:
         echo ${{ github.event.deployment_status.environment }}
 
   test:
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – widget-builder'
     defaults:
       run:
         working-directory: tests
@@ -53,7 +54,7 @@ jobs:
           fluxbox &
           pnpm playwright test
         env:
-          BASE_URL: ${{ github.event.deployment_status.target_url }}
+          BASE_URL: ${{ github.event.deployment_status.environment_url }}
           CURRENTS_PROJECT_ID: ${{ secrets.WIDGET_CURRENTS_PROJECT_ID }}
           CURRENTS_RECORD_KEY: ${{ secrets.CURRENTS_RECORD_KEY }}
           CURRENTS_CI_BUILD_ID: ${{ github.repository }}-${{ github.run_id }}-${{ github.run_attempt}}

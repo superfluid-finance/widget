@@ -1,24 +1,23 @@
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   IconButton,
   MenuItem,
   Select,
   Stack,
-  TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
-import { ExportJSON } from "../../types/export-json";
+import { FC, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import usePinataIpfs from "../../hooks/usePinataIPFS";
+import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
+import { ExportJSON } from "../../types/export-json";
+import InputWrapper from "../form/InputWrapper";
 import {
   WidgetProps,
   mapDisplaySettingsToTheme,
 } from "../widget-preview/WidgetPreview";
-import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
-import usePinataIpfs from "../../hooks/usePinataIPFS";
-import { LoadingButton } from "@mui/lab";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 type ExportOption = "json" | "ipfs";
 
@@ -32,7 +31,7 @@ const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
     download={`widget.json`}
     sx={{ color: "white" }}
   >
-    download json
+    Download JSON
   </Button>
 );
 
@@ -126,8 +125,7 @@ const ExportEditor: FC = () => {
 
   return (
     <Stack gap={2}>
-      <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">Select export option</Typography>
+      <InputWrapper title="Select export option">
         <Select
           data-testid="export-option"
           value={selectedExportOption}
@@ -139,7 +137,7 @@ const ExportEditor: FC = () => {
           <MenuItem value="ipfs">Publish to IPFS to get a hosted link</MenuItem>
           <MenuItem value="json">Download JSON</MenuItem>
         </Select>
-      </Stack>
+      </InputWrapper>
       {switchExportOption(selectedExportOption, json)}
     </Stack>
   );

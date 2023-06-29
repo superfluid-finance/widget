@@ -1,15 +1,8 @@
-import { Noto_Sans, Roboto } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
-import { red, lightGreen } from "@mui/material/colors";
+import { Noto_Sans } from "next/font/google";
+import type {} from "@mui/lab/themeAugmentation";
 
-export const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
-
-export const widgetFont = Noto_Sans({
+export const notoSans = Noto_Sans({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
@@ -41,9 +34,100 @@ const theme = createTheme({
       "700": "#656E78",
       "900": "#2E3A47",
     },
+    text: {
+      primary: "#000",
+      secondary: "#656E78",
+    },
+    divider: "#DBDEE2",
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontSize: 16,
+    htmlFontSize: 16,
+    fontFamily: notoSans.style.fontFamily,
+
+    button: {
+      textTransform: "none",
+    },
+
+    h1: {
+      fontSize: "3.875rem",
+      fontWeight: 500,
+      lineHeight: 1,
+    },
+
+    h2: {
+      fontSize: "2.625rem",
+      fontWeight: 500,
+      lineHeight: 1,
+    },
+
+    h3: {
+      fontSize: "2rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    h4: {
+      fontSize: "1.75rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    h5: {
+      fontSize: "1.5rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    subtitle1: {
+      fontSize: "1.25rem",
+      fontWeight: 500,
+      lineHeight: 1.5,
+    },
+
+    subtitle2: {
+      fontSize: "1.125rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+
+    body1: {
+      fontSize: "1rem",
+      lineHeight: 1.5,
+    },
+
+    body2: {
+      fontSize: "1rem",
+      lineHeight: 1.5,
+    },
+
+    caption: {
+      fontSize: "0.875rem",
+      lineHeight: 1.25,
+      fontWeight: 400,
+    },
+  },
+
+  shape: {
+    borderRadius: 10,
+  },
+
+  components: {
+    MuiTabPanel: {
+      styleOverrides: {
+        root: {
+          padding: 28,
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: "uppercase",
+          fontSize: "1rem",
+        },
+      },
+    },
   },
 });
 
