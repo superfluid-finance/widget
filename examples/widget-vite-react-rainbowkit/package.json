@@ -1,6 +1,6 @@
 {
   "name": "widget-vite-react-rainbowkit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,13 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@rainbow-me/rainbowkit": "^1.0.3",
-    "@superfluid-finance/tokenlist": "^1.1.0",
+    "@rainbow-me/rainbowkit": "^1.0.4",
+    "@superfluid-finance/tokenlist": "^1.2.0",
     "@superfluid-finance/widget": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "^1.1.8",
-    "wagmi": "^1.3.1",
+    "viem": "^1.2.5",
+    "wagmi": "^1.3.3",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "eslint": "^8.43.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.1",
-    "typescript": "^5.1.3",
+    "typescript": "^5.1.6",
     "vite": "^4.3.9"
   }
 }

@@ -46,6 +46,7 @@ export function EnableAutoWrapCommandMapper({
   children,
 }: CommandMapperProps<EnableAutoWrapCommand>) {
   const { getUnderlyingToken } = useWidget();
+
   const { data, isSuccess } = useContractReads({
     contracts: [
       {
@@ -78,7 +79,7 @@ export function EnableAutoWrapCommandMapper({
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
 
-    if (wrapSchedule !== undefined) {
+    if (typeof wrapSchedule === "object") {
       if (wrapSchedule.strategy !== autoWrapStrategyAddress[cmd.chainId]) {
         contractWrites_.push(
           createContractWrite({
@@ -100,7 +101,7 @@ export function EnableAutoWrapCommandMapper({
         );
       }
 
-      if (allowance && allowance < upperLimit) {
+      if (typeof allowance === "bigint" && allowance < upperLimit) {
         contractWrites_.push(
           createContractWrite({
             commandId: cmd.id,
