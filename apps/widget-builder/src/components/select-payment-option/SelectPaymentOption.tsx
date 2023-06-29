@@ -80,11 +80,7 @@ const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
   );
 };
 
-const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
-  onAdd,
-  defaultReceiverAddress,
-  setDefaultReceiver,
-}) => {
+const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
   const [selectedNetwork, setSelectedNetwork] =
     useState<Network>(defaultNetwork);
