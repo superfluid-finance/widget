@@ -43,4 +43,5 @@ jobs:
           CURRENTS_PROJECT_ID: ${{ secrets.WIDGET_CURRENTS_PROJECT_ID }}
           CURRENTS_RECORD_KEY: ${{ secrets.CURRENTS_RECORD_KEY }}
           CURRENTS_CI_BUILD_ID: ${{ github.repository }}-${{ github.run_id }}-${{ github.run_attempt}}
+          WIDGET_WALLET_PRIVATE_KEY: ${{ secrets.WIDGET_WALLET_PRIVATE_KEY}}
           CI: true
