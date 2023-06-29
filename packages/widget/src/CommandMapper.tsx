@@ -13,13 +13,15 @@ import {
   cfAv1ForwarderAddress,
   erc20ABI,
   mapTimePeriodToSeconds,
+  nativeAssetSuperTokenABI,
   superTokenABI,
 } from "./core";
-import { ContractWrite, createContractWrite } from "./ContractWrite";
+import { ContractWrite } from "./ContractWrite";
 import { ChildrenProp, MaxUint256 } from "./utils";
-import { parseEther } from "viem";
+import { Abi, ContractFunctionConfig, GetValue, parseEther } from "viem";
 import { useEffect, useMemo } from "react";
 import { useWidget } from "./WidgetContext";
+import { nanoid } from "nanoid";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
@@ -161,10 +163,10 @@ export function WrapIntoSuperTokensCommandMapper({
             getUnderlyingToken(cmd.underlyingTokenAddress).symbol
           }`,
           chainId: cmd.chainId,
-          abi: superTokenABI,
+          abi: nativeAssetSuperTokenABI,
+          functionName: "upgradeByETH",
           address: cmd.superTokenAddress,
-          functionName: "upgradeByEth",
-          args: [parseEther(cmd.amountEther)],
+          value: parseEther(cmd.amountEther),
         })
       );
     } else {
@@ -250,7 +252,7 @@ export function SendStreamCommandMapper({
               cmd.accountAddress,
               cmd.receiverAddress,
               updatedFlowRate,
-              "0x",
+              cmd.userData,
             ],
           })
         );
@@ -268,7 +270,7 @@ export function SendStreamCommandMapper({
               cmd.accountAddress,
               cmd.receiverAddress,
               flowRate,
-              "0x",
+              cmd.userData,
             ],
           })
         );
@@ -285,3 +287,16 @@ export function SendStreamCommandMapper({
 
   return <>{children?.(contractWrites)}</>;
 }
+
+const createContractWrite = <
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string
+>(
+  arg: ContractFunctionConfig<TAbi, TFunctionName, "payable" | "nonpayable"> &
+    GetValue<TAbi, TFunctionName> &
+    Pick<ContractWrite, "commandId" | "displayTitle" | "chainId">
+): ContractWrite =>
+  ({
+    id: nanoid(),
+    ...arg,
+  } as ContractWrite);
