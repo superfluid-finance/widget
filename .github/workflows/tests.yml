@@ -1,0 +1,61 @@
+name: Playwright Tests
+
+on:
+  deployment_status:
+
+jobs:
+
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Echo deployment for debugging
+       run: |
+        echo ${{ github.event.deployment.url }}
+        echo ${{ github.event.deployment.description }}
+        echo ${{ github.event.deployment.environment }}
+        echo ${{ github.event.deployment_status.deployment_url }}
+        echo ${{ github.event.deployment_status.environment_url }}
+        echo ${{ github.event.deployment_status.environment }}
+
+  test:
+    defaults:
+      run:
+        working-directory: tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Install Playwright browsers
+        run: pnpm playwright install --with-deps
+
+      - name: Install virtual display
+        run: |
+          sudo apt-get install --no-install-recommends -y \
+          fluxbox \
+          xvfb          
+
+      - name: Run Playwright tests
+        run: |
+          Xvfb :0 -screen 0 1024x768x24 -listen tcp -ac &
+          fluxbox &
+          pnpm playwright test
+        env:
+          BASE_URL: ${{ github.event.deployment_status.target_url }}
+          CURRENTS_PROJECT_ID: ${{ secrets.WIDGET_CURRENTS_PROJECT_ID }}
+          CURRENTS_RECORD_KEY: ${{ secrets.CURRENTS_RECORD_KEY }}
+          CURRENTS_CI_BUILD_ID: ${{ github.repository }}-${{ github.run_id }}-${{ github.run_attempt}}
+          DISPLAY: :0.0
+          CI: true

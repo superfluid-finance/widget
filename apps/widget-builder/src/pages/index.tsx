@@ -70,15 +70,16 @@ export default function Home() {
               Widget Customization
             </Typography>
             <FormControlLabel
+              data-testid="demo-mode-switch"
               control={<Switch checked={demoMode} onChange={toggleDemoMode} />}
               label={<Typography variant="subtitle2">Demo mode</Typography>}
             />
           </Stack>
           <TabContext value={activeTab}>
             <TabList onChange={(_, value) => setActiveTab(value)}>
-              <Tab label="Product" value="product" />
-              <Tab label="UI" value="ui" />
-              <Tab label="Export" value="export" />
+              <Tab label="Product" value="product" data-testid="product-tab" />
+              <Tab label="UI" value="ui" data-testid="ui-tab" />
+              <Tab label="Export" value="export" data-testid="export-tab" />
             </TabList>
             <FormProvider {...formMethods}>
               <TabPanel value="ui">

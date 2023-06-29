@@ -6,6 +6,7 @@ import {
   Paper,
   PaperProps,
   Stack,
+  SxProps,
   Typography,
 } from "@mui/material";
 import { create } from "blockies-ts";
@@ -20,11 +21,13 @@ const CheckIcon = normalizeIcon(CheckIcon_);
 
 interface AccountAddressCardProps {
   address: Address;
+  dataTest?: string;
   PaperProps?: PaperProps;
 }
 
 export function AccountAddressCard({
   address,
+  dataTest,
   PaperProps = { sx: {} },
 }: AccountAddressCardProps) {
   const blockiesSrc = create({ seed: address.toLowerCase() }).toDataURL();
@@ -58,7 +61,12 @@ export function AccountAddressCard({
                 sx={{ width: 24, height: 24 }}
               />
             )}
-            <Typography variant="body1" title={checksumAddress} flex={1}>
+            <Typography
+              data-testid={`${dataTest}-address`}
+              variant="body1"
+              title={checksumAddress}
+              flex={1}
+            >
               {ensNameResult.data ?? shortenedAddress}
             </Typography>
 
@@ -72,7 +80,6 @@ export function AccountAddressCard({
                 })
               }
               sx={{
-                m: -0.5,
                 "&:hover": { color: (theme) => theme.palette.primary.main },
               }}
             >

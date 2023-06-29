@@ -198,3 +198,6 @@ packages/widget/dist
 
 # Sentry Auth Token
 .sentryclirc
+
+## Webstorm files
+.idea

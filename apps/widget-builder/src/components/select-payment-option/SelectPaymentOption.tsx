@@ -168,12 +168,17 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             <InputInfo tooltip="Select the network you'd like to request payment on" />
           </Stack>
           <Select
+            data-testid="network-selection"
             value={selectedNetwork.name}
             onChange={handleNetworkSelect}
             fullWidth
           >
             {filteredNetworks.map((network) => (
-              <MenuItem value={network.name} key={`${network.chainId}`}>
+              <MenuItem
+                data-testid={network.chainId}
+                value={network.name}
+                key={`${network.chainId}`}
+              >
                 <Stack
                   direction="row"
                   gap={1}
@@ -198,6 +203,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                     {network.name}
                     {network.isTestnet && (
                       <Chip
+                        data-testid="testnet-chip"
                         variant="filled"
                         color="primary"
                         label="test"
@@ -228,7 +234,13 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             renderOption={(props, option) => (
               <Stack direction="row" gap={1} sx={{ alignItems: "center" }}>
                 {option.logoURI && (
-                  <Image src={option.logoURI} width={24} height={24} alt="" />
+                  <Image
+                    data-testid="token-selection-image"
+                    src={option.logoURI}
+                    width={24}
+                    height={24}
+                    alt=""
+                  />
                 )}
                 <Typography
                   {...props}
@@ -250,6 +262,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
         <Stack direction="row" gap={"-1px"}>
           <TextField
+            data-testid="flow-rate-input"
             fullWidth
             value={flowRateAmount}
             onChange={({ target }) =>
@@ -263,6 +276,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             }}
           />
           <Select
+            data-testid="time-unit-selection"
             value={flowRateInterval}
             onChange={({ target }) =>
               setFlowRateInterval(target.value as TimePeriod)
@@ -291,6 +305,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             <InputInfo tooltip="Set your wallet or multisig address on the relevant network" />
           </Stack>
           <TextField
+            data-testid="receiver-input-field"
             value={receiver}
             onChange={({ target }) =>
               setReceiver(target.value as `0x${string}`)
@@ -298,6 +313,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           />
         </Stack>
         <FormControlLabel
+          data-testid="default-option-switch"
           sx={{ py: 1 }}
           control={
             <Switch
@@ -313,6 +329,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
         />
       </Stack>
       <Button
+        data-testid="add-option-button"
         color="primary"
         variant="outlined"
         disabled={!(selectedNetwork && selectedToken)}

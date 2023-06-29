@@ -6,6 +6,7 @@ export function StepperContinueButton(props: ButtonProps) {
 
   return (
     <Button
+      data-testid="continue-button"
       size="large"
       variant="contained"
       onClick={() => void handleNext()}

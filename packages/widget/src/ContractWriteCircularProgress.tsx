@@ -53,7 +53,12 @@ export function ContractWriteCircularProgress({
         justifyContent="center"
       >
         {total > 1 && (
-          <Typography variant="body2" component="div" fontWeight={600}>
+          <Typography
+            data-testid="transaction-count"
+            variant="body2"
+            component="div"
+            fontWeight={600}
+          >
             {index}/{total}
           </Typography>
         )}

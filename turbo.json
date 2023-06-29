@@ -33,6 +33,15 @@
         "NEXT_PUBLIC_SEGMENT_WRITE_KEY"
       ]
     },
+    "test": {
+      "dependsOn": ["build"],
+      "env": [
+        "CI",
+        "METAMASK_VERSION",
+        "HEADLESS_MODE",
+        "WIDGET_WALLET_PRIVATE_KEY"
+      ]
+    },
     "lint": {},
     "dev": {
       "cache": false,

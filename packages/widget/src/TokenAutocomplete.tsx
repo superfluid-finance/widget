@@ -47,13 +47,14 @@ export default function TokenAutocomplete() {
               spacing={1}
             >
               <TokenAvatar tokenInfo={option.superToken} />
-              <Typography>
+              <Typography data-testid="token-option">
                 {`${option.paymentOption.flowRate.amountEther} ${option.superToken.symbol}/${option.paymentOption.flowRate.period}`}
               </Typography>
             </Stack>
           )}
           renderInput={(params) => (
             <TextField
+              data-testid="token-selection-button"
               {...params}
               inputProps={{
                 ...params.inputProps,

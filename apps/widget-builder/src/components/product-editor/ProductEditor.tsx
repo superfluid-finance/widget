@@ -39,7 +39,11 @@ const ProductEditor: FC = () => {
             control={control}
             name="productDetails.name"
             render={({ field: { value, onChange } }) => (
-              <TextField value={value} onChange={onChange} />
+              <TextField
+                data-testid="product-name-field"
+                value={value}
+                onChange={onChange}
+              />
             )}
           />
         </Stack>
@@ -50,6 +54,7 @@ const ProductEditor: FC = () => {
             name="productDetails.description"
             render={({ field: { value, onChange } }) => (
               <TextField
+                data-testid="product-description-field"
                 multiline
                 minRows={4}
                 value={value}
@@ -88,6 +93,7 @@ const ProductEditor: FC = () => {
           >
             <Typography variant="h6">Payment Details Summary</Typography>
             <Typography
+              data-testid="added-payment-options-count"
               variant="subtitle2"
               sx={{ color: theme.palette.grey[500] }}
             >

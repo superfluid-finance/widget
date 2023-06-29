@@ -58,6 +58,7 @@ const UiEditor: FC = () => {
           name="displaySettings.darkMode"
           render={({ field: { value, onChange } }) => (
             <FormControlLabel
+              data-testid="dark-mode-switch"
               control={<Switch checked={value ?? false} onChange={onChange} />}
               label={
                 <Typography variant="subtitle2">{`Dark mode: ${
@@ -69,7 +70,10 @@ const UiEditor: FC = () => {
         />
       </Stack>
       <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">
+        <Typography
+          data-testid="container-radius-slider-amount"
+          variant="subtitle2"
+        >
           Container border-radius: {displaySettings.containerRadius}
         </Typography>
         <Controller
@@ -77,6 +81,7 @@ const UiEditor: FC = () => {
           name="displaySettings.containerRadius"
           render={({ field: { value, onChange } }) => (
             <Slider
+              data-testid="container-radius-slider"
               step={1}
               min={0}
               max={50}
@@ -87,7 +92,10 @@ const UiEditor: FC = () => {
         />
       </Stack>
       <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">
+        <Typography
+          data-testid="field-border-slider-amount"
+          variant="subtitle2"
+        >
           Field border-radius: {displaySettings.inputRadius}
         </Typography>
         <Controller
@@ -95,6 +103,7 @@ const UiEditor: FC = () => {
           name="displaySettings.inputRadius"
           render={({ field: { value, onChange } }) => (
             <Slider
+              data-testid="field-border-slider"
               step={1}
               min={0}
               max={25}
@@ -106,7 +115,10 @@ const UiEditor: FC = () => {
       </Stack>
 
       <Stack direction="column" gap={1}>
-        <Typography variant="subtitle2">
+        <Typography
+          data-testid="button-border-radius-amount"
+          variant="subtitle2"
+        >
           Button border-radius: {displaySettings.buttonRadius}
         </Typography>
         <Controller
@@ -114,6 +126,7 @@ const UiEditor: FC = () => {
           name="displaySettings.buttonRadius"
           render={({ field: { value, onChange } }) => (
             <Slider
+              data-testid="button-border-radius-slider"
               step={1}
               min={0}
               max={25}
@@ -133,6 +146,7 @@ const UiEditor: FC = () => {
               name="displaySettings.primaryColor"
               render={({ field: { value, onChange } }) => (
                 <MuiColorInput
+                  data-testid="primary-color-picker"
                   fallbackValue={"#000"}
                   format="hex"
                   value={value}
@@ -151,6 +165,7 @@ const UiEditor: FC = () => {
               name="displaySettings.secondaryColor"
               render={({ field: { value, onChange } }) => (
                 <MuiColorInput
+                  data-testid="secondary-color-picker"
                   fallbackValue={"#000"}
                   format="hex"
                   value={value}
@@ -169,6 +184,7 @@ const UiEditor: FC = () => {
           name="displaySettings.font"
           render={({ field: { value, onChange } }) => (
             <Autocomplete
+              data-testid="font-picker"
               value={value}
               loading={fontOptions.length === 0}
               disablePortal
