@@ -1,25 +1,17 @@
 name: Playwright Tests
 
 on:
-  pull_request:
-    types: [ opened, reopened, ready_for_review, synchronize ]
+  deployment_status:
 
 jobs:
   test:
-    if: ${{ !github.event.pull_request.draft }}
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – widget-builder'
     timeout-minutes: 60
     defaults:
       run:
         working-directory: tests
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for widget builder to be deployed
-        uses: SFDigitalServices/wait-for-deployment-action@v1
-        id: deployment
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          environment: Preview - widget-builder 
-
       - uses: actions/checkout@v3
 
       - uses: pnpm/action-setup@v2
@@ -49,7 +41,7 @@ jobs:
           fluxbox &
           pnpm playwright test
         env:
-          BASE_URL: ${{ steps.deployment.outputs.url }}
+          BASE_URL: ${{ github.event.deployment_status.environment_url }}
           CURRENTS_PROJECT_ID: ${{ secrets.WIDGET_CURRENTS_PROJECT_ID }}
           CURRENTS_RECORD_KEY: ${{ secrets.CURRENTS_RECORD_KEY }}
           CURRENTS_CI_BUILD_ID: ${{ github.repository }}-${{ github.run_id }}-${{ github.run_attempt}}
