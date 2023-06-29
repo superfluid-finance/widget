@@ -29,6 +29,7 @@ import { UseFieldArrayAppend } from "react-hook-form";
 import { Network, networks } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
+import { toHex } from "viem";
 
 export type PaymentOption = {
   network: Network;
@@ -96,6 +97,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
+  const [userDataText, setUserDataText] = useState("");
 
   const filteredNetworks = useMemo(
     () =>
@@ -315,7 +317,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
         />
       </InputWrapper>
 
-      <FormControlLabel
+      {/* <FormControlLabel
         control={
           <Switch
             checked={isReceiverDefault}
@@ -323,7 +325,18 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           />
         }
         label={<Typography>Use as default payment option</Typography>}
-      />
+      /> */}
+
+      {/* <InputWrapper
+        title="User Data"
+        tooltip=""
+      >
+        <TextField
+          value={userDataText}
+          onChange={({ target }) => setUserDataText(target.value)}
+          helperText={`On-chain hex: ${toHex(userDataText)}`}
+        />
+      </InputWrapper> */}
 
       <Button
         color="primary"
