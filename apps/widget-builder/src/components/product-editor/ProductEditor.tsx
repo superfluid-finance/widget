@@ -8,14 +8,14 @@ import SelectPaymentOption from "../select-payment-option/SelectPaymentOption";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 const ProductEditor: FC = () => {
-  const { control, watch, setValue } = useFormContext<WidgetProps>();
+  const { control, watch } = useFormContext<WidgetProps>();
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "paymentDetails.paymentOptions", // unique name for your Field Array
   });
 
-  const defaultReceiverAddress = watch("paymentDetails.defaultReceiverAddress");
+  const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
 
   return (
     <Stack gap={1}>
@@ -58,15 +58,7 @@ const ProductEditor: FC = () => {
         <Controller
           control={control}
           name="paymentDetails.paymentOptions"
-          render={() => (
-            <SelectPaymentOption
-              onAdd={append}
-              defaultReceiverAddress={defaultReceiverAddress as `0x${string}`}
-              setDefaultReceiver={(address: string) =>
-                setValue("paymentDetails.defaultReceiverAddress", address)
-              }
-            />
-          )}
+          render={() => <SelectPaymentOption onAdd={append} />}
         />
 
         <Divider sx={{ my: 4 }} />
@@ -87,8 +79,8 @@ const ProductEditor: FC = () => {
           </Stack>
 
           <Stack direction="column" gap={2.5}>
-            {fields.length ? (
-              fields.map(
+            {paymentOptions.length ? (
+              paymentOptions.map(
                 ({ superToken, chainId, flowRate, receiverAddress }, i) => (
                   <PaymentOptionView
                     key={`${superToken.address}-${i}`}
