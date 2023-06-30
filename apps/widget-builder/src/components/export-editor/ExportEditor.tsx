@@ -56,7 +56,6 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
           <Typography variant="subtitle2" textAlign="center">
             Your config is published to IPFS. Test it with our hosted widget:
           </Typography>
-
           <SuperfluidButton
             fullWidth
             widgetUrl={`${process.env.NEXT_PUBLIC_EXPORT_BASE_URL}/${ipfsHash}`}

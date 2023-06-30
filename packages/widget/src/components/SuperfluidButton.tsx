@@ -46,7 +46,7 @@ const SuperfluidButton: FC<SuperfluidButtonProps> = ({
           },
         },
       }}
-      endIcon={<SuperfluidLogo />}
+      endIcon={<SuperfluidLogo fill={"#FFF"} />}
     >
       {children ? children : "Pay with"}
     </Button>
