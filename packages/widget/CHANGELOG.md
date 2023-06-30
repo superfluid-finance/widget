@@ -1,5 +1,11 @@
 # @superfluid-finance/widget
 
+## 0.0.8
+
+### Patch Changes
+
+- 34f946f: Add ability to add `userData` to payment options
+
 ## 0.0.7
 
 ### Patch Changes
