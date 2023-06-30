@@ -10,7 +10,9 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   outputDir: "results",
-  reporter: process.env.CI ? [["html"]] : [["html"]],
+  reporter: process.env.CI
+    ? [["@currents/playwright"], ["line"]]
+    : [["html"], ["line"]],
   expect: {
     timeout: 10000,
   },
