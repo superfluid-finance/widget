@@ -31,6 +31,7 @@ export type SendStreamCommand = {
     amountEther: `${number}`;
     period: TimePeriod;
   };
+  userData: `0x${string}`;
 };
 
 export type Command =
