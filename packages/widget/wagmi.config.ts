@@ -1,12 +1,14 @@
 import { defineConfig } from "@wagmi/cli";
 import { etherscan, actions, erc } from "@wagmi/cli/plugins";
-import { superTokenABI } from "./src/core/superTokenABI";
-import { Address } from "viem";
+import { Abi, Address } from "viem";
 import {
   ChainId,
   chainIds,
   supportedNetwork,
 } from "./src/core/SupportedNetwork";
+import nativeAssetSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/SETH.sol/SETHProxy.json" assert { type: "json" };
+import pureSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/PureSuperToken.sol/PureSuperToken.json" assert { type: "json" };
+import superTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/superfluid/SuperToken.sol/SuperToken.json" assert { type: "json" };
 
 const {
   polygon,
@@ -51,8 +53,16 @@ export default defineConfig({
   out: "./src/core/wagmi-generated.ts",
   contracts: [
     {
-      name: "SuperToken",
-      abi: superTokenABI,
+      name: "Super Token",
+      abi: superTokenJSON.abi as Abi,
+    },
+    {
+      name: "Native Asset Super Token",
+      abi: nativeAssetSuperTokenJSON.abi as Abi,
+    },
+    {
+      name: "Pure Super Token",
+      abi: pureSuperTokenJSON.abi as Abi,
     },
   ],
   plugins: [
