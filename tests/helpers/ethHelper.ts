@@ -5,6 +5,7 @@ import {
   cfAv1ForwarderABI,
 } from "./abis/wagmi-generated";
 
+const testWalletAddress = "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD";
 const CFAAddress = "0xEd6BcbF6907D4feEEe8a8875543249bEa9D308E8";
 const fUSDCxAddress = "0x8aE68021f6170E5a766bE613cEA0d75236ECCa9a";
 const fUSDCAddress = "0xc94dd466416A7dFE166aB2cF916D3875C049EBB7";
@@ -23,15 +24,12 @@ const CFA = new ethers.Contract(CFAAddress, cfAv1ForwarderABI, wallet.provider);
 
 export async function revokeAllowanceIfNeccesary() {
   await fUSDC
-    .allowance(
-      "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
-      "0x8aE68021f6170E5a766bE613cEA0d75236ECCa9a"
-    )
+    .allowance(testWalletAddress, fUSDCxAddress)
     .then(async (allowance: bigint) => {
       if (Number(allowance) > 0) {
         console.log("Allowance over 0 , revoking...");
         const data = fUSDC.interface.encodeFunctionData("approve", [
-          "0x8aE68021f6170E5a766bE613cEA0d75236ECCa9a",
+          fUSDCxAddress,
           0,
         ]);
         const tx = await wallet.sendTransaction({

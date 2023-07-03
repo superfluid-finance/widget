@@ -14,6 +14,7 @@ test.skip("Creating a flow", async ({ page }) => {
   await widgetPage.clickContinueButton();
   await widgetPage.setWrapAmount("0");
   await widgetPage.clickContinueButton();
+  //Test wallet and goerli rebounder contract
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
     "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
     "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22"
@@ -34,6 +35,7 @@ test("Modifying a flow", async ({ page }) => {
   await widgetPage.connectWallet();
   await widgetPage.setWrapAmount("0");
   await widgetPage.clickContinueButton();
+  //Test wallet and goerli rebounder contract
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
     "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
     "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22"
@@ -54,6 +56,7 @@ test("Approving and wrapping tokens", async ({ page }) => {
   await widgetPage.connectWallet();
   await widgetPage.setWrapAmount("1");
   await widgetPage.clickContinueButton();
+  //Test wallet and goerli rebounder contract
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
     "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
     "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22"
