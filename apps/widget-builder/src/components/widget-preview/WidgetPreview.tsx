@@ -50,9 +50,9 @@ export type Layout = (typeof layouts)[number];
 
 export type WidgetProps = {
   productDetails: ProductDetails;
-  paymentDetails: PaymentDetails & { defaultReceiverAddress: string };
+  paymentDetails: PaymentDetails;
   displaySettings: DisplaySettings;
-  layout: Layout;
+  type: Layout;
 };
 
 export type WidgetState = {
@@ -67,10 +67,9 @@ export const WidgetContext = createContext<WidgetProps>({
     imageURI: "https://picsum.photos/200/200",
   },
   paymentDetails: {
-    defaultReceiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
     paymentOptions: [],
   },
-  layout: "dialog",
+  type: "dialog",
   displaySettings: {
     stepperOrientation: "vertical",
     darkMode: false,
@@ -124,7 +123,6 @@ const switchLayout = (
 };
 
 export const mapDisplaySettingsToTheme = (
-  layout: Layout,
   displaySettings: DisplaySettings
 ): ThemeOptions => ({
   ...(displaySettings.font
@@ -168,7 +166,7 @@ export const mapDisplaySettingsToTheme = (
 });
 
 const WidgetPreview: FC<WidgetProps> = (props) => {
-  const { displaySettings, paymentDetails, productDetails, layout } = props;
+  const { displaySettings, paymentDetails, productDetails, type } = props;
 
   const { open, isOpen } = useWeb3Modal();
   const walletManager = useMemo(
@@ -182,10 +180,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const theme: ThemeOptions = mapDisplaySettingsToTheme(
-    layout,
-    displaySettings
-  );
+  const theme: ThemeOptions = mapDisplaySettingsToTheme(displaySettings);
 
   useFontLoader(displaySettings.font?.family);
 
@@ -193,7 +188,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     <WidgetContext.Provider value={props}>
       {mounted &&
         switchLayout(
-          layout,
+          type,
           productDetails,
           paymentDetails,
           theme,

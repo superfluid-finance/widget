@@ -1,5 +1,12 @@
 # widget-vite-react-rainbowkit
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies [34f946f]
+  - @superfluid-finance/widget@0.0.8
+
 ## 0.0.4
 
 ### Patch Changes

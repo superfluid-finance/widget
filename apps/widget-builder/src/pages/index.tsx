@@ -1,6 +1,7 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Box,
+  Button,
   Drawer,
   FormControlLabel,
   Stack,
@@ -27,6 +28,8 @@ import ProductEditor from "../components/product-editor/ProductEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
 import useDemoMode from "../hooks/useDemoMode";
+import CodeIcon from "@mui/icons-material/Code";
+import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
 
 const drawerWidth = "480px";
 
@@ -42,14 +45,16 @@ export default function Home() {
     values: widgetProps,
   });
 
-  const { watch, control } = formMethods;
+  const { watch, control, getValues, setValue } = formMethods;
 
-  const [productDetails, paymentDetails, displaySettings, layout] = watch([
+  const [productDetails, paymentDetails, displaySettings, type] = watch([
     "productDetails",
     "paymentDetails",
     "displaySettings",
-    "layout",
+    "type",
   ]);
+
+  const [isConfigEditorOpen, setConfigEditorOpen] = useState(false);
 
   return (
     <Box sx={{ display: "flex", position: "relative", height: "100vh" }}>
@@ -92,6 +97,7 @@ export default function Home() {
             <Tab label="UI" value="ui" data-testid="ui-tab" />
             <Tab label="Export" value="export" data-testid="export-tab" />
           </TabList>
+
           <FormProvider {...formMethods}>
             <TabPanel value="ui">
               <UiEditor />
@@ -121,7 +127,7 @@ export default function Home() {
             productDetails,
             paymentDetails,
             displaySettings,
-            layout,
+            type,
           }}
         />
         <Box
@@ -136,7 +142,7 @@ export default function Home() {
         >
           <Controller
             control={control}
-            name="layout"
+            name="type"
             render={({ field: { value, onChange } }) => (
               <ToggleButtonGroup
                 value={value}
@@ -169,6 +175,21 @@ export default function Home() {
         </Box>
       </Stack>
       <TermsAndPrivacy />
+      <Box sx={{ position: "absolute", top: 5, right: 5 }}>
+        <Button
+          variant="text"
+          onClick={() => setConfigEditorOpen((isOpen) => !isOpen)}
+          startIcon={<CodeIcon />}
+        >
+          JSON Editor
+        </Button>
+      </Box>
+      <ConfigEditorDrawer
+        value={getValues()}
+        setValue={setValue}
+        isOpen={isConfigEditorOpen}
+        setIsOpen={setConfigEditorOpen}
+      />
     </Box>
   );
 }

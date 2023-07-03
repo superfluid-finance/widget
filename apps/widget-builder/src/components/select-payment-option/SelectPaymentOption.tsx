@@ -29,6 +29,7 @@ import { UseFieldArrayAppend } from "react-hook-form";
 import { Network, networks } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
+import { toHex } from "viem";
 
 export type PaymentOption = {
   network: Network;
@@ -43,9 +44,7 @@ const renderToken = (token: TokenInfo) => {
 };
 
 type PaymentOptionSelectorProps = {
-  defaultReceiverAddress: `0x${string}`;
   onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
-  setDefaultReceiver: (address: string) => void;
 };
 
 const defaultNetwork = {
@@ -82,11 +81,7 @@ const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
   );
 };
 
-const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
-  onAdd,
-  defaultReceiverAddress,
-  setDefaultReceiver,
-}) => {
+const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
   const [selectedNetwork, setSelectedNetwork] =
     useState<Network>(defaultNetwork);
@@ -96,6 +91,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
+  const [userDataText, setUserDataText] = useState("");
 
   const filteredNetworks = useMemo(
     () =>
@@ -125,15 +121,11 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
       return;
     }
 
-    if (isReceiverDefault) {
-      setDefaultReceiver(receiver);
-    }
-
     const network = networks.find((n) => n.chainId === selectedToken.chainId);
 
-    if (network) {
+    if (network && receiver) {
       onAdd({
-        receiverAddress: receiver === "" ? defaultReceiverAddress : receiver,
+        receiverAddress: receiver,
         superToken: {
           address: selectedToken.address as `0x${string}`,
         },
@@ -324,7 +316,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
         />
       </InputWrapper>
 
-      <FormControlLabel
+      {/* <FormControlLabel
         data-testid="default-option-switch"
         control={
           <Switch
@@ -333,7 +325,18 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           />
         }
         label={<Typography>Use as default payment option</Typography>}
-      />
+      /> */}
+
+      {/* <InputWrapper
+        title="User Data"
+        tooltip=""
+      >
+        <TextField
+          value={userDataText}
+          onChange={({ target }) => setUserDataText(target.value)}
+          helperText={`On-chain hex: ${toHex(userDataText)}`}
+        />
+      </InputWrapper> */}
 
       <Button
         data-testid="add-option-button"
