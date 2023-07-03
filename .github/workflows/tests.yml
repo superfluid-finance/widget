@@ -2,11 +2,18 @@ name: Playwright Tests
 
 on:
   deployment_status:
+  workflow_dispatch:  
+    inputs: 
+      environment:
+        description: 'Url to run tests against'
+        type: string
+        required: true
+
 
 jobs:
   test:
-    environment: "Preview – widget-builder"
-    # if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – widget-builder'
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – widget-builder'
+    name: ${{ github.event.deployment_status.environment }}
     timeout-minutes: 60
     defaults:
       run:
@@ -36,11 +43,19 @@ jobs:
           fluxbox \
           xvfb          
           
+      - name: Set url the tests should run on
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "BASE_URL=${{ github.event.inputs.environment }}" >> $GITHUB_ENV
+          elif [[ "${{ github.event_name }}" == "deployment_status" ]]; then
+            echo "BASE_URL=${{ github.event.deployment_status.environment_url }}" >> $GITHUB_ENV
+          fi        
+
         # https://playwright.dev/docs/next/ci#running-headed  
       - name: Run Playwright tests
         run: xvfb-run pnpm playwright test
         env:
-          BASE_URL: ${{ github.event.deployment_status.environment_url }}
+          BASE_URL: ${{ env.BASE_URL }}
           CURRENTS_PROJECT_ID: 3TQU8o
           CURRENTS_RECORD_KEY: ${{ secrets.CURRENTS_RECORD_KEY }}
           CURRENTS_CI_BUILD_ID: ${{ github.repository }}-${{ github.run_id }}-${{ github.run_attempt}}
