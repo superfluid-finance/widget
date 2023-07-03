@@ -5,7 +5,8 @@ on:
 
 jobs:
   test:
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – widget-builder'
+    environment: "Preview – widget-builder"
+    # if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – widget-builder'
     timeout-minutes: 60
     defaults:
       run:
