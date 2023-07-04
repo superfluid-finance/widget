@@ -22,10 +22,14 @@ const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
   const theme = useTheme();
   return (
     <Stack
+      data-testid={`${label
+        .toLowerCase()
+        .replaceAll(" ", "-")}-added-payment-option`}
       direction="row"
       sx={{ width: "100%", justifyContent: "space-between" }}
     >
       <Typography
+        data-testid="payment-option-label"
         sx={{
           color: theme.palette.grey[700],
           fontSize: "14px",
@@ -67,7 +71,12 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         <PaymentOptionRow
           label="Network"
           value={
-            <Stack direction="row" gap={1} sx={{ alignItems: "center" }}>
+            <Stack
+              data-testid="added-network-option"
+              direction="row"
+              gap={1}
+              sx={{ alignItems: "center" }}
+            >
               {network?.logoUrl && (
                 <Image src={network.logoUrl} alt="" width={24} height={24} />
               )}
@@ -78,7 +87,12 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         <PaymentOptionRow
           label="Token"
           value={
-            <Stack direction="row" gap={1} sx={{ alignItems: "center" }}>
+            <Stack
+              data-testid="added-token-option"
+              direction="row"
+              gap={1}
+              sx={{ alignItems: "center" }}
+            >
               {token?.logoURI && (
                 <Image src={token.logoURI} alt="" width={24} height={24} />
               )}
@@ -90,8 +104,11 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         <PaymentOptionRow
           label="Receiver"
           value={
-            <Tooltip title={receiverAddress}>
-              <Typography>
+            <Tooltip
+              title={receiverAddress}
+              data-testid="added-payment-receiver-tooltip"
+            >
+              <Typography data-testid="added-payment-receiver">
                 {`${receiverAddress.substring(
                   0,
                   6
@@ -131,6 +148,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
           <EditIcon sx={{ fontSize: 16, ml: 1 }} />
         </Button> */}
         <Button
+          data-testid="delete-payment-option-button"
           fullWidth
           color="error"
           sx={{

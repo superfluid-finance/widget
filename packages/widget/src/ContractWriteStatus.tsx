@@ -37,11 +37,11 @@ export function ContractWriteStatus(
       }}
     >
       <Stack direction="row" alignItems="center" gap={0.75}>
-        <Typography flex={1} variant="body2">{`${
+        <Typography data-testid="transaction-type" flex={1} variant="body2">{`${
           index + 1
         }. ${displayTitle}`}</Typography>
         <CircleIcon sx={{ color: borderColor, width: 12, height: 12 }} />
-        <Typography variant="body2">
+        <Typography data-testid="transaction-status" variant="body2">
           {latestError
             ? "Something went wrong."
             : transactionResult.isSuccess

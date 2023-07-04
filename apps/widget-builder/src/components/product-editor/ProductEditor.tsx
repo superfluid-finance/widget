@@ -29,6 +29,7 @@ const ProductEditor: FC = () => {
             render={({ field: { value, onChange } }) => (
               <TextField
                 placeholder="Your Product Name"
+                data-testid="product-name-field"
                 value={value}
                 onChange={onChange}
               />
@@ -42,6 +43,7 @@ const ProductEditor: FC = () => {
             name="productDetails.description"
             render={({ field: { value, onChange } }) => (
               <TextField
+                data-testid="product-description-field"
                 placeholder="Your Product Description"
                 multiline
                 minRows={4}
@@ -73,7 +75,10 @@ const ProductEditor: FC = () => {
             }}
           >
             <Typography variant="subtitle1">Payment Details Summary</Typography>
-            <Typography sx={{ color: theme.palette.grey[500] }}>
+            <Typography
+              data-testid="added-payment-options-count"
+              sx={{ color: theme.palette.grey[500] }}
+            >
               Added: {fields.length}
             </Typography>
           </Stack>

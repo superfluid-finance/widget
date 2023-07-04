@@ -27,6 +27,7 @@ export default function ContractWriteButton({
     <Stack direction="column" alignItems="stretch" sx={{ width: "100%" }}>
       {needsToSwitchNetwork ? (
         <Button
+          data-testid="switch-network-button"
           size="large"
           variant="contained"
           fullWidth
@@ -36,6 +37,7 @@ export default function ContractWriteButton({
         </Button>
       ) : (
         <LoadingButton
+          data-testid="transaction-button"
           size="large"
           variant="contained"
           fullWidth

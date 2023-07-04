@@ -16,6 +16,7 @@ const SuperfluidButton: FC<SuperfluidButtonProps> = ({
   return (
     <Button
       {...props}
+      data-testid="go-to-widget-button"
       target="_blank"
       variant="contained"
       size="large"

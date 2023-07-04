@@ -72,6 +72,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
           }}
         >
           <Typography
+            data-testid="product-name"
             gutterBottom
             variant="subtitle2"
             color="text.secondary"
@@ -89,17 +90,29 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
             </Typography>
             {paymentOptionWithTokenInfo && (
               <Stack direction="row" alignItems="center" gap={1}>
-                <Typography variant="h2" component="span">
+                <Typography
+                  data-testid="main-token-amount"
+                  variant="h2"
+                  component="span"
+                >
                   {
                     paymentOptionWithTokenInfo.paymentOption.flowRate
                       .amountEther
                   }
                 </Typography>
                 <Stack direction="column">
-                  <Typography variant="caption" color="text.secondary">
+                  <Typography
+                    data-testid="main-token-selected"
+                    variant="caption"
+                    color="text.secondary"
+                  >
                     {paymentOptionWithTokenInfo.superToken.symbol}
                   </Typography>
-                  <Typography variant="caption" color="text.secondary">
+                  <Typography
+                    data-testid="main-flow-rate-period"
+                    variant="caption"
+                    color="text.secondary"
+                  >
                     per{" "}
                     {paymentOptionWithTokenInfo.paymentOption.flowRate.period}
                   </Typography>
@@ -142,7 +155,12 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
             {collapsableDetails && <ExpandIcon expanded={showDetails} />}
           </Stack>
           <Collapse in={!collapsableDetails || showDetails}>
-            <Typography variant="body2" color="text.secondary" sx={{ pt: 1 }}>
+            <Typography
+              data-testid="product-description"
+              variant="body2"
+              color="text.secondary"
+              sx={{ pt: 1 }}
+            >
               {description}
             </Typography>
           </Collapse>

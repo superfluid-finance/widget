@@ -158,12 +158,17 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
           tooltip="Select the network you'd like to request payment on"
         >
           <Select
+            data-testid="network-selection"
             value={selectedNetwork.name}
             onChange={handleNetworkSelect}
             fullWidth
           >
             {filteredNetworks.map((network) => (
-              <MenuItem value={network.name} key={`${network.chainId}`}>
+              <MenuItem
+                data-testid={network.chainId}
+                value={network.name}
+                key={`${network.chainId}`}
+              >
                 <Stack
                   direction="row"
                   gap={1}
@@ -187,6 +192,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
                     {network.name}
                     {network.isTestnet && (
                       <Chip
+                        data-testid="testnet-chip"
                         variant="filled"
                         color="primary"
                         label="test"
@@ -265,6 +271,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
           sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
         >
           <TextField
+            data-testid="flow-rate-input"
             fullWidth
             value={flowRateAmount}
             onChange={({ target }) =>
@@ -278,6 +285,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
             }}
           />
           <Select
+            data-testid="time-unit-selection"
             value={flowRateInterval}
             onChange={({ target }) =>
               setFlowRateInterval(target.value as TimePeriod)
@@ -302,12 +310,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         tooltip="Set your wallet or multisig address on the relevant network"
       >
         <TextField
+          data-testid="receiver-input-field"
           value={receiver}
           onChange={({ target }) => setReceiver(target.value as `0x${string}`)}
         />
       </InputWrapper>
 
       {/* <FormControlLabel
+        data-testid="default-option-switch"
         control={
           <Switch
             checked={isReceiverDefault}
@@ -329,6 +339,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
       </InputWrapper> */}
 
       <Button
+        data-testid="add-option-button"
         color="primary"
         variant="outlined"
         disabled={!(selectedNetwork && selectedToken)}

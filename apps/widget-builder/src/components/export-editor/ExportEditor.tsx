@@ -24,6 +24,7 @@ type ExportOption = "json" | "ipfs";
 
 const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
   <Button
+    data-testid="download-button"
     variant="contained"
     href={URL.createObjectURL(
       new Blob([JSON.stringify(json, null, 2)], { type: "application/json" })
@@ -43,6 +44,7 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
   return (
     <Stack direction="column" gap={2}>
       <LoadingButton
+        data-testid="publish-button"
         loading={isLoading}
         variant="contained"
         onClick={() => publish(json)}
@@ -123,6 +125,7 @@ const ExportEditor: FC = () => {
     <Stack gap={2}>
       <InputWrapper title="Select export option">
         <Select
+          data-testid="export-option"
           value={selectedExportOption}
           defaultValue="ipfs"
           onChange={({ target }) =>

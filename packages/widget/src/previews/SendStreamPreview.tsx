@@ -41,17 +41,23 @@ export function SendStreamPreview({
         </Typography>
 
         <AccountAddressCard
+          dataTest="sender"
           address={cmd.accountAddress}
           PaperProps={{ sx: { zIndex: 2 } }}
         />
         <StreamIndicator sx={{ mx: -1, zIndex: 0 }} />
         <AccountAddressCard
+          dataTest="receiver"
           address={cmd.receiverAddress}
           PaperProps={{ sx: { zIndex: 2 } }}
         />
       </Stack>
 
-      <Typography variant="caption" fontWeight="medium">
+      <Typography
+        data-testid="review-supertoken-balance-and-symbol"
+        variant="caption"
+        fontWeight="medium"
+      >
         Balance: {tokenBalance?.formatted} {superToken.symbol}
       </Typography>
     </Stack>

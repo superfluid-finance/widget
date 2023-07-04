@@ -44,10 +44,19 @@ export function WrapIntoSuperTokensPreview({
           sx={{ p: 1.5, borderRadius: 0.75 }}
         >
           <TokenAvatar tokenInfo={underlyingToken} />
-          <Typography variant="body1" sx={{ mt: 0.5 }}>
+          <Typography
+            data-testid="review-underlying-wrap-amount"
+            variant="body1"
+            sx={{ mt: 0.5 }}
+          >
             {cmd.amountEther}
           </Typography>
-          <Typography variant="caption">{underlyingToken.symbol}</Typography>
+          <Typography
+            data-testid="review-underlying-token-symbol"
+            variant="caption"
+          >
+            {underlyingToken.symbol}
+          </Typography>
         </Stack>
 
         <Stack component={Paper} sx={{ p: 1 }}>
@@ -62,13 +71,23 @@ export function WrapIntoSuperTokensPreview({
           sx={{ p: 1.5, borderRadius: 0.75 }}
         >
           <TokenAvatar tokenInfo={superToken} />
-          <Typography variant="body1" sx={{ mt: 0.5 }}>
+          <Typography
+            data-testid="review-super-wrap-amount"
+            variant="body1"
+            sx={{ mt: 0.5 }}
+          >
             {cmd.amountEther}
           </Typography>
-          <Typography variant="caption">{superToken.symbol}</Typography>
+          <Typography data-testid="review-super-token-symbol" variant="caption">
+            {superToken.symbol}
+          </Typography>
         </Stack>
       </Stack>
-      <Typography variant="caption" fontWeight="medium">
+      <Typography
+        data-testid="exchange-rate"
+        variant="caption"
+        fontWeight="medium"
+      >
         1 {underlyingToken.symbol} = 1 {superToken.symbol}
       </Typography>
     </Stack>
