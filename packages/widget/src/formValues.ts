@@ -3,6 +3,7 @@ import {
   supportedNetworkSchema,
   etherAmountSchema,
   paymentOptionSchema,
+  flowRateSchema,
 } from "./core";
 import { z } from "zod";
 import { UseFormReturn } from "react-hook-form";
@@ -21,6 +22,7 @@ export const checkoutFormSchema = z.object({
   accountAddress: addressSchema,
   network: supportedNetworkSchema,
   paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
+  customPaymentAmount: flowRateSchema,
   wrapAmountEther: etherAmountSchema,
   enableAutoWrap: z.boolean(),
 });
@@ -29,6 +31,6 @@ export type ValidFormValues = z.infer<typeof checkoutFormSchema>;
 export type DraftFormValues = NullableObject<ValidFormValues>;
 export type FormReturn = UseFormReturn<DraftFormValues, any, ValidFormValues>;
 
-type NullableObject<T> = {
+export type NullableObject<T> = {
   [P in keyof T]: T[P] | null;
 };

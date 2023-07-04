@@ -1,5 +1,13 @@
 import InfoIcon from "@mui/icons-material/Info";
-import { FormGroup, Stack, Tooltip, Typography, useTheme } from "@mui/material";
+import {
+  FormGroup,
+  FormLabel,
+  Stack,
+  SxProps,
+  Tooltip,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { FC, PropsWithChildren } from "react";
 
 type InputInfoProps = {
@@ -19,18 +27,27 @@ const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
 interface InputWrapperProps extends PropsWithChildren {
   title: string;
   tooltip?: string;
+  sx?: SxProps;
 }
 
-const InputWrapper: FC<InputWrapperProps> = ({ title, tooltip, children }) => (
-  <Stack gap={0.75} flex={1}>
-    <Stack direction="row" alignItems="center" justifyContent="space-between">
-      <Typography variant="body1" fontWeight="500">
-        {title}
-      </Typography>
+const InputWrapper: FC<InputWrapperProps> = ({
+  title,
+  tooltip,
+  sx = {},
+  children,
+}) => (
+  <FormGroup sx={sx}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      sx={{ mb: 0.75 }}
+    >
+      <FormLabel>{title}</FormLabel>
       {tooltip && <InputInfo tooltip={tooltip} />}
     </Stack>
     {children}
-  </Stack>
+  </FormGroup>
 );
 
 export default InputWrapper;

@@ -24,10 +24,12 @@ export const etherAmountSchema = z
   )
   .transform((x) => x.toString() as `${number}`);
 
-export const flowRateSchema = z.object({
-  amountEther: etherAmountSchema,
-  period: z.enum(timePeriods),
-});
+export const flowRateSchema = z
+  .object({
+    amountEther: etherAmountSchema,
+    period: z.enum(timePeriods),
+  })
+  .optional();
 
 export const paymentOptionSchema = z.object({
   receiverAddress: addressSchema,
@@ -37,3 +39,4 @@ export const paymentOptionSchema = z.object({
 });
 
 export type PaymentOption = z.infer<typeof paymentOptionSchema>;
+export type FlowRate = z.infer<typeof flowRateSchema>;

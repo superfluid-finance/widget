@@ -6,9 +6,10 @@ import { useAccount } from "wagmi";
 export function FormEffects() {
   const { watch, resetField, setValue } = useFormContext<DraftFormValues>();
 
-  const [network, paymentOptionWithTokenInfo] = watch([
+  const [network, paymentOptionWithTokenInfo, customPaymentAmount] = watch([
     "network",
     "paymentOptionWithTokenInfo",
+    "customPaymentAmount",
   ]);
 
   // Reset payment option (i.e. the token) when network changes.
@@ -34,22 +35,20 @@ export function FormEffects() {
       keepTouched: true,
       keepError: false,
     });
-    if (
-      paymentOptionWithTokenInfo &&
-      paymentOptionWithTokenInfo.superToken.extensions.superTokenInfo.type !==
-        "Pure"
-    ) {
-      setValue(
-        "wrapAmountEther",
-        paymentOptionWithTokenInfo.paymentOption.flowRate.amountEther,
-        {
-          shouldValidate: true,
-          shouldDirty: true,
-          shouldTouch: false,
-        }
-      );
+
+    if (!paymentOptionWithTokenInfo) return;
+
+    const { superToken, paymentOption } = paymentOptionWithTokenInfo;
+    const finalFlowRate = paymentOption.flowRate || customPaymentAmount;
+
+    if (superToken.extensions.superTokenInfo.type !== "Pure" && finalFlowRate) {
+      setValue("wrapAmountEther", finalFlowRate.amountEther, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: false,
+      });
     }
-  }, [paymentOptionWithTokenInfo]);
+  }, [paymentOptionWithTokenInfo, customPaymentAmount]);
 
   const { address } = useAccount();
 

@@ -10,7 +10,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ExpandIcon from "./ExpandIcon";
 import NetworkBadge from "./NetworkBadge";
@@ -33,15 +33,58 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
   } = useWidget();
 
   const { watch } = useFormContext<DraftFormValues>();
-  const [network, paymentOptionWithTokenInfo] = watch([
+
+  const [network, paymentOptionWithTokenInfo, customPaymentAmount] = watch([
     "network",
     "paymentOptionWithTokenInfo",
+    "customPaymentAmount",
   ]);
 
   const toggleDetails = useCallback(
     () => setShowDetails(!showDetails),
     [showDetails]
   );
+
+  const displayFlowRate = useMemo(() => {
+    return {
+      amountEther:
+        paymentOptionWithTokenInfo?.paymentOption.flowRate?.amountEther ||
+        customPaymentAmount?.amountEther ||
+        "0",
+      period:
+        paymentOptionWithTokenInfo?.paymentOption.flowRate?.period ||
+        customPaymentAmount?.period ||
+        "month",
+    };
+  }, [paymentOptionWithTokenInfo, customPaymentAmount]);
+
+  // const displayAmountEther = useMemo(() => {
+  //   if (
+  //     paymentOptionWithTokenInfo &&
+  //     !paymentOptionWithTokenInfo.paymentOption.flowRate &&
+  //     customPaymentAmount?.amountEther
+  //   ) {
+  //     return customPaymentAmount.amountEther;
+  //   }
+
+  //   return (
+  //     paymentOptionWithTokenInfo?.paymentOption.flowRate?.amountEther || "0"
+  //   );
+  // }, [paymentOptionWithTokenInfo, customPaymentAmount]);
+
+  // const displayPeriod = useMemo(() => {
+  //   if (
+  //     paymentOptionWithTokenInfo &&
+  //     !paymentOptionWithTokenInfo.paymentOption.flowRate &&
+  //     customPaymentAmount?.amountEther
+  //   ) {
+  //     return customPaymentAmount.amountEther;
+  //   }
+
+  //   return (
+  //     paymentOptionWithTokenInfo?.paymentOption.flowRate?.amountEther || "0"
+  //   );
+  // }, [paymentOptionWithTokenInfo, customPaymentAmount]);
 
   return (
     <Card variant={elevated ? "elevation" : "outlined"} {...CardProps}>
@@ -90,18 +133,14 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
             {paymentOptionWithTokenInfo && (
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography variant="h2" component="span">
-                  {
-                    paymentOptionWithTokenInfo.paymentOption.flowRate
-                      .amountEther
-                  }
+                  {displayFlowRate.amountEther}
                 </Typography>
                 <Stack direction="column">
                   <Typography variant="caption" color="text.secondary">
                     {paymentOptionWithTokenInfo.superToken.symbol}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    per{" "}
-                    {paymentOptionWithTokenInfo.paymentOption.flowRate.period}
+                    per {displayFlowRate.period}
                   </Typography>
                 </Stack>
               </Stack>

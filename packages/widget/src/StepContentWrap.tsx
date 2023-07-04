@@ -84,10 +84,12 @@ export default function StepContentWrap() {
     formState: { isValid, isValidating },
   } = useFormContext<DraftFormValues>();
 
-  const [paymentOptionWithTokenInfo, accountAddress] = watch([
-    "paymentOptionWithTokenInfo",
-    "accountAddress",
-  ]);
+  const [accountAddress, paymentOptionWithTokenInfo, customPaymentAmount] =
+    watch([
+      "accountAddress",
+      "paymentOptionWithTokenInfo",
+      "customPaymentAmount",
+    ]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
   const { getUnderlyingToken } = useWidget();
@@ -133,14 +135,15 @@ export default function StepContentWrap() {
   const showSkip = useMemo(() => {
     if (!paymentOptionWithTokenInfo || !superTokenBalance) return false;
 
-    const flowRate = paymentOptionWithTokenInfo.paymentOption.flowRate;
+    const flowRate =
+      paymentOptionWithTokenInfo.paymentOption.flowRate || customPaymentAmount;
 
     if (!flowRate) return false;
 
     const minAmount = parseEther(flowRate.amountEther);
 
     return BigInt(superTokenBalance.value) > minAmount;
-  }, [superTokenBalance]);
+  }, [superTokenBalance, paymentOptionWithTokenInfo, customPaymentAmount]);
 
   const onSkipWrapping = () => setValue("wrapAmountEther", "" as `${number}`);
 

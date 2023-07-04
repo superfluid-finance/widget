@@ -5,7 +5,11 @@ import {
   Box,
   Button,
   Chip,
+  Collapse,
+  FormControl,
   FormControlLabel,
+  FormGroup,
+  FormLabel,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -24,7 +28,14 @@ import tokenList, {
   TokenInfo,
 } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
-import { FC, useEffect, useMemo, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { Network, networks } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
@@ -93,6 +104,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   const [selectedToken, setSelectedToken] =
     useState<SuperTokenInfo>(defaultToken);
 
+  const [isOpenEnded, setIsOpenEnded] = useState(false);
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
@@ -138,10 +150,12 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           address: selectedToken.address as `0x${string}`,
         },
         chainId: selectedToken.chainId as ChainId,
-        flowRate: {
-          amountEther: flowRateAmount,
-          period: flowRateInterval,
-        },
+        flowRate: isOpenEnded
+          ? null
+          : {
+              amountEther: flowRateAmount,
+              period: flowRateInterval,
+            },
       });
     }
   };
@@ -154,6 +168,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
     );
   }, [selectedNetwork]);
 
+  const onOpenEndedChanged = (_e: ChangeEvent, checked: boolean) =>
+    setIsOpenEnded(checked);
+
   useEffect(() => {
     setSelectedToken(defaultToken);
   }, [selectedNetwork]);
@@ -162,7 +179,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
     <Stack direction="column" gap={1.5}>
       <Stack sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} gap={1.5}>
         <InputWrapper
-          title="Network"
+          title="Network*"
           tooltip="Select the network you'd like to request payment on"
         >
           <Select
@@ -208,7 +225,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           </Select>
         </InputWrapper>
         <InputWrapper
-          title="Super Token"
+          title="Super Token*"
           tooltip="Select the SuperToken you'd like to request payment in"
         >
           <Autocomplete
@@ -264,49 +281,66 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
         </InputWrapper>
       </Stack>
 
-      <InputWrapper
-        title="Flow Rate"
-        tooltip="Set the amount of tokens per month for the payment"
-      >
-        <Stack
-          gap="-1px"
-          sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
-        >
-          <TextField
-            fullWidth
-            value={flowRateAmount}
-            onChange={({ target }) =>
-              setFlowRateAmount(target.value as `${number}`)
-            }
-            InputProps={{
-              sx: {
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0,
-              },
-            }}
-          />
-          <Select
-            value={flowRateInterval}
-            onChange={({ target }) =>
-              setFlowRateInterval(target.value as TimePeriod)
-            }
-            sx={{
-              borderTopLeftRadius: 0,
-              borderBottomLeftRadius: 0,
-              marginLeft: "-1px",
-            }}
+      <Box>
+        <FormGroup>
+          <Stack direction="row" alignItems="center">
+            <FormLabel>Fixed amount</FormLabel>
+            <Switch
+              color="primary"
+              value={isOpenEnded}
+              onChange={onOpenEndedChanged}
+            />
+            <FormLabel>Open-ended amount</FormLabel>
+          </Stack>
+        </FormGroup>
+
+        <Collapse in={!isOpenEnded}>
+          <InputWrapper
+            title="Stream Rate*"
+            tooltip="Set the amount of tokens per month for the payment"
+            sx={{ pt: 1.5 }}
           >
-            {timePeriods.map((interval) => (
-              <MenuItem value={interval} key={interval}>
-                /{interval}
-              </MenuItem>
-            ))}
-          </Select>
-        </Stack>
-      </InputWrapper>
+            <Stack
+              gap="-1px"
+              sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
+            >
+              <TextField
+                fullWidth
+                value={flowRateAmount}
+                onChange={({ target }) =>
+                  setFlowRateAmount(target.value as `${number}`)
+                }
+                InputProps={{
+                  sx: {
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                  },
+                }}
+              />
+              <Select
+                value={flowRateInterval}
+                onChange={({ target }) =>
+                  setFlowRateInterval(target.value as TimePeriod)
+                }
+                sx={{
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                  marginLeft: "-1px",
+                }}
+              >
+                {timePeriods.map((interval) => (
+                  <MenuItem value={interval} key={interval}>
+                    /{interval}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Stack>
+          </InputWrapper>
+        </Collapse>
+      </Box>
 
       <InputWrapper
-        title="Receiver"
+        title="Receiver Wallet Address*"
         tooltip="Set your wallet or multisig address on the relevant network"
       >
         <TextField

@@ -1,4 +1,10 @@
-import { Divider, Stack, TextField, Typography } from "@mui/material";
+import {
+  Divider,
+  FormControl,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { FC } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import theme from "../../theme";
@@ -92,7 +98,7 @@ const ProductEditor: FC = () => {
                 ({ superToken, chainId, flowRate, receiverAddress }, i) => (
                   <PaymentOptionView
                     key={`${superToken.address}-${i}`}
-                    flowRate={`${flowRate.amountEther} / ${flowRate.period}`}
+                    flowRate={flowRate}
                     receiverAddress={receiverAddress}
                     superToken={superToken}
                     chainId={chainId}
