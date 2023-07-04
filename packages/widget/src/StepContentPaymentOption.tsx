@@ -1,5 +1,5 @@
 import { Box, Collapse, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
 import FlowRateInput from "./FlowRateInput";
@@ -11,20 +11,21 @@ import { DraftFormValues, ValidFormValues } from "./formValues";
 
 export default function StepContentPaymentOption() {
   const { watch, control } = useFormContext<DraftFormValues, ValidFormValues>();
-  const [network, paymentOptionWithTokenInfo] = watch([
+  const [network, paymentOptionWithTokenInfo, customPaymentAmount] = watch([
     "network",
     "paymentOptionWithTokenInfo",
+    "customPaymentAmount",
   ]);
 
-  const [showCustomFlowrate, setShowCustomFlowrate] = useState(
-    !paymentOptionWithTokenInfo?.paymentOption.flowRate
-  );
+  const showCustomFlowRateInput =
+    !paymentOptionWithTokenInfo?.paymentOption.flowRate;
 
-  useEffect(() => {
-    setShowCustomFlowrate(!paymentOptionWithTokenInfo?.paymentOption.flowRate);
-  }, [paymentOptionWithTokenInfo]);
-
-  const isStepComplete = !!network && !!paymentOptionWithTokenInfo;
+  const isStepComplete =
+    !!network &&
+    !!(
+      paymentOptionWithTokenInfo?.paymentOption.flowRate ||
+      customPaymentAmount?.amountEther
+    );
 
   const { isConnected } = useAccount();
 
@@ -56,7 +57,7 @@ export default function StepContentPaymentOption() {
           </Box>
         </Stack>
 
-        <Collapse in={showCustomFlowrate} appear={false}>
+        <Collapse in={showCustomFlowRateInput} appear={false}>
           <Box sx={{ pt: 2 }}>
             <Controller
               control={control}

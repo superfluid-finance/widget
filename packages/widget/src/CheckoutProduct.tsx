@@ -58,34 +58,6 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
     };
   }, [paymentOptionWithTokenInfo, customPaymentAmount]);
 
-  // const displayAmountEther = useMemo(() => {
-  //   if (
-  //     paymentOptionWithTokenInfo &&
-  //     !paymentOptionWithTokenInfo.paymentOption.flowRate &&
-  //     customPaymentAmount?.amountEther
-  //   ) {
-  //     return customPaymentAmount.amountEther;
-  //   }
-
-  //   return (
-  //     paymentOptionWithTokenInfo?.paymentOption.flowRate?.amountEther || "0"
-  //   );
-  // }, [paymentOptionWithTokenInfo, customPaymentAmount]);
-
-  // const displayPeriod = useMemo(() => {
-  //   if (
-  //     paymentOptionWithTokenInfo &&
-  //     !paymentOptionWithTokenInfo.paymentOption.flowRate &&
-  //     customPaymentAmount?.amountEther
-  //   ) {
-  //     return customPaymentAmount.amountEther;
-  //   }
-
-  //   return (
-  //     paymentOptionWithTokenInfo?.paymentOption.flowRate?.amountEther || "0"
-  //   );
-  // }, [paymentOptionWithTokenInfo, customPaymentAmount]);
-
   return (
     <Card variant={elevated ? "elevation" : "outlined"} {...CardProps}>
       <Paper
