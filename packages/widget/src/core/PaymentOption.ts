@@ -36,6 +36,10 @@ export const paymentOptionSchema = z.object({
   chainId: chainIdSchema,
   superToken: tokenSchema,
   flowRate: flowRateSchema,
+  userData: z
+    .string()
+    .transform((x) => x.toString() as `0x${string}`)
+    .optional(),
 });
 
 export type PaymentOption = z.infer<typeof paymentOptionSchema>;

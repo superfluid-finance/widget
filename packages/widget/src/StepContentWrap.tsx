@@ -23,11 +23,13 @@ import { UpgradeIcon } from "./previews/CommandPreview";
 interface WrapCardProps extends PropsWithChildren {
   token?: TokenInfo;
   formattedTokenBalance?: string;
+  dataTest?: string;
 }
 const WrapCard: FC<WrapCardProps> = ({
   children,
   token,
   formattedTokenBalance,
+  dataTest,
 }) => {
   return (
     <Paper
@@ -53,13 +55,16 @@ const WrapCard: FC<WrapCardProps> = ({
           sx={{ pl: 1.25, pr: 2, py: 1, borderRadius: 0.5 }}
         >
           <TokenAvatar tokenInfo={token} sx={{ width: 24, height: 24 }} />
-          <Typography variant="body1">{token.symbol}</Typography>
+          <Typography data-testid={`${dataTest}-symbol`} variant="body1">
+            {token.symbol}
+          </Typography>
         </Stack>
       )}
 
       <Box />
 
       <Typography
+        data-testid={`${dataTest}-balance`}
         variant="caption"
         align="right"
         color="text.secondary"
@@ -166,10 +171,12 @@ export default function StepContentWrap() {
         }) => (
           <Stack direction="column" justifyContent="center" alignItems="center">
             <WrapCard
+              dataTest="underlying"
               token={underlyingToken}
               formattedTokenBalance={underlyingTokenBalance?.formatted}
             >
               <Input
+                data-testid="wrap-amount-input"
                 disableUnderline
                 value={value}
                 onChange={onChange}
@@ -193,10 +200,12 @@ export default function StepContentWrap() {
             </Stack>
 
             <WrapCard
+              dataTest="super"
               token={superToken}
               formattedTokenBalance={superTokenBalance?.formatted}
             >
               <Input
+                data-testid="wrap-amount-mirror-amount"
                 disableUnderline
                 value={value}
                 onChange={onChange}
@@ -214,6 +223,7 @@ export default function StepContentWrap() {
             <Collapse in={focusedOnce || isTouched} timeout={400}>
               <Fade in={focusedOnce || isTouched} timeout={400}>
                 <Typography
+                  data-testid="we-recommend-message"
                   variant="caption"
                   color="text.secondary"
                   sx={{ mt: 0.75, alignSelf: "start" }}
@@ -265,6 +275,7 @@ export default function StepContentWrap() {
           )}
         </Stack>
         <Link
+          data-testid="why-wrap-tokens-button"
           underline="hover"
           href="https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens"
           target="_blank"

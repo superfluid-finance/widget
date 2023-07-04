@@ -48,7 +48,7 @@ const ImageSelect: FC<ImageSelectProps> = ({
         </Typography>
         {imageSrc && (
           <IconButton onClick={onRemove} size="small" sx={{ p: 0 }}>
-            <CancelIcon />
+            <CancelIcon data-testid="remove-image-button" />
           </IconButton>
         )}
       </Stack>
@@ -61,11 +61,17 @@ const ImageSelect: FC<ImageSelectProps> = ({
             alignItems: "center",
           }}
         >
-          <img src={imageSrc} height={90} alt="not foundg" />
+          <img
+            data-testid="product-image"
+            src={imageSrc}
+            height={90}
+            alt="not found"
+          />
         </Box>
       ) : (
         <Button fullWidth sx={{ p: 0, m: 0 }} onClick={triggerFileUpload}>
           <input
+            data-testid="file-upload-field"
             hidden
             type="file"
             name={label}

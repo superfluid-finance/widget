@@ -1,9 +1,9 @@
 import { Autocomplete, Stack, TextField, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues";
-import { useWidget } from "./WidgetContext";
 import { TokenAvatar } from "./TokenAvatar";
+import { useWidget } from "./WidgetContext";
+import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues";
 import { flowRatesEqual } from "./helpers/flowRateHelpers";
 
 export default function TokenAutocomplete() {
@@ -66,7 +66,7 @@ export default function TokenAutocomplete() {
               spacing={1}
             >
               <TokenAvatar tokenInfo={option.superToken} />
-              <Typography>
+              <Typography data-testid="token-option">
                 {option.paymentOption.flowRate
                   ? `${option.paymentOption.flowRate.amountEther} ${option.superToken.symbol}/${option.paymentOption.flowRate.period}`
                   : `${option.superToken.symbol} - Custom amount`}
@@ -75,6 +75,7 @@ export default function TokenAutocomplete() {
           )}
           renderInput={(params) => (
             <TextField
+              data-testid="token-selection-button"
               {...params}
               inputProps={{
                 ...params.inputProps,

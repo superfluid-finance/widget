@@ -1,8 +1,8 @@
-import { Command } from "./commands";
-import { ValidFormValues } from "./formValues";
-import { Address, parseEther } from "viem";
 import { nanoid } from "nanoid";
+import { Address, parseEther } from "viem";
+import { Command } from "./commands";
 import { autoWrapStrategyAddress } from "./core";
+import { ValidFormValues } from "./formValues";
 
 export const formValuesToCommands = (
   values: ValidFormValues
@@ -65,6 +65,7 @@ export const formValuesToCommands = (
     accountAddress,
     receiverAddress: paymentOption.receiverAddress,
     flowRate: finalFlowRate,
+    userData: paymentOption.userData ?? "0x",
   });
 
   return Object.freeze(commands);

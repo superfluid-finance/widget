@@ -65,14 +65,23 @@ export function CheckoutSummary() {
           {`You've streamed`}
         </Typography>
         <Stack direction="row" alignItems="end" gap={0.5}>
-          <Typography variant="h4" component="span">
+          <Typography
+            data-testid="streamed-amount"
+            variant="h4"
+            component="span"
+          >
             <FlowingBalance
               flowRate={flowRate}
               startingBalance={startingBalance}
               startingBalanceDate={startingBalanceDate}
             />{" "}
           </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5 }}>
+          <Typography
+            data-testid="streamed-token"
+            variant="caption"
+            color="text.secondary"
+            sx={{ mb: 0.5 }}
+          >
             {superToken.symbol}
           </Typography>
         </Stack>
@@ -89,11 +98,13 @@ export function CheckoutSummary() {
         width="100%"
       >
         <AccountAddressCard
+          dataTest="sender"
           address={sendStreamCommand.accountAddress}
           PaperProps={{ sx: { zIndex: 2 } }}
         />
         <StreamIndicator sx={{ mx: -1, zIndex: 0 }} />
         <AccountAddressCard
+          dataTest="receiver"
           address={sendStreamCommand.receiverAddress}
           PaperProps={{ sx: { zIndex: 2 } }}
         />
@@ -107,12 +118,19 @@ export function CheckoutSummary() {
       >
         {/* // TODO: Should these be target blank? */}
         {successURL && (
-          <Button fullWidth variant="contained" size="large" href={successURL}>
+          <Button
+            data-testid="continue-to-merchant-button"
+            fullWidth
+            variant="contained"
+            size="large"
+            href={successURL}
+          >
             {/* // TODO: Make text configurable? */}
             Continue to Merchant
           </Button>
         )}
         <Button
+          data-testid="open-dashboard-button"
           fullWidth
           size="large"
           variant="outlined"

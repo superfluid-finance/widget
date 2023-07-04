@@ -6,8 +6,6 @@ import {
   Button,
   Chip,
   Collapse,
-  FormControl,
-  FormControlLabel,
   FormGroup,
   FormLabel,
   ListItem,
@@ -20,7 +18,6 @@ import {
   Switch,
   TextField,
   Tooltip,
-  Typography,
   useTheme,
 } from "@mui/material";
 import tokenList, {
@@ -28,14 +25,7 @@ import tokenList, {
   TokenInfo,
 } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
-import {
-  ChangeEvent,
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { Network, networks } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
@@ -54,9 +44,7 @@ const renderToken = (token: TokenInfo) => {
 };
 
 type PaymentOptionSelectorProps = {
-  defaultReceiverAddress: `0x${string}`;
   onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
-  setDefaultReceiver: (address: string) => void;
 };
 
 const defaultNetwork = {
@@ -93,11 +81,7 @@ const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
   );
 };
 
-const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
-  onAdd,
-  defaultReceiverAddress,
-  setDefaultReceiver,
-}) => {
+const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
   const [selectedNetwork, setSelectedNetwork] =
     useState<Network>(defaultNetwork);
@@ -108,6 +92,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
+  const [userDataText, setUserDataText] = useState("");
 
   const filteredNetworks = useMemo(
     () =>
@@ -137,25 +122,23 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
       return;
     }
 
-    if (isReceiverDefault) {
-      setDefaultReceiver(receiver);
-    }
-
     const network = networks.find((n) => n.chainId === selectedToken.chainId);
 
-    if (network) {
+    if (network && receiver) {
       onAdd({
-        receiverAddress: receiver === "" ? defaultReceiverAddress : receiver,
+        receiverAddress: receiver,
         superToken: {
           address: selectedToken.address as `0x${string}`,
         },
         chainId: selectedToken.chainId as ChainId,
-        flowRate: isOpenEnded
-          ? null
-          : {
-              amountEther: flowRateAmount,
-              period: flowRateInterval,
-            },
+        ...(!isOpenEnded
+          ? {
+              flowRate: {
+                amountEther: flowRateAmount,
+                period: flowRateInterval,
+              },
+            }
+          : {}),
       });
     }
   };
@@ -183,12 +166,17 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           tooltip="Select the network you'd like to request payment on"
         >
           <Select
+            data-testid="network-selection"
             value={selectedNetwork.name}
             onChange={handleNetworkSelect}
             fullWidth
           >
             {filteredNetworks.map((network) => (
-              <MenuItem value={network.name} key={`${network.chainId}`}>
+              <MenuItem
+                data-testid={network.chainId}
+                value={network.name}
+                key={`${network.chainId}`}
+              >
                 <Stack
                   direction="row"
                   gap={1}
@@ -212,6 +200,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                     {network.name}
                     {network.isTestnet && (
                       <Chip
+                        data-testid="testnet-chip"
                         variant="filled"
                         color="primary"
                         label="test"
@@ -305,6 +294,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
               sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
             >
               <TextField
+                data-testid="flow-rate-input"
                 fullWidth
                 value={flowRateAmount}
                 onChange={({ target }) =>
@@ -318,6 +308,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                 }}
               />
               <Select
+                data-testid="time-unit-selection"
                 value={flowRateInterval}
                 onChange={({ target }) =>
                   setFlowRateInterval(target.value as TimePeriod)
@@ -344,12 +335,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
         tooltip="Set your wallet or multisig address on the relevant network"
       >
         <TextField
+          data-testid="receiver-input-field"
           value={receiver}
           onChange={({ target }) => setReceiver(target.value as `0x${string}`)}
         />
       </InputWrapper>
 
-      <FormControlLabel
+      {/* <FormControlLabel
+        data-testid="default-option-switch"
         control={
           <Switch
             checked={isReceiverDefault}
@@ -357,9 +350,21 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           />
         }
         label={<Typography>Use as default payment option</Typography>}
-      />
+      /> */}
+
+      {/* <InputWrapper
+        title="User Data"
+        tooltip=""
+      >
+        <TextField
+          value={userDataText}
+          onChange={({ target }) => setUserDataText(target.value)}
+          helperText={`On-chain hex: ${toHex(userDataText)}`}
+        />
+      </InputWrapper> */}
 
       <Button
+        data-testid="add-option-button"
         color="primary"
         variant="outlined"
         disabled={!(selectedNetwork && selectedToken)}

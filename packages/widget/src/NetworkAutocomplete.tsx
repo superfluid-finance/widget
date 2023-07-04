@@ -31,11 +31,14 @@ export default function NetworkAutocomplete() {
               spacing={1}
             >
               <NetworkAvatar network={option} />
-              <Typography>{option.name}</Typography>
+              <Typography data-testid="network-option">
+                {option.name}
+              </Typography>
             </Stack>
           )}
           renderInput={(params) => (
             <TextField
+              data-testid="widget-network-selection"
               {...params}
               inputProps={{
                 ...params.inputProps,
