@@ -279,7 +279,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
               value={isOpenEnded}
               onChange={onOpenEndedChanged}
             />
-            <FormLabel>Open-ended amount</FormLabel>
+            <FormLabel>Custom amount</FormLabel>
           </Stack>
         </FormGroup>
 
