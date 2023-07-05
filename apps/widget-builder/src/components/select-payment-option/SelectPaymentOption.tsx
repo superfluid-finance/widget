@@ -162,7 +162,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     <Stack direction="column" gap={1.5}>
       <Stack sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} gap={1.5}>
         <InputWrapper
-          title="Network*"
+          title="Network"
           tooltip="Select the network you'd like to request payment on"
         >
           <Select
@@ -214,7 +214,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
           </Select>
         </InputWrapper>
         <InputWrapper
-          title="Super Token*"
+          title="Super Token"
           tooltip="Select the SuperToken you'd like to request payment in"
         >
           <Autocomplete
@@ -285,7 +285,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
 
         <Collapse in={!isOpenEnded}>
           <InputWrapper
-            title="Stream Rate*"
+            title="Stream Rate"
             tooltip="Set the amount of tokens per month for the payment"
             sx={{ pt: 1.5 }}
           >
@@ -331,7 +331,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
       </Box>
 
       <InputWrapper
-        title="Receiver Wallet Address*"
+        title="Receiver Wallet Address"
         tooltip="Set your wallet or multisig address on the relevant network"
       >
         <TextField
