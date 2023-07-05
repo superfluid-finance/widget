@@ -4,7 +4,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { TokenAvatar } from "./TokenAvatar";
 import { useWidget } from "./WidgetContext";
 import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues";
-import { flowRatesEqual } from "./helpers/flowRateHelpers";
+import isEqual from "lodash.isequal";
 
 export default function TokenAutocomplete() {
   const { paymentOptionWithTokenInfoList } = useWidget();
@@ -32,28 +32,7 @@ export default function TokenAutocomplete() {
           disabled={network === null}
           value={value}
           disableClearable={!!value}
-          isOptionEqualToValue={(option, value) => {
-            const {
-              paymentOption: {
-                superToken: { address: optionTokenAddress },
-                flowRate: optionFlowRate,
-              },
-            } = option;
-            const {
-              paymentOption: {
-                superToken: { address: valueTokenAddress },
-                flowRate: valueFlowRate,
-              },
-            } = value;
-
-            if (optionTokenAddress === valueTokenAddress) {
-              if (flowRatesEqual(optionFlowRate, valueFlowRate)) {
-                return true;
-              }
-            }
-
-            return false;
-          }}
+          isOptionEqualToValue={(option, value) => isEqual(option, value)}
           options={autocompleteOptions}
           autoHighlight
           getOptionLabel={(option) => option.superToken.symbol}
