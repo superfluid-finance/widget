@@ -11,21 +11,18 @@ import { DraftFormValues, ValidFormValues } from "./formValues";
 
 export default function StepContentPaymentOption() {
   const { watch, control } = useFormContext<DraftFormValues, ValidFormValues>();
-  const [network, paymentOptionWithTokenInfo, customPaymentAmount] = watch([
+  const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
     "paymentOptionWithTokenInfo",
-    "customPaymentAmount",
+    "flowRate",
   ]);
 
   const showCustomFlowRateInput =
     !paymentOptionWithTokenInfo?.paymentOption.flowRate;
 
-  const isStepComplete =
-    !!network &&
-    !!(
-      paymentOptionWithTokenInfo?.paymentOption.flowRate ||
-      customPaymentAmount?.amountEther
-    );
+  const isStepComplete = Boolean(
+    network && flowRate?.amountEther && Number(flowRate?.amountEther) > 0 // TODO(KK): Refactor this to come from form validation
+  );
 
   const { isConnected } = useAccount();
 
@@ -61,7 +58,7 @@ export default function StepContentPaymentOption() {
           <Box sx={{ pt: 2 }}>
             <Controller
               control={control}
-              name="customPaymentAmount"
+              name="flowRate"
               render={({ field: { value, onChange, onBlur } }) => (
                 <FlowRateInput
                   value={value}

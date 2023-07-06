@@ -4,12 +4,13 @@ import { useEffect } from "react";
 import { useAccount } from "wagmi";
 
 export function FormEffects() {
-  const { watch, resetField, setValue } = useFormContext<DraftFormValues>();
+  const { watch, resetField, setValue, getFieldState, formState } =
+    useFormContext<DraftFormValues>();
 
-  const [network, paymentOptionWithTokenInfo, customPaymentAmount] = watch([
+  const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
     "paymentOptionWithTokenInfo",
-    "customPaymentAmount",
+    "flowRate",
   ]);
 
   // Reset payment option (i.e. the token) when network changes.
@@ -26,29 +27,47 @@ export function FormEffects() {
   // Reset wrap things when payment option (i.e. the token) changes.
   useEffect(() => {
     resetField("wrapAmountEther", {
-      keepDirty: true,
+      keepDirty: false,
       keepTouched: true,
       keepError: false,
     });
     resetField("enableAutoWrap", {
-      keepDirty: true,
+      keepDirty: false,
       keepTouched: true,
       keepError: false,
     });
 
-    if (!paymentOptionWithTokenInfo) return;
-
-    const { superToken, paymentOption } = paymentOptionWithTokenInfo;
-    const finalFlowRate = paymentOption.flowRate || customPaymentAmount;
-
-    if (superToken.extensions.superTokenInfo.type !== "Pure" && finalFlowRate) {
-      setValue("wrapAmountEther", finalFlowRate.amountEther, {
-        shouldValidate: true,
+    if (!paymentOptionWithTokenInfo?.paymentOption?.flowRate) {
+      resetField("flowRate", {
+        keepDirty: false,
+        keepTouched: true,
+        keepError: false,
+      });
+    } else {
+      setValue("flowRate", paymentOptionWithTokenInfo.paymentOption.flowRate, {
         shouldDirty: true,
-        shouldTouch: false,
+        shouldTouch: true,
+        shouldValidate: true,
       });
     }
-  }, [paymentOptionWithTokenInfo, customPaymentAmount]);
+  }, [paymentOptionWithTokenInfo]);
+
+  useEffect(() => {
+    if (paymentOptionWithTokenInfo) {
+      const { superToken } = paymentOptionWithTokenInfo;
+      const isWrapDirty = getFieldState("wrapAmountEther", formState).isDirty;
+      const isPureSuperToken =
+        superToken.extensions.superTokenInfo.type === "Pure";
+
+      if (!isWrapDirty && !isPureSuperToken) {
+        resetField("wrapAmountEther", {
+          keepDirty: false,
+          keepTouched: true,
+          defaultValue: flowRate.amountEther,
+        });
+      }
+    }
+  }, [paymentOptionWithTokenInfo, flowRate]);
 
   const { address } = useAccount();
 

@@ -95,7 +95,12 @@ const ProductEditor: FC = () => {
                 ({ superToken, chainId, flowRate, receiverAddress }, i) => (
                   <PaymentOptionView
                     key={`${superToken.address}-${i}`}
-                    flowRate={flowRate}
+                    flowRate={
+                      flowRate ?? {
+                        amountEther: "0",
+                        period: "month",
+                      }
+                    }
                     receiverAddress={receiverAddress}
                     superToken={superToken}
                     chainId={chainId}

@@ -8,16 +8,14 @@ import {
 import { ChangeEvent, FC, useCallback } from "react";
 import { FlowRate, TimePeriod, timePeriods } from "./core";
 
-// export type RequiredFlow = Exclude<FlowRate, undefined>;
-
 interface FlowRateInputProps {
-  value: FlowRate | null;
+  value: FlowRate;
   onChange: (newFlowRate: FlowRate) => void;
   onBlur?: () => void;
 }
 
 const FlowRateInput: FC<FlowRateInputProps> = ({ value, onChange, onBlur }) => {
-  const { amountEther, period = "month" } = value || {};
+  const { amountEther, period = "month" } = value ?? {};
 
   const onAmountEtherChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +27,7 @@ const FlowRateInput: FC<FlowRateInputProps> = ({ value, onChange, onBlur }) => {
   const onPeriodChange = useCallback(
     (e: SelectChangeEvent) => {
       onChange({
-        amountEther: (amountEther || "") as `${number}`,
+        amountEther: (amountEther ?? "") as `${number}`,
         period: e.target.value as TimePeriod,
       });
     },

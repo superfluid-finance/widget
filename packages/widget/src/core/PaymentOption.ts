@@ -24,18 +24,16 @@ export const etherAmountSchema = z
   )
   .transform((x) => x.toString() as `${number}`);
 
-export const flowRateSchema = z
-  .object({
-    amountEther: etherAmountSchema,
-    period: z.enum(timePeriods),
-  })
-  .optional();
+export const flowRateSchema = z.object({
+  amountEther: etherAmountSchema,
+  period: z.enum(timePeriods),
+});
 
 export const paymentOptionSchema = z.object({
   receiverAddress: addressSchema,
   chainId: chainIdSchema,
   superToken: tokenSchema,
-  flowRate: flowRateSchema,
+  flowRate: flowRateSchema.optional(),
   userData: z
     .string()
     .transform((x) => x.toString() as `0x${string}`)

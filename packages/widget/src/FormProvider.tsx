@@ -43,6 +43,10 @@ export default function FormProvider({ children }: Props) {
     paymentOptionWithTokenInfo: defaultPaymentOption,
     wrapAmountEther: "" as `${number}`,
     enableAutoWrap: false,
+    flowRate: {
+      amountEther: "0",
+      period: "month",
+    },
   };
 
   const formMethods: FormMethods = useForm({

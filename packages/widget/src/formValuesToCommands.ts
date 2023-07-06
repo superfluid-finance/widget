@@ -12,7 +12,7 @@ export const formValuesToCommands = (
     accountAddress,
     wrapAmountEther,
     enableAutoWrap,
-    customPaymentAmount,
+    flowRate,
     paymentOptionWithTokenInfo: { paymentOption, superToken },
   } = values;
 
@@ -49,14 +49,6 @@ export const formValuesToCommands = (
     }
   }
 
-  // Open ended payment options do not have flow rate so we ask user to specify one.
-  // There is a moment where flow rate is missing but user should not reach this point without specifying one.
-  const finalFlowRate = paymentOption.flowRate || customPaymentAmount;
-
-  if (!finalFlowRate) {
-    throw new Error("Can't check out without specified flow rate!");
-  }
-
   commands.push({
     id: nanoid(),
     type: "Send Stream",
@@ -64,7 +56,7 @@ export const formValuesToCommands = (
     superTokenAddress,
     accountAddress,
     receiverAddress: paymentOption.receiverAddress,
-    flowRate: finalFlowRate,
+    flowRate: flowRate,
     userData: paymentOption.userData ?? "0x",
   });
 

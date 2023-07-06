@@ -22,15 +22,18 @@ export const checkoutFormSchema = z.object({
   accountAddress: addressSchema,
   network: supportedNetworkSchema,
   paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
-  customPaymentAmount: flowRateSchema,
+  flowRate: flowRateSchema.refine((x) => BigInt(x.amountEther) > 0n),
   wrapAmountEther: etherAmountSchema,
-  enableAutoWrap: z.boolean(),
+  enableAutoWrap: z.boolean().optional(),
 });
 
 export type ValidFormValues = z.infer<typeof checkoutFormSchema>;
-export type DraftFormValues = NullableObject<ValidFormValues>;
+export type DraftFormValues = NullableKeys<
+  ValidFormValues,
+  "accountAddress" | "network" | "paymentOptionWithTokenInfo"
+>;
 export type FormReturn = UseFormReturn<DraftFormValues, any, ValidFormValues>;
 
-export type NullableObject<T> = {
-  [P in keyof T]: T[P] | null;
+export type NullableKeys<T, K extends keyof T> = Omit<T, K> & {
+  [P in K]: T[P] | null;
 };

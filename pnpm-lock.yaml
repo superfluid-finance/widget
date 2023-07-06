@@ -397,6 +397,9 @@ importers:
       immer:
         specifier: ^10.0.2
         version: 10.0.2
+      lodash.isequal:
+        specifier: ^4.1.2
+        version: 4.5.0
       lodash.memoize:
         specifier: ^4.1.2
         version: 4.1.2
@@ -425,6 +428,9 @@ importers:
       '@superfluid-finance/ethereum-contracts':
         specifier: ^1.7.1
         version: 1.7.1
+      '@types/lodash.isequal':
+        specifier: ^4.1.7
+        version: 4.4.0
       '@types/lodash.memoize':
         specifier: ^4.1.7
         version: 4.1.7
@@ -2054,6 +2060,7 @@ packages:
 
   /@jridgewell/source-map@0.3.4:
     resolution: {integrity: sha512-KE/SxsDqNs3rrWwFHcRh15ZLVFrI0YoZtgAdIyIq9k5hUNmiWRXXThPomIxHuL20sLdgzbDFyvkUMna14bvtrw==}
+    deprecated: the version has a bug with typescript type resolution
     dev: true
 
   /@jridgewell/sourcemap-codec@1.4.14:
@@ -4802,6 +4809,12 @@ packages:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
       '@types/node': 20.3.2
+    dev: true
+
+  /@types/lodash.isequal@4.4.0:
+    resolution: {integrity: sha512-EbXRJwooi+CdGlzV7scJ8NB3PXF8YE7zB1q3W5/in8nauf1pOgxaJtg3/QLognJ1YIWGNApdSAnqZCR0Lq0qbw==}
+    dependencies:
+      '@types/lodash': 4.14.195
     dev: true
 
   /@types/lodash.memoize@4.1.7:

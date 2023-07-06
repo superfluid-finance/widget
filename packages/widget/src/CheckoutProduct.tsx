@@ -34,29 +34,16 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
 
   const { watch } = useFormContext<DraftFormValues>();
 
-  const [network, paymentOptionWithTokenInfo, customPaymentAmount] = watch([
+  const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
     "paymentOptionWithTokenInfo",
-    "customPaymentAmount",
+    "flowRate",
   ]);
 
   const toggleDetails = useCallback(
     () => setShowDetails(!showDetails),
     [showDetails]
   );
-
-  const displayFlowRate = useMemo(() => {
-    return {
-      amountEther:
-        paymentOptionWithTokenInfo?.paymentOption.flowRate?.amountEther ||
-        customPaymentAmount?.amountEther ||
-        "0",
-      period:
-        paymentOptionWithTokenInfo?.paymentOption.flowRate?.period ||
-        customPaymentAmount?.period ||
-        "month",
-    };
-  }, [paymentOptionWithTokenInfo, customPaymentAmount]);
 
   return (
     <Card variant={elevated ? "elevation" : "outlined"} {...CardProps}>
@@ -110,7 +97,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
                   component="span"
                   data-testid="main-token-amount"
                 >
-                  {displayFlowRate.amountEther}
+                  {flowRate.amountEther}
                 </Typography>
                 <Stack direction="column">
                   <Typography
@@ -125,7 +112,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
                     color="text.secondary"
                     data-testid="main-flow-rate-period"
                   >
-                    per {displayFlowRate.period}
+                    per {flowRate.period}
                   </Typography>
                 </Stack>
               </Stack>
