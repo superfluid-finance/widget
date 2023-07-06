@@ -88,7 +88,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [selectedToken, setSelectedToken] =
     useState<SuperTokenInfo>(defaultToken);
 
-  const [isOpenEnded, setIsOpenEnded] = useState(false);
+  const [isCustomAmount, setIsCustomAmount] = useState(false);
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
@@ -131,7 +131,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
           address: selectedToken.address as `0x${string}`,
         },
         chainId: selectedToken.chainId as ChainId,
-        ...(!isOpenEnded
+        ...(!isCustomAmount
           ? {
               flowRate: {
                 amountEther: flowRateAmount,
@@ -151,8 +151,8 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     );
   }, [selectedNetwork]);
 
-  const onOpenEndedChanged = (_e: ChangeEvent, checked: boolean) =>
-    setIsOpenEnded(checked);
+  const onCustomAmountChanged = (_e: ChangeEvent, checked: boolean) =>
+    setIsCustomAmount(checked);
 
   useEffect(() => {
     setSelectedToken(defaultToken);
@@ -276,14 +276,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
             <FormLabel>Fixed amount</FormLabel>
             <Switch
               color="primary"
-              value={isOpenEnded}
-              onChange={onOpenEndedChanged}
+              value={isCustomAmount}
+              onChange={onCustomAmountChanged}
             />
             <FormLabel>Custom amount</FormLabel>
           </Stack>
         </FormGroup>
 
-        <Collapse in={!isOpenEnded}>
+        <Collapse in={!isCustomAmount}>
           <InputWrapper
             title="Stream Rate"
             tooltip="Set the amount of tokens per month for the payment"
