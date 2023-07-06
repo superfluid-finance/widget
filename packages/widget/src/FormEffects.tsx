@@ -24,19 +24,8 @@ export function FormEffects() {
     [network]
   );
 
-  // Reset wrap things when payment option (i.e. the token) changes.
+  // Set flow rate when payment option changes.
   useEffect(() => {
-    resetField("wrapAmountEther", {
-      keepDirty: false,
-      keepTouched: true,
-      keepError: false,
-    });
-    resetField("enableAutoWrap", {
-      keepDirty: false,
-      keepTouched: true,
-      keepError: false,
-    });
-
     if (!paymentOptionWithTokenInfo?.paymentOption?.flowRate) {
       resetField("flowRate", {
         keepDirty: false,
@@ -52,6 +41,21 @@ export function FormEffects() {
     }
   }, [paymentOptionWithTokenInfo]);
 
+  // Reset wrap things when payment option (i.e. the token) changes.
+  useEffect(() => {
+    resetField("wrapAmountEther", {
+      keepDirty: false,
+      keepTouched: true,
+      keepError: false,
+    });
+    resetField("enableAutoWrap", {
+      keepDirty: false,
+      keepTouched: true,
+      keepError: false,
+    });
+  }, [paymentOptionWithTokenInfo]);
+
+  // # Change initial wrap amount when flow rate changes.
   useEffect(() => {
     if (paymentOptionWithTokenInfo) {
       const { superToken } = paymentOptionWithTokenInfo;
