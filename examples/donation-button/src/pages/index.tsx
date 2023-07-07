@@ -71,12 +71,12 @@ export default function Main() {
           paymentDetails={paymentDetails}
           tokenList={superTokenList}
           theme={theme}
-          type="dialog"
+          type="drawer"
           walletManager={walletManager}
         >
           {({ openModal }) => (
             <button className={styles.btn} onClick={() => openModal()}>
-              Subscribe
+              Donate
             </button>
           )}
         </SuperfluidWidget>
