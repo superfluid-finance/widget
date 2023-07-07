@@ -1,5 +1,6 @@
 import "./App.css";
 import SuperfluidWidget, {
+  EventListeners,
   supportedNetworks,
 } from "@superfluid-finance/widget";
 import productDetails from "./productDetails";
@@ -40,6 +41,14 @@ function App() {
     [open, isOpen]
   );
 
+  const eventListeners: EventListeners = useMemo(
+    () => ({
+      onSuccess: () => console.log("onSuccess"),
+      onSuccessButtonClick: () => console.log("onSuccessButtonClick"),
+    }),
+    []
+  );
+
   return (
     <>
       <WagmiConfig config={wagmiConfig}>
@@ -49,6 +58,7 @@ function App() {
           tokenList={superTokenList}
           type="drawer"
           walletManager={walletManager}
+          eventListeners={eventListeners}
         >
           {({ openModal }) => (
             <button onClick={() => openModal()}>Drawer</button>
@@ -60,6 +70,7 @@ function App() {
           tokenList={superTokenList}
           type="dialog"
           walletManager={walletManager}
+          eventListeners={eventListeners}
         >
           {({ openModal }) => (
             <button onClick={() => openModal()}>Dialog</button>
@@ -71,6 +82,7 @@ function App() {
           tokenList={superTokenList}
           type="full-screen"
           walletManager={walletManager}
+          eventListeners={eventListeners}
         >
           {({ openModal }) => (
             <button onClick={() => openModal()}>Full-screen</button>

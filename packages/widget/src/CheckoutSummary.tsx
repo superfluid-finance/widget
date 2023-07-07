@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { parseEther } from "viem";
 import { AccountAddressCard } from "./AccountAddressCard";
 import { useCommandHandler } from "./CommandHandlerContext";
@@ -9,11 +9,13 @@ import SuccessImage from "./SuccessImage";
 import { useWidget } from "./WidgetContext";
 import { SendStreamCommand } from "./commands";
 import { mapTimePeriodToSeconds } from "./core";
+import { runEventListener } from "./EventListeners";
 
 export function CheckoutSummary() {
   const {
     getSuperToken,
-    productDetails: { successURL = "https://superfluid.finance" }, // TODO: remove the default
+    productDetails: { successURL, successText = "Continue to Merchant" },
+    eventListeners,
   } = useWidget();
   const { commands } = useCommandHandler();
 
@@ -34,6 +36,10 @@ export function CheckoutSummary() {
     () => getSuperToken(sendStreamCommand.superTokenAddress),
     [sendStreamCommand.superTokenAddress, getSuperToken]
   );
+
+  useEffect(() => {
+    runEventListener(eventListeners.onSuccess);
+  }, []);
 
   return (
     <Box>
@@ -104,7 +110,6 @@ export function CheckoutSummary() {
         alignItems="stretch"
         spacing={1}
       >
-        {/* // TODO: Should these be target blank? */}
         {successURL && (
           <Button
             data-testid="continue-to-merchant-button"
@@ -112,9 +117,11 @@ export function CheckoutSummary() {
             variant="contained"
             size="large"
             href={successURL}
+            onClick={() =>
+              runEventListener(eventListeners.onSuccessButtonClick)
+            }
           >
-            {/* // TODO: Make text configurable? */}
-            Continue to Merchant
+            {successText}
           </Button>
         )}
         <Button
