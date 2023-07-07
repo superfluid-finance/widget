@@ -6,7 +6,7 @@ type Props = {
 } & AvatarProps;
 
 export function TokenAvatar({ tokenInfo, ...AvatarProps }: Props) {
-  const { sx: AvatarSx = {} } = AvatarProps || {};
+  const { sx: AvatarSx = {} } = AvatarProps ?? {};
 
   return tokenInfo.logoURI ? (
     <Avatar

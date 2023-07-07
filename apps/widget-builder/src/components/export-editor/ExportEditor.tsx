@@ -105,7 +105,7 @@ const ExportEditor: FC = () => {
         // logo: logoBase64,
       },
       paymentDetails,
-      layout,
+      type: layout,
       theme: mapDisplaySettingsToTheme(displaySettings),
     }),
     [

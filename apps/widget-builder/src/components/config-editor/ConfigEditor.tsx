@@ -83,7 +83,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   }, []);
 
   const handleEditorChange: OnChange = useCallback((value) => {
-    setEditorValue(value || "");
+    setEditorValue(value ?? "");
   }, []);
 
   const [saved, setSaved] = useState(false);

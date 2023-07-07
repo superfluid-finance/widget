@@ -8,9 +8,9 @@ import {
   useTheme,
 } from "@mui/material";
 import superTokenList from "@superfluid-finance/tokenlist";
-import { ChainId } from "@superfluid-finance/widget";
+import { ChainId, FlowRate } from "@superfluid-finance/widget";
 import Image from "next/image";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useMemo } from "react";
 import { networks } from "../../networkDefinitions";
 
 type PaymentOptionRowProps = {
@@ -45,7 +45,7 @@ const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
 
 type PaymentOptionViewProps = {
   superToken: { address: `0x${string}` };
-  flowRate: string;
+  flowRate: FlowRate;
   receiverAddress: `0x${string}`;
   chainId: ChainId;
   index: number;
@@ -65,6 +65,12 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   const token = Object.values(superTokenList.tokens).find(
     (token) => token.address === superToken.address
   );
+
+  const flowRateValue = useMemo(() => {
+    if (!flowRate) return "Custom amount";
+    return `${flowRate.amountEther} / ${flowRate.period}`;
+  }, [flowRate]);
+
   return (
     <Paper variant="outlined" sx={{ p: 2 }}>
       <Stack direction="column" gap={1} sx={{ mb: 2 }}>
@@ -100,7 +106,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
             </Stack>
           }
         />
-        <PaymentOptionRow label="Flow Rate" value={flowRate} />
+        <PaymentOptionRow label="Stream Rate" value={flowRateValue} />
         <PaymentOptionRow
           label="Receiver"
           value={
