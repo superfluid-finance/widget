@@ -151,6 +151,7 @@ export function Widget({
     <WidgetContext.Provider value={checkoutState}>
       <ThemeProvider theme={theme}>
         {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
+        {/* TODO: (M) Add ScopedCssBaseline to handle scrollbar styles */}
         {validationResult.success ? (
           <WidgetView {...viewProps} />
         ) : (
