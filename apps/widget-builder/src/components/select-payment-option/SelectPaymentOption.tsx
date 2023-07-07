@@ -5,7 +5,9 @@ import {
   Box,
   Button,
   Chip,
-  FormControlLabel,
+  Collapse,
+  FormGroup,
+  FormLabel,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -16,7 +18,6 @@ import {
   Switch,
   TextField,
   Tooltip,
-  Typography,
   useTheme,
 } from "@mui/material";
 import tokenList, {
@@ -24,12 +25,11 @@ import tokenList, {
   TokenInfo,
 } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
-import { FC, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { Network, networks } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
-import { toHex } from "viem";
 
 export type PaymentOption = {
   network: Network;
@@ -88,6 +88,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [selectedToken, setSelectedToken] =
     useState<SuperTokenInfo>(defaultToken);
 
+  const [isCustomAmount, setIsCustomAmount] = useState(false);
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
@@ -130,10 +131,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
           address: selectedToken.address as `0x${string}`,
         },
         chainId: selectedToken.chainId as ChainId,
-        flowRate: {
-          amountEther: flowRateAmount,
-          period: flowRateInterval,
-        },
+        ...(!isCustomAmount
+          ? {
+              flowRate: {
+                amountEther: flowRateAmount,
+                period: flowRateInterval,
+              },
+            }
+          : {}),
       });
     }
   };
@@ -145,6 +150,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         token.chainId === network?.chainId && token.tags?.includes("supertoken")
     );
   }, [selectedNetwork]);
+
+  const onCustomAmountChanged = (_e: ChangeEvent, checked: boolean) =>
+    setIsCustomAmount(checked);
 
   useEffect(() => {
     setSelectedToken(defaultToken);
@@ -262,51 +270,68 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         </InputWrapper>
       </Stack>
 
-      <InputWrapper
-        title="Flow Rate"
-        tooltip="Set the amount of tokens per month for the payment"
-      >
-        <Stack
-          gap="-1px"
-          sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
-        >
-          <TextField
-            data-testid="flow-rate-input"
-            fullWidth
-            value={flowRateAmount}
-            onChange={({ target }) =>
-              setFlowRateAmount(target.value as `${number}`)
-            }
-            InputProps={{
-              sx: {
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0,
-              },
-            }}
-          />
-          <Select
-            data-testid="time-unit-selection"
-            value={flowRateInterval}
-            onChange={({ target }) =>
-              setFlowRateInterval(target.value as TimePeriod)
-            }
-            sx={{
-              borderTopLeftRadius: 0,
-              borderBottomLeftRadius: 0,
-              marginLeft: "-1px",
-            }}
+      <Box>
+        <FormGroup>
+          <Stack direction="row" alignItems="center">
+            <FormLabel>Fixed amount</FormLabel>
+            <Switch
+              color="primary"
+              value={isCustomAmount}
+              onChange={onCustomAmountChanged}
+            />
+            <FormLabel>Custom amount</FormLabel>
+          </Stack>
+        </FormGroup>
+
+        <Collapse in={!isCustomAmount}>
+          <InputWrapper
+            title="Stream Rate"
+            tooltip="Set the amount of tokens per month for the payment"
+            sx={{ pt: 1.5 }}
           >
-            {timePeriods.map((interval) => (
-              <MenuItem value={interval} key={interval}>
-                /{interval}
-              </MenuItem>
-            ))}
-          </Select>
-        </Stack>
-      </InputWrapper>
+            <Stack
+              gap="-1px"
+              sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
+            >
+              <TextField
+                data-testid="flow-rate-input"
+                fullWidth
+                value={flowRateAmount}
+                onChange={({ target }) =>
+                  setFlowRateAmount(target.value as `${number}`)
+                }
+                InputProps={{
+                  sx: {
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                  },
+                }}
+              />
+              <Select
+                data-testid="time-unit-selection"
+                value={flowRateInterval}
+                onChange={({ target }) =>
+                  setFlowRateInterval(target.value as TimePeriod)
+                }
+                sx={{
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                  marginLeft: "-1px",
+                }}
+              >
+                {timePeriods.map((interval) => (
+                  <MenuItem value={interval} key={interval}>
+                    /{interval}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Stack>
+          </InputWrapper>
+        </Collapse>
+      </Box>
 
       <InputWrapper
-        title="Receiver"
+        title="Receiver Wallet Address"
         tooltip="Set your wallet or multisig address on the relevant network"
       >
         <TextField

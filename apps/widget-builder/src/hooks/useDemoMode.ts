@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
 import { faker } from "@faker-js/faker";
 import {
   PaymentDetails,
   ProductDetails,
   supportedNetwork,
 } from "@superfluid-finance/widget";
+import { useMemo, useState } from "react";
 import {
   DisplaySettings,
   Layout,
@@ -92,6 +92,13 @@ const demoPaymentDetails: PaymentDetails = {
       },
     } as const,
     {
+      receiverAddress: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // rebounder
+      chainId: supportedNetwork.polygonMumbai.id,
+      superToken: {
+        address: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // fDAIx
+      },
+    } as const,
+    {
       receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
       chainId: supportedNetwork.celo.id,
       superToken: {
@@ -106,7 +113,6 @@ const demoPaymentDetails: PaymentDetails = {
 };
 
 const defaultPaymentDetails: PaymentDetails = {
-  // defaultReceiverAddress: "",
   paymentOptions: [
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder

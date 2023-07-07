@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import { useAccount } from "wagmi";
 import { CheckoutSummary } from "./CheckoutSummary";
 import ExpandIcon from "./ExpandIcon";
 import StepContentPaymentOption from "./StepContentPaymentOption";

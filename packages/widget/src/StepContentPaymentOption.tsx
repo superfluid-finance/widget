@@ -1,19 +1,28 @@
-import { Box, Stack } from "@mui/material";
-import TokenAutocomplete from "./TokenAutocomplete";
-import NetworkAutocomplete from "./NetworkAutocomplete";
-import { useFormContext } from "react-hook-form";
-import { DraftFormValues, ValidFormValues } from "./formValues";
-import { StepperContinueButton } from "./StepperContinueButton";
+import { Box, Collapse, Stack } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
+import FlowRateInput from "./FlowRateInput";
+import NetworkAutocomplete from "./NetworkAutocomplete";
+import { StepperContinueButton } from "./StepperContinueButton";
+import TokenAutocomplete from "./TokenAutocomplete";
 import { useWidget } from "./WidgetContext";
+import { DraftFormValues, ValidFormValues } from "./formValues";
 
 export default function StepContentPaymentOption() {
-  const { watch } = useFormContext<DraftFormValues, ValidFormValues>();
-  const [network, paymentOptionWithTokenInfo] = watch([
+  const { watch, control } = useFormContext<DraftFormValues, ValidFormValues>();
+  const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
     "paymentOptionWithTokenInfo",
+    "flowRate",
   ]);
-  const isStepComplete = !!network && !!paymentOptionWithTokenInfo;
+
+  const showCustomFlowRateInput =
+    !paymentOptionWithTokenInfo?.paymentOption.flowRate;
+
+  const isStepComplete = Boolean(
+    network && flowRate?.amountEther && Number(flowRate?.amountEther) > 0 // TODO(KK): Refactor this to come from form validation
+  );
 
   const { isConnected } = useAccount();
 
@@ -26,22 +35,42 @@ export default function StepContentPaymentOption() {
       direction="column"
       alignItems="stretch"
       justifyContent="space-around"
-      spacing={3}
+      gap={3}
       sx={{ pb: 3, px: 3.5 }}
     >
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        spacing={1}
-      >
-        <Box sx={{ width: "100%" }}>
-          <NetworkAutocomplete />
-        </Box>
-        <Box sx={{ width: "100%" }}>
-          <TokenAutocomplete />
-        </Box>
-      </Stack>
+      <Box>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          gap={1}
+          sx={{ position: "relative" }}
+        >
+          <Box sx={{ width: "100%" }}>
+            <NetworkAutocomplete />
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <TokenAutocomplete />
+          </Box>
+        </Stack>
+
+        <Collapse in={showCustomFlowRateInput} appear={false}>
+          <Box sx={{ pt: 2 }}>
+            <Controller
+              control={control}
+              name="flowRate"
+              render={({ field: { value, onChange, onBlur } }) => (
+                <FlowRateInput
+                  value={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                />
+              )}
+            />
+          </Box>
+        </Collapse>
+      </Box>
+
       <StepperContinueButton
         disabled={!isStepComplete}
         {...(!isConnected && { onClick: () => openWalletManager() })}
