@@ -9,12 +9,16 @@ import SuccessImage from "./SuccessImage";
 import { useWidget } from "./WidgetContext";
 import { SendStreamCommand } from "./commands";
 import { mapTimePeriodToSeconds } from "./core";
+import { useAccount } from "wagmi";
 
 export function CheckoutSummary() {
   const {
     getSuperToken,
-    productDetails: { successURL = "https://superfluid.finance" }, // TODO: remove the default
+    productDetails: { successURL },
   } = useWidget();
+
+  const { address: accountAddress } = useAccount();
+
   const { commands } = useCommandHandler();
 
   const sendStreamCommand = commands.find(
@@ -33,6 +37,14 @@ export function CheckoutSummary() {
   const superToken = useMemo(
     () => getSuperToken(sendStreamCommand.superTokenAddress),
     [sendStreamCommand.superTokenAddress, getSuperToken]
+  );
+
+  const dashboardURL = useMemo(
+    () =>
+      `https://app.superfluid.finance/${
+        accountAddress ? `?view=${accountAddress}` : ""
+      }`,
+    [accountAddress]
   );
 
   return (
@@ -122,7 +134,7 @@ export function CheckoutSummary() {
           fullWidth
           size="large"
           variant="outlined"
-          href="https://app.superfluid.finance"
+          href={dashboardURL}
           target="_blank"
         >
           Open Superfluid Dashboard

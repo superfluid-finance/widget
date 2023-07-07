@@ -10,7 +10,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ExpandIcon from "./ExpandIcon";
 import NetworkBadge from "./NetworkBadge";
@@ -33,9 +33,11 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
   } = useWidget();
 
   const { watch } = useFormContext<DraftFormValues>();
-  const [network, paymentOptionWithTokenInfo] = watch([
+
+  const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
     "paymentOptionWithTokenInfo",
+    "flowRate",
   ]);
 
   const toggleDetails = useCallback(
@@ -91,14 +93,11 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
             {paymentOptionWithTokenInfo && (
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography
-                  data-testid="main-token-amount"
                   variant="h2"
                   component="span"
+                  data-testid="main-token-amount"
                 >
-                  {
-                    paymentOptionWithTokenInfo.paymentOption.flowRate
-                      .amountEther
-                  }
+                  {flowRate.amountEther}
                 </Typography>
                 <Stack direction="column">
                   <Typography
@@ -109,12 +108,11 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
                     {paymentOptionWithTokenInfo.superToken.symbol}
                   </Typography>
                   <Typography
-                    data-testid="main-flow-rate-period"
                     variant="caption"
                     color="text.secondary"
+                    data-testid="main-flow-rate-period"
                   >
-                    per{" "}
-                    {paymentOptionWithTokenInfo.paymentOption.flowRate.period}
+                    per {flowRate.period}
                   </Typography>
                 </Stack>
               </Stack>

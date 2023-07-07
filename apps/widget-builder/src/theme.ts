@@ -113,6 +113,16 @@ const theme = createTheme({
   },
 
   components: {
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+          lineHeight: 1.5,
+          fontWeight: 500,
+          color: "#000",
+        },
+      },
+    },
     MuiTabPanel: {
       styleOverrides: {
         root: {

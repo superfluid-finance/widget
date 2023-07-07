@@ -1,8 +1,8 @@
-import { Command } from "./commands";
-import { ValidFormValues } from "./formValues";
-import { Address, parseEther } from "viem";
 import { nanoid } from "nanoid";
+import { Address, parseEther } from "viem";
+import { Command } from "./commands";
 import { autoWrapStrategyAddress } from "./core";
+import { ValidFormValues } from "./formValues";
 
 export const formValuesToCommands = (
   values: ValidFormValues
@@ -12,8 +12,10 @@ export const formValuesToCommands = (
     accountAddress,
     wrapAmountEther,
     enableAutoWrap,
+    flowRate,
     paymentOptionWithTokenInfo: { paymentOption, superToken },
   } = values;
+
   const wrapAmount = parseEther(wrapAmountEther ? wrapAmountEther : "0");
 
   const superTokenAddress = superToken.address as Address;
@@ -54,7 +56,7 @@ export const formValuesToCommands = (
     superTokenAddress,
     accountAddress,
     receiverAddress: paymentOption.receiverAddress,
-    flowRate: paymentOption.flowRate,
+    flowRate: flowRate,
     userData: paymentOption.userData ?? "0x",
   });
 
