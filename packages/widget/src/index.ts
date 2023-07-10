@@ -6,5 +6,6 @@ export * from "@superfluid-finance/tokenlist"; // Re-export Token List.
 
 import { Widget } from "./Widget";
 export type { WidgetProps } from "./Widget";
+export type { EventListeners } from "./EventListeners";
 
 export default Widget;

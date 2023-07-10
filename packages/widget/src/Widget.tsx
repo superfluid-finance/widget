@@ -20,9 +20,11 @@ import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoTo
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList";
 import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions";
 import { buildThemeOptions } from "./theme";
+import { EventListeners } from "./EventListeners";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {
+    eventListeners?: EventListeners;
     walletManager: WalletManager;
     theme?: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
     stepper?: {
@@ -40,6 +42,7 @@ export function Widget({
   theme: theme_,
   walletManager,
   stepper: stepper_ = { orientation: "vertical" },
+  eventListeners,
   ...viewProps
 }: WidgetProps) {
   const { paymentOptions } = paymentDetails;
@@ -121,6 +124,11 @@ export function Widget({
       layout: {
         elevated: !["drawer", "dialog"].includes(viewProps.type),
       },
+      eventListeners: {
+        onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
+        onSuccessButtonClick:
+          eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,
+      },
     }),
     [
       superTokens,
@@ -131,6 +139,8 @@ export function Widget({
       walletManager,
       stepper,
       viewProps.type,
+      eventListeners?.onSuccess,
+      eventListeners?.onSuccessButtonClick,
     ]
   );
 
@@ -164,3 +174,5 @@ export function Widget({
     </WidgetContext.Provider>
   );
 }
+
+const NOOP_FUNCTION = () => {};

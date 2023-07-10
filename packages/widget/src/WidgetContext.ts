@@ -6,6 +6,7 @@ import { Address } from "viem";
 import { WalletManager } from "./WalletManager";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import { Orientation } from "@mui/material";
+import { EventListeners } from "./EventListeners";
 
 export type WidgetContextValue = {
   getSuperToken: (address: Address) => SuperTokenInfo;
@@ -22,6 +23,7 @@ export type WidgetContextValue = {
   layout: {
     elevated: boolean;
   };
+  eventListeners: Required<EventListeners>;
 } & CheckoutConfig;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(
