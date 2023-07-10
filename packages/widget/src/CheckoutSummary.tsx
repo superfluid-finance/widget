@@ -51,7 +51,7 @@ export function CheckoutSummary() {
 
   useEffect(() => {
     runEventListener(eventListeners.onSuccess);
-  }, []);
+  }, [eventListeners.onSuccess]);
 
   return (
     <Box>
