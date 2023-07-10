@@ -26,13 +26,9 @@ const paymentDetails: PaymentDetails = {
   paymentOptions: [
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22",
-      chainId: 5,
+      chainId: 80001,
       superToken: {
         address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a",
-      },
-      flowRate: {
-        amountEther: "1",
-        period: "month",
       },
     },
   ],

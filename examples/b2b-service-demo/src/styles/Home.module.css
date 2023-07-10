@@ -1,0 +1,53 @@
+.Main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url("/bg.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.Header {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding: 0 3.5rem;
+}
+
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex: 1;
+}
+
+.Heading {
+  margin-bottom: 3.8rem;
+  text-align: center;
+}
+
+.Heading h1 {
+  font-family: var(--font-heading);
+  font-size: 3.75rem;
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.Heading p {
+  font-size: 1.21875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.96875rem;
+}
+
+.PricingOptions {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
