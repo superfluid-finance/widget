@@ -1,4 +1,7 @@
 {
+    "name": "tests",
+    "version": "0.0.1",
+    "private": true,
     "devDependencies": {
         "@currents/playwright": "^0.6.1",
         "@playwright/test": "^1.35.0",

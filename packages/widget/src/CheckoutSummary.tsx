@@ -49,6 +49,9 @@ export function CheckoutSummary() {
     [accountAddress]
   );
 
+  // Note: calling "onSuccess" through the "useEffect" hook is not optimal.
+  // We make the assumption that "CheckoutSummary" is only rendered when the checkout is successful.
+  // A more proper place would be inside a central state machine.
   useEffect(() => {
     runEventListener(eventListeners.onSuccess);
   }, [eventListeners.onSuccess]);
