@@ -26,13 +26,14 @@ interface AccountAddressCardProps {
 }
 
 export function AccountAddressCard({
-  address,
+  address = "0x0000000000000000000000000000000000000000", // TODO(KK): Remove fallback to 0-address. There is some awkward race-condition happening either because of wagmi or rendering order which ends up with address "undefined" for a moment.
   dataTest,
   PaperProps = { sx: {} },
 }: AccountAddressCardProps) {
-  const blockiesSrc = create({ seed: address.toLowerCase() }).toDataURL();
+  const blockiesSrc = create({
+    seed: address.toLowerCase(),
+  }).toDataURL();
   const [copied, setCopied] = useState(false);
-
   return (
     <Paper
       {...PaperProps}
