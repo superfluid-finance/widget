@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { parseEther } from "viem";
 import { AccountAddressCard } from "./AccountAddressCard";
 import { useCommandHandler } from "./CommandHandlerContext";
@@ -10,11 +10,13 @@ import { useWidget } from "./WidgetContext";
 import { SendStreamCommand } from "./commands";
 import { mapTimePeriodToSeconds } from "./core";
 import { useAccount } from "wagmi";
+import { runEventListener } from "./EventListeners";
 
 export function CheckoutSummary() {
   const {
     getSuperToken,
-    productDetails: { successURL },
+    productDetails: { successURL, successText = "Continue to Merchant" },
+    eventListeners,
   } = useWidget();
 
   const { address: accountAddress } = useAccount();
@@ -46,6 +48,13 @@ export function CheckoutSummary() {
       }`,
     [accountAddress]
   );
+
+  // Note: calling "onSuccess" through the "useEffect" hook is not optimal.
+  // We make the assumption that "CheckoutSummary" is only rendered when the checkout is successful.
+  // A more proper place would be inside a central state machine.
+  useEffect(() => {
+    runEventListener(eventListeners.onSuccess);
+  }, [eventListeners.onSuccess]);
 
   return (
     <Box>
@@ -116,7 +125,6 @@ export function CheckoutSummary() {
         alignItems="stretch"
         spacing={1}
       >
-        {/* // TODO: Should these be target blank? */}
         {successURL && (
           <Button
             data-testid="continue-to-merchant-button"
@@ -124,9 +132,11 @@ export function CheckoutSummary() {
             variant="contained"
             size="large"
             href={successURL}
+            onClick={() =>
+              runEventListener(eventListeners.onSuccessButtonClick)
+            }
           >
-            {/* // TODO: Make text configurable? */}
-            Continue to Merchant
+            {successText}
           </Button>
         )}
         <Button
