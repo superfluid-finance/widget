@@ -1,10 +1,15 @@
 import { useForm, FormProvider as RHFFormProvider } from "react-hook-form";
-import { DraftFormValues, FormReturn as FormMethods } from "./formValues";
+import {
+  DraftFormValues,
+  FormReturn as FormMethods,
+  checkoutFormSchema,
+} from "./formValues";
 import { ChildrenProp } from "./utils";
 import { FormEffects } from "./FormEffects";
 import { useNetwork } from "wagmi";
 import { useWidget } from "./WidgetContext";
 import { useMemo } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type Props = {
   children: ((formMethods: FormMethods) => ChildrenProp) | ChildrenProp;
@@ -52,6 +57,7 @@ export default function FormProvider({ children }: Props) {
 
   const formMethods: FormMethods = useForm({
     defaultValues,
+    resolver: zodResolver(checkoutFormSchema),
   });
 
   return (
