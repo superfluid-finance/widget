@@ -3,9 +3,10 @@ import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { StepperContinueButton } from "./StepperContinueButton";
+import { StepperCTAButton } from "./StepperCTAButton";
 import { CommandPreview } from "./previews/CommandPreview";
 import { formValuesToCommands } from "./formValuesToCommands";
+import { useStepper } from "./StepperContext";
 
 export default function StepContentReview() {
   const {
@@ -25,6 +26,8 @@ export default function StepContentReview() {
 
   useEffect(() => submitCommands(commands), [commands]);
 
+  const { handleNext } = useStepper();
+
   return (
     <Stack sx={{ pb: 3, px: 3.5 }} gap={3}>
       <Stack direction="column" spacing={3}>
@@ -35,9 +38,12 @@ export default function StepContentReview() {
           </Fragment>
         ))}
       </Stack>
-      <StepperContinueButton disabled={!isValid || isValidating}>
+      <StepperCTAButton
+        disabled={!isValid || isValidating}
+        onClick={handleNext}
+      >
         Continue
-      </StepperContinueButton>
+      </StepperCTAButton>
     </Stack>
   );
 }

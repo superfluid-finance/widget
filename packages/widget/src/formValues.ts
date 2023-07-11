@@ -18,14 +18,24 @@ export type PaymentOptionWithTokenInfo = z.infer<
   typeof paymentOptionWithTokenInfoSchema
 >;
 
-export const checkoutFormSchema = z.object({
-  accountAddress: addressSchema,
-  network: supportedNetworkSchema,
-  paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
-  flowRate: flowRateSchema.refine((x) => BigInt(x.amountEther) > 0n),
-  wrapAmountEther: etherAmountSchema,
-  enableAutoWrap: z.boolean().optional(),
-});
+export const checkoutFormSchema = z
+  .object({
+    accountAddress: addressSchema,
+    network: supportedNetworkSchema,
+    paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
+    flowRate: flowRateSchema,
+    // .refine((x) => BigInt(x.amountEther) > 0n)
+    wrapAmountEther: etherAmountSchema,
+    enableAutoWrap: z.boolean().optional(),
+  })
+  .refine(
+    (data) =>
+      data.paymentOptionWithTokenInfo.paymentOption.receiverAddress.toLowerCase() !==
+      data.accountAddress.toLowerCase(),
+    {
+      message: "You can't stream to yourself.",
+    }
+  );
 
 export type ValidFormValues = z.infer<typeof checkoutFormSchema>;
 export type DraftFormValues = NullableKeys<

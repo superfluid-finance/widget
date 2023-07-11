@@ -4,8 +4,14 @@ import { useEffect } from "react";
 import { useAccount } from "wagmi";
 
 export function FormEffects() {
-  const { watch, resetField, setValue, getFieldState, formState } =
-    useFormContext<DraftFormValues>();
+  const {
+    watch,
+    resetField,
+    setValue,
+    getFieldState,
+    formState: { isValid, errors },
+    trigger,
+  } = useFormContext<DraftFormValues>();
 
   const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
@@ -59,7 +65,7 @@ export function FormEffects() {
   useEffect(() => {
     if (paymentOptionWithTokenInfo) {
       const { superToken } = paymentOptionWithTokenInfo;
-      const isWrapDirty = getFieldState("wrapAmountEther", formState).isDirty;
+      const isWrapDirty = getFieldState("wrapAmountEther").isDirty;
       const isPureSuperToken =
         superToken.extensions.superTokenInfo.type === "Pure";
 
@@ -90,6 +96,14 @@ export function FormEffects() {
       });
     }
   }, [address]);
+
+  // Trigger "higher order validation", i.e. react-hook-form works field-level by default but we want to validate the whole form state.
+  const errorsLength = Object.keys(errors).length;
+  useEffect(() => {
+    if (!isValid && errorsLength === 0) {
+      trigger();
+    }
+  }, [isValid, errorsLength]);
 
   return null;
 }

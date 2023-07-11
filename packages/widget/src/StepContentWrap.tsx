@@ -10,15 +10,16 @@ import {
   useTheme,
 } from "@mui/material";
 import { TokenInfo } from "@superfluid-finance/tokenlist";
-import { FC, PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { FC, PropsWithChildren, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { parseEther } from "viem";
 import { Address, useBalance } from "wagmi";
-import { StepperContinueButton } from "./StepperContinueButton";
+import { StepperCTAButton } from "./StepperCTAButton";
 import { TokenAvatar } from "./TokenAvatar";
 import { useWidget } from "./WidgetContext";
 import { DraftFormValues } from "./formValues";
 import { UpgradeIcon } from "./previews/CommandPreview";
+import { useStepper } from "./StepperContext";
 
 interface WrapCardProps extends PropsWithChildren {
   token?: TokenInfo;
@@ -146,7 +147,12 @@ export default function StepContentWrap() {
     return BigInt(superTokenBalance.value) > minAmount;
   }, [superTokenBalance, paymentOptionWithTokenInfo, flowRate]);
 
-  const onSkipWrapping = () => setValue("wrapAmountEther", "" as `${number}`);
+  const { handleNext } = useStepper();
+
+  const onSkipWrapping = () => {
+    setValue("wrapAmountEther", "" as `${number}`);
+    handleNext();
+  };
 
   const onInputFocus = () => setFocusedOnce(true);
 
@@ -257,17 +263,20 @@ export default function StepContentWrap() {
           alignItems="stretch"
           gap={1.5}
         >
-          <StepperContinueButton disabled={!isValid || isValidating}>
+          <StepperCTAButton
+            disabled={!isValid || isValidating}
+            onClick={handleNext}
+          >
             Continue
-          </StepperContinueButton>
+          </StepperCTAButton>
           {showSkip && (
-            <StepperContinueButton
+            <StepperCTAButton
               variant="outlined"
               color="primary"
               onClick={onSkipWrapping}
             >
               Skip this step
-            </StepperContinueButton>
+            </StepperCTAButton>
           )}
         </Stack>
         <Link

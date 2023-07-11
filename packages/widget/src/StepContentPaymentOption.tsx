@@ -1,16 +1,20 @@
 import { Box, Collapse, Stack } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
 import FlowRateInput from "./FlowRateInput";
 import NetworkAutocomplete from "./NetworkAutocomplete";
-import { StepperContinueButton } from "./StepperContinueButton";
+import { StepperCTAButton } from "./StepperCTAButton";
 import TokenAutocomplete from "./TokenAutocomplete";
 import { useWidget } from "./WidgetContext";
 import { DraftFormValues, ValidFormValues } from "./formValues";
+import { useStepper } from "./StepperContext";
 
 export default function StepContentPaymentOption() {
-  const { watch, control } = useFormContext<DraftFormValues, ValidFormValues>();
+  const { watch, control, formState, getValues } = useFormContext<
+    DraftFormValues,
+    ValidFormValues
+  >();
   const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
     "paymentOptionWithTokenInfo",
@@ -29,6 +33,8 @@ export default function StepContentPaymentOption() {
   const {
     walletManager: { open: openWalletManager },
   } = useWidget();
+
+  const { handleNext } = useStepper();
 
   return (
     <Stack
@@ -70,13 +76,16 @@ export default function StepContentPaymentOption() {
           </Box>
         </Collapse>
       </Box>
+      {getValues("flowRate").amountEther}
 
-      <StepperContinueButton
+      <StepperCTAButton
         disabled={!isStepComplete}
-        {...(!isConnected && { onClick: () => openWalletManager() })}
+        {...(!isConnected
+          ? { onClick: () => openWalletManager() }
+          : { onClick: handleNext })}
       >
         {isConnected ? "Continue" : "Connect Wallet to Continue"}
-      </StepperContinueButton>
+      </StepperCTAButton>
     </Stack>
   );
 }
