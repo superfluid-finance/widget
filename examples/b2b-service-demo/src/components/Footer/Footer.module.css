@@ -41,3 +41,10 @@
     gap: 4rem;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .Links {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
