@@ -6,13 +6,15 @@ import SuperfluidWidget, {
   WidgetProps,
 } from "@superfluid-finance/widget";
 import { useWeb3Modal } from "@web3modal/react";
-import { FC, useMemo } from "react";
+import { FC, useCallback, useMemo, useRef } from "react";
 import Button from "../Button/Button";
 import styles from "./PricingCard.module.css";
 
 const productDetails: ProductDetails = {
   name: `Donation Subscription`,
   imageURI: "/product.png",
+  successText: "Finish Demo",
+  successURL: "#",
 };
 
 const defaultPaymentOption: PaymentOption = {
@@ -45,6 +47,7 @@ interface PricingCardProps {
   outlined?: boolean;
   features: string[];
   onClick?: () => void;
+  onFinish?: () => void;
 }
 
 const PricingCard: FC<PricingCardProps> = ({
@@ -55,7 +58,10 @@ const PricingCard: FC<PricingCardProps> = ({
   outlined = false,
   features,
   onClick,
+  onFinish,
 }) => {
+  const closeModalRef = useRef<() => void>(() => {});
+
   const { open, isOpen } = useWeb3Modal();
 
   const walletManager = useMemo(
@@ -72,13 +78,20 @@ const PricingCard: FC<PricingCardProps> = ({
         {
           ...defaultPaymentOption,
           flowRate: {
-            amountEther: price.toString() as `${number}`,
+            amountEther: "0.1" as `${number}`, //price.toString()
             period: "month",
           },
         },
       ],
     };
   }, [price]);
+
+  const onSuccessClickCallback = useCallback(() => {
+    if (!closeModalRef.current) return;
+
+    closeModalRef.current();
+    onFinish && onFinish();
+  }, [closeModalRef, onFinish]);
 
   return (
     <div className={styles.Wrapper}>
@@ -102,12 +115,18 @@ const PricingCard: FC<PricingCardProps> = ({
             theme={theme}
             type="drawer"
             walletManager={walletManager}
+            eventListeners={{
+              onSuccessButtonClick: onSuccessClickCallback,
+            }}
           >
-            {({ openModal }) => (
-              <Button outlined={outlined} onClick={openModal}>
-                {ctaTitle}
-              </Button>
-            )}
+            {({ openModal, closeModal }) => {
+              closeModalRef.current = closeModal;
+              return (
+                <Button outlined={outlined} onClick={openModal}>
+                  {ctaTitle}
+                </Button>
+              );
+            }}
           </SuperfluidWidget>
         )}
 

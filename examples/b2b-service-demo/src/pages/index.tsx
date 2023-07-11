@@ -1,13 +1,17 @@
+import Button from "@/components/Button/Button";
 import Footer from "@/components/Footer/Footer";
+import Modal from "@/components/Modal/Modal";
 import PricingCard from "@/components/PricingCard/PricingCard";
 import styles from "@/styles/Home.module.css";
 
-import { useWeb3Modal } from "@web3modal/react";
 import Head from "next/head";
-import { useMemo } from "react";
+import { useState } from "react";
 
 export default function Home() {
-  const onSubscribe = () => {};
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   return (
     <>
@@ -35,6 +39,7 @@ export default function Home() {
                 description="Up to 1,000,000 compute units/mo"
                 ctaTitle="Subscribe"
                 price={29}
+                onFinish={openModal}
                 features={[
                   "Supernode, Build, Monitor, and Notify",
                   "Enhanced APIs",
@@ -49,6 +54,7 @@ export default function Home() {
                 description="Up to 5,000,000 compute units/mo"
                 ctaTitle="Subscribe"
                 price={99}
+                onFinish={openModal}
                 features={[
                   "Auto-scaling compute units",
                   "Parity trace and gETH debug",
@@ -64,7 +70,7 @@ export default function Home() {
                 description="Custom compute units"
                 ctaTitle="Talk to us"
                 price={1000}
-                onClick={onSubscribe}
+                onClick={openModal}
                 features={[
                   "Uncapped Simulation Throughput",
                   "Committed use discounts",
@@ -75,6 +81,17 @@ export default function Home() {
               />
             </div>
           </section>
+
+          <Modal show={showModal} onClose={closeModal}>
+            <div>
+              <h3>Do you have more questions?</h3>
+              <p>
+                We’ll show you how your business can benefit from using our
+                checkout
+              </p>
+              <Button>Book a Demo</Button>
+            </div>
+          </Modal>
 
           <Footer />
         </div>
