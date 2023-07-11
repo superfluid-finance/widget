@@ -9,7 +9,7 @@ export function FormEffects() {
     resetField,
     setValue,
     getFieldState,
-    formState: { isValid, errors },
+    formState: { isValid, errors }, // Creates form state subscription.
     trigger,
   } = useFormContext<DraftFormValues>();
 
@@ -98,12 +98,12 @@ export function FormEffects() {
   }, [address]);
 
   // Trigger "higher order validation", i.e. react-hook-form works field-level by default but we want to validate the whole form state.
-  const errorsLength = Object.keys(errors).length;
-  useEffect(() => {
-    if (!isValid && errorsLength === 0) {
-      trigger();
-    }
-  }, [isValid, errorsLength]);
+  // const errorsLength = Object.keys(errors).length;
+  // useEffect(() => {
+  //   if (!isValid && errorsLength === 0) {
+  //     trigger();
+  //   }
+  // }, [isValid, errorsLength]);
 
   return null;
 }
