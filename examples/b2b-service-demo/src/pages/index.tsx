@@ -1,12 +1,10 @@
-import Button from "@/components/Button/Button";
 import Footer from "@/components/Footer/Footer";
-import Modal from "@/components/BookModal/Modal/Modal";
 import PricingCard from "@/components/PricingCard/PricingCard";
 import styles from "@/styles/Home.module.css";
 
+import BookModal from "@/components/BookModal/BookModal";
 import Head from "next/head";
 import { useState } from "react";
-import BookModal from "@/components/BookModal/BookModal";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -25,7 +23,7 @@ export default function Home() {
 
       <main className={styles.Main}>
         <header className={styles.Header}>
-          <img src="/logo.svg" />
+          <img src="/logo.svg" alt="Logo" />
         </header>
 
         <div className={styles.Wrapper}>

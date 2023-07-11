@@ -78,7 +78,7 @@ const PricingCard: FC<PricingCardProps> = ({
         {
           ...defaultPaymentOption,
           flowRate: {
-            amountEther: "0.1" as `${number}`, //price.toString()
+            amountEther: price.toString() as `${number}`,
             period: "month",
           },
         },

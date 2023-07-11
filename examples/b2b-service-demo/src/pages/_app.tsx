@@ -8,17 +8,19 @@ import {
 import { Web3Modal } from "@web3modal/react";
 import type { AppProps } from "next/app";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
+import { IntercomProvider } from "react-use-intercom";
+import configuration from "@/configuration";
 
-const projectId = "952483bf7a0f5ace4c40eb53967f1368";
+const { WalletConnectProjectID, IntercomAppID } = configuration;
 
 const { publicClient } = configureChains(supportedNetworks, [
-  w3mProvider({ projectId }),
+  w3mProvider({ projectId: WalletConnectProjectID }),
 ]);
 
 const wagmiConfig = createConfig({
   autoConnect: false,
   connectors: w3mConnectors({
-    projectId,
+    projectId: WalletConnectProjectID,
     chains: supportedNetworks,
   }),
   publicClient,
@@ -29,11 +31,16 @@ const ethereumClient = new EthereumClient(wagmiConfig, supportedNetworks);
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <WagmiConfig config={wagmiConfig}>
-        <Component {...pageProps} />
-      </WagmiConfig>
+      <IntercomProvider appId={IntercomAppID}>
+        <WagmiConfig config={wagmiConfig}>
+          <Component {...pageProps} />
+        </WagmiConfig>
 
-      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+        <Web3Modal
+          projectId={WalletConnectProjectID}
+          ethereumClient={ethereumClient}
+        />
+      </IntercomProvider>
     </>
   );
 }

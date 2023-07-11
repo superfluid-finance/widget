@@ -8,12 +8,12 @@ const Footer: FC<FooterProps> = ({}) => {
   return (
     <footer className={styles.Wrapper}>
       <div className={styles.Intro}>
-        <img src="/logo.svg" />
+        <img src="/logo.svg" alt="Logo" />
         <p>The web3 development platform</p>
         <div className={styles.Social}>
-          <img src="/social/facebook.svg" />
-          <img src="/social/instagram.svg" />
-          <img src="/social/twitter.svg" />
+          <img src="/social/facebook.svg" alt="Facebook button" />
+          <img src="/social/instagram.svg" alt="Instagram button" />
+          <img src="/social/twitter.svg" alt="Twitter icon" />
         </div>
       </div>
       <div className={styles.Links}>
