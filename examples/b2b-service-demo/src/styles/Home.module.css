@@ -5,7 +5,7 @@
   background-image: url("/bg.svg");
   background-repeat: no-repeat;
   background-size: 100%;
-  background-position: center;
+  background-position: top center;
 }
 
 .Header {
@@ -20,7 +20,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px;
+  max-width: min(100vw - 40px, 1400px);
   margin: 0 auto;
   flex: 1;
 }
@@ -32,14 +32,14 @@
 
 .Heading h1 {
   font-family: var(--font-heading);
-  font-size: 3.75rem;
+  font-size: clamp(2.6rem, 2.37rem + 1.15vw, 3.75rem);
   font-style: normal;
   font-weight: 700;
   margin-bottom: 0.6rem;
 }
 
 .Heading p {
-  font-size: 1.21875rem;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);
   font-style: normal;
   font-weight: 400;
   line-height: 1.96875rem;
@@ -50,4 +50,11 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 1.5rem;
+}
+
+@media screen and (max-width: 960px) {
+  .PricingOptions {
+    flex-direction: column;
+    align-items: center;
+  }
 }

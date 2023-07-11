@@ -1,11 +1,12 @@
 import Button from "@/components/Button/Button";
 import Footer from "@/components/Footer/Footer";
-import Modal from "@/components/Modal/Modal";
+import Modal from "@/components/BookModal/Modal/Modal";
 import PricingCard from "@/components/PricingCard/PricingCard";
 import styles from "@/styles/Home.module.css";
 
 import Head from "next/head";
 import { useState } from "react";
+import BookModal from "@/components/BookModal/BookModal";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -82,17 +83,7 @@ export default function Home() {
             </div>
           </section>
 
-          <Modal show={showModal} onClose={closeModal}>
-            <div>
-              <h3>Do you have more questions?</h3>
-              <p>
-                We’ll show you how your business can benefit from using our
-                checkout
-              </p>
-              <Button>Book a Demo</Button>
-            </div>
-          </Modal>
-
+          <BookModal show={showModal} onClose={closeModal} />
           <Footer />
         </div>
       </main>

@@ -1,0 +1,39 @@
+.BookModal {
+  padding: 4rem 2rem 3rem;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+  text-align: center;
+  width: min(100vw - 20px, 510px);
+}
+
+.BookModal h3 {
+  margin-bottom: 0.5rem;
+}
+
+.BookModal p {
+  max-width: 390px;
+  margin: 0 auto 1.5rem;
+}
+
+.BookModal a {
+  height: 52px;
+  width: 100%;
+  font-weight: 500;
+  background-color: #1db227;
+  color: white;
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  line-height: 52px;
+  border-radius: 10px;
+}
+
+.CloseBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+}

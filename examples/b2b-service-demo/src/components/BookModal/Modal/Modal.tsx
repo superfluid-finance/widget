@@ -2,7 +2,7 @@ import useOutsideClick from "@/hooks/useOutsideClick";
 import { FC, PropsWithChildren, useEffect, useRef } from "react";
 import styles from "./Modal.module.css";
 
-interface ModalProps extends PropsWithChildren {
+export interface ModalProps extends PropsWithChildren {
   show?: boolean;
   onClose?: () => void;
 }

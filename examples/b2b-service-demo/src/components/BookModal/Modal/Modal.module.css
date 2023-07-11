@@ -6,12 +6,6 @@
   transform: translate(-50%, -50%);
 }
 
-.Modal > div {
-  padding: 24px;
-  background: white;
-  border-radius: 10px;
-}
-
 .Modal::backdrop {
   content: "";
   display: block;
@@ -20,5 +14,5 @@
   top: 0;
   left: 0;
 
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
 }
