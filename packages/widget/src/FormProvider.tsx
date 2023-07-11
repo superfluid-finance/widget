@@ -2,6 +2,7 @@ import { useForm, FormProvider as RHFFormProvider } from "react-hook-form";
 import {
   DraftFormValues,
   FormReturn as FormMethods,
+  ValidFormValues,
   checkoutFormSchema,
 } from "./formValues";
 import { ChildrenProp } from "./utils";
@@ -55,7 +56,11 @@ export default function FormProvider({ children }: Props) {
     },
   };
 
-  const formMethods: FormMethods = useForm({
+  const formMethods: FormMethods = useForm<
+    DraftFormValues,
+    undefined,
+    ValidFormValues
+  >({
     defaultValues,
     resolver: zodResolver(checkoutFormSchema),
   });

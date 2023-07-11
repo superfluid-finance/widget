@@ -15,6 +15,7 @@ export default function StepContentPaymentOption() {
     DraftFormValues,
     ValidFormValues
   >();
+
   const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
     "paymentOptionWithTokenInfo",

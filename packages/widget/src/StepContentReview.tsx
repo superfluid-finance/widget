@@ -2,29 +2,17 @@ import { Divider, Stack } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import { ValidFormValues } from "./formValues";
 import { useCommandHandler } from "./CommandHandlerContext";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment } from "react";
 import { StepperCTAButton } from "./StepperCTAButton";
 import { CommandPreview } from "./previews/CommandPreview";
-import { formValuesToCommands } from "./formValuesToCommands";
 import { useStepper } from "./StepperContext";
 
 export default function StepContentReview() {
   const {
-    getValues,
     formState: { isValid, isValidating },
   } = useFormContext<ValidFormValues>();
 
-  const { submitCommands } = useCommandHandler();
-
-  // TODO(KK): Consider this logic...
-  // In essence, the Review step is given the orchestration control of mapping into commands and setting up a session.
-  const commands = useMemo(() => {
-    if (!isValid) throw new Error("Form should always be valid at this point.");
-
-    return formValuesToCommands(getValues());
-  }, []);
-
-  useEffect(() => submitCommands(commands), [commands]);
+  const { commands } = useCommandHandler();
 
   const { handleNext } = useStepper();
 
