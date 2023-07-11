@@ -34,12 +34,12 @@ export default function App({ Component, pageProps }: AppProps) {
       <IntercomProvider appId={IntercomAppID}>
         <WagmiConfig config={wagmiConfig}>
           <Component {...pageProps} />
-        </WagmiConfig>
 
-        <Web3Modal
-          projectId={WalletConnectProjectID}
-          ethereumClient={ethereumClient}
-        />
+          <Web3Modal
+            projectId={WalletConnectProjectID}
+            ethereumClient={ethereumClient}
+          />
+        </WagmiConfig>
       </IntercomProvider>
     </>
   );
