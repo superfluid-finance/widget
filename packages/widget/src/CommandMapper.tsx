@@ -1,4 +1,4 @@
-import { useContractRead, useContractReads } from "wagmi";
+import { useBalance, useContractRead, useContractReads } from "wagmi";
 import {
   Command,
   EnableAutoWrapCommand,
@@ -22,6 +22,7 @@ import { Abi, ContractFunctionConfig, GetValue, parseEther } from "viem";
 import { useEffect, useMemo } from "react";
 import { useWidget } from "./WidgetContext";
 import { nanoid } from "nanoid";
+import { z } from "zod";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
@@ -128,6 +129,16 @@ export function EnableAutoWrapCommandMapper({
   return <>{children?.(contractWrites)}</>;
 }
 
+const schema = z
+  .custom<
+    WrapIntoSuperTokensCommand & {
+      underlyingTokenOrNativeAssetBalance: bigint;
+    }
+  >()
+  .refine((x) => x.amountWei > x.underlyingTokenOrNativeAssetBalance, {
+    message: "Insufficient balance",
+  });
+
 export function WrapIntoSuperTokensCommandMapper({
   command: cmd,
   onMapped,
@@ -151,7 +162,15 @@ export function WrapIntoSuperTokensCommandMapper({
       : undefined,
   );
 
-  const amount = parseEther(cmd.amountEther);
+  // TODO(KK)
+  // const {
+  //   data: underlyingTokenOrNativeAssetBalance,
+  //   isLoading: isBalanceLoading,
+  // } = useBalance({
+  //   chainId: cmd.chainId,
+  //   address: cmd.accountAddress,
+  //   token: isNativeAssetSuperToken ? undefined : cmd.underlyingTokenAddress,
+  // });
 
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
@@ -167,12 +186,12 @@ export function WrapIntoSuperTokensCommandMapper({
           abi: nativeAssetSuperTokenABI,
           functionName: "upgradeByETH",
           address: cmd.superTokenAddress,
-          value: parseEther(cmd.amountEther),
+          value: cmd.amountWei,
         }),
       );
     } else {
       if (allowance !== undefined) {
-        if (allowance < amount) {
+        if (allowance < cmd.amountWei) {
           contractWrites_.push(
             createContractWrite({
               commandId: cmd.id,
@@ -198,7 +217,7 @@ export function WrapIntoSuperTokensCommandMapper({
             abi: superTokenABI,
             address: cmd.superTokenAddress,
             functionName: "upgrade",
-            args: [parseEther(cmd.amountEther)],
+            args: [cmd.amountWei],
           }),
         );
       }
@@ -229,7 +248,7 @@ export function SendStreamCommandMapper({
   });
 
   const flowRate =
-    parseEther(cmd.flowRate.amountEther) /
+    cmd.flowRate.amountWei /
     BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
 
   const contractWrites = useMemo(() => {

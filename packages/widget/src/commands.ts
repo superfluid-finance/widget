@@ -8,7 +8,7 @@ export type WrapIntoSuperTokensCommand = {
   accountAddress: Address;
   superTokenAddress: Address;
   underlyingTokenAddress: Address;
-  amountEther: `${number}`;
+  amountWei: bigint;
 };
 
 export type EnableAutoWrapCommand = {
@@ -28,7 +28,7 @@ export type SendStreamCommand = {
   accountAddress: Address;
   receiverAddress: Address;
   flowRate: {
-    amountEther: `${number}`;
+    amountWei: bigint;
     period: TimePeriod;
   };
   userData: `0x${string}`;
