@@ -1,5 +1,4 @@
 import { Box, Collapse, Stack } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
 import FlowRateInput from "./FlowRateInput";
@@ -18,7 +17,8 @@ export default function StepContentPaymentOption() {
   ]);
 
   const showCustomFlowRateInput =
-    !paymentOptionWithTokenInfo?.paymentOption.flowRate;
+    paymentOptionWithTokenInfo &&
+    paymentOptionWithTokenInfo.paymentOption.flowRate === undefined;
 
   const isStepComplete = Boolean(
     network && flowRate?.amountEther && Number(flowRate?.amountEther) > 0 // TODO(KK): Refactor this to come from form validation
