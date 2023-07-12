@@ -19,7 +19,7 @@ export function AccountAddress({ children, address }: Props) {
   const checksumAddress = useMemo(() => getAddress(address), [address]);
   const shortenedAddress = useMemo(
     () => shortenHex(checksumAddress),
-    [checksumAddress]
+    [checksumAddress],
   );
 
   const ensNameResult = useEnsName({
@@ -28,7 +28,7 @@ export function AccountAddress({ children, address }: Props) {
   });
 
   const ensAvatarResult = useEnsAvatar(
-    ensNameResult.data ? { name: ensNameResult.data, chainId: 1 } : undefined
+    ensNameResult.data ? { name: ensNameResult.data, chainId: 1 } : undefined,
   );
 
   const result = {

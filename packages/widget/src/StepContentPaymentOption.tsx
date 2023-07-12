@@ -1,5 +1,4 @@
 import { Box, Collapse, Stack } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
 import FlowRateInput from "./FlowRateInput";
@@ -17,11 +16,13 @@ export default function StepContentPaymentOption() {
     "flowRate",
   ]);
 
-  const showCustomFlowRateInput =
-    !paymentOptionWithTokenInfo?.paymentOption.flowRate;
+  const showCustomFlowRateInput = Boolean(
+    paymentOptionWithTokenInfo &&
+      paymentOptionWithTokenInfo.paymentOption.flowRate === undefined,
+  );
 
   const isStepComplete = Boolean(
-    network && flowRate?.amountEther && Number(flowRate?.amountEther) > 0 // TODO(KK): Refactor this to come from form validation
+    network && flowRate?.amountEther && Number(flowRate?.amountEther) > 0, // TODO(KK): Refactor this to come from form validation
   );
 
   const { isConnected } = useAccount();

@@ -69,7 +69,7 @@ const PricingCard: FC<PricingCardProps> = ({
       open,
       isOpen,
     }),
-    [open, isOpen]
+    [open, isOpen],
   );
 
   const paymentDetails: PaymentDetails = useMemo(() => {

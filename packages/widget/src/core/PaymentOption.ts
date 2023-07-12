@@ -20,7 +20,7 @@ export const etherAmountSchema = z
     },
     {
       message: "Must be a string representing a number",
-    }
+    },
   )
   .transform((x) => x.toString() as `${number}`);
 

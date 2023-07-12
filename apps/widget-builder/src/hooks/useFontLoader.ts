@@ -9,7 +9,7 @@ const useFontLoader = (fontFamily?: string) => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = `https://fonts.googleapis.com/css2?family=${fontFamily}:wght@${FONT_WEIGHTS.join(
-      ";"
+      ";",
     )}&display=swap`;
     document.head.appendChild(link);
 

@@ -5,7 +5,7 @@ const useOutsideClick = (ref: RefObject<any>, callback: () => void) => {
     function handleClickOutside(event: MouseEvent) {
       if (ref.current) {
         const isOutsideClick = [...ref.current.children].every(
-          (child) => !child.contains(event.target)
+          (child) => !child.contains(event.target),
         );
 
         if (isOutsideClick) callback();

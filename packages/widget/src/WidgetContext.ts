@@ -27,7 +27,7 @@ export type WidgetContextValue = {
 } & CheckoutConfig;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(
-  undefined
+  undefined,
 );
 
 export function useWidget(): WidgetContextValue {

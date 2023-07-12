@@ -12,7 +12,7 @@ const useAnalyticsBrowser = () =>
         { writeKey },
         {
           initialPageview: true,
-        }
+        },
       );
     } else {
       console.warn("Segment not initialized. No-op instance provided instead.");

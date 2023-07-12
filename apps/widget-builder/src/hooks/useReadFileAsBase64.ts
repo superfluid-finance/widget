@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 const readAsBase64 = (
   file: File,
   onSuccess: Dispatch<SetStateAction<string>>,
-  onError: Dispatch<SetStateAction<ProgressEvent<EventTarget> | undefined>>
+  onError: Dispatch<SetStateAction<ProgressEvent<EventTarget> | undefined>>,
 ) => {
   const reader = new FileReader();
   reader.readAsDataURL(file);

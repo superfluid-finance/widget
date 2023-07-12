@@ -42,7 +42,7 @@ class SuperfluidWidget extends HTMLElement {
           theme,
           type,
           trigger,
-        })}`
+        })}`,
       );
     } else {
       this.productDetails = JSON.parse(productDetails);
@@ -54,7 +54,7 @@ class SuperfluidWidget extends HTMLElement {
     }
 
     createRoot(mountPoint).render(
-      null
+      null,
       // this.type === "page" ? (
       //   <SuperfluidWidget_
       //     productDetails={this.productDetails}

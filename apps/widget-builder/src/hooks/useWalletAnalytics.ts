@@ -24,7 +24,7 @@ const useWalletAnalytics = ({
       analyticsBrowser.identify(wallet.address, {
         walletAddress: wallet.address,
       }),
-    [analyticsBrowser]
+    [analyticsBrowser],
   );
 
   const currentWallet = useMemo(
@@ -44,7 +44,7 @@ const useWalletAnalytics = ({
           } as const)
         : NOT_CONNECTED),
     }),
-    [isConnected, activeConnector, activeAccountAddress, activeChain]
+    [isConnected, activeConnector, activeAccountAddress, activeChain],
   );
 
   const [prevWallet, setPrevWallet] =
@@ -58,7 +58,7 @@ const useWalletAnalytics = ({
     if (currentWallet.isConnected !== prevWallet.isConnected) {
       if (currentWallet.isConnected) {
         track("Wallet Connected", currentWallet).then(() =>
-          identify(currentWallet)
+          identify(currentWallet),
         );
       } else {
         track("Wallet Disconnected", currentWallet).then(() => reset());

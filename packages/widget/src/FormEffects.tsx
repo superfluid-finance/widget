@@ -21,7 +21,7 @@ export function FormEffects() {
         keepTouched: true,
         keepError: false,
       }),
-    [network]
+    [network],
   );
 
   // Set flow rate when payment option changes.

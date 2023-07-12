@@ -10,7 +10,7 @@ export function StepperContinueButton(props: ButtonProps) {
       props.onClick && props.onClick(e);
       handleNext();
     },
-    [props.onClick, handleNext]
+    [props.onClick, handleNext],
   );
 
   return (

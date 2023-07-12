@@ -49,45 +49,45 @@ export function Widget({
 
   const { superTokens, underlyingTokens } = useMemo(
     () => filterSuperTokensFromTokenList(tokenList),
-    [tokenList]
+    [tokenList],
   ); // TODO: Worry about consumer having to keep the token list reference unchanged.
 
   // TODO: Check if network is configured in wagmi.
   const networks: ReadonlyArray<SupportedNetwork> = useMemo(
     () => mapSupportedNetworksFromPaymentOptions(paymentOptions),
-    [paymentOptions]
+    [paymentOptions],
   );
 
   const paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo> =
     useMemo(
       () => addSuperTokenInfoToPaymentOptions(superTokens, paymentOptions),
-      [superTokens, paymentOptions]
+      [superTokens, paymentOptions],
     );
 
   const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>(
     memoize((address: Address) => {
       const superToken = superTokens.find(
-        (x) => x.address.toLowerCase() === address.toLowerCase()
+        (x) => x.address.toLowerCase() === address.toLowerCase(),
       );
       if (!superToken) {
         throw new Error("Super Token not found from token list.");
       }
       return superToken;
     }),
-    [superTokens]
+    [superTokens],
   );
 
   const getUnderlyingToken = useCallback<(address: Address) => TokenInfo>(
     memoize((address: Address) => {
       const underlyingToken = underlyingTokens.find(
-        (x) => x.address.toLowerCase() === address.toLowerCase()
+        (x) => x.address.toLowerCase() === address.toLowerCase(),
       );
       if (!underlyingToken) {
         throw new Error("Super Token not found from token list.");
       }
       return underlyingToken;
     }),
-    [underlyingTokens]
+    [underlyingTokens],
   );
 
   const getNetwork = useCallback<(chainId: number) => SupportedNetwork>(
@@ -98,14 +98,14 @@ export function Widget({
       }
       return network;
     }),
-    []
+    [],
   );
 
   const stepper = useMemo(
     () => ({
       orientation: stepper_.orientation,
     }),
-    [stepper_.orientation]
+    [stepper_.orientation],
   );
 
   const checkoutState = useMemo<WidgetContextValue>(
@@ -141,12 +141,12 @@ export function Widget({
       viewProps.type,
       eventListeners?.onSuccess,
       eventListeners?.onSuccessButtonClick,
-    ]
+    ],
   );
 
   const theme = useMemo(() => {
     const defaultThemeOptions = buildThemeOptions(
-      theme_?.palette?.mode || "light"
+      theme_?.palette?.mode || "light",
     );
     const themeOptions = deepmerge(defaultThemeOptions, theme_);
     return createTheme(themeOptions);

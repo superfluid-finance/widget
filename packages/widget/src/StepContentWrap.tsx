@@ -122,7 +122,7 @@ export default function StepContentWrap() {
           chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
           formatUnits: "ether",
         }
-      : undefined
+      : undefined,
   );
 
   const { data: superTokenBalance } = useBalance(
@@ -133,7 +133,7 @@ export default function StepContentWrap() {
           chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
           formatUnits: "ether",
         }
-      : undefined
+      : undefined,
   );
 
   const showSkip = useMemo(() => {

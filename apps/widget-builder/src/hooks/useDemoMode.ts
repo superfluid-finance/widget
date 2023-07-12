@@ -167,7 +167,7 @@ const useDemoMode = () => {
             displaySettings,
           }),
     }),
-    [demoMode]
+    [demoMode],
   );
 
   return {

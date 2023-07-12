@@ -27,7 +27,7 @@ const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
     data-testid="download-button"
     variant="contained"
     href={URL.createObjectURL(
-      new Blob([JSON.stringify(json, null, 2)], { type: "application/json" })
+      new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),
     )}
     download={`widget.json`}
     sx={{ color: "white" }}
@@ -74,7 +74,7 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
 
 const switchExportOption = (
   selectedExportOption: ExportOption,
-  json: ExportJSON
+  json: ExportJSON,
 ) => {
   switch (selectedExportOption) {
     case "json":
@@ -97,7 +97,7 @@ const ExportEditor: FC = () => {
   ]);
 
   const { base64: productImageBase64 } = useReadAsBase64(
-    productDetails.imageURI
+    productDetails.imageURI,
   );
   // const [logoBase64] = useReadAsBase64(displaySettings.logo);
 
@@ -119,7 +119,7 @@ const ExportEditor: FC = () => {
       layout,
       productImageBase64,
       //   logoBase64,
-    ]
+    ],
   );
 
   const [selectedExportOption, setSelectedExportOption] =

@@ -75,23 +75,23 @@ export class WidgetPage extends BasePage {
     this.wrapUnderlyingBalance = page.getByTestId("underlying-balance");
     this.wrapSuperTokenBalance = page.getByTestId("super-balance");
     this.wrapAmountInput = page.locator(
-      "[data-testid=wrap-amount-input] input"
+      "[data-testid=wrap-amount-input] input",
     );
     this.wrapAmountMirrorAmount = page.locator(
-      "[data-testid=wrap-amount-mirror-amount] input"
+      "[data-testid=wrap-amount-mirror-amount] input",
     );
     this.whyWrapTokensButton = page.getByTestId("why-wrap-tokens-button");
     this.reviewUnderlyingWrapAmount = page.getByTestId(
-      "review-underlying-wrap-amount"
+      "review-underlying-wrap-amount",
     );
     this.reviewUnderlyingTokenSymbol = page.getByTestId(
-      "review-underlying-token-symbol"
+      "review-underlying-token-symbol",
     );
     this.reviewSuperTokenAmount = page.getByTestId("review-super-wrap-amount");
     this.reviewSuperTokenSymbol = page.getByTestId("review-super-token-symbol");
     this.successStreamedAmount = page.getByTestId("streamed-amount");
     this.reviewSuperTokenBalanceAndSymbol = page.getByTestId(
-      "review-supertoken-balance-and-symbol"
+      "review-supertoken-balance-and-symbol",
     );
     this.reviewExchangeRate = page.getByTestId("exchange-rate");
     this.receiverAddress = page.getByTestId("receiver-address");
@@ -104,10 +104,10 @@ export class WidgetPage extends BasePage {
     this.transactionTypes = page.getByTestId("transaction-type");
     this.transactionButton = page.getByTestId("transaction-button");
     this.transactionButtonLoadingSpinner = page.locator(
-      ".MuiLoadingButton-loadingIndicator"
+      ".MuiLoadingButton-loadingIndicator",
     );
     this.continueToMerchantButton = page.getByTestId(
-      "continue-to-merchant-button"
+      "continue-to-merchant-button",
     );
     this.openSuperfluidDashboard = page.getByTestId("open-dashboard-button");
     this.skipWrapButton = page
@@ -163,7 +163,7 @@ export class WidgetPage extends BasePage {
     await expect(this.wrapAmountMirrorAmount).toHaveValue(amount);
     await expect(this.weRecomendMessage).toBeVisible();
     await expect(this.weRecomendMessage).toHaveText(
-      "We recommend wrapping at least 1 month of the subscription amount."
+      "We recommend wrapping at least 1 month of the subscription amount.",
     );
   }
 
@@ -187,15 +187,15 @@ export class WidgetPage extends BasePage {
 
   async validateTransactionStatuses(
     transactionList: string[],
-    statusList: string[]
+    statusList: string[],
   ) {
     for (const [index, transaction] of transactionList.entries()) {
       await expect(this.transactionTypes.nth(index)).toHaveText(
-        index + 1 + ". " + this.getTransactionTypeString(transaction)
+        index + 1 + ". " + this.getTransactionTypeString(transaction),
       );
       await expect(this.transactionStatuses.nth(index)).toHaveText(
         statusList[index],
-        { timeout: 60000 }
+        { timeout: 60000 },
       );
     }
     await this.validateTransactionCounter(statusList);
@@ -203,7 +203,7 @@ export class WidgetPage extends BasePage {
 
   async validateTransactionButtonTextAndClick(text: string) {
     await expect(this.transactionButton).toHaveText(
-      this.getTransactionTypeString(text)!
+      this.getTransactionTypeString(text)!,
     );
     await this.transactionButton.click();
   }
@@ -231,10 +231,10 @@ export class WidgetPage extends BasePage {
       parseFloat(amountShownInSuccessScreen) + expectedFlowAmountIncrease;
     await this.page.waitForTimeout(2000);
     expect(
-      parseFloat(await this.successStreamedAmount.innerText())
+      parseFloat(await this.successStreamedAmount.innerText()),
     ).toBeGreaterThan(parseFloat(amountShownInSuccessScreen));
     expect(
-      parseFloat(await this.successStreamedAmount.innerText())
+      parseFloat(await this.successStreamedAmount.innerText()),
     ).toBeCloseTo(expectedAmount, flowRateInWei / 1e17);
     await expect(this.senderAddress.last()).toHaveText(
       BasePage.shortenHex(this.senderAddressDuringTest!)
@@ -246,11 +246,11 @@ export class WidgetPage extends BasePage {
 
   async validateAndSaveSenderAndReceiverAddresses(
     sender: string,
-    receiver: string
+    receiver: string,
   ) {
     await expect(this.senderAddress).toHaveText(BasePage.shortenHex(sender));
     await expect(this.receiverAddress).toHaveText(
-      BasePage.shortenHex(receiver)
+      BasePage.shortenHex(receiver),
     );
     this.senderAddressDuringTest = sender;
     this.receiverAddressDuringTest = receiver;

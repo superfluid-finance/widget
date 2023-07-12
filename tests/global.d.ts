@@ -1,7 +1,7 @@
 declare module "@synthetixio/synpress/commands/metamask" {
   export const initialSetup: (
     browser: BrowserType,
-    metamaskParameters: {}
+    metamaskParameters: {},
   ) => void;
   export const acceptAccess: (options?: {}) => void;
   export const confirmTransaction: (gasConfig: string | {}) => void;

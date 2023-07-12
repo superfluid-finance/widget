@@ -64,29 +64,29 @@ test("Approving and wrapping tokens", async ({ page }) => {
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Not started", "Not started", "Not started"]
+    ["Not started", "Not started", "Not started"],
   );
   await widgetPage.validateTransactionButtonTextAndClick("approve");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskAllowanceTransaction("1");
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["In progress", "Not started", "Not started"]
+    ["In progress", "Not started", "Not started"],
   );
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Completed", "Not started", "Not started"]
+    ["Completed", "Not started", "Not started"],
   );
   await widgetPage.validateTransactionButtonTextAndClick("wrap");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskTransaction();
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Completed", "In progress", "Not started"]
+    ["Completed", "In progress", "Not started"],
   );
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Completed", "Completed", "Not started"]
+    ["Completed", "Completed", "Not started"],
   );
   await widgetPage.validateTokenBalanceAfterWrap();
 });

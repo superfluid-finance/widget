@@ -93,7 +93,7 @@ const switchLayout = (
   paymentDetails: PaymentDetails,
   theme: ThemeOptions,
   walletManager: WalletManager,
-  stepperOrientation: "vertical" | "horizontal"
+  stepperOrientation: "vertical" | "horizontal",
 ) => {
   return layout === "page" ? (
     <SuperfluidWidget
@@ -123,7 +123,7 @@ const switchLayout = (
 };
 
 export const mapDisplaySettingsToTheme = (
-  displaySettings: DisplaySettings
+  displaySettings: DisplaySettings,
 ): ThemeOptions => ({
   ...(displaySettings.font
     ? {
@@ -174,7 +174,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
       open,
       isOpen,
     }),
-    [open, isOpen]
+    [open, isOpen],
   );
 
   const [mounted, setMounted] = useState(false);
@@ -193,7 +193,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
           paymentDetails,
           theme,
           walletManager,
-          displaySettings.stepperOrientation
+          displaySettings.stepperOrientation,
         )}
     </WidgetContext.Provider>
   );

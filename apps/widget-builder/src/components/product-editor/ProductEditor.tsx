@@ -107,7 +107,7 @@ const ProductEditor: FC = () => {
                     index={i}
                     remove={remove}
                   />
-                )
+                ),
               )
             ) : (
               <Typography data-testid="no-options-message" variant="caption">

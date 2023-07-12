@@ -24,7 +24,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
   const [showDetails, setShowDetails] = useState(false);
 
   const collapsableDetails = useMediaQuery(
-    "@media all and (max-height: 840px)"
+    "@media all and (max-height: 840px)",
   );
 
   const {
@@ -42,7 +42,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
 
   const toggleDetails = useCallback(
     () => setShowDetails(!showDetails),
-    [showDetails]
+    [showDetails],
   );
 
   return (
