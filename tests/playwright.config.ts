@@ -6,7 +6,6 @@ dotenv.config();
 export default defineConfig({
   testDir: "specs",
   fullyParallel: false,
-  forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   outputDir: "results",
@@ -19,7 +18,7 @@ export default defineConfig({
   timeout: 300000,
   use: {
     baseURL: process.env.BASE_URL,
-    trace: "on-first-retry",
+    trace: process.env.CI ? "on-first-retry" : "on",
     timezoneId: "Europe/Riga",
     viewport: { width: 1280, height: 720 },
     screenshot: "only-on-failure",

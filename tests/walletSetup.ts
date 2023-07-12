@@ -34,8 +34,10 @@ export const test = base.extend<{
     context.setDefaultTimeout(30000);
     // wait for metamask
     await context.pages()[0].waitForTimeout(3000);
-    //Revoke allowance before tests, otherwise the widget does not pick it u
+    //Revoke allowance before tests, otherwise the widget does not pick it up
     await ethHelper.revokeAllowanceIfNeccesary();
+    //Delete flow before tests, otherwise the widget might not pick it up
+    await ethHelper.deleteFlowIfNeccesary();
     // setup metamask
     await initialSetup(chromium, {
       secretWordsOrPrivateKey: process.env.WIDGET_WALLET_PRIVATE_KEY,

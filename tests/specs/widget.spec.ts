@@ -1,23 +1,23 @@
 import { test } from "../walletSetup";
 import { WidgetPage } from "../pageObjects/widgetPage";
+import { rebounderAddresses } from "../pageObjects/basePage";
+import { BuilderPage } from "../pageObjects/builderPage";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
-test.skip("Creating a flow", async ({ page }) => {
-  //TODO setup closing the flow other than that the test case is ready to go, just change the payment option
+test("Creating a flow", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
-  await widgetPage.connectWallet();
+  let builderPage = new BuilderPage(page);
+  await builderPage.enableDemoMode();
   await widgetPage.selectPaymentNetwork("Goerli");
-  await widgetPage.selectPaymentToken("fUSDCx");
-  await widgetPage.clickContinueButton();
-  await widgetPage.setWrapAmount("0");
-  await widgetPage.clickContinueButton();
-  //Test wallet and goerli rebounder contract
+  await widgetPage.selectPaymentToken("fDAIx");
+  await widgetPage.connectWallet();
+  await widgetPage.skipWrapStep();
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
-    "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
-    "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22"
+    process.env.WIDGET_WALLET_PUBLIC_KEY!,
+    rebounderAddresses["goerli"]
   );
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(["send"], ["Not started"]);
@@ -35,10 +35,9 @@ test("Modifying a flow", async ({ page }) => {
   await widgetPage.connectWallet();
   await widgetPage.setWrapAmount("0");
   await widgetPage.clickContinueButton();
-  //Test wallet and goerli rebounder contract
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
-    "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
-    "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22"
+    process.env.WIDGET_WALLET_PUBLIC_KEY!,
+    rebounderAddresses["goerli"]
   );
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(["modify"], ["Not started"]);
@@ -54,12 +53,12 @@ test("Approving and wrapping tokens", async ({ page }) => {
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("fUSDCx");
   await widgetPage.connectWallet();
+  await widgetPage.validateAndSaveWrapPageBalances();
   await widgetPage.setWrapAmount("1");
   await widgetPage.clickContinueButton();
-  //Test wallet and goerli rebounder contract
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
-    "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
-    "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22"
+    process.env.WIDGET_WALLET_PUBLIC_KEY!,
+    rebounderAddresses["goerli"]
   );
   await widgetPage.validateWrapReviewAmount("1");
   await widgetPage.clickContinueButton();
@@ -89,5 +88,5 @@ test("Approving and wrapping tokens", async ({ page }) => {
     ["approve", "wrap", "modify"],
     ["Completed", "Completed", "Not started"]
   );
-  //TODO check token balances without UI here
+  await widgetPage.validateTokenBalanceAfterWrap();
 });

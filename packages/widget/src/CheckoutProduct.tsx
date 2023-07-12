@@ -48,6 +48,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
   return (
     <Card variant={elevated ? "elevation" : "outlined"} {...CardProps}>
       <Paper
+        data-testid="selected-option-paper"
         component={Stack}
         variant="outlined"
         flexDirection="row"
@@ -56,6 +57,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
       >
         {imageURI && (
           <CardMedia
+            data-testid="widget-product-image"
             sx={{ minWidth: "calc(100% / 3)", borderRadius: 1 }}
             image={imageURI}
             title="product image"

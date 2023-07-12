@@ -1,13 +1,6 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { BasePage } from "./basePage";
-
-type PaymentOption = {
-  network: string;
-  superToken: string;
-  flowRate: string;
-  receiver: string;
-  useAsDefault: boolean;
-};
+import fs from "fs";
 
 export class BuilderPage extends BasePage {
   readonly page: Page;
@@ -19,7 +12,7 @@ export class BuilderPage extends BasePage {
   readonly networkOptions: Locator;
   readonly superTokenOption: Locator;
   readonly flowRateOption: Locator;
-  readonly timeUnitOption: Locator;
+  readonly timeUnitSelection: Locator;
   readonly receiverOption: Locator;
   readonly useAsDefaultPaymentSwitch: Locator;
   readonly addPaymentOptionButton: Locator;
@@ -29,7 +22,6 @@ export class BuilderPage extends BasePage {
   readonly summaryFlowRate: Locator;
   readonly summaryReceiver: Locator;
   readonly summaryDeleteButtons: Locator;
-  readonly productImageField: Locator;
   readonly darkModeSwitch: Locator;
   readonly containerBorderSlider: Locator;
   readonly containerBorderSliderAmount: Locator;
@@ -49,6 +41,10 @@ export class BuilderPage extends BasePage {
   readonly downloadButton: Locator;
   readonly demoModeSwitch: Locator;
   readonly goToHostedWidgetButton: Locator;
+  readonly publishedWidgetMessage: Locator;
+  readonly noOptionsMessage: Locator;
+  readonly uploadImageField: Locator;
+  paymentOptionDuringTest: PaymentOption | undefined;
 
   constructor(page: Page) {
     super();
@@ -56,6 +52,7 @@ export class BuilderPage extends BasePage {
     this.uiTab = page.getByTestId("ui-tab");
     this.productTab = page.getByTestId("product-tab");
     this.exportTab = page.getByTestId("export-tab");
+    this.publishedWidgetMessage = page.getByTestId("published-message");
     this.productNameField = page
       .getByTestId("product-name-field")
       .getByRole("textbox");
@@ -69,7 +66,7 @@ export class BuilderPage extends BasePage {
     this.flowRateOption = page
       .getByTestId("flow-rate-input")
       .getByRole("textbox");
-    this.timeUnitOption = page.getByRole("button", { name: "/month" });
+    this.timeUnitSelection = page.getByTestId("time-unit-selection");
     this.receiverOption = page
       .getByTestId("receiver-input-field")
       .getByRole("textbox");
@@ -80,15 +77,12 @@ export class BuilderPage extends BasePage {
     this.paymentOptionCount = page.getByTestId("added-payment-options-count");
     this.summaryNetworks = page.getByTestId("added-network-option");
     this.summaryTokens = page.getByTestId("added-token-option");
-    this.summaryFlowRate = page.getByTestId("flow-rate-added-payment-option");
+    this.summaryFlowRate = page.getByTestId("stream-rate-added-payment-option");
     this.summaryReceiver = page.getByTestId("added-payment-receiver");
     this.summaryDeleteButtons = page.getByTestId(
       "delete-payment-option-button"
     );
-    this.productImageField = page.getByRole("button", {
-      name: "Optional",
-      exact: true,
-    });
+    this.uploadImageField = page.getByTestId("file-upload-field");
     this.darkModeSwitch = page.getByLabel("Dark mode: off");
     this.containerBorderSlider = page.getByTestId("container-radius-slider");
     this.containerBorderSliderAmount = page.getByTestId(
@@ -115,17 +109,16 @@ export class BuilderPage extends BasePage {
     this.stepperPossitionHorizontal = page.getByRole("button", {
       name: "horizontal stepper",
     });
-    this.exportOptions = page.getByRole("button", {
-      name: "Publish to IPFS to get a hosted link",
-    });
+    this.exportOptions = page.getByTestId("export-option");
     this.exportIPFSOption = page.getByRole("option", {
       name: "Publish to IPFS to get a hosted link",
     });
     this.exportJSONoption = page.getByRole("option", { name: "Download JSON" });
     this.publishButton = page.getByTestId("publish-button");
     this.downloadButton = page.getByTestId("download-button");
-    this.demoModeSwitch = page.getByLabel("Demo mode");
-    this.goToHostedWidgetButton = page.getByTestId("OpenInNewIcon");
+    this.demoModeSwitch = page.getByTestId("demo-mode-switch");
+    this.goToHostedWidgetButton = page.getByTestId("go-to-widget-button");
+    this.noOptionsMessage = page.getByTestId("no-options-message");
   }
 
   async changeDescription(description = "Testing description") {
@@ -137,71 +130,131 @@ export class BuilderPage extends BasePage {
   }
 
   async addPaymentOption(paymentOption: PaymentOption) {
+    this.paymentOptionDuringTest = paymentOption;
     await this.networkOptions.click();
-    await this.page.getByText(paymentOption.network).click();
+    await this.page.locator(`[data-value=${paymentOption.network}]`).click();
     await this.superTokenOption.click();
     await this.page.getByText(paymentOption.superToken).click();
     await this.flowRateOption.fill(paymentOption.flowRate);
+    if (paymentOption.timeUnit != "month") {
+      await this.timeUnitSelection.click();
+      await this.page.locator(`[data-value=${paymentOption.timeUnit}]`).click();
+    }
     await this.receiverOption.fill(paymentOption.receiver);
-    if (paymentOption.useAsDefault) {
-      await this.useAsDefaultPaymentSwitch.click();
+    // No more option like that
+    // if (paymentOption.useAsDefault) {
+    //   await this.useAsDefaultPaymentSwitch.click();
+    // }
+    await this.addPaymentOptionButton.click();
+  }
+
+  async verifyAddedPaymentOptions(paymentOptions: PaymentOption[]) {
+    for (const [index, option] of paymentOptions.entries()) {
+      paymentOptions.forEach(async (option: PaymentOption, index: number) => {
+        await expect(this.summaryNetworks.nth(index)).toHaveText(
+          option.network
+        );
+        await expect(this.summaryTokens.nth(index)).toHaveText(
+          option.superTokenName
+        );
+        await expect(this.summaryFlowRate.nth(index)).toHaveText(
+          `Stream Rate${option.flowRate} / ${option.timeUnit}`
+        );
+        await expect(this.summaryReceiver.nth(index)).toContainText(
+          `${BasePage.shortenHex(option.receiver)}`,
+          { ignoreCase: true }
+        );
+      });
     }
   }
 
-  async verifyAddedPaymentOption(paymentOption: PaymentOption) {
-    await expect(this.summaryNetworks).toHaveText(paymentOption.network);
-    await expect(this.summaryTokens).toHaveText(paymentOption.superToken);
-    await expect(this.summaryFlowRate).toHaveText(paymentOption.flowRate);
-    await expect(this.summaryReceiver).toHaveText(paymentOption.receiver);
-  }
-
-  async deleteAddedPaymentOption() {
+  async deleteLastAddedPaymentOption() {
     await this.summaryDeleteButtons.click();
   }
 
   async openExportTab() {
-    this.exportTab.click();
+    await this.exportTab.click();
   }
 
   async openUITab() {
-    this.uiTab.click();
+    await this.uiTab.click();
   }
 
   async openProductTab() {
-    this.productTab.click();
+    await this.productTab.click();
   }
 
   async enableDemoMode() {
-    this.demoModeSwitch.check();
+    await this.demoModeSwitch.check();
   }
 
   async disableDemoMode() {
-    this.demoModeSwitch.uncheck();
+    await this.demoModeSwitch.uncheck();
   }
 
   async selectIPFSExportOption() {
-    this.exportOptions.click();
-    this.exportIPFSOption.click();
+    await this.exportOptions.click();
+    await this.exportIPFSOption.click();
   }
 
   async selectJSONExportOption() {
-    this.exportOptions.click();
-    this.exportJSONoption.click();
+    await this.exportOptions.click();
+    await this.exportJSONoption.click();
   }
 
   async publishToIPFS() {
-    this.publishButton.click();
-  }
-
-  async downloadJSONExport() {
-    const downloadPromise = this.page.waitForEvent("download");
-    this.downloadButton.click();
-    const download = await downloadPromise;
-    await download.saveAs("/downloads/export.json");
-    //TODO: Assert the downloaded json
+    await this.publishButton.click();
   }
 
   async visitPublishedWidget() {
-    this.goToHostedWidgetButton.click();
+    await this.goToHostedWidgetButton.click();
+  }
+
+  async validateAddedPaymentOptionCount(count: string) {
+    await expect(this.paymentOptionCount).toHaveText(`Added: ${count}`);
+  }
+
+  async validateNoPaymentOptionsAddedMessage() {
+    await expect(this.noOptionsMessage).toHaveText("- None");
+  }
+
+  async chooseExportOption(exportType: string) {
+    await this.exportOptions.click();
+    await this.page.locator(`[data-value=${exportType}]`).click();
+  }
+
+  async exportWidget(exportType: string) {
+    let buttonToPress =
+      exportType === "json" ? this.downloadButton : this.publishButton;
+    if (exportType === "json") {
+      const downloadPromise = this.page.waitForEvent("download");
+      await buttonToPress.click();
+      const download = await downloadPromise;
+      await download.saveAs("downloads/exportedWidget.json");
+    } else {
+      await buttonToPress.click();
+    }
+  }
+
+  async validateIPFSPublishMessage() {
+    await expect(this.publishedWidgetMessage).toHaveText(
+      "Your config is published to IPFS. Test it with our hosted widget:"
+    );
+  }
+
+  async validateExportedJsonFile() {
+    const downloadPath = "./downloads/exportedWidget.json";
+    const dataPath = "./data/export.json";
+    const downloadedWidgetContents = JSON.parse(
+      fs.readFileSync(downloadPath, "utf-8")
+    );
+    const savedWidgetExportContents = JSON.parse(
+      fs.readFileSync(dataPath, "utf-8")
+    );
+    await expect(downloadedWidgetContents).toEqual(savedWidgetExportContents);
+  }
+
+  async uploadTestImage() {
+    await this.uploadImageField.setInputFiles("./data/Superfluid_logo.png");
   }
 }

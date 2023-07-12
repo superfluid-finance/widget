@@ -154,7 +154,7 @@ export function Widget({
         {validationResult.success ? (
           <WidgetView {...viewProps} />
         ) : (
-          <Alert severity="error">
+          <Alert data-testid="widget-error" severity="error">
             <AlertTitle>Input Error</AlertTitle>
             {JSON.stringify(validationResult.error, null, 2)}
           </Alert>

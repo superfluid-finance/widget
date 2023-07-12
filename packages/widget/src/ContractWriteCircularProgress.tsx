@@ -30,6 +30,11 @@ export function ContractWriteCircularProgress({
         {...props}
       />
       <CircularProgress
+        data-testid={
+          total === 1
+            ? "spinning-circular-progress"
+            : "transaction-progress-circular-progress"
+        }
         disableShrink
         variant={total === 1 ? "indeterminate" : "determinate"}
         value={index === 0 ? 4 : (index / total) * 100}
