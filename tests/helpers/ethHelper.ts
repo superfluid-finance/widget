@@ -27,7 +27,7 @@ const CFAv1 = new ethers.Contract(CFAAddress, CFA, wallet.provider);
 const CFAv1Forwarder = new ethers.Contract(
   CFAV1ForwarderAddress,
   cfAv1ForwarderABI,
-  wallet.provider
+  wallet.provider,
 );
 
 export async function revokeAllowanceIfNeccesary() {
@@ -56,7 +56,7 @@ export async function deleteFlowIfNeccesary() {
   await CFAv1Forwarder.getFlowInfo(
     fDAIxAddress,
     process.env.WIDGET_WALLET_PUBLIC_KEY,
-    rebounderAddresses["goerli"]
+    rebounderAddresses["goerli"],
   ).then(async (flow: bigint[]) => {
     //returns lastUpdated uint256, flowRate int96, deposit uint256, owedDeposit uint256
     if (flow[1] > 0) {
@@ -86,6 +86,6 @@ export async function getUnderlyingTokenBalance() {
 // Returns availableBalance int256, deposit uint256, owedDeposit uint256, timestamp uint256
 export async function getSuperTokenBalance() {
   return await fUSDCx.realtimeBalanceOfNow(
-    process.env.WIDGET_WALLET_PUBLIC_KEY
+    process.env.WIDGET_WALLET_PUBLIC_KEY,
   );
 }

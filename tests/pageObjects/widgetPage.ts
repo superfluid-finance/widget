@@ -116,18 +116,18 @@ export class WidgetPage extends BasePage {
     this.productName = page.getByTestId("product-name");
     this.productDescription = page.getByTestId("product-description");
     this.widgetErrorMessage = page.locator(
-      "[data-testid=widget-error] .MuiAlert-message"
+      "[data-testid=widget-error] .MuiAlert-message",
     );
     this.widgetErrorTitle = page.locator(
-      "[data-testid=widget-error] .MuiAlert-message div"
+      "[data-testid=widget-error] .MuiAlert-message div",
     );
     this.productImage = page.getByTestId("widget-product-image");
     this.transactionCount = page.getByTestId("transaction-count");
     this.transactionCircularProgress = page.getByTestId(
-      "transaction-progress-circular-progress"
+      "transaction-progress-circular-progress",
     );
     this.transactionSpinningProgress = page.getByTestId(
-      "spinning-circular-progress"
+      "spinning-circular-progress",
     );
   }
 
@@ -180,7 +180,7 @@ export class WidgetPage extends BasePage {
       case "approve":
         return `Approve ${this.selectedTokenDuringTest!.slice(
           0,
-          -1
+          -1,
         )} Allowance`;
     }
   }
@@ -237,10 +237,10 @@ export class WidgetPage extends BasePage {
       parseFloat(await this.successStreamedAmount.innerText()),
     ).toBeCloseTo(expectedAmount, flowRateInWei / 1e17);
     await expect(this.senderAddress.last()).toHaveText(
-      BasePage.shortenHex(this.senderAddressDuringTest!)
+      BasePage.shortenHex(this.senderAddressDuringTest!),
     );
     await expect(this.receiverAddress.last()).toHaveText(
-      BasePage.shortenHex(this.receiverAddressDuringTest!)
+      BasePage.shortenHex(this.receiverAddressDuringTest!),
     );
   }
 
@@ -276,12 +276,12 @@ export class WidgetPage extends BasePage {
     await expect(this.chosenFlowRate).toHaveText(option.flowRate);
     await expect(this.chosenToken).toHaveText(option.superToken);
     await expect(this.chosenFlowRatePeriod).toHaveText(
-      `per ${option.timeUnit}`
+      `per ${option.timeUnit}`,
     );
     await expect(
       this.page
         .getByTestId(`selected-option-paper`)
-        .getByTestId(`${option.chainId}-badge`)
+        .getByTestId(`${option.chainId}-badge`),
     ).toBeVisible();
   }
 
@@ -314,14 +314,14 @@ export class WidgetPage extends BasePage {
         completedStatusCount === 0
           ? (4).toString()
           : Math.round(
-              (completedStatusCount / statusList.length) * 100
+              (completedStatusCount / statusList.length) * 100,
             ).toString();
       await expect(this.transactionCount).toHaveText(
-        `${completedStatusCount}/${statusList.length}`
+        `${completedStatusCount}/${statusList.length}`,
       );
       await expect(this.transactionCircularProgress).toHaveAttribute(
         "aria-valuenow",
-        progressPercentage
+        progressPercentage,
       );
     }
   }
@@ -331,14 +331,14 @@ export class WidgetPage extends BasePage {
     await EthHelper.getUnderlyingTokenBalance().then(
       async (underlyingBalance) => {
         await expect(
-          this.underlyingTokenBalanceBeforeWrap! - wrappedAmount
+          this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
         ).toEqual(underlyingBalance);
-      }
+      },
     );
 
     await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
       await expect(this.superTokenBalanceBeforeWrap! + wrappedAmount).toEqual(
-        superTokenBalance[0]
+        superTokenBalance[0],
       );
     });
   }
@@ -348,21 +348,21 @@ export class WidgetPage extends BasePage {
       async (underlyingBalance) => {
         this.underlyingTokenBalanceBeforeWrap = underlyingBalance;
         let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
-          (underlyingBalance.toString() / 1e18).toString()
+          (underlyingBalance.toString() / 1e18).toString(),
         );
         await expect(this.wrapUnderlyingBalance).toHaveText(
-          `Balance: ${underlyingBalanceToAssert}`
+          `Balance: ${underlyingBalanceToAssert}`,
         );
-      }
+      },
     );
 
     await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
       this.superTokenBalanceBeforeWrap = superTokenBalance[0];
       let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
-        (superTokenBalance[0].toString() / 1e18).toString()
+        (superTokenBalance[0].toString() / 1e18).toString(),
       );
       await expect(this.wrapSuperTokenBalance).toHaveText(
-        `Balance: ${superTokenBalanceToAssert}`
+        `Balance: ${superTokenBalanceToAssert}`,
       );
     });
   }

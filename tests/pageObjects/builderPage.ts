@@ -152,17 +152,17 @@ export class BuilderPage extends BasePage {
     for (const [index, option] of paymentOptions.entries()) {
       paymentOptions.forEach(async (option: PaymentOption, index: number) => {
         await expect(this.summaryNetworks.nth(index)).toHaveText(
-          option.network
+          option.network,
         );
         await expect(this.summaryTokens.nth(index)).toHaveText(
-          option.superTokenName
+          option.superTokenName,
         );
         await expect(this.summaryFlowRate.nth(index)).toHaveText(
-          `Stream Rate${option.flowRate} / ${option.timeUnit}`
+          `Stream Rate${option.flowRate} / ${option.timeUnit}`,
         );
         await expect(this.summaryReceiver.nth(index)).toContainText(
           `${BasePage.shortenHex(option.receiver)}`,
-          { ignoreCase: true }
+          { ignoreCase: true },
         );
       });
     }
@@ -238,7 +238,7 @@ export class BuilderPage extends BasePage {
 
   async validateIPFSPublishMessage() {
     await expect(this.publishedWidgetMessage).toHaveText(
-      "Your config is published to IPFS. Test it with our hosted widget:"
+      "Your config is published to IPFS. Test it with our hosted widget:",
     );
   }
 
@@ -246,10 +246,10 @@ export class BuilderPage extends BasePage {
     const downloadPath = "./downloads/exportedWidget.json";
     const dataPath = "./data/export.json";
     const downloadedWidgetContents = JSON.parse(
-      fs.readFileSync(downloadPath, "utf-8")
+      fs.readFileSync(downloadPath, "utf-8"),
     );
     const savedWidgetExportContents = JSON.parse(
-      fs.readFileSync(dataPath, "utf-8")
+      fs.readFileSync(dataPath, "utf-8"),
     );
     await expect(downloadedWidgetContents).toEqual(savedWidgetExportContents);
   }

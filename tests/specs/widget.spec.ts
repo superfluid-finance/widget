@@ -17,7 +17,7 @@ test("Creating a flow", async ({ page }) => {
   await widgetPage.skipWrapStep();
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
     process.env.WIDGET_WALLET_PUBLIC_KEY!,
-    rebounderAddresses["goerli"]
+    rebounderAddresses["goerli"],
   );
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(["send"], ["Not started"]);
@@ -37,7 +37,7 @@ test("Modifying a flow", async ({ page }) => {
   await widgetPage.clickContinueButton();
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
     process.env.WIDGET_WALLET_PUBLIC_KEY!,
-    rebounderAddresses["goerli"]
+    rebounderAddresses["goerli"],
   );
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(["modify"], ["Not started"]);
@@ -58,7 +58,7 @@ test("Approving and wrapping tokens", async ({ page }) => {
   await widgetPage.clickContinueButton();
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
     process.env.WIDGET_WALLET_PUBLIC_KEY!,
-    rebounderAddresses["goerli"]
+    rebounderAddresses["goerli"],
   );
   await widgetPage.validateWrapReviewAmount("1");
   await widgetPage.clickContinueButton();
