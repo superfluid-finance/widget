@@ -46,7 +46,7 @@ export function WidgetView(props: ViewProps) {
       openModal,
       closeModal,
     }),
-    [isOpen, openModal, closeModal]
+    [isOpen, openModal, closeModal],
   );
 
   const {

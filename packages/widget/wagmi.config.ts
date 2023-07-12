@@ -83,10 +83,13 @@ export default defineConfig({
         },
         {
           name: "CFAv1Forwarder",
-          address: chainIds.reduce((acc, value) => {
-            acc[value] = "0xcfA132E353cB4E398080B9700609bb008eceB125";
-            return acc;
-          }, {} as Record<ChainId, Address>),
+          address: chainIds.reduce(
+            (acc, value) => {
+              acc[value] = "0xcfA132E353cB4E398080B9700609bb008eceB125";
+              return acc;
+            },
+            {} as Record<ChainId, Address>,
+          ),
         },
       ],
     }),

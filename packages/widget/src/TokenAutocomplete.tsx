@@ -17,10 +17,10 @@ export default function TokenAutocomplete() {
     () =>
       network
         ? paymentOptionWithTokenInfoList.filter(
-            ({ paymentOption }) => paymentOption.chainId === network.id
+            ({ paymentOption }) => paymentOption.chainId === network.id,
           )
         : [],
-    [network, paymentOptionWithTokenInfoList]
+    [network, paymentOptionWithTokenInfoList],
   );
 
   return (

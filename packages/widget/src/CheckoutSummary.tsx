@@ -24,7 +24,7 @@ export function CheckoutSummary() {
   const { commands } = useCommandHandler();
 
   const sendStreamCommand = commands.find(
-    (x) => x.type === "Send Stream"
+    (x) => x.type === "Send Stream",
   )! as SendStreamCommand; // TODO: Do this more type-safe.
 
   const flowRate =
@@ -38,7 +38,7 @@ export function CheckoutSummary() {
 
   const superToken = useMemo(
     () => getSuperToken(sendStreamCommand.superTokenAddress),
-    [sendStreamCommand.superTokenAddress, getSuperToken]
+    [sendStreamCommand.superTokenAddress, getSuperToken],
   );
 
   const dashboardURL = useMemo(
@@ -46,7 +46,7 @@ export function CheckoutSummary() {
       `https://app.superfluid.finance/${
         accountAddress ? `?view=${accountAddress}` : ""
       }`,
-    [accountAddress]
+    [accountAddress],
   );
 
   // Note: calling "onSuccess" through the "useEffect" hook is not optimal.

@@ -24,7 +24,7 @@ export function useCommandHandler(): CommandHandlerContextValue {
 
   if (!context) {
     throw new Error(
-      "useCommandHandler must be used within a CommandHandlerProvider"
+      "useCommandHandler must be used within a CommandHandlerProvider",
     );
   }
 
