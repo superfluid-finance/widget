@@ -1,8 +1,8 @@
+import configuration from "@/configuration";
 import { FC, useCallback } from "react";
-import Modal, { ModalProps } from "./Modal/Modal";
-import Button from "../Button/Button";
-import styles from "./BookModal.module.css";
 import { useIntercom } from "react-use-intercom";
+import styles from "./BookModal.module.css";
+import Modal, { ModalProps } from "./Modal/Modal";
 
 interface BookModalProps extends ModalProps {}
 
@@ -12,7 +12,7 @@ const BookModal: FC<BookModalProps> = ({ show, onClose }) => {
   const bookDemo = useCallback(() => {
     boot();
     showIntercom();
-    startSurvey(34698139);
+    startSurvey(configuration.IntercomSurveyID);
     onClose && onClose();
   }, [boot, showIntercom, startSurvey, onClose]);
 

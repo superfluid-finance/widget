@@ -30,6 +30,13 @@
   font-size: 1rem;
   text-decoration: none;
   outline: none;
+  cursor: pointer;
+}
+
+.BookModal.Outlined {
+  background: transparent;
+  color: #1db227;
+  border: 1px solid #1db227;
 }
 
 .CloseBtn {
