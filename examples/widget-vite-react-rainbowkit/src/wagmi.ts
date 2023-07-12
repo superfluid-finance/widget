@@ -7,7 +7,7 @@ const walletConnectProjectId = "952483bf7a0f5ace4c40eb53967f1368";
 
 export const { chains, publicClient, webSocketPublicClient } = configureChains(
   supportedNetworks,
-  [publicProvider()]
+  [publicProvider()],
 );
 
 const { connectors } = getDefaultWallets({

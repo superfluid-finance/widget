@@ -4,7 +4,7 @@ export type ChildrenProp = PropsWithChildren["children"];
 
 // https://github.com/ethers-io/ethers.js/blob/13593809bd61ef24c01d79de82563540d77098db/src.ts/constants/numbers.ts#L21
 export const MaxUint256 = BigInt(
-  "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
 );
 
 export function isDefined<T>(value: T | undefined | null): value is T {
@@ -25,7 +25,7 @@ export function useStateWithDep<T>(defaultValue: T) {
 export function shortenHex(address: string, length = 4) {
   return `${address.substring(0, 2 + length)}...${address.substring(
     address.length - length,
-    address.length
+    address.length,
   )}`;
 }
 

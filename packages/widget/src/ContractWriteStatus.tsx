@@ -7,7 +7,7 @@ export const CircleIcon = normalizeIcon(CircleIcon_);
 
 export function ContractWriteStatus(
   result: ContractWriteResult,
-  index: number
+  index: number,
 ) {
   const {
     contractWrite: { id, commandId, displayTitle },

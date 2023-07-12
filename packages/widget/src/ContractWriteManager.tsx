@@ -34,7 +34,7 @@ export function ContractWriteManager({
   const prepare = _prepare && contractWrite.chainId === chain?.id;
 
   const prepareResult = usePrepareContractWrite(
-    prepare ? contractWrite : undefined
+    prepare ? contractWrite : undefined,
   );
   const writeResult = useContractWrite(prepareResult.config);
   const transactionResult = useWaitForTransaction({
@@ -58,7 +58,7 @@ export function ContractWriteManager({
       prepareResult.status,
       writeResult.status,
       transactionResult.status,
-    ]
+    ],
   );
 
   useEffect(() => void onChange?.(result), [result]);

@@ -4,7 +4,7 @@ import { absoluteValue } from "./utils";
 
 export const useSignificantFlowingDecimal = (
   flowRate: bigint,
-  animationStepTimeInMs: number
+  animationStepTimeInMs: number,
 ): number | undefined =>
   useMemo(() => {
     if (flowRate === 0n) {

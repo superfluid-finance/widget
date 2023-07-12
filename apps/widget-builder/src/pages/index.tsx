@@ -36,7 +36,7 @@ const drawerWidth = "480px";
 export default function Home() {
   const theme = useTheme();
   const [activeTab, setActiveTab] = useState<"ui" | "product" | "export">(
-    "product"
+    "product",
   );
 
   const { widgetProps, demoMode, toggleDemoMode } = useDemoMode();

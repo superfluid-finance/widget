@@ -107,7 +107,7 @@ const ProductEditor: FC = () => {
                     index={i}
                     remove={remove}
                   />
-                )
+                ),
               )
             ) : (
               <Typography variant="caption">- None</Typography>

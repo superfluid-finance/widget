@@ -12,12 +12,12 @@ const fUSDCAddress = "0xc94dd466416A7dFE166aB2cF916D3875C049EBB7";
 const provider = new ethers.InfuraProvider(5);
 const wallet = new ethers.Wallet(
   process.env.WIDGET_WALLET_PRIVATE_KEY!,
-  provider
+  provider,
 );
 const fUSDCx = new ethers.Contract(
   fUSDCxAddress,
   superTokenABI,
-  wallet.provider
+  wallet.provider,
 );
 const fUSDC = new ethers.Contract(fUSDCAddress, erc20ABI, wallet.provider);
 const CFA = new ethers.Contract(CFAAddress, cfAv1ForwarderABI, wallet.provider);

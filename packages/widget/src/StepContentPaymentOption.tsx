@@ -18,11 +18,11 @@ export default function StepContentPaymentOption() {
 
   const showCustomFlowRateInput = Boolean(
     paymentOptionWithTokenInfo &&
-      paymentOptionWithTokenInfo.paymentOption.flowRate === undefined
+      paymentOptionWithTokenInfo.paymentOption.flowRate === undefined,
   );
 
   const isStepComplete = Boolean(
-    network && flowRate?.amountEther && Number(flowRate?.amountEther) > 0 // TODO(KK): Refactor this to come from form validation
+    network && flowRate?.amountEther && Number(flowRate?.amountEther) > 0, // TODO(KK): Refactor this to come from form validation
   );
 
   const { isConnected } = useAccount();

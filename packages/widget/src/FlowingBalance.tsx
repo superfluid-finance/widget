@@ -21,12 +21,12 @@ export default memo(function FlowingBalance({
   const flowingBalance = useFlowingBalance(
     startingBalance,
     startingBalanceDate,
-    flowRate
+    flowRate,
   );
 
   const decimalPlaces = useSignificantFlowingDecimal(
     flowRate,
-    ANIMATION_MINIMUM_STEP_TIME
+    ANIMATION_MINIMUM_STEP_TIME,
   );
 
   return (

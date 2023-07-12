@@ -68,9 +68,9 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
           displaySettings: undefined,
         },
         undefined,
-        2
+        2,
       ),
-    [value]
+    [value],
   );
   const [editorValue, setEditorValue] = useState<string>(initialValue);
   const [isJsonValid, setIsJsonValid] = useState<boolean>(true);
@@ -78,7 +78,9 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   const handleEditorValidate: OnValidate = useCallback((markers) => {
     // If there are no errors in markers, the JSON is valid.
     setIsJsonValid(
-      markers.every((marker) => marker.severity !== monaco.MarkerSeverity.Error)
+      markers.every(
+        (marker) => marker.severity !== monaco.MarkerSeverity.Error,
+      ),
     );
   }, []);
 
@@ -107,7 +109,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
         }
       }
     }, 250),
-    [setValue, setSaved]
+    [setValue, setSaved],
   );
 
   useEffect(() => {

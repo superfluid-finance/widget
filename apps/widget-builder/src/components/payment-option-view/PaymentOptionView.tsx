@@ -63,7 +63,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   const theme = useTheme();
   const network = networks.find((n) => n.chainId === chainId);
   const token = Object.values(superTokenList.tokens).find(
-    (token) => token.address === superToken.address
+    (token) => token.address === superToken.address,
   );
 
   const flowRateValue = useMemo(() => {
@@ -117,10 +117,10 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
               <Typography data-testid="added-payment-receiver">
                 {`${receiverAddress.substring(
                   0,
-                  6
+                  6,
                 )}...${receiverAddress.substring(
                   receiverAddress.length - 4,
-                  receiverAddress.length
+                  receiverAddress.length,
                 )}
                 `}
               </Typography>

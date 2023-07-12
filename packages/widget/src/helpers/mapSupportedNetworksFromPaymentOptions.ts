@@ -1,7 +1,7 @@
 import { PaymentOption, SupportedNetwork, supportedNetworks } from "../core";
 
 export function mapSupportedNetworksFromPaymentOptions(
-  paymentOptions: ReadonlyArray<PaymentOption>
+  paymentOptions: ReadonlyArray<PaymentOption>,
 ): ReadonlyArray<SupportedNetwork> {
   // TODO: In some cases, produces this error: Type 'Set<5 | 80001 | 420 | 421613 | 43113 | 100 | 137 | 10 | 42161 | 43114 | 56 | 1 | 42220>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
   // const uniqueChainIds = [...new Set(paymentOptions.map((x) => x.chainId))];
@@ -12,7 +12,7 @@ export function mapSupportedNetworksFromPaymentOptions(
   return uniqueChainIds
     .map((chainId) => {
       const supportedNetwork = supportedNetworks.find(
-        (network_) => network_.id === chainId
+        (network_) => network_.id === chainId,
       );
 
       if (supportedNetwork === undefined) {

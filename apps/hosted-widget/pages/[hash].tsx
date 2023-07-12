@@ -26,7 +26,7 @@ const IPFSWidgetPage: NextPage = () => {
       open,
       isOpen,
     }),
-    [open, isOpen]
+    [open, isOpen],
   );
 
   const { data, loading, error } = useLoadFromIPFS(query.hash as string);

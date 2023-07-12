@@ -19,7 +19,7 @@ export function CheckoutContent() {
       orientation === "vertical"
         ? `@container wrapper (width >= ${theme.breakpoints.values.md}${theme.breakpoints.unit})`
         : "",
-    [theme, orientation]
+    [theme, orientation],
   );
 
   return (
