@@ -31,6 +31,11 @@ export function ContractWriteCircularProgress({
         {...props}
       />
       <CircularProgress
+        data-testid={
+          isDeterminate
+            ? "transaction-progress-circular-progress"
+            : "spinning-circular-progress"
+        }
         disableShrink={!isDeterminate} // Don't pass "true" with "determinate" because MUI will whine.
         variant={isDeterminate ? "determinate" : "indeterminate"}
         value={index === 0 ? 4 : (index / total) * 100}

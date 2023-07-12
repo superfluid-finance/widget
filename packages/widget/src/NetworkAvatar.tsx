@@ -97,6 +97,7 @@ const NetworkAvatar: FC<NetworkAvatarProps> = ({
 
   return (
     <Avatar
+      data-testid={`${network.id}-badge`}
       src={networkAssetConf?.logoUrl}
       {...AvatarProps}
       sx={{

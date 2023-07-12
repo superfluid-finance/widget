@@ -10,3 +10,14 @@ declare module "@synthetixio/synpress/commands/metamask" {
 declare module "@synthetixio/synpress/helpers" {
   export const prepareMetamask: (version: string) => void;
 }
+
+type PaymentOption = {
+  network: string;
+  superToken: string;
+  superTokenName: string;
+  flowRate: string;
+  receiver: string;
+  timeUnit: string;
+  chainId: string;
+  // useAsDefault: boolean;
+};

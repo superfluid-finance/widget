@@ -110,7 +110,9 @@ const ProductEditor: FC = () => {
                 ),
               )
             ) : (
-              <Typography variant="caption">- None</Typography>
+              <Typography data-testid="no-options-message" variant="caption">
+                - None
+              </Typography>
             )}
           </Stack>
         </Stack>

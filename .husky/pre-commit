@@ -10,3 +10,4 @@ fi
 
 
 npx --no-install lint-staged
+cd tests && pnpm lint:check-no-focused-tests

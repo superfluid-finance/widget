@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 import * as metamask from "@synthetixio/synpress/commands/metamask";
 import { BasePage } from "./basePage";
+import * as EthHelper from "../helpers/ethHelper";
 
 export class WidgetPage extends BasePage {
   readonly page: Page;
@@ -10,7 +11,7 @@ export class WidgetPage extends BasePage {
   readonly continueButton: Locator;
   readonly termsLink: Locator;
   readonly privacyPolicyLink: Locator;
-  readonly wrapUnderlyingBalannce: Locator;
+  readonly wrapUnderlyingBalance: Locator;
   readonly wrapSuperTokenBalance: Locator;
   readonly wrapAmountInput: Locator;
   readonly wrapAmountMirrorAmount: Locator;
@@ -34,22 +35,31 @@ export class WidgetPage extends BasePage {
   readonly transactionStatuses: Locator;
   readonly transactionTypes: Locator;
   readonly transactionButtonLoadingSpinner: Locator;
+  readonly skipWrapButton: Locator;
+  readonly productDescription: Locator;
+  readonly productName: Locator;
+  readonly widgetErrorMessage: Locator;
+  readonly widgetErrorTitle: Locator;
+  readonly productImage: Locator;
+  readonly transactionCount: Locator;
+  readonly transactionCircularProgress: Locator;
+  readonly transactionSpinningProgress: Locator;
   // readonly copyButtons: Locator;
   // readonly selectNetworkDropdown: Locator;
   // readonly selectTokenDropdown: Locator;
   // readonly productDetails: Locator;
-  // readonly productDescription: Locator;
-  // readonly productName: Locator;
   // readonly poweredBySuperfluidButton: Locator;
   // readonly selectedNetworkBadge: Locator;
   // readonly switchNetworkButton: Locator;
   // readonly transactionProgressBar: Locator;
   // readonly transactionProgressCount: Locator;
   // readonly closeButton: Locator;
-  selectedTokenDuringTest: string;
-  senderAddressDuringTest: string;
-  receiverAddressDuringTest: string;
-  wrapAmountDuringTest: string;
+  selectedTokenDuringTest?: string;
+  senderAddressDuringTest?: string;
+  receiverAddressDuringTest?: string;
+  wrapAmountDuringTest?: string;
+  underlyingTokenBalanceBeforeWrap?: bigint;
+  superTokenBalanceBeforeWrap?: bigint;
 
   constructor(page: Page) {
     super();
@@ -62,7 +72,7 @@ export class WidgetPage extends BasePage {
     this.networkSelectionButton = page.getByTestId("widget-network-selection");
     this.tokenSelectionButton = page.getByTestId("token-selection-button");
     this.privacyPolicyLink = page.getByTestId("privacy-link");
-    this.wrapUnderlyingBalannce = page.getByTestId("underlying-balance");
+    this.wrapUnderlyingBalance = page.getByTestId("underlying-balance");
     this.wrapSuperTokenBalance = page.getByTestId("super-balance");
     this.wrapAmountInput = page.locator(
       "[data-testid=wrap-amount-input] input",
@@ -100,11 +110,25 @@ export class WidgetPage extends BasePage {
       "continue-to-merchant-button",
     );
     this.openSuperfluidDashboard = page.getByTestId("open-dashboard-button");
-    //Should probobly create a test context class , move to basePage for context or look into playwrights BrowserContext
-    this.selectedTokenDuringTest = "";
-    this.senderAddressDuringTest = "";
-    this.receiverAddressDuringTest = "";
-    this.wrapAmountDuringTest = "";
+    this.skipWrapButton = page
+      .getByTestId("continue-button")
+      .filter({ hasText: "Skip this step" });
+    this.productName = page.getByTestId("product-name");
+    this.productDescription = page.getByTestId("product-description");
+    this.widgetErrorMessage = page.locator(
+      "[data-testid=widget-error] .MuiAlert-message",
+    );
+    this.widgetErrorTitle = page.locator(
+      "[data-testid=widget-error] .MuiAlert-message div",
+    );
+    this.productImage = page.getByTestId("widget-product-image");
+    this.transactionCount = page.getByTestId("transaction-count");
+    this.transactionCircularProgress = page.getByTestId(
+      "transaction-progress-circular-progress",
+    );
+    this.transactionSpinningProgress = page.getByTestId(
+      "spinning-circular-progress",
+    );
   }
 
   async clickContinueButton() {
@@ -119,7 +143,10 @@ export class WidgetPage extends BasePage {
 
   async selectPaymentNetwork(network: string) {
     await this.networkSelectionButton.click();
-    await this.page.getByTestId("network-option").filter().click();
+    await this.page
+      .getByTestId("network-option")
+      .filter({ hasText: network })
+      .click();
   }
 
   async selectPaymentToken(token: string) {
@@ -143,7 +170,7 @@ export class WidgetPage extends BasePage {
   getTransactionTypeString(type: string) {
     switch (type) {
       case "wrap":
-        return `Wrap ${this.selectedTokenDuringTest.slice(0, -1)} into ${
+        return `Wrap ${this.selectedTokenDuringTest!.slice(0, -1)} into ${
           this.selectedTokenDuringTest
         }`;
       case "modify":
@@ -151,7 +178,10 @@ export class WidgetPage extends BasePage {
       case "send":
         return "Send Stream";
       case "approve":
-        return `Approve ${this.selectedTokenDuringTest.slice(0, -1)} Allowance`;
+        return `Approve ${this.selectedTokenDuringTest!.slice(
+          0,
+          -1,
+        )} Allowance`;
     }
   }
 
@@ -159,7 +189,6 @@ export class WidgetPage extends BasePage {
     transactionList: string[],
     statusList: string[],
   ) {
-    //TODO add steps for the transaction counter too
     for (const [index, transaction] of transactionList.entries()) {
       await expect(this.transactionTypes.nth(index)).toHaveText(
         index + 1 + ". " + this.getTransactionTypeString(transaction),
@@ -169,6 +198,7 @@ export class WidgetPage extends BasePage {
         { timeout: 60000 },
       );
     }
+    await this.validateTransactionCounter(statusList);
   }
 
   async validateTransactionButtonTextAndClick(text: string) {
@@ -207,10 +237,10 @@ export class WidgetPage extends BasePage {
       parseFloat(await this.successStreamedAmount.innerText()),
     ).toBeCloseTo(expectedAmount, flowRateInWei / 1e17);
     await expect(this.senderAddress.last()).toHaveText(
-      BasePage.shortenHex(this.senderAddressDuringTest),
+      BasePage.shortenHex(this.senderAddressDuringTest!),
     );
     await expect(this.receiverAddress.last()).toHaveText(
-      BasePage.shortenHex(this.receiverAddressDuringTest),
+      BasePage.shortenHex(this.receiverAddressDuringTest!),
     );
   }
 
@@ -227,6 +257,113 @@ export class WidgetPage extends BasePage {
   }
 
   async validateWrapReviewAmount(amount: string) {
-    expect(this.reviewUnderlyingWrapAmount);
+    await expect(this.reviewUnderlyingWrapAmount).toHaveText(amount);
+  }
+
+  async skipWrapStep() {
+    await this.skipWrapButton.click();
+  }
+
+  async validateProductName(name: string) {
+    await expect(this.productName).toHaveText(name);
+  }
+
+  async validateProductDescription(description: string) {
+    await expect(this.productDescription).toHaveText(description);
+  }
+
+  async validateSelectedPaymentOption(option: PaymentOption) {
+    await expect(this.chosenFlowRate).toHaveText(option.flowRate);
+    await expect(this.chosenToken).toHaveText(option.superToken);
+    await expect(this.chosenFlowRatePeriod).toHaveText(
+      `per ${option.timeUnit}`,
+    );
+    await expect(
+      this.page
+        .getByTestId(`selected-option-paper`)
+        .getByTestId(`${option.chainId}-badge`),
+    ).toBeVisible();
+  }
+
+  async validateWidgetNoPaymentOptionsError() {
+    await expect(this.widgetErrorTitle).toHaveText("Input Error");
+    //TODO validate the message too, playwright returns 17 strings??
+    //This will probobly be a nicer message in the future so wont spend time on it for now
+  }
+  async validateUsedTestImage() {
+    const screenshot = await this.productImage.screenshot();
+    //Snapshot is saved in specs/specFileName.ts-snapshots
+    //Sometimes the rounded edges can show up abit different than the screenshot in different viewports, so the 1% threshold
+    await expect(screenshot).toMatchSnapshot("./data/Superfluid_logo.png", {
+      maxDiffPixelRatio: 1,
+    });
+  }
+
+  async validateTransactionCounter(statusList: string[]) {
+    if (statusList.length === 1) {
+      await expect(this.transactionSpinningProgress).toBeVisible();
+      await expect(this.transactionCount).not.toBeVisible();
+    } else {
+      let completedStatusCount = 0;
+      for (const [index, status] of statusList.entries()) {
+        if (status === "Completed") {
+          completedStatusCount++;
+        }
+      }
+      let progressPercentage =
+        completedStatusCount === 0
+          ? (4).toString()
+          : Math.round(
+              (completedStatusCount / statusList.length) * 100,
+            ).toString();
+      await expect(this.transactionCount).toHaveText(
+        `${completedStatusCount}/${statusList.length}`,
+      );
+      await expect(this.transactionCircularProgress).toHaveAttribute(
+        "aria-valuenow",
+        progressPercentage,
+      );
+    }
+  }
+
+  async validateTokenBalanceAfterWrap() {
+    let wrappedAmount = BigInt(1e18) * BigInt(this.wrapAmountDuringTest!);
+    await EthHelper.getUnderlyingTokenBalance().then(
+      async (underlyingBalance) => {
+        await expect(
+          this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
+        ).toEqual(underlyingBalance);
+      },
+    );
+
+    await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
+      await expect(this.superTokenBalanceBeforeWrap! + wrappedAmount).toEqual(
+        superTokenBalance[0],
+      );
+    });
+  }
+
+  async validateAndSaveWrapPageBalances() {
+    await EthHelper.getUnderlyingTokenBalance().then(
+      async (underlyingBalance) => {
+        this.underlyingTokenBalanceBeforeWrap = underlyingBalance;
+        let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
+          (underlyingBalance.toString() / 1e18).toString(),
+        );
+        await expect(this.wrapUnderlyingBalance).toHaveText(
+          `Balance: ${underlyingBalanceToAssert}`,
+        );
+      },
+    );
+
+    await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
+      this.superTokenBalanceBeforeWrap = superTokenBalance[0];
+      let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
+        (superTokenBalance[0].toString() / 1e18).toString(),
+      );
+      await expect(this.wrapSuperTokenBalance).toHaveText(
+        `Balance: ${superTokenBalanceToAssert}`,
+      );
+    });
   }
 }
