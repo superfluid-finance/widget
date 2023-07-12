@@ -8,6 +8,6 @@
         "dotenv": "16.3.1"
     },
     "scripts": {
-        "lint:check-no-focused-tests": "grep -FR test.only specs || { echo 'No test is focused.';exit 0; } && { echo '✘ You have focused tests.'; exit 1; }"
+        "lint:check-no-focused-tests": "grep -FR test.only specs || { echo '✅ No test is focused.';exit 0; } && { echo '❌ You have focused tests.'; exit 1; }"
     }
 }
