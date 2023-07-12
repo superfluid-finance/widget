@@ -1,8 +1,14 @@
 .Wrapper {
+  width: 100%;
+  background: #00081d;
+}
+
+.Content {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  padding: 3.25rem 0 1.5rem;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 3.25rem 0 2rem;
 }
 
 .Intro p {
@@ -25,9 +31,14 @@
 }
 
 @media screen and (max-width: 960px) {
-  .Wrapper {
+  .Content {
     flex-direction: column;
     align-items: center;
+  }
+
+  .Logo {
+    display: block;
+    margin: 0 auto;
   }
 
   .Social {

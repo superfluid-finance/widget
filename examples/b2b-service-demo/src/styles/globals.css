@@ -5,6 +5,7 @@
   --font-heading: "Space Grotesk", sans-serif;
 
   --primary: #60b2ff;
+  --content-width: min(100vw - 2.5rem, 1400px);
 }
 
 * {
