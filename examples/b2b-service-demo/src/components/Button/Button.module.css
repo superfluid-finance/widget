@@ -1,0 +1,32 @@
+.Button {
+  text-align: center;
+  font-family: Inter;
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 700;
+  border: none;
+  position: relative;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.Filled {
+  color: #000;
+}
+
+.Outlined {
+  color: var(--primary);
+}
+
+.Button svg {
+  width: 100%;
+  display: block;
+}
+
+.Button span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

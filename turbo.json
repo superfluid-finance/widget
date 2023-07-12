@@ -33,6 +33,10 @@
         "NEXT_PUBLIC_SEGMENT_WRITE_KEY"
       ]
     },
+    "@superfluid-finance/b2b-service-demo#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
     "test": {
       "dependsOn": ["build"],
       "env": [
