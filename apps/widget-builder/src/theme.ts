@@ -16,6 +16,7 @@ const theme = createTheme({
       main: "#1DB227",
       light: "#ECFAEF",
       dark: "#16891D",
+      contrastText: "#fff",
     },
     secondary: {
       main: "#19857b",
@@ -32,11 +33,15 @@ const theme = createTheme({
       "100": "#DBDEE2",
       "500": "#8995A1",
       "700": "#656E78",
+      "800": "#656E78",
       "900": "#2E3A47",
     },
     text: {
       primary: "#000",
       secondary: "#656E78",
+    },
+    background: {
+      default: "#EAEFF4",
     },
     divider: "#DBDEE2",
   },
@@ -50,8 +55,8 @@ const theme = createTheme({
     },
 
     h1: {
-      fontSize: "3.875rem",
-      fontWeight: 500,
+      fontSize: "3.375rem",
+      fontWeight: 700,
       lineHeight: 1,
     },
 
@@ -113,6 +118,24 @@ const theme = createTheme({
   },
 
   components: {
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+        translate: "yes",
+      },
+      styleOverrides: {
+        sizeLarge: {
+          paddingTop: "0.75rem",
+          paddingBottom: "0.75rem",
+        },
+        outlined: {
+          border: "1.5px solid",
+          "&:hover": {
+            border: "1.5px solid",
+          },
+        },
+      },
+    },
     MuiFormLabel: {
       styleOverrides: {
         root: {
