@@ -159,7 +159,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
               data-testid="product-description"
               variant="body2"
               color="text.secondary"
-              sx={{ pt: 1 }}
+              sx={{ pt: 1, whiteSpace: "pre-wrap" }}
             >
               {description}
             </Typography>

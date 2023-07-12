@@ -18,6 +18,7 @@ export function ContractWriteCircularProgress({
   ...props
 }: Props) {
   const theme = useTheme();
+  const isDeterminate = total > 1;
   return (
     <Box position="relative" display="inline-flex">
       <CircularProgress
@@ -31,12 +32,12 @@ export function ContractWriteCircularProgress({
       />
       <CircularProgress
         data-testid={
-          total === 1
+          isDeterminate
             ? "spinning-circular-progress"
             : "transaction-progress-circular-progress"
         }
-        disableShrink
-        variant={total === 1 ? "indeterminate" : "determinate"}
+        disableShrink={!isDeterminate} // Don't pass "true" with "determinate" because MUI will whine.
+        variant={isDeterminate ? "determinate" : "indeterminate"}
         value={index === 0 ? 4 : (index / total) * 100}
         sx={{
           animationDuration: theme.transitions.duration.complex,
