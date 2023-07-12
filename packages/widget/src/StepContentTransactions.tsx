@@ -7,14 +7,116 @@ import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress";
 import { ContractWriteStatus } from "./ContractWriteStatus";
 import { useStepper } from "./StepperContext";
 import { normalizeIcon } from "./helpers/normalizeIcon";
+import { SendStreamCommand, WrapIntoSuperTokensCommand } from "./commands";
+import { z } from "zod";
+import { getPublicClient } from "wagmi/actions";
+import { erc20ABI, mapTimePeriodToSeconds } from "./core";
+import { useQuery, useQueryClient } from "wagmi";
+
+// const {
+//   data: underlyingTokenOrNativeAssetBalance,
+//   isLoading: isBalanceLoading,
+// } = useBalance({
+//   chainId: cmd.chainId,
+//   address: cmd.accountAddress,
+//   token: isNativeAssetSuperToken ? undefined : cmd.underlyingTokenAddress,
+// });
+
+// const result = wrapIntoSuperTokensCommandSchema.safeParse({
+//   ...cmd,
+//   underlyingTokenOrNativeAssetBalance:
+//     underlyingTokenOrNativeAssetBalance?.value,
+// });
+
+// const wrapIntoSuperTokensCommandSchema = z
+//   .custom<
+//     WrapIntoSuperTokensCommand & {
+//       underlyingTokenOrNativeAssetBalance: bigint;
+//     }
+//   >()
+//   .refine((x) => x.amountWei < x.underlyingTokenOrNativeAssetBalance, {
+//     message: "Insufficient balance",
+//   });
+
+// const sendStreamCommandSchema = z
+//   .custom<SendStreamCommand>()
+//   .refine(
+//     (x) => x.accountAddress.toLowerCase() !== x.receiverAddress.toLowerCase(),
+//     {
+//       message: "Can't stream to yourself.",
+//     }
+//   );
+
+const commandValidationSchema = z
+  .object({
+    wrapIntoSuperTokensCommand: z
+      .custom<WrapIntoSuperTokensCommand>()
+      .refine(
+        async (cmd) => {
+          const publicClient = getPublicClient({ chainId: cmd.chainId });
+
+          const balance = cmd.isNativeAssetSuperToken
+            ? await publicClient.getBalance({ address: cmd.accountAddress })
+            : await publicClient.readContract({
+                abi: erc20ABI,
+                address: cmd.underlyingTokenAddress,
+                functionName: "balanceOf",
+                args: [cmd.accountAddress],
+              });
+
+          return cmd.amountWei < balance;
+        },
+        {
+          message: "Insufficient balance",
+        },
+      )
+      .optional(),
+    sendStreamCommand: z
+      .custom<SendStreamCommand>()
+      .refine(
+        (x) =>
+          x.accountAddress.toLowerCase() !== x.receiverAddress.toLowerCase(),
+        {
+          message: "Can't stream to yourself.",
+        },
+      ),
+  })
+  .refine(
+    async ({ sendStreamCommand: cmd }) => {
+      const publicClient = getPublicClient({ chainId: cmd.chainId });
+
+      const balance = await publicClient.readContract({
+        abi: erc20ABI,
+        address: cmd.superTokenAddress,
+        functionName: "balanceOf",
+        args: [cmd.accountAddress],
+      });
+
+      // Account for initial wrap.
+
+      return (
+        balance >
+        (cmd.flowRate.amountWei * 86400n) /
+          BigInt(mapTimePeriodToSeconds(cmd.flowRate.period))
+      );
+    },
+    {
+      message: "Need to leave 24 hour worth of balance in the Super Token.",
+    },
+  );
 
 const CloseIcon = normalizeIcon(CloseIcon_);
 
 export function StepContentTransactions() {
   const { handleBack, handleNext } = useStepper();
 
-  const { contractWrites, contractWriteResults, writeIndex } =
-    useCommandHandler(); // Cleaner to pass with props.
+  const {
+    sessionId,
+    commands,
+    contractWrites,
+    contractWriteResults,
+    writeIndex,
+  } = useCommandHandler(); // Cleaner to pass with props.
 
   useEffect(() => {
     if (writeIndex > 0 && writeIndex === contractWriteResults.length) {
@@ -25,6 +127,19 @@ export function StepContentTransactions() {
 
   const total = contractWrites.length;
   const currentResult = contractWriteResults[writeIndex];
+
+  const { data: validationResult } = useQuery(["sessionId"], () =>
+    commandValidationSchema.safeParseAsync({
+      wrapIntoSuperTokensCommand: commands.find(
+        (x) => x.type === "Wrap into Super Tokens",
+      ),
+      sendStreamCommand: commands.find((x) => x.type === "Send Stream"),
+    }),
+  );
+
+  console.log({
+    validationResult,
+  });
 
   return (
     <Box>

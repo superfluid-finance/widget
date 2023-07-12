@@ -22,7 +22,6 @@ import { Abi, ContractFunctionConfig, GetValue, parseEther } from "viem";
 import { useEffect, useMemo } from "react";
 import { useWidget } from "./WidgetContext";
 import { nanoid } from "nanoid";
-import { z } from "zod";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
@@ -129,16 +128,6 @@ export function EnableAutoWrapCommandMapper({
   return <>{children?.(contractWrites)}</>;
 }
 
-const schema = z
-  .custom<
-    WrapIntoSuperTokensCommand & {
-      underlyingTokenOrNativeAssetBalance: bigint;
-    }
-  >()
-  .refine((x) => x.amountWei > x.underlyingTokenOrNativeAssetBalance, {
-    message: "Insufficient balance",
-  });
-
 export function WrapIntoSuperTokensCommandMapper({
   command: cmd,
   onMapped,
@@ -161,16 +150,6 @@ export function WrapIntoSuperTokensCommandMapper({
         }
       : undefined,
   );
-
-  // TODO(KK)
-  // const {
-  //   data: underlyingTokenOrNativeAssetBalance,
-  //   isLoading: isBalanceLoading,
-  // } = useBalance({
-  //   chainId: cmd.chainId,
-  //   address: cmd.accountAddress,
-  //   token: isNativeAssetSuperToken ? undefined : cmd.underlyingTokenAddress,
-  // });
 
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];

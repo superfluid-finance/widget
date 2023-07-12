@@ -7,6 +7,7 @@ export type WrapIntoSuperTokensCommand = {
   chainId: ChainId;
   accountAddress: Address;
   superTokenAddress: Address;
+  isNativeAssetSuperToken: boolean;
   underlyingTokenAddress: Address;
   amountWei: bigint;
 };

@@ -21,6 +21,7 @@ export const formValuesToCommands = (
   const superTokenAddress = superToken.address as Address;
 
   const commands: Command[] = [];
+
   if (superToken.extensions.superTokenInfo.type === "Wrapper") {
     const underlyingTokenAddress =
       superToken.extensions.superTokenInfo.underlyingTokenAddress;
@@ -34,6 +35,7 @@ export const formValuesToCommands = (
         accountAddress,
         underlyingTokenAddress,
         amountWei: parseEther(wrapAmountEther), // TODO(KK): Decimals need to be accounted somewhere!
+        isNativeAssetSuperToken: false,
       });
     }
 
