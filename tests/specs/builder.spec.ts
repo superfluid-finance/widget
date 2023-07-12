@@ -29,7 +29,7 @@ test("Changing the products description", async ({ page }) => {
   await widgetPage.validateProductDescription(testString);
 });
 
-test.only("Adding a payment new option", async ({ page }) => {
+test("Adding a payment new option", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
   await builderPage.addPaymentOption(testOption);
