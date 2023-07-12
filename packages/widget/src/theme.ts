@@ -38,14 +38,16 @@ const getModeStyleCB =
 
 interface CoreThemeOptions
   extends Required<
-    Pick<ThemeOptions, "palette" | "shadows" | "transitions" | "breakpoints">
+    Pick<
+      ThemeOptions,
+      "palette" | "shadows" | "transitions" | "breakpoints" | "shape"
+    >
   > {
   typography: TypographyOptions;
 }
 
 const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
   const getModeStyle = getModeStyleCB(mode);
-
   return {
     palette: {
       mode: mode,
@@ -53,6 +55,9 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
       text: {
         primary: getModeStyle("#12141ede", "#FFFFFFFF"),
         secondary: getModeStyle("#656E78", "#FFFFFFC7"),
+      },
+      primary: {
+        main: "#1DB227",
       },
       error: {
         main: getModeStyle("#D22525FF", "#F2685BFF"),
@@ -281,6 +286,9 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
         xl: 1536,
       },
     },
+    shape: {
+      borderRadius: 20,
+    },
   };
 };
 
@@ -304,6 +312,9 @@ export function getThemedComponents(
       },
       MuiButton: {
         styleOverrides: {
+          root: {
+            borderRadius: 10,
+          },
           sizeLarge: {
             fontSize: "1rem",
             paddingTop: "0.75rem",
@@ -311,11 +322,16 @@ export function getThemedComponents(
           },
         },
       },
-      MuiLink: {
+      MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            ...typography.body1,
+            borderRadius: 10,
           },
+        },
+      },
+      MuiLink: {
+        defaultProps: {
+          variant: "body1",
         },
       },
       MuiSvgIcon: {
@@ -423,10 +439,6 @@ export function getThemedComponents(
           },
         },
       },
-    },
-
-    shape: {
-      borderRadius: 20,
     },
   };
 }

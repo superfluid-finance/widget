@@ -1,0 +1,69 @@
+.Main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url("/bg.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: top center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding: 0 3.5rem;
+}
+
+.Wrapper {
+  max-width: var(--content-width);
+  margin: 0 auto 10vh;
+  /* flex: 1; */
+}
+
+.Heading {
+  margin-bottom: 3.8rem;
+  text-align: center;
+}
+
+.Heading h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2.6rem, 2.37rem + 1.15vw, 3.75rem);
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.Heading p {
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.96875rem;
+}
+
+.PricingOptions {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+@media screen and (max-width: 960px) {
+  .PricingOptions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Header {
+    padding: 0 2.5rem;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .Header {
+    padding: 0 1.25rem;
+  }
+}
