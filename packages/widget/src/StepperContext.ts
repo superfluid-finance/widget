@@ -11,7 +11,7 @@ export type StepperContextValue = {
 };
 
 export const StepperContext = createContext<StepperContextValue | undefined>(
-  undefined
+  undefined,
 );
 
 export const useStepper = (): StepperContextValue => {

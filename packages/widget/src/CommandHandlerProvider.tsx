@@ -33,13 +33,13 @@ export function CommandHandlerProvider({ children }: Props) {
   }, [commands]);
 
   const writeIndex = contractWriteResults.filter(
-    (x) => x.transactionResult.isSuccess
+    (x) => x.transactionResult.isSuccess,
   ).length;
 
   const submitCommands = useCallback(
     (commands: ReadonlyArray<Command>) =>
       void dispatch({ type: "set commands", payload: commands }),
-    [dispatch]
+    [dispatch],
   );
   const reset = useCallback(() => void dispatch({ type: "reset" }), [dispatch]);
 
@@ -54,7 +54,7 @@ export function CommandHandlerProvider({ children }: Props) {
       reset,
       writeIndex,
     }),
-    [status, commands, contractWrites, contractWriteResults, sessionId]
+    [status, commands, contractWrites, contractWriteResults, sessionId],
   );
 
   return (

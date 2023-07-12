@@ -5,7 +5,7 @@ export const ANIMATION_MINIMUM_STEP_TIME = 40;
 const useFlowingBalance = (
   startingBalance: bigint,
   startingBalanceDate: Date,
-  flowRate: bigint
+  flowRate: bigint,
 ) => {
   const [flowingBalance, setFlowingBalance] = useState(startingBalance);
 
@@ -22,7 +22,7 @@ const useFlowingBalance = (
         ANIMATION_MINIMUM_STEP_TIME
       ) {
         const elapsedTimeInMilliseconds = BigInt(
-          Date.now() - startingBalanceDate.getTime()
+          Date.now() - startingBalanceDate.getTime(),
         );
         const flowingBalance_ =
           startingBalance + (flowRate * elapsedTimeInMilliseconds) / 1000n;

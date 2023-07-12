@@ -5,7 +5,7 @@ import { autoWrapStrategyAddress } from "./core";
 import { ValidFormValues } from "./formValues";
 
 export const formValuesToCommands = (
-  values: ValidFormValues
+  values: ValidFormValues,
 ): ReadonlyArray<Command> => {
   const {
     network: { id: chainId },

@@ -74,7 +74,7 @@ export class BuilderPage extends BasePage {
       .getByTestId("receiver-input-field")
       .getByRole("textbox");
     this.useAsDefaultPaymentSwitch = page.getByLabel(
-      "Use as default payment option"
+      "Use as default payment option",
     );
     this.addPaymentOptionButton = page.getByTestId("add-option-button");
     this.paymentOptionCount = page.getByTestId("added-payment-options-count");
@@ -83,7 +83,7 @@ export class BuilderPage extends BasePage {
     this.summaryFlowRate = page.getByTestId("flow-rate-added-payment-option");
     this.summaryReceiver = page.getByTestId("added-payment-receiver");
     this.summaryDeleteButtons = page.getByTestId(
-      "delete-payment-option-button"
+      "delete-payment-option-button",
     );
     this.productImageField = page.getByRole("button", {
       name: "Optional",
@@ -92,15 +92,15 @@ export class BuilderPage extends BasePage {
     this.darkModeSwitch = page.getByLabel("Dark mode: off");
     this.containerBorderSlider = page.getByTestId("container-radius-slider");
     this.containerBorderSliderAmount = page.getByTestId(
-      "container-radius-slider-amount"
+      "container-radius-slider-amount",
     );
     this.fieldBorderSlider = page.getByTestId("field-border-slider");
     this.fieldBorderSliderAmount = page.getByTestId(
-      "field-border-slider-amount"
+      "field-border-slider-amount",
     );
     this.buttonBorderSlider = page.getByTestId("button-border-radius-slider");
     this.buttonBorderSliderAmount = page.getByTestId(
-      "button-border-radius-amount"
+      "button-border-radius-amount",
     );
     this.primaryColorPicker = page
       .getByTestId("primary-color-picker")

@@ -53,7 +53,7 @@ export default function Stepper() {
         Content: StepContentReview,
       },
     ],
-    [paymentOptionWithTokenInfo]
+    [paymentOptionWithTokenInfo],
   );
 
   const container = React.useRef(null);

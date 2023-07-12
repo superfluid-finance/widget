@@ -38,7 +38,7 @@ function App() {
       open,
       isOpen,
     }),
-    [open, isOpen]
+    [open, isOpen],
   );
 
   const eventListeners: EventListeners = useMemo(
@@ -46,7 +46,7 @@ function App() {
       onSuccess: () => console.log("onSuccess"),
       onSuccessButtonClick: () => console.log("onSuccessButtonClick"),
     }),
-    []
+    [],
   );
 
   return (

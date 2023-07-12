@@ -35,7 +35,7 @@ export const etherAmountToBigInt = z
   .pipe(z.bigint()); // TODO(KK): The gt check might be better suited somewhere else.
 
 export const etherAmountSchema = etherAmountToBigInt.transform(
-  (x) => formatEther(x) as `${number}`
+  (x) => formatEther(x) as `${number}`,
 );
 
 export const flowRateSchema = z.object({

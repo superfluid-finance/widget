@@ -43,12 +43,12 @@ export const useCommandHandlerReducer = () =>
         }
         case "set contract writes": {
           const command = draft.commands.find(
-            (x) => x.id === action.payload.commandId
+            (x) => x.id === action.payload.commandId,
           );
 
           if (!command)
             throw new Error(
-              `Command not found with ID: ${action.payload.commandId}`
+              `Command not found with ID: ${action.payload.commandId}`,
             );
 
           command.contractWrites = castDraft(action.payload.contractWrites);
@@ -61,7 +61,7 @@ export const useCommandHandlerReducer = () =>
 
           if (!contractWrite)
             throw new Error(
-              `ContractWrite not found with ID: ${action.payload.commandId}.${action.payload.writeId}`
+              `ContractWrite not found with ID: ${action.payload.commandId}.${action.payload.writeId}`,
             );
 
           // Initialize session when first transaction invoked.
@@ -77,5 +77,5 @@ export const useCommandHandlerReducer = () =>
         }
       }
     },
-    { status: "idle", commands: [], sessionId: null }
+    { status: "idle", commands: [], sessionId: null },
   );

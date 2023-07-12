@@ -11,7 +11,7 @@ type ReturnValue = Readonly<{
 }>;
 
 export function filterSuperTokensFromTokenList(
-  tokenList: SuperTokenList
+  tokenList: SuperTokenList,
 ): ReturnValue {
   return tokenList.tokens.reduce(
     (accumulator, tokenInfo) => {
@@ -25,6 +25,6 @@ export function filterSuperTokensFromTokenList(
         });
       }
     },
-    { superTokens: [], underlyingTokens: [] } as ReturnValue
+    { superTokens: [], underlyingTokens: [] } as ReturnValue,
   );
 }

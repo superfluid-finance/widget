@@ -99,10 +99,10 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
       networks.filter((network) =>
         tokenList.tokens.find(
           ({ chainId, tags }) =>
-            network.chainId === chainId && tags && tags.includes("supertoken")
-        )
+            network.chainId === chainId && tags && tags.includes("supertoken"),
+        ),
       ),
-    []
+    [],
   );
 
   const handleNetworkSelect = (event: SelectChangeEvent<string>) => {
@@ -147,7 +147,8 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     const network = networks.find(({ name }) => name === selectedNetwork?.name);
     return tokenList.tokens.filter(
       (token) =>
-        token.chainId === network?.chainId && token.tags?.includes("supertoken")
+        token.chainId === network?.chainId &&
+        token.tags?.includes("supertoken"),
     );
   }, [selectedNetwork]);
 

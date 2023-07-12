@@ -19,7 +19,7 @@ export default function StepContentPaymentOption() {
   const [paymentOptionWithTokenInfo] = watch(["paymentOptionWithTokenInfo"]);
   const showCustomFlowRateInput = Boolean(
     paymentOptionWithTokenInfo &&
-      paymentOptionWithTokenInfo.paymentOption.flowRate === undefined
+      paymentOptionWithTokenInfo.paymentOption.flowRate === undefined,
   );
 
   const isStepComplete = isValid && !isValidating; // Might be better to solve with "getFieldState".

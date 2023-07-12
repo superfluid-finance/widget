@@ -33,7 +33,7 @@ export default function FormProvider({ children }: Props) {
     }
 
     const networkPaymentOptions = paymentOptionWithTokenInfoList.filter(
-      (x) => x.paymentOption.chainId === defaultNetwork.id
+      (x) => x.paymentOption.chainId === defaultNetwork.id,
     );
 
     if (networkPaymentOptions.length === 1) {

@@ -21,7 +21,7 @@ const FlowRateInput: FC<FlowRateInputProps> = ({ value, onChange, onBlur }) => {
     (e: ChangeEvent<HTMLInputElement>) => {
       onChange({ amountEther: e.target.value as `${number}`, period });
     },
-    [period]
+    [period],
   );
 
   const onPeriodChange = useCallback(
@@ -31,7 +31,7 @@ const FlowRateInput: FC<FlowRateInputProps> = ({ value, onChange, onBlur }) => {
         period: e.target.value as TimePeriod,
       });
     },
-    [amountEther]
+    [amountEther],
   );
 
   return (

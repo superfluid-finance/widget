@@ -12,7 +12,7 @@ const StyledExpandIcon = styled(ExpandMoreRoundedIcon)<{ expanded: boolean }>(
       easing: theme.transitions.easing.easeInOut,
       duration: theme.transitions.duration.short,
     }),
-  })
+  }),
 );
 
 interface ExpandIconProps {

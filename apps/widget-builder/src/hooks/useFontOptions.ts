@@ -25,14 +25,14 @@ const useFontOptions = () => {
   useEffect(() => {
     const effect = async () => {
       const response = await fetch(
-        `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY}`
+        `https://www.googleapis.com/webfonts/v1/webfonts?key=${process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY}`,
       );
 
       const { items } = await response.json();
 
       if (items) {
         setFontOptions(
-          items.filter(fontHasRequiredWeights).map(mapFontSettings)
+          items.filter(fontHasRequiredWeights).map(mapFontSettings),
         );
       }
     };

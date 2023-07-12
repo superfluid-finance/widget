@@ -97,7 +97,7 @@ export function EnableAutoWrapCommandMapper({
               172800n,
               604800n,
             ],
-          })
+          }),
         );
       }
 
@@ -113,7 +113,7 @@ export function EnableAutoWrapCommandMapper({
             functionName: "approve",
             address: cmd.underlyingTokenAddress,
             args: [autoWrapStrategyAddress[cmd.chainId], MaxUint256],
-          })
+          }),
         );
       }
     }
@@ -122,7 +122,7 @@ export function EnableAutoWrapCommandMapper({
 
   useEffect(
     () => (isSuccess ? onMapped?.(contractWrites) : void 0),
-    [contractWrites]
+    [contractWrites],
   );
 
   return <>{children?.(contractWrites)}</>;
@@ -148,7 +148,7 @@ export function WrapIntoSuperTokensCommandMapper({
           functionName: "allowance",
           args: [cmd.accountAddress, cmd.superTokenAddress],
         }
-      : undefined
+      : undefined,
   );
 
   const amount = parseEther(cmd.amountEther);
@@ -168,7 +168,7 @@ export function WrapIntoSuperTokensCommandMapper({
           functionName: "upgradeByETH",
           address: cmd.superTokenAddress,
           value: parseEther(cmd.amountEther),
-        })
+        }),
       );
     } else {
       if (allowance !== undefined) {
@@ -184,7 +184,7 @@ export function WrapIntoSuperTokensCommandMapper({
               functionName: "approve",
               address: cmd.underlyingTokenAddress,
               args: [cmd.superTokenAddress, MaxUint256],
-            })
+            }),
           );
         }
 
@@ -199,7 +199,7 @@ export function WrapIntoSuperTokensCommandMapper({
             address: cmd.superTokenAddress,
             functionName: "upgrade",
             args: [parseEther(cmd.amountEther)],
-          })
+          }),
         );
       }
     }
@@ -209,7 +209,7 @@ export function WrapIntoSuperTokensCommandMapper({
 
   useEffect(
     () => (isSuccess ? onMapped?.(contractWrites) : void 0),
-    [contractWrites]
+    [contractWrites],
   );
 
   return <>{children?.(contractWrites)}</>;
@@ -255,7 +255,7 @@ export function SendStreamCommandMapper({
               updatedFlowRate,
               cmd.userData,
             ],
-          })
+          }),
         );
       } else {
         contractWrites_.push(
@@ -273,7 +273,7 @@ export function SendStreamCommandMapper({
               flowRate,
               cmd.userData,
             ],
-          })
+          }),
         );
       }
     }
@@ -283,7 +283,7 @@ export function SendStreamCommandMapper({
 
   useEffect(
     () => (isSuccess ? onMapped?.(contractWrites) : void 0),
-    [contractWrites]
+    [contractWrites],
   );
 
   return <>{children?.(contractWrites)}</>;
@@ -291,13 +291,13 @@ export function SendStreamCommandMapper({
 
 const createContractWrite = <
   TAbi extends Abi | readonly unknown[] = Abi,
-  TFunctionName extends string = string
+  TFunctionName extends string = string,
 >(
   arg: ContractFunctionConfig<TAbi, TFunctionName, "payable" | "nonpayable"> &
     GetValue<TAbi, TFunctionName> &
-    Pick<ContractWrite, "commandId" | "displayTitle" | "chainId">
+    Pick<ContractWrite, "commandId" | "displayTitle" | "chainId">,
 ): ContractWrite =>
   ({
     id: nanoid(),
     ...arg,
-  } as ContractWrite);
+  }) as ContractWrite;

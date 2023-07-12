@@ -17,7 +17,7 @@ test.skip("Creating a flow", async ({ page }) => {
   //Test wallet and goerli rebounder contract
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
     "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
-    "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22"
+    "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
   );
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(["send"], ["Not started"]);
@@ -38,7 +38,7 @@ test("Modifying a flow", async ({ page }) => {
   //Test wallet and goerli rebounder contract
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
     "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
-    "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22"
+    "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
   );
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(["modify"], ["Not started"]);
@@ -59,35 +59,35 @@ test("Approving and wrapping tokens", async ({ page }) => {
   //Test wallet and goerli rebounder contract
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
     "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD",
-    "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22"
+    "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
   );
   await widgetPage.validateWrapReviewAmount("1");
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Not started", "Not started", "Not started"]
+    ["Not started", "Not started", "Not started"],
   );
   await widgetPage.validateTransactionButtonTextAndClick("approve");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskAllowanceTransaction("1");
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["In progress", "Not started", "Not started"]
+    ["In progress", "Not started", "Not started"],
   );
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Completed", "Not started", "Not started"]
+    ["Completed", "Not started", "Not started"],
   );
   await widgetPage.validateTransactionButtonTextAndClick("wrap");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskTransaction();
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Completed", "In progress", "Not started"]
+    ["Completed", "In progress", "Not started"],
   );
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Completed", "Completed", "Not started"]
+    ["Completed", "Completed", "Not started"],
   );
   //TODO check token balances without UI here
 });

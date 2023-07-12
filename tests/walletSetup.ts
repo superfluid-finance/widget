@@ -12,7 +12,7 @@ export const test = base.extend<{
     global.expect = expect;
     // download metamask
     const metamaskPath = await prepareMetamask(
-      process.env.METAMASK_VERSION || "10.25.0"
+      process.env.METAMASK_VERSION || "10.25.0",
     );
     // prepare browser args
     const browserArgs = [
