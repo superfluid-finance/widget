@@ -126,6 +126,15 @@ const ExportEditor: FC = () => {
     ],
   );
 
+  const onBookDemo = () => {
+    if (window.Intercom) {
+      window.Intercom(
+        "startSurvey",
+        process.env.NEXT_PUBLIC_INTERCOM_SURVEY_ID,
+      );
+    }
+  };
+
   const [selectedExportOption, setSelectedExportOption] =
     useState<ExportOption>("ipfs");
 
@@ -168,7 +177,13 @@ const ExportEditor: FC = () => {
         <Typography color="grey.800" sx={{ mb: 3 }}>
           We’ll show you how your business can benefit from using our checkout
         </Typography>
-        <Button fullWidth size="large" variant="outlined" color="primary">
+        <Button
+          fullWidth
+          size="large"
+          variant="outlined"
+          color="primary"
+          onClick={onBookDemo}
+        >
           Book a Demo
         </Button>
       </Box>

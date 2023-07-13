@@ -21,7 +21,8 @@
         "NEXT_PUBLIC_EXPORT_BASE_URL",
         "NEXT_PUBLIC_SEGMENT_WRITE_KEY",
         "NEXT_PUBLIC_PINATA_API_KEY",
-        "NEXT_PUBLIC_PINATA_API_SECRET"
+        "NEXT_PUBLIC_PINATA_API_SECRET",
+        "NEXT_PUBLIC_INTERCOM_SURVEY_ID"
       ]
     },
     "@superfluid-finance/hosted-widget#build": {
