@@ -8,6 +8,7 @@ import {
 import { z } from "zod";
 import { UseFormReturn } from "react-hook-form";
 import { SuperTokenInfo } from "@superfluid-finance/tokenlist";
+import { parseEther } from "viem";
 
 const paymentOptionWithTokenInfoSchema = z.object({
   paymentOption: paymentOptionSchema,
@@ -22,12 +23,15 @@ export const checkoutFormSchema = z.object({
   accountAddress: addressSchema,
   network: supportedNetworkSchema,
   paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
-  flowRate: flowRateSchema.refine((x) => BigInt(x.amountEther) > 0n),
+  flowRate: flowRateSchema.refine((x) => parseEther(x.amountEther) > 0n, {
+    message: "Flow rate must be greater than 0.",
+  }),
   wrapAmountEther: etherAmountSchema,
   enableAutoWrap: z.boolean().optional(),
 });
 
 export type ValidFormValues = z.infer<typeof checkoutFormSchema>;
+
 export type DraftFormValues = NullableKeys<
   ValidFormValues,
   "accountAddress" | "network" | "paymentOptionWithTokenInfo"

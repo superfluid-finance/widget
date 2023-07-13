@@ -30,9 +30,10 @@ export function AccountAddressCard({
   dataTest,
   PaperProps = { sx: {} },
 }: AccountAddressCardProps) {
-  const blockiesSrc = create({ seed: address.toLowerCase() }).toDataURL();
+  const blockiesSrc = create({
+    seed: address.toLowerCase(),
+  }).toDataURL();
   const [copied, setCopied] = useState(false);
-
   return (
     <Paper
       {...PaperProps}

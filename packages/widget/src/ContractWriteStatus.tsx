@@ -1,5 +1,5 @@
 import CircleIcon_ from "@mui/icons-material/Circle";
-import { Paper, Stack, Typography, useTheme } from "@mui/material";
+import { Paper, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import { ContractWriteResult } from "./ContractWriteManager";
 import { normalizeIcon } from "./helpers/normalizeIcon";
 
@@ -13,6 +13,7 @@ export function ContractWriteStatus(
     contractWrite: { id, commandId, displayTitle },
     transactionResult,
     writeResult,
+    prepareResult,
     latestError,
   } = result;
 
@@ -41,6 +42,7 @@ export function ContractWriteStatus(
           index + 1
         }. ${displayTitle}`}</Typography>
         <CircleIcon sx={{ color: borderColor, width: 12, height: 12 }} />
+
         <Typography data-testid="transaction-status" variant="body2">
           {latestError
             ? "Something went wrong."

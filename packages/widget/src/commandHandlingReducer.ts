@@ -38,7 +38,7 @@ export const useCommandHandlerReducer = () =>
         case "set commands": {
           draft.status = "initialized";
           draft.commands = castDraft(action.payload);
-          draft.sessionId = null;
+          draft.sessionId = nanoid();
           break;
         }
         case "set contract writes": {
@@ -65,12 +65,13 @@ export const useCommandHandlerReducer = () =>
             );
 
           // Initialize session when first transaction invoked.
-          if (
-            !draft.sessionId &&
-            !!action.payload.result.writeResult.data?.hash
-          ) {
-            draft.sessionId = nanoid();
-          }
+          // EDIT: Moved this to when commands are set.
+          // if (
+          //   !draft.sessionId &&
+          //   !!action.payload.result.writeResult.data?.hash
+          // ) {
+          //   draft.sessionId = nanoid();
+          // }
 
           contractWrite.result = castDraft(action.payload.result);
           break;

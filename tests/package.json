@@ -4,15 +4,15 @@
   "private": true,
   "devDependencies": {
     "@currents/playwright": "^0.6.1",
-    "@playwright/test": "^1.35.0",
-    "@synthetixio/synpress": "^3.5.1",
+    "@playwright/test": "^1.36.0",
+    "@synthetixio/synpress": "^3.7.1",
     "dotenv": "16.3.1",
-    "ethers": "6.6.0",
+    "ethers": "6.6.3",
     "typescript": "5.1.6"
   },
   "scripts": {
-     "lint:check-no-focused-tests": "grep -FR test.only specs || { echo '✅ No test is focused.';exit 0; } && { echo '❌ You have focused tests.'; exit 1; }",
-      "build": "tsc --noEmit --project ./tsconfig.json",
-      "tests": "npx playwright test --headed"
+    "lint:check-no-focused-tests": "grep -FR test.only specs || { echo '✅ No test is focused.';exit 0; } && { echo '❌ You have focused tests.'; exit 1; }",
+    "build": "tsc --noEmit --project ./tsconfig.json",
+    "tests": "npx playwright test --headed"
   }
 }

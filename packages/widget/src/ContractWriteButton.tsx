@@ -37,6 +37,7 @@ export default function ContractWriteButton({
         </Button>
       ) : (
         <LoadingButton
+          loadingIndicator="Loading…"
           data-testid="transaction-button"
           size="large"
           variant="contained"
