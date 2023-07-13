@@ -1,11 +1,17 @@
 import { useMemo } from "react";
 import { z } from "zod";
 import { SendStreamCommand, WrapIntoSuperTokensCommand } from "./commands";
-import { mapTimePeriodToSeconds } from "./core";
-import { fetchBalance } from "wagmi/actions";
+import {
+  cfAv1ForwarderABI,
+  cfAv1ForwarderAddress,
+  mapTimePeriodToSeconds,
+  superTokenABI,
+} from "./core";
+import { fetchBalance, readContract } from "wagmi/actions";
+import { calculateDateWhenBalanceCritical } from "./helpers/calculateDateWhenBalanceCritical";
 
-export const useCommandValidation = () =>
-  useMemo(
+export const useCommandValidation = () => {
+  return useMemo(
     () =>
       z
         .object({
@@ -20,15 +26,10 @@ export const useCommandValidation = () =>
                     ? undefined
                     : cmd.underlyingTokenAddress,
                 });
-
-                console.log({
-                  balance,
-                });
-
-                return cmd.amountWei < balance;
+                return cmd.amountWei <= balance;
               },
               {
-                message: "Insufficient balance",
+                message: "Insufficient balance for wrapping.",
               },
             )
             .optional(),
@@ -39,25 +40,54 @@ export const useCommandValidation = () =>
                 x.accountAddress.toLowerCase() !==
                 x.receiverAddress.toLowerCase(),
               {
-                message: "Can't stream to yourself.",
+                message: "You can't stream to yourself.",
               },
             ),
         })
         .refine(
-          async ({ sendStreamCommand: cmd }) => {
-            const { value: balance } = await fetchBalance({
+          async ({ sendStreamCommand: cmd, wrapIntoSuperTokensCommand }) => {
+            const [availableBalance, _deposit, _owedDeposit, timestamp] =
+              await readContract({
+                chainId: cmd.chainId,
+                abi: superTokenABI,
+                functionName: "realtimeBalanceOfNow",
+                address: cmd.superTokenAddress,
+                args: [cmd.accountAddress],
+              });
+            const accountFlowRate = await readContract({
               chainId: cmd.chainId,
-              address: cmd.accountAddress,
-              token: cmd.superTokenAddress,
+              abi: cfAv1ForwarderABI,
+              address: cfAv1ForwarderAddress[cmd.chainId],
+              functionName: "getAccountFlowrate",
+              args: [cmd.superTokenAddress, cmd.accountAddress],
             });
 
-            // Account for initial wrap.
+            const flowRateWeiPerSecond =
+              cmd.flowRate.amountWei /
+              BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
 
-            return (
-              balance >
-              (cmd.flowRate.amountWei * 86400n) /
-                BigInt(mapTimePeriodToSeconds(cmd.flowRate.period))
+            const availableBalanceWithWrapAmount =
+              availableBalance + (wrapIntoSuperTokensCommand?.amountWei ?? 0n);
+            const accountFlowRateWithNewFlowRate =
+              accountFlowRate + flowRateWeiPerSecond;
+
+            const criticalDate = calculateDateWhenBalanceCritical({
+              availableBalance: availableBalanceWithWrapAmount,
+              timestamp,
+              accountFlowRate: accountFlowRateWithNewFlowRate,
+            });
+
+            if (!criticalDate) {
+              return true;
+            }
+
+            const secondsToCritical = Math.round(
+              (Date.now() - criticalDate.getTime()) / 1000,
             );
+
+            // Account for initial wrap.
+            const SECONDS_IN_DAY = 86400n;
+            return secondsToCritical < SECONDS_IN_DAY;
           },
           {
             message:
@@ -66,3 +96,4 @@ export const useCommandValidation = () =>
         ),
     [],
   );
+};
