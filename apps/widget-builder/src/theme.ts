@@ -128,11 +128,9 @@ const theme = createTheme({
           paddingTop: "0.75rem",
           paddingBottom: "0.75rem",
         },
-        outlined: {
-          border: "1.5px solid",
-          "&:hover": {
-            border: "1.5px solid",
-          },
+        outlinedSizeLarge: {
+          paddingTop: "0.6875rem",
+          paddingBottom: "0.6875rem",
         },
       },
     },

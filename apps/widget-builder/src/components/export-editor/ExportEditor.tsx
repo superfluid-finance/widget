@@ -1,7 +1,9 @@
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { LoadingButton } from "@mui/lab";
 import {
+  Box,
   Button,
+  Divider,
   IconButton,
   MenuItem,
   Select,
@@ -25,6 +27,8 @@ type ExportOption = "json" | "ipfs";
 const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
   <Button
     data-testid="download-button"
+    fullWidth
+    size="large"
     variant="contained"
     href={URL.createObjectURL(
       new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),
@@ -45,10 +49,10 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
     <Stack direction="column" gap={2}>
       <LoadingButton
         data-testid="publish-button"
+        size="large"
         loading={isLoading}
         variant="contained"
         onClick={() => publish(json)}
-        sx={{ color: "white" }}
       >
         Publish
       </LoadingButton>
@@ -126,21 +130,48 @@ const ExportEditor: FC = () => {
     useState<ExportOption>("ipfs");
 
   return (
-    <Stack gap={2}>
-      <InputWrapper title="Select export option">
-        <Select
-          data-testid="export-option"
-          value={selectedExportOption}
-          defaultValue="ipfs"
-          onChange={({ target }) =>
-            setSelectedExportOption(target.value as ExportOption)
-          }
-        >
-          <MenuItem value="ipfs">Publish to IPFS to get a hosted link</MenuItem>
-          <MenuItem value="json">Download JSON</MenuItem>
-        </Select>
-      </InputWrapper>
-      {switchExportOption(selectedExportOption, json)}
+    <Stack gap={4}>
+      <Box>
+        <InputWrapper title="Select export option">
+          <Select
+            data-testid="export-option"
+            value={selectedExportOption}
+            defaultValue="ipfs"
+            onChange={({ target }) =>
+              setSelectedExportOption(target.value as ExportOption)
+            }
+          >
+            <MenuItem value="ipfs">
+              Publish to IPFS to get a hosted link
+            </MenuItem>
+            <MenuItem value="json">Download JSON</MenuItem>
+          </Select>
+        </InputWrapper>
+        <Box textAlign="center" sx={{ my: 3 }}>
+          <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
+            How does it work?
+          </Typography>
+          <Typography color="grey.800">
+            You’ll create a hosted link to your checkout which you can embed in
+            your CTAs.
+          </Typography>
+        </Box>
+        {switchExportOption(selectedExportOption, json)}
+      </Box>
+
+      <Divider />
+
+      <Box textAlign="center">
+        <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
+          Do you have more questions?
+        </Typography>
+        <Typography color="grey.800" sx={{ mb: 3 }}>
+          We’ll show you how your business can benefit from using our checkout
+        </Typography>
+        <Button fullWidth size="large" variant="outlined" color="primary">
+          Book a Demo
+        </Button>
+      </Box>
     </Stack>
   );
 };

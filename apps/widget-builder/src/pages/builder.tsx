@@ -82,7 +82,7 @@ export default function Builder() {
           gap={1}
         >
           <Typography variant="subtitle1" fontWeight="500">
-            Widget Customization
+            Widget Builder
           </Typography>
           <FormControlLabel
             data-testid="demo-mode-switch"
@@ -93,9 +93,9 @@ export default function Builder() {
 
         <TabContext value={activeTab}>
           <TabList onChange={(_, value) => setActiveTab(value)} sx={{ px: 2 }}>
-            <Tab label="Product" value="product" data-testid="product-tab" />
-            <Tab label="UI" value="ui" data-testid="ui-tab" />
-            <Tab label="Export" value="export" data-testid="export-tab" />
+            <Tab label="1. Product" value="product" data-testid="product-tab" />
+            <Tab label="2. UI" value="ui" data-testid="ui-tab" />
+            <Tab label="3. Export" value="export" data-testid="export-tab" />
           </TabList>
 
           <FormProvider {...formMethods}>
@@ -116,12 +116,23 @@ export default function Builder() {
         alignItems="center"
         sx={{
           flexGrow: 1,
-          backgroundColor: theme.palette.grey[50],
           position: "relative",
           py: "8vh",
           overflow: "auto",
         }}
       >
+        <Box textAlign="center" sx={{ mb: 6.5 }}>
+          <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
+            Widget Preview
+          </Typography>
+          <Typography color="grey.800">
+            In this preview you can see all the changes you apply in the builder
+            menu.
+          </Typography>
+          <Typography color="grey.800">
+            This is how your checkout will look once you export it.
+          </Typography>
+        </Box>
         <WidgetPreview
           {...{
             productDetails,
