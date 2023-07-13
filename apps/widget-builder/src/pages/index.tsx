@@ -1,10 +1,22 @@
-import { Box, Button, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "../components/footer/Footer";
 import BookDemoBtn from "../components/buttons/BookDemoBtn";
 
 export default function Home() {
+  const theme = useTheme();
+  const isBelowMd = useMediaQuery(theme.breakpoints.down("md"));
+  const isBelowSm = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Stack sx={{ minHeight: "100vh" }} alignItems="center">
       <Stack
@@ -15,6 +27,11 @@ export default function Home() {
           my: 3,
           maxWidth: "min(100vw - 2.5rem, 1920px)",
           width: "100%",
+          [theme.breakpoints.down("sm")]: {
+            maxWidth: "calc(100vw - 1.5rem)",
+            my: 2,
+            gap: 2,
+          },
         }}
       >
         <Paper
@@ -42,15 +59,36 @@ export default function Home() {
             position: "relative",
             overflow: "hidden",
             // Substracting footer, header and all the y margins/gaps
-            maxHeight: "calc(100vh - 375px)",
+            [theme.breakpoints.up("sm")]: {
+              maxHeight: "calc(100vh - 375px)",
+            },
+            [theme.breakpoints.down("sm")]: {
+              borderRadius: 2,
+            },
           }}
         >
-          <Box flex="1" sx={{ maxWidth: "650px", px: 7.5 }}>
+          <Box
+            flex="1"
+            sx={{
+              maxWidth: "650px",
+              px: 7.5,
+              [theme.breakpoints.down("md")]: {
+                py: 5,
+              },
+              [theme.breakpoints.down("sm")]: {
+                px: 5,
+              },
+            }}
+          >
             <Stack direction="row" gap={1} alignItems="center">
               <svg width="39" height="2" viewBox="0 0 39 2">
                 <path d="M39 1H0.5" stroke="#1DB227" />
               </svg>
-              <Typography fontWeight="bold" color="primary">
+              <Typography
+                fontWeight="bold"
+                color="primary"
+                variant={isBelowSm ? "caption" : "body1"}
+              >
                 Subscription checkout builder
               </Typography>
             </Stack>
@@ -62,7 +100,17 @@ export default function Home() {
               Export your creation with ease in the most convenient format and
               seamlessly integrate it into your platform.
             </Typography>
-            <Stack direction="row" gap={2} sx={{ mt: 8 }}>
+            <Stack
+              direction="row"
+              gap={2}
+              sx={{
+                mt: 8,
+                [theme.breakpoints.down("sm")]: {
+                  flexDirection: "column",
+                  mt: 4,
+                },
+              }}
+            >
               <Button
                 fullWidth
                 component={Link}
@@ -70,21 +118,34 @@ export default function Home() {
                 variant="contained"
                 color="primary"
                 size="large"
-                sx={{ maxWidth: "254px" }}
+                sx={{
+                  [theme.breakpoints.up("sm")]: {
+                    maxWidth: "254px",
+                  },
+                }}
               >
                 Enter Builder
               </Button>
-              <BookDemoBtn sx={{ maxWidth: "180px" }}>Book a Demo</BookDemoBtn>
+              <BookDemoBtn
+                sx={{
+                  [theme.breakpoints.up("sm")]: {
+                    maxWidth: "180px",
+                  },
+                }}
+              >
+                Book a Demo
+              </BookDemoBtn>
             </Stack>
           </Box>
-
-          <Box sx={{ maxWidth: "min(50%, 1208px)" }}>
-            <img
-              src="/assets/preview.png"
-              alt=""
-              style={{ display: "block", width: "100%" }}
-            />
-          </Box>
+          {!isBelowMd && (
+            <Box sx={{ maxWidth: "min(50%, 1208px)" }}>
+              <img
+                src="/assets/preview.png"
+                alt=""
+                style={{ display: "block", width: "100%" }}
+              />
+            </Box>
+          )}
         </Paper>
       </Stack>
 

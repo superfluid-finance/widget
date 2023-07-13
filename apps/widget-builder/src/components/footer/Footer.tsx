@@ -1,4 +1,11 @@
-import { Box, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Image from "next/image";
 import { FC } from "react";
 import FooterLinksGroup, { FooterLink } from "./FooterLinksGroup";
@@ -6,6 +13,8 @@ import FooterLinksGroup, { FooterLink } from "./FooterLinksGroup";
 interface FooterProps {}
 
 const Footer: FC<FooterProps> = ({}) => {
+  const theme = useTheme();
+
   return (
     <Paper
       component="footer"
@@ -15,26 +24,45 @@ const Footer: FC<FooterProps> = ({}) => {
       <Stack
         direction="row"
         justifyContent="space-between"
+        gap={4}
         sx={{
           py: 3,
-          maxWidth: "min(100vw - 6rem, 1920px)",
+          maxWidth: "min(100vw - 6rem, 1600px)",
           margin: "0 auto",
+          [theme.breakpoints.down("md")]: {
+            flexDirection: "column",
+          },
         }}
       >
-        <Box sx={{ maxWidth: "220px" }}>
+        <Stack
+          sx={{
+            maxWidth: "220px",
+            [theme.breakpoints.down("sm")]: {
+              margin: "0 auto",
+            },
+          }}
+        >
           <Image
             src="/assets/superfluid-logo.svg"
             alt="Superfluid logo"
             width="171"
             height="31"
-            style={{ display: "block" }}
+            style={{
+              display: "block",
+            }}
           />
-          <Typography variant="body1" color="grey.800" sx={{ mt: 3 }}>
-            Lorem ipsum dolor sit amet consectetur. Sed eu non sed fusce. Diam
-            vel nulla blandit libero volutpat euismod amet.
-          </Typography>
-        </Box>
-        <Stack direction="row" gap={8}>
+        </Stack>
+        <Stack
+          direction="row"
+          gap={8}
+          sx={{
+            [theme.breakpoints.down("sm")]: {
+              flexDirection: "column",
+              textAlign: "center",
+              gap: 5,
+            },
+          }}
+        >
           <FooterLinksGroup title="Developers">
             <FooterLink href="">Docs</FooterLink>
             <FooterLink href="">Github</FooterLink>

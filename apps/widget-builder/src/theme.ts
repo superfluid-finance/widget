@@ -55,7 +55,7 @@ const theme = createTheme({
     },
 
     h1: {
-      fontSize: "3.375rem",
+      fontSize: "clamp(2rem, 1.5rem + 2.5vw, 3.375rem)",
       fontWeight: 700,
       lineHeight: 1,
     },

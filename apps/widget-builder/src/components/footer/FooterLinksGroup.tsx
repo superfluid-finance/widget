@@ -1,4 +1,4 @@
-import { Link, LinkProps, Stack, Typography } from "@mui/material";
+import { Link, LinkProps, Stack, Typography, useTheme } from "@mui/material";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { FC, PropsWithChildren } from "react";
 
@@ -24,10 +24,21 @@ interface FooterLinksGroupProps extends PropsWithChildren {
 }
 
 const FooterLinksGroup: FC<FooterLinksGroupProps> = ({ title, children }) => {
+  const theme = useTheme();
+
   return (
     <Stack gap={3}>
       <Typography variant="subtitle1">{title}</Typography>
-      <Stack gap={2}>{children}</Stack>
+      <Stack
+        gap={2}
+        sx={{
+          [theme.breakpoints.down("sm")]: {
+            alignItems: "center",
+          },
+        }}
+      >
+        {children}
+      </Stack>
     </Stack>
   );
 };
