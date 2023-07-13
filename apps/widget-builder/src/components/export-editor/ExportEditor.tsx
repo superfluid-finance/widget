@@ -55,7 +55,11 @@ const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
 
       {ipfsHash && (
         <Stack direction="column" sx={{ alignItems: "center", mt: 4 }} gap={2}>
-          <Typography variant="subtitle2" textAlign="center">
+          <Typography
+            data-testid="published-message"
+            variant="subtitle2"
+            textAlign="center"
+          >
             Your config is published to IPFS. Test it with our hosted widget:
           </Typography>
           <SuperfluidButton

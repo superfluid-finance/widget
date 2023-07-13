@@ -1,5 +1,13 @@
 # @superfluid-finance/widget
 
+## 0.0.9
+
+### Patch Changes
+
+- 0268d79: Fix issue of custom amount input showing up when token not selected
+- 2737d18: Updated dependencies (including token list)
+- 0059ef1: Add event listeners
+
 ## 0.0.8
 
 ### Patch Changes
