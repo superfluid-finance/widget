@@ -2,6 +2,7 @@ import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "../components/footer/Footer";
+import BookDemoBtn from "../components/buttons/BookDemoBtn";
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
         <Paper
           component="header"
           elevation={0}
-          sx={{ px: 6, py: 3, borderRadius: 2 }}
+          sx={{ px: 6, py: 3, borderRadius: 2, height: "80px" }}
         >
           <Image
             src="/assets/superfluid-logo.svg"
@@ -40,6 +41,8 @@ export default function Home() {
             borderRadius: 5,
             position: "relative",
             overflow: "hidden",
+            // Substracting footer, header and all the y margins/gaps
+            maxHeight: "calc(100vh - 375px)",
           }}
         >
           <Box flex="1" sx={{ maxWidth: "650px", px: 7.5 }}>
@@ -61,17 +64,17 @@ export default function Home() {
             </Typography>
             <Stack direction="row" gap={2} sx={{ mt: 8 }}>
               <Button
+                fullWidth
                 component={Link}
                 href="builder"
                 variant="contained"
                 color="primary"
                 size="large"
+                sx={{ maxWidth: "254px" }}
               >
                 Enter Builder
               </Button>
-              <Button variant="outlined" color="primary" size="large">
-                Book a Demo
-              </Button>
+              <BookDemoBtn sx={{ maxWidth: "180px" }}>Book a Demo</BookDemoBtn>
             </Stack>
           </Box>
 

@@ -1,10 +1,6 @@
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Button,
   Divider,
-  IconButton,
   MenuItem,
   Select,
   Stack,
@@ -12,69 +8,18 @@ import {
 } from "@mui/material";
 import { FC, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import usePinataIpfs from "../../hooks/usePinataIPFS";
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
 import { ExportJSON } from "../../types/export-json";
+import BookDemoBtn from "../buttons/BookDemoBtn";
+import DownloadJsonBtn from "../buttons/DownloadJsonBtn";
+import IPFSPublishBtn from "../buttons/IPFSPublishBtn";
 import InputWrapper from "../form/InputWrapper";
 import {
   WidgetProps,
   mapDisplaySettingsToTheme,
 } from "../widget-preview/WidgetPreview";
-import { SuperfluidButton } from "@superfluid-finance/widget/components";
 
 type ExportOption = "json" | "ipfs";
-
-const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
-  <Button
-    data-testid="download-button"
-    fullWidth
-    size="large"
-    variant="contained"
-    href={URL.createObjectURL(
-      new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),
-    )}
-    download={`widget.json`}
-    sx={{ color: "white" }}
-  >
-    Download JSON
-  </Button>
-);
-
-const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
-  const { publish, isLoading, ipfsHash } = usePinataIpfs({
-    pinataMetadata: { name: `${json.productDetails.name}-superfluid-widget` },
-  });
-
-  return (
-    <Stack direction="column" gap={2}>
-      <LoadingButton
-        data-testid="publish-button"
-        size="large"
-        loading={isLoading}
-        variant="contained"
-        onClick={() => publish(json)}
-      >
-        Publish
-      </LoadingButton>
-
-      {ipfsHash && (
-        <Stack direction="column" sx={{ alignItems: "center", mt: 4 }} gap={2}>
-          <Typography
-            data-testid="published-message"
-            variant="subtitle2"
-            textAlign="center"
-          >
-            Your config is published to IPFS. Test it with our hosted widget:
-          </Typography>
-          <SuperfluidButton
-            fullWidth
-            widgetUrl={`${process.env.NEXT_PUBLIC_EXPORT_BASE_URL}/${ipfsHash}`}
-          />
-        </Stack>
-      )}
-    </Stack>
-  );
-};
 
 const switchExportOption = (
   selectedExportOption: ExportOption,
@@ -82,9 +27,9 @@ const switchExportOption = (
 ) => {
   switch (selectedExportOption) {
     case "json":
-      return <DownloadJsonButton json={json} />;
+      return <DownloadJsonBtn json={json} />;
     case "ipfs":
-      return <IpfsPublish json={json} />;
+      return <IPFSPublishBtn json={json} />;
     default:
       return <></>;
   }
@@ -125,15 +70,6 @@ const ExportEditor: FC = () => {
       //   logoBase64,
     ],
   );
-
-  const onBookDemo = () => {
-    if (window.Intercom) {
-      window.Intercom(
-        "startSurvey",
-        process.env.NEXT_PUBLIC_INTERCOM_SURVEY_ID,
-      );
-    }
-  };
 
   const [selectedExportOption, setSelectedExportOption] =
     useState<ExportOption>("ipfs");
@@ -180,15 +116,7 @@ const ExportEditor: FC = () => {
         <Typography color="grey.800" sx={{ mb: 3 }}>
           We’ll show you how your business can benefit from using our checkout.
         </Typography>
-        <Button
-          fullWidth
-          size="large"
-          variant="outlined"
-          color="primary"
-          onClick={onBookDemo}
-        >
-          Book a Demo
-        </Button>
+        <BookDemoBtn>Book a Demo</BookDemoBtn>
       </Box>
     </Stack>
   );
