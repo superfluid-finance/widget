@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { StepperCTAButton } from "./StepperCTAButton";
 import { CommandPreview } from "./previews/CommandPreview";
 import { useStepper } from "./StepperContext";
-import { useCommandValidation } from "./useCommandValidation";
+import { useCommandValidationSchema } from "./useCommandValidation";
 import { useQuery } from "wagmi";
 
 export default function StepContentReview() {
@@ -12,7 +12,7 @@ export default function StepContentReview() {
 
   const { handleNext } = useStepper();
 
-  const commandValidationSchema = useCommandValidation();
+  const commandValidationSchema = useCommandValidationSchema();
 
   const { isFetching: isValidating, data: validationResult } = useQuery(
     [sessionId],

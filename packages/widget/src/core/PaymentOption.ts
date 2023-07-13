@@ -1,4 +1,4 @@
-import { Address, formatEther, getAddress, parseEther } from "viem";
+import { formatEther, getAddress, parseEther } from "viem";
 import { z } from "zod";
 import { timePeriods } from "./TimePeriod";
 import { chainIdSchema } from "./SupportedNetwork";
@@ -32,7 +32,7 @@ export const etherAmountToBigInt = z
       return z.NEVER;
     }
   })
-  .pipe(z.bigint()); // TODO(KK): The gt check might be better suited somewhere else.
+  .pipe(z.bigint());
 
 export const etherAmountSchema = etherAmountToBigInt.transform(
   (x) => formatEther(x) as `${number}`,

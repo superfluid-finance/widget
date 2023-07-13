@@ -10,8 +10,8 @@ import {
 import { fetchBalance, readContract } from "wagmi/actions";
 import { calculateDateWhenBalanceCritical } from "./helpers/calculateDateWhenBalanceCritical";
 
-export const useCommandValidation = () => {
-  return useMemo(
+export const useCommandValidationSchema = () =>
+  useMemo(
     () =>
       z
         .object({
@@ -96,4 +96,3 @@ export const useCommandValidation = () => {
         ),
     [],
   );
-};
