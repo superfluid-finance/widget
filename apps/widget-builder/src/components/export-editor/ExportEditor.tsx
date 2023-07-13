@@ -161,8 +161,11 @@ const ExportEditor: FC = () => {
             How does it work?
           </Typography>
           <Typography color="grey.800">
-            You’ll create a hosted link to your checkout which you can embed in
-            your CTAs.
+            {selectedExportOption === "ipfs"
+              ? "You’ll create a hosted link to your checkout which you can embed in your CTAs."
+              : selectedExportOption === "json"
+              ? "Use this JSON configuration when embedding react or web component directly to your code."
+              : ""}
           </Typography>
         </Box>
         {switchExportOption(selectedExportOption, json)}
@@ -175,7 +178,7 @@ const ExportEditor: FC = () => {
           Do you have more questions?
         </Typography>
         <Typography color="grey.800" sx={{ mb: 3 }}>
-          We’ll show you how your business can benefit from using our checkout
+          We’ll show you how your business can benefit from using our checkout.
         </Typography>
         <Button
           fullWidth
