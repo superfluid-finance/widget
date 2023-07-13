@@ -69,7 +69,7 @@ export const useCommandValidationSchema = () =>
             const availableBalanceWithWrapAmount =
               availableBalance + (wrapIntoSuperTokensCommand?.amountWei ?? 0n);
             const accountFlowRateWithNewFlowRate =
-              accountFlowRate + flowRateWeiPerSecond;
+              accountFlowRate - flowRateWeiPerSecond;
 
             const criticalDate = calculateDateWhenBalanceCritical({
               availableBalance: availableBalanceWithWrapAmount,

@@ -13,7 +13,7 @@ import { TokenInfo } from "@superfluid-finance/tokenlist";
 import { FC, PropsWithChildren, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { parseEther } from "viem";
-import { Address, useBalance } from "wagmi";
+import { Address, useBalance, useContractRead } from "wagmi";
 import { StepperCTAButton } from "./StepperCTAButton";
 import { TokenAvatar } from "./TokenAvatar";
 import { useWidget } from "./WidgetContext";
