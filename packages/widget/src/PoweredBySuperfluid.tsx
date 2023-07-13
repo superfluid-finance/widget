@@ -12,7 +12,6 @@ const PoweredBySuperfluid: FC<PaperProps> = ({ sx = {} }) => (
       px: 4,
       py: 1.5,
       borderRadius: 0.5,
-      background: "transparent",
       textDecoration: "none",
       ...sx,
     }}
