@@ -1,11 +1,4 @@
-import {
-  Box,
-  Paper,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Paper, Stack, useTheme } from "@mui/material";
 import Image from "next/image";
 import { FC } from "react";
 import FooterLinksGroup, { FooterLink } from "./FooterLinksGroup";
@@ -14,6 +7,12 @@ interface FooterProps {}
 
 const Footer: FC<FooterProps> = ({}) => {
   const theme = useTheme();
+
+  const openIntercom = () => {
+    if (window.Intercom) {
+      window.Intercom("show");
+    }
+  };
 
   return (
     <Paper
@@ -64,26 +63,48 @@ const Footer: FC<FooterProps> = ({}) => {
           }}
         >
           <FooterLinksGroup title="Developers">
-            <FooterLink href="">Docs</FooterLink>
-            <FooterLink href="">Github</FooterLink>
-            <FooterLink href="">Console</FooterLink>
-            <FooterLink href="">Contribute</FooterLink>
+            <FooterLink href="https://docs.superfluid.finance/">
+              Docs
+            </FooterLink>
+            <FooterLink href="https://github.com/superfluid-finance">
+              Github
+            </FooterLink>
+            <FooterLink href="https://console.superfluid.finance/">
+              Console
+            </FooterLink>
+            <FooterLink href="https://github.com/superfluid-finance/protocol-monorepo/issues?q=is%3Aissue+is%3Aopen+label%3A%22Tag%3A+Bounty%22">
+              Contribute
+            </FooterLink>
           </FooterLinksGroup>
           <FooterLinksGroup title="Resources">
-            <FooterLink href="">Support Chat</FooterLink>
-            <FooterLink href="">Knowledge Base</FooterLink>
+            <FooterLink onClick={openIntercom}>Support Chat</FooterLink>
+            {/* <FooterLink href="">Knowledge Base</FooterLink> */}
           </FooterLinksGroup>
           <FooterLinksGroup title="Company">
-            <FooterLink href="">About</FooterLink>
-            <FooterLink href="">Blog</FooterLink>
-            <FooterLink href="">Contact</FooterLink>
-            <FooterLink href="">Careers</FooterLink>
+            <FooterLink href="https://www.superfluid.finance/about">
+              About
+            </FooterLink>
+            <FooterLink href="https://www.superfluid.finance/blog">
+              Blog
+            </FooterLink>
+            {/* <FooterLink href="">Contact</FooterLink> */}
+            <FooterLink href="https://www.superfluid.finance/about/#job">
+              Careers
+            </FooterLink>
           </FooterLinksGroup>
           <FooterLinksGroup title="Social Media">
-            <FooterLink href="">Medium</FooterLink>
-            <FooterLink href="">Discord</FooterLink>
-            <FooterLink href="">Twitter</FooterLink>
-            <FooterLink href="">LinkedIn</FooterLink>
+            <FooterLink href="https://medium.com/@superfluid_HQ">
+              Medium
+            </FooterLink>
+            <FooterLink href="https://discord.superfluid.finance/">
+              Discord
+            </FooterLink>
+            <FooterLink href="https://twitter.com/Superfluid_HQ">
+              Twitter
+            </FooterLink>
+            <FooterLink href="https://www.linkedin.com/company/superfluid">
+              LinkedIn
+            </FooterLink>
           </FooterLinksGroup>
         </Stack>
       </Stack>

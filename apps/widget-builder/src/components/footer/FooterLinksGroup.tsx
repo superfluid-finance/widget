@@ -9,10 +9,16 @@ interface FooterLinkProps
 
 export const FooterLink: FC<FooterLinkProps> = ({ children, ...props }) => (
   <Link
-    component={NextLink}
     variant="caption"
     underline="none"
     color="text.primary"
+    {...(props.href
+      ? {
+          component: NextLink,
+          target: "_blank",
+        }
+      : {})}
+    sx={{ ...(props.sx || {}), cursor: "pointer" }}
     {...props}
   >
     {children}
