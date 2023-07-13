@@ -25,7 +25,8 @@ const Footer: FC<FooterProps> = ({}) => {
         justifyContent="space-between"
         gap={4}
         sx={{
-          py: 3,
+          pt: 8,
+          pb: 6,
           maxWidth: "min(100vw - 6rem, 1600px)",
           margin: "0 auto",
           [theme.breakpoints.down("md")]: {

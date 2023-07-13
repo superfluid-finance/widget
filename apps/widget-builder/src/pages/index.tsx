@@ -58,9 +58,9 @@ export default function Home() {
             borderRadius: 5,
             position: "relative",
             overflow: "hidden",
-            // Substracting footer, header and all the y margins/gaps
             [theme.breakpoints.up("sm")]: {
-              maxHeight: "calc(100vh - 375px)",
+              // 100vh - gaps and margins - header height - footer height
+              maxHeight: "calc(100vh - 72px - 80px - 284px)",
             },
             [theme.breakpoints.down("sm")]: {
               borderRadius: 2,
