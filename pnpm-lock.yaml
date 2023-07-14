@@ -268,7 +268,7 @@ importers:
         specifier: ^3.21.4
         version: 3.21.4
 
-  examples/donation-example:
+  examples/donation-demo:
     dependencies:
       '@superfluid-finance/tokenlist':
         specifier: ^1.3.0
