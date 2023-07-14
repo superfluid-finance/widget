@@ -34,7 +34,8 @@ export const useCommandValidationSchema = () =>
                 return cmd.amountWei <= balance;
               },
               {
-                message: "Insufficient balance for wrapping.",
+                message:
+                  "You don’t have enough underlying token balance to wrap.",
               },
             )
             .optional(),
@@ -122,7 +123,8 @@ export const useCommandValidationSchema = () =>
             return availableBalanceWithWrapAmount >= neededDeposit;
           },
           {
-            message: "Not enough balance for buffer.",
+            message:
+              "You don’t have enough Super Token balance to cover buffer.",
           },
         )
         .refine(
@@ -178,7 +180,7 @@ export const useCommandValidationSchema = () =>
           },
           {
             message:
-              "Need to leave 24 hour worth of balance in the Super Token.",
+              "You need to have Super Token balance for at least 24 hours of streaming.",
           },
         ),
     [],
