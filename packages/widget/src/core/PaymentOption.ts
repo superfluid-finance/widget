@@ -19,7 +19,7 @@ export const tokenSchema = z.object({
   address: addressSchema,
 });
 
-export const etherAmountToBigInt = z
+export const positiveEtherAmountToBigInt = z
   .string()
   .transform((x, ctx) => {
     try {
@@ -32,9 +32,9 @@ export const etherAmountToBigInt = z
       return z.NEVER;
     }
   })
-  .pipe(z.bigint());
+  .pipe(z.bigint().nonnegative());
 
-export const etherAmountSchema = etherAmountToBigInt.transform(
+export const etherAmountSchema = positiveEtherAmountToBigInt.transform(
   (x) => formatEther(x) as `${number}`,
 );
 
