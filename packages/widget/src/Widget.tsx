@@ -9,12 +9,12 @@ import { deepmerge } from "@mui/utils";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
 import { useCallback, useMemo } from "react";
-import { Address } from "viem";
+import { Address, zeroAddress } from "viem";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { WalletManager } from "./WalletManager";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext";
 import { ViewProps, WidgetView } from "./WidgetView";
-import { SupportedNetwork, supportedNetworks } from "./core";
+import { ChainId, SupportedNetwork, supportedNetworks } from "./core";
 import { PaymentOptionWithTokenInfo } from "./formValues";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList";
@@ -60,12 +60,6 @@ export function Widget({
     [paymentOptions],
   );
 
-  const paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo> =
-    useMemo(
-      () => addSuperTokenInfoToPaymentOptions(superTokens, paymentOptions),
-      [superTokens, paymentOptions],
-    );
-
   const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>(
     memoize((address: Address) => {
       const superToken = superTokens.find(
@@ -103,6 +97,32 @@ export function Widget({
     [],
   );
 
+  const getNativeAsset = useCallback<(chainId: ChainId) => TokenInfo>(
+    memoize((chainId: ChainId) => {
+      const nativeAsset = getNetwork(chainId).nativeCurrency;
+      return {
+        chainId: chainId,
+        address: zeroAddress,
+        name: nativeAsset.name,
+        decimals: nativeAsset.decimals,
+        symbol: nativeAsset.symbol,
+      };
+    }),
+    [getNetwork],
+  );
+
+  const paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo> =
+    useMemo(
+      () =>
+        addSuperTokenInfoToPaymentOptions(
+          paymentOptions,
+          getSuperToken,
+          getUnderlyingToken,
+          getNativeAsset,
+        ),
+      [paymentOptions, getSuperToken, getUnderlyingToken, getNativeAsset],
+    );
+
   const stepper = useMemo(
     () => ({
       orientation: stepper_.orientation,
@@ -115,6 +135,7 @@ export function Widget({
       getNetwork,
       getSuperToken,
       getUnderlyingToken,
+      getNativeAsset,
       superTokens,
       productDetails,
       paymentDetails,
@@ -133,6 +154,10 @@ export function Widget({
       },
     }),
     [
+      getNativeAsset,
+      getSuperToken,
+      getNetwork,
+      getNativeAsset,
       superTokens,
       productDetails,
       paymentDetails,

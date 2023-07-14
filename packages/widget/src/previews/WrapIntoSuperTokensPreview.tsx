@@ -3,16 +3,25 @@ import { TokenAvatar } from "../TokenAvatar";
 import { useWidget } from "../WidgetContext";
 import { WrapIntoSuperTokensCommand } from "../commands";
 import { UpgradeIcon } from "./CommandPreview";
+import { useMemo } from "react";
+import { formatEther } from "viem";
 
 export function WrapIntoSuperTokensPreview({
   command: cmd,
 }: {
   command: WrapIntoSuperTokensCommand;
 }) {
-  const { getSuperToken, getUnderlyingToken } = useWidget();
+  const { getSuperToken, getUnderlyingToken, getNativeAsset } = useWidget();
 
   const superToken = getSuperToken(cmd.superTokenAddress);
-  const underlyingToken = getUnderlyingToken(cmd.underlyingTokenAddress);
+  const underlyingToken = cmd.underlyingToken.isNativeAsset
+    ? getNativeAsset(cmd.chainId)
+    : getUnderlyingToken(cmd.underlyingToken.address);
+
+  const amountEther = useMemo(
+    () => formatEther(cmd.amountWei),
+    [cmd.amountWei],
+  );
 
   return (
     <Stack direction="column" alignItems="center" spacing={2.25}>
@@ -49,7 +58,7 @@ export function WrapIntoSuperTokensPreview({
             variant="body1"
             sx={{ mt: 0.5 }}
           >
-            {cmd.amountEther}
+            {amountEther}
           </Typography>
           <Typography
             data-testid="review-underlying-token-symbol"
@@ -76,7 +85,7 @@ export function WrapIntoSuperTokensPreview({
             variant="body1"
             sx={{ mt: 0.5 }}
           >
-            {cmd.amountEther}
+            {amountEther}
           </Typography>
           <Typography data-testid="review-super-token-symbol" variant="caption">
             {superToken.symbol}

@@ -4,8 +4,14 @@ import { useEffect } from "react";
 import { useAccount } from "wagmi";
 
 export function FormEffects() {
-  const { watch, resetField, setValue, getFieldState, formState } =
-    useFormContext<DraftFormValues>();
+  const {
+    watch,
+    resetField,
+    setValue,
+    getFieldState,
+    formState: { isValid, errors }, // Creates form state subscription.
+    trigger,
+  } = useFormContext<DraftFormValues>();
 
   const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
@@ -43,7 +49,7 @@ export function FormEffects() {
 
   // Reset wrap things when payment option (i.e. the token) changes.
   useEffect(() => {
-    resetField("wrapAmountEther", {
+    resetField("wrapAmountInUnits", {
       keepDirty: false,
       keepTouched: true,
       keepError: false,
@@ -59,12 +65,12 @@ export function FormEffects() {
   useEffect(() => {
     if (paymentOptionWithTokenInfo) {
       const { superToken } = paymentOptionWithTokenInfo;
-      const isWrapDirty = getFieldState("wrapAmountEther", formState).isDirty;
+      const isWrapDirty = getFieldState("wrapAmountInUnits").isDirty;
       const isPureSuperToken =
         superToken.extensions.superTokenInfo.type === "Pure";
 
       if (!isWrapDirty && !isPureSuperToken) {
-        resetField("wrapAmountEther", {
+        resetField("wrapAmountInUnits", {
           keepDirty: false,
           keepTouched: true,
           defaultValue: flowRate.amountEther,

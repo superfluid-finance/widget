@@ -28,7 +28,7 @@ export function CheckoutSummary() {
   )! as SendStreamCommand; // TODO: Do this more type-safe.
 
   const flowRate =
-    parseEther(sendStreamCommand.flowRate.amountEther) /
+    sendStreamCommand.flowRate.amountWei /
     BigInt(mapTimePeriodToSeconds(sendStreamCommand.flowRate.period));
 
   // TODO: do the flowing balance animation with a speed-up

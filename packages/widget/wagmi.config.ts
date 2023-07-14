@@ -9,6 +9,8 @@ import {
 import nativeAssetSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/SETH.sol/SETHProxy.json" assert { type: "json" };
 import pureSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/PureSuperToken.sol/PureSuperToken.json" assert { type: "json" };
 import superTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/superfluid/SuperToken.sol/SuperToken.json" assert { type: "json" };
+import superfluidGovernanceJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/gov/SuperfluidGovernanceII.sol/SuperfluidGovernanceII.json" assert { type: "json" };
+import superfluidMetadata from "@superfluid-finance/metadata";
 
 const {
   polygon,
@@ -63,6 +65,17 @@ export default defineConfig({
     {
       name: "Pure Super Token",
       abi: pureSuperTokenJSON.abi as Abi,
+    },
+    {
+      name: "SuperfluidGovernance",
+      abi: superfluidGovernanceJSON.abi as Abi,
+      address: superfluidMetadata.networks.reduce(
+        (acc, network) => {
+          acc[network.chainId] = network.contractsV1.governance;
+          return acc;
+        },
+        {} as Record<ChainId, Address>,
+      ),
     },
   ],
   plugins: [
