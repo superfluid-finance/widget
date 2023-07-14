@@ -27,7 +27,9 @@ export const checkoutFormSchema = z.object({
   flowRate: flowRateSchema.refine((x) => parseEther(x.amountEther) > 0n, {
     message: "Flow rate must be greater than 0.",
   }),
-  wrapAmountInUnits: etherAmountSchema,
+  wrapAmountInUnits: etherAmountSchema.refine((x) => parseEther(x) >= 0n, {
+    message: "Wrap amount can't be negative.",
+  }),
   enableAutoWrap: z.boolean().optional(),
 });
 

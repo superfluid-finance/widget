@@ -19,24 +19,17 @@ export const tokenSchema = z.object({
   address: addressSchema,
 });
 
-export const positiveEtherAmountToBigInt = z
-  .string()
-  .transform((x, ctx) => {
-    try {
-      return parseEther(x);
-    } catch {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Not an ether amount.",
-      });
-      return z.NEVER;
-    }
-  })
-  .pipe(z.bigint().nonnegative());
-
-export const etherAmountSchema = positiveEtherAmountToBigInt.transform(
-  (x) => formatEther(x) as `${number}`,
-);
+export const etherAmountSchema = z.string().transform((x, ctx) => {
+  try {
+    return formatEther(parseEther(x)) as `${number}`;
+  } catch {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Not an ether amount.",
+    });
+    return z.NEVER;
+  }
+});
 
 export const flowRateSchema = z.object({
   amountEther: etherAmountSchema,
