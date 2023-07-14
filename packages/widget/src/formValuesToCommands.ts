@@ -26,12 +26,12 @@ export const formValuesToCommands = (
 
   const isWrapperSuperToken =
     superToken.extensions.superTokenInfo.type === "Wrapper";
-  const isNativeAssetSuperToken =
+  const _isNativeAssetSuperToken =
     superToken.extensions.superTokenInfo.type === "Native Asset";
 
   // TODO(KK): Clean-up the bangs.
 
-  if (isWrapperSuperToken || isNativeAssetSuperToken) {
+  if (isWrapperSuperToken) {
     const wrapAmount = parseUnits(
       wrapAmountInUnits ? wrapAmountInUnits : "0",
       underlyingTokenInfo!.decimals,
