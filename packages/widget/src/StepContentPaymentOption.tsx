@@ -8,6 +8,7 @@ import TokenAutocomplete from "./TokenAutocomplete";
 import { useWidget } from "./WidgetContext";
 import { DraftFormValues } from "./formValues";
 import { useStepper } from "./StepperContext";
+import { useEffect, useState } from "react";
 
 export default function StepContentPaymentOption() {
   const {
@@ -24,6 +25,15 @@ export default function StepContentPaymentOption() {
 
   const isStepComplete = isValid && !isValidating; // Might be better to solve with "getFieldState".
   const { isConnected } = useAccount();
+
+  const [nextStepOnConnect, setNextOnConnect] = useState(false);
+
+  useEffect(() => {
+    if (nextStepOnConnect && isConnected) {
+      setNextOnConnect(false);
+      handleNext();
+    }
+  }, [nextStepOnConnect, isConnected]);
 
   const {
     walletManager: { open: openWalletManager },
@@ -71,7 +81,12 @@ export default function StepContentPaymentOption() {
         </Collapse>
       </Box>
       {!isConnected ? (
-        <StepperCTAButton onClick={openWalletManager}>
+        <StepperCTAButton
+          onClick={() => {
+            openWalletManager();
+            setNextOnConnect(true);
+          }}
+        >
           Connect Wallet to Continue
         </StepperCTAButton>
       ) : (
