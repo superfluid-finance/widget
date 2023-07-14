@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { StepperCTAButton } from "./StepperCTAButton";
 import { CommandPreview } from "./previews/CommandPreview";
 import { useStepper } from "./StepperContext";
-import { useCommandValidationSchema } from "./useCommandValidation";
+import { useCommandValidationSchema } from "./useCommandValidationSchema";
 import { useQuery } from "wagmi";
 
 export default function StepContentReview() {
