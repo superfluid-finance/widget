@@ -8,21 +8,38 @@
   margin: 0 auto;
 }
 
+.Projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.HeroWrapper {
+  position: relative;
+  width: 100%;
+}
+
 .HeroImage {
   display: block;
   width: 100%;
   margin: 54px 0;
 }
 
-.Header {
+.HeroText {
+  position: absolute;
+  bottom: calc(15% + 54px);
+  left: 6%;
+  max-width: 360px;
 }
 
-.Main {
-  display: flex;
-  flex-direction: row;
-  align-items: start;
-  gap: 80px;
+.HeroText h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 36px;
+  margin-bottom: 12px;
 }
 
-.Footer {
+.ActiveProjects {
+  margin-bottom: 36px;
 }

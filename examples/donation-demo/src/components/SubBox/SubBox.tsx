@@ -10,7 +10,7 @@ import styles from "./SubBox.module.css";
 import superTokenList from "@superfluid-finance/tokenlist";
 
 const productDetails: ProductDetails = {
-  name: `Donation Subscription`,
+  name: "Support BlockchainBites",
   imageURI: "/product.png",
   successText: "Finish Demo",
   successURL: "#",

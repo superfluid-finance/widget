@@ -1,0 +1,47 @@
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.HeroImage {
+  display: block;
+  width: 100%;
+  margin: 54px 0;
+}
+
+.ProjectContent h3 {
+  margin-left: 62px;
+  margin-bottom: 18px;
+}
+
+.ProjectContent hr {
+  margin: 56px 0;
+}
+
+.Main {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 80px;
+}
+
+.Red {
+  color: #eb5428;
+}
+
+.Blue {
+  color: #000985;
+}
+
+.Green {
+  color: #296118;
+}
+
+.Purple {
+  color: #75187c;
+}

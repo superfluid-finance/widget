@@ -24,10 +24,11 @@
   column-gap: 2.75rem;
 }
 
-.SubheaderLink {
-  color: var(--blue);
+.BackButton {
   display: flex;
   flex-direction: row;
+  gap: 16px;
   align-items: center;
-  gap: 0.5rem;
+  margin-bottom: 36px;
+  color: var(--blue);
 }
