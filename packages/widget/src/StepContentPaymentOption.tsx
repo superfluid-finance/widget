@@ -28,18 +28,17 @@ export default function StepContentPaymentOption() {
 
   const [nextStepOnConnect, setNextOnConnect] = useState(false);
 
+  const { handleNext } = useStepper();
   useEffect(() => {
     if (nextStepOnConnect && isConnected) {
       setNextOnConnect(false);
       handleNext();
     }
-  }, [nextStepOnConnect, isConnected]);
+  }, [handleNext, nextStepOnConnect, isConnected]);
 
   const {
     walletManager: { open: openWalletManager },
   } = useWidget();
-
-  const { handleNext } = useStepper();
 
   return (
     <Stack
