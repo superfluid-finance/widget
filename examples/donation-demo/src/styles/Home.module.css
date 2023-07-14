@@ -43,3 +43,24 @@
 .ActiveProjects {
   margin-bottom: 36px;
 }
+
+@media screen and (max-width: 960px) {
+  .Projects {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .HeroImage {
+    display: none;
+  }
+
+  .HeroText {
+    position: initial;
+    text-align: center;
+    margin: 0 auto 48px;
+  }
+
+  .ActiveProjects {
+    text-align: center;
+  }
+}

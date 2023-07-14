@@ -44,3 +44,9 @@
   margin-top: 20px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 480px) {
+  .Wrapper {
+    width: 100%;
+  }
+}

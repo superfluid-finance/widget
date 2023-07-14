@@ -32,3 +32,15 @@
   margin-bottom: 36px;
   color: var(--blue);
 }
+
+@media screen and (max-width: 960px) {
+  .SubHeader {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .Links {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

@@ -45,3 +45,14 @@
 .Purple {
   color: #75187c;
 }
+
+@media screen and (max-width: 1200px) {
+  .Main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ProjectContent h3 {
+    margin-left: 46px;
+  }
+}

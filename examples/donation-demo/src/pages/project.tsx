@@ -18,6 +18,7 @@ export default function Project() {
       </Head>
 
       <Header />
+
       <div className={styles.Wrapper}>
         <img
           src="/heading2.png"
