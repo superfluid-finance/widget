@@ -11,10 +11,12 @@ export function WrapIntoSuperTokensPreview({
 }: {
   command: WrapIntoSuperTokensCommand;
 }) {
-  const { getSuperToken, getUnderlyingToken } = useWidget();
+  const { getSuperToken, getUnderlyingToken, getNativeAsset } = useWidget();
 
   const superToken = getSuperToken(cmd.superTokenAddress);
-  const underlyingToken = getUnderlyingToken(cmd.underlyingTokenAddress);
+  const underlyingToken = cmd.underlyingToken.isNativeAsset
+    ? getNativeAsset(cmd.chainId)
+    : getUnderlyingToken(cmd.underlyingToken.address);
 
   const amountEther = useMemo(
     () => formatEther(cmd.amountWei),

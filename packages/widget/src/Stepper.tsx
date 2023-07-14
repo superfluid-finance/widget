@@ -38,7 +38,9 @@ export default function Stepper() {
       },
       // Add wrap step only when Super Token has an underlying token.
       ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
-        .type === "Wrapper"
+        .type === "Wrapper" ||
+      paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo.type ===
+        "Native Asset"
         ? [
             {
               buttonText: "Wrap to Super Tokens",

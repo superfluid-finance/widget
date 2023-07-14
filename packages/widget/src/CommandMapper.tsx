@@ -135,15 +135,13 @@ export function WrapIntoSuperTokensCommandMapper({
 }: CommandMapperProps<WrapIntoSuperTokensCommand>) {
   const { getSuperToken, getUnderlyingToken } = useWidget();
 
-  const superToken = getSuperToken(cmd.superTokenAddress);
-  const isNativeAssetSuperToken =
-    superToken.extensions.superTokenInfo.type === "Native Asset";
+  const isNativeAssetUnderlyingToken = cmd.underlyingToken.isNativeAsset;
 
   const { data: allowance, isSuccess } = useContractRead(
-    !isNativeAssetSuperToken
+    !isNativeAssetUnderlyingToken
       ? {
           chainId: cmd.chainId,
-          address: cmd.underlyingTokenAddress,
+          address: cmd.underlyingToken.address,
           abi: erc20ABI,
           functionName: "allowance",
           args: [cmd.accountAddress, cmd.superTokenAddress],
@@ -154,12 +152,12 @@ export function WrapIntoSuperTokensCommandMapper({
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
 
-    if (isNativeAssetSuperToken) {
+    if (isNativeAssetUnderlyingToken) {
       contractWrites_.push(
         createContractWrite({
           commandId: cmd.id,
           displayTitle: `Wrap to ${
-            getUnderlyingToken(cmd.underlyingTokenAddress).symbol
+            getSuperToken(cmd.superTokenAddress).symbol
           }`,
           chainId: cmd.chainId,
           abi: nativeAssetSuperTokenABI,
@@ -175,13 +173,13 @@ export function WrapIntoSuperTokensCommandMapper({
             createContractWrite({
               commandId: cmd.id,
               displayTitle: `Approve ${
-                getUnderlyingToken(cmd.underlyingTokenAddress).symbol
+                getUnderlyingToken(cmd.underlyingToken.address).symbol
               } Allowance`,
               chainId: cmd.chainId,
               abi: erc20ABI,
               functionName: "approve",
-              address: cmd.underlyingTokenAddress,
-              args: [cmd.superTokenAddress, MaxUint256],
+              address: cmd.underlyingToken.address,
+              args: [cmd.superTokenAddress, cmd.amountWei],
             }),
           );
         }
@@ -190,7 +188,7 @@ export function WrapIntoSuperTokensCommandMapper({
           createContractWrite({
             commandId: cmd.id,
             displayTitle: `Wrap ${
-              getUnderlyingToken(cmd.underlyingTokenAddress).symbol
+              getUnderlyingToken(cmd.underlyingToken.address).symbol
             } into ${getSuperToken(cmd.superTokenAddress).symbol}`,
             chainId: cmd.chainId,
             abi: superTokenABI,

@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { Address, parseEther } from "viem";
+import { Address, parseEther, parseUnits } from "viem";
 import { Command } from "./commands";
 import { autoWrapStrategyAddress } from "./core";
 import { ValidFormValues } from "./formValues";
@@ -10,21 +10,44 @@ export const formValuesToCommands = (
   const {
     network: { id: chainId },
     accountAddress,
-    wrapAmountEther,
+    wrapAmountInUnits,
     enableAutoWrap,
     flowRate,
-    paymentOptionWithTokenInfo: { paymentOption, superToken },
+    paymentOptionWithTokenInfo: {
+      paymentOption,
+      superToken,
+      underlyingToken: underlyingTokenInfo,
+    },
   } = values;
-
-  const wrapAmount = parseEther(wrapAmountEther ? wrapAmountEther : "0");
 
   const superTokenAddress = superToken.address as Address;
 
   const commands: Command[] = [];
 
-  if (superToken.extensions.superTokenInfo.type === "Wrapper") {
-    const underlyingTokenAddress =
-      superToken.extensions.superTokenInfo.underlyingTokenAddress;
+  const isWrapperSuperToken =
+    superToken.extensions.superTokenInfo.type === "Wrapper";
+  const isNativeAssetSuperToken =
+    superToken.extensions.superTokenInfo.type === "Native Asset";
+
+  // TODO(KK): Clean-up the bangs.
+
+  if (isWrapperSuperToken || isNativeAssetSuperToken) {
+    const wrapAmount = parseUnits(
+      wrapAmountInUnits ? wrapAmountInUnits : "0",
+      underlyingTokenInfo!.decimals,
+    );
+
+    const underlyingToken = isWrapperSuperToken
+      ? ({
+          isNativeAsset: false,
+          address: superToken.extensions.superTokenInfo.underlyingTokenAddress,
+          decimals: underlyingTokenInfo!.decimals,
+        } as const)
+      : ({
+          isNativeAsset: true,
+          address: undefined,
+          decimals: underlyingTokenInfo!.decimals,
+        } as const);
 
     if (wrapAmount !== 0n) {
       commands.push({
@@ -33,20 +56,19 @@ export const formValuesToCommands = (
         chainId: chainId,
         superTokenAddress,
         accountAddress,
-        underlyingTokenAddress,
-        amountWei: parseEther(wrapAmountEther), // TODO(KK): Decimals need to be accounted somewhere!
-        isNativeAssetSuperToken: false,
+        underlyingToken,
+        amountWei: wrapAmount,
       });
     }
 
-    if (enableAutoWrap) {
+    if (enableAutoWrap && underlyingToken?.address) {
       commands.push({
         id: nanoid(),
         type: "Enable Auto-Wrap",
         chainId: chainId as keyof typeof autoWrapStrategyAddress, // TODO(KK): validate the type in form schema
         superTokenAddress,
         accountAddress,
-        underlyingTokenAddress,
+        underlyingTokenAddress: underlyingToken.address,
       });
     }
   }

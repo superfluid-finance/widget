@@ -12,6 +12,7 @@ export type WidgetContextValue = {
   getSuperToken: (address: Address) => SuperTokenInfo;
   getUnderlyingToken: (address: Address) => TokenInfo;
   getNetwork: (chainId: ChainId) => SupportedNetwork;
+  getNativeAsset: (chainId: ChainId) => TokenInfo;
   superTokens: ReadonlyArray<SuperTokenInfo>;
   networks: ReadonlyArray<SupportedNetwork>;
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;

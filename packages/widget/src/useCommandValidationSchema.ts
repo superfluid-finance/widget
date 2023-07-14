@@ -27,9 +27,9 @@ export const useCommandValidationSchema = () =>
                 const { value: balance } = await fetchBalance({
                   chainId: cmd.chainId,
                   address: cmd.accountAddress,
-                  token: cmd.isNativeAssetSuperToken
+                  token: cmd.underlyingToken.isNativeAsset
                     ? undefined
-                    : cmd.underlyingTokenAddress,
+                    : cmd.underlyingToken.address,
                 });
                 return cmd.amountWei <= balance;
               },

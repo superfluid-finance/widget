@@ -150,7 +150,7 @@ export default function StepContentWrap() {
   const { handleNext } = useStepper();
 
   const onSkipWrapping = () => {
-    setValue("wrapAmountEther", "" as `${number}`);
+    setValue("wrapAmountInUnits", "" as `${number}`);
     handleNext();
   };
 
@@ -166,7 +166,7 @@ export default function StepContentWrap() {
     >
       <Controller
         control={c}
-        name="wrapAmountEther"
+        name="wrapAmountInUnits"
         render={({
           field: { value, onChange, onBlur },
           fieldState: { isTouched },

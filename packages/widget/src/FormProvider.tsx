@@ -47,7 +47,7 @@ export default function FormProvider({ children }: Props) {
     accountAddress: null,
     network: defaultNetwork,
     paymentOptionWithTokenInfo: defaultPaymentOption,
-    wrapAmountEther:
+    wrapAmountInUnits:
       defaultPaymentOption?.paymentOption?.flowRate?.amountEther ?? "0",
     enableAutoWrap: false,
     flowRate: defaultPaymentOption?.paymentOption?.flowRate ?? {

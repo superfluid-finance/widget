@@ -49,7 +49,7 @@ export function FormEffects() {
 
   // Reset wrap things when payment option (i.e. the token) changes.
   useEffect(() => {
-    resetField("wrapAmountEther", {
+    resetField("wrapAmountInUnits", {
       keepDirty: false,
       keepTouched: true,
       keepError: false,
@@ -65,12 +65,12 @@ export function FormEffects() {
   useEffect(() => {
     if (paymentOptionWithTokenInfo) {
       const { superToken } = paymentOptionWithTokenInfo;
-      const isWrapDirty = getFieldState("wrapAmountEther").isDirty;
+      const isWrapDirty = getFieldState("wrapAmountInUnits").isDirty;
       const isPureSuperToken =
         superToken.extensions.superTokenInfo.type === "Pure";
 
       if (!isWrapDirty && !isPureSuperToken) {
-        resetField("wrapAmountEther", {
+        resetField("wrapAmountInUnits", {
           keepDirty: false,
           keepTouched: true,
           defaultValue: flowRate.amountEther,
