@@ -10,7 +10,6 @@ import nativeAssetSuperTokenJSON from "@superfluid-finance/ethereum-contracts/ar
 import pureSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/PureSuperToken.sol/PureSuperToken.json" assert { type: "json" };
 import superTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/superfluid/SuperToken.sol/SuperToken.json" assert { type: "json" };
 import superfluidGovernanceJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/gov/SuperfluidGovernanceII.sol/SuperfluidGovernanceII.json" assert { type: "json" };
-import cfaV1ForwarderABI_modified from "./src/core/cfaV1ForwarderABI_modified";
 import superfluidMetadata from "@superfluid-finance/metadata";
 
 const {
@@ -68,17 +67,6 @@ export default defineConfig({
       abi: pureSuperTokenJSON.abi as Abi,
     },
     {
-      name: "CFAv1Forwarder",
-      abi: cfaV1ForwarderABI_modified,
-      address: chainIds.reduce(
-        (acc, chainId) => {
-          acc[chainId] = "0xcfA132E353cB4E398080B9700609bb008eceB125";
-          return acc;
-        },
-        {} as Record<ChainId, Address>,
-      ),
-    },
-    {
       name: "SuperfluidGovernance",
       abi: superfluidGovernanceJSON.abi as Abi,
       address: superfluidMetadata.networks.reduce(
@@ -105,6 +93,16 @@ export default defineConfig({
         {
           name: "AutoWrapStrategy",
           address: autoWrapStrategyAddresses,
+        },
+        {
+          name: "CFAv1Forwarder",
+          address: chainIds.reduce(
+            (acc, value) => {
+              acc[value] = "0xcfA132E353cB4E398080B9700609bb008eceB125";
+              return acc;
+            },
+            {} as Record<ChainId, Address>,
+          ),
         },
       ],
     }),
