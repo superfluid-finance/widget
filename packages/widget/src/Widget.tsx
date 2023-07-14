@@ -21,6 +21,8 @@ import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromT
 import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions";
 import { buildThemeOptions } from "./theme";
 import { EventListeners } from "./EventListeners";
+import { nanoid } from "nanoid";
+import { fromZodError } from "zod-validation-error";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {
@@ -157,17 +159,22 @@ export function Widget({
     paymentDetails,
   });
 
+  const paymentDetailsKey = useMemo(
+    () => nanoid(),
+    [JSON.stringify(paymentDetails)],
+  );
+
   return (
     <WidgetContext.Provider value={checkoutState}>
       <ThemeProvider theme={theme}>
         {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
         {/* TODO: (M) Add ScopedCssBaseline to handle scrollbar styles */}
         {validationResult.success ? (
-          <WidgetView {...viewProps} />
+          <WidgetView key={paymentDetailsKey} {...viewProps} />
         ) : (
           <Alert data-testid="widget-error" severity="error">
             <AlertTitle>Input Error</AlertTitle>
-            {JSON.stringify(validationResult.error, null, 2)}
+            {fromZodError(validationResult.error).message}
           </Alert>
         )}
       </ThemeProvider>
