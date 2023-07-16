@@ -9,6 +9,7 @@ import { useMemo } from "react";
 
 export function CheckoutContent() {
   const theme = useTheme();
+
   const {
     layout: { elevated },
     stepper: { orientation },
@@ -28,7 +29,6 @@ export function CheckoutContent() {
         m: 3,
         containerType: "inline-size",
         containerName: "wrapper",
-        minWidth: "min(510px, calc(100vw))",
       }}
     >
       <FormProvider>
@@ -51,9 +51,10 @@ export function CheckoutContent() {
             CardProps={{
               sx: {
                 flex: 1,
-                width: "min(510px, 100vw)",
+                width: "100%",
+                maxWidth: "510px",
                 [containerMediaQuery]: {
-                  maxWidth: "480px",
+                  width: "480px",
                 },
               },
             }}
@@ -62,9 +63,11 @@ export function CheckoutContent() {
           <Card
             variant={elevated ? "elevation" : "outlined"}
             sx={{
-              width: "min(510px, 100vw)",
+              width: "100%",
+              maxWidth: "510px",
               flex: 1,
               [containerMediaQuery]: {
+                width: "510px",
                 gridRow: "1/3",
                 gridColumn: "2",
               },
