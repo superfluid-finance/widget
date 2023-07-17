@@ -13,6 +13,7 @@ export function CheckoutContent() {
   const {
     layout: { elevated },
     stepper: { orientation },
+    type,
   } = useWidget();
 
   const containerMediaQuery = useMemo(
@@ -23,12 +24,20 @@ export function CheckoutContent() {
     [theme, orientation],
   );
 
+  const containerType = useMemo(
+    () => (["drawer", "dialog"].includes(type) ? "normal" : "inline-size"),
+    [type],
+  );
+
   return (
     <Stack
       sx={{
-        m: 3,
-        containerType: "inline-size",
+        containerType,
         containerName: "wrapper",
+        m: 3,
+        [theme.breakpoints.down("sm")]: {
+          m: 2,
+        },
       }}
     >
       <FormProvider>

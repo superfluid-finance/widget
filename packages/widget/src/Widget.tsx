@@ -147,6 +147,7 @@ export function Widget({
       layout: {
         elevated: !["drawer", "dialog"].includes(viewProps.type),
       },
+      type: viewProps.type,
       eventListeners: {
         onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
         onSuccessButtonClick:

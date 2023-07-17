@@ -7,6 +7,7 @@ import { WalletManager } from "./WalletManager";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import { Orientation } from "@mui/material";
 import { EventListeners } from "./EventListeners";
+import { ViewProps } from "./WidgetView";
 
 export type WidgetContextValue = {
   getSuperToken: (address: Address) => SuperTokenInfo;
@@ -24,6 +25,7 @@ export type WidgetContextValue = {
   layout: {
     elevated: boolean;
   };
+  type: ViewProps["type"];
   eventListeners: Required<EventListeners>;
 } & CheckoutConfig;
 
