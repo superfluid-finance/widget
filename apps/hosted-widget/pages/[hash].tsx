@@ -16,7 +16,6 @@ import { Fade } from "@mui/material";
 import useFontLoader from "../src/hooks/useFontLoader";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { WagmiProviders } from "../src/providers";
-import DemoWalletDisconnect from "../src/components/demo-wallet-disconnect/DemoWalletDisconnect";
 
 const IPFSWidgetPage: NextPage = () => {
   const { query } = useRouter();
@@ -90,7 +89,6 @@ const IPFSWidgetPage: NextPage = () => {
           <Analytics />
         </Container>
       )}
-      <DemoWalletDisconnect />
     </WagmiProviders>
   );
 };
