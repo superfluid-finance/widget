@@ -3,7 +3,6 @@ import { SendStreamCommand } from "../commands";
 import { useWidget } from "../WidgetContext";
 import { AccountAddressCard } from "../AccountAddressCard";
 import { useBalance } from "wagmi";
-import { NorthEastIcon } from "./CommandPreview";
 import StreamIndicator from "../StreamIndicator";
 
 export function SendStreamPreview({

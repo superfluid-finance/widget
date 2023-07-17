@@ -38,7 +38,7 @@ const schema = z.object({
 });
 
 const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
-  const editorRef = useRef<StandaloneCodeEditor>(null);
+  const editorRef = useRef<StandaloneCodeEditor | null>(null);
   const monaco = useMonaco();
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
     // If there are no errors in markers, the JSON is valid.
     setIsJsonValid(
       markers.every(
-        (marker) => marker.severity !== monaco.MarkerSeverity.Error,
+        (marker) => marker.severity !== monaco!.MarkerSeverity.Error,
       ),
     );
   }, []);
