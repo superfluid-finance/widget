@@ -1,11 +1,4 @@
-import {
-  Box,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Stack,
-  colors,
-} from "@mui/material";
+import { Box, ListItemAvatar, ListItemText, colors } from "@mui/material";
 import { FC } from "react";
 import { useAccount } from "wagmi";
 import AddressAvatar from "../address-avatar/AddressAvatar";

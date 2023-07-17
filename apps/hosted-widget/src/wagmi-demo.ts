@@ -33,6 +33,9 @@ const { chains, publicClient } = configureChains(
 
 export const connector = new MockConnector({
   options: {
+    flags: {
+      noSwitchChain: true,
+    },
     walletClient: createWalletClient({
       account,
       transport: http(superfluidRpcUrls[polygonMumbai.id]),
