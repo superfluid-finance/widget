@@ -1,0 +1,46 @@
+.SubHeader {
+  display: flex;
+  flex-direction: row;
+  gap: 8.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.SubHeader h2 {
+  margin-bottom: 1rem;
+}
+
+.Tags {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+}
+
+.Links {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2.75rem;
+}
+
+.BackButton {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 36px;
+  color: var(--blue);
+}
+
+@media screen and (max-width: 960px) {
+  .SubHeader {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .Links {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

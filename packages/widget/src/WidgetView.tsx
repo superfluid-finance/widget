@@ -57,9 +57,6 @@ export function WidgetView(props: ViewProps) {
     open: isOpen && !isWalletManagerOpen,
     onClose: closeModal,
     keepMounted: isOpen,
-    sx: {
-      borderRadius: theme.shape.borderRadius,
-    },
   };
 
   const containerProps: ContainerProps = {
@@ -71,7 +68,17 @@ export function WidgetView(props: ViewProps) {
       return (
         <>
           {props.children(viewState)}
-          <Dialog {...modalProps} maxWidth="lg">
+          <Dialog
+            {...modalProps}
+            sx={{ borderRadius: theme.shape.borderRadius }}
+            maxWidth="lg"
+            PaperProps={{
+              sx: {
+                mx: 2,
+                width: `min(510px, calc(100vw - ${theme.spacing(4)}))`,
+              },
+            }}
+          >
             <Container {...containerProps}>
               <CheckoutContent />
             </Container>
@@ -82,7 +89,15 @@ export function WidgetView(props: ViewProps) {
       return (
         <>
           {props.children(viewState)}
-          <Drawer {...modalProps} anchor="right">
+          <Drawer
+            {...modalProps}
+            PaperProps={{
+              sx: {
+                width: "min(510px, 100vw)",
+              },
+            }}
+            anchor="right"
+          >
             <Container {...containerProps}>
               <CheckoutContent />
             </Container>
@@ -93,7 +108,11 @@ export function WidgetView(props: ViewProps) {
       return (
         <>
           {props.children(viewState)}
-          <Dialog {...modalProps} fullScreen>
+          <Dialog
+            {...modalProps}
+            sx={{ borderRadius: theme.shape.borderRadius }}
+            fullScreen
+          >
             <AppBar sx={{ position: "relative" }}>
               <Toolbar>
                 <IconButton

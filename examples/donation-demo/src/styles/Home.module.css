@@ -1,0 +1,66 @@
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.Projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.HeroWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.HeroImage {
+  display: block;
+  width: 100%;
+  margin: 54px 0;
+}
+
+.HeroText {
+  position: absolute;
+  bottom: calc(15% + 54px);
+  left: 6%;
+  max-width: 360px;
+}
+
+.HeroText h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 36px;
+  margin-bottom: 12px;
+}
+
+.ActiveProjects {
+  margin-bottom: 36px;
+}
+
+@media screen and (max-width: 960px) {
+  .Projects {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .HeroImage {
+    display: none;
+  }
+
+  .HeroText {
+    position: initial;
+    text-align: center;
+    margin: 0 auto 48px;
+  }
+
+  .ActiveProjects {
+    text-align: center;
+  }
+}
