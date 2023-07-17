@@ -60,7 +60,7 @@ export default function Home() {
             overflow: "hidden",
             [theme.breakpoints.up("sm")]: {
               // 100vh - gaps and margins - header height - footer height
-              maxHeight: "calc(100vh - 72px - 80px - 284px)",
+              maxHeight: "calc(100vh - 72px - 80px - 268px)",
             },
             [theme.breakpoints.down("sm")]: {
               borderRadius: 2,
@@ -71,9 +71,10 @@ export default function Home() {
             flex="1"
             sx={{
               maxWidth: "650px",
-              px: 7.5,
+              pl: 7.5,
+              py: 5,
               [theme.breakpoints.down("md")]: {
-                py: 5,
+                pl: 5,
               },
               [theme.breakpoints.down("sm")]: {
                 px: 5,
