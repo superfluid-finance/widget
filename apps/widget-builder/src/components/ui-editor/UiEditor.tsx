@@ -32,10 +32,8 @@ const UiEditor: FC = () => {
           render={({ field: { value, onChange } }) => (
             <ImageSelect
               label="Product image"
-              onClick={(file) =>
-                onChange({ target: { value: URL.createObjectURL(file) } })
-              }
-              onRemove={() => onChange({ target: { value: "" } })}
+              onClick={(file) => onChange(URL.createObjectURL(file))}
+              onRemove={() => onChange("")}
               imageSrc={value}
             />
           )}
@@ -80,7 +78,7 @@ const UiEditor: FC = () => {
               min={0}
               max={50}
               value={Number(value)}
-              onChange={onChange}
+              onChange={(_event, x) => onChange(x as number)}
             />
           )}
         />
@@ -98,7 +96,7 @@ const UiEditor: FC = () => {
               min={0}
               max={25}
               value={Number(value)}
-              onChange={onChange}
+              onChange={(_event, x) => onChange(x as number)}
             />
           )}
         />
@@ -117,7 +115,7 @@ const UiEditor: FC = () => {
               min={0}
               max={25}
               value={Number(value)}
-              onChange={onChange}
+              onChange={(_event, x) => onChange(x as number)}
             />
           )}
         />
@@ -133,7 +131,7 @@ const UiEditor: FC = () => {
                 fallbackValue={"#000"}
                 format="hex"
                 value={value}
-                onChange={onChange}
+                onChange={(x) => onChange(x as `#{string}`)}
               />
             )}
           />
@@ -149,7 +147,7 @@ const UiEditor: FC = () => {
                 fallbackValue={"#000"}
                 format="hex"
                 value={value}
-                onChange={onChange}
+                onChange={(x) => onChange(x as `#{string}`)}
               />
             )}
           />
@@ -189,7 +187,7 @@ const UiEditor: FC = () => {
             <ToggleButtonGroup
               value={value}
               exclusive
-              onChange={onChange}
+              onChange={(_, x: "vertical" | "horizontal") => onChange(x)}
               sx={{
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,

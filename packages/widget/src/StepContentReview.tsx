@@ -1,33 +1,42 @@
-import { Divider, Stack } from "@mui/material";
-import { useFormContext } from "react-hook-form";
-import { ValidFormValues } from "./formValues";
+import { Alert, Collapse, Divider, Stack } from "@mui/material";
 import { useCommandHandler } from "./CommandHandlerContext";
-import { Fragment, useEffect, useMemo, useState } from "react";
-import { StepperContinueButton } from "./StepperContinueButton";
+import { Fragment } from "react";
+import { StepperCTAButton } from "./StepperCTAButton";
 import { CommandPreview } from "./previews/CommandPreview";
-import { formValuesToCommands } from "./formValuesToCommands";
+import { useStepper } from "./StepperContext";
+import { useCommandValidationSchema } from "./useCommandValidationSchema";
+import { useQuery } from "wagmi";
 
 export default function StepContentReview() {
-  const {
-    getValues,
-    formState: { isValid, isValidating },
-  } = useFormContext<ValidFormValues>();
+  const { commands, sessionId } = useCommandHandler();
 
-  const { submitCommands } = useCommandHandler();
+  const { handleNext } = useStepper();
 
-  // TODO(KK): Consider this logic...
-  // In essence, the Review step is given the orchestration control of mapping into commands and setting up a session.
-  const commands = useMemo(() => {
-    if (!isValid) throw new Error("Form should always be valid at this point.");
+  const commandValidationSchema = useCommandValidationSchema();
 
-    return formValuesToCommands(getValues());
-  }, []);
-
-  useEffect(() => submitCommands(commands), [commands]);
+  const { isFetching: isValidating, data: validationResult } = useQuery(
+    [sessionId],
+    async () =>
+      await commandValidationSchema.safeParseAsync({
+        wrapIntoSuperTokensCommand: commands.find(
+          (x) => x.type === "Wrap into Super Tokens",
+        ),
+        sendStreamCommand: commands.find((x) => x.type === "Send Stream"),
+      }),
+  );
+  const isValid = Boolean(validationResult?.success);
+  const isValidationError = validationResult?.success === false;
 
   return (
     <Stack sx={{ pb: 3, px: 3.5 }} gap={3}>
       <Stack direction="column" spacing={3}>
+        <Collapse in={isValidationError}>
+          {isValidationError && (
+            <Alert severity="error">
+              {validationResult.error.issues[0].message}
+            </Alert>
+          )}
+        </Collapse>
         {commands.map((cmd, index) => (
           <Fragment key={cmd.id}>
             {index > 0 && <Divider />}
@@ -35,9 +44,12 @@ export default function StepContentReview() {
           </Fragment>
         ))}
       </Stack>
-      <StepperContinueButton disabled={!isValid || isValidating}>
+      <StepperCTAButton
+        disabled={!isValid || isValidating}
+        onClick={handleNext}
+      >
         Continue
-      </StepperContinueButton>
+      </StepperCTAButton>
     </Stack>
   );
 }
