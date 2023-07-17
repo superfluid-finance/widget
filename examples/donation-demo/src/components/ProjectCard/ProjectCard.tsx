@@ -2,6 +2,7 @@ import { FC } from "react";
 import styles from "./ProjectCard.module.css";
 import Link from "next/link";
 import IconLink from "../IconLink/IconLink";
+import SubscribeButton from "../SubscribeButton/SubscribeButton";
 
 interface ProjectCardProps {
   title: string;
@@ -31,7 +32,13 @@ const ProjectCard: FC<ProjectCardProps> = ({
       )}
 
       <div className={styles.ProjectCardContent}>
-        <h3>{title}</h3>
+        {active ? (
+          <Link href="/project">
+            <h3>{title}</h3>
+          </Link>
+        ) : (
+          <h3>{title}</h3>
+        )}
         <IconLink iconUrl="/icon/copy.svg">{websiteUrl}</IconLink>
 
         <p>{description}</p>
@@ -40,6 +47,15 @@ const ProjectCard: FC<ProjectCardProps> = ({
           <span>Total contributions</span>
           <h3>${totalContributions}/mo</h3>
         </div>
+
+        {active && (
+          <div className={styles.ActionsBlock}>
+            <SubscribeButton />
+            <Link className={styles.ProjectLink} href="/project">
+              View Project
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -11,8 +11,8 @@ export default function Project() {
   return (
     <>
       <Head>
-        <title>Clonify Demo | Superfluid</title>
-        <meta name="description" content="Clonify Demo | Superfluid widget" />
+        <title>DevShare Demo | Superfluid</title>
+        <meta name="description" content="DevShare Demo | Superfluid widget" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
