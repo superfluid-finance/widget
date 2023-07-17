@@ -1,13 +1,13 @@
+import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   PaymentDetails,
-  PaymentOption,
   ProductDetails,
   WidgetProps,
 } from "@superfluid-finance/widget";
 import { useWeb3Modal } from "@web3modal/react";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import BookModal from "../BookModal/BookModal";
 import styles from "./SubBox.module.css";
-import superTokenList from "@superfluid-finance/tokenlist";
 
 const productDetails: ProductDetails = {
   name: "Support BlockchainBites",
@@ -41,6 +41,8 @@ const theme: WidgetProps["theme"] = {
 };
 
 const SubBox = () => {
+  const [showCtaModal, setShowCtaModal] = useState(false);
+
   const closeModalRef = useRef<() => void>(() => {});
 
   const { open, isOpen } = useWeb3Modal();
@@ -53,39 +55,50 @@ const SubBox = () => {
     [open, isOpen],
   );
 
+  const openCtaModal = () => setShowCtaModal(true);
+  const closeCtaModal = () => setShowCtaModal(false);
+
   const onSuccessClickCallback = useCallback(() => {
     if (!closeModalRef.current) return;
 
+    openCtaModal();
     closeModalRef.current();
   }, [closeModalRef]);
 
   return (
-    <div className={styles.Wrapper}>
-      <div className={styles.Caption}>Total contributions</div>
-      <h2>$698.98/mo</h2>
-      <hr />
-      <span className={styles.Caption}>
-        Supporters: <b>199</b>
-      </span>
-      <SuperfluidWidget
-        productDetails={productDetails}
-        paymentDetails={paymentDetails}
-        tokenList={superTokenList}
-        theme={theme}
-        type="drawer"
-        walletManager={walletManager}
-        eventListeners={{
-          onSuccessButtonClick: onSuccessClickCallback,
-        }}
-      >
-        {({ openModal, closeModal }) => (
-          <button onClick={openModal}>
-            <span>Donate with</span>
-            <img src="/sf-logo.svg" alt="Superfluid Logo" />
-          </button>
-        )}
-      </SuperfluidWidget>
-    </div>
+    <>
+      <div className={styles.Wrapper}>
+        <div className={styles.Caption}>Total contributions</div>
+        <h2>$698.98/mo</h2>
+        <hr />
+        <span className={styles.Caption}>
+          Supporters: <b>199</b>
+        </span>
+        <SuperfluidWidget
+          productDetails={productDetails}
+          paymentDetails={paymentDetails}
+          tokenList={superTokenList}
+          theme={theme}
+          type="drawer"
+          walletManager={walletManager}
+          eventListeners={{
+            onSuccessButtonClick: onSuccessClickCallback,
+          }}
+        >
+          {({ openModal, closeModal }) => {
+            closeModalRef.current = closeModal;
+            return (
+              <button onClick={openModal}>
+                <span>Donate with</span>
+                <img src="/sf-logo.svg" alt="Superfluid Logo" />
+              </button>
+            );
+          }}
+        </SuperfluidWidget>
+      </div>
+
+      <BookModal show={showCtaModal} onClose={closeCtaModal} />
+    </>
   );
 };
 

@@ -4,9 +4,7 @@ import { useIntercom } from "react-use-intercom";
 import styles from "./BookModal.module.css";
 import Modal, { ModalProps } from "./Modal/Modal";
 
-interface BookModalProps extends ModalProps {}
-
-const BookModal: FC<BookModalProps> = ({ show, onClose }) => {
+const BookModal: FC<ModalProps> = ({ show, onClose }) => {
   const { boot, show: showIntercom, startSurvey } = useIntercom();
 
   const bookDemo = useCallback(() => {
@@ -28,7 +26,18 @@ const BookModal: FC<BookModalProps> = ({ show, onClose }) => {
         <p>
           We’ll show you how your business can benefit from using our checkout
         </p>
-        <button onClick={bookDemo}>Book a Demo</button>
+        <div className={styles.ActionsWrapper}>
+          <a
+            className={styles.PrimaryButton}
+            href="https://checkout-builder.superfluid.finance/"
+            target="_blank"
+          >
+            Try the Widget Builder
+          </a>
+          <button className={styles.SecondaryButton} onClick={bookDemo}>
+            Book a Demo
+          </button>
+        </div>
       </div>
     </Modal>
   );

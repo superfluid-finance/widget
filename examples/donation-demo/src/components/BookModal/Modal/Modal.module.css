@@ -4,6 +4,8 @@
   border: none;
   background: transparent;
   transform: translate(-50%, -50%);
+  max-width: calc(100vw - 20px);
+  outline: none;
 }
 
 .Modal::backdrop {
