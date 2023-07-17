@@ -1,5 +1,4 @@
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import { Container, Box, Fade } from "@mui/material";
 
 import { useRouter } from "next/router";
 import { NextPage } from "next";
@@ -12,12 +11,11 @@ import { useMemo } from "react";
 import useAnalyticsBrowser from "../../src/hooks/useAnalyticsBrowser";
 import useWalletAnalytics from "../../src/hooks/useWalletAnalytics";
 import Image from "next/image";
-import { Fade } from "@mui/material";
 import useFontLoader from "../../src/hooks/useFontLoader";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
-import { WagmiDemoProviders, WagmiProviders } from "../../src/providers";
-import { useAccount } from "wagmi";
+import { WagmiDemoProviders } from "../../src/providers";
 import DemoWalletDisplay from "../../src/components/demo-wallet-display/DemoWalletDisplay";
+import { deleteFlow } from "../../src/utils/deleteDemoFlow";
 
 const IPFSWidgetPage: NextPage = () => {
   const { query } = useRouter();
@@ -87,6 +85,9 @@ const IPFSWidgetPage: NextPage = () => {
                 tokenList={tokenList}
                 type="page"
                 walletManager={walletManager}
+                eventListeners={{
+                  onSuccess: () => deleteFlow(),
+                }}
               />
             )}
           </Box>

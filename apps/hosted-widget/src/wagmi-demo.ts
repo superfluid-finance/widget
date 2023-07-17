@@ -11,23 +11,12 @@ const account = privateKeyToAccount(
   process.env.NEXT_PUBLIC_THE_THING! as `0x${string}`,
 );
 
-const connector = new MockConnector({
-  options: {
-    walletClient: createWalletClient({
-      account,
-      transport: http(superfluidRpcUrls[polygonMumbai.id]),
-    }),
-  },
-  chains: [polygonMumbai],
-});
-
 const { chains, publicClient } = configureChains(
   [polygonMumbai],
   [
     jsonRpcProvider({
-      rpc: (chain) => {
-        const rpcURL =
-          superfluidRpcUrls[chain.id as keyof typeof superfluidRpcUrls];
+      rpc: () => {
+        const rpcURL = superfluidRpcUrls[polygonMumbai.id];
 
         if (!rpcURL) {
           return null;
@@ -42,6 +31,18 @@ const { chains, publicClient } = configureChains(
   ],
 );
 
+export const connector = new MockConnector({
+  options: {
+    walletClient: createWalletClient({
+      account,
+      transport: http(superfluidRpcUrls[polygonMumbai.id]),
+      chain: polygonMumbai,
+    }),
+  },
+  chains: [polygonMumbai],
+});
+
+export const wagmiGetDemoPublicClient = publicClient;
 export const wagmiChainsDemo = chains;
 export const wagmiConfigDemo = createConfig({
   autoConnect: true,
