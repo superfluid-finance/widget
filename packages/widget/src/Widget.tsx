@@ -9,18 +9,20 @@ import { deepmerge } from "@mui/utils";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
 import { useCallback, useMemo } from "react";
-import { Address } from "viem";
+import { Address, zeroAddress } from "viem";
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
 import { WalletManager } from "./WalletManager";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext";
 import { ViewProps, WidgetView } from "./WidgetView";
-import { SupportedNetwork, supportedNetworks } from "./core";
+import { ChainId, SupportedNetwork, supportedNetworks } from "./core";
 import { PaymentOptionWithTokenInfo } from "./formValues";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList";
 import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions";
 import { buildThemeOptions } from "./theme";
 import { EventListeners } from "./EventListeners";
+import { nanoid } from "nanoid";
+import { fromZodError } from "zod-validation-error";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {
@@ -57,12 +59,6 @@ export function Widget({
     () => mapSupportedNetworksFromPaymentOptions(paymentOptions),
     [paymentOptions],
   );
-
-  const paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo> =
-    useMemo(
-      () => addSuperTokenInfoToPaymentOptions(superTokens, paymentOptions),
-      [superTokens, paymentOptions],
-    );
 
   const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>(
     memoize((address: Address) => {
@@ -101,6 +97,32 @@ export function Widget({
     [],
   );
 
+  const getNativeAsset = useCallback<(chainId: ChainId) => TokenInfo>(
+    memoize((chainId: ChainId) => {
+      const nativeAsset = getNetwork(chainId).nativeCurrency;
+      return {
+        chainId: chainId,
+        address: zeroAddress,
+        name: nativeAsset.name,
+        decimals: nativeAsset.decimals,
+        symbol: nativeAsset.symbol,
+      };
+    }),
+    [getNetwork],
+  );
+
+  const paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo> =
+    useMemo(
+      () =>
+        addSuperTokenInfoToPaymentOptions(
+          paymentOptions,
+          getSuperToken,
+          getUnderlyingToken,
+          getNativeAsset,
+        ),
+      [paymentOptions, getSuperToken, getUnderlyingToken, getNativeAsset],
+    );
+
   const stepper = useMemo(
     () => ({
       orientation: stepper_.orientation,
@@ -113,6 +135,7 @@ export function Widget({
       getNetwork,
       getSuperToken,
       getUnderlyingToken,
+      getNativeAsset,
       superTokens,
       productDetails,
       paymentDetails,
@@ -131,6 +154,10 @@ export function Widget({
       },
     }),
     [
+      getNativeAsset,
+      getSuperToken,
+      getNetwork,
+      getNativeAsset,
       superTokens,
       productDetails,
       paymentDetails,
@@ -157,17 +184,22 @@ export function Widget({
     paymentDetails,
   });
 
+  const paymentDetailsKey = useMemo(
+    () => nanoid(),
+    [JSON.stringify(paymentDetails)],
+  );
+
   return (
     <WidgetContext.Provider value={checkoutState}>
       <ThemeProvider theme={theme}>
         {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
         {/* TODO: (M) Add ScopedCssBaseline to handle scrollbar styles */}
         {validationResult.success ? (
-          <WidgetView {...viewProps} />
+          <WidgetView key={paymentDetailsKey} {...viewProps} />
         ) : (
           <Alert data-testid="widget-error" severity="error">
             <AlertTitle>Input Error</AlertTitle>
-            {JSON.stringify(validationResult.error, null, 2)}
+            {fromZodError(validationResult.error).message}
           </Alert>
         )}
       </ThemeProvider>

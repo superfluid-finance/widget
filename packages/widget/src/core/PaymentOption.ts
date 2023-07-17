@@ -1,28 +1,35 @@
-import { Address } from "viem";
+import { formatEther, getAddress, parseEther } from "viem";
 import { z } from "zod";
 import { timePeriods } from "./TimePeriod";
 import { chainIdSchema } from "./SupportedNetwork";
 
-export const addressSchema = z.custom<Address>((val) => {
-  return /^0x[a-fA-F0-9]{40}$/.test(val as string);
+export const addressSchema = z.string().transform((value, ctx) => {
+  try {
+    return getAddress(value);
+  } catch {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Not an address.",
+    });
+    return z.NEVER;
+  }
 });
 
 export const tokenSchema = z.object({
   address: addressSchema,
 });
 
-export const etherAmountSchema = z
-  .string()
-  .refine(
-    (value) => {
-      const parsed = Number(value);
-      return !isNaN(parsed) && String(parsed) === value;
-    },
-    {
-      message: "Must be a string representing a number",
-    },
-  )
-  .transform((x) => x.toString() as `${number}`);
+export const etherAmountSchema = z.string().transform((x, ctx) => {
+  try {
+    return formatEther(parseEther(x)) as `${number}`;
+  } catch {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Not an ether amount.",
+    });
+    return z.NEVER;
+  }
+});
 
 export const flowRateSchema = z.object({
   amountEther: etherAmountSchema,

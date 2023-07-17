@@ -85,7 +85,7 @@ const ProductEditor: FC = () => {
               data-testid="added-payment-options-count"
               sx={{ color: theme.palette.grey[500] }}
             >
-              Added: {fields.length}
+              Added: {paymentOptions.length}
             </Typography>
           </Stack>
 

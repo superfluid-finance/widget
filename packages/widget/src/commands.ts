@@ -7,8 +7,16 @@ export type WrapIntoSuperTokensCommand = {
   chainId: ChainId;
   accountAddress: Address;
   superTokenAddress: Address;
-  underlyingTokenAddress: Address;
-  amountEther: `${number}`;
+  underlyingToken:
+    | {
+        isNativeAsset: false;
+        address: Address;
+      }
+    | {
+        isNativeAsset: true;
+        address: undefined;
+      };
+  amountWei: bigint;
 };
 
 export type EnableAutoWrapCommand = {
@@ -28,7 +36,7 @@ export type SendStreamCommand = {
   accountAddress: Address;
   receiverAddress: Address;
   flowRate: {
-    amountEther: `${number}`;
+    amountWei: bigint;
     period: TimePeriod;
   };
   userData: `0x${string}`;
