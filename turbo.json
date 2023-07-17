@@ -30,7 +30,8 @@
       "env": [
         "NEXT_PUBLIC_SENTRY_DSN",
         "NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID",
-        "NEXT_PUBLIC_SEGMENT_WRITE_KEY"
+        "NEXT_PUBLIC_SEGMENT_WRITE_KEY",
+        "NEXT_PUBLIC_THE_THING"
       ]
     },
     "@superfluid-finance/b2b-service-demo#build": {
