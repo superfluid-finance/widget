@@ -6,6 +6,8 @@ declare module "@synthetixio/synpress/commands/metamask" {
   export const acceptAccess: (options?: {}) => void;
   export const confirmTransaction: (gasConfig: string | {}) => void;
   export const confirmPermissionToSpend: (allowance: string) => void;
+  export const changeNetwork: (network: string) => void;
+  export const allowToSwitchNetwork: () => void;
 }
 declare module "@synthetixio/synpress/helpers" {
   export const prepareMetamask: (version: string) => void;

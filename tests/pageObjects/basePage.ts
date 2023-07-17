@@ -21,6 +21,16 @@ export const testOption = {
   timeUnit: "month",
 };
 
+export const streamToSelfOption = {
+  network: "Goerli",
+  superToken: "TDLx",
+  superTokenName: "Super TDL Fake Token",
+  chainId: "5",
+  flowRate: "2",
+  receiver: process.env.WIDGET_WALLET_PUBLIC_KEY!,
+  timeUnit: "month",
+};
+
 export class BasePage {
   static shortenHex(address: string, length = 4) {
     return `${address.substring(0, 2 + length)}...${address.substring(
