@@ -8,6 +8,10 @@ import { useWeb3Modal } from "@web3modal/react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import BookModal from "../BookModal/BookModal";
 import styles from "./SubscribeButton.module.css";
+import { deleteFlow } from "@/utils/deleteDemoFlow";
+import configuration from "@/configuration";
+
+const { Receiver, Token } = configuration;
 
 const productDetails: ProductDetails = {
   name: "Support BlockchainBites",
@@ -19,10 +23,10 @@ const productDetails: ProductDetails = {
 const paymentDetails: PaymentDetails = {
   paymentOptions: [
     {
-      receiverAddress: "0xE0537ea8F1d5A304635ce05D6F6b0D71fCfAB3a1",
+      receiverAddress: Receiver,
       chainId: 80001,
       superToken: {
-        address: "0x42bb40bf79730451b11f6de1cba222f17b87afd7",
+        address: Token,
       },
     },
   ],
@@ -75,6 +79,7 @@ const SubscribeButton = () => {
         walletManager={walletManager}
         eventListeners={{
           onSuccessButtonClick: onSuccessClickCallback,
+          onSuccess: () => deleteFlow(),
         }}
       >
         {({ openModal, closeModal }) => {

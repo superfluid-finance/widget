@@ -185,10 +185,7 @@ const PricingCard: FC<PricingCardProps> = ({
             walletManager={walletManager}
             eventListeners={{
               onSuccessButtonClick: onSuccessClickCallback,
-              onSuccess: () => {
-                console.log("ON SUCCESS");
-                deleteFlow();
-              },
+              onSuccess: () => deleteFlow(),
             }}
           >
             {({ openModal, closeModal }) => {
