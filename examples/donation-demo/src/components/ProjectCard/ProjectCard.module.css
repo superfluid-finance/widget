@@ -31,3 +31,15 @@
   margin-top: 30px;
   margin-bottom: 8px;
 }
+
+.ActionsBlock {
+  margin-top: 30px;
+}
+
+.ProjectLink {
+  color: #eb5428;
+  margin-top: 16px;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
