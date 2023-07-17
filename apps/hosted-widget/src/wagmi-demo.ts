@@ -42,7 +42,6 @@ export const connector = new MockConnector({
   chains: [polygonMumbai],
 });
 
-export const wagmiGetDemoPublicClient = publicClient;
 export const wagmiChainsDemo = chains;
 export const wagmiConfigDemo = createConfig({
   autoConnect: true,

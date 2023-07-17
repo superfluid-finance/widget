@@ -29,7 +29,7 @@ const IPFSWidgetPage: NextPage = () => {
     [open, isOpen],
   );
 
-  const { data, loading, error } = useLoadFromIPFS(query.hash as string);
+  const { data, loading } = useLoadFromIPFS(query.hash as string);
 
   const fontFamily = useMemo(() => {
     const typography = data?.theme?.typography as TypographyOptions;
