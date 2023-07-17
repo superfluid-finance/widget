@@ -1,18 +1,19 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
 import { useEffect, useMemo } from "react";
-import { parseEther } from "viem";
+import { useAccount } from "wagmi";
 import { AccountAddressCard } from "./AccountAddressCard";
 import { useCommandHandler } from "./CommandHandlerContext";
+import { runEventListener } from "./EventListeners";
 import FlowingBalance from "./FlowingBalance";
 import StreamIndicator from "./StreamIndicator";
 import SuccessImage from "./SuccessImage";
 import { useWidget } from "./WidgetContext";
 import { SendStreamCommand } from "./commands";
 import { mapTimePeriodToSeconds } from "./core";
-import { useAccount } from "wagmi";
-import { runEventListener } from "./EventListeners";
 
 export function CheckoutSummary() {
+  const theme = useTheme();
+
   const {
     getSuperToken,
     productDetails: { successURL, successText = "Continue to Merchant" },
@@ -102,6 +103,9 @@ export function CheckoutSummary() {
           gridTemplateColumns: "1fr auto 1fr",
           mt: 3,
           mb: 4,
+          [theme.breakpoints.down("md")]: {
+            gridTemplateColumns: "1fr",
+          },
         }}
         alignItems="center"
         width="100%"
@@ -111,7 +115,18 @@ export function CheckoutSummary() {
           address={sendStreamCommand.accountAddress}
           PaperProps={{ sx: { zIndex: 2 } }}
         />
-        <StreamIndicator sx={{ mx: -1, zIndex: 0 }} />
+        <StreamIndicator
+          sx={{
+            mx: -1,
+            zIndex: 0,
+            [theme.breakpoints.down("md")]: {
+              transform: "rotate(90deg)",
+              justifySelf: "center",
+              transformOrigin: "center",
+              my: 1,
+            },
+          }}
+        />
         <AccountAddressCard
           dataTest="receiver"
           address={sendStreamCommand.receiverAddress}

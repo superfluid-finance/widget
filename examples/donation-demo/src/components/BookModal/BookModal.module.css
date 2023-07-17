@@ -5,6 +5,8 @@
   position: relative;
   text-align: center;
   width: min(100vw - 20px, 510px);
+  white-space: break-spaces;
+  font-family: "Inter", sans-serif;
 }
 
 .BookModal h3 {

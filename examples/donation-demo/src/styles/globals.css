@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Martian+Mono:wght@400;700&family=Noto+Sans:wght@400;500;600&display=swap");
+
+:root {
+  --font: "Martian Mono", monospace;
+  --font-sf: "Noto Sans", sans-serif;
+
+  --primary: #eb5428;
+  --secondary: #fbddd4;
+
+  --blue: #1f2df6;
+  --content-width: min(100vw - 4rem, 1400px);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: normal;
+}
+
+body {
+  font-family: var(--font);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+hr {
+  height: 1px;
+  border: none;
+  background: #d9d9d9;
+}
+
+img {
+  display: block;
+}
