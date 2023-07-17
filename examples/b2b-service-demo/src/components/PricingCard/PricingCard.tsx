@@ -9,6 +9,10 @@ import { useWeb3Modal } from "@web3modal/react";
 import { FC, useCallback, useMemo, useRef } from "react";
 import Button from "../Button/Button";
 import styles from "./PricingCard.module.css";
+import { deleteFlow } from "@/utils/deleteDemoFlow";
+import configuration from "@/configuration";
+
+const { Receiver, Token } = configuration;
 
 const productDetails: ProductDetails = {
   name: `Donation Subscription`,
@@ -18,10 +22,10 @@ const productDetails: ProductDetails = {
 };
 
 const defaultPaymentOption: PaymentOption = {
-  receiverAddress: "0xE0537ea8F1d5A304635ce05D6F6b0D71fCfAB3a1",
+  receiverAddress: Receiver,
   chainId: 80001,
   superToken: {
-    address: "0x42bb40bf79730451b11f6de1cba222f17b87afd7",
+    address: Token,
   },
 };
 
@@ -181,6 +185,10 @@ const PricingCard: FC<PricingCardProps> = ({
             walletManager={walletManager}
             eventListeners={{
               onSuccessButtonClick: onSuccessClickCallback,
+              onSuccess: () => {
+                console.log("ON SUCCESS");
+                deleteFlow();
+              },
             }}
           >
             {({ openModal, closeModal }) => {

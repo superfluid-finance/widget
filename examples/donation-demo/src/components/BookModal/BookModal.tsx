@@ -5,13 +5,13 @@ import styles from "./BookModal.module.css";
 import Modal, { ModalProps } from "./Modal/Modal";
 
 const BookModal: FC<ModalProps> = ({ show, onClose }) => {
-  const { boot, show: showIntercom, startSurvey } = useIntercom();
+  const { boot, startSurvey } = useIntercom();
 
   const bookDemo = useCallback(() => {
     boot();
     startSurvey(configuration.IntercomSurveyID);
     onClose && onClose();
-  }, [boot, showIntercom, startSurvey, onClose]);
+  }, [boot, startSurvey, onClose]);
 
   return (
     <Modal show={show} onClose={onClose}>

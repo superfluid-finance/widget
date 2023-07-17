@@ -36,11 +36,13 @@
     },
     "@superfluid-finance/b2b-service-demo#build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": ["NEXT_PUBLIC_THE_THING"]
     },
     "@superfluid-finance/donation-demo#build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": ["NEXT_PUBLIC_THE_THING"]
     },
     "test": {
       "dependsOn": ["build"],
