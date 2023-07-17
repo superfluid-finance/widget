@@ -1,7 +1,7 @@
 import { EthereumClient } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
 import * as React from "react";
-import { WagmiConfig, useAccount } from "wagmi";
+import { WagmiConfig } from "wagmi";
 
 import { wagmiChains, wagmiConfig, walletConnectProjectId } from "./wagmi";
 import { wagmiConfigDemo } from "./wagmi-demo";

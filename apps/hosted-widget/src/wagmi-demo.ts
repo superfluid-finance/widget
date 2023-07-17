@@ -1,7 +1,7 @@
 import { configureChains, createConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
-import { superfluidRpcUrls, wagmiChains } from "./wagmi";
+import { superfluidRpcUrls } from "./wagmi";
 import { privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
 import { MockConnector } from "wagmi/connectors/mock";
@@ -18,26 +18,29 @@ const connector = new MockConnector({
       transport: http(superfluidRpcUrls[polygonMumbai.id]),
     }),
   },
-  chains: wagmiChains,
+  chains: [polygonMumbai],
 });
 
-const { chains, publicClient } = configureChains(wagmiChains, [
-  jsonRpcProvider({
-    rpc: (chain) => {
-      const rpcURL =
-        superfluidRpcUrls[chain.id as keyof typeof superfluidRpcUrls];
+const { chains, publicClient } = configureChains(
+  [polygonMumbai],
+  [
+    jsonRpcProvider({
+      rpc: (chain) => {
+        const rpcURL =
+          superfluidRpcUrls[chain.id as keyof typeof superfluidRpcUrls];
 
-      if (!rpcURL) {
-        return null;
-      }
+        if (!rpcURL) {
+          return null;
+        }
 
-      return {
-        http: rpcURL,
-      };
-    },
-  }),
-  publicProvider(),
-]);
+        return {
+          http: rpcURL,
+        };
+      },
+    }),
+    publicProvider(),
+  ],
+);
 
 export const wagmiChainsDemo = chains;
 export const wagmiConfigDemo = createConfig({
