@@ -29,6 +29,70 @@ const theme: WidgetProps["theme"] = {
   typography: {
     fontFamily: "Inter, sans-serif",
     fontSize: 16,
+
+    button: {
+      textTransform: "none",
+    },
+
+    h1: {
+      fontSize: "3.875rem",
+      fontWeight: 500,
+      lineHeight: 1,
+    },
+
+    h2: {
+      fontSize: "2.625rem",
+      fontWeight: 500,
+      lineHeight: 1,
+    },
+
+    h3: {
+      fontSize: "2rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    h4: {
+      fontSize: "1.75rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    h5: {
+      fontSize: "1.5rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    subtitle1: {
+      fontSize: "1.25rem",
+      fontWeight: 500,
+      lineHeight: 1.5,
+    },
+
+    subtitle2: {
+      fontSize: "1.125rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+
+    body1: {
+      fontSize: "0.75rem",
+      fontWeight: 500,
+      lineHeight: 1.5,
+    },
+
+    body2: {
+      fontSize: "1rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+
+    caption: {
+      fontSize: "0.875rem",
+      lineHeight: 1.25,
+      fontWeight: 400,
+    },
   },
   palette: {
     primary: {

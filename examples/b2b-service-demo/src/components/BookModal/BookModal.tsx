@@ -11,7 +11,6 @@ const BookModal: FC<BookModalProps> = ({ show, onClose }) => {
 
   const bookDemo = useCallback(() => {
     boot();
-    showIntercom();
     startSurvey(configuration.IntercomSurveyID);
     onClose && onClose();
   }, [boot, showIntercom, startSurvey, onClose]);
