@@ -33,7 +33,6 @@ const Content: FC<ContentProps> = ({ lineHeight = 24, children }) => {
 
   const lines = useMemo(() => {
     if (!height) return new Array();
-    console.log({ height });
     return new Array(Math.ceil(height / lineHeight)).fill(null);
   }, [height]);
 
