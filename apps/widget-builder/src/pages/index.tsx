@@ -74,9 +74,6 @@ export default function Home() {
               pl: 7.5,
               py: 5,
               [theme.breakpoints.down("md")]: {
-                pl: 5,
-              },
-              [theme.breakpoints.down("sm")]: {
                 px: 5,
               },
             }}
@@ -93,10 +90,28 @@ export default function Home() {
                 Subscription checkout builder
               </Typography>
             </Stack>
-            <Typography variant="h1" sx={{ mt: 2, mb: 2.5 }} color="grey.900">
+            <Typography
+              variant="h1"
+              sx={{
+                mt: 2,
+                mb: 2.5,
+                [theme.breakpoints.down("lg")]: {
+                  fontSize: "2rem",
+                },
+              }}
+              color="grey.900"
+            >
               Build your checkout and get paid every second.
             </Typography>
-            <Typography variant="subtitle2" color="grey.800">
+            <Typography
+              variant="subtitle2"
+              color="grey.800"
+              sx={{
+                [theme.breakpoints.down("lg")]: {
+                  fontSize: "1rem",
+                },
+              }}
+            >
               Define your payment details and experiment with component styles.
               Export your creation with ease in the most convenient format and
               seamlessly integrate it into your platform.
@@ -106,8 +121,7 @@ export default function Home() {
               gap={2}
               sx={{
                 mt: 8,
-                [theme.breakpoints.down("sm")]: {
-                  flexDirection: "column",
+                [theme.breakpoints.down("lg")]: {
                   mt: 4,
                 },
               }}
@@ -120,7 +134,7 @@ export default function Home() {
                 color="primary"
                 size="large"
                 sx={{
-                  [theme.breakpoints.up("sm")]: {
+                  [theme.breakpoints.up("lg")]: {
                     maxWidth: "254px",
                   },
                 }}
@@ -129,7 +143,7 @@ export default function Home() {
               </Button>
               <BookDemoBtn
                 sx={{
-                  [theme.breakpoints.up("sm")]: {
+                  [theme.breakpoints.up("lg")]: {
                     maxWidth: "180px",
                   },
                 }}
