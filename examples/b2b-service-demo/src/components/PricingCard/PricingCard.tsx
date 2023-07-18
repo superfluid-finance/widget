@@ -39,55 +39,55 @@ const theme: WidgetProps["theme"] = {
     },
 
     h1: {
-      fontSize: "3.875rem",
+      fontSize: "3.36875rem",
       fontWeight: 500,
       lineHeight: 1,
     },
 
     h2: {
-      fontSize: "2.625rem",
+      fontSize: "2.296875rem",
       fontWeight: 500,
       lineHeight: 1,
     },
 
     h3: {
-      fontSize: "2rem",
-      fontWeight: 500,
-      lineHeight: 1.25,
-    },
-
-    h4: {
       fontSize: "1.75rem",
       fontWeight: 500,
       lineHeight: 1.25,
     },
 
+    h4: {
+      fontSize: "1.53125rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
     h5: {
-      fontSize: "1.5rem",
+      fontSize: "1.3125rem",
       fontWeight: 500,
       lineHeight: 1.25,
     },
 
     subtitle1: {
-      fontSize: "1.25rem",
+      fontSize: "1.09375rem",
       fontWeight: 500,
       lineHeight: 1.5,
     },
 
     subtitle2: {
-      fontSize: "1.125rem",
+      fontSize: "0.984375rem",
       fontWeight: 400,
       lineHeight: 1.5,
     },
 
     body1: {
-      fontSize: "0.75rem",
+      fontSize: "0.875rem",
       fontWeight: 500,
       lineHeight: 1.5,
     },
 
     body2: {
-      fontSize: "1rem",
+      fontSize: "0.875rem",
       fontWeight: 400,
       lineHeight: 1.5,
     },
