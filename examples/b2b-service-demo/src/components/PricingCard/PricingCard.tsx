@@ -6,27 +6,20 @@ import SuperfluidWidget, {
   WidgetProps,
 } from "@superfluid-finance/widget";
 import { useWeb3Modal } from "@web3modal/react";
-import { FC, useCallback, useMemo, useRef } from "react";
+import { FC, useCallback, useMemo, useRef, useState } from "react";
 import Button from "../Button/Button";
 import styles from "./PricingCard.module.css";
 import { deleteFlow } from "@/utils/deleteDemoFlow";
 import configuration from "@/configuration";
+import { privateKeyToAccount, generatePrivateKey } from "viem/accounts";
 
-const { Receiver, Token } = configuration;
+const { Token } = configuration;
 
 const productDetails: ProductDetails = {
   name: `Donation Subscription`,
   imageURI: "/product.png",
   successText: "Finish Demo",
   successURL: "#",
-};
-
-const defaultPaymentOption: PaymentOption = {
-  receiverAddress: Receiver,
-  chainId: 80001,
-  superToken: {
-    address: Token,
-  },
 };
 
 const theme: WidgetProps["theme"] = {
@@ -128,6 +121,10 @@ const PricingCard: FC<PricingCardProps> = ({
   onClick,
   onFinish,
 }) => {
+  const [randomReceiver] = useState<`0x${string}`>(
+    privateKeyToAccount(generatePrivateKey()).address,
+  );
+
   const closeModalRef = useRef<() => void>(() => {});
 
   const { open, isOpen } = useWeb3Modal();
@@ -144,7 +141,11 @@ const PricingCard: FC<PricingCardProps> = ({
     return {
       paymentOptions: [
         {
-          ...defaultPaymentOption,
+          receiverAddress: randomReceiver,
+          chainId: 80001,
+          superToken: {
+            address: Token,
+          },
           flowRate: {
             amountEther: price.toString() as `${number}`,
             period: "month",
@@ -152,7 +153,7 @@ const PricingCard: FC<PricingCardProps> = ({
         },
       ],
     };
-  }, [price]);
+  }, [price, randomReceiver]);
 
   const onSuccessClickCallback = useCallback(() => {
     if (!closeModalRef.current) return;
@@ -185,7 +186,7 @@ const PricingCard: FC<PricingCardProps> = ({
             walletManager={walletManager}
             eventListeners={{
               onSuccessButtonClick: onSuccessClickCallback,
-              onSuccess: () => deleteFlow(),
+              onSuccess: () => deleteFlow(randomReceiver),
             }}
           >
             {({ openModal, closeModal }) => {

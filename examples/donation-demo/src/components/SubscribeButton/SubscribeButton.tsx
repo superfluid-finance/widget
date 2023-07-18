@@ -1,3 +1,5 @@
+import configuration from "@/configuration";
+import { deleteFlow } from "@/utils/deleteDemoFlow";
 import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   PaymentDetails,
@@ -6,30 +8,17 @@ import SuperfluidWidget, {
 } from "@superfluid-finance/widget";
 import { useWeb3Modal } from "@web3modal/react";
 import { useCallback, useMemo, useRef, useState } from "react";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import BookModal from "../BookModal/BookModal";
 import styles from "./SubscribeButton.module.css";
-import { deleteFlow } from "@/utils/deleteDemoFlow";
-import configuration from "@/configuration";
 
-const { Receiver, Token } = configuration;
+const { Token } = configuration;
 
 const productDetails: ProductDetails = {
   name: "Support BlockchainBites",
   imageURI: "/product.png",
   successText: "Finish Demo",
   successURL: "#",
-};
-
-const paymentDetails: PaymentDetails = {
-  paymentOptions: [
-    {
-      receiverAddress: Receiver,
-      chainId: 80001,
-      superToken: {
-        address: Token,
-      },
-    },
-  ],
 };
 
 const theme: WidgetProps["theme"] = {
@@ -105,6 +94,10 @@ const theme: WidgetProps["theme"] = {
 };
 
 const SubscribeButton = () => {
+  const [randomReceiver] = useState<`0x${string}`>(
+    privateKeyToAccount(generatePrivateKey()).address,
+  );
+
   const [showCtaModal, setShowCtaModal] = useState(false);
 
   const closeModalRef = useRef<() => void>(() => {});
@@ -128,6 +121,23 @@ const SubscribeButton = () => {
     openCtaModal();
     closeModalRef.current();
   }, [closeModalRef]);
+
+  const paymentDetails = useMemo(
+    () =>
+      ({
+        paymentOptions: [
+          {
+            receiverAddress: randomReceiver,
+            chainId: 80001,
+            superToken: {
+              address: Token,
+            },
+          },
+        ],
+      }) as PaymentDetails,
+    [randomReceiver],
+  );
+
   return (
     <>
       <SuperfluidWidget
@@ -139,7 +149,7 @@ const SubscribeButton = () => {
         walletManager={walletManager}
         eventListeners={{
           onSuccessButtonClick: onSuccessClickCallback,
-          onSuccess: () => deleteFlow(),
+          onSuccess: () => deleteFlow(randomReceiver),
         }}
       >
         {({ openModal, closeModal }) => {
