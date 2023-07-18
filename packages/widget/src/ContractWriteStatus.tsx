@@ -21,7 +21,7 @@ export function ContractWriteStatus(
 
   const borderColor = // latestError
     // ? theme.palette.error.main
-    //:  g temporary fix, don't show this for now
+    //:  temporary fix, don't show this for now
     transactionResult.isSuccess
       ? theme.palette.success.main
       : writeResult?.isSuccess
