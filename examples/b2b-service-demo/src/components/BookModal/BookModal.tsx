@@ -1,18 +1,8 @@
-import configuration from "@/configuration";
-import { FC, useCallback } from "react";
-import { useIntercom } from "react-use-intercom";
+import { FC } from "react";
 import styles from "./BookModal.module.css";
 import Modal, { ModalProps } from "./Modal/Modal";
 
 const BookModal: FC<ModalProps> = ({ show, onClose }) => {
-  const { boot, startSurvey } = useIntercom();
-
-  const bookDemo = useCallback(() => {
-    boot();
-    startSurvey(configuration.IntercomSurveyID);
-    onClose && onClose();
-  }, [boot, startSurvey, onClose]);
-
   return (
     <Modal show={show} onClose={onClose}>
       <div className={styles.BookModal}>
@@ -34,9 +24,13 @@ const BookModal: FC<ModalProps> = ({ show, onClose }) => {
           >
             Try the Widget Builder
           </a>
-          <button className={styles.SecondaryButton} onClick={bookDemo}>
+          <a
+            className={styles.SecondaryButton}
+            href="https://use.superfluid.finance/subscriptions"
+            target="_blank"
+          >
             Book a Demo
-          </button>
+          </a>
         </div>
       </div>
     </Modal>
