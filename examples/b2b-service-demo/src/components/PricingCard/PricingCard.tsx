@@ -111,6 +111,10 @@ interface PricingCardProps {
   onFinish?: () => void;
 }
 
+function generateRandomReceiver() {
+  return privateKeyToAccount(generatePrivateKey()).address;
+}
+
 const PricingCard: FC<PricingCardProps> = ({
   title,
   description,
@@ -121,8 +125,8 @@ const PricingCard: FC<PricingCardProps> = ({
   onClick,
   onFinish,
 }) => {
-  const [randomReceiver] = useState<`0x${string}`>(
-    privateKeyToAccount(generatePrivateKey()).address,
+  const [randomReceiver, setRandomReceiver] = useState<`0x${string}`>(
+    generateRandomReceiver(),
   );
 
   const closeModalRef = useRef<() => void>(() => {});
@@ -137,8 +141,8 @@ const PricingCard: FC<PricingCardProps> = ({
     [open, isOpen],
   );
 
-  const paymentDetails: PaymentDetails = useMemo(() => {
-    return {
+  const paymentDetails: PaymentDetails = useMemo(
+    () => ({
       paymentOptions: [
         {
           receiverAddress: randomReceiver,
@@ -152,14 +156,16 @@ const PricingCard: FC<PricingCardProps> = ({
           },
         },
       ],
-    };
-  }, [price, randomReceiver]);
+    }),
+    [price, randomReceiver],
+  );
 
   const onSuccessClickCallback = useCallback(() => {
     if (!closeModalRef.current) return;
 
     closeModalRef.current();
     onFinish && onFinish();
+    setRandomReceiver(generateRandomReceiver());
   }, [closeModalRef, onFinish]);
 
   return (

@@ -93,9 +93,13 @@ const theme: WidgetProps["theme"] = {
   },
 };
 
+function generateRandomReceiver() {
+  return privateKeyToAccount(generatePrivateKey()).address;
+}
+
 const SubscribeButton = () => {
-  const [randomReceiver] = useState<`0x${string}`>(
-    privateKeyToAccount(generatePrivateKey()).address,
+  const [randomReceiver, setRandomReceiver] = useState<`0x${string}`>(
+    generateRandomReceiver(),
   );
 
   const [showCtaModal, setShowCtaModal] = useState(false);
@@ -120,6 +124,7 @@ const SubscribeButton = () => {
 
     openCtaModal();
     closeModalRef.current();
+    setRandomReceiver(generateRandomReceiver());
   }, [closeModalRef]);
 
   const paymentDetails = useMemo(
