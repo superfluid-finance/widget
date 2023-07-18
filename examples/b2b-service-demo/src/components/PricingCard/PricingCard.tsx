@@ -6,27 +6,20 @@ import SuperfluidWidget, {
   WidgetProps,
 } from "@superfluid-finance/widget";
 import { useWeb3Modal } from "@web3modal/react";
-import { FC, useCallback, useMemo, useRef } from "react";
+import { FC, useCallback, useMemo, useRef, useState } from "react";
 import Button from "../Button/Button";
 import styles from "./PricingCard.module.css";
 import { deleteFlow } from "@/utils/deleteDemoFlow";
 import configuration from "@/configuration";
+import { privateKeyToAccount, generatePrivateKey } from "viem/accounts";
 
-const { Receiver, Token } = configuration;
+const { Token } = configuration;
 
 const productDetails: ProductDetails = {
   name: `Donation Subscription`,
   imageURI: "/product.png",
   successText: "Finish Demo",
   successURL: "#",
-};
-
-const defaultPaymentOption: PaymentOption = {
-  receiverAddress: Receiver,
-  chainId: 80001,
-  superToken: {
-    address: Token,
-  },
 };
 
 const theme: WidgetProps["theme"] = {
@@ -118,6 +111,10 @@ interface PricingCardProps {
   onFinish?: () => void;
 }
 
+function generateRandomReceiver() {
+  return privateKeyToAccount(generatePrivateKey()).address;
+}
+
 const PricingCard: FC<PricingCardProps> = ({
   title,
   description,
@@ -128,6 +125,10 @@ const PricingCard: FC<PricingCardProps> = ({
   onClick,
   onFinish,
 }) => {
+  const [randomReceiver, setRandomReceiver] = useState<`0x${string}`>(
+    generateRandomReceiver(),
+  );
+
   const closeModalRef = useRef<() => void>(() => {});
 
   const { open, isOpen } = useWeb3Modal();
@@ -140,25 +141,31 @@ const PricingCard: FC<PricingCardProps> = ({
     [open, isOpen],
   );
 
-  const paymentDetails: PaymentDetails = useMemo(() => {
-    return {
+  const paymentDetails: PaymentDetails = useMemo(
+    () => ({
       paymentOptions: [
         {
-          ...defaultPaymentOption,
+          receiverAddress: randomReceiver,
+          chainId: 80001,
+          superToken: {
+            address: Token,
+          },
           flowRate: {
             amountEther: price.toString() as `${number}`,
             period: "month",
           },
         },
       ],
-    };
-  }, [price]);
+    }),
+    [price, randomReceiver],
+  );
 
   const onSuccessClickCallback = useCallback(() => {
     if (!closeModalRef.current) return;
 
     closeModalRef.current();
     onFinish && onFinish();
+    setRandomReceiver(generateRandomReceiver());
   }, [closeModalRef, onFinish]);
 
   return (
@@ -185,7 +192,7 @@ const PricingCard: FC<PricingCardProps> = ({
             walletManager={walletManager}
             eventListeners={{
               onSuccessButtonClick: onSuccessClickCallback,
-              onSuccess: () => deleteFlow(),
+              onSuccess: () => deleteFlow(randomReceiver),
             }}
           >
             {({ openModal, closeModal }) => {

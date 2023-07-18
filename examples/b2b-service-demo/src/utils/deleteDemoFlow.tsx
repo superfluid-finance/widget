@@ -4,9 +4,9 @@ import { polygonMumbai } from "wagmi/chains";
 import { demoConfig } from "./connectionUtils";
 import configuration from "@/configuration";
 
-const { CFAV1ForwarderAddress, Sender, Receiver, Token } = configuration;
+const { CFAV1ForwarderAddress, Sender, Token } = configuration;
 
-export async function deleteFlow() {
+export async function deleteFlow(receiver: `0x${string}`) {
   const publicClient = demoConfig.getPublicClient();
   const walletClient = await demoConfig.connectors[0].getWalletClient({
     chainId: polygonMumbai.id,
@@ -24,7 +24,7 @@ export async function deleteFlow() {
     const hash = await cfaV1Forwarder.write.deleteFlow([
       Token,
       Sender,
-      Receiver,
+      receiver,
       "0x",
     ]);
 
@@ -40,7 +40,7 @@ export async function deleteFlow() {
     const flow = await cfaV1Forwarder.read.getFlowInfo([
       Token,
       Sender,
-      Receiver,
+      receiver,
     ]);
 
     if (flow[1] > 0) {
