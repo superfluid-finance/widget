@@ -8,6 +8,10 @@ import { useWeb3Modal } from "@web3modal/react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import BookModal from "../BookModal/BookModal";
 import styles from "./SubscribeButton.module.css";
+import { deleteFlow } from "@/utils/deleteDemoFlow";
+import configuration from "@/configuration";
+
+const { Receiver, Token } = configuration;
 
 const productDetails: ProductDetails = {
   name: "Support BlockchainBites",
@@ -19,10 +23,10 @@ const productDetails: ProductDetails = {
 const paymentDetails: PaymentDetails = {
   paymentOptions: [
     {
-      receiverAddress: "0xE0537ea8F1d5A304635ce05D6F6b0D71fCfAB3a1",
+      receiverAddress: Receiver,
       chainId: 80001,
       superToken: {
-        address: "0x42bb40bf79730451b11f6de1cba222f17b87afd7",
+        address: Token,
       },
     },
   ],
@@ -31,6 +35,66 @@ const paymentDetails: PaymentDetails = {
 const theme: WidgetProps["theme"] = {
   typography: {
     fontFamily: "'Noto Sans', 'sans-serif'",
+
+    h1: {
+      fontSize: "3.36875rem",
+      fontWeight: 500,
+      lineHeight: 1,
+    },
+
+    h2: {
+      fontSize: "2.296875rem",
+      fontWeight: 500,
+      lineHeight: 1,
+    },
+
+    h3: {
+      fontSize: "1.75rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    h4: {
+      fontSize: "1.53125rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    h5: {
+      fontSize: "1.3125rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    subtitle1: {
+      fontSize: "1.09375rem",
+      fontWeight: 500,
+      lineHeight: 1.5,
+    },
+
+    subtitle2: {
+      fontSize: "0.984375rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+
+    body1: {
+      fontSize: "0.875rem",
+      fontWeight: 500,
+      lineHeight: 1.5,
+    },
+
+    body2: {
+      fontSize: "0.875rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+
+    caption: {
+      fontSize: "0.875rem",
+      lineHeight: 1.25,
+      fontWeight: 400,
+    },
   },
   palette: {
     primary: {
@@ -75,6 +139,7 @@ const SubscribeButton = () => {
         walletManager={walletManager}
         eventListeners={{
           onSuccessButtonClick: onSuccessClickCallback,
+          onSuccess: () => deleteFlow(),
         }}
       >
         {({ openModal, closeModal }) => {

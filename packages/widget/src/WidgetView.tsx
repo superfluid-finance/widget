@@ -75,7 +75,7 @@ export function WidgetView(props: ViewProps) {
             PaperProps={{
               sx: {
                 mx: 2,
-                width: `min(510px, calc(100vw - ${theme.spacing(4)}))`,
+                width: `min(558px, calc(100vw - ${theme.spacing(4)}))`,
               },
             }}
           >
@@ -93,7 +93,7 @@ export function WidgetView(props: ViewProps) {
             {...modalProps}
             PaperProps={{
               sx: {
-                width: "min(510px, 100vw)",
+                width: "min(558px, 100vw)",
               },
             }}
             anchor="right"
