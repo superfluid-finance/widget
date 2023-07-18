@@ -43,15 +43,18 @@ export function ContractWriteStatus(
         }. ${displayTitle}`}</Typography>
         <CircleIcon sx={{ color: borderColor, width: 12, height: 12 }} />
 
-        <Typography data-testid="transaction-status" variant="body2">
-          {latestError
-            ? "Something went wrong."
-            : transactionResult.isSuccess
-            ? "Completed"
-            : writeResult?.isSuccess
-            ? "In progress"
-            : "Not started"}
-        </Typography>
+        {!latestError && (
+          <Typography data-testid="transaction-status" variant="body2">
+            {
+              // latestError ? "Something went wrong." this is a temporary fix
+              transactionResult.isSuccess
+                ? "Completed"
+                : writeResult?.isSuccess
+                ? "In progress"
+                : "Not started"
+            }
+          </Typography>
+        )}
       </Stack>
     </Paper>
   );
