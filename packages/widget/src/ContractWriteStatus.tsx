@@ -19,13 +19,14 @@ export function ContractWriteStatus(
 
   const theme = useTheme();
 
-  const borderColor = latestError
-    ? theme.palette.error.main
-    : transactionResult.isSuccess
-    ? theme.palette.success.main
-    : writeResult?.isSuccess
-    ? theme.palette.warning.main
-    : theme.palette.action.selected;
+  const borderColor = // latestError
+    // ? theme.palette.error.main
+    //:  g temporary fix, don't show this for now
+    transactionResult.isSuccess
+      ? theme.palette.success.main
+      : writeResult?.isSuccess
+      ? theme.palette.warning.main
+      : theme.palette.action.selected;
 
   return (
     <Paper
