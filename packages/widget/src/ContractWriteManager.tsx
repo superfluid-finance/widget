@@ -5,8 +5,8 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { ContractWrite } from "./ContractWrite";
-import { ChildrenProp } from "./utils";
+import { ContractWrite } from "./ContractWrite.js";
+import { ChildrenProp } from "./utils.js";
 import { BaseError } from "viem";
 
 export type ContractWriteResult = {

@@ -1,6 +1,6 @@
 import { Avatar, AvatarProps } from "@mui/material";
 import { FC, useMemo } from "react";
-import { SupportedNetwork } from "./core";
+import { SupportedNetwork } from "./core/index.js";
 
 // TODO: (MÕ) Merge this conf with supported networks
 export const networkAssetsConf = [

@@ -1,5 +1,5 @@
 import { Address, getAddress } from "viem";
-import { ChildrenProp, shortenHex } from "./utils";
+import { ChildrenProp, shortenHex } from "./utils.js";
 import { useEnsAvatar, useEnsName } from "wagmi";
 import { useMemo } from "react";
 

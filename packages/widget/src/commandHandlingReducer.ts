@@ -1,10 +1,11 @@
 import { castDraft } from "immer";
-import { useImmerReducer } from "use-immer";
-import { State } from "./CommandHandlerState";
+import { State } from "./CommandHandlerState.js";
 import { nanoid } from "nanoid";
-import { Command } from "./commands";
-import { ContractWrite } from "./ContractWrite";
-import { ContractWriteResult } from "./ContractWriteManager";
+import { Command } from "./commands.js";
+import { ContractWrite } from "./ContractWrite.js";
+import { ContractWriteResult } from "./ContractWriteManager.js";
+
+const useImmer: any = require("use-immer");
 
 export type Action =
   | { type: "reset" }
@@ -26,7 +27,7 @@ export type Action =
     };
 
 export const useCommandHandlerReducer = () =>
-  useImmerReducer<State, Action>(
+  useImmer.useImmerReducer<State, Action>(
     (draft, action) => {
       switch (action.type) {
         case "reset": {

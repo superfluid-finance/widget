@@ -1,8 +1,8 @@
 import { Box, Paper, Stack, Typography } from "@mui/material";
-import { TokenAvatar } from "../TokenAvatar";
-import { useWidget } from "../WidgetContext";
-import { WrapIntoSuperTokensCommand } from "../commands";
-import { UpgradeIcon } from "./CommandPreview";
+import { TokenAvatar } from "../TokenAvatar.js";
+import { useWidget } from "../WidgetContext.js";
+import { WrapIntoSuperTokensCommand } from "../commands.js";
+import { UpgradeIcon } from "./CommandPreview.js";
 import { useMemo } from "react";
 import { formatEther } from "viem";
 

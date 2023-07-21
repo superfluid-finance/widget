@@ -1,12 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
-import { StepperContext, StepperContextValue } from "./StepperContext";
-import { ChildrenProp } from "./utils";
+import { StepperContext, StepperContextValue } from "./StepperContext.js";
+import { ChildrenProp } from "./utils.js";
 import { useAccount } from "wagmi";
-import { useWidget } from "./WidgetContext";
+import { useWidget } from "./WidgetContext.js";
 import { useFormContext } from "react-hook-form";
-import { DraftFormValues, ValidFormValues } from "./formValues";
-import { useCommandHandler } from "./CommandHandlerContext";
-import { formValuesToCommands } from "./formValuesToCommands";
+import { DraftFormValues, ValidFormValues } from "./formValues.js";
+import { useCommandHandler } from "./CommandHandlerContext.js";
+import { formValuesToCommands } from "./formValuesToCommands.js";
 
 type Props = {
   children: (contextValue: StepperContextValue) => ChildrenProp;

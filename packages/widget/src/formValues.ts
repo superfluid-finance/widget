@@ -4,7 +4,7 @@ import {
   etherAmountSchema,
   paymentOptionSchema,
   flowRateSchema,
-} from "./core";
+} from "./core/index.js";
 import { z } from "zod";
 import { UseFormReturn } from "react-hook-form";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";

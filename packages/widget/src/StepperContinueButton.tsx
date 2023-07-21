@@ -1,5 +1,5 @@
 import { MouseEvent, useCallback } from "react";
-import { useStepper } from "./StepperContext";
+import { useStepper } from "./StepperContext.js";
 import { Button, ButtonProps } from "@mui/material";
 
 export function StepperContinueButton(props: ButtonProps) {

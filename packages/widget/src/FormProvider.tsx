@@ -4,11 +4,11 @@ import {
   FormReturn as FormMethods,
   ValidFormValues,
   checkoutFormSchema,
-} from "./formValues";
-import { ChildrenProp } from "./utils";
-import { FormEffects } from "./FormEffects";
+} from "./formValues.js";
+import { ChildrenProp } from "./utils.js";
+import { FormEffects } from "./FormEffects.js";
 import { useNetwork } from "wagmi";
-import { useWidget } from "./WidgetContext";
+import { useWidget } from "./WidgetContext.js";
 import { useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 

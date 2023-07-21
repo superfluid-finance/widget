@@ -1,10 +1,10 @@
 import { Alert, Collapse, Divider, Stack } from "@mui/material";
-import { useCommandHandler } from "./CommandHandlerContext";
+import { useCommandHandler } from "./CommandHandlerContext.js";
 import { Fragment } from "react";
-import { StepperCTAButton } from "./StepperCTAButton";
-import { CommandPreview } from "./previews/CommandPreview";
-import { useStepper } from "./StepperContext";
-import { useCommandValidationSchema } from "./useCommandValidationSchema";
+import { StepperCTAButton } from "./StepperCTAButton.js";
+import { CommandPreview } from "./previews/CommandPreview.js";
+import { useStepper } from "./StepperContext.js";
+import { useCommandValidationSchema } from "./useCommandValidationSchema.js";
 import { useQuery } from "wagmi";
 
 export default function StepContentReview() {

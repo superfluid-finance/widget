@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { paymentOptionSchema } from "./PaymentOption";
+import { paymentOptionSchema } from "./PaymentOption.js";
 
 export const paymentDetailsSchema = z.object({
   paymentOptions: z.array(paymentOptionSchema).min(1),

@@ -1,8 +1,8 @@
 import { nanoid } from "nanoid";
 import { Address, parseEther, parseUnits } from "viem";
-import { Command } from "./commands";
-import { autoWrapStrategyAddress } from "./core";
-import { ValidFormValues } from "./formValues";
+import { Command } from "./commands.js";
+import { autoWrapStrategyAddress } from "./core/index.js";
+import { ValidFormValues } from "./formValues.js";
 
 export const formValuesToCommands = (
   values: ValidFormValues,

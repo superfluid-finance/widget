@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { z } from "zod";
-import { SendStreamCommand, WrapIntoSuperTokensCommand } from "./commands";
+import { SendStreamCommand, WrapIntoSuperTokensCommand } from "./commands.js";
 import {
   cfAv1ForwarderABI,
   cfAv1ForwarderAddress,
@@ -8,10 +8,10 @@ import {
   superTokenABI,
   superfluidGovernanceABI,
   superfluidGovernanceAddress,
-} from "./core";
+} from "./core/index.js";
 import { fetchBalance, readContracts } from "wagmi/actions";
-import { calculateDateWhenBalanceCritical } from "./helpers/calculateDateWhenBalanceCritical";
-import { calculateDepositAmount } from "./helpers/calculateDepositAmount";
+import { calculateDateWhenBalanceCritical } from "./helpers/calculateDateWhenBalanceCritical.js";
+import { calculateDepositAmount } from "./helpers/calculateDepositAmount.js";
 import superfluidMetadata from "@superfluid-finance/metadata";
 import { Address } from "viem";
 

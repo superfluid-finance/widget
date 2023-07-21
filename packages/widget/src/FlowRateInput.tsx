@@ -6,7 +6,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { ChangeEvent, FC, useCallback } from "react";
-import { FlowRate, TimePeriod, timePeriods } from "./core";
+import { FlowRate, TimePeriod, timePeriods } from "./core/index.js";
 
 interface FlowRateInputProps {
   value: FlowRate;

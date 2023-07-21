@@ -1,5 +1,5 @@
 import { FC } from "react";
-import NetworkAvatar, { NetworkAvatarProps } from "./NetworkAvatar";
+import NetworkAvatar, { NetworkAvatarProps } from "./NetworkAvatar.js";
 
 const NetworkBadge: FC<NetworkAvatarProps> = ({
   network,

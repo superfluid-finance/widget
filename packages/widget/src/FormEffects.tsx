@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { DraftFormValues } from "./formValues";
+import { DraftFormValues } from "./formValues.js";
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
 

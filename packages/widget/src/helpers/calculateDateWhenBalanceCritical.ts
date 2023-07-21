@@ -1,4 +1,4 @@
-import { ChainId, supportedNetwork, supportedNetworks } from "../core";
+import { ChainId, supportedNetwork, supportedNetworks } from "../core/index.js";
 import superfluidMetadata from "@superfluid-finance/metadata";
 
 /**
