@@ -1,5 +1,6 @@
 import CircleIcon_ from "@mui/icons-material/Circle.js";
 import { Paper, Stack, Tooltip, Typography, useTheme } from "@mui/material";
+
 import { ContractWriteResult } from "./ContractWriteManager.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 

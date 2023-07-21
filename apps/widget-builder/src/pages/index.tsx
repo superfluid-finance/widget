@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import Footer from "../components/footer/Footer";
+
 import BookDemoBtn from "../components/buttons/BookDemoBtn";
+import Footer from "../components/footer/Footer";
 
 export default function Home() {
   const theme = useTheme();

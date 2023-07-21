@@ -1,14 +1,15 @@
+import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
+import { UseFormReturn } from "react-hook-form";
+import { parseEther } from "viem";
+import { z } from "zod";
+
 import {
   addressSchema,
-  supportedNetworkSchema,
   etherAmountSchema,
-  paymentOptionSchema,
   flowRateSchema,
+  paymentOptionSchema,
+  supportedNetworkSchema,
 } from "./core/index.js";
-import { z } from "zod";
-import { UseFormReturn } from "react-hook-form";
-import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
-import { parseEther } from "viem";
 
 const paymentOptionWithTokenInfoSchema = z.object({
   paymentOption: paymentOptionSchema,

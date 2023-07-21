@@ -1,28 +1,29 @@
-import { useRef, FC, useEffect, useMemo, useCallback, useState } from "react";
 import MonacoEditor, {
-  useMonaco,
-  OnMount,
   OnChange,
+  OnMount,
   OnValidate,
+  useMonaco,
 } from "@monaco-editor/react";
-import {
-  paymentDetailsSchema,
-  productDetailsSchema,
-} from "@superfluid-finance/widget";
-import { zodToJsonSchema } from "zod-to-json-schema";
-import { z } from "zod";
-import { WidgetProps } from "../widget-preview/WidgetPreview";
 import {
   Alert,
   AppBar,
   Box,
+  debounce,
   Snackbar,
   Stack,
   Toolbar,
   Typography,
-  debounce,
 } from "@mui/material";
+import {
+  paymentDetailsSchema,
+  productDetailsSchema,
+} from "@superfluid-finance/widget";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
+import { z } from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
+
+import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 type StandaloneCodeEditor = Parameters<OnMount>[0];
 

@@ -1,9 +1,9 @@
 import {
   Box,
   CircularProgress,
+  circularProgressClasses,
   CircularProgressProps,
   Typography,
-  circularProgressClasses,
   useTheme,
 } from "@mui/material";
 

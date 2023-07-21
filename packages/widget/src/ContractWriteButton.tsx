@@ -1,7 +1,8 @@
 import { LoadingButton } from "@mui/lab";
-import { ContractWriteResult } from "./ContractWriteManager.js";
 import { Button, Stack } from "@mui/material";
 import { useChainId, useNetwork, useSwitchNetwork } from "wagmi";
+
+import { ContractWriteResult } from "./ContractWriteManager.js";
 
 export type ContractWriteButtonProps = ContractWriteResult;
 

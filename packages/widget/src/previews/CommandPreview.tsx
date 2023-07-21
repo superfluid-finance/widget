@@ -1,10 +1,11 @@
-import { Command } from "../commands.js";
 import ArrowForwardRoundedIcon_ from "@mui/icons-material/ArrowForwardRounded.js";
-import { normalizeIcon } from "../helpers/normalizeIcon.js";
 import NorthEastIcon_ from "@mui/icons-material/NorthEast.js";
-import { WrapIntoSuperTokensPreview } from "./WrapIntoSuperTokensPreview.js";
+
+import { Command } from "../commands.js";
+import { normalizeIcon } from "../helpers/normalizeIcon.js";
 import { EnableAutoWrapPreview } from "./EnableAutoWrapPreview.js";
 import { SendStreamPreview } from "./SendStreamPreview.js";
+import { WrapIntoSuperTokensPreview } from "./WrapIntoSuperTokensPreview.js";
 
 export const NorthEastIcon = normalizeIcon(NorthEastIcon_);
 export const UpgradeIcon = normalizeIcon(ArrowForwardRoundedIcon_);

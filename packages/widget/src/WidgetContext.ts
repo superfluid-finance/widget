@@ -1,12 +1,13 @@
+import { Orientation } from "@mui/material";
+import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import { createContext, useContext } from "react";
+import { Address } from "viem";
+
 import { CheckoutConfig } from "./CheckoutConfig.js";
 import { ChainId, SupportedNetwork } from "./core/index.js";
-import { PaymentOptionWithTokenInfo } from "./formValues.js";
-import { Address } from "viem";
-import { WalletManager } from "./WalletManager.js";
-import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
-import { Orientation } from "@mui/material";
 import { EventListeners } from "./EventListeners.js";
+import { PaymentOptionWithTokenInfo } from "./formValues.js";
+import { WalletManager } from "./WalletManager.js";
 import { ViewProps } from "./WidgetView.js";
 
 export type WidgetContextValue = {

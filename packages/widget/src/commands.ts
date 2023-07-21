@@ -1,5 +1,6 @@
 import { Address } from "viem";
-import { ChainId, TimePeriod, autoWrapStrategyAddress } from "./core/index.js";
+
+import { autoWrapStrategyAddress, ChainId, TimePeriod } from "./core/index.js";
 
 export type WrapIntoSuperTokensCommand = {
   id: string;

@@ -1,11 +1,12 @@
 import {
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Stack,
   TextField,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
 } from "@mui/material";
 import { ChangeEvent, FC, useCallback } from "react";
+
 import { FlowRate, TimePeriod, timePeriods } from "./core/index.js";
 
 interface FlowRateInputProps {

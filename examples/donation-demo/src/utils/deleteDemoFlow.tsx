@@ -1,8 +1,10 @@
 import { cfAv1ForwarderABI } from "@superfluid-finance/widget";
 import { getContract } from "viem";
 import { polygonMumbai } from "wagmi/chains";
-import { demoConfig } from "./connectionUtils";
+
 import configuration from "@/configuration";
+
+import { demoConfig } from "./connectionUtils";
 
 const { CFAV1ForwarderAddress, Sender, Token } = configuration;
 

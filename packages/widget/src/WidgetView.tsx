@@ -11,10 +11,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
+
 import { CheckoutContent } from "./CheckoutContent.js";
-import { useWidget } from "./WidgetContext.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { ChildrenProp } from "./utils.js";
+import { useWidget } from "./WidgetContext.js";
 
 const CloseIcon = normalizeIcon(Close);
 

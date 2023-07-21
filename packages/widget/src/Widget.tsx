@@ -1,28 +1,29 @@
 import {
   Alert,
   AlertTitle,
+  createTheme,
   ThemeOptions,
   ThemeProvider,
-  createTheme,
 } from "@mui/material";
 import { deepmerge } from "@mui/utils";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
+import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
 import { Address, zeroAddress } from "viem";
+import { fromZodError } from "zod-validation-error";
+
 import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig.js";
-import { WalletManager } from "./WalletManager.js";
-import { WidgetContext, WidgetContextValue } from "./WidgetContext.js";
-import { ViewProps, WidgetView } from "./WidgetView.js";
 import { ChainId, SupportedNetwork, supportedNetworks } from "./core/index.js";
+import { EventListeners } from "./EventListeners.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList.js";
 import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions.js";
 import { buildThemeOptions } from "./theme.js";
-import { EventListeners } from "./EventListeners.js";
-import { nanoid } from "nanoid";
-import { fromZodError } from "zod-validation-error";
+import { WalletManager } from "./WalletManager.js";
+import { WidgetContext, WidgetContextValue } from "./WidgetContext.js";
+import { ViewProps, WidgetView } from "./WidgetView.js";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {

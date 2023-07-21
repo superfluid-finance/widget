@@ -1,4 +1,5 @@
 import { FC, PropsWithChildren } from "react";
+
 import styles from "./IconLink.module.css";
 
 interface IconLinkProps extends PropsWithChildren {

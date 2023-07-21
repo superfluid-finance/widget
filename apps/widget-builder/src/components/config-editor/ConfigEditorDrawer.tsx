@@ -1,9 +1,10 @@
+import CloseIcon from "@mui/icons-material/Close";
 import { Box, Button, Drawer, Typography } from "@mui/material";
 import { FC } from "react";
-import ConfigEditor from "./ConfigEditor";
 import { UseFormSetValue } from "react-hook-form";
-import CloseIcon from "@mui/icons-material/Close";
+
 import { WidgetProps } from "../widget-preview/WidgetPreview";
+import ConfigEditor from "./ConfigEditor";
 
 type ConfigEditorDrawerProps = {
   isOpen: boolean;

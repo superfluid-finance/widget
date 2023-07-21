@@ -27,6 +27,7 @@ import tokenList, {
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
 import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
+
 import { Network, networks } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
 import { WidgetProps } from "../widget-preview/WidgetPreview";

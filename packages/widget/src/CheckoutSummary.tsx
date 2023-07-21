@@ -1,15 +1,16 @@
 import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
 import { useEffect, useMemo } from "react";
 import { useAccount } from "wagmi";
+
 import { AccountAddressCard } from "./AccountAddressCard.js";
 import { useCommandHandler } from "./CommandHandlerContext.js";
+import { SendStreamCommand } from "./commands.js";
+import { mapTimePeriodToSeconds } from "./core/index.js";
 import { runEventListener } from "./EventListeners.js";
 import FlowingBalance from "./FlowingBalance.js";
 import StreamIndicator from "./StreamIndicator.js";
 import SuccessImage from "./SuccessImage.js";
 import { useWidget } from "./WidgetContext.js";
-import { SendStreamCommand } from "./commands.js";
-import { mapTimePeriodToSeconds } from "./core/index.js";
 
 export function CheckoutSummary() {
   const theme = useTheme();

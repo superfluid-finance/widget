@@ -1,6 +1,7 @@
 import { Paper, Stack, useTheme } from "@mui/material";
 import Image from "next/image";
 import { FC } from "react";
+
 import FooterLinksGroup, { FooterLink } from "./FooterLinksGroup";
 
 interface FooterProps {}

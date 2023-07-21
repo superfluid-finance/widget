@@ -1,10 +1,11 @@
 import { Autocomplete, Stack, TextField, Typography } from "@mui/material";
+import isEqual from "lodash.isequal";
 import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+
+import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues.js";
 import { TokenAvatar } from "./TokenAvatar.js";
 import { useWidget } from "./WidgetContext.js";
-import { DraftFormValues, PaymentOptionWithTokenInfo } from "./formValues.js";
-import isEqual from "lodash.isequal";
 
 export default function TokenAutocomplete() {
   const { paymentOptionWithTokenInfoList } = useWidget();

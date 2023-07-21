@@ -1,4 +1,4 @@
-import { SxProps, styled } from "@mui/material";
+import { styled, SxProps } from "@mui/material";
 import { FC } from "react";
 
 const SuccessImg = styled("img")(() => ({

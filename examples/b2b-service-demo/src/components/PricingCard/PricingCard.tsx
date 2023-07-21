@@ -7,11 +7,13 @@ import SuperfluidWidget, {
 } from "@superfluid-finance/widget";
 import { useWeb3Modal } from "@web3modal/react";
 import { FC, useCallback, useMemo, useRef, useState } from "react";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+
+import configuration from "@/configuration";
+import { deleteFlow } from "@/utils/deleteDemoFlow";
+
 import Button from "../Button/Button";
 import styles from "./PricingCard.module.css";
-import { deleteFlow } from "@/utils/deleteDemoFlow";
-import configuration from "@/configuration";
-import { privateKeyToAccount, generatePrivateKey } from "viem/accounts";
 
 const { Token } = configuration;
 

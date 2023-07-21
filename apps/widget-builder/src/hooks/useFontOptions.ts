@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Font } from "../types/general";
+
 import { FontSettings } from "../components/widget-preview/WidgetPreview";
+import { Font } from "../types/general";
 
 const FONT_WEIGHT_CONFIG = {
   "400": "regular",

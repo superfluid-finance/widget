@@ -12,10 +12,11 @@ import {
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
+
 import ExpandIcon from "./ExpandIcon.js";
+import { DraftFormValues } from "./formValues.js";
 import NetworkBadge from "./NetworkBadge.js";
 import { useWidget } from "./WidgetContext.js";
-import { DraftFormValues } from "./formValues.js";
 
 interface CheckoutProductProps {
   CardProps?: CardProps;

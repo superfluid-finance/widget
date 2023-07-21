@@ -1,11 +1,11 @@
+import Head from "next/head";
+
 import Content from "@/components/Content/Content";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import SubBox from "@/components/SubBox/SubBox";
 import Subheader from "@/components/Subheader/Subheader";
 import styles from "@/styles/Project.module.css";
-
-import Head from "next/head";
 
 export default function Project() {
   return (

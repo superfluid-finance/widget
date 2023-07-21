@@ -1,5 +1,6 @@
-import { ChainId, supportedNetwork, supportedNetworks } from "../core/index.js";
 import superfluidMetadata from "@superfluid-finance/metadata";
+
+import { ChainId, supportedNetwork, supportedNetworks } from "../core/index.js";
 
 /**
  * Calculates the date when a Super Token balance is critical and may be liquidated.

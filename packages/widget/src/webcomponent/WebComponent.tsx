@@ -1,8 +1,9 @@
-import { createRoot } from "react-dom/client";
-import { Widget as SuperfluidWidget_ } from "../Widget.js";
-import { PaymentDetails, ProductDetails } from "../core/index.js";
 import { Theme } from "@mui/material";
 import { TokenList } from "@superfluid-finance/tokenlist";
+import { createRoot } from "react-dom/client";
+
+import { PaymentDetails, ProductDetails } from "../core/index.js";
+import { Widget as SuperfluidWidget_ } from "../Widget.js";
 
 class WidgetWebComponent extends HTMLElement {
   mountPoint!: HTMLSpanElement;

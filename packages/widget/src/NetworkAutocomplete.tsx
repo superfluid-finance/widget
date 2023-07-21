@@ -1,8 +1,9 @@
 import { Autocomplete, Box, Stack, TextField, Typography } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
+
 import { DraftFormValues } from "./formValues.js";
-import { useWidget } from "./WidgetContext.js";
 import NetworkAvatar from "./NetworkAvatar.js";
+import { useWidget } from "./WidgetContext.js";
 
 export default function NetworkAutocomplete() {
   const { control: c } = useFormContext<DraftFormValues>();

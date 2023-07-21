@@ -1,3 +1,8 @@
+import CodeIcon from "@mui/icons-material/Code";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
+import WebIcon from "@mui/icons-material/Web";
+import WebAssetIcon from "@mui/icons-material/WebAsset";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Box,
@@ -12,23 +17,17 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
-import { useState } from "react";
-import WidgetPreview, {
-  WidgetProps,
-} from "../components/widget-preview/WidgetPreview";
-
-import CodeIcon from "@mui/icons-material/Code";
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
-import WebIcon from "@mui/icons-material/Web";
-import WebAssetIcon from "@mui/icons-material/WebAsset";
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
 import ExportEditor from "../components/export-editor/ExportEditor";
 import ProductEditor from "../components/product-editor/ProductEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
+import WidgetPreview, {
+  WidgetProps,
+} from "../components/widget-preview/WidgetPreview";
 import useDemoMode from "../hooks/useDemoMode";
 
 const drawerWidth = "480px";

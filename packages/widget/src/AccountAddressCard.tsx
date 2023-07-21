@@ -12,6 +12,7 @@ import {
 import { create } from "blockies-ts";
 import { useState } from "react";
 import { Address } from "viem";
+
 import { AccountAddress } from "./AccountAddress.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { copyToClipboard } from "./utils.js";

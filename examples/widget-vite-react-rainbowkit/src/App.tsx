@@ -1,12 +1,13 @@
 import "./App.css";
+
+import { ConnectButton, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget from "@superfluid-finance/widget";
-import productDetails from "./productDetails";
-import paymentDetails from "./paymentDetails";
 import { WagmiConfig } from "wagmi";
 
-import superTokenList from "@superfluid-finance/tokenlist";
-import { ConnectButton, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { wagmiConfig, chains } from "./wagmi";
+import paymentDetails from "./paymentDetails";
+import productDetails from "./productDetails";
+import { chains, wagmiConfig } from "./wagmi";
 
 export default function App() {
   return (

@@ -1,11 +1,12 @@
 import { Card, Stack, useTheme } from "@mui/material";
+import { useMemo } from "react";
+
 import CheckoutProduct from "./CheckoutProduct.js";
 import { CommandHandlerProvider } from "./CommandHandlerProvider.js";
 import FormProvider from "./FormProvider.js";
 import PoweredBySuperfluid from "./PoweredBySuperfluid.js";
 import Stepper from "./Stepper.js";
 import { useWidget } from "./WidgetContext.js";
-import { useMemo } from "react";
 
 export function CheckoutContent() {
   const theme = useTheme();

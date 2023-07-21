@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { ThemeOptions } from "@mui/material";
 import {
-  ProductDetails,
   PaymentDetails,
   paymentDetailsSchema,
+  ProductDetails,
   productDetailsSchema,
 } from "@superfluid-finance/widget";
-import { ThemeOptions } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const gateway = "https://cloudflare-ipfs.com";
 
