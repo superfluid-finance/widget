@@ -1,12 +1,13 @@
 import { Box, Container, Fade } from "@mui/material";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import tokenList from "@superfluid-finance/tokenlist";
-import SuperfluidWidget from "@superfluid-finance/widget";
+import SuperfluidWidget, { PaymentDetails } from "@superfluid-finance/widget";
 import { useWeb3Modal } from "@web3modal/react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 
 import DemoWalletDisplay from "../../src/components/demo-wallet-display/DemoWalletDisplay";
 import useAnalyticsBrowser from "../../src/hooks/useAnalyticsBrowser";
@@ -16,8 +17,16 @@ import useWalletAnalytics from "../../src/hooks/useWalletAnalytics";
 import { WagmiDemoProviders } from "../../src/providers";
 import { deleteFlow } from "../../src/utils/deleteDemoFlow";
 
+function generateRandomReceiver() {
+  return privateKeyToAccount(generatePrivateKey()).address;
+}
+
 const IPFSWidgetPage: NextPage = () => {
   const { query } = useRouter();
+
+  const [randomReceiver, setRandomReceiver] = useState<`0x${string}`>(
+    generateRandomReceiver(),
+  );
 
   const { open, isOpen } = useWeb3Modal();
   const walletManager = useMemo(
@@ -43,6 +52,22 @@ const IPFSWidgetPage: NextPage = () => {
   useFontLoader(fontFamily);
 
   const showLoader = loading && data === null;
+
+  const config = useMemo(() => {
+    if (!data) {
+      return data;
+    }
+
+    return {
+      ...data,
+      paymentOptions: [
+        data.paymentDetails.paymentOptions.map((paymentOption) => ({
+          ...paymentOption,
+          receiverAddress: randomReceiver,
+        })),
+      ],
+    };
+  }, [data, randomReceiver]);
 
   return (
     <WagmiDemoProviders>
@@ -78,9 +103,9 @@ const IPFSWidgetPage: NextPage = () => {
           >
             <DemoWalletDisplay />
 
-            {data && (
+            {config && (
               <SuperfluidWidget
-                {...data}
+                {...config}
                 tokenList={tokenList}
                 type="page"
                 walletManager={walletManager}
