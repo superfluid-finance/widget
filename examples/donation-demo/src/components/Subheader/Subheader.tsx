@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { FC, PropsWithChildren } from "react";
 
 import Chip from "../Chip/Chip";
 import IconLink from "../IconLink/IconLink";

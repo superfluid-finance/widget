@@ -10,8 +10,7 @@ export function FormEffects() {
     resetField,
     setValue,
     getFieldState,
-    formState: { isValid, errors }, // Creates form state subscription.
-    trigger,
+    // formState: { isValid, errors }, Creates form state subscription.
   } = useFormContext<DraftFormValues>();
 
   const [network, paymentOptionWithTokenInfo, flowRate] = watch([

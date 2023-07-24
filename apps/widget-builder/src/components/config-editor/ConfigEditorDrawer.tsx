@@ -1,5 +1,4 @@
-import CloseIcon from "@mui/icons-material/Close";
-import { Box, Button, Drawer, Typography } from "@mui/material";
+import { Drawer } from "@mui/material";
 import { FC } from "react";
 import { UseFormSetValue } from "react-hook-form";
 

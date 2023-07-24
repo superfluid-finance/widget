@@ -1,7 +1,6 @@
 import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   PaymentDetails,
-  PaymentOption,
   ProductDetails,
   WidgetProps,
 } from "@superfluid-finance/widget";

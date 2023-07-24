@@ -10,7 +10,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import ExpandIcon from "./ExpandIcon.js";

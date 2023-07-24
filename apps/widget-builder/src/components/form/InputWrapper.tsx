@@ -5,7 +5,6 @@ import {
   Stack,
   SxProps,
   Tooltip,
-  Typography,
   useTheme,
 } from "@mui/material";
 import { FC, PropsWithChildren } from "react";
