@@ -32,7 +32,7 @@ export default function StepContentReview() {
       <Stack direction="column" spacing={3}>
         <Collapse in={isValidationError}>
           {isValidationError && (
-            <Alert severity="error">
+            <Alert data-testid="review-error" severity="error">
               {validationResult.error.issues[0].message}
             </Alert>
           )}

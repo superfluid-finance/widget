@@ -1,10 +1,15 @@
 import { test } from "../walletSetup";
 import { WidgetPage } from "../pageObjects/widgetPage";
-import { rebounderAddresses } from "../pageObjects/basePage";
+import {
+  rebounderAddresses,
+  streamToSelfOption,
+  testOption,
+} from "../pageObjects/basePage";
 import { BuilderPage } from "../pageObjects/builderPage";
+import * as metamask from "@synthetixio/synpress/commands/metamask";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/builder");
 });
 
 test("Creating a flow", async ({ page }) => {
@@ -89,4 +94,77 @@ test("Approving and wrapping tokens", async ({ page }) => {
     ["Completed", "Completed", "Not started"],
   );
   await widgetPage.validateTokenBalanceAfterWrap();
+});
+
+test("Can't stream to self error during review", async ({ page }) => {
+  let widgetPage = new WidgetPage(page);
+  let builderPage = new BuilderPage(page);
+  await builderPage.addPaymentOption(streamToSelfOption);
+  await widgetPage.selectPaymentNetwork("Goerli");
+  await widgetPage.selectPaymentToken("TDLx");
+  await widgetPage.connectWallet();
+  await widgetPage.clickContinueButton();
+  await widgetPage.validateReviewStepError("You can't stream to yourself.");
+});
+
+test("Not enough underlying token balance during review", async ({ page }) => {
+  let widgetPage = new WidgetPage(page);
+  await widgetPage.selectPaymentNetwork("Goerli");
+  await widgetPage.selectPaymentToken("fUSDCx");
+  await widgetPage.connectWallet();
+  await widgetPage.setWrapAmount("99999");
+  await widgetPage.clickContinueButton();
+  await widgetPage.validateReviewStepError(
+    "You don’t have enough underlying token balance to wrap.",
+  );
+});
+
+test("Not enough super token balance to cover buffer error", async ({
+  page,
+}) => {
+  let widgetPage = new WidgetPage(page);
+  let builderPage = new BuilderPage(page);
+  testOption.flowRate = "99999999";
+  await builderPage.addPaymentOption(testOption);
+  await widgetPage.selectPaymentNetwork("Goerli");
+  await widgetPage.selectPaymentToken("TDLx");
+  await widgetPage.connectWallet();
+  await widgetPage.clickContinueButton();
+  await widgetPage.validateReviewStepError(
+    "You don’t have enough Super Token balance to cover buffer.",
+  );
+});
+
+test("Need atleast 24 hours worth of stream error", async ({ page }) => {
+  let widgetPage = new WidgetPage(page);
+  let builderPage = new BuilderPage(page);
+  testOption.flowRate = "1";
+  testOption.timeUnit = "day";
+  await builderPage.addPaymentOption(testOption);
+  await widgetPage.selectPaymentNetwork("Goerli");
+  await widgetPage.selectPaymentToken("TDLx");
+  await widgetPage.connectWallet();
+  await widgetPage.clickContinueButton();
+  await widgetPage.validateReviewStepError(
+    "You need to have Super Token balance for at least 24 hours of streaming.",
+  );
+});
+
+test("Switch network button shown in the transaction view", async ({
+  page,
+}) => {
+  let widgetPage = new WidgetPage(page);
+  await metamask.changeNetwork("Sepolia");
+  await widgetPage.selectPaymentNetwork("Goerli");
+  await widgetPage.selectPaymentToken("fUSDCx");
+  await widgetPage.connectWallet();
+  await widgetPage.clickContinueButton();
+  await widgetPage.clickContinueButton();
+  await widgetPage.clickSwitchNetworkButton();
+  await metamask.allowToSwitchNetwork();
+  await widgetPage.validateTransactionStatuses(
+    ["approve", "wrap", "modify"],
+    ["Not started", "Not started", "Not started"],
+  );
+  await widgetPage.validateTransactionButtonTextAndClick("approve");
 });
