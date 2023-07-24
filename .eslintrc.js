@@ -10,7 +10,6 @@ module.exports = {
   plugins: ["simple-import-sort", "unused-imports"],
   rules: {
     "react-hooks/exhaustive-deps": "off",
-    "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "warn",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
