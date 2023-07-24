@@ -14,12 +14,13 @@ import { FC, PropsWithChildren, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { parseEther } from "viem";
 import { Address, useBalance } from "wagmi";
-import { StepperCTAButton } from "./StepperCTAButton";
-import { TokenAvatar } from "./TokenAvatar";
-import { useWidget } from "./WidgetContext";
-import { DraftFormValues } from "./formValues";
-import { UpgradeIcon } from "./previews/CommandPreview";
-import { useStepper } from "./StepperContext";
+
+import { DraftFormValues } from "./formValues.js";
+import { UpgradeIcon } from "./previews/CommandPreview.js";
+import { useStepper } from "./StepperContext.js";
+import { StepperCTAButton } from "./StepperCTAButton.js";
+import { TokenAvatar } from "./TokenAvatar.js";
+import { useWidget } from "./WidgetContext.js";
 
 interface WrapCardProps extends PropsWithChildren {
   token?: TokenInfo;

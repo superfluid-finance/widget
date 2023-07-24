@@ -1,10 +1,10 @@
+import Head from "next/head";
+import { useState } from "react";
+
+import BookModal from "@/components/BookModal/BookModal";
 import Footer from "@/components/Footer/Footer";
 import PricingCard from "@/components/PricingCard/PricingCard";
 import styles from "@/styles/Home.module.css";
-
-import BookModal from "@/components/BookModal/BookModal";
-import Head from "next/head";
-import { useState } from "react";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);

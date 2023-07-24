@@ -1,7 +1,8 @@
-import { Address } from "viem";
-import { ChainId, PaymentOption } from "../core";
-import { PaymentOptionWithTokenInfo } from "../formValues";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
+import { Address } from "viem";
+
+import { ChainId, PaymentOption } from "../core/index.js";
+import { PaymentOptionWithTokenInfo } from "../formValues.js";
 
 export function addSuperTokenInfoToPaymentOptions(
   paymentOptions: ReadonlyArray<PaymentOption>,

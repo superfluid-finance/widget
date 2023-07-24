@@ -1,4 +1,3 @@
-import { z } from "zod";
 import {
   arbitrum,
   arbitrumGoerli,
@@ -6,6 +5,7 @@ import {
   avalancheFuji,
   bsc,
   celo,
+  Chain,
   gnosis,
   goerli,
   mainnet,
@@ -13,8 +13,8 @@ import {
   optimismGoerli,
   polygon,
   polygonMumbai,
-  Chain,
 } from "wagmi/chains";
+import { z } from "zod";
 
 export const supportedNetwork = {
   arbitrum,

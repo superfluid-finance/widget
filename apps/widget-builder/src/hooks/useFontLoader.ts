@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { DisplaySettings } from "../components/widget-preview/WidgetPreview";
 import { FONT_WEIGHTS } from "./useFontOptions";
 

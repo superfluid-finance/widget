@@ -1,19 +1,20 @@
+import superfluidMetadata from "@superfluid-finance/metadata";
 import { useMemo } from "react";
+import { Address } from "viem";
+import { fetchBalance, readContracts } from "wagmi/actions";
 import { z } from "zod";
-import { SendStreamCommand, WrapIntoSuperTokensCommand } from "./commands";
+
+import { SendStreamCommand, WrapIntoSuperTokensCommand } from "./commands.js";
 import {
   cfAv1ForwarderABI,
   cfAv1ForwarderAddress,
   mapTimePeriodToSeconds,
-  superTokenABI,
   superfluidGovernanceABI,
   superfluidGovernanceAddress,
-} from "./core";
-import { fetchBalance, readContracts } from "wagmi/actions";
-import { calculateDateWhenBalanceCritical } from "./helpers/calculateDateWhenBalanceCritical";
-import { calculateDepositAmount } from "./helpers/calculateDepositAmount";
-import superfluidMetadata from "@superfluid-finance/metadata";
-import { Address } from "viem";
+  superTokenABI,
+} from "./core/index.js";
+import { calculateDateWhenBalanceCritical } from "./helpers/calculateDateWhenBalanceCritical.js";
+import { calculateDepositAmount } from "./helpers/calculateDepositAmount.js";
 
 export const useCommandValidationSchema = () =>
   useMemo(

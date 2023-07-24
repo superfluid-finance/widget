@@ -12,10 +12,11 @@ import {
 import { MuiColorInput } from "mui-color-input";
 import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+
 import useFontOptions from "../../hooks/useFontOptions";
+import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
-import InputWrapper from "../form/InputWrapper";
 
 const UiEditor: FC = () => {
   const { control, watch } = useFormContext<WidgetProps>();

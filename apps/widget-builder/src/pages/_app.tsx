@@ -1,11 +1,6 @@
-import Head from "next/head";
-import { AppProps } from "next/app";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import theme from "../theme";
-import createEmotionCache from "../createEmotionCache";
-import { WagmiConfig, configureChains, createConfig } from "wagmi";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
 import {
   supportedNetwork,
   supportedNetworks,
@@ -16,10 +11,16 @@ import {
   w3mProvider,
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
+import { AppProps } from "next/app";
+import Head from "next/head";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import { publicProvider } from "wagmi/providers/public";
+
+import createEmotionCache from "../createEmotionCache";
 import useAnalyticsBrowser from "../hooks/useAnalyticsBrowser";
 import useWalletAnalytics from "../hooks/useWalletAnalytics";
-import { publicProvider } from "wagmi/providers/public";
-import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import theme from "../theme";
 
 const projectId =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ??

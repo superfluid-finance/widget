@@ -1,10 +1,15 @@
-import { useBalance, useContractRead, useContractReads } from "wagmi";
+import { nanoid } from "nanoid";
+import { useEffect, useMemo } from "react";
+import { Abi, ContractFunctionConfig, GetValue, parseEther } from "viem";
+import { useContractRead, useContractReads } from "wagmi";
+
 import {
   Command,
   EnableAutoWrapCommand,
   SendStreamCommand,
   WrapIntoSuperTokensCommand,
-} from "./commands";
+} from "./commands.js";
+import { ContractWrite } from "./ContractWrite.js";
 import {
   autoWrapManagerABI,
   autoWrapManagerAddress,
@@ -15,13 +20,9 @@ import {
   mapTimePeriodToSeconds,
   nativeAssetSuperTokenABI,
   superTokenABI,
-} from "./core";
-import { ContractWrite } from "./ContractWrite";
-import { ChildrenProp, MaxUint256 } from "./utils";
-import { Abi, ContractFunctionConfig, GetValue, parseEther } from "viem";
-import { useEffect, useMemo } from "react";
-import { useWidget } from "./WidgetContext";
-import { nanoid } from "nanoid";
+} from "./core/index.js";
+import { ChildrenProp, MaxUint256 } from "./utils.js";
+import { useWidget } from "./WidgetContext.js";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;

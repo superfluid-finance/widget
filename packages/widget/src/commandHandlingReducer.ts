@@ -1,10 +1,11 @@
 import { castDraft } from "immer";
-import { useImmerReducer } from "use-immer";
-import { State } from "./CommandHandlerState";
 import { nanoid } from "nanoid";
-import { Command } from "./commands";
-import { ContractWrite } from "./ContractWrite";
-import { ContractWriteResult } from "./ContractWriteManager";
+
+import { State } from "./CommandHandlerState.js";
+import { Command } from "./commands.js";
+import { ContractWrite } from "./ContractWrite.js";
+import { ContractWriteResult } from "./ContractWriteManager.js";
+import { useImmerReducer } from "./useImmer.js";
 
 export type Action =
   | { type: "reset" }

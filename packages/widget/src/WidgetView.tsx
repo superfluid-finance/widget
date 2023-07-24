@@ -1,4 +1,4 @@
-import Close from "@mui/icons-material/Close";
+import Close from "@mui/icons-material/Close.js";
 import {
   AppBar,
   Container,
@@ -11,10 +11,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
-import { CheckoutContent } from "./CheckoutContent";
-import { useWidget } from "./WidgetContext";
-import { normalizeIcon } from "./helpers/normalizeIcon";
-import { ChildrenProp } from "./utils";
+
+import { CheckoutContent } from "./CheckoutContent.js";
+import { normalizeIcon } from "./helpers/normalizeIcon.js";
+import { ChildrenProp } from "./utils.js";
+import { useWidget } from "./WidgetContext.js";
 
 const CloseIcon = normalizeIcon(Close);
 

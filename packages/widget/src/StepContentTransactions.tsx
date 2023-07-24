@@ -1,12 +1,13 @@
-import CloseIcon_ from "@mui/icons-material/Close";
+import CloseIcon_ from "@mui/icons-material/Close.js";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { useEffect } from "react";
-import { useCommandHandler } from "./CommandHandlerContext";
-import ContractWriteButton from "./ContractWriteButton";
-import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress";
-import { ContractWriteStatus } from "./ContractWriteStatus";
-import { useStepper } from "./StepperContext";
-import { normalizeIcon } from "./helpers/normalizeIcon";
+
+import { useCommandHandler } from "./CommandHandlerContext.js";
+import ContractWriteButton from "./ContractWriteButton.js";
+import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress.js";
+import { ContractWriteStatus } from "./ContractWriteStatus.js";
+import { normalizeIcon } from "./helpers/normalizeIcon.js";
+import { useStepper } from "./StepperContext.js";
 
 const CloseIcon = normalizeIcon(CloseIcon_);
 

@@ -1,4 +1,5 @@
 import { FC } from "react";
+
 import styles from "./FooterSection.module.css";
 
 interface FooterSectionProps {

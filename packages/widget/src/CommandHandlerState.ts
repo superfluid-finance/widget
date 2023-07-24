@@ -1,6 +1,6 @@
-import { ContractWriteResult } from "./ContractWriteManager";
-import { Command } from "./commands";
-import { ContractWrite } from "./ContractWrite";
+import { Command } from "./commands.js";
+import { ContractWrite } from "./ContractWrite.js";
+import { ContractWriteResult } from "./ContractWriteManager.js";
 
 export type State = Idle | Initialized | Handling;
 

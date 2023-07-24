@@ -1,8 +1,9 @@
+import Head from "next/head";
+
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import ProjectCard from "@/components/ProjectCard/ProjectCard";
 import styles from "@/styles/Home.module.css";
-import Head from "next/head";
 
 const HeroImage = () => {
   return (

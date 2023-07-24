@@ -4,7 +4,9 @@ module.exports = {
     return [
       {
         source: "/",
-        destination: process.env.ROOT_REDIRECT_URL ?? "https://www.superfluid.finance/subscriptions",
+        destination:
+          process.env.ROOT_REDIRECT_URL ??
+          "https://www.superfluid.finance/subscriptions",
         permanent: false,
       },
     ];
@@ -16,9 +18,7 @@ module.exports = {
 
     return config;
   },
-  transpilePackages: ["@superfluid-finance/widget"],
 };
-
 
 // Injected content via Sentry wizard below
 
@@ -54,5 +54,5 @@ module.exports = withSentryConfig(
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
-  }
+  },
 );

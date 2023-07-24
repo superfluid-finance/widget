@@ -1,6 +1,7 @@
 import { Link, Paper, PaperProps, Stack, Typography } from "@mui/material";
 import { FC, memo } from "react";
-import SuperfluidLogo from "./SuperfluidLogo";
+
+import SuperfluidLogo from "./SuperfluidLogo.js";
 
 const PoweredBySuperfluid: FC<PaperProps> = ({ sx = {} }) => (
   <Paper

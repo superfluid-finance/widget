@@ -1,9 +1,10 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useBalance } from "wagmi";
-import { AccountAddressCard } from "../AccountAddressCard";
-import StreamIndicator from "../StreamIndicator";
-import { useWidget } from "../WidgetContext";
-import { SendStreamCommand } from "../commands";
+
+import { AccountAddressCard } from "../AccountAddressCard.js";
+import { SendStreamCommand } from "../commands.js";
+import StreamIndicator from "../StreamIndicator.js";
+import { useWidget } from "../WidgetContext.js";
 
 export function SendStreamPreview({
   command: cmd,

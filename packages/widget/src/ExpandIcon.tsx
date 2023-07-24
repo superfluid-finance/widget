@@ -1,7 +1,8 @@
-import ExpandMoreRoundedIcon_ from "@mui/icons-material/ExpandMoreRounded";
-import { SxProps, styled } from "@mui/material";
+import ExpandMoreRoundedIcon_ from "@mui/icons-material/ExpandMoreRounded.js";
+import { styled, SxProps } from "@mui/material";
 import { FC } from "react";
-import { normalizeIcon } from "./helpers/normalizeIcon";
+
+import { normalizeIcon } from "./helpers/normalizeIcon.js";
 
 const ExpandMoreRoundedIcon = normalizeIcon(ExpandMoreRoundedIcon_);
 

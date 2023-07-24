@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { FC, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
+
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
 import { ExportJSON } from "../../types/export-json";
 import BookDemoBtn from "../buttons/BookDemoBtn";
@@ -15,8 +16,8 @@ import DownloadJsonBtn from "../buttons/DownloadJsonBtn";
 import IPFSPublishBtn from "../buttons/IPFSPublishBtn";
 import InputWrapper from "../form/InputWrapper";
 import {
-  WidgetProps,
   mapDisplaySettingsToTheme,
+  WidgetProps,
 } from "../widget-preview/WidgetPreview";
 
 type ExportOption = "json" | "ipfs";

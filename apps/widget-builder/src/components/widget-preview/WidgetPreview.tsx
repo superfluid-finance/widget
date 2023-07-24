@@ -1,23 +1,23 @@
-import {
-  CSSProperties,
-  FC,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-} from "react";
-import { useState } from "react";
-import { Button, SelectChangeEvent, ThemeOptions, colors } from "@mui/material";
-import type { Font, NullableObject } from "../../types/general";
-
+import { Button, colors, SelectChangeEvent, ThemeOptions } from "@mui/material";
+import tokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   PaymentDetails,
   ProductDetails,
   WalletManager,
 } from "@superfluid-finance/widget";
-import tokenList from "@superfluid-finance/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
+import {
+  createContext,
+  CSSProperties,
+  FC,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
 import useFontLoader from "../../hooks/useFontLoader";
+import type { Font, NullableObject } from "../../types/general";
 
 export interface FontSettings {
   family: string;

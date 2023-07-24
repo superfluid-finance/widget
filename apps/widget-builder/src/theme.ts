@@ -1,6 +1,6 @@
+import type {} from "@mui/lab/themeAugmentation";
 import { createTheme } from "@mui/material/styles";
 import { Noto_Sans } from "next/font/google";
-import type {} from "@mui/lab/themeAugmentation";
 
 export const notoSans = Noto_Sans({
   weight: ["300", "400", "500", "700"],

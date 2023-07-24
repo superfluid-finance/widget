@@ -1,10 +1,11 @@
-import { createRoot } from "react-dom/client";
-import { Widget as SuperfluidWidget_ } from "../Widget";
-import { PaymentDetails, ProductDetails } from "../core";
 import { Theme } from "@mui/material";
 import { TokenList } from "@superfluid-finance/tokenlist";
+import { createRoot } from "react-dom/client";
 
-class SuperfluidWidget extends HTMLElement {
+import { PaymentDetails, ProductDetails } from "../core/index.js";
+import { Widget as SuperfluidWidget_ } from "../Widget.js";
+
+class WidgetWebComponent extends HTMLElement {
   mountPoint!: HTMLSpanElement;
   productDetails!: ProductDetails;
   paymentDetails!: PaymentDetails;
@@ -89,7 +90,7 @@ class SuperfluidWidget extends HTMLElement {
   }
 }
 
-export default SuperfluidWidget;
+export default WidgetWebComponent;
 
 window.customElements.get("superfluid-widget") ||
-  window.customElements.define("superfluid-widget", SuperfluidWidget);
+  window.customElements.define("superfluid-widget", WidgetWebComponent);

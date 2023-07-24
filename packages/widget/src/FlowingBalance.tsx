@@ -1,10 +1,11 @@
 import { memo, ReactElement } from "react";
+import { formatEther } from "viem";
+
 import useFlowingBalance, {
   ANIMATION_MINIMUM_STEP_TIME,
-} from "./useFlowingBalance";
-import { useSignificantFlowingDecimal } from "./useSignificantFlowingDecimal";
-import { formatEther } from "viem";
-import { toFixedUsingString } from "./utils";
+} from "./useFlowingBalance.js";
+import { useSignificantFlowingDecimal } from "./useSignificantFlowingDecimal.js";
+import { toFixedUsingString } from "./utils.js";
 
 // TODO: re-use with useFlowingBalance?
 type FlowingBalanceProps = {

@@ -1,5 +1,6 @@
 import { Abi, ContractFunctionConfig, GetValue } from "viem";
-import { ChainId } from "./core";
+
+import { ChainId } from "./core/index.js";
 
 export type ContractWrite = ContractFunctionConfig<
   Abi,

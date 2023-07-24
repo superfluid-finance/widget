@@ -1,11 +1,12 @@
 import {
+  createRef,
   FC,
   PropsWithChildren,
-  createRef,
   useEffect,
   useMemo,
   useState,
 } from "react";
+
 import styles from "./Content.module.css";
 
 interface ContentProps extends PropsWithChildren {

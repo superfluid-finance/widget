@@ -1,10 +1,11 @@
-import { configureChains, createConfig } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
-import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import { createWalletClient, http } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
+import { configureChains, createConfig } from "wagmi";
 import { MockConnector } from "wagmi/connectors/mock";
-import { createWalletClient, http } from "viem";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import { publicProvider } from "wagmi/providers/public";
+
 import configuration from "@/configuration";
 
 const account = privateKeyToAccount(

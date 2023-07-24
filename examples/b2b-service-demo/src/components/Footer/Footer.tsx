@@ -1,4 +1,5 @@
 import { FC } from "react";
+
 import styles from "./Footer.module.css";
 import FooterSection from "./FooterSection/FooterSection";
 

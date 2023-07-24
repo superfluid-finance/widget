@@ -1,5 +1,3 @@
-import configuration from "@/configuration";
-import { deleteFlow } from "@/utils/deleteDemoFlow";
 import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   PaymentDetails,
@@ -9,6 +7,10 @@ import SuperfluidWidget, {
 import { useWeb3Modal } from "@web3modal/react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+
+import configuration from "@/configuration";
+import { deleteFlow } from "@/utils/deleteDemoFlow";
+
 import BookModal from "../BookModal/BookModal";
 import styles from "./SubscribeButton.module.css";
 
