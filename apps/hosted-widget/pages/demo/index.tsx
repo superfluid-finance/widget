@@ -21,7 +21,7 @@ function generateRandomReceiver() {
   return privateKeyToAccount(generatePrivateKey()).address;
 }
 
-const superfluidDemoIPFSHash = "QmWxgE57RHou36fDYwS7qCVZgK2SDhZzNSs2t6nqsmGc1X";
+const superfluidDemoIPFSHash: string = process.env.NEXT_PUBLIC_DEMO_IPFS!;
 
 const IPFSWidgetPage: NextPage = () => {
   const [randomReceiver] = useState<`0x${string}`>(generateRandomReceiver());
