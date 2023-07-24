@@ -9,7 +9,7 @@ import { BuilderPage } from "../pageObjects/builderPage";
 import * as metamask from "@synthetixio/synpress/commands/metamask";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/builder");
 });
 
 test("Creating a flow", async ({ page }) => {

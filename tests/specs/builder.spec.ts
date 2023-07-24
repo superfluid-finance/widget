@@ -8,7 +8,7 @@ import {
 } from "../pageObjects/basePage";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/builder");
 });
 
 test("Changing the products name", async ({ page }) => {
