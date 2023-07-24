@@ -21,9 +21,11 @@ function generateRandomReceiver() {
   return privateKeyToAccount(generatePrivateKey()).address;
 }
 
-const superfluidDemoIPFSHash: string = process.env.NEXT_PUBLIC_DEMO_IPFS!;
+const superfluidDemoIPFSHash = process.env.NEXT_PUBLIC_DEMO_IPFS!;
 
 const IPFSWidgetPage: NextPage = () => {
+  const { query } = useRouter();
+
   const [randomReceiver] = useState<`0x${string}`>(generateRandomReceiver());
 
   const { open, isOpen } = useWeb3Modal();
@@ -35,7 +37,10 @@ const IPFSWidgetPage: NextPage = () => {
     [open, isOpen],
   );
 
-  const { data, loading } = useLoadFromIPFS(superfluidDemoIPFSHash);
+  const { data: demoData, loading: demoLoading } = useLoadFromIPFS(
+    superfluidDemoIPFSHash,
+  );
+  const { data, loading } = useLoadFromIPFS(query.hash as string);
 
   const fontFamily = useMemo(() => {
     const typography = data?.theme?.typography as TypographyOptions;
@@ -49,7 +54,18 @@ const IPFSWidgetPage: NextPage = () => {
 
   useFontLoader(fontFamily);
 
-  const showLoader = loading && data === null;
+  const showLoader =
+    (demoLoading && demoData === null) || (loading && data === null);
+
+  const config = useMemo(() => {
+    if (!demoData) return null;
+    if (!data) return demoData;
+
+    return {
+      ...data,
+      paymentDetails: demoData.paymentDetails,
+    };
+  }, [demoData, data, randomReceiver]);
 
   return (
     <WagmiDemoProviders>
@@ -85,9 +101,9 @@ const IPFSWidgetPage: NextPage = () => {
           >
             <DemoWalletDisplay />
 
-            {data && (
+            {config && (
               <SuperfluidWidget
-                {...data}
+                {...config}
                 tokenList={tokenList}
                 type="page"
                 walletManager={walletManager}
