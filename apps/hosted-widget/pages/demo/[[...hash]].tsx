@@ -62,8 +62,8 @@ const IPFSWidgetPage: NextPage = () => {
     if (!data) return demoData;
 
     return {
-      ...demoData,
-      ...(data ? { theme: data.theme } : {}),
+      ...data,
+      paymentDetails: demoData.paymentDetails,
     };
   }, [demoData, data, randomReceiver]);
 
