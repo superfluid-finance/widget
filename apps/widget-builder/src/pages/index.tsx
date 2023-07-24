@@ -1,195 +1,170 @@
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Box,
   Button,
-  Drawer,
-  FormControlLabel,
+  Paper,
   Stack,
-  Switch,
-  Tab,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Controller, FormProvider, useForm } from "react-hook-form";
-
-import { useState } from "react";
-import WidgetPreview, {
-  WidgetProps,
-} from "../components/widget-preview/WidgetPreview";
-
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
-import WebIcon from "@mui/icons-material/Web";
-import WebAssetIcon from "@mui/icons-material/WebAsset";
-import ExportEditor from "../components/export-editor/ExportEditor";
-import ProductEditor from "../components/product-editor/ProductEditor";
-import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
-import UiEditor from "../components/ui-editor/UiEditor";
-import useDemoMode from "../hooks/useDemoMode";
-import CodeIcon from "@mui/icons-material/Code";
-import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
-
-const drawerWidth = "480px";
+import Image from "next/image";
+import Link from "next/link";
+import Footer from "../components/footer/Footer";
+import BookDemoBtn from "../components/buttons/BookDemoBtn";
 
 export default function Home() {
   const theme = useTheme();
-  const [activeTab, setActiveTab] = useState<"ui" | "product" | "export">(
-    "product",
-  );
-
-  const { widgetProps, demoMode, toggleDemoMode } = useDemoMode();
-
-  const formMethods = useForm<WidgetProps>({
-    values: widgetProps,
-  });
-
-  const { watch, control, getValues, setValue } = formMethods;
-
-  const [productDetails, paymentDetails, displaySettings, type] = watch([
-    "productDetails",
-    "paymentDetails",
-    "displaySettings",
-    "type",
-  ]);
-
-  const [isConfigEditorOpen, setConfigEditorOpen] = useState(false);
+  const isBelowMd = useMediaQuery(theme.breakpoints.down("md"));
+  const isBelowSm = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Box sx={{ display: "flex", position: "relative", height: "100vh" }}>
-      <Drawer
-        variant="permanent"
-        anchor="left"
+    <Stack sx={{ minHeight: "100vh" }} alignItems="center">
+      <Stack
+        direction="column"
+        flex={1}
+        gap={3}
         sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
+          my: 3,
+          maxWidth: "min(100vw - 2.5rem, 1920px)",
+          width: "100%",
+          [theme.breakpoints.down("sm")]: {
+            maxWidth: "calc(100vw - 1.5rem)",
+            my: 2,
+            gap: 2,
           },
         }}
       >
-        <Stack
-          direction="row"
-          sx={{
-            alignItems: "center",
-            justifyContent: "space-between",
-            px: 3.5,
-            pt: 3.5,
-            pb: 1,
-          }}
-          gap={1}
+        <Paper
+          component="header"
+          elevation={0}
+          sx={{ px: 6, py: 3, borderRadius: 2, height: "80px" }}
         >
-          <Typography variant="subtitle1" fontWeight="500">
-            Widget Customization
-          </Typography>
-          <FormControlLabel
-            data-testid="demo-mode-switch"
-            control={<Switch checked={demoMode} onChange={toggleDemoMode} />}
-            label={<Typography>Demo</Typography>}
+          <Image
+            src="/assets/superfluid-logo.svg"
+            alt="Superfluid logo"
+            width="171"
+            height="31"
+            style={{ display: "block" }}
           />
-        </Stack>
+        </Paper>
 
-        <TabContext value={activeTab}>
-          <TabList onChange={(_, value) => setActiveTab(value)} sx={{ px: 2 }}>
-            <Tab label="Product" value="product" data-testid="product-tab" />
-            <Tab label="UI" value="ui" data-testid="ui-tab" />
-            <Tab label="Export" value="export" data-testid="export-tab" />
-          </TabList>
-
-          <FormProvider {...formMethods}>
-            <TabPanel value="ui">
-              <UiEditor />
-            </TabPanel>
-            <TabPanel value="product">
-              <ProductEditor />
-            </TabPanel>
-            <TabPanel value="export">
-              <ExportEditor />
-            </TabPanel>
-          </FormProvider>
-        </TabContext>
-      </Drawer>
-      <Stack
-        component="main"
-        alignItems="center"
-        sx={{
-          flexGrow: 1,
-          backgroundColor: theme.palette.grey[50],
-          position: "relative",
-          py: "8vh",
-          overflow: "auto",
-        }}
-      >
-        <WidgetPreview
-          {...{
-            productDetails,
-            paymentDetails,
-            displaySettings,
-            type,
-          }}
-        />
-        <Box
+        <Paper
+          component={Stack}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          elevation={0}
           sx={{
-            position: "fixed",
-            left: "calc(50%-96px)",
-            backgroundColor: theme.palette.common.white,
-            bottom: 0,
-            borderRadius: 1,
-            zIndex: 100,
+            borderRadius: 5,
+            position: "relative",
+            overflow: "hidden",
+            [theme.breakpoints.up("sm")]: {
+              // 100vh - gaps and margins - header height - footer height
+              maxHeight: "calc(100vh - 72px - 80px - 268px)",
+            },
+            [theme.breakpoints.down("sm")]: {
+              borderRadius: 2,
+            },
           }}
         >
-          <Controller
-            control={control}
-            name="type"
-            render={({ field: { value, onChange } }) => (
-              <ToggleButtonGroup
-                value={value}
-                exclusive
-                onChange={(_, value) => onChange(value)}
+          <Box
+            flex="1"
+            sx={{
+              maxWidth: "650px",
+              pl: 7.5,
+              py: 5,
+              [theme.breakpoints.down("md")]: {
+                px: 5,
+              },
+            }}
+          >
+            <Stack direction="row" gap={1} alignItems="center">
+              <svg width="39" height="2" viewBox="0 0 39 2">
+                <path d="M39 1H0.5" stroke="#1DB227" />
+              </svg>
+              <Typography
+                fontWeight="bold"
+                color="primary"
+                variant={isBelowSm ? "caption" : "body1"}
+              >
+                Subscription checkout builder
+              </Typography>
+            </Stack>
+            <Typography
+              variant="h1"
+              sx={{
+                mt: 2,
+                mb: 2.5,
+                [theme.breakpoints.down("lg")]: {
+                  fontSize: "2rem",
+                },
+              }}
+              color="grey.900"
+            >
+              Build your checkout and get paid every second.
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              color="grey.800"
+              sx={{
+                [theme.breakpoints.down("lg")]: {
+                  fontSize: "1rem",
+                },
+              }}
+            >
+              Define your payment details and experiment with component styles.
+              Export your creation with ease in the most convenient format and
+              seamlessly integrate it into your platform.
+            </Typography>
+            <Stack
+              direction="row"
+              gap={2}
+              sx={{
+                mt: 8,
+                [theme.breakpoints.down("lg")]: {
+                  mt: 4,
+                },
+              }}
+            >
+              <Button
+                fullWidth
+                component={Link}
+                href="builder"
+                variant="contained"
+                color="primary"
+                size="large"
                 sx={{
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
+                  [theme.breakpoints.up("lg")]: {
+                    maxWidth: "254px",
+                  },
                 }}
               >
-                <ToggleButton value="dialog" aria-label="dialog" title="Dialog">
-                  <WebAssetIcon />
-                </ToggleButton>
-                <ToggleButton value="drawer" aria-label="drawer" title="Drawer">
-                  <ViewSidebarIcon />
-                </ToggleButton>
-                <ToggleButton
-                  value="full-screen"
-                  aria-label="full-screen"
-                  title="Full Screen"
-                >
-                  <FullscreenIcon />
-                </ToggleButton>
-                <ToggleButton value="page" aria-label="page" title="Page">
-                  <WebIcon />
-                </ToggleButton>
-              </ToggleButtonGroup>
-            )}
-          />
-        </Box>
+                Enter Builder
+              </Button>
+              <BookDemoBtn
+                sx={{
+                  [theme.breakpoints.up("lg")]: {
+                    maxWidth: "180px",
+                  },
+                }}
+              >
+                Book a Demo
+              </BookDemoBtn>
+            </Stack>
+          </Box>
+          {!isBelowMd && (
+            <Box sx={{ maxWidth: "min(50%, 1208px)" }}>
+              <img
+                src="/assets/preview.png"
+                alt=""
+                style={{ display: "block", width: "100%" }}
+              />
+            </Box>
+          )}
+        </Paper>
       </Stack>
-      <TermsAndPrivacy />
-      <Box sx={{ position: "absolute", top: 5, right: 5 }}>
-        <Button
-          variant="text"
-          onClick={() => setConfigEditorOpen((isOpen) => !isOpen)}
-          startIcon={<CodeIcon />}
-        >
-          JSON Editor
-        </Button>
-      </Box>
-      <ConfigEditorDrawer
-        value={getValues()}
-        setValue={setValue}
-        isOpen={isConfigEditorOpen}
-        setIsOpen={setConfigEditorOpen}
-      />
-    </Box>
+
+      <Footer />
+    </Stack>
   );
 }

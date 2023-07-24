@@ -1,0 +1,14 @@
+.Footer {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+@media screen and (max-width: 480px) {
+  .Footer {
+    text-align: center;
+  }
+}

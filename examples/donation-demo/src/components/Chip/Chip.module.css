@@ -1,0 +1,6 @@
+.Chip {
+  border-radius: 50px;
+  background-color: var(--secondary);
+  color: var(--primary);
+  padding: 0.35rem 1rem;
+}

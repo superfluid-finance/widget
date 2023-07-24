@@ -62,14 +62,15 @@ const WrapCard: FC<WrapCardProps> = ({
         </Stack>
       )}
 
-      <Box />
-
       <Typography
         data-testid={`${dataTest}-balance`}
         variant="caption"
         align="right"
         color="text.secondary"
-        sx={{ visibility: formattedTokenBalance ? "visible" : "hidden" }}
+        sx={{
+          visibility: formattedTokenBalance ? "visible" : "hidden",
+          gridColumn: "1/3",
+        }}
       >
         {`Balance: ${
           formattedTokenBalance && approximateIfDecimal(formattedTokenBalance)

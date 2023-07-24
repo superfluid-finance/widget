@@ -21,7 +21,8 @@
         "NEXT_PUBLIC_EXPORT_BASE_URL",
         "NEXT_PUBLIC_SEGMENT_WRITE_KEY",
         "NEXT_PUBLIC_PINATA_API_KEY",
-        "NEXT_PUBLIC_PINATA_API_SECRET"
+        "NEXT_PUBLIC_PINATA_API_SECRET",
+        "NEXT_PUBLIC_INTERCOM_SURVEY_ID"
       ]
     },
     "@superfluid-finance/hosted-widget#build": {
@@ -35,7 +36,13 @@
     },
     "@superfluid-finance/b2b-service-demo#build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": ["NEXT_PUBLIC_THE_THING"]
+    },
+    "@superfluid-finance/donation-demo#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": ["NEXT_PUBLIC_THE_THING"]
     },
     "test": {
       "dependsOn": ["build"],

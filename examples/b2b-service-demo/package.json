@@ -1,5 +1,5 @@
 {
-  "name": "b2b-service-demo",
+  "name": "@superfluid-finance/b2b-service-demo",
   "version": "0.1.1",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sentry/nextjs": "^7.59.2",
     "@superfluid-finance/tokenlist": "^1.3.0",
     "@superfluid-finance/widget": "workspace:*",
     "@types/node": "20.4.2",
