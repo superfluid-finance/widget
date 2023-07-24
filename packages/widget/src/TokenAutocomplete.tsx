@@ -40,6 +40,7 @@ export default function TokenAutocomplete() {
           renderOption={(props, option) => (
             <Stack
               {...props}
+              key={`${option.superToken.symbol}-${option.paymentOption.flowRate?.amountEther}`}
               component="li"
               direction="row"
               alignItems="center"
