@@ -40,7 +40,7 @@ const IPFSWidgetPage: NextPage = () => {
   const { data: demoData, loading: demoLoading } = useLoadFromIPFS(
     superfluidDemoIPFSHash,
   );
-  const { data, loading } = useLoadFromIPFS(query.hash as string);
+  const { data, loading } = useLoadFromIPFS(query.hash ? query.hash[0] : "");
 
   const fontFamily = useMemo(() => {
     const typography = data?.theme?.typography as TypographyOptions;
@@ -62,8 +62,8 @@ const IPFSWidgetPage: NextPage = () => {
     if (!data) return demoData;
 
     return {
-      ...data,
-      paymentDetails: demoData.paymentDetails,
+      ...demoData,
+      ...(data ? { theme: data.theme } : {}),
     };
   }, [demoData, data, randomReceiver]);
 
