@@ -1,12 +1,14 @@
-import { createContext, useContext } from "react";
-import { CheckoutConfig } from "./CheckoutConfig";
-import { ChainId, SupportedNetwork } from "./core";
-import { PaymentOptionWithTokenInfo } from "./formValues";
-import { Address } from "viem";
-import { WalletManager } from "./WalletManager";
-import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import { Orientation } from "@mui/material";
-import { EventListeners } from "./EventListeners";
+import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
+import { createContext, useContext } from "react";
+import { Address } from "viem";
+
+import { CheckoutConfig } from "./CheckoutConfig.js";
+import { ChainId, SupportedNetwork } from "./core/index.js";
+import { EventListeners } from "./EventListeners.js";
+import { PaymentOptionWithTokenInfo } from "./formValues.js";
+import { WalletManager } from "./WalletManager.js";
+import { ViewProps } from "./WidgetView.js";
 
 export type WidgetContextValue = {
   getSuperToken: (address: Address) => SuperTokenInfo;
@@ -24,6 +26,7 @@ export type WidgetContextValue = {
   layout: {
     elevated: boolean;
   };
+  type: ViewProps["type"];
   eventListeners: Required<EventListeners>;
 } & CheckoutConfig;
 

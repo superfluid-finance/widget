@@ -1,14 +1,15 @@
 import { test } from "@playwright/test";
-import { WidgetPage } from "../pageObjects/widgetPage";
-import { BuilderPage } from "../pageObjects/builderPage";
+
 import {
+  defaultPaymentOption,
   rebounderAddresses,
   testOption,
-  defaultPaymentOption,
 } from "../pageObjects/basePage";
+import { BuilderPage } from "../pageObjects/builderPage";
+import { WidgetPage } from "../pageObjects/widgetPage";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/builder");
 });
 
 test("Changing the products name", async ({ page }) => {

@@ -1,5 +1,5 @@
-import CheckIcon_ from "@mui/icons-material/Check";
-import ContentCopyIcon_ from "@mui/icons-material/ContentCopy";
+import CheckIcon_ from "@mui/icons-material/Check.js";
+import ContentCopyIcon_ from "@mui/icons-material/ContentCopy.js";
 import {
   Avatar,
   IconButton,
@@ -12,9 +12,10 @@ import {
 import { create } from "blockies-ts";
 import { useState } from "react";
 import { Address } from "viem";
-import { AccountAddress } from "./AccountAddress";
-import { normalizeIcon } from "./helpers/normalizeIcon";
-import { copyToClipboard } from "./utils";
+
+import { AccountAddress } from "./AccountAddress.js";
+import { normalizeIcon } from "./helpers/normalizeIcon.js";
+import { copyToClipboard } from "./utils.js";
 
 const ContentCopyIcon = normalizeIcon(ContentCopyIcon_);
 const CheckIcon = normalizeIcon(CheckIcon_);

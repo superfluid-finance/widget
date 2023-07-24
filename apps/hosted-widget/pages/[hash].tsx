@@ -1,20 +1,19 @@
-import Container from "@mui/material/Container";
+import { Fade } from "@mui/material";
 import Box from "@mui/material/Box";
-
-import { useRouter } from "next/router";
-import { NextPage } from "next";
-import useLoadFromIPFS from "../src/hooks/useLoadFromIPFS";
-import { useWeb3Modal } from "@web3modal/react";
-import SuperfluidWidget from "@superfluid-finance/widget";
+import Container from "@mui/material/Container";
+import { TypographyOptions } from "@mui/material/styles/createTypography";
 import tokenList from "@superfluid-finance/tokenlist";
+import SuperfluidWidget from "@superfluid-finance/widget";
+import { useWeb3Modal } from "@web3modal/react";
+import { NextPage } from "next";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { useMemo } from "react";
 
 import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
-import useWalletAnalytics from "../src/hooks/useWalletAnalytics";
-import Image from "next/image";
-import { Fade } from "@mui/material";
 import useFontLoader from "../src/hooks/useFontLoader";
-import { TypographyOptions } from "@mui/material/styles/createTypography";
+import useLoadFromIPFS from "../src/hooks/useLoadFromIPFS";
+import useWalletAnalytics from "../src/hooks/useWalletAnalytics";
 import { WagmiProviders } from "../src/providers";
 
 const IPFSWidgetPage: NextPage = () => {

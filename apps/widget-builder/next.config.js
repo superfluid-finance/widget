@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  transpilePackages: ["@superfluid-finance/widget"],
   webpack: (config) => {
     config.resolve.fallback = { fs: false, net: false, tls: false };
 
@@ -24,9 +23,9 @@ module.exports = {
     NEXT_PUBLIC_EXPORT_BASE_URL: process.env.NEXT_PUBLIC_EXPORT_BASE_URL,
     NEXT_PUBLIC_PINATA_API_KEY: process.env.NEXT_PUBLIC_PINATA_API_KEY,
     NEXT_PUBLIC_PINATA_API_SECRET: process.env.NEXT_PUBLIC_PINATA_API_SECRET,
+    NEXT_PUBLIC_INTERCOM_SURVEY_ID: process.env.NEXT_PUBLIC_INTERCOM_SURVEY_ID,
   },
 };
-
 
 // Injected content via Sentry wizard below
 
@@ -62,5 +61,5 @@ module.exports = withSentryConfig(
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
-  }
+  },
 );

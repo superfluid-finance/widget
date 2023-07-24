@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { addressSchema } from "./PaymentOption";
+
+import { addressSchema } from "./PaymentOption.js";
 
 const WrapperSchema = z.object({
   type: z.literal("Wrapper"),

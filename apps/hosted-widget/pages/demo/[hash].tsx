@@ -1,20 +1,19 @@
-import { Container, Box, Fade } from "@mui/material";
-
-import { useRouter } from "next/router";
-import { NextPage } from "next";
-import useLoadFromIPFS from "../../src/hooks/useLoadFromIPFS";
-import { useWeb3Modal } from "@web3modal/react";
-import SuperfluidWidget from "@superfluid-finance/widget";
+import { Box, Container, Fade } from "@mui/material";
+import { TypographyOptions } from "@mui/material/styles/createTypography";
 import tokenList from "@superfluid-finance/tokenlist";
+import SuperfluidWidget from "@superfluid-finance/widget";
+import { useWeb3Modal } from "@web3modal/react";
+import { NextPage } from "next";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { useMemo } from "react";
 
-import useAnalyticsBrowser from "../../src/hooks/useAnalyticsBrowser";
-import useWalletAnalytics from "../../src/hooks/useWalletAnalytics";
-import Image from "next/image";
-import useFontLoader from "../../src/hooks/useFontLoader";
-import { TypographyOptions } from "@mui/material/styles/createTypography";
-import { WagmiDemoProviders } from "../../src/providers";
 import DemoWalletDisplay from "../../src/components/demo-wallet-display/DemoWalletDisplay";
+import useAnalyticsBrowser from "../../src/hooks/useAnalyticsBrowser";
+import useFontLoader from "../../src/hooks/useFontLoader";
+import useLoadFromIPFS from "../../src/hooks/useLoadFromIPFS";
+import useWalletAnalytics from "../../src/hooks/useWalletAnalytics";
+import { WagmiDemoProviders } from "../../src/providers";
 import { deleteFlow } from "../../src/utils/deleteDemoFlow";
 
 const IPFSWidgetPage: NextPage = () => {

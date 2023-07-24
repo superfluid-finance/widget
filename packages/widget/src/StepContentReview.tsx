@@ -1,11 +1,12 @@
 import { Alert, Collapse, Divider, Stack } from "@mui/material";
-import { useCommandHandler } from "./CommandHandlerContext";
 import { Fragment } from "react";
-import { StepperCTAButton } from "./StepperCTAButton";
-import { CommandPreview } from "./previews/CommandPreview";
-import { useStepper } from "./StepperContext";
-import { useCommandValidationSchema } from "./useCommandValidationSchema";
 import { useQuery } from "wagmi";
+
+import { useCommandHandler } from "./CommandHandlerContext.js";
+import { CommandPreview } from "./previews/CommandPreview.js";
+import { useStepper } from "./StepperContext.js";
+import { StepperCTAButton } from "./StepperCTAButton.js";
+import { useCommandValidationSchema } from "./useCommandValidationSchema.js";
 
 export default function StepContentReview() {
   const { commands, sessionId } = useCommandHandler();
@@ -32,7 +33,7 @@ export default function StepContentReview() {
       <Stack direction="column" spacing={3}>
         <Collapse in={isValidationError}>
           {isValidationError && (
-            <Alert severity="error">
+            <Alert data-testid="review-error" severity="error">
               {validationResult.error.issues[0].message}
             </Alert>
           )}

@@ -1,19 +1,21 @@
 import "./App.css";
+
+import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   EventListeners,
   supportedNetworks,
 } from "@superfluid-finance/widget";
-import productDetails from "./productDetails";
-import paymentDetails from "./paymentDetails";
-import { WagmiConfig, configureChains, createConfig } from "wagmi";
-import { Web3Modal, useWeb3Modal } from "@web3modal/react";
 import {
   EthereumClient,
   w3mConnectors,
   w3mProvider,
 } from "@web3modal/ethereum";
+import { useWeb3Modal, Web3Modal } from "@web3modal/react";
 import { useMemo } from "react";
-import superTokenList from "@superfluid-finance/tokenlist";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+
+import paymentDetails from "./paymentDetails";
+import productDetails from "./productDetails";
 
 const projectId = "952483bf7a0f5ace4c40eb53967f1368";
 

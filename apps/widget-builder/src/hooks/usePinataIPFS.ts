@@ -1,6 +1,6 @@
+import pinataSDK, { PinataPinOptions } from "@pinata/sdk";
 import { useCallback, useState } from "react";
 
-import pinataSDK, { PinataPinOptions } from "@pinata/sdk";
 import { ExportJSON } from "../types/export-json";
 
 const usePinataIpfs = (pinOptions: PinataPinOptions) => {

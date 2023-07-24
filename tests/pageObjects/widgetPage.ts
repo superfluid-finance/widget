@@ -1,7 +1,8 @@
 import { expect, Locator, Page } from "@playwright/test";
 import * as metamask from "@synthetixio/synpress/commands/metamask";
-import { BasePage } from "./basePage";
+
 import * as EthHelper from "../helpers/ethHelper";
+import { BasePage } from "./basePage";
 
 export class WidgetPage extends BasePage {
   readonly page: Page;
@@ -44,15 +45,12 @@ export class WidgetPage extends BasePage {
   readonly transactionCount: Locator;
   readonly transactionCircularProgress: Locator;
   readonly transactionSpinningProgress: Locator;
+  readonly reviewStepError: Locator;
+  readonly switchNetworkButton: Locator;
   // readonly copyButtons: Locator;
-  // readonly selectNetworkDropdown: Locator;
-  // readonly selectTokenDropdown: Locator;
   // readonly productDetails: Locator;
   // readonly poweredBySuperfluidButton: Locator;
   // readonly selectedNetworkBadge: Locator;
-  // readonly switchNetworkButton: Locator;
-  // readonly transactionProgressBar: Locator;
-  // readonly transactionProgressCount: Locator;
   // readonly closeButton: Locator;
   selectedTokenDuringTest?: string;
   senderAddressDuringTest?: string;
@@ -129,6 +127,8 @@ export class WidgetPage extends BasePage {
     this.transactionSpinningProgress = page.getByTestId(
       "spinning-circular-progress",
     );
+    this.reviewStepError = page.getByTestId("review-error");
+    this.switchNetworkButton = page.getByTestId("switch-network-button");
   }
 
   async clickContinueButton() {
@@ -365,5 +365,15 @@ export class WidgetPage extends BasePage {
         `Balance: ${superTokenBalanceToAssert}`,
       );
     });
+  }
+
+  async validateReviewStepError(message: string) {
+    await expect(this.reviewStepError).toHaveText(message);
+    await expect(this.continueButton).toBeDisabled();
+  }
+
+  async clickSwitchNetworkButton() {
+    await expect(this.switchNetworkButton).toBeVisible();
+    await this.switchNetworkButton.click();
   }
 }

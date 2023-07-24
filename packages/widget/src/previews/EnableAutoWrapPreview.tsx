@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
-import { EnableAutoWrapCommand } from "../commands";
+
+import { EnableAutoWrapCommand } from "../commands.js";
 
 export function EnableAutoWrapPreview({
   command: cmd,

@@ -1,4 +1,8 @@
-import { PaymentOption, SupportedNetwork, supportedNetworks } from "../core";
+import {
+  PaymentOption,
+  SupportedNetwork,
+  supportedNetworks,
+} from "../core/index.js";
 
 export function mapSupportedNetworksFromPaymentOptions(
   paymentOptions: ReadonlyArray<PaymentOption>,

@@ -1,7 +1,8 @@
 import { formatEther, getAddress, parseEther } from "viem";
 import { z } from "zod";
-import { timePeriods } from "./TimePeriod";
-import { chainIdSchema } from "./SupportedNetwork";
+
+import { chainIdSchema } from "./SupportedNetwork.js";
+import { timePeriods } from "./TimePeriod.js";
 
 export const addressSchema = z.string().transform((value, ctx) => {
   try {

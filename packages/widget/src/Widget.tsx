@@ -1,28 +1,29 @@
 import {
   Alert,
   AlertTitle,
+  createTheme,
   ThemeOptions,
   ThemeProvider,
-  createTheme,
 } from "@mui/material";
 import { deepmerge } from "@mui/utils";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
+import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
 import { Address, zeroAddress } from "viem";
-import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig";
-import { WalletManager } from "./WalletManager";
-import { WidgetContext, WidgetContextValue } from "./WidgetContext";
-import { ViewProps, WidgetView } from "./WidgetView";
-import { ChainId, SupportedNetwork, supportedNetworks } from "./core";
-import { PaymentOptionWithTokenInfo } from "./formValues";
-import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions";
-import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList";
-import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions";
-import { buildThemeOptions } from "./theme";
-import { EventListeners } from "./EventListeners";
-import { nanoid } from "nanoid";
 import { fromZodError } from "zod-validation-error";
+
+import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig.js";
+import { ChainId, SupportedNetwork, supportedNetworks } from "./core/index.js";
+import { EventListeners } from "./EventListeners.js";
+import { PaymentOptionWithTokenInfo } from "./formValues.js";
+import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
+import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList.js";
+import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions.js";
+import { buildThemeOptions } from "./theme.js";
+import { WalletManager } from "./WalletManager.js";
+import { WidgetContext, WidgetContextValue } from "./WidgetContext.js";
+import { ViewProps, WidgetView } from "./WidgetView.js";
 
 export type WidgetProps = ViewProps &
   CheckoutConfig & {
@@ -147,6 +148,7 @@ export function Widget({
       layout: {
         elevated: !["drawer", "dialog"].includes(viewProps.type),
       },
+      type: viewProps.type,
       eventListeners: {
         onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
         onSuccessButtonClick:

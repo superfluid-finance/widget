@@ -1,0 +1,16 @@
+.ContentWrapper {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  align-items: start;
+  gap: 2rem;
+}
+
+.ContentNumbers {
+  text-align: right;
+}
+
+@media screen and (max-width: 480px) {
+  .ContentWrapper {
+    gap: 1rem;
+  }
+}

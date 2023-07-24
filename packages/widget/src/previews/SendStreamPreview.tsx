@@ -1,15 +1,19 @@
-import { Box, Paper, Stack, Typography } from "@mui/material";
-import { SendStreamCommand } from "../commands";
-import { useWidget } from "../WidgetContext";
-import { AccountAddressCard } from "../AccountAddressCard";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useBalance } from "wagmi";
-import StreamIndicator from "../StreamIndicator";
+
+import { AccountAddressCard } from "../AccountAddressCard.js";
+import { SendStreamCommand } from "../commands.js";
+import StreamIndicator from "../StreamIndicator.js";
+import { useWidget } from "../WidgetContext.js";
 
 export function SendStreamPreview({
   command: cmd,
 }: {
   command: SendStreamCommand;
 }) {
+  const theme = useTheme();
+  const isBelowMd = useMediaQuery(theme.breakpoints.down("md"));
+
   const { getSuperToken } = useWidget();
   const superToken = getSuperToken(cmd.superTokenAddress);
 
@@ -27,6 +31,9 @@ export function SendStreamPreview({
           display: "grid",
           gridTemplateColumns: "1fr auto 1fr",
           rowGap: 1.25,
+          [theme.breakpoints.down("md")]: {
+            gridTemplateColumns: "1fr",
+          },
         }}
         alignItems="center"
         width="100%"
@@ -34,8 +41,16 @@ export function SendStreamPreview({
         <Typography variant="caption" fontWeight="medium">
           Sender
         </Typography>
-        <Box />
-        <Typography variant="caption" fontWeight="medium">
+        {!isBelowMd && <Box />}
+        <Typography
+          variant="caption"
+          fontWeight="medium"
+          sx={{
+            [theme.breakpoints.down("md")]: {
+              gridRow: 4,
+            },
+          }}
+        >
           Receiver
         </Typography>
 
@@ -44,7 +59,18 @@ export function SendStreamPreview({
           address={cmd.accountAddress}
           PaperProps={{ sx: { zIndex: 2 } }}
         />
-        <StreamIndicator sx={{ mx: -1, zIndex: 0 }} />
+        <StreamIndicator
+          sx={{
+            mx: -1,
+            zIndex: 0,
+            [theme.breakpoints.down("md")]: {
+              transform: "rotate(90deg)",
+              justifySelf: "center",
+              transformOrigin: "center",
+              mb: -3.5,
+            },
+          }}
+        />
         <AccountAddressCard
           dataTest="receiver"
           address={cmd.receiverAddress}

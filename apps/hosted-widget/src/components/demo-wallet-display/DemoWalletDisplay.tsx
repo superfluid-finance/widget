@@ -1,6 +1,7 @@
-import { Box, ListItemAvatar, ListItemText, colors } from "@mui/material";
+import { Box, colors, ListItemAvatar, ListItemText } from "@mui/material";
 import { FC } from "react";
 import { useAccount } from "wagmi";
+
 import AddressAvatar from "../address-avatar/AddressAvatar";
 
 const DemoWalletDisplay: FC = () => {

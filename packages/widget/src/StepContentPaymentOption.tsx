@@ -1,14 +1,15 @@
 import { Box, Collapse, Stack } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
-import FlowRateInput from "./FlowRateInput";
-import NetworkAutocomplete from "./NetworkAutocomplete";
-import { StepperCTAButton } from "./StepperCTAButton";
-import TokenAutocomplete from "./TokenAutocomplete";
-import { useWidget } from "./WidgetContext";
-import { DraftFormValues } from "./formValues";
-import { useStepper } from "./StepperContext";
-import { useEffect, useState } from "react";
+
+import FlowRateInput from "./FlowRateInput.js";
+import { DraftFormValues } from "./formValues.js";
+import NetworkAutocomplete from "./NetworkAutocomplete.js";
+import { useStepper } from "./StepperContext.js";
+import { StepperCTAButton } from "./StepperCTAButton.js";
+import TokenAutocomplete from "./TokenAutocomplete.js";
+import { useWidget } from "./WidgetContext.js";
 
 export default function StepContentPaymentOption() {
   const {

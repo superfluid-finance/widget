@@ -1,7 +1,8 @@
 import { cfAv1ForwarderABI } from "@superfluid-finance/widget";
 import { getContract } from "viem";
-import { wagmiConfigDemo } from "../wagmi-demo";
 import { polygonMumbai } from "wagmi/chains";
+
+import { wagmiConfigDemo } from "../wagmi-demo";
 
 const CFAV1ForwarderAddress = "0xcfA132E353cB4E398080B9700609bb008eceB125";
 const fUSDCxAddress = "0x42bb40bf79730451b11f6de1cba222f17b87afd7";

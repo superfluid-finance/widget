@@ -1,8 +1,6 @@
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { LoadingButton } from "@mui/lab";
 import {
-  Button,
-  IconButton,
+  Box,
+  Divider,
   MenuItem,
   Select,
   Stack,
@@ -10,67 +8,19 @@ import {
 } from "@mui/material";
 import { FC, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import usePinataIpfs from "../../hooks/usePinataIPFS";
+
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
 import { ExportJSON } from "../../types/export-json";
+import BookDemoBtn from "../buttons/BookDemoBtn";
+import DownloadJsonBtn from "../buttons/DownloadJsonBtn";
+import IPFSPublishBtn from "../buttons/IPFSPublishBtn";
 import InputWrapper from "../form/InputWrapper";
 import {
-  WidgetProps,
   mapDisplaySettingsToTheme,
+  WidgetProps,
 } from "../widget-preview/WidgetPreview";
-import { SuperfluidButton } from "@superfluid-finance/widget/components";
 
 type ExportOption = "json" | "ipfs";
-
-const DownloadJsonButton: FC<{ json: ExportJSON }> = ({ json }) => (
-  <Button
-    data-testid="download-button"
-    variant="contained"
-    href={URL.createObjectURL(
-      new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),
-    )}
-    download={`widget.json`}
-    sx={{ color: "white" }}
-  >
-    Download JSON
-  </Button>
-);
-
-const IpfsPublish: FC<{ json: ExportJSON }> = ({ json }) => {
-  const { publish, isLoading, ipfsHash } = usePinataIpfs({
-    pinataMetadata: { name: `${json.productDetails.name}-superfluid-widget` },
-  });
-
-  return (
-    <Stack direction="column" gap={2}>
-      <LoadingButton
-        data-testid="publish-button"
-        loading={isLoading}
-        variant="contained"
-        onClick={() => publish(json)}
-        sx={{ color: "white" }}
-      >
-        Publish
-      </LoadingButton>
-
-      {ipfsHash && (
-        <Stack direction="column" sx={{ alignItems: "center", mt: 4 }} gap={2}>
-          <Typography
-            data-testid="published-message"
-            variant="subtitle2"
-            textAlign="center"
-          >
-            Your config is published to IPFS. Test it with our hosted widget:
-          </Typography>
-          <SuperfluidButton
-            fullWidth
-            widgetUrl={`${process.env.NEXT_PUBLIC_EXPORT_BASE_URL}/${ipfsHash}`}
-          />
-        </Stack>
-      )}
-    </Stack>
-  );
-};
 
 const switchExportOption = (
   selectedExportOption: ExportOption,
@@ -78,9 +28,9 @@ const switchExportOption = (
 ) => {
   switch (selectedExportOption) {
     case "json":
-      return <DownloadJsonButton json={json} />;
+      return <DownloadJsonBtn json={json} />;
     case "ipfs":
-      return <IpfsPublish json={json} />;
+      return <IPFSPublishBtn json={json} />;
     default:
       return <></>;
   }
@@ -126,21 +76,49 @@ const ExportEditor: FC = () => {
     useState<ExportOption>("ipfs");
 
   return (
-    <Stack gap={2}>
-      <InputWrapper title="Select export option">
-        <Select
-          data-testid="export-option"
-          value={selectedExportOption}
-          defaultValue="ipfs"
-          onChange={({ target }) =>
-            setSelectedExportOption(target.value as ExportOption)
-          }
-        >
-          <MenuItem value="ipfs">Publish to IPFS to get a hosted link</MenuItem>
-          <MenuItem value="json">Download JSON</MenuItem>
-        </Select>
-      </InputWrapper>
-      {switchExportOption(selectedExportOption, json)}
+    <Stack gap={4}>
+      <Box>
+        <InputWrapper title="Select export option">
+          <Select
+            data-testid="export-option"
+            value={selectedExportOption}
+            defaultValue="ipfs"
+            onChange={({ target }) =>
+              setSelectedExportOption(target.value as ExportOption)
+            }
+          >
+            <MenuItem value="ipfs">
+              Publish to IPFS to get a hosted link
+            </MenuItem>
+            <MenuItem value="json">Download JSON</MenuItem>
+          </Select>
+        </InputWrapper>
+        <Box textAlign="center" sx={{ my: 3 }}>
+          <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
+            How does it work?
+          </Typography>
+          <Typography color="grey.800">
+            {selectedExportOption === "ipfs"
+              ? "You’ll create a hosted link to your checkout which you can embed in your CTAs."
+              : selectedExportOption === "json"
+              ? "Use this JSON configuration when embedding react or web component directly to your code."
+              : ""}
+          </Typography>
+        </Box>
+        {switchExportOption(selectedExportOption, json)}
+      </Box>
+
+      <Divider />
+
+      <Box textAlign="center">
+        <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
+          Do you have more questions?
+        </Typography>
+        <Typography color="grey.800" sx={{ mb: 3 }}>
+          We’ll show you how your business can benefit from using our checkout.
+        </Typography>
+        <BookDemoBtn>Book a Demo</BookDemoBtn>
+      </Box>
     </Stack>
   );
 };

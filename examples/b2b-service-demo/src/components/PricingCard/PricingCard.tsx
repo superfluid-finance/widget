@@ -6,9 +6,16 @@ import SuperfluidWidget, {
   WidgetProps,
 } from "@superfluid-finance/widget";
 import { useWeb3Modal } from "@web3modal/react";
-import { FC, useCallback, useMemo, useRef } from "react";
+import { FC, useCallback, useMemo, useRef, useState } from "react";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+
+import configuration from "@/configuration";
+import { deleteFlow } from "@/utils/deleteDemoFlow";
+
 import Button from "../Button/Button";
 import styles from "./PricingCard.module.css";
+
+const { Token } = configuration;
 
 const productDetails: ProductDetails = {
   name: `Donation Subscription`,
@@ -17,18 +24,74 @@ const productDetails: ProductDetails = {
   successURL: "#",
 };
 
-const defaultPaymentOption: PaymentOption = {
-  receiverAddress: "0xE0537ea8F1d5A304635ce05D6F6b0D71fCfAB3a1",
-  chainId: 80001,
-  superToken: {
-    address: "0x42bb40bf79730451b11f6de1cba222f17b87afd7",
-  },
-};
-
 const theme: WidgetProps["theme"] = {
   typography: {
     fontFamily: "Inter, sans-serif",
     fontSize: 16,
+
+    button: {
+      textTransform: "none",
+    },
+
+    h1: {
+      fontSize: "3.36875rem",
+      fontWeight: 500,
+      lineHeight: 1,
+    },
+
+    h2: {
+      fontSize: "2.296875rem",
+      fontWeight: 500,
+      lineHeight: 1,
+    },
+
+    h3: {
+      fontSize: "1.75rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    h4: {
+      fontSize: "1.53125rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    h5: {
+      fontSize: "1.3125rem",
+      fontWeight: 500,
+      lineHeight: 1.25,
+    },
+
+    subtitle1: {
+      fontSize: "1.09375rem",
+      fontWeight: 500,
+      lineHeight: 1.5,
+    },
+
+    subtitle2: {
+      fontSize: "0.984375rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+
+    body1: {
+      fontSize: "0.875rem",
+      fontWeight: 500,
+      lineHeight: 1.5,
+    },
+
+    body2: {
+      fontSize: "0.875rem",
+      fontWeight: 400,
+      lineHeight: 1.5,
+    },
+
+    caption: {
+      fontSize: "0.875rem",
+      lineHeight: 1.25,
+      fontWeight: 400,
+    },
   },
   palette: {
     primary: {
@@ -50,6 +113,10 @@ interface PricingCardProps {
   onFinish?: () => void;
 }
 
+function generateRandomReceiver() {
+  return privateKeyToAccount(generatePrivateKey()).address;
+}
+
 const PricingCard: FC<PricingCardProps> = ({
   title,
   description,
@@ -60,6 +127,10 @@ const PricingCard: FC<PricingCardProps> = ({
   onClick,
   onFinish,
 }) => {
+  const [randomReceiver, setRandomReceiver] = useState<`0x${string}`>(
+    generateRandomReceiver(),
+  );
+
   const closeModalRef = useRef<() => void>(() => {});
 
   const { open, isOpen } = useWeb3Modal();
@@ -72,25 +143,31 @@ const PricingCard: FC<PricingCardProps> = ({
     [open, isOpen],
   );
 
-  const paymentDetails: PaymentDetails = useMemo(() => {
-    return {
+  const paymentDetails: PaymentDetails = useMemo(
+    () => ({
       paymentOptions: [
         {
-          ...defaultPaymentOption,
+          receiverAddress: randomReceiver,
+          chainId: 80001,
+          superToken: {
+            address: Token,
+          },
           flowRate: {
             amountEther: price.toString() as `${number}`,
             period: "month",
           },
         },
       ],
-    };
-  }, [price]);
+    }),
+    [price, randomReceiver],
+  );
 
   const onSuccessClickCallback = useCallback(() => {
     if (!closeModalRef.current) return;
 
     closeModalRef.current();
     onFinish && onFinish();
+    setRandomReceiver(generateRandomReceiver());
   }, [closeModalRef, onFinish]);
 
   return (
@@ -117,6 +194,7 @@ const PricingCard: FC<PricingCardProps> = ({
             walletManager={walletManager}
             eventListeners={{
               onSuccessButtonClick: onSuccessClickCallback,
+              onSuccess: () => deleteFlow(randomReceiver),
             }}
           >
             {({ openModal, closeModal }) => {

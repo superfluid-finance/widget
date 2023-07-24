@@ -11,6 +11,7 @@ import superTokenList from "@superfluid-finance/tokenlist";
 import { ChainId, FlowRate } from "@superfluid-finance/widget";
 import Image from "next/image";
 import { FC, ReactNode, useMemo } from "react";
+
 import { networks } from "../../networkDefinitions";
 
 type PaymentOptionRowProps = {

@@ -1,13 +1,14 @@
 import { useCallback, useMemo } from "react";
+
 import {
   CommandHandlerContext,
   CommandHandlerContextValue,
-} from "./CommandHandlerContext";
-import { ChildrenProp, isDefined } from "./utils";
-import { ContractWriteManager } from "./ContractWriteManager";
-import { CommandMapper } from "./CommandMapper";
-import { Command } from "./commands";
-import { useCommandHandlerReducer } from "./commandHandlingReducer";
+} from "./CommandHandlerContext.js";
+import { useCommandHandlerReducer } from "./commandHandlingReducer.js";
+import { CommandMapper } from "./CommandMapper.js";
+import { Command } from "./commands.js";
+import { ContractWriteManager } from "./ContractWriteManager.js";
+import { ChildrenProp, isDefined } from "./utils.js";
 
 type Props = {
   children:

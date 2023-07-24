@@ -1,5 +1,13 @@
 # widget-vite-react-web3modal
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [c6957f6]
+- Updated dependencies [150022f]
+  - @superfluid-finance/widget@0.0.10
+
 ## 0.0.6
 
 ### Patch Changes

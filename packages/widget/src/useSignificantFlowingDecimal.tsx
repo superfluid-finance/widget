@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { formatEther } from "viem";
-import { absoluteValue } from "./utils";
+
+import { absoluteValue } from "./utils.js";
 
 export const useSignificantFlowingDecimal = (
   flowRate: bigint,

@@ -2,24 +2,25 @@ import {
   Box,
   Collapse,
   Fade,
-  Stepper as MUIStepper,
   Portal,
   Step,
   StepButton,
   StepConnector,
   StepContent,
   StepLabel,
+  Stepper as MUIStepper,
 } from "@mui/material";
 import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import { CheckoutSummary } from "./CheckoutSummary";
-import ExpandIcon from "./ExpandIcon";
-import StepContentPaymentOption from "./StepContentPaymentOption";
-import StepContentReview from "./StepContentReview";
-import { StepContentTransactions } from "./StepContentTransactions";
-import StepContentWrap from "./StepContentWrap";
-import { StepperProvider } from "./StepperProvider";
-import { DraftFormValues } from "./formValues";
+
+import { CheckoutSummary } from "./CheckoutSummary.js";
+import ExpandIcon from "./ExpandIcon.js";
+import { DraftFormValues } from "./formValues.js";
+import StepContentPaymentOption from "./StepContentPaymentOption.js";
+import StepContentReview from "./StepContentReview.js";
+import { StepContentTransactions } from "./StepContentTransactions.js";
+import StepContentWrap from "./StepContentWrap.js";
+import { StepperProvider } from "./StepperProvider.js";
 
 export default function Stepper() {
   const {

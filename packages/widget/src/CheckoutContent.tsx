@@ -1,17 +1,20 @@
 import { Card, Stack, useTheme } from "@mui/material";
-import CheckoutProduct from "./CheckoutProduct";
-import { CommandHandlerProvider } from "./CommandHandlerProvider";
-import FormProvider from "./FormProvider";
-import PoweredBySuperfluid from "./PoweredBySuperfluid";
-import Stepper from "./Stepper";
-import { useWidget } from "./WidgetContext";
 import { useMemo } from "react";
+
+import CheckoutProduct from "./CheckoutProduct.js";
+import { CommandHandlerProvider } from "./CommandHandlerProvider.js";
+import FormProvider from "./FormProvider.js";
+import PoweredBySuperfluid from "./PoweredBySuperfluid.js";
+import Stepper from "./Stepper.js";
+import { useWidget } from "./WidgetContext.js";
 
 export function CheckoutContent() {
   const theme = useTheme();
+
   const {
     layout: { elevated },
     stepper: { orientation },
+    type,
   } = useWidget();
 
   const containerMediaQuery = useMemo(
@@ -22,13 +25,20 @@ export function CheckoutContent() {
     [theme, orientation],
   );
 
+  const containerType = useMemo(
+    () => (["drawer", "dialog"].includes(type) ? "normal" : "inline-size"),
+    [type],
+  );
+
   return (
     <Stack
       sx={{
-        m: 3,
-        containerType: "inline-size",
+        containerType,
         containerName: "wrapper",
-        minWidth: "min(510px, calc(100vw))",
+        m: 3,
+        [theme.breakpoints.down("sm")]: {
+          m: 2,
+        },
       }}
     >
       <FormProvider>
@@ -51,9 +61,10 @@ export function CheckoutContent() {
             CardProps={{
               sx: {
                 flex: 1,
-                width: "min(510px, 100vw)",
+                width: "100%",
+                maxWidth: "510px",
                 [containerMediaQuery]: {
-                  maxWidth: "480px",
+                  width: "480px",
                 },
               },
             }}
@@ -62,9 +73,11 @@ export function CheckoutContent() {
           <Card
             variant={elevated ? "elevation" : "outlined"}
             sx={{
-              width: "min(510px, 100vw)",
+              width: "100%",
+              maxWidth: "510px",
               flex: 1,
               [containerMediaQuery]: {
+                width: "510px",
                 gridRow: "1/3",
                 gridColumn: "2",
               },

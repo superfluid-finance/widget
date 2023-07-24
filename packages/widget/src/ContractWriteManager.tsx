@@ -1,13 +1,14 @@
 import { useEffect, useMemo } from "react";
+import { BaseError } from "viem";
 import {
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { ContractWrite } from "./ContractWrite";
-import { ChildrenProp } from "./utils";
-import { BaseError } from "viem";
+
+import { ContractWrite } from "./ContractWrite.js";
+import { ChildrenProp } from "./utils.js";
 
 export type ContractWriteResult = {
   contractWrite: ContractWrite;

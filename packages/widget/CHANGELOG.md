@@ -1,5 +1,12 @@
 # @superfluid-finance/widget
 
+## 0.0.10
+
+### Patch Changes
+
+- c6957f6: Reset widget when payment details change & show friendlier validation error
+- 150022f: Removed all directory imports/exports, added useImmer.ts as a local file for compilation, removed transpilePackages from all next.configs as they are not necessary
+
 ## 0.0.9
 
 ### Patch Changes

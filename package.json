@@ -8,9 +8,9 @@
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "clean": "npm-run-all -p clean:*",
-    "clean:next": "rimraf --glob './**/.next'",
-    "clean:node-modules": "rimraf --glob '**/node_modules'",
-    "clean:dist": "rimraf --glob './**/dist'",
+    "clean:next": "rimraf -g \"./**/.next\"",
+    "clean:node-modules": "rimraf -g \"**/node_modules\"",
+    "clean:dist": "rimraf -g \"./**/dist\"",
     "dev": "turbo run dev",
     "dev:main": "turbo run dev --filter=!./examples/*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -26,12 +26,12 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.26.2",
-    "npm-run-all": "^4.1.5",
-    "rimraf": "^5.0.1"
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
     "eslint": "^8.44.0",
     "eslint-config-custom": "workspace:*",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
@@ -43,7 +43,7 @@
     "overrides": {
       "next": "13.4.9",
       "react-hook-form": "7.44.3",
-      "eslint-plugin-react-hooks": "4.6.0" 
+      "eslint-plugin-react-hooks": "4.6.0"
     }
   }
 }

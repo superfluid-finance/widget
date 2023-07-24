@@ -1,11 +1,16 @@
-export type { WalletManager } from "./WalletManager";
-export { supportedNetwork, supportedNetworks, timePeriods } from "./core";
+// Re-export Token List.
 
-export * from "./core";
-export * from "@superfluid-finance/tokenlist"; // Re-export Token List.
+import { Widget } from "./Widget.js";
 
-import { Widget } from "./Widget";
-export type { WidgetProps } from "./Widget";
+export {
+  supportedNetwork,
+  supportedNetworks,
+  timePeriods,
+} from "./core/index.js";
+export * from "./core/index.js";
 export type { EventListeners } from "./EventListeners";
+export type { WalletManager } from "./WalletManager";
+export type { WidgetProps } from "./Widget";
+export * from "@superfluid-finance/tokenlist";
 
 export default Widget;
