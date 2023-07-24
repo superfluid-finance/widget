@@ -6,7 +6,6 @@ import {
   Paper,
   PaperProps,
   Stack,
-  SxProps,
   Typography,
 } from "@mui/material";
 import { create } from "blockies-ts";
@@ -76,7 +75,7 @@ export function AccountAddressCard({
               size="small"
               title="Copy address to clipboard"
               onClick={() =>
-                void copyToClipboard(checksumAddress).then((x) => {
+                void copyToClipboard(checksumAddress).then(() => {
                   setCopied(true);
                   setTimeout(() => setCopied(false), 1000);
                 })

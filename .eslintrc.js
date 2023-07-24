@@ -7,9 +7,10 @@ module.exports = {
       rootDir: ["apps/*/"],
     },
   },
-  plugins: ["simple-import-sort"],
+  plugins: ["simple-import-sort", "unused-imports"],
   rules: {
     "react-hooks/exhaustive-deps": "off",
+    "unused-imports/no-unused-imports": "warn",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "import/first": "error",

@@ -3,7 +3,6 @@ import { TokenList } from "@superfluid-finance/tokenlist";
 import { createRoot } from "react-dom/client";
 
 import { PaymentDetails, ProductDetails } from "../core/index.js";
-import { Widget as SuperfluidWidget_ } from "../Widget.js";
 
 class WidgetWebComponent extends HTMLElement {
   mountPoint!: HTMLSpanElement;

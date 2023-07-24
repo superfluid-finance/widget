@@ -1,10 +1,5 @@
 import { ThemeOptions } from "@mui/material";
-import {
-  PaymentDetails,
-  paymentDetailsSchema,
-  ProductDetails,
-  productDetailsSchema,
-} from "@superfluid-finance/widget";
+import { PaymentDetails, ProductDetails } from "@superfluid-finance/widget";
 import { useEffect, useState } from "react";
 
 const gateway = "https://cloudflare-ipfs.com";

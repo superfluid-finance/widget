@@ -17,7 +17,6 @@ import {
 } from "react";
 
 import useFontLoader from "../../hooks/useFontLoader";
-import type { Font, NullableObject } from "../../types/general";
 
 export interface FontSettings {
   family: string;

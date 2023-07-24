@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Stack, TextField, Typography } from "@mui/material";
+import { Autocomplete, Stack, TextField, Typography } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 
 import { DraftFormValues } from "./formValues.js";

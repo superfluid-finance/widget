@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
-import { Abi, ContractFunctionConfig, GetValue, parseEther } from "viem";
+import { Abi, ContractFunctionConfig, GetValue } from "viem";
 import { useContractRead, useContractReads } from "wagmi";
 
 import {
