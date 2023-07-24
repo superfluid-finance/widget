@@ -1,5 +1,14 @@
 # @superfluid-finance/hosted-widget
 
+## 0.0.7
+
+### Patch Changes
+
+- 150022f: Removed all directory imports/exports, added useImmer.ts as a local file for compilation, removed transpilePackages from all next.configs as they are not necessary
+- Updated dependencies [c6957f6]
+- Updated dependencies [150022f]
+  - @superfluid-finance/widget@0.0.10
+
 ## 0.0.6
 
 ### Patch Changes
