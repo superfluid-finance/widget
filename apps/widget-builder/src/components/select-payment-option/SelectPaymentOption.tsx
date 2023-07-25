@@ -17,9 +17,7 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import tokenList, {
-  SuperTokenInfo,
-} from "@superfluid-finance/tokenlist";
+import tokenList, { SuperTokenInfo } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
 import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
