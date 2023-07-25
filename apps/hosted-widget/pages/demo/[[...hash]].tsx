@@ -16,13 +16,14 @@ import useLoadFromIPFS from "../../src/hooks/useLoadFromIPFS";
 import useWalletAnalytics from "../../src/hooks/useWalletAnalytics";
 import { WagmiDemoProviders } from "../../src/providers";
 import { deleteFlow } from "../../src/utils/deleteDemoFlow";
-import ensureDefined from "../../src/utils/ensureDefined";
 
 function generateRandomReceiver() {
   return privateKeyToAccount(generatePrivateKey()).address;
 }
 
-const superfluidDemoIPFSHash = ensureDefined(process.env.NEXT_PUBLIC_DEMO_IPFS);
+const superfluidDemoIPFSHash =
+  process.env.NEXT_PUBLIC_DEMO_IPFS ??
+  "QmWxgE57RHou36fDYwS7qCVZgK2SDhZzNSs2t6nqsmGc1X";
 
 const IPFSWidgetPage: NextPage = () => {
   const { query } = useRouter();

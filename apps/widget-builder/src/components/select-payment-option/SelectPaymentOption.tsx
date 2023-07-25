@@ -77,7 +77,10 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
       networks.filter((network) =>
         tokenList.tokens.find(
           ({ chainId, tags }) =>
-            network.chainId !== 1 && // hide mainnet
+            /* #35 [SUBS] - Hide Ethereum Mainnet payment option in Widget.
+             * As the UX is bad for streams on mainnet we don't want to encourage subscriptions there.
+             */
+            network.chainId !== 1 &&
             network.chainId === chainId &&
             tags &&
             tags.includes("supertoken"),
