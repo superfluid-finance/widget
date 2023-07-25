@@ -122,7 +122,7 @@ export default function StepContentWrap() {
           token: underlyingToken.address as Address,
           address: accountAddress,
           chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
-          formatUnits: "ether",
+          formatUnits: underlyingToken.decimals,
         }
       : undefined,
   );
@@ -133,7 +133,7 @@ export default function StepContentWrap() {
           token: superToken.address as Address,
           address: accountAddress,
           chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
-          formatUnits: "ether",
+          formatUnits: "ether", // Super Tokens are always 18 decimals.
         }
       : undefined,
   );
