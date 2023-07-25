@@ -1,5 +1,4 @@
 const Configuration = {
-  TheThing: process.env.NEXT_PUBLIC_THE_THING,
   IntercomAppID: "o7qlnuli",
   IntercomSurveyID: 34698139,
   WalletConnectProjectID: "952483bf7a0f5ace4c40eb53967f1368",

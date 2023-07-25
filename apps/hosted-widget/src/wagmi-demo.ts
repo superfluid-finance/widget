@@ -8,8 +8,10 @@ import { publicProvider } from "wagmi/providers/public";
 
 import { superfluidRpcUrls } from "./wagmi";
 
+const NOOP_ACCOUNT =
+  "0x498262a4afde2bdd9e1bef3aafc6442ec36ccf167e527457a211118de93346ba";
 const account = privateKeyToAccount(
-  process.env.NEXT_PUBLIC_THE_THING! as `0x${string}`,
+  (process.env.NEXT_PUBLIC_THE_THING ?? NOOP_ACCOUNT) as `0x${string}`,
 );
 
 const { chains, publicClient } = configureChains(
