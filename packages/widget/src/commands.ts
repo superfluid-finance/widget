@@ -12,12 +12,16 @@ export type WrapIntoSuperTokensCommand = {
     | {
         isNativeAsset: false;
         address: Address;
+        decimals: number;
       }
     | {
         isNativeAsset: true;
         address: undefined;
+        decimals: number;
       };
-  amountWei: bigint;
+  amountInUnits: `${number}`;
+  amountWeiFromSuperTokenDecimals: bigint;
+  amountWeiFromUnderlyingTokenDecimals: bigint;
 };
 
 export type EnableAutoWrapCommand = {
