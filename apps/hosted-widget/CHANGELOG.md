@@ -1,5 +1,13 @@
 # @superfluid-finance/hosted-widget
 
+## 0.0.8
+
+### Patch Changes
+
+- 5db744c: Added demo mode to hosted widget, with preconfigured shared wallet
+- Updated dependencies [af18415]
+  - @superfluid-finance/widget@0.0.11
+
 ## 0.0.7
 
 ### Patch Changes
