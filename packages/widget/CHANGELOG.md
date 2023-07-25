@@ -1,5 +1,11 @@
 # @superfluid-finance/widget
 
+## 0.0.11
+
+### Patch Changes
+
+- af18415: Fix underlying token balance not accounting for decimals when displaying it
+
 ## 0.0.10
 
 ### Patch Changes
