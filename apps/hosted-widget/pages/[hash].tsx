@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
+import StartupDisconnect from "../src/components/startup-disconnect/StartupDisconnect";
 import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
 import useFontLoader from "../src/hooks/useFontLoader";
 import useLoadFromIPFS from "../src/hooks/useLoadFromIPFS";
@@ -46,6 +47,7 @@ const IPFSWidgetPage: NextPage = () => {
 
   return (
     <WagmiProviders>
+      <StartupDisconnect />
       {showLoader ? (
         <Box
           sx={{
