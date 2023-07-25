@@ -1,6 +1,6 @@
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
-import { formatEther } from "viem";
+import { formatUnits } from "viem";
 
 import { WrapIntoSuperTokensCommand } from "../commands.js";
 import { TokenAvatar } from "../TokenAvatar.js";
@@ -20,7 +20,7 @@ export function WrapIntoSuperTokensPreview({
     : getUnderlyingToken(cmd.underlyingToken.address);
 
   const amountEther = useMemo(
-    () => formatEther(cmd.amountWei),
+    () => formatUnits(cmd.amountWei, underlyingToken.decimals),
     [cmd.amountWei],
   );
 
