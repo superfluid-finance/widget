@@ -21,7 +21,9 @@ function generateRandomReceiver() {
   return privateKeyToAccount(generatePrivateKey()).address;
 }
 
-const superfluidDemoIPFSHash = process.env.NEXT_PUBLIC_DEMO_IPFS!;
+const superfluidDemoIPFSHash =
+  process.env.NEXT_PUBLIC_DEMO_IPFS ??
+  "QmWxgE57RHou36fDYwS7qCVZgK2SDhZzNSs2t6nqsmGc1X";
 
 const IPFSWidgetPage: NextPage = () => {
   const { query } = useRouter();
@@ -40,6 +42,7 @@ const IPFSWidgetPage: NextPage = () => {
   const { data: demoData, loading: demoLoading } = useLoadFromIPFS(
     superfluidDemoIPFSHash,
   );
+
   const { data, loading } = useLoadFromIPFS(query.hash ? query.hash[0] : "");
 
   const fontFamily = useMemo(() => {

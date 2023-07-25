@@ -1,4 +1,3 @@
-import InfoIcon from "@mui/icons-material/Info";
 import {
   Autocomplete,
   Avatar,
@@ -17,13 +16,8 @@ import {
   Stack,
   Switch,
   TextField,
-  Tooltip,
-  useTheme,
 } from "@mui/material";
-import tokenList, {
-  SuperTokenInfo,
-  TokenInfo,
-} from "@superfluid-finance/tokenlist";
+import tokenList, { SuperTokenInfo } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
 import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
@@ -35,13 +29,6 @@ import { WidgetProps } from "../widget-preview/WidgetPreview";
 export type PaymentOption = {
   network: Network;
   superToken: SuperTokenInfo;
-};
-
-const renderToken = (token: TokenInfo) => {
-  const raw =
-    token.name && token.symbol ? `${token.name} (${token.symbol})` : "";
-
-  return raw.replace(/[^a-zA-Z0-9\s]g/, "");
 };
 
 type PaymentOptionSelectorProps = {
@@ -72,16 +59,6 @@ type InputInfoProps = {
   tooltip: string;
 };
 
-const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
-  const theme = useTheme();
-
-  return (
-    <Tooltip title={tooltip}>
-      <InfoIcon fontSize="small" sx={{ color: theme.palette.grey[600] }} />
-    </Tooltip>
-  );
-};
-
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
   const [selectedNetwork, setSelectedNetwork] =
@@ -100,7 +77,13 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
       networks.filter((network) =>
         tokenList.tokens.find(
           ({ chainId, tags }) =>
-            network.chainId === chainId && tags && tags.includes("supertoken"),
+            /* #35 [SUBS] - Hide Ethereum Mainnet payment option in Widget.
+             * As the UX is bad for streams on mainnet we don't want to encourage subscriptions there.
+             */
+            network.chainId !== 1 &&
+            network.chainId === chainId &&
+            tags &&
+            tags.includes("supertoken"),
         ),
       ),
     [],
