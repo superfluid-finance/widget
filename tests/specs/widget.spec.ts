@@ -1,12 +1,13 @@
-import { test } from "../walletSetup";
-import { WidgetPage } from "../pageObjects/widgetPage";
+import * as metamask from "@synthetixio/synpress/commands/metamask";
+
 import {
   rebounderAddresses,
   streamToSelfOption,
   testOption,
 } from "../pageObjects/basePage";
 import { BuilderPage } from "../pageObjects/builderPage";
-import * as metamask from "@synthetixio/synpress/commands/metamask";
+import { WidgetPage } from "../pageObjects/widgetPage";
+import { test } from "../walletSetup";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");

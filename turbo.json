@@ -32,22 +32,19 @@
         "NEXT_PUBLIC_SENTRY_DSN",
         "NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID",
         "NEXT_PUBLIC_SEGMENT_WRITE_KEY",
+        "NEXT_PUBLIC_THE_THING",
+        "NEXT_PUBLIC_DEMO_IPFS",
         "ROOT_REDIRECT_URL"
       ]
     },
     "@superfluid-finance/b2b-service-demo#build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"],
-      "env": ["NEXT_PUBLIC_THE_THING"]
-    },
-    "@superfluid-finance/donation-demo#build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"],
-      "env": ["NEXT_PUBLIC_THE_THING"]
+      "outputs": [".next/**", "!.next/cache/**"]
     },
     "test": {
       "dependsOn": ["build"],
       "env": [
+        "NEXT_PUBLIC_THE_THING",
         "CI",
         "METAMASK_VERSION",
         "HEADLESS_MODE",

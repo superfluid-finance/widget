@@ -1,6 +1,4 @@
-import { Fade } from "@mui/material";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+import { Box, Container, Fade } from "@mui/material";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import tokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget from "@superfluid-finance/widget";
@@ -8,16 +6,27 @@ import { useWeb3Modal } from "@web3modal/react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 
-import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
-import useFontLoader from "../src/hooks/useFontLoader";
-import useLoadFromIPFS from "../src/hooks/useLoadFromIPFS";
-import useWalletAnalytics from "../src/hooks/useWalletAnalytics";
-import { WagmiProviders } from "../src/providers";
+import DemoWalletDisplay from "../../src/components/demo-wallet-display/DemoWalletDisplay";
+import useAnalyticsBrowser from "../../src/hooks/useAnalyticsBrowser";
+import useFontLoader from "../../src/hooks/useFontLoader";
+import useLoadFromIPFS from "../../src/hooks/useLoadFromIPFS";
+import useWalletAnalytics from "../../src/hooks/useWalletAnalytics";
+import { WagmiDemoProviders } from "../../src/providers";
+import { deleteFlow } from "../../src/utils/deleteDemoFlow";
+
+function generateRandomReceiver() {
+  return privateKeyToAccount(generatePrivateKey()).address;
+}
+
+const superfluidDemoIPFSHash = process.env.NEXT_PUBLIC_DEMO_IPFS!;
 
 const IPFSWidgetPage: NextPage = () => {
   const { query } = useRouter();
+
+  const [randomReceiver] = useState<`0x${string}`>(generateRandomReceiver());
 
   const { open, isOpen } = useWeb3Modal();
   const walletManager = useMemo(
@@ -28,7 +37,10 @@ const IPFSWidgetPage: NextPage = () => {
     [open, isOpen],
   );
 
-  const { data, loading, error } = useLoadFromIPFS(query.hash as string);
+  const { data: demoData, loading: demoLoading } = useLoadFromIPFS(
+    superfluidDemoIPFSHash,
+  );
+  const { data, loading } = useLoadFromIPFS(query.hash ? query.hash[0] : "");
 
   const fontFamily = useMemo(() => {
     const typography = data?.theme?.typography as TypographyOptions;
@@ -42,10 +54,21 @@ const IPFSWidgetPage: NextPage = () => {
 
   useFontLoader(fontFamily);
 
-  const showLoader = loading && data === null;
+  const showLoader =
+    (demoLoading && demoData === null) || (loading && data === null);
+
+  const config = useMemo(() => {
+    if (!demoData) return null;
+    if (!data) return demoData;
+
+    return {
+      ...data,
+      paymentDetails: demoData.paymentDetails,
+    };
+  }, [demoData, data, randomReceiver]);
 
   return (
-    <WagmiProviders>
+    <WagmiDemoProviders>
       {showLoader ? (
         <Box
           sx={{
@@ -76,19 +99,24 @@ const IPFSWidgetPage: NextPage = () => {
               alignItems: "center",
             }}
           >
-            {data && (
+            <DemoWalletDisplay />
+
+            {config && (
               <SuperfluidWidget
-                {...data}
+                {...config}
                 tokenList={tokenList}
                 type="page"
                 walletManager={walletManager}
+                eventListeners={{
+                  onSuccess: () => deleteFlow(),
+                }}
               />
             )}
           </Box>
           <Analytics />
         </Container>
       )}
-    </WagmiProviders>
+    </WagmiDemoProviders>
   );
 };
 
