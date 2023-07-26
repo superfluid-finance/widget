@@ -1,5 +1,12 @@
 # @superfluid-finance/widget-builder
 
+## 0.0.9
+
+### Patch Changes
+
+- Updated dependencies [2a4ce95]
+  - @superfluid-finance/widget@0.0.12
+
 ## 0.0.8
 
 ### Patch Changes
