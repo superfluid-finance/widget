@@ -1,5 +1,17 @@
 # @superfluid-finance/widget
 
+## 0.0.12
+
+### Patch Changes
+
+- 2a4ce95: Fix less tokens being wrapped into Super Tokens when underlying token's decimals are not 18
+
+## 0.0.11
+
+### Patch Changes
+
+- af18415: Fix underlying token balance not accounting for decimals when displaying it
+
 ## 0.0.10
 
 ### Patch Changes

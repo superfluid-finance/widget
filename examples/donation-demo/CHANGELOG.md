@@ -1,5 +1,19 @@
 # @superfluid-finance/donation-demo
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [2a4ce95]
+  - @superfluid-finance/widget@0.0.12
+
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [af18415]
+  - @superfluid-finance/widget@0.0.11
+
 ## 0.1.1
 
 ### Patch Changes
