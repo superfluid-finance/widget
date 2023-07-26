@@ -32,7 +32,7 @@ export const useCommandValidationSchema = () =>
                     ? undefined
                     : cmd.underlyingToken.address,
                 });
-                return cmd.amountWei <= balance;
+                return cmd.amountWeiFromUnderlyingTokenDecimals <= balance;
               },
               {
                 message:
@@ -119,7 +119,9 @@ export const useCommandValidationSchema = () =>
 
             const neededDeposit = newDeposit - existingDeposit;
             const availableBalanceWithWrapAmount =
-              availableBalance + (wrapIntoSuperTokensCommand?.amountWei ?? 0n);
+              availableBalance +
+              (wrapIntoSuperTokensCommand?.amountWeiFromUnderlyingTokenDecimals ??
+                0n);
 
             return availableBalanceWithWrapAmount >= neededDeposit;
           },
@@ -158,7 +160,9 @@ export const useCommandValidationSchema = () =>
               mapTimePeriodToSeconds(cmd.flowRate.period);
 
             const availableBalanceWithWrapAmount =
-              availableBalance + (wrapIntoSuperTokensCommand?.amountWei ?? 0n);
+              availableBalance +
+              (wrapIntoSuperTokensCommand?.amountWeiFromUnderlyingTokenDecimals ??
+                0n);
             const accountFlowRateWithNewFlowRate =
               accountFlowRate - flowRateWeiPerSecond;
 

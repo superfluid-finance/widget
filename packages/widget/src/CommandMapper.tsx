@@ -164,12 +164,12 @@ export function WrapIntoSuperTokensCommandMapper({
           abi: nativeAssetSuperTokenABI,
           functionName: "upgradeByETH",
           address: cmd.superTokenAddress,
-          value: cmd.amountWei,
+          value: cmd.amountWeiFromUnderlyingTokenDecimals,
         }),
       );
     } else {
       if (allowance !== undefined) {
-        if (allowance < cmd.amountWei) {
+        if (allowance < cmd.amountWeiFromUnderlyingTokenDecimals) {
           contractWrites_.push(
             createContractWrite({
               commandId: cmd.id,
@@ -180,7 +180,10 @@ export function WrapIntoSuperTokensCommandMapper({
               abi: erc20ABI,
               functionName: "approve",
               address: cmd.underlyingToken.address,
-              args: [cmd.superTokenAddress, cmd.amountWei],
+              args: [
+                cmd.superTokenAddress,
+                cmd.amountWeiFromUnderlyingTokenDecimals,
+              ],
             }),
           );
         }
@@ -195,7 +198,7 @@ export function WrapIntoSuperTokensCommandMapper({
             abi: superTokenABI,
             address: cmd.superTokenAddress,
             functionName: "upgrade",
-            args: [cmd.amountWei],
+            args: [cmd.amountWeiFromSuperTokenDecimals],
           }),
         );
       }

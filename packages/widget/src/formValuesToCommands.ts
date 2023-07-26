@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { Address, parseEther, parseUnits } from "viem";
+import { Address, formatUnits, parseEther, parseUnits } from "viem";
 
 import { Command } from "./commands.js";
 import { autoWrapStrategyAddress } from "./core/index.js";
@@ -33,11 +33,6 @@ export const formValuesToCommands = (
   // TODO(KK): Clean-up the bangs.
 
   if (isWrapperSuperToken) {
-    const wrapAmount = parseUnits(
-      wrapAmountInUnits ? wrapAmountInUnits : "0",
-      underlyingTokenInfo!.decimals,
-    );
-
     const underlyingToken = isWrapperSuperToken
       ? ({
           isNativeAsset: false,
@@ -50,7 +45,13 @@ export const formValuesToCommands = (
           decimals: underlyingTokenInfo!.decimals,
         } as const);
 
-    if (wrapAmount !== 0n) {
+    const amountWeiFromUnderlyingTokenDecimals = parseUnits(
+      wrapAmountInUnits,
+      underlyingToken.decimals,
+    );
+    const amountWeiFromSuperTokenDecimals = parseUnits(wrapAmountInUnits, 18); // Super Tokens always have 18 decimals.
+
+    if (amountWeiFromUnderlyingTokenDecimals !== 0n) {
       commands.push({
         id: nanoid(),
         type: "Wrap into Super Tokens",
@@ -58,7 +59,12 @@ export const formValuesToCommands = (
         superTokenAddress,
         accountAddress,
         underlyingToken,
-        amountWei: wrapAmount,
+        amountInUnits: formatUnits(
+          amountWeiFromUnderlyingTokenDecimals,
+          underlyingToken.decimals,
+        ) as `${number}`,
+        amountWeiFromUnderlyingTokenDecimals,
+        amountWeiFromSuperTokenDecimals,
       });
     }
 

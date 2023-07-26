@@ -1,6 +1,4 @@
 import { Box, Paper, Stack, Typography } from "@mui/material";
-import { useMemo } from "react";
-import { formatUnits } from "viem";
 
 import { WrapIntoSuperTokensCommand } from "../commands.js";
 import { TokenAvatar } from "../TokenAvatar.js";
@@ -18,11 +16,6 @@ export function WrapIntoSuperTokensPreview({
   const underlyingToken = cmd.underlyingToken.isNativeAsset
     ? getNativeAsset(cmd.chainId)
     : getUnderlyingToken(cmd.underlyingToken.address);
-
-  const amountEther = useMemo(
-    () => formatUnits(cmd.amountWei, underlyingToken.decimals),
-    [cmd.amountWei],
-  );
 
   return (
     <Stack direction="column" alignItems="center" spacing={2.25}>
@@ -59,7 +52,7 @@ export function WrapIntoSuperTokensPreview({
             variant="body1"
             sx={{ mt: 0.5 }}
           >
-            {amountEther}
+            {cmd.amountInUnits}
           </Typography>
           <Typography
             data-testid="review-underlying-token-symbol"
@@ -86,7 +79,7 @@ export function WrapIntoSuperTokensPreview({
             variant="body1"
             sx={{ mt: 0.5 }}
           >
-            {amountEther}
+            {cmd.amountInUnits}
           </Typography>
           <Typography data-testid="review-super-token-symbol" variant="caption">
             {superToken.symbol}
