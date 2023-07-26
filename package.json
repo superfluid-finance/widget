@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:widget": "turbo run build --filter='./packages/widget'",
     "changeset": "changeset",
-    "changeset:release": "pnpm build && changeset publish",
+    "changeset:release": "pnpm build:widget && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "clean": "npm-run-all -p clean:*",
     "clean:next": "rimraf -g \"./**/.next\"",
