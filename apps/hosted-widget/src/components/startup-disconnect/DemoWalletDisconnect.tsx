@@ -1,13 +1,17 @@
 import { FC, useEffect } from "react";
+import { zeroAddress } from "viem";
+import { Address, privateKeyToAccount } from "viem/accounts";
 import { useAccount } from "wagmi";
 
-const demoWalletAddress = "0xab1D164065aed9A3e42fca42c2c20997f369A2B0";
+const demoAccount = privateKeyToAccount(
+  (process.env.NEXT_PUBLIC_THE_THING ?? zeroAddress) as Address,
+);
 
 const DemoWalletDisconnect: FC = () => {
   const account = useAccount();
 
   useEffect(() => {
-    if (account.address === demoWalletAddress) {
+    if (account.address === demoAccount.address) {
       account.connector?.disconnect();
     }
   }, [account]);
