@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 
 import BookModal from "@/components/BookModal/BookModal";
+import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import Footer from "@/components/Footer/Footer";
 import PricingCard from "@/components/PricingCard/PricingCard";
 import styles from "@/styles/Home.module.css";
@@ -81,6 +82,8 @@ export default function Home() {
         </section>
 
         <BookModal show={showModal} onClose={closeModal} />
+
+        <ConnectWallet />
 
         <Footer />
       </main>

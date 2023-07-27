@@ -1,0 +1,40 @@
+.ConnectBox {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+}
+
+.ConnectorWrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem;
+}
+
+.ConnectorWrapper img {
+  cursor: pointer;
+}
+
+.ConnectedWallet {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 1.5rem;
+}
+
+.Disconnect {
+  text-align: center;
+  font-family: Inter;
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 700;
+  border: none;
+  position: relative;
+  background: #60b2ff;
+  cursor: pointer;
+  outline: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+}

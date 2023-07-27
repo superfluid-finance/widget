@@ -12,20 +12,6 @@ import { demoConfig } from "@/utils/connectionUtils";
 
 const { WalletConnectProjectID, IntercomAppID } = configuration;
 
-// TODO: If automatically signing fails then fall back to manual signing
-// const { publicClient } = configureChains(supportedNetworks, [
-//   w3mProvider({ projectId: WalletConnectProjectID }),
-// ]);
-
-// const wagmiConfig = createConfig({
-//   autoConnect: false,
-//   connectors: w3mConnectors({
-//     projectId: WalletConnectProjectID,
-//     chains: supportedNetworks,
-//   }),
-//   publicClient,
-// });
-
 const ethereumClient = new EthereumClient(demoConfig, supportedNetworks);
 
 export default function App({ Component, pageProps }: AppProps) {
