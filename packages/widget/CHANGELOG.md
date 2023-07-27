@@ -1,5 +1,11 @@
 # @superfluid-finance/widget
 
+## 0.0.13
+
+### Patch Changes
+
+- 0571635: Fix validation logic issue with decimals (#117)
+
 ## 0.0.12
 
 ### Patch Changes

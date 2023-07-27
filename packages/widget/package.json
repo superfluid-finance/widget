@@ -1,6 +1,6 @@
 {
   "name": "@superfluid-finance/widget",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": false,
   "license": "MIT",
   "type": "module",
