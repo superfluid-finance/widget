@@ -120,7 +120,7 @@ export const useCommandValidationSchema = () =>
             const neededDeposit = newDeposit - existingDeposit;
             const availableBalanceWithWrapAmount =
               availableBalance +
-              (wrapIntoSuperTokensCommand?.amountWeiFromUnderlyingTokenDecimals ??
+              (wrapIntoSuperTokensCommand?.amountWeiFromSuperTokenDecimals ??
                 0n);
 
             return availableBalanceWithWrapAmount >= neededDeposit;
@@ -161,7 +161,7 @@ export const useCommandValidationSchema = () =>
 
             const availableBalanceWithWrapAmount =
               availableBalance +
-              (wrapIntoSuperTokensCommand?.amountWeiFromUnderlyingTokenDecimals ??
+              (wrapIntoSuperTokensCommand?.amountWeiFromSuperTokenDecimals ??
                 0n);
             const accountFlowRateWithNewFlowRate =
               accountFlowRate - flowRateWeiPerSecond;
