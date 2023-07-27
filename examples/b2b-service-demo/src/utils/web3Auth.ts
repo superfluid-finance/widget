@@ -20,7 +20,7 @@ export const getWeb3AuthConnector = (chains: Chain[]) => {
 
   const web3auth = new Web3Auth({
     clientId: web3AuthClientId,
-    web3AuthNetwork: "cyan",
+    web3AuthNetwork: "testnet",
     enableLogging: true,
     uiConfig: {
       appName: "b2b-service-demo,",
