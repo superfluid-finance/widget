@@ -34,19 +34,21 @@ const ConnectWallet: FC = () => {
           </div>
         ) : (
           <div className={styles.ConnectorWrapper}>
-            {connectors.map((connector) => {
-              return (
-                <Image
-                  key={connector.id}
-                  title={`Connect with ${connector.name}`}
-                  onClick={() => connect({ connector })}
-                  src={`/${connector.id.toLowerCase()}-logo.png`}
-                  width={48}
-                  height={48}
-                  alt="WalletConnect"
-                />
-              );
-            })}
+            {connectors
+              .filter(({ id }) => id.toLocaleLowerCase() !== "walletconnect")
+              .map((connector) => {
+                return (
+                  <Image
+                    key={connector.id}
+                    title={`Connect with ${connector.name}`}
+                    onClick={() => connect({ connector })}
+                    src={`/${connector.id}-logo.png`}
+                    width={48}
+                    height={48}
+                    alt="WalletConnect"
+                  />
+                );
+              })}
           </div>
         )}
       </div>
