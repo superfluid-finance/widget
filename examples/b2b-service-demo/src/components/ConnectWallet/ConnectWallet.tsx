@@ -42,7 +42,7 @@ const ConnectWallet: FC = () => {
                   key={connector.id}
                   title={connector.name}
                   onClick={() => connect({ connector })}
-                  src={`/${connector.id}-logo.png`}
+                  src={`/${connector.id.toLowerCase()}-logo.png`}
                   width={48}
                   height={48}
                   alt="WalletConnect"
