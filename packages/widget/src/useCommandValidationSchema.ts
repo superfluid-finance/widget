@@ -161,7 +161,7 @@ export const useCommandValidationSchema = () =>
 
             const availableBalanceWithWrapAmount =
               availableBalance +
-              (wrapIntoSuperTokensCommand?.amountWeiFromUnderlyingTokenDecimals ??
+              (wrapIntoSuperTokensCommand?.amountWeiFromSuperTokenDecimals ??
                 0n);
             const accountFlowRateWithNewFlowRate =
               accountFlowRate - flowRateWeiPerSecond;
