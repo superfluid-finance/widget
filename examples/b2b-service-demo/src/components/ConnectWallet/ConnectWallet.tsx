@@ -18,8 +18,6 @@ const ConnectWallet: FC = () => {
 
   const [isClient, setIsClient] = useState(false);
 
-  console.log(connectors);
-
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -40,7 +38,7 @@ const ConnectWallet: FC = () => {
               return (
                 <Image
                   key={connector.id}
-                  title={connector.name}
+                  title={`Connect with ${connector.name}`}
                   onClick={() => connect({ connector })}
                   src={`/${connector.id.toLowerCase()}-logo.png`}
                   width={48}

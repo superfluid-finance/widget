@@ -62,6 +62,8 @@ export const demoConfig = createConfig({
   autoConnect: false,
   publicClient,
   connectors: () => [
-    ...(isServer ? [] : [walletConnectConnector, getWeb3AuthConnector(chains)]),
+    ...(isServer
+      ? []
+      : [mockConnector, walletConnectConnector, getWeb3AuthConnector(chains)]),
   ],
 });
