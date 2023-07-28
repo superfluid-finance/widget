@@ -1,5 +1,5 @@
 import { createWalletClient, http } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
 import { configureChains, createConfig } from "wagmi";
 import { MockConnector } from "wagmi/connectors/mock";
@@ -8,10 +8,8 @@ import { publicProvider } from "wagmi/providers/public";
 
 import configuration from "@/configuration";
 
-const NOOP_ACCOUNT =
-  "0x498262a4afde2bdd9e1bef3aafc6442ec36ccf167e527457a211118de93346ba";
 const account = privateKeyToAccount(
-  (process.env.NEXT_PUBLIC_THE_THING ?? NOOP_ACCOUNT) as `0x${string}`,
+  (process.env.NEXT_PUBLIC_THE_THING ?? generatePrivateKey()) as `0x${string}`,
 );
 
 const { chains, publicClient } = configureChains(
