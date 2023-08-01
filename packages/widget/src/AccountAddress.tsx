@@ -1,6 +1,12 @@
 import { useMemo } from "react";
 import { Address, getAddress } from "viem";
-import { useEnsAvatar, useEnsName } from "wagmi";
+import {
+  Chain,
+  mainnet,
+  useEnsAvatar,
+  useEnsName,
+  useNetwork,
+} from "wagmi";
 
 import { ChildrenProp, shortenHex } from "./utils.js";
 
@@ -23,13 +29,31 @@ export function AccountAddress({ children, address }: Props) {
     [checksumAddress],
   );
 
-  const ensNameResult = useEnsName({
-    address: checksumAddress,
-    chainId: 1,
-  });
+  const { chains } = useNetwork();
+
+  // Find the first configured chain which has ENS resolver supported. Prefer Mainnet.
+  const ensChain = useMemo(
+    () =>
+      [chains.find((x) => x.id === mainnet.id), ...chains]
+        .filter((x): x is Chain => !!x)
+        .find((x) => x.contracts?.ensUniversalResolver),
+    [chains],
+  );
+  const ensChainId = ensChain?.id;
+
+  const ensNameResult = useEnsName(
+    ensChainId
+      ? {
+          address: checksumAddress,
+          chainId: ensChainId,
+        }
+      : undefined,
+  );
 
   const ensAvatarResult = useEnsAvatar(
-    ensNameResult.data ? { name: ensNameResult.data, chainId: 1 } : undefined,
+    ensNameResult.data && ensChainId
+      ? { name: ensNameResult.data, chainId: ensChainId }
+      : undefined,
   );
 
   const result = {
