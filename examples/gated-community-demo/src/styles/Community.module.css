@@ -1,0 +1,63 @@
+.Main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+}
+
+.Header {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 40px;
+  height: 320px;
+  background: url("/headings/grumpy-kitties.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.HeaderWrapper {
+  max-width: var(--content-width);
+  padding: 0 40px 60px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.Logo {
+  top: 40px;
+  position: absolute;
+  left: 4px;
+}
+
+.Wrapper {
+  max-width: calc(var(--content-width) - 200px);
+  width: 100%;
+  margin: 0 auto 10vh;
+}
+
+.Navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.Back {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  left: -27px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.Badges {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}

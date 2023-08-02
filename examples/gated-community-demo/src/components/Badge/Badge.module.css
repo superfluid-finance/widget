@@ -1,0 +1,22 @@
+.Badge {
+  border-radius: 50px;
+  background: #f5e696;
+  padding: 4px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: pre;
+
+  color: #555;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.Badge img {
+  height: 12px;
+  display: block;
+}
+
+.Badge.Disabled {
+  background: #e8e8e8;
+}
