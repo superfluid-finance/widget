@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",
-    "dev": "vite",
-    "preview": "vite preview"
+    "dev": "vite --host",
+    "preview": "vite preview --host"
   },
   "dependencies": {
     "@superfluid-finance/tokenlist": "^1.3.2",

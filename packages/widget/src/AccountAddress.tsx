@@ -1,8 +1,7 @@
 import { useMemo } from "react";
 import { Address, getAddress } from "viem";
 import {
-  Chain,
-  mainnet,
+  mainnet as mainnet_,
   useEnsAvatar,
   useEnsName,
   useNetwork,
@@ -31,15 +30,13 @@ export function AccountAddress({ children, address }: Props) {
 
   const { chains } = useNetwork();
 
-  // Find the first configured chain which has ENS resolver supported. Prefer Mainnet.
-  const ensChain = useMemo(
-    () =>
-      [chains.find((x) => x.id === mainnet.id), ...chains]
-        .filter((x): x is Chain => !!x)
-        .find((x) => x.contracts?.ensUniversalResolver),
+  const mainnet = useMemo(
+    () => chains.find((x) => x.id === mainnet_.id),
     [chains],
   );
-  const ensChainId = ensChain?.id;
+  const ensChainId = mainnet?.contracts?.ensUniversalResolver
+    ? mainnet.id
+    : undefined;
 
   const ensNameResult = useEnsName(
     ensChainId
