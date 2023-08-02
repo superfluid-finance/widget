@@ -1,8 +1,5 @@
 import { FC, useEffect } from "react";
-import {
-  generatePrivateKey,
-  privateKeyToAccount,
-} from "viem/accounts";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { useAccount } from "wagmi";
 
 const demoAccount = privateKeyToAccount(
