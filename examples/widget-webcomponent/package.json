@@ -9,7 +9,7 @@
     "preview": "vite preview --host"
   },
   "dependencies": {
-    "@superfluid-finance/tokenlist": "^2.0.0",
+    "@superfluid-finance/tokenlist": "^2.0.2",
     "@superfluid-finance/widget": "workspace:*"
   },
   "devDependencies": {
