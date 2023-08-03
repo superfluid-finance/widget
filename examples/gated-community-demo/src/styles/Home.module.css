@@ -35,10 +35,14 @@
   transform: translate(-50%, -50%);
 }
 
+.HeaderBg {
+  max-width: 80%;
+}
+
 .Logo {
   top: 40px;
   position: absolute;
-  left: 4px;
+  left: 80px;
 }
 
 .Wrapper {
@@ -53,4 +57,44 @@
   grid-template-columns: repeat(2, 1fr);
   column-gap: 48px;
   row-gap: 32px;
+}
+
+@media screen and (max-width: 1440px) {
+  .Logo {
+    top: 40px;
+    left: 40px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .Logo {
+    position: relative;
+    left: 1.25rem;
+    top: 0;
+    padding-top: 1.25rem;
+  }
+
+  .HeaderWrapper {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 40px 0;
+    gap: 16px;
+  }
+
+  .HeaderContent {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    max-width: var(--content-width);
+    text-align: center;
+  }
+
+  .HeaderContent p {
+    margin: 0 auto;
+  }
+
+  .Communities {
+    grid-template-columns: 1fr;
+  }
 }

@@ -15,9 +15,9 @@ export default function Home() {
 
       <main className={styles.Main}>
         <header className={styles.Header}>
-          <div className={styles.HeaderWrapper}>
-            <img className={styles.Logo} src="/cliques.svg" />
+          <img className={styles.Logo} src="/cliques.svg" />
 
+          <div className={styles.HeaderWrapper}>
             <div className={styles.HeaderContent}>
               <h1>Welcome to Cliques</h1>
               <p>The platformless access management for your community.</p>

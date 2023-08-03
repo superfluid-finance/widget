@@ -18,9 +18,7 @@ export default function Community() {
 
       <main className={styles.Main}>
         <header className={styles.Header}>
-          <div className={styles.HeaderWrapper}>
-            <img className={styles.Logo} src="/cliques-white.svg" />
-          </div>
+          <img className={styles.Logo} src="/cliques-white.svg" />
         </header>
 
         <section className={styles.Wrapper}>

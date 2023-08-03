@@ -15,24 +15,14 @@
   background-position: center;
 }
 
-.HeaderWrapper {
-  max-width: var(--content-width);
-  padding: 0 40px 60px;
-  margin: 0 auto;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-
 .Logo {
   top: 40px;
   position: absolute;
-  left: 4px;
+  left: 80px;
 }
 
 .Wrapper {
-  max-width: calc(var(--content-width) - 200px);
+  max-width: var(--small-content-width);
   width: 100%;
   margin: 0 auto 10vh;
 }
@@ -60,4 +50,31 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
+}
+
+@media screen and (max-width: 1600px) {
+  .Back {
+    left: 0;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .Logo {
+    position: relative;
+    left: 1.25rem;
+    top: 0;
+    padding-top: 1.25rem;
+  }
+
+  .Header {
+    height: 240px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .Navigation {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 }

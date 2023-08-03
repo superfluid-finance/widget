@@ -5,6 +5,7 @@
 
   --primary: #ffb525;
   --content-width: min(100vw - 2.5rem, 1400px);
+  --small-content-width: min(100vw - 2.5rem, 1400px);
 }
 
 * {
@@ -37,7 +38,7 @@ a {
 h1 {
   font-size: 32px;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 32px;
   margin: 0 0 15px;
 }
 

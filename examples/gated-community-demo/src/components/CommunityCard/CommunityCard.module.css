@@ -22,6 +22,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px 32px;
+  gap: 8px;
 }
 
 .Badges {
@@ -29,4 +30,12 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+}
+
+@media screen and (max-width: 960px) {
+  .CardContent {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

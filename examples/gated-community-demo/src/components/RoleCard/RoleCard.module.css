@@ -56,3 +56,19 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+@media screen and (max-width: 960px) {
+  .Card {
+    grid-template-columns: 1fr;
+  }
+
+  .TitleWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .Left,
+  .Right {
+    padding: 20px 28px;
+  }
+}
