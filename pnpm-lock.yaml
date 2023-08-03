@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  react-hook-form: 7.44.3
+  react-hook-form: ~7.44.3
 
 importers:
 
@@ -37,8 +37,8 @@ importers:
         specifier: ^13.2.3
         version: 13.2.3
       prettier:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.0.1
+        version: 3.0.1
       turbo:
         specifier: ^1.10.12
         version: 1.10.12
@@ -73,14 +73,14 @@ importers:
         specifier: ^7.61.0
         version: 7.61.0(next@13.4.12)(react@18.2.0)
       '@superfluid-finance/tokenlist':
-        specifier: ^1.3.2
-        version: 1.3.2
+        specifier: ^2.0.2
+        version: 2.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
       '@web3modal/ethereum':
         specifier: ^2.7.1
-        version: 2.7.1(viem@1.5.0)
+        version: 2.7.1(viem@1.5.2)
       '@web3modal/react':
         specifier: ^2.7.1
         version: 2.7.1(react-dom@18.2.0)(react@18.2.0)
@@ -100,18 +100,18 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: ^1.5.0
-        version: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+        specifier: ^1.5.2
+        version: 1.5.2(typescript@5.1.6)(zod@3.21.4)
       wagmi:
         specifier: ^1.3.9
-        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
       zod:
         specifier: ^3.21.4
         version: 3.21.4
     devDependencies:
       '@types/node':
-        specifier: ^20.4.5
-        version: 20.4.5
+        specifier: ^20.4.6
+        version: 20.4.6
       '@types/react':
         specifier: ^18.2.18
         version: 18.2.18
@@ -147,7 +147,7 @@ importers:
         version: 8.0.2
       '@monaco-editor/react':
         specifier: ^4.5.1
-        version: 4.5.1(monaco-editor@0.40.0)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.5.1(monaco-editor@0.41.0)(react-dom@18.2.0)(react@18.2.0)
       '@mui/icons-material':
         specifier: ^5.14.3
         version: 5.14.3(@mui/material@5.14.3)(@types/react@18.2.18)(react@18.2.0)
@@ -167,14 +167,14 @@ importers:
         specifier: ^7.61.0
         version: 7.61.0(next@13.4.12)(react@18.2.0)
       '@superfluid-finance/tokenlist':
-        specifier: ^1.3.2
-        version: 1.3.2
+        specifier: ^2.0.2
+        version: 2.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
       '@web3modal/ethereum':
         specifier: ^2.7.1
-        version: 2.7.1(viem@1.5.0)
+        version: 2.7.1(viem@1.5.2)
       '@web3modal/react':
         specifier: ^2.7.1
         version: 2.7.1(react-dom@18.2.0)(react@18.2.0)
@@ -182,8 +182,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       monaco-editor:
-        specifier: ^0.40.0
-        version: 0.40.0
+        specifier: ^0.41.0
+        version: 0.41.0
       mui-color-input:
         specifier: ^1.1.1
         version: 1.1.1(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@mui/material@5.14.3)(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)
@@ -197,14 +197,14 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: 7.44.3
+        specifier: ~7.44.3
         version: 7.44.3(react@18.2.0)
       viem:
-        specifier: ^1.5.0
-        version: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+        specifier: ^1.5.2
+        version: 1.5.2(typescript@5.1.6)(zod@3.21.4)
       wagmi:
         specifier: ^1.3.9
-        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -216,8 +216,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)
       '@types/node':
-        specifier: ^20.4.5
-        version: 20.4.5
+        specifier: ^20.4.6
+        version: 20.4.6
       '@types/react':
         specifier: ^18.2.18
         version: 18.2.18
@@ -237,14 +237,14 @@ importers:
         specifier: ^7.61.0
         version: 7.61.0(next@13.4.12)(react@18.2.0)
       '@superfluid-finance/tokenlist':
-        specifier: ^1.3.2
-        version: 1.3.2
+        specifier: ^2.0.2
+        version: 2.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
       '@types/node':
-        specifier: 20.4.5
-        version: 20.4.5
+        specifier: 20.4.6
+        version: 20.4.6
       '@types/react':
         specifier: 18.2.18
         version: 18.2.18
@@ -253,7 +253,7 @@ importers:
         version: 18.2.7
       '@web3modal/ethereum':
         specifier: ^2.7.1
-        version: 2.7.1(viem@1.5.0)
+        version: 2.7.1(viem@1.5.2)
       '@web3modal/react':
         specifier: ^2.7.1
         version: 2.7.1(react-dom@18.2.0)(react@18.2.0)
@@ -273,11 +273,11 @@ importers:
         specifier: 5.1.6
         version: 5.1.6
       viem:
-        specifier: ^1.5.0
-        version: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+        specifier: ^1.5.2
+        version: 1.5.2(typescript@5.1.6)(zod@3.21.4)
       wagmi:
         specifier: ^1.3.9
-        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -288,14 +288,14 @@ importers:
         specifier: ^7.61.0
         version: 7.61.0(next@13.4.12)(react@18.2.0)
       '@superfluid-finance/tokenlist':
-        specifier: ^1.3.2
-        version: 1.3.2
+        specifier: ^2.0.2
+        version: 2.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
       '@types/node':
-        specifier: 20.4.5
-        version: 20.4.5
+        specifier: 20.4.6
+        version: 20.4.6
       '@types/react':
         specifier: 18.2.18
         version: 18.2.18
@@ -304,7 +304,7 @@ importers:
         version: 18.2.7
       '@web3modal/ethereum':
         specifier: ^2.7.1
-        version: 2.7.1(viem@1.5.0)
+        version: 2.7.1(viem@1.5.2)
       '@web3modal/react':
         specifier: ^2.7.1
         version: 2.7.1(react-dom@18.2.0)(react@18.2.0)
@@ -324,11 +324,11 @@ importers:
         specifier: 5.1.6
         version: 5.1.6
       viem:
-        specifier: ^1.5.0
-        version: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+        specifier: ^1.5.2
+        version: 1.5.2(typescript@5.1.6)(zod@3.21.4)
       wagmi:
         specifier: ^1.3.9
-        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -336,11 +336,11 @@ importers:
   examples/widget-vite-react-rainbowkit:
     dependencies:
       '@rainbow-me/rainbowkit':
-        specifier: ^1.0.7
-        version: 1.0.7(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)(viem@1.5.0)(wagmi@1.3.9)
+        specifier: ^1.0.8
+        version: 1.0.8(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)(viem@1.5.2)(wagmi@1.3.9)
       '@superfluid-finance/tokenlist':
-        specifier: ^1.3.2
-        version: 1.3.2
+        specifier: ^2.0.2
+        version: 2.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
@@ -351,11 +351,11 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: ^1.5.0
-        version: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+        specifier: ^1.5.2
+        version: 1.5.2(typescript@5.1.6)(zod@3.21.4)
       wagmi:
         specifier: ^1.3.9
-        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -379,8 +379,8 @@ importers:
         specifier: ^8.46.0
         version: 8.46.0
       eslint-plugin-react-hooks:
-        specifier: ^4.6.0
-        version: 4.6.0(eslint@8.46.0)
+        specifier: ^5.0.0-canary-493f72b0a-20230727
+        version: 5.0.0-canary-7118f5dd7-20230705(eslint@8.46.0)
       eslint-plugin-react-refresh:
         specifier: ^0.4.3
         version: 0.4.3(eslint@8.46.0)
@@ -394,14 +394,14 @@ importers:
   examples/widget-vite-react-web3modal:
     dependencies:
       '@superfluid-finance/tokenlist':
-        specifier: ^1.3.2
-        version: 1.3.2
+        specifier: ^2.0.2
+        version: 2.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
       '@web3modal/ethereum':
         specifier: ^2.7.1
-        version: 2.7.1(viem@1.5.0)
+        version: 2.7.1(viem@1.5.2)
       '@web3modal/react':
         specifier: ^2.7.1
         version: 2.7.1(react-dom@18.2.0)(react@18.2.0)
@@ -412,11 +412,11 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: ^1.5.0
-        version: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+        specifier: ^1.5.2
+        version: 1.5.2(typescript@5.1.6)(zod@3.21.4)
       wagmi:
         specifier: ^1.3.9
-        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -440,8 +440,8 @@ importers:
         specifier: ^8.46.0
         version: 8.46.0
       eslint-plugin-react-hooks:
-        specifier: ^4.6.0
-        version: 4.6.0(eslint@8.46.0)
+        specifier: ^5.0.0-canary-493f72b0a-20230727
+        version: 5.0.0-canary-7118f5dd7-20230705(eslint@8.46.0)
       eslint-plugin-react-refresh:
         specifier: ^0.4.3
         version: 0.4.3(eslint@8.46.0)
@@ -455,8 +455,8 @@ importers:
   examples/widget-webcomponent:
     dependencies:
       '@superfluid-finance/tokenlist':
-        specifier: ^1.3.2
-        version: 1.3.2
+        specifier: ^2.0.2
+        version: 2.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
@@ -474,8 +474,8 @@ importers:
         specifier: ^13.4.12
         version: 13.4.12(eslint@8.46.0)(typescript@5.1.6)
       eslint-config-prettier:
-        specifier: ^8.9.0
-        version: 8.9.0(eslint@8.46.0)
+        specifier: ^8.10.0
+        version: 8.10.0(eslint@8.46.0)
       eslint-config-turbo:
         specifier: ^1.10.12
         version: 1.10.12(eslint@8.46.0)
@@ -509,8 +509,8 @@ importers:
         specifier: ^1.1.10
         version: 1.1.10
       '@superfluid-finance/tokenlist':
-        specifier: ^1.3.2
-        version: 1.3.2
+        specifier: ^2.0.2
+        version: 2.0.2
       blockies-ts:
         specifier: ^1.0.0
         version: 1.0.0
@@ -533,7 +533,7 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: 7.44.3
+        specifier: ~7.44.3
         version: 7.44.3(react@18.2.0)
       use-immer:
         specifier: ^0.9.0
@@ -576,11 +576,11 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
       viem:
-        specifier: ^1.5.0
-        version: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+        specifier: ^1.5.2
+        version: 1.5.2(typescript@5.1.6)(zod@3.21.4)
       wagmi:
         specifier: ^1.3.9
-        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+        version: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
 
   tests:
     devDependencies:
@@ -597,8 +597,8 @@ importers:
         specifier: 16.3.1
         version: 16.3.1
       ethers:
-        specifier: 6.6.7
-        version: 6.6.7
+        specifier: 6.7.0
+        version: 6.7.0
       typescript:
         specifier: 5.1.6
         version: 5.1.6
@@ -2071,7 +2071,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
       '@types/yargs': 15.0.15
       chalk: 4.1.2
     dev: true
@@ -2177,24 +2177,24 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@monaco-editor/loader@1.3.3(monaco-editor@0.40.0):
+  /@monaco-editor/loader@1.3.3(monaco-editor@0.41.0):
     resolution: {integrity: sha512-6KKF4CTzcJiS8BJwtxtfyYt9shBiEv32ateQ9T4UVogwn4HM/uPo9iJd2Dmbkpz8CM6Y0PDUpjnZzCwC+eYo2Q==}
     peerDependencies:
       monaco-editor: '>= 0.21.0 < 1'
     dependencies:
-      monaco-editor: 0.40.0
+      monaco-editor: 0.41.0
       state-local: 1.0.7
     dev: false
 
-  /@monaco-editor/react@4.5.1(monaco-editor@0.40.0)(react-dom@18.2.0)(react@18.2.0):
+  /@monaco-editor/react@4.5.1(monaco-editor@0.41.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-NNDFdP+2HojtNhCkRfE6/D6ro6pBNihaOzMbGK84lNWzRu+CfBjwzGt4jmnqimLuqp5yE5viHS2vi+QOAnD5FQ==}
     peerDependencies:
       monaco-editor: '>= 0.25.0 < 1'
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@monaco-editor/loader': 1.3.3(monaco-editor@0.40.0)
-      monaco-editor: 0.40.0
+      '@monaco-editor/loader': 1.3.3(monaco-editor@0.41.0)
+      monaco-editor: 0.41.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
@@ -2617,7 +2617,7 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
       playwright-core: 1.36.2
     optionalDependencies:
       fsevents: 2.3.2
@@ -2626,8 +2626,8 @@ packages:
   /@popperjs/core@2.11.8:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
-  /@rainbow-me/rainbowkit@1.0.7(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)(viem@1.5.0)(wagmi@1.3.9):
-    resolution: {integrity: sha512-cZZgPqpkeQEmKX5As3+WnKFF7PejDFVbc4bF9t6zC52nMFjSQUAnv2AttzyR4sP4pp2BSE1nVpTvygZGJ4f1Xg==}
+  /@rainbow-me/rainbowkit@1.0.8(@types/react@18.2.18)(react-dom@18.2.0)(react@18.2.0)(viem@1.5.2)(wagmi@1.3.9):
+    resolution: {integrity: sha512-m1B9/X3p8MLmj4fDfs2NpJlFRmKz7vOR0jmcdBw2SMFzXqP1FQFQc4pjvtLEeyfEUGSNNceGrecFZRVS0Qk//A==}
     engines: {node: '>=12.4'}
     peerDependencies:
       react: '>=17'
@@ -2643,8 +2643,8 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-remove-scroll: 2.5.4(@types/react@18.2.18)(react@18.2.0)
-      viem: 1.5.0(typescript@5.1.6)(zod@3.21.4)
-      wagmi: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+      viem: 1.5.2(typescript@5.1.6)(zod@3.21.4)
+      wagmi: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -2701,7 +2701,7 @@ packages:
     resolution: {integrity: sha512-gYw0ki/EAuV1oSyMxpqandHjnthZjYYy+YWpTAzf8BqfXM3ItcZLpjxfg+3+mXW8HIO+3jw6T9iiqEXsqHaMMw==}
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.8.0
-      viem: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+      viem: 1.5.2(typescript@5.1.6)(zod@3.21.4)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -4171,8 +4171,8 @@ packages:
     resolution: {integrity: sha512-IbcpfB/pOwjl/Vam0d1WXNJaeA0bUW/CkQEZlEhUpL+DQh01d6TnxneEjw3VsT9alqamtycKoi6+2uPHAzyvFA==}
     dev: false
 
-  /@superfluid-finance/tokenlist@1.3.2:
-    resolution: {integrity: sha512-vwP+oNpn82lnRFrpiSM8xDGVrSGaNFlfze2+s6rCsu9+8YhUhKbZL6jlWyIh0p250G5q2dWLI9HRnrDNg6gs0g==}
+  /@superfluid-finance/tokenlist@2.0.2:
+    resolution: {integrity: sha512-Cl5WrJh71Z//cSf2T9HRRFR2T0wRGJL4Csaj0vXWyCSbT0oK/cacWCH3StTC0V64aHRJj/bChy6f1LuMiLuMPA==}
     dependencies:
       '@uniswap/token-lists': 1.0.0-beta.33
     dev: false
@@ -4212,7 +4212,7 @@ packages:
       dotenv: 16.3.1
       dotenv-parse-variables: 2.0.0
       download: 8.0.0
-      ethers: 6.6.7
+      ethers: 6.7.0
       etherscan-api: 10.3.0(debug@4.3.4)
       find-config: 1.0.0
       get-port: 6.1.2
@@ -4511,26 +4511,26 @@ packages:
   /@types/bn.js@4.11.6:
     resolution: {integrity: sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/bn.js@5.1.1:
     resolution: {integrity: sha512-qNrYbZqMx0uJAfKnKclPh+dTwK33KfLHYqtyODwd5HnXOjnkhc4qgn3BrK6RWyGZm5+sIFE7Q7Vz6QQtJB7w7g==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/body-parser@1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/bonjour@3.5.10:
     resolution: {integrity: sha512-p7ienRMiS41Nu2/igbJxxLDWrSZ0WxM8UQgCeO9KhoVF7cOVFkrKsiDr1EsJIla8vV3oEEjGcz11jc5yimhzZw==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/cacheable-request@6.0.3:
@@ -4538,7 +4538,7 @@ packages:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       '@types/keyv': 3.1.4
-      '@types/node': 20.4.5
+      '@types/node': 12.20.55
       '@types/responselike': 1.0.0
     dev: true
 
@@ -4546,13 +4546,13 @@ packages:
     resolution: {integrity: sha512-4x5FkPpLipqwthjPsF7ZRbOv3uoLUFkTA9G9v583qi4pACvq0uTELrB8OLUzPWUI4IJIyvM85vzkV1nyiI2Lig==}
     dependencies:
       '@types/express-serve-static-core': 4.17.35
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/connect@3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
 
   /@types/debug@4.1.8:
     resolution: {integrity: sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==}
@@ -4566,7 +4566,7 @@ packages:
   /@types/express-serve-static-core@4.17.35:
     resolution: {integrity: sha512-wALWQwrgiB2AWTT91CB62b6Yt0sNHpznUXeZEcnPU3DRdlDIz74x8Qg1UUYKSVFi+va5vKOLYRBI1bRKiLLKIg==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
       '@types/send': 0.17.1
@@ -4600,7 +4600,7 @@ packages:
   /@types/http-proxy@1.17.11:
     resolution: {integrity: sha512-HC8G7c1WmaF2ekqpnFq626xd3Zz0uvaqFmBJNRZCGEZCXkvSdJoNFn/8Ygbd9fKNQj8UzLdCETaI0UWPAjK7IA==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/is-ci@3.0.0:
@@ -4635,7 +4635,7 @@ packages:
   /@types/keyv@3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/lodash.isequal@4.5.6:
@@ -4680,8 +4680,8 @@ packages:
     resolution: {integrity: sha512-N+0kuo9KgrUQ1Sn/ifDXsvg0TTleP7rIy4zOBGECxAljqvqfqpTfzx0Q1NUedOixRMBfe2Whhb056a42cWs26Q==}
     dev: true
 
-  /@types/node@20.4.5:
-    resolution: {integrity: sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==}
+  /@types/node@20.4.6:
+    resolution: {integrity: sha512-q0RkvNgMweWWIvSMDiXhflGUKMdIxBo2M2tYM/0kEGDueQByFzK4KZAgu5YHGFNxziTlppNpTIBcqHQAxlfHdA==}
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -4693,7 +4693,7 @@ packages:
   /@types/pbkdf2@3.1.0:
     resolution: {integrity: sha512-Cf63Rv7jCQ0LaL8tNXmEyqTHuIJxRdlS5vMh1mj5voN4+QFhVZnlZruezqpWYDiJ8UTzhP0VmeLXCmBk66YrMQ==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/prop-types@15.7.5:
@@ -4738,7 +4738,7 @@ packages:
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/retry@0.12.0:
@@ -4751,7 +4751,7 @@ packages:
   /@types/secp256k1@4.0.3:
     resolution: {integrity: sha512-Da66lEIFeIz9ltsdMZcpQvmrmmoqrfju8pm1BH8WbYjZSwUgCwXLb9C+9XYogwBITnbsSaMdVPb2ekf7TV+03w==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/semver@7.5.0:
@@ -4761,7 +4761,7 @@ packages:
     resolution: {integrity: sha512-Cwo8LE/0rnvX7kIIa3QHCkcuF21c05Ayb0ZfxPiv0W8VRiZiNW/WuRupHKpqqGVGf7SUA44QSOUKaEd9lIrd/Q==}
     dependencies:
       '@types/mime': 1.3.2
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/serve-index@1.9.1:
@@ -4775,7 +4775,7 @@ packages:
     dependencies:
       '@types/http-errors': 2.0.1
       '@types/mime': 3.0.1
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/sinonjs__fake-timers@8.1.1:
@@ -4789,7 +4789,7 @@ packages:
   /@types/sockjs@0.3.33:
     resolution: {integrity: sha512-f0KEEe05NvUnat+boPTZ0dgaLZ4SfSouXUgv5noUiefG2ajgKjmETo9ZJyuqsl7dfl2aHlLJUiki6B4ZYldiiw==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
     dev: true
 
   /@types/source-list-map@0.1.2:
@@ -4819,7 +4819,7 @@ packages:
   /@types/webpack-sources@3.2.0:
     resolution: {integrity: sha512-Ft7YH3lEVRQ6ls8k4Ff1oB4jN6oy/XmU6tQISKdhfh+1mR+viZFphS6WL0IrtDOzvefmJg5a0s7ZQoRXwqTEFg==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
       '@types/source-list-map': 0.1.2
       source-map: 0.7.4
     dev: true
@@ -4827,7 +4827,7 @@ packages:
   /@types/webpack@4.41.33:
     resolution: {integrity: sha512-PPajH64Ft2vWevkerISMtnZ8rTs4YmRbs+23c402J0INmxDKCrhZNvwZYtzx96gY2wAtXdrK1BS2fiC8MlLr3g==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
       '@types/tapable': 1.0.8
       '@types/uglify-js': 3.17.1
       '@types/webpack-sources': 3.2.0
@@ -4838,13 +4838,12 @@ packages:
   /@types/ws@7.4.7:
     resolution: {integrity: sha512-JQbbmxZTZehdc2iszGKs5oC3NFnjeay7mtAWrdt7qNtAVK0g19muApzAy4bm9byz79xa2ZnO/BOBC2R8RC5Lww==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.4.6
 
   /@types/ws@8.5.5:
     resolution: {integrity: sha512-lwhs8hktwxSjf9UaZ9tG5M03PGogvFaH8gUgLNbN9HKIg0dvv6q+gkSuJ8HN4/VbyxkuLzCjlN7GquQ0gUJfIg==}
     dependencies:
-      '@types/node': 20.4.5
-    dev: true
+      '@types/node': 20.4.6
 
   /@types/yargs-parser@21.0.0:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
@@ -4860,7 +4859,7 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 14.18.54
     dev: true
     optional: true
 
@@ -5190,15 +5189,15 @@ packages:
       picocolors: 1.0.0
       prettier: 2.8.8
       typescript: 5.1.6
-      viem: 1.5.0(typescript@5.1.6)(zod@3.21.4)
-      wagmi: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+      viem: 1.5.2(typescript@5.1.6)(zod@3.21.4)
+      wagmi: 1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
       zod: 3.21.4
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
     dev: true
 
-  /@wagmi/connectors@2.6.6(@wagmi/chains@1.6.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4):
+  /@wagmi/connectors@2.6.6(@wagmi/chains@1.6.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4):
     resolution: {integrity: sha512-/o1c/TCivQs8DOAUOcQvY2UIt3p2mWOAHi39D0LC74+ncpXzLC5/gyaWU38qnTxPM8s/PmTmaWDgz+VhICXrag==}
     peerDependencies:
       '@wagmi/chains': '>=1.3.0'
@@ -5222,7 +5221,7 @@ packages:
       abitype: 0.8.7(typescript@5.1.6)(zod@3.21.4)
       eventemitter3: 4.0.7
       typescript: 5.1.6
-      viem: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+      viem: 1.5.2(typescript@5.1.6)(zod@3.21.4)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - bufferutil
@@ -5233,7 +5232,7 @@ packages:
       - utf-8-validate
       - zod
 
-  /@wagmi/core@1.3.8(immer@10.0.2)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4):
+  /@wagmi/core@1.3.8(immer@10.0.2)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4):
     resolution: {integrity: sha512-OYSxikoMizqVnpSkFTwGE7PwFaz2k0PXteSiI0W2Mtk4j4sZzRFdP+9AWeDB6AYm0yU3WvgN1IATx0EEBKUe3w==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -5243,11 +5242,11 @@ packages:
         optional: true
     dependencies:
       '@wagmi/chains': 1.6.0(typescript@5.1.6)
-      '@wagmi/connectors': 2.6.6(@wagmi/chains@1.6.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+      '@wagmi/connectors': 2.6.6(@wagmi/chains@1.6.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
       abitype: 0.8.7(typescript@5.1.6)(zod@3.21.4)
       eventemitter3: 4.0.7
       typescript: 5.1.6
-      viem: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+      viem: 1.5.2(typescript@5.1.6)(zod@3.21.4)
       zustand: 4.3.9(immer@10.0.2)(react@18.2.0)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
@@ -5609,13 +5608,13 @@ packages:
       - react
     dev: false
 
-  /@web3modal/ethereum@2.7.1(viem@1.5.0):
+  /@web3modal/ethereum@2.7.1(viem@1.5.2):
     resolution: {integrity: sha512-1x3qhYh9qgtvw1MDQD4VeDf2ZOsVANKRPtUty4lF+N4L8xnAIwvNKUAMA4j6T5xSsjqUfq5Tdy5mYsNxLmsWMA==}
     peerDependencies:
       '@wagmi/core': '>=1'
       viem: '>=1'
     dependencies:
-      viem: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+      viem: 1.5.2(typescript@5.1.6)(zod@3.21.4)
     dev: false
 
   /@web3modal/react@2.7.1(react-dom@18.2.0)(react@18.2.0):
@@ -8474,8 +8473,8 @@ packages:
       - eslint-import-resolver-webpack
       - supports-color
 
-  /eslint-config-prettier@8.9.0(eslint@8.46.0):
-    resolution: {integrity: sha512-+sbni7NfVXnOpnRadUA8S28AUlsZt9GjgFvABIRL9Hkn8KqNzOp+7Lw4QWtrwn20KzU3wqu1QoOj2m+7rKRqkA==}
+  /eslint-config-prettier@8.10.0(eslint@8.46.0):
+    resolution: {integrity: sha512-SM8AMJdeQqRYT9O9zguiruQZaN7+z+E4eAP9oiLNGKMtomwaB1E9dcgUD6ZAn/eQAb52USbvezbiljfZUhbJcg==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -8611,15 +8610,6 @@ packages:
       object.entries: 1.1.6
       object.fromentries: 2.0.6
       semver: 6.3.1
-
-  /eslint-plugin-react-hooks@4.6.0(eslint@8.46.0):
-    resolution: {integrity: sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
-    dependencies:
-      eslint: 8.46.0
-    dev: true
 
   /eslint-plugin-react-hooks@5.0.0-canary-7118f5dd7-20230705(eslint@8.46.0):
     resolution: {integrity: sha512-AZYbMo/NW9chdL7vk6HQzQhT+PvTAEVqWk9ziruUoW2kAOcN5qNyelv70e0F1VNQAbvutOC9oc+xfWycI9FxDw==}
@@ -8970,8 +8960,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /ethers@6.6.7:
-    resolution: {integrity: sha512-1SdT3W5/IPAcx9l5/+9qKRYR/iqVIdNQIct18yeh+XvN+I4RK44mvOsAerMwJYCAwdQfsOgf3OkfozeuMInbtQ==}
+  /ethers@6.7.0:
+    resolution: {integrity: sha512-pxt5hK82RNwcTX2gOZP81t6qVPVspnkpeivwEgQuK9XUvbNtghBnT8GNIb/gPh+WnVSfi8cXC9XlfT8sqc6D6w==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@adraffy/ens-normalize': 1.9.2
@@ -11756,8 +11746,8 @@ packages:
     resolution: {integrity: sha512-qYvlv/exQ4+svI3UOvPUpLDF0OMX5euvUH0Ny4N5QyRyhNdgAgUrVH3iUINSzEPLvx0kbo/Bp28GJKIqvE7URw==}
     dev: true
 
-  /monaco-editor@0.40.0:
-    resolution: {integrity: sha512-1wymccLEuFSMBvCk/jT1YDW/GuxMLYwnFwF9CDyYCxoTw2Pt379J3FUhwy9c43j51JdcxVPjwk0jm0EVDsBS2g==}
+  /monaco-editor@0.41.0:
+    resolution: {integrity: sha512-1o4olnZJsiLmv5pwLEAmzHTE/5geLKQ07BrGxlF4Ri/AXAc2yyDGZwHjiTqD8D/ROKUZmwMA28A+yEowLNOEcA==}
     dev: false
 
   /motion@10.16.2:
@@ -12867,8 +12857,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  /prettier@3.0.0:
-    resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
+  /prettier@3.0.1:
+    resolution: {integrity: sha512-fcOWSnnpCrovBsmFZIGIy9UqK2FaI7Hqax+DIO0A9UxeVoY4iweyaFjS5TavZN97Hfehph0nhsZnjlVKzEQSrQ==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
@@ -15281,8 +15271,8 @@ packages:
       - zod
     dev: true
 
-  /viem@1.5.0(typescript@5.1.6)(zod@3.21.4):
-    resolution: {integrity: sha512-+SVCVaXJRR+fE9q6Sf6q9droB6TunPGY1JfwB3uTdxwWrkgr3qq/NbXaRdtEk+TyaOEjzZQr7t6vUzjOL0zL0Q==}
+  /viem@1.5.2(typescript@5.1.6)(zod@3.21.4):
+    resolution: {integrity: sha512-hPs4TJ9ONZw44K8lh24I5+Qntu62DEP85yhPsGqSSyr2d9yROY/9AisLLTlrlsudhg+A+BnLQGAuqvj/X+i8Ow==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
@@ -15294,6 +15284,7 @@ packages:
       '@noble/hashes': 1.3.0
       '@scure/bip32': 1.3.0
       '@scure/bip39': 1.2.0
+      '@types/ws': 8.5.5
       '@wagmi/chains': 1.6.0(typescript@5.1.6)
       abitype: 0.9.3(typescript@5.1.6)(zod@3.21.4)
       isomorphic-ws: 5.0.0(ws@8.12.0)
@@ -15347,7 +15338,7 @@ packages:
     resolution: {integrity: sha512-AFbieoL7a5LMqcnOF04ji+rpXadgOXnZsxQr//r83kLPr7biP7am3g9zbaZIaBGwBRWeSvoMD4mgPdX3e4NWBg==}
     dev: true
 
-  /wagmi@1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4):
+  /wagmi@1.3.9(immer@10.0.2)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4):
     resolution: {integrity: sha512-BQbl+vWLNpLraXd/MWsl1P3I41l7DHrujx6qshIa1HDV7Mdh0GNrDuluRYBtuK2bBx9WM/Fjw45Ef2aKADan9A==}
     peerDependencies:
       react: '>=17.0.0'
@@ -15360,12 +15351,12 @@ packages:
       '@tanstack/query-sync-storage-persister': 4.32.0
       '@tanstack/react-query': 4.32.0(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-query-persist-client': 4.32.0(@tanstack/react-query@4.32.0)
-      '@wagmi/core': 1.3.8(immer@10.0.2)(react@18.2.0)(typescript@5.1.6)(viem@1.5.0)(zod@3.21.4)
+      '@wagmi/core': 1.3.8(immer@10.0.2)(react@18.2.0)(typescript@5.1.6)(viem@1.5.2)(zod@3.21.4)
       abitype: 0.8.7(typescript@5.1.6)(zod@3.21.4)
       react: 18.2.0
       typescript: 5.1.6
       use-sync-external-store: 1.2.0(react@18.2.0)
-      viem: 1.5.0(typescript@5.1.6)(zod@3.21.4)
+      viem: 1.5.2(typescript@5.1.6)(zod@3.21.4)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - bufferutil

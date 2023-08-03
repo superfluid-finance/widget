@@ -67,7 +67,9 @@ export function Widget({
         (x) => x.address.toLowerCase() === address.toLowerCase(),
       );
       if (!superToken) {
-        throw new Error("Super Token not found from token list.");
+        throw new Error(
+          `Super Token [${address}] not found from token list (which contains ${superTokens.length} Super Tokens).`,
+        );
       }
       return superToken;
     }),
@@ -80,7 +82,9 @@ export function Widget({
         (x) => x.address.toLowerCase() === address.toLowerCase(),
       );
       if (!underlyingToken) {
-        throw new Error("Super Token not found from token list.");
+        throw new Error(
+          `Underlying token [${address}] not found from token list (which contains ${underlyingTokens.length} underlying tokens).`,
+        );
       }
       return underlyingToken;
     }),
