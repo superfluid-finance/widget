@@ -4,10 +4,10 @@
   "private": true,
   "devDependencies": {
     "@currents/playwright": "^0.6.3",
-    "@playwright/test": "^1.36.1",
+    "@playwright/test": "^1.36.2",
     "@synthetixio/synpress": "^3.7.1",
     "dotenv": "16.3.1",
-    "ethers": "6.6.4",
+    "ethers": "6.6.7",
     "typescript": "5.1.6"
   },
   "scripts": {
