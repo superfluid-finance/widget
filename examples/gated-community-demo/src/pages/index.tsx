@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Clonify Demo | Superfluid</title>
-        <meta name="description" content="Clonify Demo | Superfluid widget" />
+        <title>Cliques Demo | Superfluid</title>
+        <meta name="description" content="Cliques Demo | Superfluid widget" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

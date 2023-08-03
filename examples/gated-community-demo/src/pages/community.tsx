@@ -10,8 +10,8 @@ export default function Community() {
   return (
     <>
       <Head>
-        <title>Clique Demo | Superfluid</title>
-        <meta name="description" content="Clique Demo | Superfluid widget" />
+        <title>Cliques Demo | Superfluid</title>
+        <meta name="description" content="Cliques Demo | Superfluid widget" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
