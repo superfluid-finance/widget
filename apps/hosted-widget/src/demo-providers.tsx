@@ -7,7 +7,7 @@
 import * as React from "react";
 import { WagmiConfig } from "wagmi";
 
-import { wagmiConfigDemo } from "./wagmi-demo";
+import { wagmiConfigDemo } from "./DEMO-wagmi";
 
 export function WagmiDemoProviders({
   children,
