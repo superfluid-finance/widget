@@ -86,6 +86,10 @@ const JoinButton: FC<PropsWithChildren> = ({ children }) => {
             superToken: {
               address: Token,
             },
+            flowRate: {
+              amountEther: "5",
+              period: "month",
+            },
           },
         ],
       }) as PaymentDetails,

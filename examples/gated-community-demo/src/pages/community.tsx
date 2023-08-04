@@ -59,7 +59,7 @@ export default function Community() {
             title="Clique Member"
             members="63k"
             description="The Member tier grants you access to the exclusive world of Grumpy Kitties, where you can participate in community discussions and enjoy early sneak peeks of the latest updates!"
-            requirements={["Join community to receive an NFT"]}
+            requirements={["Stream 5 fUSDCx and receive an NFT"]}
           />
         </section>
       </main>
