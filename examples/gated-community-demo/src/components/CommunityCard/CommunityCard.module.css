@@ -36,6 +36,6 @@
   .CardContent {
     padding: 16px;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: start;
   }
 }
