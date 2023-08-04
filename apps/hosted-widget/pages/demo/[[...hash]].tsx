@@ -10,7 +10,7 @@ import { useMemo, useState } from "react";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 
 import DemoWalletDisplay from "../../src/components/demo-wallet-display/DemoWalletDisplay";
-import { WagmiDemoProviders } from "../../src/DEMO-providers";
+import { WagmiDemoProviders } from "../../src/DEMOs-providers";
 import useAnalyticsBrowser from "../../src/hooks/useAnalyticsBrowser";
 import useFontLoader from "../../src/hooks/useFontLoader";
 import useLoadFromIPFS from "../../src/hooks/useLoadFromIPFS";
