@@ -62,3 +62,10 @@ p {
   font-weight: 400;
   line-height: 24px;
 }
+
+@media screen and (min-width: 960px) {
+  :root {
+    --content-width: min(100vw - 6rem, 1400px);
+    --small-content-width: min(100vw - 6rem, 1400px);
+  }
+}
