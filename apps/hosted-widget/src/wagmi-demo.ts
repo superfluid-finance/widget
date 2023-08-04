@@ -1,3 +1,4 @@
+import { supportedNetworks } from "@superfluid-finance/widget";
 import { createWalletClient, http } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
@@ -12,26 +13,23 @@ const account = privateKeyToAccount(
   (process.env.NEXT_PUBLIC_THE_THING ?? generatePrivateKey()) as `0x${string}`,
 );
 
-const { chains, publicClient } = configureChains(
-  [polygonMumbai],
-  [
-    jsonRpcProvider({
-      rpc: (chain) => {
-        const rpcURL =
-          superfluidRpcUrls[chain.id as keyof typeof superfluidRpcUrls];
+const { chains, publicClient } = configureChains(supportedNetworks, [
+  jsonRpcProvider({
+    rpc: (chain) => {
+      const rpcURL =
+        superfluidRpcUrls[chain.id as keyof typeof superfluidRpcUrls];
 
-        if (!rpcURL) {
-          return null;
-        }
+      if (!rpcURL) {
+        return null;
+      }
 
-        return {
-          http: rpcURL,
-        };
-      },
-    }),
-    publicProvider(),
-  ],
-);
+      return {
+        http: rpcURL,
+      };
+    },
+  }),
+  publicProvider(),
+]);
 
 export const connector = new MockConnector({
   options: {
