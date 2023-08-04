@@ -1,6 +1,4 @@
-import {
-  supportedNetworks,
-} from "@superfluid-finance/widget";
+import { supportedNetworks } from "@superfluid-finance/widget";
 import { w3mConnectors, w3mProvider } from "@web3modal/ethereum";
 import { configureChains, createConfig } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
