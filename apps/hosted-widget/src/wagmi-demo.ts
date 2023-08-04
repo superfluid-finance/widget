@@ -6,7 +6,7 @@ import { MockConnector } from "wagmi/connectors/mock";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { publicProvider } from "wagmi/providers/public";
 
-import { superfluidRpcUrls } from "./wagmi";
+import { superfluidRpcUrls } from "./constants";
 
 const account = privateKeyToAccount(
   (process.env.NEXT_PUBLIC_THE_THING ?? generatePrivateKey()) as `0x${string}`,
