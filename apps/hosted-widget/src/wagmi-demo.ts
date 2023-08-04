@@ -12,7 +12,6 @@ const account = privateKeyToAccount(
   (process.env.NEXT_PUBLIC_THE_THING ?? generatePrivateKey()) as `0x${string}`,
 );
 
-console.log("this is running");
 const { chains, publicClient } = configureChains(
   [polygonMumbai],
   [
