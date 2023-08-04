@@ -1,3 +1,9 @@
+/**
+ * WARINGING: Don't mix imports from wagmi.ts and wagmi-demo.ts.
+ * It will break the main page, as wagmi's createConfig in the wagmi-demo.ts
+ * will override the config in wagmi.ts, since wagmi has a global store.
+ */
+
 import { supportedNetworks } from "@superfluid-finance/widget";
 import { createWalletClient, http } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
