@@ -12,12 +12,14 @@ const account = privateKeyToAccount(
   (process.env.NEXT_PUBLIC_THE_THING ?? generatePrivateKey()) as `0x${string}`,
 );
 
+console.log("this is running");
 const { chains, publicClient } = configureChains(
   [polygonMumbai],
   [
     jsonRpcProvider({
-      rpc: () => {
-        const rpcURL = superfluidRpcUrls[polygonMumbai.id];
+      rpc: (chain) => {
+        const rpcURL =
+          superfluidRpcUrls[chain.id as keyof typeof superfluidRpcUrls];
 
         if (!rpcURL) {
           return null;
