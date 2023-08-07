@@ -16,6 +16,10 @@
   margin: 0;
 }
 
+.Card.NoAccess h4 {
+  color: #727272;
+}
+
 .CardContent {
   display: flex;
   flex-direction: row;

@@ -1,8 +1,24 @@
 import Link from "next/link";
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import Badge from "../Badge/Badge";
 import styles from "./CommunityCard.module.css";
+
+interface CommunityCardWrapperProps extends PropsWithChildren {
+  hasAccess?: boolean;
+}
+
+const CommunityCardWrapper: FC<CommunityCardWrapperProps> = ({
+  hasAccess,
+  children,
+}) =>
+  !hasAccess ? (
+    <div className={`${styles.Card} ${styles.NoAccess}`}>{children}</div>
+  ) : (
+    <Link href="/community" className={styles.Card}>
+      {children}
+    </Link>
+  );
 
 interface CommunityCardProps {
   title: string;
@@ -20,7 +36,7 @@ const CommunityCard: FC<CommunityCardProps> = ({
   hasAccess,
 }) => {
   return (
-    <Link href="/community" className={styles.Card}>
+    <CommunityCardWrapper hasAccess={hasAccess}>
       <img src={imgSrc} />
       <div className={styles.CardContent}>
         <h4>{title}</h4>
@@ -34,7 +50,7 @@ const CommunityCard: FC<CommunityCardProps> = ({
           </Badge>
         </div>
       </div>
-    </Link>
+    </CommunityCardWrapper>
   );
 };
 
