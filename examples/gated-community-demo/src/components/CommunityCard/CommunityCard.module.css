@@ -1,0 +1,45 @@
+.Card {
+  border-radius: 10px;
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #dbdee2;
+  overflow: hidden;
+}
+
+.Card img {
+  display: block;
+  width: 100%;
+  margin: -1px;
+}
+
+.Card h4 {
+  margin: 0;
+}
+
+.Card.NoAccess h4 {
+  color: #727272;
+}
+
+.CardContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  gap: 8px;
+}
+
+.Badges {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+  .CardContent {
+    padding: 16px;
+    flex-direction: column;
+    align-items: start;
+  }
+}

@@ -41,6 +41,10 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
+    "@superfluid-finance/gated-community-demo#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
     "test": {
       "dependsOn": ["build"],
       "env": [
