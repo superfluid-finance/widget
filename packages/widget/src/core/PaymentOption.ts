@@ -48,5 +48,9 @@ export const paymentOptionSchema = z.object({
     .optional(),
 });
 
-export type PaymentOption = z.infer<typeof paymentOptionSchema>;
+/**
+ * The details of a single payment option for the checkout flow.
+ */
+export interface PaymentOption extends z.infer<typeof paymentOptionSchema> {}
+
 export type FlowRate = z.infer<typeof flowRateSchema>;

@@ -2,7 +2,6 @@ import {
   Alert,
   AlertTitle,
   createTheme,
-  ThemeOptions,
   ThemeProvider,
 } from "@mui/material";
 import { deepmerge } from "@mui/utils";
@@ -13,27 +12,18 @@ import { useCallback, useMemo } from "react";
 import { Address, zeroAddress } from "viem";
 import { fromZodError } from "zod-validation-error";
 
-import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig.js";
+import {
+  checkoutConfigSchema,
+  WidgetProps,
+} from "./CheckoutConfig.js";
 import { ChainId, SupportedNetwork, supportedNetworks } from "./core/index.js";
-import { EventListeners } from "./EventListeners.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList.js";
 import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions.js";
 import { buildThemeOptions } from "./theme.js";
-import { WalletManager } from "./WalletManager.js";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext.js";
 import { ViewProps, WidgetView } from "./WidgetView.js";
-
-export type WidgetProps = ViewProps &
-  CheckoutConfig & {
-    eventListeners?: EventListeners;
-    walletManager: WalletManager;
-    theme?: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
-    stepper?: {
-      orientation: "vertical" | "horizontal";
-    };
-  };
 
 /**
  * The entrypoint to the Superfluid widget.
@@ -47,7 +37,7 @@ export function Widget({
   stepper: stepper_ = { orientation: "vertical" },
   eventListeners,
   ...viewProps
-}: WidgetProps) {
+}: WidgetProps & ViewProps) {
   const { paymentOptions } = paymentDetails;
 
   const { superTokens, underlyingTokens } = useMemo(
@@ -185,7 +175,7 @@ export function Widget({
     return createTheme(themeOptions);
   }, [theme_]);
 
-  const validationResult = checoutConfigSchema.safeParse({
+  const validationResult = checkoutConfigSchema.safeParse({
     productDetails,
     paymentDetails,
   });

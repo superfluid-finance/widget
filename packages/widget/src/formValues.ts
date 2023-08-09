@@ -17,9 +17,8 @@ const paymentOptionWithTokenInfoSchema = z.object({
   underlyingToken: z.custom<TokenInfo>().nullable(),
 });
 
-export type PaymentOptionWithTokenInfo = z.infer<
-  typeof paymentOptionWithTokenInfoSchema
->;
+export interface PaymentOptionWithTokenInfo
+  extends z.infer<typeof paymentOptionWithTokenInfoSchema> {}
 
 export const checkoutFormSchema = z.object({
   accountAddress: addressSchema,
