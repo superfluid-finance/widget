@@ -1,5 +1,33 @@
 /**
  * An interface for interacting with a wallet management library (e.g. Web3Modal, RainbowKit, ConnectKit etc).
+ *
+ * @example
+ * Example with React & RainbowKit.
+ *
+ * ```typescript
+ * const { openConnectModal, connectModalOpen } = useConnectModal();
+ * const walletManager = useMemo(
+ *   () => ({
+ *     open: async () => openConnectModal?.(),
+ *     isOpen: connectModalOpen,
+ *   }),
+ *   [openConnectModal, connectModalOpen]
+ * );
+ * ```
+ *
+ * @example
+ * Example with React & Web3Modal.
+ *
+ * ```typescript
+ * const { open, isOpen } = useWeb3Modal();
+ * const walletManager = useMemo(
+ *   () => ({
+ *     open,
+ *     isOpen,
+ *   }),
+ *   [open, isOpen],
+ * );
+ * ```
  */
 export interface WalletManager {
   /**
