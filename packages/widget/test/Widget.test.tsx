@@ -35,8 +35,8 @@ test("the widget renders with minimum configuration", () => {
     </WagmiConfig>,
   );
 
-  const productName = within(screen.getByTestId("product-name"));
-  expect(productName.getByText("Test Product")).toBeDefined();
+  const continueButton = within(screen.getByTestId("continue-button"));
+  expect(continueButton.getByText("Connect Wallet to Continue")).toBeDefined();
 });
 
 test("the widget renders with an old configuration", () => {
