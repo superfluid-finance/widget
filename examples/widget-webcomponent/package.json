@@ -9,11 +9,11 @@
     "preview": "vite preview --host"
   },
   "dependencies": {
-    "@superfluid-finance/tokenlist": "^2.0.2",
+    "@superfluid-finance/tokenlist": "^2.0.3",
     "@superfluid-finance/widget": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.1.6",
-    "vite": "^4.4.8"
+    "vite": "^4.4.9"
   }
 }
