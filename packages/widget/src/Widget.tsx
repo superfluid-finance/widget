@@ -69,13 +69,16 @@ export function Widget({
     return defaultWalletManager;
   }, [walletManager_, connectors, connect, chains]);
 
+  const paymentDetailsInputStringified = JSON.stringify(paymentDetails_);
+  const productDetailsInputStringified = JSON.stringify(productDetails_);
+
   const validationResult = useMemo(
     () =>
       checkoutConfigSchema.safeParse({
         productDetails: productDetails_,
         paymentDetails: paymentDetails_,
       }),
-    [productDetails_, paymentDetails_],
+    [productDetailsInputStringified, paymentDetailsInputStringified],
   );
 
   const {
@@ -242,12 +245,12 @@ export function Widget({
     return createTheme(themeOptions);
   }, [theme_]);
 
+  // TODO(KK): debug message about what token list is used?
+
   const paymentDetailsKey = useMemo(
     () => nanoid(),
-    [JSON.stringify(paymentDetails)],
+    [paymentDetailsInputStringified],
   );
-
-  // TODO(KK): debug message about what token list is used?
 
   return (
     <WidgetContext.Provider value={checkoutState}>
