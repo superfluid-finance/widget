@@ -27,7 +27,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "cp ../../README.md . && tsc -p ./tsconfig.json",
+    "build": "cp ../../README.md . && tsc -p ./tsconfig.build.json",
     "dev": "tsc -w -p ./tsconfig.json",
     "typedoc": "typedoc --out docs src/index.ts",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
