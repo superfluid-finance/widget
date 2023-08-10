@@ -1,21 +1,15 @@
-import {
-  Alert,
-  AlertTitle,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material";
+import { Alert, AlertTitle, createTheme, ThemeProvider } from "@mui/material";
 import { deepmerge } from "@mui/utils";
-import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
+import defaultTokenList, { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
 import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
 import { Address, zeroAddress } from "viem";
+import { useConnect, useNetwork } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 import { fromZodError } from "zod-validation-error";
 
-import {
-  checkoutConfigSchema,
-  WidgetProps,
-} from "./CheckoutConfig.js";
+import { checkoutConfigSchema, WidgetProps } from "./CheckoutConfig.js";
 import { ChainId, SupportedNetwork, supportedNetworks } from "./core/index.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
@@ -31,13 +25,41 @@ import { ViewProps, WidgetView } from "./WidgetView.js";
 export function Widget({
   productDetails,
   paymentDetails,
-  tokenList,
+  tokenList = defaultTokenList,
   theme: theme_,
-  walletManager,
+  walletManager: walletManager_,
   stepper: stepper_ = { orientation: "vertical" },
   eventListeners,
-  ...viewProps
-}: WidgetProps & ViewProps) {
+  type = "page",
+  ..._viewProps
+}: WidgetProps & Partial<ViewProps>) {
+  const viewProps: ViewProps =
+    type === "page" ? { type } : ({ type, ..._viewProps } as ViewProps);
+
+  const { connect, connectors } = useConnect();
+  const { chains } = useNetwork();
+  const walletManager = useMemo(() => {
+    if (walletManager_) {
+      return walletManager_;
+    }
+
+    // Note that there's no good reason to use the default wallet manager in production. It is only to make setting up the widget easier for the _first time_.
+    const defaultWalletManager = {
+      isOpen: false,
+      open: () =>
+        connect({
+          connector:
+            connectors.find((x) => x.id === "injected") ??
+            new InjectedConnector({
+              chains,
+              options: { shimDisconnect: true },
+            }),
+        }),
+    };
+
+    return defaultWalletManager;
+  }, [walletManager_, connectors, connect, chains]);
+
   const { paymentOptions } = paymentDetails;
 
   const { superTokens, underlyingTokens } = useMemo(
@@ -184,6 +206,8 @@ export function Widget({
     () => nanoid(),
     [JSON.stringify(paymentDetails)],
   );
+
+  // TODO(KK): debug message about what token list is used?
 
   return (
     <WidgetContext.Provider value={checkoutState}>

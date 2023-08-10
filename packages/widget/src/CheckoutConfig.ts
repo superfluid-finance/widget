@@ -23,7 +23,7 @@ export const checkoutConfigSchema = z.object({
   /**
    * The token list that contains Super Tokens and their underlying tokens.
    */
-  tokenList: z.custom<SuperTokenList>(),
+  tokenList: z.custom<SuperTokenList>().optional(),
 });
 
 export interface CheckoutConfig extends z.infer<typeof checkoutConfigSchema> {}
@@ -47,7 +47,7 @@ const widgetPropsSchema = checkoutConfigSchema.merge(
     /**
      * @inheritdoc WalletManager
      */
-    walletManager: z.custom<WalletManager>(),
+    walletManager: z.custom<WalletManager>().optional(),
     /**
      * @inheritdoc EventListeners
      */
