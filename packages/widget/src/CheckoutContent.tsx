@@ -18,7 +18,8 @@ export function CheckoutContent() {
     productDetails,
   } = useWidget();
 
-  const showProductCard = !!productDetails.name;
+  const showProductCard =
+    !!productDetails.name?.trim() || !!productDetails.description?.trim();
 
   const containerMediaQuery = useMemo(
     () =>
