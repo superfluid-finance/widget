@@ -12,7 +12,11 @@ import { useConnect, useNetwork } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { fromZodError } from "zod-validation-error";
 
-import { checkoutConfigSchema, WidgetProps } from "./CheckoutConfig.js";
+import {
+  CheckoutConfig,
+  checkoutConfigSchema,
+  WidgetProps,
+} from "./CheckoutConfig.js";
 import { ChainId, SupportedNetwork, supportedNetworks } from "./core/index.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
@@ -26,8 +30,10 @@ import { ViewProps, WidgetView } from "./WidgetView.js";
  * The entrypoint to the Superfluid widget.
  */
 export function Widget({
-  productDetails,
-  paymentDetails,
+  productDetails: productDetails_ = {
+    name: "",
+  },
+  paymentDetails: paymentDetails_,
   tokenList = defaultTokenList,
   theme: theme_,
   walletManager: walletManager_,
@@ -63,7 +69,38 @@ export function Widget({
     return defaultWalletManager;
   }, [walletManager_, connectors, connect, chains]);
 
-  const { paymentOptions } = paymentDetails;
+  const validationResult = useMemo(
+    () =>
+      checkoutConfigSchema.safeParse({
+        productDetails: productDetails_,
+        paymentDetails: paymentDetails_,
+      }),
+    [productDetails_, paymentDetails_],
+  );
+
+  const {
+    productDetails,
+    paymentDetails,
+  }: {
+    productDetails: CheckoutConfig["productDetails"];
+    paymentDetails: CheckoutConfig["paymentDetails"];
+  } = useMemo(() => {
+    if (validationResult.success) {
+      return {
+        productDetails: validationResult.data.productDetails,
+        paymentDetails: validationResult.data.paymentDetails,
+      };
+    } else {
+      return {
+        productDetails: {
+          name: "",
+        },
+        paymentDetails: {
+          paymentOptions: [],
+        },
+      };
+    }
+  }, [validationResult]);
 
   const { superTokens, underlyingTokens } = useMemo(
     () => filterSuperTokensFromTokenList(tokenList),
@@ -72,8 +109,8 @@ export function Widget({
 
   // TODO: Check if network is configured in wagmi.
   const networks: ReadonlyArray<SupportedNetwork> = useMemo(
-    () => mapSupportedNetworksFromPaymentOptions(paymentOptions),
-    [paymentOptions],
+    () => mapSupportedNetworksFromPaymentOptions(paymentDetails.paymentOptions),
+    [validationResult],
   );
 
   const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>(
@@ -135,12 +172,17 @@ export function Widget({
     useMemo(
       () =>
         addSuperTokenInfoToPaymentOptions(
-          paymentOptions,
+          paymentDetails.paymentOptions,
           getSuperToken,
           getUnderlyingToken,
           getNativeAsset,
         ),
-      [paymentOptions, getSuperToken, getUnderlyingToken, getNativeAsset],
+      [
+        paymentDetails.paymentOptions,
+        getSuperToken,
+        getUnderlyingToken,
+        getNativeAsset,
+      ],
     );
 
   const stepper = useMemo(
@@ -199,11 +241,6 @@ export function Widget({
     const themeOptions = deepmerge(defaultThemeOptions, theme_);
     return createTheme(themeOptions);
   }, [theme_]);
-
-  const validationResult = checkoutConfigSchema.safeParse({
-    productDetails,
-    paymentDetails,
-  });
 
   const paymentDetailsKey = useMemo(
     () => nanoid(),

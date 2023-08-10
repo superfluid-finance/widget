@@ -15,6 +15,7 @@ export function CheckoutContent() {
     layout: { elevated },
     stepper: { orientation },
     type,
+    productDetails,
   } = useWidget();
 
   const containerMediaQuery = useMemo(
@@ -57,18 +58,20 @@ export function CheckoutContent() {
             },
           }}
         >
-          <CheckoutProduct
-            CardProps={{
-              sx: {
-                flex: 1,
-                width: "100%",
-                maxWidth: "510px",
-                [containerMediaQuery]: {
-                  width: "480px",
+          {!!productDetails.name && (
+            <CheckoutProduct
+              CardProps={{
+                sx: {
+                  flex: 1,
+                  width: "100%",
+                  maxWidth: "510px",
+                  [containerMediaQuery]: {
+                    width: "480px",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          )}
 
           <Card
             variant={elevated ? "elevation" : "outlined"}

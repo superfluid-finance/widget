@@ -22,19 +22,14 @@ test("the widget renders with minimum configuration", () => {
   render(
     <WagmiConfig config={createDummyWagmiConfig()}>
       <Widget
-        productDetails={{
-          name: "Test Product",
-        }}
         paymentDetails={{
-          paymentOptions: [
-            {
-              chainId: 1,
-              receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
-              superToken: {
-                address: "0xd70408b34ed121722631d647d37c4e6641ec363d",
-              },
+          paymentOptions: {
+            chainId: 1,
+            receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
+            superToken: {
+              address: "0xd70408b34ed121722631d647d37c4e6641ec363d",
             },
-          ],
+          },
         }}
       />
     </WagmiConfig>,

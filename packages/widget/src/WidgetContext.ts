@@ -28,7 +28,7 @@ export type WidgetContextValue = {
   };
   type: ViewProps["type"];
   eventListeners: Required<EventListeners>;
-} & CheckoutConfig;
+} & Required<CheckoutConfig>;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(
   undefined,
