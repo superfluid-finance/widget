@@ -2,7 +2,6 @@ import { test } from "@playwright/test";
 
 import {
   defaultPaymentOption,
-  rebounderAddresses,
   testOption,
 } from "../pageObjects/basePage";
 import { BuilderPage } from "../pageObjects/builderPage";
@@ -26,6 +25,7 @@ test("Changing the products description", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let testString =
     "Testing changing product description !@£$%^&*() 😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗";
+  await builderPage.changeProductName("Testing");
   await builderPage.changeDescription(testString);
   await widgetPage.validateProductDescription(testString);
 });
@@ -33,6 +33,7 @@ test("Changing the products description", async ({ page }) => {
 test("Adding a payment new option", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
+  await builderPage.changeProductName("Testing");
   await builderPage.addPaymentOption(testOption);
   await builderPage.verifyAddedPaymentOptions([
     defaultPaymentOption,
@@ -83,6 +84,7 @@ test("Exporting the widget to JSON", async ({ page }) => {
 test("Uploading a product image", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
+  await builderPage.changeProductName("Testing");
   await builderPage.openUITab();
   await builderPage.uploadTestImage();
   await widgetPage.validateUsedTestImage();
