@@ -1,6 +1,9 @@
 import { Alert, AlertTitle, createTheme, ThemeProvider } from "@mui/material";
 import { deepmerge } from "@mui/utils";
-import defaultTokenList, { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
+import defaultTokenList, {
+  SuperTokenInfo,
+  TokenInfo,
+} from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
 import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
