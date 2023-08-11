@@ -3,7 +3,9 @@ import { z } from "zod";
 import { paymentOptionSchema } from "./PaymentOption.js";
 
 export const paymentDetailsSchema = z.object({
-  paymentOptions: z.array(paymentOptionSchema).min(1),
+  paymentOptions: paymentOptionSchema
+    .transform((x) => [x])
+    .or(z.array(paymentOptionSchema).min(1)),
 });
 
 /**
