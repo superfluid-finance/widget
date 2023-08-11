@@ -1,9 +1,6 @@
 import { test } from "@playwright/test";
 
-import {
-  defaultPaymentOption,
-  testOption,
-} from "../pageObjects/basePage";
+import { defaultPaymentOption, testOption } from "../pageObjects/basePage";
 import { BuilderPage } from "../pageObjects/builderPage";
 import { WidgetPage } from "../pageObjects/widgetPage";
 
@@ -25,7 +22,6 @@ test("Changing the products description", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let testString =
     "Testing changing product description !@£$%^&*() 😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗";
-  await builderPage.changeProductName("Testing");
   await builderPage.changeDescription(testString);
   await widgetPage.validateProductDescription(testString);
 });
