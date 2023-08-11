@@ -18,12 +18,15 @@ export function CheckoutContent() {
     productDetails,
   } = useWidget();
 
+  const showProductCard =
+    !!productDetails.name?.trim() || !!productDetails.description?.trim();
+
   const containerMediaQuery = useMemo(
     () =>
-      orientation === "vertical"
+      orientation === "vertical" && showProductCard
         ? `@container wrapper (width >= ${theme.breakpoints.values.md}${theme.breakpoints.unit})`
         : "",
-    [theme, orientation],
+    [theme, showProductCard, orientation],
   );
 
   const containerType = useMemo(
@@ -58,7 +61,7 @@ export function CheckoutContent() {
             },
           }}
         >
-          {!!productDetails.name && (
+          {showProductCard && (
             <CheckoutProduct
               CardProps={{
                 sx: {
