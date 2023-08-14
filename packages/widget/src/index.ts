@@ -13,6 +13,7 @@ export type {
 } from "./core/index.js";
 export {
   cfAv1ForwarderABI, // TODO: Export ABI from @superfluid-finance/widget/abi"
+  mapTimePeriodToSeconds,
   supportedNetwork,
   supportedNetworks,
   timePeriods,
