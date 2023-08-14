@@ -50,7 +50,6 @@ const StreamGatingEditor: FC = () => {
     } finally {
       setDeploying(false);
     }
-    g;
   }, [tokenName, tokenSymbol, nftImage, selectedPaymentOptions]);
 
   return (
