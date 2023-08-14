@@ -16,8 +16,10 @@ import {
 import { privateKeyToAccount } from "viem/accounts";
 import * as chains from "viem/chains";
 
-import { superfluidRpcUrls } from "../../constants";
-import { NetworkNames } from "../../networkDefinitions";
+import {
+  getNetworkByChainIdOrThrow,
+  NetworkNames,
+} from "../../networkDefinitions";
 
 const pk = "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
 const account = privateKeyToAccount(pk);
@@ -60,7 +62,7 @@ const handler: NextApiHandler = async (req, res) => {
           ({ id }) => Number(chainId) === id,
         ) ?? chains.polygonMumbai) as Chain,
         transport: http(
-          superfluidRpcUrls[Number(chainId) as keyof typeof superfluidRpcUrls],
+          getNetworkByChainIdOrThrow(Number(chainId) as ChainId).rpcUrl,
         ),
       }),
     }),

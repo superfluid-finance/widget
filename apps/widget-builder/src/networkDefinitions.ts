@@ -50,7 +50,7 @@ export const networks: Network[] = [
   {
     name: "Goerli",
     chainId: 5,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/eth-goerli",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-goerli",
     isTestnet: true,
@@ -59,7 +59,7 @@ export const networks: Network[] = [
   {
     name: "Polygon Mumbai",
     chainId: 80001,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/polygon-mumbai",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-mumbai",
     isTestnet: true,
@@ -68,7 +68,7 @@ export const networks: Network[] = [
   {
     name: "Optimism Goerli",
     chainId: 420,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/optimism-goerli",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-optimism-goerli",
     isTestnet: true,
@@ -77,7 +77,7 @@ export const networks: Network[] = [
   {
     name: "Arbitrum Goerli",
     chainId: 421613,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/arbitrum-goerli",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-arbitrum-goerli",
     isTestnet: true,
@@ -86,7 +86,7 @@ export const networks: Network[] = [
   {
     name: "Avalanche Fuji",
     chainId: 43113,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/avalanche-fuji",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-avalanche-fuji",
     isTestnet: true,
@@ -95,7 +95,7 @@ export const networks: Network[] = [
   {
     name: "Gnosis Chain",
     chainId: 100,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/xdai-mainnet",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-xdai",
     logoUrl: "/assets/network-icons/gnosis.svg",
@@ -104,7 +104,7 @@ export const networks: Network[] = [
   {
     name: "Polygon",
     chainId: 137,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/polygon-mainnet",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-matic",
     logoUrl: "/assets/network-icons/polygon.svg",
@@ -113,7 +113,7 @@ export const networks: Network[] = [
   {
     name: "Optimism",
     chainId: 10,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/optimism-mainnet",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-optimism-mainnet",
     logoUrl: "/assets/network-icons/optimism.svg",
@@ -122,7 +122,7 @@ export const networks: Network[] = [
   {
     name: "Arbitrum One",
     chainId: 42161,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/arbitrum-one",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-arbitrum-one",
     logoUrl: "/assets/network-icons/arbitrum.svg",
@@ -131,7 +131,7 @@ export const networks: Network[] = [
   {
     name: "Avalanche C",
     chainId: 43114,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/avalanche-",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-avalanche-c",
     logoUrl: "/assets/network-icons/avalanche.svg",
@@ -140,7 +140,7 @@ export const networks: Network[] = [
   {
     name: "BNB Smart Chain",
     chainId: 56,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/bsc-mainnet",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-bsc-mainnet",
     logoUrl: "/assets/network-icons/bnb.svg",
@@ -149,7 +149,7 @@ export const networks: Network[] = [
   {
     name: "Ethereum",
     chainId: 1,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/eth-mainnet",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-eth-mainnet",
     logoUrl: "/assets/network-icons/ethereum.svg",
@@ -158,7 +158,7 @@ export const networks: Network[] = [
   {
     name: "Celo",
     chainId: 42220,
-    rpcUrl: "",
+    rpcUrl: "https://rpc-endpoints.superfluid.dev/celo-mainnet",
     subgraphUrl:
       "https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-celo-mainnet",
     logoUrl: "/assets/network-icons/celo.svg",
