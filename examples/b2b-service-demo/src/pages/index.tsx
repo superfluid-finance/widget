@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useState } from "react";
 
 import BookModal from "@/components/BookModal/BookModal";
@@ -14,13 +13,6 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Clonify Demo | Superfluid</title>
-        <meta name="description" content="Clonify Demo | Superfluid widget" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main className={styles.Main}>
         <header className={styles.Header}>
           <img src="/logo.svg" alt="Logo" />
