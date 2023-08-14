@@ -23,6 +23,7 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
 import ExportEditor from "../components/export-editor/ExportEditor";
 import ProductEditor from "../components/product-editor/ProductEditor";
+import StreamGatingEditor from "../components/stream-gating-editor/StreamGatingEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
 import WidgetPreview, {
@@ -34,9 +35,9 @@ const drawerWidth = "480px";
 
 export default function Builder() {
   const theme = useTheme();
-  const [activeTab, setActiveTab] = useState<"ui" | "product" | "export">(
-    "product",
-  );
+  const [activeTab, setActiveTab] = useState<
+    "ui" | "product" | "export" | "nft"
+  >("product");
 
   const { widgetProps, demoMode, toggleDemoMode } = useDemoMode();
 
@@ -95,6 +96,7 @@ export default function Builder() {
             <Tab label="1. Product" value="product" data-testid="product-tab" />
             <Tab label="2. UI" value="ui" data-testid="ui-tab" />
             <Tab label="3. Export" value="export" data-testid="export-tab" />
+            <Tab label="4. NFT" value="nft" data-testid="nft-tab" />
           </TabList>
 
           <FormProvider {...formMethods}>
@@ -106,6 +108,9 @@ export default function Builder() {
             </TabPanel>
             <TabPanel value="export">
               <ExportEditor />
+            </TabPanel>
+            <TabPanel value="nft">
+              <StreamGatingEditor />
             </TabPanel>
           </FormProvider>
         </TabContext>

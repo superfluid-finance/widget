@@ -61,8 +61,9 @@ type InputInfoProps = {
 
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
-  const [selectedNetwork, setSelectedNetwork] =
-    useState<Network>(defaultNetwork);
+  const [selectedNetwork, setSelectedNetwork] = useState<Network>(
+    defaultNetwork as Network,
+  );
   const [selectedToken, setSelectedToken] =
     useState<SuperTokenInfo>(defaultToken);
 

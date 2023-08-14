@@ -21,7 +21,7 @@
     "@mui/material": "^5.14.4",
     "@pinata/sdk": "^2.1.0",
     "@segment/analytics-next": "^1.53.3",
-    "@sentry/nextjs": "^7.62.0",
+    "@sentry/nextjs": "^7.64.0",
     "@superfluid-finance/tokenlist": "^2.0.3",
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.7.1",
@@ -32,7 +32,8 @@
     "next": "13.4.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "~7.44.3",
+    "react-hook-form": "~7.45.4",
+    "stream-gating": "^0.0.14",
     "viem": "^1.5.4",
     "wagmi": "^1.3.9",
     "zod": "^3.21.4",
@@ -40,9 +41,9 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
-    "@types/node": "^20.4.9",
+    "@types/node": "^20.5.0",
     "@types/react": "^18.2.19",
-    "eslint": "^8.46.0",
+    "eslint": "^8.47.0",
     "eslint-config-next": "^13.4.13",
     "typescript": "^5.1.6"
   }

@@ -25,6 +25,7 @@ module.exports = {
     NEXT_PUBLIC_PINATA_API_SECRET: process.env.NEXT_PUBLIC_PINATA_API_SECRET,
     NEXT_PUBLIC_INTERCOM_SURVEY_ID: process.env.NEXT_PUBLIC_INTERCOM_SURVEY_ID,
   },
+  transpilePackages: ["stream-gating"],
 };
 
 // Injected content via Sentry wizard below
