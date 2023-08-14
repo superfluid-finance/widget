@@ -1,0 +1,11 @@
+{
+    "build": {
+      "image": "guergeiro/pnpm:18-8",
+      "command": "pnpm install && pnpm turbo",
+      "publicDir": "out",
+      "baseDir": "apps/hosted-widget",
+      "environment": {
+        "ROOT_REDIRECT_URL": "https://checkout-builder.superfluid.finance"
+      }
+    }
+   }
