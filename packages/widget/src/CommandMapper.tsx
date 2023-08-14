@@ -236,6 +236,20 @@ export function SendStreamCommandMapper({
     const contractWrites_: ContractWrite[] = [];
 
     if (existingFlowRate !== undefined) {
+      if (cmd.transferAmountWei > 0n) {
+        contractWrites_.push(
+          createContractWrite({
+            commandId: cmd.id,
+            displayTitle: "Transfer",
+            abi: erc20ABI,
+            address: cmd.superTokenAddress,
+            chainId: cmd.chainId,
+            functionName: "transfer",
+            args: [cmd.receiverAddress, cmd.transferAmountWei],
+          }),
+        );
+      }
+
       if (existingFlowRate > 0n) {
         const updatedFlowRate = existingFlowRate + flowRate;
 

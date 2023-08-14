@@ -87,6 +87,7 @@ export const formValuesToCommands = (
     superTokenAddress,
     accountAddress,
     receiverAddress: paymentOption.receiverAddress,
+    transferAmountWei: parseEther(paymentOption.transferAmount ?? "0"),
     flowRate: {
       amountWei: parseEther(flowRate.amountEther),
       period: flowRate.period,

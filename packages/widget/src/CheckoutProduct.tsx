@@ -94,31 +94,40 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
               Pay in Stream
             </Typography>
             {paymentOptionWithTokenInfo && (
-              <Stack direction="row" alignItems="center" gap={1}>
-                <Typography
-                  variant="h2"
-                  component="span"
-                  data-testid="main-token-amount"
-                >
-                  {flowRate.amountEther}
-                </Typography>
-                <Stack direction="column">
+              <>
+                <Stack direction="row" alignItems="center" gap={1}>
                   <Typography
-                    data-testid="main-token-selected"
-                    variant="caption"
-                    color="text.secondary"
+                    variant="h2"
+                    component="span"
+                    data-testid="main-token-amount"
                   >
-                    {paymentOptionWithTokenInfo.superToken.symbol}
+                    {flowRate.amountEther}
                   </Typography>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    data-testid="main-flow-rate-period"
-                  >
-                    per {flowRate.period}
-                  </Typography>
+                  <Stack direction="column">
+                    <Typography
+                      data-testid="main-token-selected"
+                      variant="caption"
+                      color="text.secondary"
+                    >
+                      {paymentOptionWithTokenInfo.superToken.symbol}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      data-testid="main-flow-rate-period"
+                    >
+                      per {flowRate.period}
+                    </Typography>
+                  </Stack>
                 </Stack>
-              </Stack>
+                {paymentOptionWithTokenInfo.paymentOption.transferAmount && (
+                  <Typography variant="body1" color="text.secondary">
+                    +{paymentOptionWithTokenInfo.paymentOption.transferAmount}{" "}
+                    {paymentOptionWithTokenInfo.superToken.symbol} upfront
+                    service fee
+                  </Typography>
+                )}
+              </>
             )}
           </Box>
 

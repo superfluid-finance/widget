@@ -35,11 +35,12 @@ export type EnableAutoWrapCommand = {
 
 export type SendStreamCommand = {
   id: string;
-  type: "Send Stream";
+  type: "Send Stream"; // TODO(KK): This is not a fitting name anymore.
   chainId: ChainId;
   superTokenAddress: Address;
   accountAddress: Address;
   receiverAddress: Address;
+  transferAmountWei: bigint; // TODO(KK): Is it better to separate to another command? IMO no.
   flowRate: {
     amountWei: bigint;
     period: TimePeriod;

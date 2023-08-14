@@ -118,12 +118,13 @@ export const useCommandValidationSchema = () =>
             });
 
             const neededDeposit = newDeposit - existingDeposit;
-            const availableBalanceWithWrapAmount =
-              availableBalance +
+            const adjustedAvailableBalance =
+              availableBalance -
+              cmd.transferAmountWei +
               (wrapIntoSuperTokensCommand?.amountWeiFromSuperTokenDecimals ??
                 0n);
 
-            return availableBalanceWithWrapAmount >= neededDeposit;
+            return adjustedAvailableBalance >= neededDeposit;
           },
           {
             message:
@@ -159,15 +160,16 @@ export const useCommandValidationSchema = () =>
               cmd.flowRate.amountWei /
               mapTimePeriodToSeconds(cmd.flowRate.period);
 
-            const availableBalanceWithWrapAmount =
-              availableBalance +
+            const adjustedAvailableBalance =
+              availableBalance -
+              cmd.transferAmountWei +
               (wrapIntoSuperTokensCommand?.amountWeiFromSuperTokenDecimals ??
                 0n);
             const accountFlowRateWithNewFlowRate =
               accountFlowRate - flowRateWeiPerSecond;
 
             const criticalDate = calculateDateWhenBalanceCritical({
-              availableBalance: availableBalanceWithWrapAmount,
+              availableBalance: adjustedAvailableBalance,
               timestamp,
               accountFlowRate: accountFlowRateWithNewFlowRate,
             });

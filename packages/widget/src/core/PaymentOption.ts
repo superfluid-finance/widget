@@ -37,16 +37,26 @@ export const flowRateSchema = z.object({
   period: z.enum(timePeriods),
 });
 
-export const paymentOptionSchema = z.object({
-  receiverAddress: addressSchema,
-  chainId: chainIdSchema,
-  superToken: tokenSchema,
-  flowRate: flowRateSchema.optional(),
-  userData: z
-    .string()
-    .transform((x) => x.toString() as `0x${string}`)
-    .optional(),
-});
+export const paymentOptionSchema = z
+  .object({
+    receiverAddress: addressSchema,
+    chainId: chainIdSchema,
+    superToken: tokenSchema,
+    transferAmount: etherAmountSchema.optional(), // TODO(KK): Is "transferAmount" the best name for this? Make valid only with a flow rate.
+    flowRate: flowRateSchema.optional(), // TODO(KK): validate "not 0"
+    userData: z
+      .string()
+      .transform((x) => x.toString() as `0x${string}`)
+      .optional(),
+  })
+  .refine(
+    (data) => data.transferAmount !== undefined && data.flowRate !== undefined,
+    {
+      path: ["transferAmount", "flowRate"],
+      message:
+        "The upfront payment can only be defined with a fixed flow rate.",
+    },
+  );
 
 /**
  * The details of a single payment option for the checkout flow.
