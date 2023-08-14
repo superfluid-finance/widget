@@ -85,9 +85,9 @@ const handler: NextApiHandler = async (req, res) => {
               parseEther(flowRate!.amountEther) /
               mapTimePeriodToSeconds(flowRate!.period),
           ),
-          [image],
           name,
           symbol,
+          image,
         ]);
       }),
     );
