@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { PaymentOption } from "@superfluid-finance/widget";
+import uniqBy from "lodash/uniqBy";
 import { FC, useCallback, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -84,32 +85,35 @@ const StreamGatingEditor: FC = () => {
       </Stack>
       <Stack sx={{ px: 1 }}>
         <FormGroup>
-          {paymentOptions.map((paymentOption) => {
-            const network = getNetworkByChainIdOrThrow(paymentOption.chainId);
+          {uniqBy(
+            paymentOptions.map((paymentOption) => {
+              const network = getNetworkByChainIdOrThrow(paymentOption.chainId);
 
-            return (
-              <FormControlLabel
-                key={network.name}
-                sx={{ fontWeight: "bold" }}
-                control={
-                  <Checkbox
-                    color="primary"
-                    value={network.name}
-                    checked={Boolean(selectedPaymentOptions[network.name])}
-                    onChange={({ target }) => {
-                      setSelectedPaymentOptions((prev) => ({
-                        ...prev,
-                        [network.name]: target.checked
-                          ? paymentOption
-                          : undefined,
-                      }));
-                    }}
-                  />
-                }
-                label={network?.name}
-              />
-            );
-          })}
+              return (
+                <FormControlLabel
+                  key={network.name}
+                  sx={{ fontWeight: "bold" }}
+                  control={
+                    <Checkbox
+                      color="primary"
+                      value={network.name}
+                      checked={Boolean(selectedPaymentOptions[network.name])}
+                      onChange={({ target }) => {
+                        setSelectedPaymentOptions((prev) => ({
+                          ...prev,
+                          [network.name]: target.checked
+                            ? paymentOption
+                            : undefined,
+                        }));
+                      }}
+                    />
+                  }
+                  label={network?.name}
+                />
+              );
+            }),
+            "chainId",
+          )}
         </FormGroup>
       </Stack>
       <Stack direction="column" gap={4} sx={{ mt: 4 }}>

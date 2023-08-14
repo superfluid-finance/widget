@@ -3,11 +3,13 @@ import {
   mapTimePeriodToSeconds,
   PaymentOption,
 } from "@superfluid-finance/widget";
+import difference from "lodash/difference";
 import { NextApiHandler } from "next";
 import { ExistentialNFTCloneFactory__factory } from "stream-gating";
 import {
   Address,
   Chain,
+  createPublicClient,
   createWalletClient,
   getContract,
   http,
@@ -53,46 +55,69 @@ const handler: NextApiHandler = async (req, res) => {
   );
 
   const deployConfig = Object.entries(paymentOptionsByNetwork).map(
-    ([chainId, paymentOptions]) => ({
-      paymentOptions,
-      contractAddress,
-      client: createWalletClient({
-        account,
-        chain: (Object.values(chains).find(
-          ({ id }) => Number(chainId) === id,
-        ) ?? chains.polygonMumbai) as Chain,
-        transport: http(
-          getNetworkByChainIdOrThrow(Number(chainId) as ChainId).rpcUrl,
-        ),
-      }),
-    }),
+    ([chainId, paymentOptions]) => {
+      const chain = (Object.values(chains).find(
+        ({ id }) => Number(chainId) === id,
+      ) ?? chains.polygonMumbai) as Chain;
+      const rpcUrl = getNetworkByChainIdOrThrow(
+        Number(chainId) as ChainId,
+      ).rpcUrl;
+
+      return {
+        paymentOptions,
+        contractAddress,
+        publicClient: createPublicClient({
+          chain,
+          transport: http(rpcUrl),
+        }),
+        walletClient: createWalletClient({
+          account,
+          chain,
+          transport: http(rpcUrl),
+        }),
+      };
+    },
   );
 
   try {
-    const addresses = await Promise.all(
-      deployConfig.map(async ({ client, contractAddress, paymentOptions }) => {
-        const cloneFactory = getContract({
-          abi: ExistentialNFTCloneFactory__factory.abi,
-          address: contractAddress,
-          walletClient: client,
-        });
+    const deployments = await Promise.all(
+      deployConfig.map(
+        async ({
+          publicClient,
+          walletClient,
+          contractAddress,
+          paymentOptions,
+        }) => {
+          const cloneFactory = getContract({
+            abi: ExistentialNFTCloneFactory__factory.abi,
+            address: contractAddress,
+            publicClient,
+            walletClient,
+          });
 
-        return cloneFactory.write.deployClone([
-          paymentOptions.map(({ superToken }) => superToken.address),
-          paymentOptions.map(({ receiverAddress }) => receiverAddress),
-          paymentOptions.map(
-            ({ flowRate }) =>
-              parseEther(flowRate!.amountEther) /
-              mapTimePeriodToSeconds(flowRate!.period),
-          ),
-          name,
-          symbol,
-          image,
-        ]);
-      }),
+          const existingClones = await cloneFactory.read.getClones();
+
+          await cloneFactory.write.deployClone([
+            paymentOptions.map(({ superToken }) => superToken.address),
+            paymentOptions.map(({ receiverAddress }) => receiverAddress),
+            paymentOptions.map(
+              ({ flowRate }) =>
+                parseEther(flowRate!.amountEther) /
+                mapTimePeriodToSeconds(flowRate!.period),
+            ),
+            name,
+            symbol,
+            image,
+          ]);
+
+          const newClones = await cloneFactory.read.getClones();
+
+          return difference(newClones, existingClones);
+        },
+      ),
     );
 
-    res.status(200).json({ addresses });
+    res.status(200).json({ deployments });
   } catch (e) {
     console.error(e);
     res
