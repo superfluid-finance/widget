@@ -42,7 +42,7 @@ export const paymentOptionSchema = z
     receiverAddress: addressSchema,
     chainId: chainIdSchema,
     superToken: tokenSchema,
-    transferAmount: etherAmountSchema.optional(), // TODO(KK): Is "transferAmount" the best name for this? Make valid only with a flow rate.
+    transferAmountEther: etherAmountSchema.optional(), // TODO(KK): Is "transferAmount" the best name for this?
     flowRate: flowRateSchema
       .optional()
       .refine((x) => (x ? parseEther(x.amountEther) > 0n : true), {
@@ -55,7 +55,8 @@ export const paymentOptionSchema = z
   })
   .refine(
     (data) =>
-      !data.transferAmount || Boolean(data.transferAmount && data.flowRate),
+      !data.transferAmountEther ||
+      Boolean(data.transferAmountEther && data.flowRate),
     {
       path: ["transferAmount"],
       message:
