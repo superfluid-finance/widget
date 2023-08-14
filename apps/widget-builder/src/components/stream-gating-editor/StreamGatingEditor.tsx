@@ -46,11 +46,11 @@ const StreamGatingEditor: FC = () => {
         }),
       });
     } catch (error) {
-      setDeploying(false);
       console.error("Deploy NFT error", error);
+    } finally {
+      setDeploying(false);
     }
-
-    setDeploying(false);
+    g;
   }, [tokenName, tokenSymbol, nftImage, selectedPaymentOptions]);
 
   return (
