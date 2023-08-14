@@ -43,16 +43,21 @@ export const paymentOptionSchema = z
     chainId: chainIdSchema,
     superToken: tokenSchema,
     transferAmount: etherAmountSchema.optional(), // TODO(KK): Is "transferAmount" the best name for this? Make valid only with a flow rate.
-    flowRate: flowRateSchema.optional(), // TODO(KK): validate "not 0"
+    flowRate: flowRateSchema
+      .optional()
+      .refine((x) => (x ? parseEther(x.amountEther) > 0n : true), {
+        message: "Flow rate must be greater than 0.",
+      }),
     userData: z
       .string()
       .transform((x) => x.toString() as `0x${string}`)
       .optional(),
   })
   .refine(
-    (data) => data.transferAmount !== undefined && data.flowRate !== undefined,
+    (data) =>
+      !data.transferAmount || Boolean(data.transferAmount && data.flowRate),
     {
-      path: ["transferAmount", "flowRate"],
+      path: ["transferAmount"],
       message:
         "The upfront payment can only be defined with a fixed flow rate.",
     },
