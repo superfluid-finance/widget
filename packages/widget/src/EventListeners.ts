@@ -1,3 +1,5 @@
+import { PaymentOption } from "./core";
+
 /**
  * A set of non-blocking callback functions that are triggered in response to the widget events.
  * @example
@@ -11,6 +13,10 @@ export interface EventListeners {
   onSuccess?: () => void;
   /** Called when the merchant's success button is defined in the schema and it's clicked. */
   onSuccessButtonClick?: () => void;
+  /**
+   *
+   */
+  onPaymentOptionUpdate?: (paymentOption?: PaymentOption) => void;
 }
 
 /**
