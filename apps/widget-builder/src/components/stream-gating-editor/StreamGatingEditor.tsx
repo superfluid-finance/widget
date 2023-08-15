@@ -123,7 +123,7 @@ const StreamGatingEditor: FC = () => {
         <FormGroup>
           {paymentOptionNetworks.map((network) => (
             <FormControlLabel
-              key={network.name}
+              key={network.chainId}
               sx={{ fontWeight: "bold" }}
               control={
                 <Checkbox
