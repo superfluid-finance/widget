@@ -1,9 +1,12 @@
+import { PaymentOption } from "./core";
+
 /**
  * A set of non-blocking callback functions that are triggered in response to the widget events.
  * @example
  * <SuperfluidWidget eventListeners={{
  *   onSuccess: () => console.log('Checkout is successfully finished!'),
  *   onSuccessButtonClick: () => console.log('Merchant success button is clicked!')
+ *   onPaymentOptionUpdate: (paymentOption) => setChainId(paymentOption?.chainId);
  * }} />
  */
 export interface EventListeners {
@@ -11,6 +14,10 @@ export interface EventListeners {
   onSuccess?: () => void;
   /** Called when the merchant's success button is defined in the schema and it's clicked. */
   onSuccessButtonClick?: () => void;
+  /**
+   * Called when the payment option is initialized or changed by the user.
+   */
+  onPaymentOptionUpdate?: (paymentOption?: PaymentOption) => void;
 }
 
 /**

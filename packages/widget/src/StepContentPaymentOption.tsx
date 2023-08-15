@@ -31,14 +31,15 @@ export default function StepContentPaymentOption() {
 
   const { handleNext } = useStepper();
   useEffect(() => {
-    if (nextStepOnConnect && isConnected) {
+    if (nextStepOnConnect && isConnected && isStepComplete) {
       setNextOnConnect(false);
       handleNext();
     }
-  }, [handleNext, nextStepOnConnect, isConnected]);
+  }, [handleNext, nextStepOnConnect, isConnected, isStepComplete]);
 
   const {
     walletManager: { open: openWalletManager },
+    getNetwork,
   } = useWidget();
 
   return (
@@ -83,7 +84,11 @@ export default function StepContentPaymentOption() {
       {!isConnected ? (
         <StepperCTAButton
           onClick={() => {
-            openWalletManager();
+            openWalletManager({
+              chain: paymentOptionWithTokenInfo?.paymentOption?.chainId
+                ? getNetwork(paymentOptionWithTokenInfo.paymentOption.chainId)
+                : undefined,
+            });
             setNextOnConnect(true);
           }}
         >

@@ -1,0 +1,2 @@
+/:hash  /[hash].html  200
+/demo/:hash  /demo/[[...hash]].html  200

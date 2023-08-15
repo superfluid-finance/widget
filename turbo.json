@@ -34,7 +34,8 @@
         "NEXT_PUBLIC_SEGMENT_WRITE_KEY",
         "NEXT_PUBLIC_THE_THING",
         "NEXT_PUBLIC_DEMO_IPFS",
-        "ROOT_REDIRECT_URL"
+        "ROOT_REDIRECT_URL",
+        "NEXT_PUBLIC_ROOT_REDIRECT_URL"
       ]
     },
     "@superfluid-finance/b2b-service-demo#build": {

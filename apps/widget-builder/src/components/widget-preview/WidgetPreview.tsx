@@ -167,13 +167,18 @@ export const mapDisplaySettingsToTheme = (
 const WidgetPreview: FC<WidgetProps> = (props) => {
   const { displaySettings, paymentDetails, productDetails, type } = props;
 
-  const { open, isOpen } = useWeb3Modal();
-  const walletManager = useMemo(
+  const { open, isOpen, setDefaultChain } = useWeb3Modal();
+  const walletManager = useMemo<WalletManager>(
     () => ({
-      open,
+      open: ({ chain }) => {
+        if (chain) {
+          setDefaultChain(chain);
+        }
+        open();
+      },
       isOpen,
     }),
-    [open, isOpen],
+    [open, isOpen, setDefaultChain],
   );
 
   const [mounted, setMounted] = useState(false);
