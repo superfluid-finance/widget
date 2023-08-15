@@ -171,7 +171,6 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
   const walletManager = useMemo<WalletManager>(
     () => ({
       open: ({ chain }) => {
-        console.log({ chain });
         if (chain) {
           setDefaultChain(chain);
         }
