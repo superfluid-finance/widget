@@ -13,14 +13,14 @@ export const networkNames = [
   "Ethereum",
   "Celo",
 ] as const;
-export type NetworkNames = (typeof networkNames)[number];
+export type NetworkName = (typeof networkNames)[number];
 
 export const chainIds = [
   5, 80001, 420, 421613, 43113, 100, 137, 10, 42161, 43114, 56, 1, 42220,
 ] as const;
 export type ChainId = (typeof chainIds)[number];
 
-export const networkDefinitions: Record<NetworkNames, { chainId: ChainId }> = {
+export const networkDefinitions: Record<NetworkName, { chainId: ChainId }> = {
   Goerli: { chainId: 5 as const },
   "Polygon Mumbai": { chainId: 80001 },
   "Optimism Goerli": { chainId: 420 },
@@ -37,8 +37,8 @@ export const networkDefinitions: Record<NetworkNames, { chainId: ChainId }> = {
 } as const;
 
 export type Network = {
-  name: NetworkNames;
-  chainId: number;
+  name: NetworkName;
+  chainId: ChainId;
   rpcUrl: string;
   subgraphUrl: string;
   isTestnet?: boolean;
@@ -166,11 +166,21 @@ export const networks: Network[] = [
   },
 ];
 
-export const getNetworkByChainIdOrThrow = (chainId: ChainId) => {
+export const getNetworkByNameOrThrow = (name: NetworkName) => {
+  const result = networks.find((network) => network.name === name);
+
+  if (!result) {
+    throw new Error(`No network found for name: ${name}`);
+  }
+
+  return result;
+};
+
+export const getNetworkByChainIdOrThrow = (chainId: number) => {
   const result = networks.find((network) => network.chainId === chainId);
 
   if (!result) {
-    throw new Error(`No network found for chainId ${chainId}`);
+    throw new Error(`No network found for chainId: ${chainId}`);
   }
 
   return result;

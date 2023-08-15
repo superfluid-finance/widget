@@ -13,9 +13,9 @@ import { FC, useCallback, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import {
+  ChainId,
   getNetworkByChainIdOrThrow,
   Network,
-  NetworkNames,
 } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
@@ -29,7 +29,7 @@ const StreamGatingEditor: FC = () => {
   const [tokenName, setTokenName] = useState("");
   const [nftImage, setNftImage] = useState("");
   const [selectedPaymentOptions, setSelectedPaymentOptions] = useState<
-    Partial<Record<NetworkNames, PaymentOption[]>>
+    Partial<Record<ChainId, PaymentOption[]>>
   >({});
 
   const [isDeploying, setDeploying] = useState(false);
@@ -37,9 +37,11 @@ const StreamGatingEditor: FC = () => {
   // Collect networks used in payment options
   const paymentOptionNetworks = useMemo(() => {
     try {
-      return uniqBy(paymentOptions, "chainId").map(({ chainId }) =>
-        getNetworkByChainIdOrThrow(chainId),
-      );
+      const result = uniqBy(paymentOptions, "chainId").map(({ chainId }) => {
+        return getNetworkByChainIdOrThrow(chainId);
+      });
+
+      return result;
     } catch (error) {
       return [];
     }
@@ -54,7 +56,7 @@ const StreamGatingEditor: FC = () => {
 
       setSelectedPaymentOptions((prev) => ({
         ...prev,
-        [network.name]: checked ? paymentOptionsByNetwork : undefined,
+        [network.chainId]: checked ? paymentOptionsByNetwork : undefined,
       }));
 
       return;
@@ -127,7 +129,7 @@ const StreamGatingEditor: FC = () => {
                 <Checkbox
                   color="primary"
                   value={network}
-                  checked={Boolean(selectedPaymentOptions[network.name])}
+                  checked={Boolean(selectedPaymentOptions[network.chainId])}
                   onChange={({ target }) =>
                     selectPaymentOptions(target.checked, network)
                   }

@@ -18,10 +18,7 @@ import {
 import { privateKeyToAccount } from "viem/accounts";
 import * as chains from "viem/chains";
 
-import {
-  getNetworkByChainIdOrThrow,
-  NetworkNames,
-} from "../../networkDefinitions";
+import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
 
 const pk = "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
 const account = privateKeyToAccount(pk);
@@ -35,25 +32,23 @@ BigInt.prototype.toJSON = function () {
 
 const handler: NextApiHandler = async (req, res) => {
   const {
-    name,
-    symbol,
-    image,
+    tokenName,
+    tokenSymbol,
+    nftImage,
     selectedPaymentOptions,
   }: {
-    name: string;
-    symbol: string;
-    image: string;
-    selectedPaymentOptions: Partial<Record<NetworkNames, PaymentOption[]>>;
+    tokenName: string;
+    tokenSymbol: string;
+    nftImage: string;
+    selectedPaymentOptions: Partial<Record<ChainId, PaymentOption[]>>;
   } = JSON.parse(req.body);
 
   const deployConfig = Object.entries(selectedPaymentOptions).map(
     ([chainId, paymentOptions]) => {
-      const chain = (Object.values(chains).find(
-        ({ id }) => Number(chainId) === id,
-      ) ?? chains.polygonMumbai) as Chain;
-      const rpcUrl = getNetworkByChainIdOrThrow(
-        Number(chainId) as ChainId,
-      ).rpcUrl;
+      const rpcUrl = getNetworkByChainIdOrThrow(Number(chainId)).rpcUrl;
+      const chain = Object.values(chains).find(
+        (chain) => chain.id === Number(chainId) ?? chains.polygonMumbai,
+      ) as Chain;
 
       return {
         paymentOptions,
@@ -99,9 +94,9 @@ const handler: NextApiHandler = async (req, res) => {
                 parseEther(flowRate!.amountEther) /
                 mapTimePeriodToSeconds(flowRate!.period),
             ),
-            name,
-            symbol,
-            image,
+            tokenName,
+            tokenSymbol,
+            nftImage,
           ]);
 
           const newClones = await cloneFactory.read.getClones();
