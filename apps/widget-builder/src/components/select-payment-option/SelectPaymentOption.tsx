@@ -5,8 +5,8 @@ import {
   Button,
   Chip,
   Collapse,
+  FormControlLabel,
   FormGroup,
-  FormLabel,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -16,6 +16,8 @@ import {
   Stack,
   Switch,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import tokenList, { SuperTokenInfo } from "@superfluid-finance/tokenlist";
 import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
@@ -117,6 +119,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         chainId: selectedToken.chainId as ChainId,
         ...(!isCustomAmount
           ? {
+              ...(showUpfrontPayment
+                ? { transferAmountEther: upfrontPaymentAmount }
+                : {}),
               flowRate: {
                 amountEther: flowRateAmount,
                 period: flowRateInterval,
@@ -136,195 +141,254 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     );
   }, [selectedNetwork]);
 
-  const onCustomAmountChanged = (_e: ChangeEvent, checked: boolean) =>
+  const onCustomAmountChanged = (_e: any, checked: boolean) => {
     setIsCustomAmount(checked);
+    setShowUpfrontPayment(false);
+    setUpfrontPaymentAmount("0");
+    setFlowRateAmount("0");
+  };
 
   useEffect(() => {
     setSelectedToken(defaultToken);
   }, [selectedNetwork]);
 
+  const [showUpfrontPayment, setShowUpfrontPayment] = useState(false);
+  const [upfrontPaymentAmount, setUpfrontPaymentAmount] =
+    useState<`${number}`>("0");
+  const onShowUpfrontPaymentChanged = (_e: ChangeEvent, checked: boolean) =>
+    setShowUpfrontPayment(checked);
+
   return (
     <Stack direction="column" gap={1.5}>
+      <InputWrapper
+        title="Receiver Address"
+        tooltip="Set your wallet or multisig address on the relevant network"
+      >
+        {(id) => (
+          <TextField
+            id={id}
+            data-testid="receiver-input-field"
+            value={receiver}
+            onChange={({ target }) =>
+              setReceiver(target.value as `0x${string}`)
+            }
+          />
+        )}
+      </InputWrapper>
       <Stack sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} gap={1.5}>
         <InputWrapper
           title="Network"
           tooltip="Select the network you'd like to request payment on"
         >
-          <Select
-            data-testid="network-selection"
-            value={selectedNetwork.name}
-            onChange={handleNetworkSelect}
-            fullWidth
-          >
-            {filteredNetworks.map((network) => (
-              <MenuItem
-                data-testid={network.chainId}
-                value={network.name}
-                key={`${network.chainId}`}
-              >
-                <Stack
-                  direction="row"
-                  gap={1}
-                  sx={{ alignItems: "center", width: "100%" }}
+          {(id) => (
+            <Select
+              id={id}
+              data-testid="network-selection"
+              value={selectedNetwork.name}
+              onChange={handleNetworkSelect}
+              fullWidth
+            >
+              {filteredNetworks.map((network) => (
+                <MenuItem
+                  data-testid={network.chainId}
+                  value={network.name}
+                  key={`${network.chainId}`}
                 >
-                  {network.logoUrl && (
-                    <Avatar
-                      sx={{ width: 24, height: 24 }}
-                      src={network.logoUrl}
-                      alt={network.name}
-                    />
-                  )}
                   <Stack
                     direction="row"
-                    sx={{
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flex: 1,
-                    }}
+                    gap={1}
+                    sx={{ alignItems: "center", width: "100%" }}
                   >
-                    {network.name}
-                    {network.isTestnet && (
-                      <Chip
-                        data-testid="testnet-chip"
-                        variant="filled"
-                        color="primary"
-                        label="test"
-                        size="small"
+                    {network.logoUrl && (
+                      <Avatar
+                        sx={{ width: 24, height: 24 }}
+                        src={network.logoUrl}
+                        alt={network.name}
                       />
                     )}
+                    <Stack
+                      direction="row"
+                      sx={{
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        flex: 1,
+                      }}
+                    >
+                      {network.name}
+                      {network.isTestnet && (
+                        <Chip
+                          data-testid="testnet-chip"
+                          variant="filled"
+                          color="primary"
+                          label="test"
+                          size="small"
+                        />
+                      )}
+                    </Stack>
                   </Stack>
-                </Stack>
-              </MenuItem>
-            ))}
-          </Select>
+                </MenuItem>
+              ))}
+            </Select>
+          )}
         </InputWrapper>
         <InputWrapper
+          id="token-select"
           title="Super Token"
           tooltip="Select the SuperToken you'd like to request payment in"
         >
-          <Autocomplete
-            fullWidth
-            value={selectedToken}
-            onChange={(_, value) => setSelectedToken(value!)}
-            id="token-select"
-            options={autoCompleteTokenOptions}
-            getOptionLabel={(token) => token.symbol}
-            componentsProps={{
-              popper: {
-                placement: "bottom-end",
-                sx: {
-                  width: "calc(80% - 48px) !important",
-                  mt: "2px !important",
+          {(id) => (
+            <Autocomplete
+              fullWidth
+              value={selectedToken}
+              onChange={(_, value) => setSelectedToken(value!)}
+              id={id}
+              options={autoCompleteTokenOptions}
+              getOptionLabel={(token) => token.symbol}
+              componentsProps={{
+                popper: {
+                  placement: "bottom-end",
+                  sx: {
+                    width: "calc(80% - 48px) !important",
+                    mt: "2px !important",
+                  },
+                  disablePortal: true,
                 },
-                disablePortal: true,
-              },
-            }}
-            renderOption={(props, option) => (
-              <ListItem {...props}>
-                <ListItemAvatar sx={{ width: 24, height: 24, minWidth: 40 }}>
-                  {option.logoURI && (
-                    <Avatar
-                      sx={{ width: 24, height: 24 }}
-                      src={option.logoURI}
-                    />
-                  )}
-                </ListItemAvatar>
-                <ListItemText
-                  primary={option.symbol}
-                  secondary={option.name}
-                  secondaryTypographyProps={{ variant: "caption" }}
-                  sx={{ m: 0 }}
+              }}
+              renderOption={(props, option) => (
+                <ListItem {...props}>
+                  <ListItemAvatar sx={{ width: 24, height: 24, minWidth: 40 }}>
+                    {option.logoURI && (
+                      <Avatar
+                        sx={{ width: 24, height: 24 }}
+                        src={option.logoURI}
+                      />
+                    )}
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={option.symbol}
+                    secondary={option.name}
+                    secondaryTypographyProps={{ variant: "caption" }}
+                    sx={{ m: 0 }}
+                  />
+                </ListItem>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  InputProps={{
+                    ...params.InputProps,
+                    startAdornment: selectedToken?.logoURI && (
+                      <Avatar
+                        sx={{ width: 24, height: 24 }}
+                        src={selectedToken.logoURI}
+                      />
+                    ),
+                  }}
                 />
-              </ListItem>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                InputProps={{
-                  ...params.InputProps,
-                  startAdornment: selectedToken?.logoURI && (
-                    <Avatar
-                      sx={{ width: 24, height: 24 }}
-                      src={selectedToken.logoURI}
-                    />
-                  ),
-                }}
-              />
-            )}
-          />
+              )}
+            />
+          )}
         </InputWrapper>
       </Stack>
 
-      <Box>
-        <FormGroup>
-          <Stack direction="row" alignItems="center">
-            <FormLabel>Fixed amount</FormLabel>
-            <Switch
-              color="primary"
-              value={isCustomAmount}
-              onChange={onCustomAmountChanged}
-            />
-            <FormLabel>Custom amount</FormLabel>
-          </Stack>
-        </FormGroup>
+      <Box sx={{ pt: 1 }}>
+        <ToggleButtonGroup
+          value={isCustomAmount}
+          exclusive
+          onChange={onCustomAmountChanged}
+          fullWidth
+          color="primary"
+        >
+          <ToggleButton value={false}>Fixed stream</ToggleButton>
+          <ToggleButton value={true}>User-defined stream</ToggleButton>
+        </ToggleButtonGroup>
 
         <Collapse in={!isCustomAmount}>
-          <InputWrapper
-            title="Stream Rate"
-            tooltip="Set the amount of tokens per month for the payment"
-            sx={{ pt: 1.5 }}
-          >
-            <Stack
-              gap="-1px"
-              sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
+          <Stack spacing={1}>
+            <InputWrapper
+              title="Stream Rate"
+              tooltip="Set the amount of tokens per month for the payment"
+              sx={{ pt: 1.5 }}
             >
-              <TextField
-                data-testid="flow-rate-input"
-                fullWidth
-                value={flowRateAmount}
-                onChange={({ target }) =>
-                  setFlowRateAmount(target.value as `${number}`)
+              {(id) => (
+                <Stack
+                  gap="-1px"
+                  sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
+                >
+                  <TextField
+                    id={id}
+                    data-testid="flow-rate-input"
+                    fullWidth
+                    value={flowRateAmount}
+                    onChange={({ target }) =>
+                      setFlowRateAmount(target.value as `${number}`)
+                    }
+                    InputProps={{
+                      sx: {
+                        borderTopRightRadius: 0,
+                        borderBottomRightRadius: 0,
+                      },
+                    }}
+                  />
+                  <Select
+                    data-testid="time-unit-selection"
+                    value={flowRateInterval}
+                    onChange={({ target }) =>
+                      setFlowRateInterval(target.value as TimePeriod)
+                    }
+                    sx={{
+                      borderTopLeftRadius: 0,
+                      borderBottomLeftRadius: 0,
+                      marginLeft: "-1px",
+                    }}
+                  >
+                    {timePeriods.map((interval) => (
+                      <MenuItem value={interval} key={interval}>
+                        /{interval}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Stack>
+              )}
+            </InputWrapper>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="primary"
+                    checked={showUpfrontPayment}
+                    value={showUpfrontPayment}
+                    onChange={onShowUpfrontPaymentChanged}
+                  />
                 }
-                InputProps={{
-                  sx: {
-                    borderTopRightRadius: 0,
-                    borderBottomRightRadius: 0,
-                  },
-                }}
+                label="Charge upfront payment amount"
               />
-              <Select
-                data-testid="time-unit-selection"
-                value={flowRateInterval}
-                onChange={({ target }) =>
-                  setFlowRateInterval(target.value as TimePeriod)
-                }
-                sx={{
-                  borderTopLeftRadius: 0,
-                  borderBottomLeftRadius: 0,
-                  marginLeft: "-1px",
-                }}
-              >
-                {timePeriods.map((interval) => (
-                  <MenuItem value={interval} key={interval}>
-                    /{interval}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Stack>
-          </InputWrapper>
+            </FormGroup>
+
+            <Collapse in={showUpfrontPayment}>
+              <FormGroup>
+                <InputWrapper
+                  title="Upfront Payment Amount"
+                  // tooltip="TODO"
+                  sx={{ pt: 1.5 }}
+                >
+                  {(id) => (
+                    <TextField
+                      id={id}
+                      data-testid="upfront-payment-amount-input"
+                      fullWidth
+                      value={upfrontPaymentAmount}
+                      onChange={({ target }) =>
+                        setUpfrontPaymentAmount(target.value as `${number}`)
+                      }
+                    />
+                  )}
+                </InputWrapper>
+              </FormGroup>
+            </Collapse>
+          </Stack>
         </Collapse>
       </Box>
-
-      <InputWrapper
-        title="Receiver Wallet Address"
-        tooltip="Set your wallet or multisig address on the relevant network"
-      >
-        <TextField
-          data-testid="receiver-input-field"
-          value={receiver}
-          onChange={({ target }) => setReceiver(target.value as `0x${string}`)}
-        />
-      </InputWrapper>
 
       {/* <FormControlLabel
         data-testid="default-option-switch"

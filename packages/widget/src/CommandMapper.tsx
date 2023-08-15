@@ -6,7 +6,7 @@ import { useContractRead, useContractReads } from "wagmi";
 import {
   Command,
   EnableAutoWrapCommand,
-  SendStreamCommand,
+  SubscribeCommand,
   WrapIntoSuperTokensCommand,
 } from "./commands.js";
 import { ContractWrite } from "./ContractWrite.js";
@@ -36,8 +36,8 @@ export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
       return <EnableAutoWrapCommandMapper command={cmd} {...props} />;
     case "Wrap into Super Tokens":
       return <WrapIntoSuperTokensCommandMapper command={cmd} {...props} />;
-    case "Send Stream":
-      return <SendStreamCommandMapper command={cmd} {...props} />;
+    case "Subscribe":
+      return <SubscribeCommandMapper command={cmd} {...props} />;
   }
 }
 
@@ -215,11 +215,11 @@ export function WrapIntoSuperTokensCommandMapper({
   return <>{children?.(contractWrites)}</>;
 }
 
-export function SendStreamCommandMapper({
+export function SubscribeCommandMapper({
   command: cmd,
   onMapped,
   children,
-}: CommandMapperProps<SendStreamCommand>) {
+}: CommandMapperProps<SubscribeCommand>) {
   const { isSuccess, data: existingFlowRate } = useContractRead({
     chainId: cmd.chainId,
     address: cfAv1ForwarderAddress[cmd.chainId],

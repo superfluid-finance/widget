@@ -82,7 +82,7 @@ export const formValuesToCommands = (
 
   commands.push({
     id: nanoid(),
-    type: "Send Stream",
+    type: "Subscribe",
     chainId,
     superTokenAddress,
     accountAddress,

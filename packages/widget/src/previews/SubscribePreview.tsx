@@ -2,14 +2,14 @@ import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useBalance } from "wagmi";
 
 import { AccountAddressCard } from "../AccountAddressCard.js";
-import { SendStreamCommand } from "../commands.js";
+import { SubscribeCommand } from "../commands.js";
 import StreamIndicator from "../StreamIndicator.js";
 import { useWidget } from "../WidgetContext.js";
 
-export function SendStreamPreview({
+export function SubscribePreview({
   command: cmd,
 }: {
-  command: SendStreamCommand;
+  command: SubscribeCommand;
 }) {
   const theme = useTheme();
   const isBelowMd = useMediaQuery(theme.breakpoints.down("md"));

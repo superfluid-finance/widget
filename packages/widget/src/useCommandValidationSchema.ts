@@ -4,7 +4,7 @@ import { Address } from "viem";
 import { fetchBalance, readContracts } from "wagmi/actions";
 import { z } from "zod";
 
-import { SendStreamCommand, WrapIntoSuperTokensCommand } from "./commands.js";
+import { SubscribeCommand, WrapIntoSuperTokensCommand } from "./commands.js";
 import {
   cfAv1ForwarderABI,
   cfAv1ForwarderAddress,
@@ -40,8 +40,8 @@ export const useCommandValidationSchema = () =>
               },
             )
             .optional(),
-          sendStreamCommand: z
-            .custom<SendStreamCommand>()
+          subscribeCommand: z
+            .custom<SubscribeCommand>()
             .refine(
               (x) =>
                 x.accountAddress.toLowerCase() !==
@@ -52,7 +52,7 @@ export const useCommandValidationSchema = () =>
             ),
         })
         .refine(
-          async ({ sendStreamCommand: cmd, wrapIntoSuperTokensCommand }) => {
+          async ({ subscribeCommand: cmd, wrapIntoSuperTokensCommand }) => {
             const metadata = superfluidMetadata.getNetworkByChainId(
               cmd.chainId,
             )!; // TODO(KK): optimize
@@ -132,7 +132,7 @@ export const useCommandValidationSchema = () =>
           },
         )
         .refine(
-          async ({ sendStreamCommand: cmd, wrapIntoSuperTokensCommand }) => {
+          async ({ subscribeCommand: cmd, wrapIntoSuperTokensCommand }) => {
             const [
               accountFlowRate,
               [availableBalance, _deposit, _owedDeposit, timestamp],

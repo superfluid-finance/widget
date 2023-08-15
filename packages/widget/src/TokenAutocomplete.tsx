@@ -41,7 +41,7 @@ export default function TokenAutocomplete() {
             const key = option.paymentOption.flowRate
               ? `${
                   option.paymentOption.transferAmountEther
-                    ? `${option.paymentOption.transferAmountEther} ${option.superToken.symbol} + `
+                    ? `${option.paymentOption.transferAmountEther} + `
                     : ""
                 }${option.paymentOption.flowRate.amountEther} ${
                   option.superToken.symbol

@@ -23,37 +23,43 @@ const ProductEditor: FC = () => {
       <Stack mb={4} gap={2}>
         <Typography variant="subtitle1">Payment Configuration</Typography>
 
-        <InputWrapper title="Product Name">
-          <Controller
-            control={control}
-            name="productDetails.name"
-            render={({ field: { value, onChange } }) => (
-              <TextField
-                placeholder="Your Product Name"
-                data-testid="product-name-field"
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          />
-        </InputWrapper>
+        <Controller
+          control={control}
+          name="productDetails.name"
+          render={({ field: { value, onChange } }) => (
+            <InputWrapper title="Product Name">
+              {(id) => (
+                <TextField
+                  id={id}
+                  placeholder="Your Product Name"
+                  data-testid="product-name-field"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            </InputWrapper>
+          )}
+        />
 
-        <InputWrapper title="Product Description">
-          <Controller
-            control={control}
-            name="productDetails.description"
-            render={({ field: { value, onChange } }) => (
-              <TextField
-                data-testid="product-description-field"
-                placeholder="Your Product Description"
-                multiline
-                minRows={4}
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          />
-        </InputWrapper>
+        <Controller
+          control={control}
+          name="productDetails.description"
+          render={({ field: { value, onChange } }) => (
+            <InputWrapper title="Product Description">
+              {(id) => (
+                <TextField
+                  id={id}
+                  data-testid="product-description-field"
+                  placeholder="Your Product Description"
+                  multiline
+                  minRows={4}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            </InputWrapper>
+          )}
+        />
       </Stack>
 
       <Stack direction="column" gap={2}>
