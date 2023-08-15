@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/:hash", "destination": "/[hash].html" },
+    { "source": "/demo/:hash", "destination": "/demo/[hash].html" }
+  ]
+}
