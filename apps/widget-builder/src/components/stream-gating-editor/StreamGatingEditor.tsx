@@ -9,11 +9,12 @@ import {
 } from "@mui/material";
 import { PaymentOption } from "@superfluid-finance/widget";
 import uniqBy from "lodash/uniqBy";
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import {
   getNetworkByChainIdOrThrow,
+  Network,
   NetworkNames,
 } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
@@ -28,10 +29,40 @@ const StreamGatingEditor: FC = () => {
   const [tokenName, setTokenName] = useState("");
   const [nftImage, setNftImage] = useState("");
   const [selectedPaymentOptions, setSelectedPaymentOptions] = useState<
-    Partial<Record<NetworkNames, PaymentOption>>
+    Partial<Record<NetworkNames, PaymentOption[]>>
   >({});
 
   const [isDeploying, setDeploying] = useState(false);
+
+  console.log(selectedPaymentOptions);
+
+  // Collect networks used in payment options
+  const paymentOptionNetworks = useMemo(() => {
+    try {
+      return uniqBy(paymentOptions, "chainId").map(({ chainId }) =>
+        getNetworkByChainIdOrThrow(chainId),
+      );
+    } catch (error) {
+      return [];
+    }
+  }, [paymentOptions]);
+
+  // Group payment options by network
+  const selectPaymentOptions = useCallback(
+    (checked: boolean, network: Network) => {
+      const paymentOptionsByNetwork = paymentOptions.filter(
+        ({ chainId }) => network.chainId === chainId,
+      );
+
+      setSelectedPaymentOptions((prev) => ({
+        ...prev,
+        [network.name]: checked ? paymentOptionsByNetwork : undefined,
+      }));
+
+      return;
+    },
+    [paymentOptions],
+  );
 
   const deployNFT = useCallback(async () => {
     try {
@@ -46,11 +77,16 @@ const StreamGatingEditor: FC = () => {
         }),
       });
     } catch (error) {
-      console.error("Deploy NFT error", error);
+      console.error("Deploying NFT failed. Reason:", error);
     } finally {
       setDeploying(false);
     }
   }, [tokenName, tokenSymbol, nftImage, selectedPaymentOptions]);
+
+  const isDeployDisabled = useMemo(
+    () => !tokenName || !tokenSymbol || !nftImage || !paymentOptions.length,
+    [tokenName, tokenSymbol, nftImage, paymentOptions],
+  );
 
   return (
     <Stack>
@@ -84,35 +120,23 @@ const StreamGatingEditor: FC = () => {
       </Stack>
       <Stack sx={{ px: 1 }}>
         <FormGroup>
-          {uniqBy(
-            paymentOptions.map((paymentOption) => {
-              const network = getNetworkByChainIdOrThrow(paymentOption.chainId);
-
-              return (
-                <FormControlLabel
-                  key={network.name}
-                  sx={{ fontWeight: "bold" }}
-                  control={
-                    <Checkbox
-                      color="primary"
-                      value={network.name}
-                      checked={Boolean(selectedPaymentOptions[network.name])}
-                      onChange={({ target }) => {
-                        setSelectedPaymentOptions((prev) => ({
-                          ...prev,
-                          [network.name]: target.checked
-                            ? paymentOption
-                            : undefined,
-                        }));
-                      }}
-                    />
+          {paymentOptionNetworks.map((network) => (
+            <FormControlLabel
+              key={network.name}
+              sx={{ fontWeight: "bold" }}
+              control={
+                <Checkbox
+                  color="primary"
+                  value={network}
+                  checked={Boolean(selectedPaymentOptions[network.name])}
+                  onChange={({ target }) =>
+                    selectPaymentOptions(target.checked, network)
                   }
-                  label={network?.name}
                 />
-              );
-            }),
-            "chainId",
-          )}
+              }
+              label={network?.name}
+            />
+          ))}
         </FormGroup>
       </Stack>
       <Stack direction="column" gap={4} sx={{ mt: 4 }}>
@@ -128,6 +152,7 @@ const StreamGatingEditor: FC = () => {
           size="large"
           onClick={deployNFT}
           loading={isDeploying}
+          disabled={isDeployDisabled}
         >
           Create NFT
         </LoadingButton>

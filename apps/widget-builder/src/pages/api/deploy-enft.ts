@@ -43,18 +43,10 @@ const handler: NextApiHandler = async (req, res) => {
     name: string;
     symbol: string;
     image: string;
-    selectedPaymentOptions: Partial<Record<NetworkNames, PaymentOption>>;
+    selectedPaymentOptions: Partial<Record<NetworkNames, PaymentOption[]>>;
   } = JSON.parse(req.body);
 
-  const paymentOptionsByNetwork = Object.values(selectedPaymentOptions).reduce(
-    (acc, curr) => {
-      acc[curr.chainId] = [...(acc[curr.chainId] ?? []), curr];
-      return acc;
-    },
-    {} as Partial<Record<ChainId, PaymentOption[]>>,
-  );
-
-  const deployConfig = Object.entries(paymentOptionsByNetwork).map(
+  const deployConfig = Object.entries(selectedPaymentOptions).map(
     ([chainId, paymentOptions]) => {
       const chain = (Object.values(chains).find(
         ({ id }) => Number(chainId) === id,
