@@ -88,8 +88,9 @@ const StreamGatingEditor: FC = () => {
 
   return (
     <Stack>
-      <Stack direction="column" gap={2} sx={{ mb: 2 }}>
-        <Typography variant="body2">
+      <Stack direction="column" gap={1} sx={{ mb: 3 }}>
+        <Typography variant="h6">Stream Gating with NFTs</Typography>
+        <Typography color="grey.800">
           Create NFT your users will hold while they are paying for your product
           or service
         </Typography>
@@ -109,10 +110,10 @@ const StreamGatingEditor: FC = () => {
         </InputWrapper>
       </Stack>
       <Stack direction="column" sx={{ my: 2 }}>
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle1" sx={{ fontSize: "1.1rem" }}>
           Select networks you want to deploy your NFT to.
         </Typography>
-        <Typography variant="caption">
+        <Typography color="grey.800">
           The following networks are used in your checkout widget:
         </Typography>
       </Stack>
