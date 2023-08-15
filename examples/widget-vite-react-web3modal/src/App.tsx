@@ -4,6 +4,7 @@ import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   EventListeners,
   supportedNetworks,
+  WalletManager,
 } from "@superfluid-finance/widget";
 import {
   EthereumClient,
@@ -34,13 +35,18 @@ const wagmiConfig = createConfig({
 const ethereumClient = new EthereumClient(wagmiConfig, supportedNetworks);
 
 function App() {
-  const { open, isOpen } = useWeb3Modal();
-  const walletManager = useMemo(
+  const { open, isOpen, setDefaultChain } = useWeb3Modal();
+  const walletManager = useMemo<WalletManager>(
     () => ({
-      open,
+      open: ({ chain }) => {
+        if (chain) {
+          setDefaultChain(chain);
+        }
+        open();
+      },
       isOpen,
     }),
-    [open, isOpen],
+    [open, isOpen, setDefaultChain],
   );
 
   const eventListeners: EventListeners = useMemo(

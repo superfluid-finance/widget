@@ -1,4 +1,3 @@
-
 import CommunityCard from "@/components/CommunityCard/CommunityCard";
 import styles from "@/styles/Home.module.css";
 

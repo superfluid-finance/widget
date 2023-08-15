@@ -155,12 +155,12 @@ test("Switch network button shown in the transaction view", async ({
   page,
 }) => {
   let widgetPage = new WidgetPage(page);
-  await metamask.changeNetwork("Sepolia");
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("fUSDCx");
   await widgetPage.connectWallet();
   await widgetPage.clickContinueButton();
   await widgetPage.clickContinueButton();
+  await metamask.changeNetwork("Sepolia");
   await widgetPage.clickSwitchNetworkButton();
   await metamask.allowToSwitchNetwork();
   await widgetPage.validateTransactionStatuses(
