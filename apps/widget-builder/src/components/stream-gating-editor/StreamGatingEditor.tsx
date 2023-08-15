@@ -34,8 +34,6 @@ const StreamGatingEditor: FC = () => {
 
   const [isDeploying, setDeploying] = useState(false);
 
-  console.log(selectedPaymentOptions);
-
   // Collect networks used in payment options
   const paymentOptionNetworks = useMemo(() => {
     try {

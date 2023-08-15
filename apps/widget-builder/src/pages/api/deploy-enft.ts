@@ -67,6 +67,7 @@ const handler: NextApiHandler = async (req, res) => {
           chain,
           transport: http(rpcUrl),
         }),
+        chain,
       };
     },
   );
@@ -79,6 +80,7 @@ const handler: NextApiHandler = async (req, res) => {
           walletClient,
           contractAddress,
           paymentOptions,
+          chain,
         }) => {
           const cloneFactory = getContract({
             abi: ExistentialNFTCloneFactory__factory.abi,
@@ -104,7 +106,7 @@ const handler: NextApiHandler = async (req, res) => {
 
           const newClones = await cloneFactory.read.getClones();
 
-          return difference(newClones, existingClones);
+          return { [chain.id]: difference(newClones, existingClones) };
         },
       ),
     );
