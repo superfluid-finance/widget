@@ -3,7 +3,6 @@ import {
   mapTimePeriodToSeconds,
   PaymentOption,
 } from "@superfluid-finance/widget";
-import difference from "lodash/difference";
 import { NextApiHandler } from "next";
 import { ExistentialNFTCloneFactory__factory } from "stream-gating";
 import {
@@ -84,9 +83,7 @@ const handler: NextApiHandler = async (req, res) => {
             walletClient,
           });
 
-          const existingClones = await cloneFactory.read.getClones();
-
-          await cloneFactory.write.deployClone([
+          const address = await cloneFactory.write.deployClone([
             paymentOptions.map(({ superToken }) => superToken.address),
             paymentOptions.map(({ receiverAddress }) => receiverAddress),
             paymentOptions.map(
@@ -99,9 +96,7 @@ const handler: NextApiHandler = async (req, res) => {
             nftImage,
           ]);
 
-          const newClones = await cloneFactory.read.getClones();
-
-          return { [chain.id]: difference(newClones, existingClones) };
+          return { [chain.id]: address };
         },
       ),
     );
