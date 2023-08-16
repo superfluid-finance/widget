@@ -11,6 +11,7 @@ import { PaymentOption } from "@superfluid-finance/widget";
 import uniqBy from "lodash/uniqBy";
 import { FC, useCallback, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { Address } from "viem";
 
 import {
   ChainId,
@@ -19,6 +20,7 @@ import {
 } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
+import NFTDeploymentDialog from "../nft-deployment-modal/NFTDeploymentDialog";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 const StreamGatingEditor: FC = () => {
@@ -31,6 +33,10 @@ const StreamGatingEditor: FC = () => {
   const [selectedPaymentOptions, setSelectedPaymentOptions] = useState<
     Partial<Record<ChainId, PaymentOption[]>>
   >({});
+
+  const [deployedCloneAddresses, setDeployedCloneAddresses] = useState<
+    Record<ChainId, Address>[]
+  >([]);
 
   const [isDeploying, setDeploying] = useState(false);
 
@@ -64,10 +70,11 @@ const StreamGatingEditor: FC = () => {
     [paymentOptions],
   );
 
+  console.log(deployedCloneAddresses);
   const deployNFT = useCallback(async () => {
     try {
       setDeploying(true);
-      await fetch("/api/deploy-enft", {
+      const response = await fetch("/api/deploy-enft", {
         method: "POST",
         body: JSON.stringify({
           selectedPaymentOptions,
@@ -76,6 +83,11 @@ const StreamGatingEditor: FC = () => {
           nftImage,
         }),
       });
+
+      const { deployments }: { deployments: Record<ChainId, Address>[] } =
+        await response.json();
+
+      setDeployedCloneAddresses(deployments);
     } catch (error) {
       console.error("Deploying NFT failed. Reason:", error);
     } finally {
@@ -84,7 +96,12 @@ const StreamGatingEditor: FC = () => {
   }, [tokenName, tokenSymbol, nftImage, selectedPaymentOptions]);
 
   const isDeployDisabled = useMemo(
-    () => !tokenName || !tokenSymbol || !nftImage || !paymentOptions.length,
+    () =>
+      !tokenName ||
+      !tokenSymbol ||
+      !nftImage ||
+      paymentOptions.length === 0 ||
+      deployedCloneAddresses.length > 0,
     [tokenName, tokenSymbol, nftImage, paymentOptions],
   );
 
@@ -158,6 +175,11 @@ const StreamGatingEditor: FC = () => {
           Create NFT
         </LoadingButton>
       </Stack>
+      <NFTDeploymentDialog
+        open={deployedCloneAddresses.length > 0}
+        cloneAddresses={deployedCloneAddresses}
+        onClose={() => setDeployedCloneAddresses([])}
+      />
     </Stack>
   );
 };
