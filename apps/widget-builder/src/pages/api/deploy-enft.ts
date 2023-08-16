@@ -23,7 +23,7 @@ import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
 const pk = "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
 const account = privateKeyToAccount(pk);
 
-const contractAddress: Address = "0x9b232002da833f4540186191ec230b414110e22b";
+const contractAddress: Address = "0xD7774fA18E40c06b0320493183D840f0f6c5Ca96";
 
 // @ts-ignore polyfill
 BigInt.prototype.toJSON = function () {
@@ -84,7 +84,7 @@ const handler: NextApiHandler = async (req, res) => {
             walletClient,
           });
 
-          const hash = await cloneFactory.write.deployClone([
+          const cloneArgs = [
             paymentOptions.map(({ superToken }) => superToken.address),
             paymentOptions.map(({ receiverAddress }) => receiverAddress),
             paymentOptions.map(
@@ -95,7 +95,17 @@ const handler: NextApiHandler = async (req, res) => {
             tokenName,
             tokenSymbol,
             nftImage,
-          ]);
+          ] as const;
+
+          const gas = await publicClient.estimateContractGas({
+            address: contractAddress,
+            abi: ExistentialNFTCloneFactory__factory.abi,
+            functionName: "deployClone",
+            account,
+            args: cloneArgs,
+          });
+
+          const hash = await cloneFactory.write.deployClone(cloneArgs, { gas });
 
           const rc = await publicClient.waitForTransactionReceipt({ hash });
 
