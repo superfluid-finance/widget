@@ -70,7 +70,6 @@ const StreamGatingEditor: FC = () => {
     [paymentOptions],
   );
 
-  console.log(deployedCloneAddresses);
   const deployNFT = useCallback(async () => {
     try {
       setDeploying(true);

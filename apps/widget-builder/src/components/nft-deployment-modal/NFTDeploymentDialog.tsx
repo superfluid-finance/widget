@@ -48,7 +48,7 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
   }, [cloneAddresses]);
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open}>
       <Box
         sx={{
           position: "relative",
@@ -56,6 +56,7 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
         }}
       >
         <IconButton
+          onClick={onClose}
           sx={{ position: "absolute", right: 12, top: 12, color: "grey.900" }}
         >
           <Close />
