@@ -203,8 +203,8 @@ importers:
         specifier: ~7.44.3
         version: 7.44.3(react@18.2.0)
       stream-gating:
-        specifier: ^0.0.14
-        version: 0.0.14(typescript@5.1.6)(zod@3.21.4)
+        specifier: ^0.0.15
+        version: 0.0.15(typescript@5.1.6)(zod@3.21.4)
       viem:
         specifier: ^1.5.4
         version: 1.5.4(typescript@5.1.6)(zod@3.21.4)
@@ -14876,8 +14876,8 @@ packages:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
-  /stream-gating@0.0.14(typescript@5.1.6)(zod@3.21.4):
-    resolution: {integrity: sha512-YAgIQalUvNhzoBtvBD4VcUadREPS2e6BccxviOiOqsARgDd97ffW1hjVNC0NWFlv9vmQ79lMZXKswGOTV4aseA==}
+  /stream-gating@0.0.15(typescript@5.1.6)(zod@3.21.4):
+    resolution: {integrity: sha512-cgCcUV8eooTxwZl3dK7g8gc/OvACdkxmtf05Na91cO1Bkt8L/XX/MhTWosyLFYl96VAtzLMZAmVV/Y6MUMoIbw==}
     dependencies:
       ethers: 6.7.0
       viem: 1.6.0(typescript@5.1.6)(zod@3.21.4)
