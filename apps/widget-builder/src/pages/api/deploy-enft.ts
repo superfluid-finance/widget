@@ -10,6 +10,7 @@ import {
   Chain,
   createPublicClient,
   createWalletClient,
+  decodeEventLog,
   getContract,
   http,
   parseEther,
@@ -22,7 +23,7 @@ import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
 const pk = "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
 const account = privateKeyToAccount(pk);
 
-const contractAddress: Address = "0x20eb33C9f7bF08558b492372B261076E2f8a08D2";
+const contractAddress: Address = "0x9b232002da833f4540186191ec230b414110e22b";
 
 // @ts-ignore polyfill
 BigInt.prototype.toJSON = function () {
@@ -83,7 +84,7 @@ const handler: NextApiHandler = async (req, res) => {
             walletClient,
           });
 
-          const address = await cloneFactory.write.deployClone([
+          const hash = await cloneFactory.write.deployClone([
             paymentOptions.map(({ superToken }) => superToken.address),
             paymentOptions.map(({ receiverAddress }) => receiverAddress),
             paymentOptions.map(
@@ -96,7 +97,20 @@ const handler: NextApiHandler = async (req, res) => {
             nftImage,
           ]);
 
-          return { [chain.id]: address };
+          const rc = await publicClient.waitForTransactionReceipt({ hash });
+
+          const {
+            args,
+          }: {
+            eventName: "ExistentialNFT_CloneDeployed";
+            args: { clone: Address };
+          } = decodeEventLog({
+            abi: ExistentialNFTCloneFactory__factory.abi,
+            data: rc.logs[0].data,
+            topics: rc.logs[0].topics,
+          });
+
+          return { [chain.id]: args.clone };
         },
       ),
     );
