@@ -13,6 +13,7 @@ import { FC, useCallback, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Address } from "viem";
 
+import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
 import {
   ChainId,
   getNetworkByChainIdOrThrow,
@@ -29,7 +30,11 @@ const StreamGatingEditor: FC = () => {
 
   const [tokenSymbol, setTokenSymbol] = useState("");
   const [tokenName, setTokenName] = useState("");
+
   const [nftImage, setNftImage] = useState("");
+  // TODO: forward base64 image to deployment, and use NFT API
+  const { base64: nftImageBase64 } = useReadAsBase64(nftImage);
+
   const [selectedPaymentOptions, setSelectedPaymentOptions] = useState<
     Partial<Record<ChainId, PaymentOption[]>>
   >({});
