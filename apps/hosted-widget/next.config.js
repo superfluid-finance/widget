@@ -2,11 +2,6 @@
 module.exports = {
   output: "export",
   images: { unoptimized: true },
-  env: {
-    NEXT_PUBLIC_ROOT_REDIRECT_URL:
-      process.env.ROOT_REDIRECT_URL ??
-      "https://www.superfluid.finance/subscriptions",
-  },
 
   reactStrictMode: true,
   webpack: (config) => {

@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
-import Link from "next/link";
 import { FC } from "react";
+
+import Link from "../../Link";
 
 const TermsAndPrivacy: FC = () => (
   <Box sx={{ position: "absolute", p: 2, bottom: 0, right: 0 }}>
@@ -11,7 +12,7 @@ const TermsAndPrivacy: FC = () => (
     >
       Terms of Use
     </Link>
-    {" and "}
+    {" & "}
     <Link
       data-testid="privacy-link"
       href="https://www.iubenda.com/privacy-policy/34415583/legal"
