@@ -1,6 +1,14 @@
 {
   "rewrites": [
     { "source": "/:hash", "destination": "/[hash].html" },
-    { "source": "/demo/:hash", "destination": "/demo/[hash].html" }
+    { "source": "/demo/:hash", "destination": "/demo/[[...hash]].html" }
+  ],
+  "headers": [
+    {
+      "source": "/*",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://app.safe.global" }
+      ]
+    }
   ]
 }
