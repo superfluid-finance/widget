@@ -93,9 +93,19 @@ const ProductEditor: FC = () => {
           <Stack direction="column" gap={2.5}>
             {paymentOptions.length ? (
               paymentOptions.map(
-                ({ superToken, chainId, flowRate, receiverAddress }, i) => (
+                (
+                  {
+                    superToken,
+                    chainId,
+                    transferAmountEther,
+                    flowRate,
+                    receiverAddress,
+                  },
+                  i,
+                ) => (
                   <PaymentOptionView
                     key={`${superToken.address}-${i}`}
+                    upfrontPaymentAmountEther={transferAmountEther}
                     flowRate={
                       flowRate ?? {
                         amountEther: "0",

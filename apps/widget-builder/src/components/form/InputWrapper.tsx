@@ -40,6 +40,7 @@ const InputWrapper: FC<InputWrapperProps> = ({
 }) => {
   const generatedId = useId();
   const inputId = props.id ?? generatedId;
+  const labelId = `label-${inputId}`;
   return (
     <FormControl sx={sx}>
       <Stack
@@ -48,7 +49,9 @@ const InputWrapper: FC<InputWrapperProps> = ({
         justifyContent="space-between"
         sx={{ mb: 0.75 }}
       >
-        <FormLabel htmlFor={inputId}>{title}</FormLabel>
+        <FormLabel id={labelId} htmlFor={inputId} focused={false}>
+          {title}
+        </FormLabel>
         {tooltip && <InputInfo tooltip={tooltip} />}
       </Stack>
       {children(inputId)}

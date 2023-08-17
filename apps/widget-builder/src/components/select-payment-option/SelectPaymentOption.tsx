@@ -7,6 +7,7 @@ import {
   Collapse,
   FormControlLabel,
   FormGroup,
+  InputAdornment,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -182,6 +183,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         >
           {(id) => (
             <Select
+              labelId={`label-${id}`}
               id={id}
               data-testid="network-selection"
               value={selectedNetwork.name}
@@ -328,6 +330,11 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
                         borderTopRightRadius: 0,
                         borderBottomRightRadius: 0,
                       },
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          {selectedToken?.symbol}
+                        </InputAdornment>
+                      ),
                     }}
                   />
                   <Select
@@ -381,6 +388,13 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
                       onChange={({ target }) =>
                         setUpfrontPaymentAmount(target.value as `${number}`)
                       }
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            {selectedToken?.symbol}
+                          </InputAdornment>
+                        ),
+                      }}
                     />
                   )}
                 </InputWrapper>
