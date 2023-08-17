@@ -18,7 +18,9 @@ const Home: NextPage = () => {
   const onSubmit = useCallback<FormEventHandler>(
     (e) => {
       e.preventDefault();
-      router.push(`/${ipfsHash}`);
+      if (ipfsHash) {
+        router.push(`/${ipfsHash}`);
+      }
     },
     [router, ipfsHash],
   );
