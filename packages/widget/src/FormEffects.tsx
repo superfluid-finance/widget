@@ -4,6 +4,7 @@ import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 
 import { DraftFormValues } from "./formValues.js";
+import { useWidget } from "./WidgetContext.js";
 
 export function FormEffects() {
   const {
@@ -102,6 +103,13 @@ export function FormEffects() {
       });
     }
   }, [address]);
+
+  const { eventListeners } = useWidget();
+  useEffect(() => {
+    eventListeners.onPaymentOptionUpdate(
+      paymentOptionWithTokenInfo?.paymentOption,
+    );
+  }, [eventListeners.onPaymentOptionUpdate, paymentOptionWithTokenInfo]);
 
   return null;
 }

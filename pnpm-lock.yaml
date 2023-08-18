@@ -427,8 +427,8 @@ importers:
         specifier: ^8.46.0
         version: 8.46.0
       eslint-plugin-react-hooks:
-        specifier: 5.0.0-next-fecc288b7-20221025
-        version: 5.0.0-next-fecc288b7-20221025(eslint@8.46.0)
+        specifier: 5.0.0-canary-7118f5dd7-20230705
+        version: 5.0.0-canary-7118f5dd7-20230705(eslint@8.46.0)
       eslint-plugin-react-refresh:
         specifier: ^0.4.3
         version: 0.4.3(eslint@8.46.0)
@@ -488,8 +488,8 @@ importers:
         specifier: ^8.46.0
         version: 8.46.0
       eslint-plugin-react-hooks:
-        specifier: 5.0.0-next-fecc288b7-20221025
-        version: 5.0.0-next-fecc288b7-20221025(eslint@8.46.0)
+        specifier: 5.0.0-canary-7118f5dd7-20230705
+        version: 5.0.0-canary-7118f5dd7-20230705(eslint@8.46.0)
       eslint-plugin-react-refresh:
         specifier: ^0.4.3
         version: 0.4.3(eslint@8.46.0)
@@ -8681,15 +8681,6 @@ packages:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
     dependencies:
       eslint: 8.46.0
-
-  /eslint-plugin-react-hooks@5.0.0-next-fecc288b7-20221025(eslint@8.46.0):
-    resolution: {integrity: sha512-uxKmkZ9xrQKJ3GbHDGsmMUO5XFzP4bTP3xiLwEmfvi16FIedz24q7czcREQbdQ+MRKcHUA9u247qAVYhsUM1yQ==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
-    dependencies:
-      eslint: 8.46.0
-    dev: true
 
   /eslint-plugin-react-refresh@0.4.3(eslint@8.46.0):
     resolution: {integrity: sha512-Hh0wv8bUNY877+sI0BlCUlsS0TYYQqvzEwJsJJPM2WF4RnTStSnSR3zdJYa2nPOJgg3UghXi54lVyMSmpCalzA==}

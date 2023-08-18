@@ -217,6 +217,8 @@ export function Widget({
         onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
         onSuccessButtonClick:
           eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,
+        onPaymentOptionUpdate:
+          eventListeners?.onPaymentOptionUpdate ?? NOOP_FUNCTION,
       },
     }),
     [
