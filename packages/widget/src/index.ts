@@ -6,6 +6,8 @@ export type { WidgetProps } from "./CheckoutConfig";
 export type {
   ChainId,
   FlowRate,
+  NetworkAssetInfo,
+  NetworkAssets,
   PaymentDetails,
   PaymentOption,
   ProductDetails,
@@ -13,6 +15,7 @@ export type {
 } from "./core/index.js";
 export {
   cfAv1ForwarderABI, // TODO: Export ABI from @superfluid-finance/widget/abi"
+  defaultNetworkAssets,
   supportedNetwork,
   supportedNetworks,
   timePeriods,

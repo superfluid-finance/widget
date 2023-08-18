@@ -3,6 +3,7 @@ import { SuperTokenList } from "@superfluid-finance/tokenlist";
 import { z } from "zod";
 
 import {
+  NetworkAssets,
   PaymentDetails,
   paymentDetailsSchema,
   ProductDetails,
@@ -63,6 +64,7 @@ const widgetPropsSchema = z.object({
    * @inheritdoc EventListeners
    */
   eventListeners: z.custom<EventListeners>().optional(),
+  networkAssets: z.custom<NetworkAssets>().optional(),
 });
 
 export interface WidgetProps extends z.input<typeof widgetPropsSchema> {}

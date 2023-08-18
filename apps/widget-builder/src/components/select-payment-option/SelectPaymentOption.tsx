@@ -19,6 +19,8 @@ import {
 } from "@mui/material";
 import {
   ChainId,
+  defaultNetworkAssets,
+  NetworkAssetInfo,
   supportedNetworks,
   TimePeriod,
   timePeriods,
@@ -30,12 +32,11 @@ import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { Chain } from "wagmi";
 
-import { NetworkLogoInfo, networkLogoInfos } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 export type PaymentOption = {
-  network: NetworkLogoInfo;
+  network: NetworkAssetInfo;
   superToken: SuperTokenInfo;
 };
 
@@ -170,10 +171,10 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
                   gap={1}
                   sx={{ alignItems: "center", width: "100%" }}
                 >
-                  {networkLogoInfos[network.id]?.logoUrl && (
+                  {defaultNetworkAssets[network.id]?.logoURI && (
                     <Avatar
                       sx={{ width: 24, height: 24 }}
-                      src={networkLogoInfos[network.id]!.logoUrl}
+                      src={defaultNetworkAssets[network.id]!.logoURI}
                       alt={network.name}
                     />
                   )}
