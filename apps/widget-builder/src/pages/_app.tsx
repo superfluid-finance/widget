@@ -1,9 +1,7 @@
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
-import {
-  supportedNetworks,
-} from "@superfluid-finance/widget";
+import { supportedNetworks } from "@superfluid-finance/widget";
 import superfluidMetadata from "@superfluid-finance/widget/metadata";
 import {
   EthereumClient,
