@@ -10,7 +10,7 @@
     "preview": "vite preview --host"
   },
   "dependencies": {
-    "@superfluid-finance/tokenlist": "^2.0.3",
+    "@superfluid-finance/tokenlist": "^2.1.0",
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
