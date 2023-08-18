@@ -1,4 +1,10 @@
-import { Alert, AlertTitle, createTheme, ThemeProvider } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  createTheme,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import { deepmerge } from "@mui/utils";
 import defaultTokenList, {
   SuperTokenInfo,
@@ -264,7 +270,13 @@ export function Widget({
         ) : (
           <Alert data-testid="widget-error" severity="error">
             <AlertTitle>Input Error</AlertTitle>
-            {fromZodError(validationResult.error).message}
+            <Typography variant="inherit" whiteSpace="pre-wrap">
+              {
+                fromZodError(validationResult.error, {
+                  issueSeparator: "\n",
+                }).message
+              }
+            </Typography>
           </Alert>
         )}
       </ThemeProvider>
