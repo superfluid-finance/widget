@@ -5,23 +5,45 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": "./dist/index.js",
-    "./components": "./dist/components/index.js",
-    "./webcomponent": "./dist/webcomponent/WebComponent.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "default": "./dist/components/index.js"
+    },
+    "./webcomponent": {
+      "types": "./dist/webcomponent/WebComponent.d.ts",
+      "default": "./dist/webcomponent/WebComponent.js"
+    },
+    "./tokenlist": {
+      "types": "./dist/index.tokenlist.d.ts",
+      "default": "./dist/index.tokenlist.js"
+    },
+    "./metadata": {
+      "types": "./dist/index.metadata.d.ts",
+      "default": "./dist/index.metadata.js"
+    }
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "typesVersions": {
     "*": {
       "components": [
-        "dist/components/index.d.ts"
+        "./dist/components/index.d.ts"
       ],
       "webcomponent": [
-        "dist/webcomponent/WebComponent.d.ts"
+        "./dist/webcomponent/WebComponent.d.ts"
+      ],
+      "tokenlist": [
+        "./dist/index.tokenlist.d.ts"
+      ],
+      "metadata": [
+        "./dist/index.metadata.d.ts"
       ]
     }
   },
-  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "README.md"

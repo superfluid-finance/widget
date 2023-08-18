@@ -7,8 +7,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import superTokenList from "@superfluid-finance/tokenlist";
 import { ChainId, FlowRate } from "@superfluid-finance/widget";
+import superTokenList from "@superfluid-finance/widget/tokenlist";
 import Image from "next/image";
 import { FC, ReactNode, useMemo } from "react";
 

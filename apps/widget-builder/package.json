@@ -23,7 +23,6 @@
     "@pinata/sdk": "^2.1.0",
     "@segment/analytics-next": "^1.53.3",
     "@sentry/nextjs": "^7.64.0",
-    "@superfluid-finance/tokenlist": "^2.1.0",
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",

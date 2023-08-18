@@ -19,7 +19,6 @@ export {
 } from "./core/index.js";
 export type { EventListeners } from "./EventListeners";
 export type { WalletManager } from "./WalletManager";
-export * from "@superfluid-finance/tokenlist"; // TODO: Export from @superfluid-finance/widget/tokenlist
 
 // TODO: Export Zod schemas from @superfluid-finance/widget/zod
 export { paymentDetailsSchema, productDetailsSchema } from "./core/index.js";
