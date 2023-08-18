@@ -4,7 +4,7 @@ import pureSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts
 import nativeAssetSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/SETH.sol/SETHProxy.json" assert { type: "json" };
 import superfluidMetadata from "@superfluid-finance/metadata";
 import { defineConfig } from "@wagmi/cli";
-import { actions, erc,etherscan } from "@wagmi/cli/plugins";
+import { actions, erc, etherscan } from "@wagmi/cli/plugins";
 import { Abi, Address } from "viem";
 
 import {
