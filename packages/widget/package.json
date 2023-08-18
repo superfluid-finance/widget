@@ -32,7 +32,8 @@
     "typedoc": "typedoc --out docs src/index.ts",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "wagmi": "wagmi generate",
-    "test": "vitest"
+    "test": "vitest",
+    "tsc": "tsc -p ./tsconfig.build.json --noEmit"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

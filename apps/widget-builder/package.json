@@ -7,7 +7,8 @@
     "dev": "next dev",
     "lint": "next lint",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
-    "start": "next start"
+    "start": "next start",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",

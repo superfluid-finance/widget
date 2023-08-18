@@ -7,7 +7,8 @@
     "build": "tsc && vite build",
     "dev": "vite --host",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^1.0.8",

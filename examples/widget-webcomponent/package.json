@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc && vite build",
     "dev": "vite --host",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@superfluid-finance/tokenlist": "^2.1.0",
