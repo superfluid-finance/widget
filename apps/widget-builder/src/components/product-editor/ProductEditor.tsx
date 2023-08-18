@@ -31,7 +31,7 @@ const ProductEditor: FC = () => {
               {(id) => (
                 <TextField
                   id={id}
-                  placeholder="Your Product Name"
+                  placeholder=""
                   data-testid="product-name-field"
                   value={value}
                   onChange={onChange}
@@ -50,7 +50,7 @@ const ProductEditor: FC = () => {
                 <TextField
                   id={id}
                   data-testid="product-description-field"
-                  placeholder="Your Product Description"
+                  placeholder=""
                   multiline
                   minRows={4}
                   value={value}

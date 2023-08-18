@@ -78,16 +78,23 @@ const ExportEditor: FC = () => {
   return (
     <Stack gap={4}>
       <Box>
-        <InputWrapper title="Select export option">
+        <InputWrapper
+          title="Select export option"
+          sx={{
+            width: "100%",
+          }}
+        >
           {(id) => (
             <Select
               id={id}
+              labelId={`label-${id}`}
               data-testid="export-option"
               value={selectedExportOption}
               defaultValue="ipfs"
               onChange={({ target }) =>
                 setSelectedExportOption(target.value as ExportOption)
               }
+              fullWidth
             >
               <MenuItem value="ipfs">
                 Publish to IPFS to get a hosted link

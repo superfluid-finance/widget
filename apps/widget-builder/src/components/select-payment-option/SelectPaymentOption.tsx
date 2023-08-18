@@ -70,7 +70,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     useState<SuperTokenInfo>(defaultToken);
 
   const [isCustomAmount, setIsCustomAmount] = useState(false);
-  const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
+  const [flowRateAmount, setFlowRateAmount] = useState<`${number}` | "">("");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
   const [isReceiverDefault, setReceiverAsDefault] = useState(false);
   const [userDataText, setUserDataText] = useState("");
@@ -121,10 +121,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         ...(!isCustomAmount
           ? {
               ...(showUpfrontPayment
-                ? { transferAmountEther: upfrontPaymentAmount }
+                ? {
+                    transferAmountEther: upfrontPaymentAmount
+                      ? upfrontPaymentAmount
+                      : "0",
+                  }
                 : {}),
               flowRate: {
-                amountEther: flowRateAmount,
+                amountEther: flowRateAmount ? flowRateAmount : "0",
                 period: flowRateInterval,
               },
             }
@@ -145,8 +149,8 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const onCustomAmountChanged = (_e: any, checked: boolean) => {
     setIsCustomAmount(checked);
     setShowUpfrontPayment(false);
-    setUpfrontPaymentAmount("0");
-    setFlowRateAmount("0");
+    setUpfrontPaymentAmount("");
+    setFlowRateAmount("");
   };
 
   useEffect(() => {
@@ -154,8 +158,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   }, [selectedNetwork]);
 
   const [showUpfrontPayment, setShowUpfrontPayment] = useState(false);
-  const [upfrontPaymentAmount, setUpfrontPaymentAmount] =
-    useState<`${number}`>("0");
+  const [upfrontPaymentAmount, setUpfrontPaymentAmount] = useState<
+    `${number}` | ""
+  >("");
   const onShowUpfrontPaymentChanged = (_e: ChangeEvent, checked: boolean) =>
     setShowUpfrontPayment(checked);
 
