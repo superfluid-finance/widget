@@ -1,9 +1,9 @@
-import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   PaymentDetails,
   ProductDetails,
   WidgetProps,
 } from "@superfluid-finance/widget";
+import superTokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import { FC, useCallback, useMemo, useRef, useState } from "react";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";

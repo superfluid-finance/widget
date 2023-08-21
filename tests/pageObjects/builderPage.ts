@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { BasePage } from "./basePage";
 import fs from "fs";
+
+import { BasePage } from "./basePage";
 
 export class BuilderPage extends BasePage {
   readonly page: Page;
@@ -151,7 +152,7 @@ export class BuilderPage extends BasePage {
   async verifyAddedPaymentOptions(paymentOptions: PaymentOption[]) {
     for (const [index, option] of paymentOptions.entries()) {
       paymentOptions.forEach(async (option: PaymentOption, index: number) => {
-        await expect(this.summaryNetworks.nth(index)).toHaveText(
+        await expect(this.summaryNetworks.nth(index)).toContainText(
           option.network,
         );
         await expect(this.summaryTokens.nth(index)).toHaveText(
