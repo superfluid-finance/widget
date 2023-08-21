@@ -13,7 +13,7 @@ const NetworkAvatar: FC<NetworkAvatarProps> = ({
   network,
   AvatarProps = {},
 }) => {
-  const networkAssetConf = useMemo(() => {
+  const networkAssetInfo = useMemo(() => {
     return defaultNetworkAssets[network.id];
   }, [network]);
 
@@ -22,10 +22,15 @@ const NetworkAvatar: FC<NetworkAvatarProps> = ({
   return (
     <Avatar
       data-testid={`${network.id}-badge`}
-      src={networkAssetConf?.logoURI}
+      src={networkAssetInfo?.logoURI}
       {...AvatarProps}
       sx={{
-        backgroundColor: networkAssetConf?.color,
+        // Don't show background color when logo is present because some logos have transparency.
+        ...(networkAssetInfo &&
+        !networkAssetInfo.logoURI &&
+        networkAssetInfo.color
+          ? { backgroundColor: networkAssetInfo.color }
+          : {}),
         width: 24,
         height: 24,
         fontSize: 16,
