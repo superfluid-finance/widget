@@ -17,29 +17,31 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import tokenList, { SuperTokenInfo } from "@superfluid-finance/tokenlist";
-import { ChainId, TimePeriod, timePeriods } from "@superfluid-finance/widget";
+import {
+  ChainId,
+  NetworkAssetInfo,
+  supportedNetworks,
+  TimePeriod,
+  timePeriods,
+} from "@superfluid-finance/widget";
+import tokenList, {
+  SuperTokenInfo,
+} from "@superfluid-finance/widget/tokenlist";
 import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
+import { Chain } from "wagmi";
 
-import { Network, networks } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
+import NetworkAvatar from "../NetworkAvatar";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 export type PaymentOption = {
-  network: Network;
+  network: NetworkAssetInfo;
   superToken: SuperTokenInfo;
 };
 
 type PaymentOptionSelectorProps = {
   onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
-};
-
-const defaultNetwork = {
-  name: "",
-  chainId: -1,
-  subgraphUrl: "",
-  logoUrl: "",
 };
 
 const defaultToken: SuperTokenInfo = {
@@ -61,9 +63,7 @@ type InputInfoProps = {
 
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
-  const [selectedNetwork, setSelectedNetwork] = useState<Network>(
-    defaultNetwork as Network,
-  );
+  const [selectedNetwork, setSelectedNetwork] = useState<Chain | null>(null);
   const [selectedToken, setSelectedToken] =
     useState<SuperTokenInfo>(defaultToken);
 
@@ -75,14 +75,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
 
   const filteredNetworks = useMemo(
     () =>
-      networks.filter((network) =>
+      supportedNetworks.filter((network) =>
         tokenList.tokens.find(
           ({ chainId, tags }) =>
             /* #35 [SUBS] - Hide Ethereum Mainnet payment option in Widget.
              * As the UX is bad for streams on mainnet we don't want to encourage subscriptions there.
              */
-            network.chainId !== 1 &&
-            network.chainId === chainId &&
+            network.id !== 1 &&
+            network.id === chainId &&
             tags &&
             tags.includes("supertoken"),
         ),
@@ -107,7 +107,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
       return;
     }
 
-    const network = networks.find((n) => n.chainId === selectedToken.chainId);
+    const network = supportedNetworks.find(
+      (n) => n.id === selectedToken.chainId,
+    );
 
     if (network && receiver) {
       onAdd({
@@ -129,11 +131,12 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   };
 
   const autoCompleteTokenOptions = useMemo(() => {
-    const network = networks.find(({ name }) => name === selectedNetwork?.name);
+    const network = supportedNetworks.find(
+      ({ name }) => name === selectedNetwork?.name,
+    );
     return tokenList.tokens.filter(
       (token) =>
-        token.chainId === network?.chainId &&
-        token.tags?.includes("supertoken"),
+        token.chainId === network?.id && token.tags?.includes("supertoken"),
     );
   }, [selectedNetwork]);
 
@@ -153,28 +156,22 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         >
           <Select
             data-testid="network-selection"
-            value={selectedNetwork.name}
+            value={selectedNetwork?.name}
             onChange={handleNetworkSelect}
             fullWidth
           >
             {filteredNetworks.map((network) => (
               <MenuItem
-                data-testid={network.chainId}
+                data-testid={network.id}
                 value={network.name}
-                key={`${network.chainId}`}
+                key={`${network.id}`}
               >
                 <Stack
                   direction="row"
                   gap={1}
                   sx={{ alignItems: "center", width: "100%" }}
                 >
-                  {network.logoUrl && (
-                    <Avatar
-                      sx={{ width: 24, height: 24 }}
-                      src={network.logoUrl}
-                      alt={network.name}
-                    />
-                  )}
+                  <NetworkAvatar network={network} />
                   <Stack
                     direction="row"
                     sx={{
@@ -184,11 +181,11 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
                     }}
                   >
                     {network.name}
-                    {network.isTestnet && (
+                    {network.testnet && (
                       <Chip
                         data-testid="testnet-chip"
                         variant="filled"
-                        color="primary"
+                        color="warning"
                         label="test"
                         size="small"
                       />

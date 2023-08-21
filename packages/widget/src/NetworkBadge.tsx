@@ -23,6 +23,7 @@ const NetworkBadge: FC<NetworkAvatarProps> = ({
         ...AvatarProps.sx,
       },
     }}
+    forceNetworkBackgroundColor
   />
 );
 

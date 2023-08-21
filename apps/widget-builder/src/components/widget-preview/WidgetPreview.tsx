@@ -1,10 +1,10 @@
 import { Button, colors, SelectChangeEvent, ThemeOptions } from "@mui/material";
-import tokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   PaymentDetails,
   ProductDetails,
   WalletManager,
 } from "@superfluid-finance/widget";
+import tokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import {
   createContext,

@@ -3,6 +3,8 @@ import {
   arbitrumGoerli,
   avalanche,
   avalancheFuji,
+  base,
+  baseGoerli,
   bsc,
   celo,
   Chain,
@@ -17,15 +19,17 @@ import {
 import { z } from "zod";
 
 export const supportedNetwork = {
+  mainnet, // Keep mainnet first.
   arbitrum,
   arbitrumGoerli,
   avalanche,
   avalancheFuji,
+  base,
+  baseGoerli,
   bsc,
   celo,
   gnosis,
   goerli,
-  mainnet,
   optimism,
   optimismGoerli,
   polygon,
@@ -33,15 +37,17 @@ export const supportedNetwork = {
 } as const satisfies Record<string, Chain>;
 
 export const chainIds = [
+  mainnet.id,
   arbitrum.id,
   arbitrumGoerli.id,
   avalanche.id,
   avalancheFuji.id,
+  base.id,
+  baseGoerli.id,
   bsc.id,
   celo.id,
   gnosis.id,
   goerli.id,
-  mainnet.id,
   optimism.id,
   optimismGoerli.id,
   polygon.id,
@@ -49,19 +55,16 @@ export const chainIds = [
 ] as const;
 export type ChainId = (typeof chainIds)[number];
 
-const supportedNetworks_ = [
-  supportedNetwork.arbitrum,
-  supportedNetwork.avalanche,
-  supportedNetwork.avalancheFuji,
-  supportedNetwork.bsc,
-  supportedNetwork.celo,
-  supportedNetwork.goerli,
-  supportedNetwork.gnosis,
-  supportedNetwork.mainnet,
-  supportedNetwork.optimism,
-  supportedNetwork.polygon,
-  supportedNetwork.polygonMumbai,
-] as const;
+const supportedNetworks_ = Object.values(supportedNetwork).sort((a, b) => {
+  const testnetA = !!(a as { testnet?: boolean }).testnet;
+  const testnetB = !!(b as { testnet?: boolean }).testnet;
+
+  if (testnetA !== testnetB) {
+    return testnetA ? 1 : -1; // Put non-testnets first
+  }
+
+  return 0;
+});
 
 export const chainIdSchema = z.custom<ChainId>((value) => {
   return chainIds.some((x) => x === (Number(value) as ChainId));
