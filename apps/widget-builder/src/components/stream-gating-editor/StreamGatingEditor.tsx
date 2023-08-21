@@ -7,18 +7,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { PaymentOption } from "@superfluid-finance/widget";
+import { ChainId, PaymentOption } from "@superfluid-finance/widget";
 import uniqBy from "lodash/uniqBy";
 import { FC, useCallback, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Address } from "viem";
 
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
-import {
-  ChainId,
-  getNetworkByChainIdOrThrow,
-  Network,
-} from "../../networkDefinitions";
+import { getNetworkByChainIdOrThrow, Network } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
 import NFTDeploymentDialog from "../nft-deployment-modal/NFTDeploymentDialog";
