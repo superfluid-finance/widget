@@ -18,10 +18,10 @@ export const defaultNetworkAssets: NetworkAssets = {
   },
   [supportedNetwork.base.id]: {
     logoURI: `https://app.superfluid.finance/icons/network/base.svg`,
-    color: "#0052ff",
+    color: "#68B1D5",
   },
   [supportedNetwork.baseGoerli.id]: {
-    color: "#0052ff",
+    color: "#68B1D5",
   },
   [supportedNetwork.bsc.id]: {
     logoURI: `https://app.superfluid.finance/icons/network/bnb.svg`,
