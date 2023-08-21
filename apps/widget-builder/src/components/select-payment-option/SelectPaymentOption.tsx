@@ -19,7 +19,6 @@ import {
 } from "@mui/material";
 import {
   ChainId,
-  defaultNetworkAssets,
   NetworkAssetInfo,
   supportedNetworks,
   TimePeriod,
@@ -33,6 +32,7 @@ import { UseFieldArrayAppend } from "react-hook-form";
 import { Chain } from "wagmi";
 
 import InputWrapper from "../form/InputWrapper";
+import NetworkAvatar from "../NetworkAvatar";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 export type PaymentOption = {
@@ -171,13 +171,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
                   gap={1}
                   sx={{ alignItems: "center", width: "100%" }}
                 >
-                  {defaultNetworkAssets[network.id]?.logoURI && (
-                    <Avatar
-                      sx={{ width: 24, height: 24 }}
-                      src={defaultNetworkAssets[network.id]!.logoURI}
-                      alt={network.name}
-                    />
-                  )}
+                  <NetworkAvatar network={network} />
                   <Stack
                     direction="row"
                     sx={{
@@ -191,7 +185,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
                       <Chip
                         data-testid="testnet-chip"
                         variant="filled"
-                        color="primary"
+                        color="warning"
                         label="test"
                         size="small"
                       />

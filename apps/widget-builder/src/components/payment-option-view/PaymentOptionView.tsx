@@ -9,13 +9,14 @@ import {
 } from "@mui/material";
 import {
   ChainId,
-  defaultNetworkAssets,
   FlowRate,
   supportedNetworks,
 } from "@superfluid-finance/widget";
 import superTokenList from "@superfluid-finance/widget/tokenlist";
 import Image from "next/image";
 import { FC, ReactNode, useMemo } from "react";
+
+import NetworkAvatar from "../NetworkAvatar";
 
 type PaymentOptionRowProps = {
   label: string;
@@ -65,7 +66,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   remove,
 }) => {
   const theme = useTheme();
-  const network = supportedNetworks.find((n) => n.id === chainId);
+  const network = supportedNetworks.find((n) => n.id === chainId)!;
   const token = Object.values(superTokenList.tokens).find(
     (token) => token.address === superToken.address,
   );
@@ -87,14 +88,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
               gap={1}
               sx={{ alignItems: "center" }}
             >
-              {defaultNetworkAssets[network?.id!]?.logoURI && (
-                <Image
-                  src={defaultNetworkAssets[network!.id]!.logoURI!}
-                  alt=""
-                  width={24}
-                  height={24}
-                />
-              )}
+              <NetworkAvatar network={network} />
               {network?.name}
             </Stack>
           }
