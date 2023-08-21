@@ -1,11 +1,11 @@
 import "./App.css";
 
-import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   EventListeners,
   supportedNetworks,
   WalletManager,
 } from "@superfluid-finance/widget";
+import superTokenList from "@superfluid-finance/widget/tokenlist";
 import {
   EthereumClient,
   w3mConnectors,
