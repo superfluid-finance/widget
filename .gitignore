@@ -198,3 +198,6 @@ packages/widget/dist
 
 # Sentry Auth Token
 .sentryclirc
+
+# Vite temporary files
+vite.config.js.timestamp-*.mjs
