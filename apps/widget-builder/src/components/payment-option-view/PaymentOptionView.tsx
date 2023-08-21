@@ -105,7 +105,13 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
               sx={{ alignItems: "center" }}
             >
               {token?.logoURI && (
-                <Image src={token.logoURI} alt="" width={24} height={24} />
+                <Image
+                  src={token.logoURI}
+                  alt=""
+                  width={24}
+                  height={24}
+                  objectFit="contain"
+                />
               )}
               {token?.name}
             </Stack>

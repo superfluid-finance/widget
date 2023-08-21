@@ -252,19 +252,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
               componentsProps={{
                 popper: {
                   placement: "bottom-end",
-                  sx: {
-                    width: "calc(80% - 48px) !important",
-                    mt: "2px !important",
-                  },
-                  disablePortal: true,
                 },
               }}
               renderOption={(props, option) => (
                 <ListItem {...props}>
-                  <ListItemAvatar sx={{ width: 24, height: 24, minWidth: 40 }}>
+                  <ListItemAvatar sx={{ minWidth: 40 }}>
                     {option.logoURI && (
                       <Avatar
-                        sx={{ width: 24, height: 24 }}
+                        sx={{ width: 24, height: 24, objectFit: "contain" }}
                         src={option.logoURI}
                       />
                     )}
@@ -284,7 +279,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
                     ...params.InputProps,
                     startAdornment: selectedToken?.logoURI && (
                       <Avatar
-                        sx={{ width: 24, height: 24 }}
+                        sx={{ width: 24, height: 24, objectFit: "contain" }}
                         src={selectedToken.logoURI}
                       />
                     ),
