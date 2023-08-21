@@ -9,14 +9,13 @@ import {
 } from "@mui/material";
 import {
   ChainId,
+  defaultNetworkAssets,
   FlowRate,
   supportedNetworks,
 } from "@superfluid-finance/widget";
 import superTokenList from "@superfluid-finance/widget/tokenlist";
 import Image from "next/image";
 import { FC, ReactNode, useMemo } from "react";
-
-import { networkLogoInfos } from "../../networkDefinitions";
 
 type PaymentOptionRowProps = {
   label: string;
@@ -88,9 +87,9 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
               gap={1}
               sx={{ alignItems: "center" }}
             >
-              {networkLogoInfos[network?.id ?? -1]?.logoUrl && (
+              {defaultNetworkAssets[network?.id!]?.logoURI && (
                 <Image
-                  src={networkLogoInfos[network!.id]!.logoUrl!}
+                  src={defaultNetworkAssets[network!.id]!.logoURI!}
                   alt=""
                   width={24}
                   height={24}

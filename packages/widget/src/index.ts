@@ -11,6 +11,7 @@ export type {
   PaymentDetails,
   PaymentOption,
   ProductDetails,
+  SupportedNetwork,
   TimePeriod,
 } from "./core/index.js";
 export {

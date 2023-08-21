@@ -5,7 +5,6 @@ import { defaultNetworkAssets, SupportedNetwork } from "./core/index.js";
 
 export interface NetworkAvatarProps {
   network: SupportedNetwork;
-  useNetworkBackgroundColor?: boolean;
   AvatarProps?: Partial<AvatarProps>;
 }
 
