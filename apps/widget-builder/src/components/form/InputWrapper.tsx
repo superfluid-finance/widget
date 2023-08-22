@@ -18,7 +18,7 @@ export const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
 
   return (
     <Tooltip title={tooltip}>
-      <InfoIcon fontSize="small" sx={{ color: theme.palette.grey[600] }} />
+      <InfoIcon fontSize="small" sx={{ color: theme.palette.grey[500] }} />
     </Tooltip>
   );
 };
