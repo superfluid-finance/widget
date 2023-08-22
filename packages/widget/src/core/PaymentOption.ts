@@ -14,6 +14,7 @@ export const addressSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Not an address.",
+        fatal: true,
       });
       return z.NEVER;
     }
@@ -33,6 +34,7 @@ export const etherAmountSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Not an ether amount.",
+        fatal: true,
       });
       return z.NEVER;
     }
@@ -49,16 +51,16 @@ export const paymentOptionSchema = z
     chainId: chainIdSchema,
     superToken: tokenSchema,
     transferAmountEther: etherAmountSchema
-      .optional()
-      .refine((x) => (x ? parseEther(x) > 0n : true), {
+      .refine((x) => parseEther(x) > 0n, {
         message:
           "Upfront transfer amount must be greater than 0 when specified.",
-      }),
+      })
+      .optional(),
     flowRate: flowRateSchema
-      .optional()
-      .refine((x) => (x ? parseEther(x.amountEther) > 0n : true), {
+      .refine((x) => parseEther(x.amountEther) > 0n, {
         message: "Flow rate must be greater than 0.",
-      }),
+      })
+      .optional(),
     userData: z
       .string()
       .trim()

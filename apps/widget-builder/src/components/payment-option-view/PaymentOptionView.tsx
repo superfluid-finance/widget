@@ -75,7 +75,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
 
   const flowRateValue = useMemo(() => {
     if (!flowRate) return "Custom amount";
-    return `${flowRate.amountEther} ${token?.symbol}/${flowRate.period}`;
+    return `${flowRate.amountEther} ${token?.symbol ?? "x"}/${flowRate.period}`;
   }, [flowRate, token]);
 
   return (
@@ -121,7 +121,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         {upfrontPaymentAmountEther && (
           <PaymentOptionRow
             label="Upfront Payment Amount"
-            value={`${upfrontPaymentAmountEther} ${token?.symbol}`}
+            value={`${upfrontPaymentAmountEther} ${token?.symbol ?? ""}`}
           />
         )}
         <PaymentOptionRow
