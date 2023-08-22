@@ -9,6 +9,11 @@ module.exports = {
 
     return config;
   },
+  env: {
+    NEXT_PUBLIC_ROOT_REDIRECT_URL:
+      process.env.ROOT_REDIRECT_URL ??
+      "https://www.superfluid.finance/subscriptions",
+  },
 };
 
 // Injected content via Sentry wizard below
