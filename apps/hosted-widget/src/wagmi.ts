@@ -43,11 +43,11 @@ const safeConnector = new SafeConnector({
 export const wagmiConfig = createConfig({
   autoConnect: false,
   connectors: [
+    ...(safeConnector.ready ? [safeConnector] : []),
     ...w3mConnectors({
       projectId: walletConnectProjectId,
       chains: wagmiChains,
     }),
-    ...(safeConnector.ready ? [safeConnector] : []),
   ],
   publicClient,
 });
