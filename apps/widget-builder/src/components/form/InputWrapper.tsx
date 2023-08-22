@@ -13,7 +13,7 @@ type InputInfoProps = {
   tooltip: string;
 };
 
-const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
+export const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
   const theme = useTheme();
 
   return (
@@ -43,12 +43,7 @@ const InputWrapper: FC<InputWrapperProps> = ({
   const labelId = `label-${inputId}`;
   return (
     <FormControl sx={sx}>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{ mb: 0.75 }}
-      >
+      <Stack direction="row" alignItems="center" gap={1} sx={{ mb: 0.75 }}>
         <FormLabel id={labelId} htmlFor={inputId} focused={false}>
           {title}
         </FormLabel>

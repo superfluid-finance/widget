@@ -34,7 +34,7 @@ import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { Chain } from "wagmi";
 
-import InputWrapper from "../form/InputWrapper";
+import InputWrapper, { InputInfo } from "../form/InputWrapper";
 import NetworkAvatar from "../NetworkAvatar";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
@@ -172,7 +172,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     <Stack direction="column" gap={1.5}>
       <InputWrapper
         title="Receiver Address"
-        tooltip="Set your wallet or multisig address on the relevant network"
+        tooltip="Set your wallet or multisig address on the relevant network."
       >
         {(id) => (
           <TextField
@@ -188,7 +188,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
       <Stack sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} gap={1.5}>
         <InputWrapper
           title="Network"
-          tooltip="Select the network you'd like to request payment on"
+          tooltip="Select the network you'd like to request payment on."
         >
           {(id) => (
             <Select
@@ -239,7 +239,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         <InputWrapper
           id="token-select"
           title="Super Token"
-          tooltip="Select the SuperToken you'd like to request payment in"
+          tooltip="Select the SuperToken you'd like to request payment in."
         >
           {(id) => (
             <Autocomplete
@@ -307,7 +307,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
           <Stack spacing={1}>
             <InputWrapper
               title="Stream Rate"
-              tooltip="Set the amount of tokens per month for the payment"
+              tooltip="Set the amount of tokens per month for the payment."
               sx={{ pt: 1.5 }}
             >
               {(id) => (
@@ -357,24 +357,30 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
               )}
             </InputWrapper>
             <FormGroup>
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="primary"
-                    checked={showUpfrontPayment}
-                    value={showUpfrontPayment}
-                    onChange={onShowUpfrontPaymentChanged}
-                  />
-                }
-                label="Charge upfront payment amount"
-              />
+              <Stack direction="row" alignItems="center" gap={1}>
+                <FormControlLabel
+                  sx={{
+                    mr: 0,
+                  }}
+                  control={
+                    <Switch
+                      color="primary"
+                      checked={showUpfrontPayment}
+                      value={showUpfrontPayment}
+                      onChange={onShowUpfrontPaymentChanged}
+                    />
+                  }
+                  label="Charge upfront payment amount"
+                />
+                <InputInfo tooltip="A one-time payment amount to be paid before the stream starts." />
+              </Stack>
             </FormGroup>
 
             <Collapse in={showUpfrontPayment}>
               <FormGroup>
                 <InputWrapper
                   title="Upfront Payment Amount"
-                  // tooltip="TODO"
+                  tooltip="The ERC-20 transfer amount the user should send as an upfront payment."
                   sx={{ pt: 1.5 }}
                 >
                   {(id) => (
