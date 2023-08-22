@@ -1,3 +1,5 @@
+export * from "./NetworkAssets/defaultNetworkAssets.js";
+export * from "./NetworkAssets/types.js";
 export * from "./PaymentDetails.js";
 export * from "./PaymentOption.js";
 export * from "./ProductDetails.js";
