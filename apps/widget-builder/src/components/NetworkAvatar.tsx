@@ -1,18 +1,18 @@
 import { Avatar, AvatarProps } from "@mui/material";
+import {
+  defaultNetworkAssets,
+  SupportedNetwork,
+} from "@superfluid-finance/widget";
 import { FC, useMemo } from "react";
-
-import { defaultNetworkAssets, SupportedNetwork } from "./core/index.js";
 
 export interface NetworkAvatarProps {
   network: SupportedNetwork;
   AvatarProps?: Partial<AvatarProps>;
-  forceNetworkBackgroundColor?: boolean;
 }
 
 const NetworkAvatar: FC<NetworkAvatarProps> = ({
   network,
   AvatarProps = {},
-  forceNetworkBackgroundColor,
 }) => {
   const networkAssetInfo = useMemo(() => {
     return defaultNetworkAssets[network.id];
@@ -28,7 +28,7 @@ const NetworkAvatar: FC<NetworkAvatarProps> = ({
       sx={{
         // Don't show background color when logo is present because some logos have transparency.
         ...(networkAssetInfo &&
-        (!networkAssetInfo.logoURI || forceNetworkBackgroundColor) &&
+        !networkAssetInfo.logoURI &&
         networkAssetInfo.color
           ? { backgroundColor: networkAssetInfo.color }
           : {}),

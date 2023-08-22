@@ -17,7 +17,12 @@ import {
   checkoutConfigSchema,
   WidgetProps,
 } from "./CheckoutConfig.js";
-import { ChainId, SupportedNetwork, supportedNetworks } from "./core/index.js";
+import {
+  ChainId,
+  defaultNetworkAssets,
+  SupportedNetwork,
+  supportedNetworks,
+} from "./core/index.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList.js";
@@ -40,6 +45,7 @@ export function Widget({
   stepper: stepper_ = { orientation: "vertical" },
   eventListeners,
   type = "page",
+  networkAssets = defaultNetworkAssets,
   ..._viewProps
 }: WidgetProps & Partial<ViewProps>) {
   const viewProps: ViewProps =

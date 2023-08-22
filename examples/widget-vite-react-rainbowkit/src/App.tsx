@@ -1,11 +1,11 @@
 import "./App.css";
 
 import { ConnectButton, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import superTokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   EventListeners,
   PaymentOption,
 } from "@superfluid-finance/widget";
+import superTokenList from "@superfluid-finance/widget/tokenlist";
 import { useCallback, useMemo, useState } from "react";
 import { WagmiConfig } from "wagmi";
 

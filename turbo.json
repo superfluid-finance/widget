@@ -3,6 +3,10 @@
   "globalEnv": ["GITHUB_TOKEN"],
   "globalDependencies": ["**/.env.*local", "tsconfig.json"],
   "pipeline": {
+    "tsc": {
+      "dependsOn": ["^tsc"],
+      "cache": false
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]

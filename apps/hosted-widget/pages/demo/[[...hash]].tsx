@@ -1,7 +1,7 @@
 import { Box, Container, Fade } from "@mui/material";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
-import tokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget from "@superfluid-finance/widget";
+import tokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import { NextPage } from "next";
 import Image from "next/image";
