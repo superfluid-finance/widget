@@ -31,6 +31,15 @@ const { chains, publicClient } = configureChains(supportedNetworks, [
 ]);
 
 export const wagmiChains = chains;
+
+const safeConnector = new SafeConnector({
+  chains: wagmiChains,
+  options: {
+    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    debug: false,
+  },
+});
+
 export const wagmiConfig = createConfig({
   autoConnect: false,
   connectors: [
@@ -38,13 +47,7 @@ export const wagmiConfig = createConfig({
       projectId: walletConnectProjectId,
       chains: wagmiChains,
     }),
-    new SafeConnector({
-      chains: wagmiChains,
-      options: {
-        allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
-        debug: false,
-      },
-    }),
+    ...(safeConnector.ready ? [safeConnector] : []),
   ],
   publicClient,
 });
