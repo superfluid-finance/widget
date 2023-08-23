@@ -1,2 +1,5 @@
 /:hash  /[hash].html  200
+/:hash/manifest.json  /manifest.json  200
 /demo/:hash  /demo/[[...hash]].html  200
+/demo/:hash/manifest.json  /manifest.json  200
+/load/manifest.json  /manifest.json  200
