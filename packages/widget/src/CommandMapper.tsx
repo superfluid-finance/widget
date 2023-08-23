@@ -299,5 +299,6 @@ const createContractWrite = <
 ): ContractWrite =>
   ({
     id: nanoid(),
+    value: 0n, // Gnosis Safe has a bug that required "value" to be specified: https://github.com/wagmi-dev/wagmi/issues/2887
     ...arg,
   }) as ContractWrite;
