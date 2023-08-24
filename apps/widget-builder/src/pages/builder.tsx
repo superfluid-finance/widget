@@ -73,7 +73,7 @@ export default function Builder() {
         }}
       >
         <TabContext value={activeTab}>
-          <AppBar position="static" color="primary" elevation={1}>
+          <AppBar position="sticky" color="primary" elevation={1}>
             <Stack
               component={Toolbar}
               // bgcolor="primary.main"
