@@ -4,7 +4,7 @@ import { useAccount } from "wagmi";
 
 import { AccountAddressCard } from "./AccountAddressCard.js";
 import { useCommandHandler } from "./CommandHandlerContext.js";
-import { SendStreamCommand } from "./commands.js";
+import { SubscribeCommand } from "./commands.js";
 import { mapTimePeriodToSeconds } from "./core/index.js";
 import { runEventListener } from "./EventListeners.js";
 import FlowingBalance from "./FlowingBalance.js";
@@ -25,13 +25,13 @@ export function CheckoutSummary() {
 
   const { commands } = useCommandHandler();
 
-  const sendStreamCommand = commands.find(
-    (x) => x.type === "Send Stream",
-  )! as SendStreamCommand; // TODO: Do this more type-safe.
+  const subscribeCommand = commands.find(
+    (x) => x.type === "Subscribe",
+  )! as SubscribeCommand; // TODO: Do this more type-safe.
 
   const flowRate =
-    sendStreamCommand.flowRate.amountWei /
-    BigInt(mapTimePeriodToSeconds(sendStreamCommand.flowRate.period));
+    subscribeCommand.flowRate.amountWei /
+    BigInt(mapTimePeriodToSeconds(subscribeCommand.flowRate.period));
 
   // TODO: do the flowing balance animation with a speed-up
   const startingBalance = 0n;
@@ -39,8 +39,8 @@ export function CheckoutSummary() {
   const startingBalanceDate = useMemo(() => new Date(), []);
 
   const superToken = useMemo(
-    () => getSuperToken(sendStreamCommand.superTokenAddress),
-    [sendStreamCommand.superTokenAddress, getSuperToken],
+    () => getSuperToken(subscribeCommand.superTokenAddress),
+    [subscribeCommand.superTokenAddress, getSuperToken],
   );
 
   const dashboardURL = useMemo(
@@ -113,7 +113,7 @@ export function CheckoutSummary() {
       >
         <AccountAddressCard
           dataTest="sender"
-          address={sendStreamCommand.accountAddress}
+          address={subscribeCommand.accountAddress}
           PaperProps={{ sx: { zIndex: 2 } }}
         />
         <StreamIndicator
@@ -130,7 +130,7 @@ export function CheckoutSummary() {
         />
         <AccountAddressCard
           dataTest="receiver"
-          address={sendStreamCommand.receiverAddress}
+          address={subscribeCommand.receiverAddress}
           PaperProps={{ sx: { zIndex: 2 } }}
         />
       </Stack>

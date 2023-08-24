@@ -22,7 +22,7 @@ export default function StepContentReview() {
         wrapIntoSuperTokensCommand: commands.find(
           (x) => x.type === "Wrap into Super Tokens",
         ),
-        sendStreamCommand: commands.find((x) => x.type === "Send Stream"),
+        subscribeCommand: commands.find((x) => x.type === "Subscribe"),
       }),
   );
   const isValid = Boolean(validationResult?.success);

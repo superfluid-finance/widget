@@ -1,12 +1,12 @@
 import {
   Autocomplete,
   Avatar,
-  Box,
   Button,
   Chip,
   Collapse,
+  FormControlLabel,
   FormGroup,
-  FormLabel,
+  InputAdornment,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -16,6 +16,8 @@ import {
   Stack,
   Switch,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import {
   ChainId,
@@ -31,7 +33,7 @@ import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { Chain } from "wagmi";
 
-import InputWrapper from "../form/InputWrapper";
+import InputWrapper, { InputInfo } from "../form/InputWrapper";
 import NetworkAvatar from "../NetworkAvatar";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
@@ -44,34 +46,16 @@ type PaymentOptionSelectorProps = {
   onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
 };
 
-const defaultToken: SuperTokenInfo = {
-  address: "",
-  chainId: -1,
-  decimals: 0,
-  name: "",
-  symbol: "",
-  extensions: {
-    superTokenInfo: {
-      type: "Pure",
-    },
-  },
-};
-
-type InputInfoProps = {
-  tooltip: string;
-};
-
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
   const [selectedNetwork, setSelectedNetwork] = useState<Chain | null>(null);
-  const [selectedToken, setSelectedToken] =
-    useState<SuperTokenInfo>(defaultToken);
+  const [selectedToken, setSelectedToken] = useState<SuperTokenInfo | null>(
+    null,
+  );
 
   const [isCustomAmount, setIsCustomAmount] = useState(false);
-  const [flowRateAmount, setFlowRateAmount] = useState<`${number}`>("0");
+  const [flowRateAmount, setFlowRateAmount] = useState<`${number}` | "">("");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
-  const [isReceiverDefault, setReceiverAsDefault] = useState(false);
-  const [userDataText, setUserDataText] = useState("");
 
   const filteredNetworks = useMemo(
     () =>
@@ -120,8 +104,15 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         chainId: selectedToken.chainId as ChainId,
         ...(!isCustomAmount
           ? {
+              ...(showUpfrontPayment
+                ? {
+                    transferAmountEther: upfrontPaymentAmount
+                      ? upfrontPaymentAmount
+                      : "0",
+                  }
+                : {}),
               flowRate: {
-                amountEther: flowRateAmount,
+                amountEther: flowRateAmount ? flowRateAmount : "0",
                 period: flowRateInterval,
               },
             }
@@ -140,211 +131,284 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
     );
   }, [selectedNetwork]);
 
-  const onCustomAmountChanged = (_e: ChangeEvent, checked: boolean) =>
-    setIsCustomAmount(checked);
+  const onCustomAmountChanged = (_e: any, checked: boolean) => {
+    if (checked !== null) {
+      if (checked !== isCustomAmount) {
+        setIsCustomAmount(checked);
+        setShowUpfrontPayment(false);
+        setUpfrontPaymentAmount("");
+        setFlowRateAmount("");
+      }
+    }
+  };
 
   useEffect(() => {
-    setSelectedToken(defaultToken);
+    setSelectedToken(null);
   }, [selectedNetwork]);
+
+  const [showUpfrontPayment, setShowUpfrontPayment] = useState(false);
+  const [upfrontPaymentAmount, setUpfrontPaymentAmount] = useState<
+    `${number}` | ""
+  >("");
+  const onShowUpfrontPaymentChanged = (_e: ChangeEvent, checked: boolean) =>
+    setShowUpfrontPayment(checked);
 
   return (
     <Stack direction="column" gap={1.5}>
-      <Stack sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} gap={1.5}>
+      <InputWrapper
+        title=""
+        sx={{ width: "100%" }}
+        helperText={
+          isCustomAmount
+            ? "User-defined rate is a payment type suited for donations where users determine the amount they want to pay over a given period of time."
+            : "Fixed rate is a payment type suited for regular subscriptions where users pay a predetermined amount over a given period of time."
+        }
+      >
+        {(id) => (
+          <ToggleButtonGroup
+            id={id}
+            value={isCustomAmount}
+            exclusive
+            onChange={onCustomAmountChanged}
+            fullWidth
+            color="primary"
+          >
+            <ToggleButton value={false}>Fixed rate</ToggleButton>
+            <ToggleButton value={true}>User-defined rate</ToggleButton>
+          </ToggleButtonGroup>
+        )}
+      </InputWrapper>
+
+      <Stack
+        sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
+        gap={1.25}
+      >
         <InputWrapper
           title="Network"
-          tooltip="Select the network you'd like to request payment on"
+          tooltip="Select the network you'd like to request payment on."
         >
-          <Select
-            data-testid="network-selection"
-            value={selectedNetwork?.name}
-            onChange={handleNetworkSelect}
-            fullWidth
-          >
-            {filteredNetworks.map((network) => (
-              <MenuItem
-                data-testid={network.id}
-                value={network.name}
-                key={`${network.id}`}
-              >
-                <Stack
-                  direction="row"
-                  gap={1}
-                  sx={{ alignItems: "center", width: "100%" }}
+          {(id) => (
+            <Select
+              labelId={`label-${id}`}
+              id={id}
+              data-testid="network-selection"
+              value={selectedNetwork?.name}
+              onChange={handleNetworkSelect}
+              fullWidth
+            >
+              {filteredNetworks.map((network) => (
+                <MenuItem
+                  data-testid={network.id}
+                  value={network.name}
+                  key={`${network.id}`}
                 >
-                  <NetworkAvatar network={network} />
                   <Stack
                     direction="row"
-                    sx={{
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flex: 1,
-                    }}
+                    gap={1}
+                    sx={{ alignItems: "center", width: "100%" }}
                   >
-                    {network.name}
-                    {network.testnet && (
-                      <Chip
-                        data-testid="testnet-chip"
-                        variant="filled"
-                        color="warning"
-                        label="test"
-                        size="small"
+                    <NetworkAvatar network={network} />
+                    <Stack
+                      direction="row"
+                      sx={{
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        flex: 1,
+                      }}
+                    >
+                      {network.name}
+                      {network.testnet && (
+                        <Chip
+                          data-testid="testnet-chip"
+                          variant="filled"
+                          color="primary"
+                          label="test"
+                          size="small"
+                        />
+                      )}
+                    </Stack>
+                  </Stack>
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        </InputWrapper>
+
+        <InputWrapper
+          id="token-select"
+          title="Super Token"
+          tooltip="Select the SuperToken you'd like to request payment in."
+        >
+          {(id) => (
+            <Autocomplete
+              fullWidth
+              disabled={!selectedNetwork}
+              value={selectedToken}
+              onChange={(_, value) => setSelectedToken(value!)}
+              id={id}
+              options={autoCompleteTokenOptions}
+              getOptionLabel={(token) => token.symbol}
+              componentsProps={{
+                popper: {
+                  placement: "bottom-end",
+                },
+              }}
+              renderOption={(props, option) => (
+                <ListItem {...props}>
+                  <ListItemAvatar sx={{ minWidth: 40 }}>
+                    {option.logoURI && (
+                      <Avatar
+                        sx={{ width: 24, height: 24, objectFit: "contain" }}
+                        src={option.logoURI}
                       />
                     )}
-                  </Stack>
-                </Stack>
-              </MenuItem>
-            ))}
-          </Select>
-        </InputWrapper>
-        <InputWrapper
-          title="Super Token"
-          tooltip="Select the SuperToken you'd like to request payment in"
-        >
-          <Autocomplete
-            fullWidth
-            value={selectedToken}
-            onChange={(_, value) => setSelectedToken(value!)}
-            id="token-select"
-            options={autoCompleteTokenOptions}
-            getOptionLabel={(token) => token.symbol}
-            componentsProps={{
-              popper: {
-                placement: "bottom-end",
-                sx: {
-                  width: "calc(80% - 48px) !important",
-                  mt: "2px !important",
-                },
-                disablePortal: true,
-              },
-            }}
-            renderOption={(props, option) => (
-              <ListItem {...props}>
-                <ListItemAvatar sx={{ width: 24, height: 24, minWidth: 40 }}>
-                  {option.logoURI && (
-                    <Avatar
-                      sx={{ width: 24, height: 24 }}
-                      src={option.logoURI}
-                    />
-                  )}
-                </ListItemAvatar>
-                <ListItemText
-                  primary={option.symbol}
-                  secondary={option.name}
-                  secondaryTypographyProps={{ variant: "caption" }}
-                  sx={{ m: 0 }}
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={option.symbol}
+                    secondary={option.name}
+                    secondaryTypographyProps={{ variant: "caption" }}
+                    sx={{ m: 0 }}
+                  />
+                </ListItem>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  InputProps={{
+                    ...params.InputProps,
+                    startAdornment: selectedToken?.logoURI && (
+                      <Avatar
+                        sx={{ width: 24, height: 24, objectFit: "contain" }}
+                        src={selectedToken.logoURI}
+                      />
+                    ),
+                  }}
                 />
-              </ListItem>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                InputProps={{
-                  ...params.InputProps,
-                  startAdornment: selectedToken?.logoURI && (
-                    <Avatar
-                      sx={{ width: 24, height: 24 }}
-                      src={selectedToken.logoURI}
-                    />
-                  ),
-                }}
-              />
-            )}
-          />
+              )}
+            />
+          )}
         </InputWrapper>
       </Stack>
 
-      <Box>
-        <FormGroup>
-          <Stack direction="row" alignItems="center">
-            <FormLabel>Fixed amount</FormLabel>
-            <Switch
-              color="primary"
-              value={isCustomAmount}
-              onChange={onCustomAmountChanged}
-            />
-            <FormLabel>Custom amount</FormLabel>
-          </Stack>
-        </FormGroup>
-
-        <Collapse in={!isCustomAmount}>
+      <Collapse in={!isCustomAmount}>
+        <Stack spacing={1}>
           <InputWrapper
             title="Stream Rate"
-            tooltip="Set the amount of tokens per month for the payment"
+            tooltip="Set the amount of tokens per month for the payment."
             sx={{ pt: 1.5 }}
           >
-            <Stack
-              gap="-1px"
-              sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
-            >
-              <TextField
-                data-testid="flow-rate-input"
-                fullWidth
-                value={flowRateAmount}
-                onChange={({ target }) =>
-                  setFlowRateAmount(target.value as `${number}`)
-                }
-                InputProps={{
-                  sx: {
-                    borderTopRightRadius: 0,
-                    borderBottomRightRadius: 0,
-                  },
-                }}
-              />
-              <Select
-                data-testid="time-unit-selection"
-                value={flowRateInterval}
-                onChange={({ target }) =>
-                  setFlowRateInterval(target.value as TimePeriod)
-                }
-                sx={{
-                  borderTopLeftRadius: 0,
-                  borderBottomLeftRadius: 0,
-                  marginLeft: "-1px",
-                }}
+            {(id) => (
+              <Stack
+                gap="-1px"
+                sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
               >
-                {timePeriods.map((interval) => (
-                  <MenuItem value={interval} key={interval}>
-                    /{interval}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Stack>
+                <TextField
+                  id={id}
+                  data-testid="flow-rate-input"
+                  fullWidth
+                  value={flowRateAmount}
+                  onChange={({ target }) =>
+                    setFlowRateAmount(target.value as `${number}`)
+                  }
+                  InputProps={{
+                    sx: {
+                      borderTopRightRadius: 0,
+                      borderBottomRightRadius: 0,
+                    },
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {selectedToken?.symbol}
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <Select
+                  data-testid="time-unit-selection"
+                  value={flowRateInterval}
+                  onChange={({ target }) =>
+                    setFlowRateInterval(target.value as TimePeriod)
+                  }
+                  sx={{
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                    marginLeft: "-1px",
+                  }}
+                >
+                  {timePeriods.map((interval) => (
+                    <MenuItem value={interval} key={interval}>
+                      /{interval}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Stack>
+            )}
           </InputWrapper>
-        </Collapse>
-      </Box>
+          <FormGroup>
+            <Stack direction="row" alignItems="center" gap={1}>
+              <FormControlLabel
+                sx={{
+                  mr: 0,
+                }}
+                control={
+                  <Switch
+                    color="primary"
+                    checked={showUpfrontPayment}
+                    value={showUpfrontPayment}
+                    onChange={onShowUpfrontPaymentChanged}
+                  />
+                }
+                label="Charge upfront payment amount"
+              />
+              <InputInfo tooltip="A one-time payment amount to be paid before the stream starts." />
+            </Stack>
+          </FormGroup>
+
+          <Collapse in={showUpfrontPayment}>
+            <FormGroup>
+              <InputWrapper
+                title="Upfront Payment Amount"
+                tooltip="The ERC-20 transfer amount the user should send as an upfront payment."
+                sx={{ pt: 1.5 }}
+              >
+                {(id) => (
+                  <TextField
+                    id={id}
+                    data-testid="upfront-payment-amount-input"
+                    fullWidth
+                    value={upfrontPaymentAmount}
+                    onChange={({ target }) =>
+                      setUpfrontPaymentAmount(target.value as `${number}`)
+                    }
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          {selectedToken?.symbol}
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+              </InputWrapper>
+            </FormGroup>
+          </Collapse>
+        </Stack>
+      </Collapse>
 
       <InputWrapper
-        title="Receiver Wallet Address"
-        tooltip="Set your wallet or multisig address on the relevant network"
+        title="Receiver Address"
+        tooltip="Set your wallet or multisig address on the relevant network."
       >
-        <TextField
-          data-testid="receiver-input-field"
-          value={receiver}
-          onChange={({ target }) => setReceiver(target.value as `0x${string}`)}
-        />
-      </InputWrapper>
-
-      {/* <FormControlLabel
-        data-testid="default-option-switch"
-        control={
-          <Switch
-            checked={isReceiverDefault}
-            onChange={() => setReceiverAsDefault((val) => !val)}
+        {(id) => (
+          <TextField
+            id={id}
+            data-testid="receiver-input-field"
+            value={receiver}
+            onChange={({ target }) =>
+              setReceiver(target.value as `0x${string}`)
+            }
           />
-        }
-        label={<Typography>Use as default payment option</Typography>}
-      /> */}
-
-      {/* <InputWrapper
-        title="User Data"
-        tooltip=""
-      >
-        <TextField
-          value={userDataText}
-          onChange={({ target }) => setUserDataText(target.value)}
-          helperText={`On-chain hex: ${toHex(userDataText)}`}
-        />
-      </InputWrapper> */}
+        )}
+      </InputWrapper>
 
       <Button
         data-testid="add-option-button"
@@ -352,6 +416,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         variant="outlined"
         disabled={!(selectedNetwork && selectedToken)}
         onClick={handleAdd}
+        sx={{ mt: 1.5 }}
       >
         Add +
       </Button>
