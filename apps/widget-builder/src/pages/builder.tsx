@@ -5,6 +5,7 @@ import WebIcon from "@mui/icons-material/Web";
 import WebAssetIcon from "@mui/icons-material/WebAsset";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
+  AppBar,
   Box,
   Button,
   Drawer,
@@ -14,6 +15,7 @@ import {
   Tab,
   ToggleButton,
   ToggleButtonGroup,
+  Toolbar,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -22,6 +24,7 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
 import ExportEditor from "../components/export-editor/ExportEditor";
+import PaymentEditor from "../components/payment-editor/PaymentEditor";
 import ProductEditor from "../components/product-editor/ProductEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
@@ -69,33 +72,59 @@ export default function Builder() {
           },
         }}
       >
-        <Stack
-          direction="row"
-          sx={{
-            alignItems: "center",
-            justifyContent: "space-between",
-            px: 3.5,
-            pt: 3.5,
-            pb: 1,
-          }}
-          gap={1}
-        >
-          <Typography variant="subtitle1" fontWeight="500">
-            Widget Builder
-          </Typography>
-          <FormControlLabel
-            data-testid="demo-mode-switch"
-            control={<Switch checked={demoMode} onChange={toggleDemoMode} />}
-            label={<Typography>Demo</Typography>}
-          />
-        </Stack>
-
         <TabContext value={activeTab}>
-          <TabList onChange={(_, value) => setActiveTab(value)} sx={{ px: 2 }}>
-            <Tab label="1. Product" value="product" data-testid="product-tab" />
-            <Tab label="2. UI" value="ui" data-testid="ui-tab" />
-            <Tab label="3. Export" value="export" data-testid="export-tab" />
-          </TabList>
+          <AppBar position="static" color="primary" elevation={1}>
+            <Stack
+              component={Toolbar}
+              // bgcolor="primary.main"
+              direction="row"
+              sx={{
+                alignItems: "center",
+                justifyContent: "space-between",
+                px: 3.5,
+              }}
+              gap={1}
+            >
+              <Typography variant="subtitle1" component="h1" fontWeight="500">
+                Widget Builder
+              </Typography>
+              <FormControlLabel
+                data-testid="demo-mode-switch"
+                control={
+                  <Switch
+                    color="secondary"
+                    checked={demoMode}
+                    onChange={toggleDemoMode}
+                  />
+                }
+                label="Demo Mode"
+              />
+            </Stack>
+            <Box bgcolor="background.paper">
+              <TabList
+                variant="fullWidth"
+                onChange={(_, value) => setActiveTab(value)}
+                sx={{ px: 2 }}
+              >
+                <Tab
+                  label="1. Product"
+                  value="product"
+                  data-testid="product-tab"
+                />
+                <Tab
+                  label="2. Payment"
+                  value="payment"
+                  data-testid="payment-tab"
+                />
+                <Tab label="3. UI" value="ui" data-testid="ui-tab" />
+                <Tab
+                  label="4. Export"
+                  value="export"
+                  data-testid="export-tab"
+                />
+              </TabList>
+            </Box>
+          </AppBar>
 
           <FormProvider {...formMethods}>
             <TabPanel value="ui">
@@ -103,6 +132,9 @@ export default function Builder() {
             </TabPanel>
             <TabPanel value="product">
               <ProductEditor />
+            </TabPanel>
+            <TabPanel value="payment">
+              <PaymentEditor />
             </TabPanel>
             <TabPanel value="export">
               <ExportEditor />

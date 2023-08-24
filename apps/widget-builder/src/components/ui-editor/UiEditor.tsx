@@ -15,7 +15,6 @@ import { Controller, useFormContext } from "react-hook-form";
 
 import useFontOptions from "../../hooks/useFontOptions";
 import InputWrapper from "../form/InputWrapper";
-import ImageSelect from "../image-select/ImageSelect";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 const UiEditor: FC = () => {
@@ -27,18 +26,6 @@ const UiEditor: FC = () => {
   return (
     <Stack direction="column" gap={2}>
       <Stack direction="row" gap={2}>
-        <Controller
-          control={control}
-          name="productDetails.imageURI"
-          render={({ field: { value, onChange } }) => (
-            <ImageSelect
-              label="Product image"
-              onClick={(file) => onChange(URL.createObjectURL(file))}
-              onRemove={() => onChange("")}
-              imageSrc={value}
-            />
-          )}
-        />
         {/* <Controller
           control={control}
           name="displaySettings.logo"
