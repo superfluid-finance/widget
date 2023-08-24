@@ -62,7 +62,7 @@ const ProductEditor: FC = () => {
         />
       </Stack>
 
-      <Stack direction="column" gap={2}>
+      <Stack direction="column" gap={1.5}>
         <Typography variant="subtitle1">Add Payment Options</Typography>
         <Controller
           control={control}

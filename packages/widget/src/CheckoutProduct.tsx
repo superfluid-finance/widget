@@ -128,8 +128,7 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
                       paymentOptionWithTokenInfo.paymentOption
                         .transferAmountEther
                     }{" "}
-                    {paymentOptionWithTokenInfo.superToken.symbol} upfront
-                    service fee
+                    {paymentOptionWithTokenInfo.superToken.symbol} upfront fee
                   </Typography>
                 )}
               </>

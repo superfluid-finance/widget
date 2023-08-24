@@ -1,7 +1,10 @@
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
 import { Abi, ContractFunctionConfig, GetValue } from "viem";
-import { useContractRead, useContractReads } from "wagmi";
+import {
+  useContractRead,
+  useContractReads,
+ usePublicClient,  useQuery } from "wagmi";
 
 import {
   Command,
@@ -220,13 +223,32 @@ export function SubscribeCommandMapper({
   onMapped,
   children,
 }: CommandMapperProps<SubscribeCommand>) {
-  const { isSuccess, data: existingFlowRate } = useContractRead({
+  const { isSuccess: isSuccessForGetFlowRate, data: existingFlowRate } =
+    useContractRead({
+      chainId: cmd.chainId,
+      address: cfAv1ForwarderAddress[cmd.chainId],
+      abi: cfAv1ForwarderABI,
+      functionName: "getFlowrate",
+      args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
+    });
+
+  const publicClient = usePublicClient({
     chainId: cmd.chainId,
-    address: cfAv1ForwarderAddress[cmd.chainId],
-    abi: cfAv1ForwarderABI,
-    functionName: "getFlowrate",
-    args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
   });
+
+  const { isSuccess: isSuccessForGetTransferEvents, data: transferEvents } =
+    useQuery([cmd.id], async () => {
+      const filter = await publicClient.createContractEventFilter({
+        abi: erc20ABI,
+        eventName: "Transfer",
+        address: cmd.superTokenAddress,
+        args: {
+          from: cmd.accountAddress,
+          to: cmd.receiverAddress,
+        },
+      });
+      return await publicClient.getFilterLogs({ filter });
+    });
 
   const flowRate =
     cmd.flowRate.amountWei /
@@ -234,6 +256,8 @@ export function SubscribeCommandMapper({
 
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
+
+    // transferEvents?.map(x => x.)
 
     if (existingFlowRate !== undefined) {
       if (cmd.transferAmountWei > 0n) {
@@ -293,10 +317,13 @@ export function SubscribeCommandMapper({
     }
 
     return contractWrites_;
-  }, [cmd.id, isSuccess]);
+  }, [cmd.id, isSuccessForGetFlowRate, isSuccessForGetTransferEvents]);
 
   useEffect(
-    () => (isSuccess ? onMapped?.(contractWrites) : void 0),
+    () =>
+      isSuccessForGetFlowRate && isSuccessForGetTransferEvents
+        ? onMapped?.(contractWrites)
+        : void 0,
     [contractWrites],
   );
 
