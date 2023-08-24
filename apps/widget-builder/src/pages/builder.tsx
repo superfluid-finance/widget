@@ -81,7 +81,6 @@ export default function Builder() {
               sx={{
                 alignItems: "center",
                 justifyContent: "space-between",
-                px: 3.5,
               }}
               gap={1}
             >
@@ -104,7 +103,6 @@ export default function Builder() {
               <TabList
                 variant="fullWidth"
                 onChange={(_, value) => setActiveTab(value)}
-                sx={{ px: 2 }}
               >
                 <Tab
                   label="1. Product"

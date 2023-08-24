@@ -27,7 +27,7 @@ const ProductEditor: FC = () => {
           render={() => <SelectPaymentOption onAdd={append} />}
         />
 
-        <Divider sx={{ my: 4 }} />
+        <Divider sx={{ my: 2 }} />
 
         <Stack direction="column">
           <Stack
