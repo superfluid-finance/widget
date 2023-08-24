@@ -152,6 +152,11 @@ export class BuilderPage extends BasePage {
   async verifyAddedPaymentOptions(paymentOptions: PaymentOption[]) {
     for (const [index, option] of paymentOptions.entries()) {
       paymentOptions.forEach(async (option: PaymentOption, index: number) => {
+        await expect(
+          this.summaryNetworks
+            .nth(index)
+            .getByTestId(`${option.chainId}-badge`),
+        ).toBeVisible();
         await expect(this.summaryNetworks.nth(index)).toContainText(
           option.network,
         );
@@ -159,7 +164,7 @@ export class BuilderPage extends BasePage {
           option.superTokenName,
         );
         await expect(this.summaryFlowRate.nth(index)).toHaveText(
-          `Stream Rate${option.flowRate} / ${option.timeUnit}`,
+          `Stream Rate${option.flowRate} ${option.superToken}/${option.timeUnit}`,
         );
         await expect(this.summaryReceiver.nth(index)).toContainText(
           `${BasePage.shortenHex(option.receiver)}`,
