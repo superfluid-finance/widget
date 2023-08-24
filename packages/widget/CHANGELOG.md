@@ -1,5 +1,21 @@
 # @superfluid-finance/widget
 
+## 0.2.0
+
+### Minor Changes
+
+- 19eea2e: Re-export "@superfluid-finance/metadata" from "@superfluid-finance/widget/metadata"
+- 19eea2e: Re-export "@superfluid-finance/tokenlist" from "@superflud-finance/widget/tokenlist". Remove the re-export from "@superfluid-finance/widget".
+
+### Patch Changes
+
+- d742691: Pass payment option's Chain with WalletManager.open()
+- 81ae750: Make network asset config configurable through "networkAssets"
+- d742691: Add EventListeners.onPaymentOptionUpdate callback
+- ecd03dc: Update dependencies
+- 6f8e126: Add Base Goerli support
+- e03f8a5: Add Base network support
+
 ## 0.1.0
 
 ### Minor Changes

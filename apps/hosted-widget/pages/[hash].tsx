@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
+import AutoConnect from "../src/components/auto-connect/AutoConnect";
 import DemoWalletDisconnect from "../src/components/startup-disconnect/DemoWalletDisconnect";
 import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
 import useFontLoader from "../src/hooks/useFontLoader";
@@ -48,6 +49,7 @@ const IPFSWidgetPage: NextPage = () => {
   return (
     <WagmiProviders>
       <DemoWalletDisconnect />
+      <AutoConnect />
       {showLoader ? (
         <Box
           sx={{
