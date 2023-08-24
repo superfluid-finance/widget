@@ -1,10 +1,7 @@
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
 import { Abi, ContractFunctionConfig, GetValue } from "viem";
-import {
-  useContractRead,
-  useContractReads,
- usePublicClient,  useQuery } from "wagmi";
+import { useContractRead, useContractReads } from "wagmi";
 
 import {
   Command,
@@ -232,32 +229,12 @@ export function SubscribeCommandMapper({
       args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
     });
 
-  const publicClient = usePublicClient({
-    chainId: cmd.chainId,
-  });
-
-  const { isSuccess: isSuccessForGetTransferEvents, data: transferEvents } =
-    useQuery([cmd.id], async () => {
-      const filter = await publicClient.createContractEventFilter({
-        abi: erc20ABI,
-        eventName: "Transfer",
-        address: cmd.superTokenAddress,
-        args: {
-          from: cmd.accountAddress,
-          to: cmd.receiverAddress,
-        },
-      });
-      return await publicClient.getFilterLogs({ filter });
-    });
-
   const flowRate =
     cmd.flowRate.amountWei /
     BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
 
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
-
-    // transferEvents?.map(x => x.)
 
     if (existingFlowRate !== undefined) {
       if (cmd.transferAmountWei > 0n) {
@@ -317,13 +294,10 @@ export function SubscribeCommandMapper({
     }
 
     return contractWrites_;
-  }, [cmd.id, isSuccessForGetFlowRate, isSuccessForGetTransferEvents]);
+  }, [cmd.id, isSuccessForGetFlowRate]);
 
   useEffect(
-    () =>
-      isSuccessForGetFlowRate && isSuccessForGetTransferEvents
-        ? onMapped?.(contractWrites)
-        : void 0,
+    () => (isSuccessForGetFlowRate ? onMapped?.(contractWrites) : void 0),
     [contractWrites],
   );
 
