@@ -1,5 +1,16 @@
 # @superfluid-finance/widget
 
+## 0.3.0
+
+### Minor Changes
+
+- 6a451c8: Validate uniqueness of inputted payment options
+
+### Patch Changes
+
+- 90eb900: Update dependencies
+- db5865d: Fix small bug of default wrap amount not always being set
+
 ## 0.2.0
 
 ### Minor Changes
