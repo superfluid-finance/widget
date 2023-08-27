@@ -1,5 +1,7 @@
 import CodeIcon from "@mui/icons-material/Code";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import WebIcon from "@mui/icons-material/Web";
 import WebAssetIcon from "@mui/icons-material/WebAsset";
@@ -10,6 +12,8 @@ import {
   Button,
   Drawer,
   FormControlLabel,
+  MobileStepper,
+  Paper,
   Stack,
   Switch,
   Tab,
@@ -37,9 +41,15 @@ const drawerWidth = "480px";
 
 export default function Builder() {
   const theme = useTheme();
-  const [activeTab, setActiveTab] = useState<"ui" | "product" | "export">(
-    "product",
-  );
+
+  const [activeStep, setActiveStep] = useState(0);
+  const maxSteps = 4;
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
   const { widgetProps, demoMode, toggleDemoMode } = useDemoMode();
 
@@ -72,8 +82,8 @@ export default function Builder() {
           },
         }}
       >
-        <TabContext value={activeTab}>
-          <AppBar position="sticky" color="primary" elevation={1}>
+        <TabContext value={activeStep.toString()}>
+          <AppBar position="sticky" color="primary" elevation={3}>
             <Stack
               component={Toolbar}
               // bgcolor="primary.main"
@@ -102,42 +112,67 @@ export default function Builder() {
             <Box bgcolor="background.paper">
               <TabList
                 variant="fullWidth"
-                onChange={(_, value) => setActiveTab(value)}
+                onChange={(_, value) => setActiveStep(Number(value))}
               >
-                <Tab
-                  label="1. Product"
-                  value="product"
-                  data-testid="product-tab"
-                />
-                <Tab
-                  label="2. Payment"
-                  value="payment"
-                  data-testid="payment-tab"
-                />
-                <Tab label="3. UI" value="ui" data-testid="ui-tab" />
-                <Tab
-                  label="4. Export"
-                  value="export"
-                  data-testid="export-tab"
-                />
+                <Tab label="1. Product" value="0" data-testid="product-tab" />
+                <Tab label="2. Payment" value="1" data-testid="payment-tab" />
+                <Tab label="3. UI" value="2" data-testid="ui-tab" />
+                <Tab label="4. Export" value="3" data-testid="export-tab" />
               </TabList>
             </Box>
           </AppBar>
 
-          <FormProvider {...formMethods}>
-            <TabPanel value="ui">
-              <UiEditor />
-            </TabPanel>
-            <TabPanel value="product">
-              <ProductEditor />
-            </TabPanel>
-            <TabPanel value="payment">
-              <PaymentEditor />
-            </TabPanel>
-            <TabPanel value="export">
-              <ExportEditor />
-            </TabPanel>
-          </FormProvider>
+          <Box height="100%">
+            <FormProvider {...formMethods}>
+              <TabPanel value="0">
+                <ProductEditor />
+              </TabPanel>
+              <TabPanel value="1">
+                <PaymentEditor />
+              </TabPanel>
+              <TabPanel value="2">
+                <UiEditor />
+              </TabPanel>
+              <TabPanel value="3">
+                <ExportEditor />
+              </TabPanel>
+            </FormProvider>
+          </Box>
+
+          <Paper
+            sx={{ position: "sticky", bottom: 0, left: 0, right: 0 }}
+            elevation={3}
+          >
+            <MobileStepper
+              sx={{
+                bgcolor: "background.paper",
+              }}
+              variant="text"
+              steps={4}
+              position="static"
+              activeStep={activeStep}
+              nextButton={
+                <Button
+                  size="small"
+                  onClick={handleNext}
+                  disabled={activeStep === maxSteps - 1}
+                >
+                  Next
+                  <KeyboardArrowRight />
+                </Button>
+              }
+              backButton={
+                <Button
+                  size="small"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                >
+                  <KeyboardArrowLeft />
+                  Back
+                </Button>
+              }
+            />
+          </Paper>
         </TabContext>
       </Drawer>
       <Stack
