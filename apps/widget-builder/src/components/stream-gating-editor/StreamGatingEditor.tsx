@@ -108,7 +108,7 @@ const StreamGatingEditor: FC = () => {
   return (
     <Stack>
       <Stack direction="column" gap={1} sx={{ mb: 3 }}>
-        <Typography variant="h6">Stream Gating with NFTs</Typography>
+        <Typography variant="subtitle1">Add Payment Options</Typography>
         <Typography color="grey.800">
           Create NFT your users will hold while they are paying for your product
           or service
