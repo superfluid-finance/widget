@@ -16,13 +16,17 @@ import {
   http,
   parseEther,
 } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
+import { mnemonicToAccount, privateKeyToAccount } from "viem/accounts";
 import * as chains from "viem/chains";
 
 import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
 
-const pk = "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
-const account = privateKeyToAccount(pk);
+const mnemonic = process.env.DEPLOYER_MNEMONIC;
+const account = mnemonic
+  ? mnemonicToAccount(mnemonic)
+  : privateKeyToAccount(
+      "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161",
+    );
 
 // @ts-ignore polyfill
 BigInt.prototype.toJSON = function () {
