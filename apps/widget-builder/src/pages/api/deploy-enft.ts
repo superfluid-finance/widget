@@ -21,11 +21,13 @@ import * as chains from "viem/chains";
 
 import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
 
-const mnemonic = process.env.DEPLOYER_MNEMONIC;
+const mnemonic = process.env.DEPLOYER_MNEMONIC ?? "";
+const pk = process.env.DEPLOYER_PRIVATE_KEY ?? "";
 const account = mnemonic
   ? mnemonicToAccount(mnemonic)
   : privateKeyToAccount(
-      "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161",
+      (pk as `0x${string}`) ??
+        "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161",
     );
 
 // @ts-ignore polyfill
