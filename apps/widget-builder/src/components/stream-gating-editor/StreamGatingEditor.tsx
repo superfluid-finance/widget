@@ -116,16 +116,20 @@ const StreamGatingEditor: FC = () => {
       </Stack>
       <Stack gap={2}>
         <InputWrapper title="NFT Symbol">
-          <TextField
-            value={tokenSymbol}
-            onChange={({ target }) => setTokenSymbol(target.value)}
-          />
+          {() => (
+            <TextField
+              value={tokenSymbol}
+              onChange={({ target }) => setTokenSymbol(target.value)}
+            />
+          )}
         </InputWrapper>
         <InputWrapper title="NFT Name">
-          <TextField
-            value={tokenName}
-            onChange={({ target }) => setTokenName(target.value)}
-          />
+          {() => (
+            <TextField
+              value={tokenName}
+              onChange={({ target }) => setTokenName(target.value)}
+            />
+          )}
         </InputWrapper>
       </Stack>
       <Stack direction="column" sx={{ my: 2 }}>

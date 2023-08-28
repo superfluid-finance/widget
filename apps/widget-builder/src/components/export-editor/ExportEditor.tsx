@@ -78,20 +78,30 @@ const ExportEditor: FC = () => {
   return (
     <Stack gap={4}>
       <Box>
-        <InputWrapper title="Select export option">
-          <Select
-            data-testid="export-option"
-            value={selectedExportOption}
-            defaultValue="ipfs"
-            onChange={({ target }) =>
-              setSelectedExportOption(target.value as ExportOption)
-            }
-          >
-            <MenuItem value="ipfs">
-              Publish to IPFS to get a hosted link
-            </MenuItem>
-            <MenuItem value="json">Download JSON</MenuItem>
-          </Select>
+        <InputWrapper
+          title="Select export option"
+          sx={{
+            width: "100%",
+          }}
+        >
+          {(id) => (
+            <Select
+              id={id}
+              labelId={`label-${id}`}
+              data-testid="export-option"
+              value={selectedExportOption}
+              defaultValue="ipfs"
+              onChange={({ target }) =>
+                setSelectedExportOption(target.value as ExportOption)
+              }
+              fullWidth
+            >
+              <MenuItem value="ipfs">
+                Publish to IPFS to get a hosted link
+              </MenuItem>
+              <MenuItem value="json">Download JSON</MenuItem>
+            </Select>
+          )}
         </InputWrapper>
         <Box textAlign="center" sx={{ my: 3 }}>
           <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>

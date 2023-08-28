@@ -4,49 +4,79 @@ import { z } from "zod";
 import { chainIdSchema } from "./SupportedNetwork.js";
 import { timePeriods } from "./TimePeriod.js";
 
-export const addressSchema = z.string().transform((value, ctx) => {
-  try {
-    return getAddress(value);
-  } catch {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Not an address.",
-    });
-    return z.NEVER;
-  }
-});
+export const addressSchema = z
+  .string()
+  .trim()
+  .transform((value, ctx) => {
+    try {
+      return getAddress(value);
+    } catch {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Not an address.",
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  });
 
 export const tokenSchema = z.object({
   address: addressSchema,
 });
 
-export const etherAmountSchema = z.string().transform((x, ctx) => {
-  try {
-    return formatEther(parseEther(x)) as `${number}`;
-  } catch {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Not an ether amount.",
-    });
-    return z.NEVER;
-  }
-});
+export const etherAmountSchema = z
+  .string()
+  .trim()
+  .transform((x, ctx) => {
+    try {
+      return formatEther(parseEther(x)) as `${number}`;
+    } catch {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Not an ether amount.",
+        fatal: true,
+      });
+      return z.NEVER;
+    }
+  });
 
 export const flowRateSchema = z.object({
   amountEther: etherAmountSchema,
   period: z.enum(timePeriods),
 });
 
-export const paymentOptionSchema = z.object({
-  receiverAddress: addressSchema,
-  chainId: chainIdSchema,
-  superToken: tokenSchema,
-  flowRate: flowRateSchema.optional(),
-  userData: z
-    .string()
-    .transform((x) => x.toString() as `0x${string}`)
-    .optional(),
-});
+export const paymentOptionSchema = z
+  .object({
+    receiverAddress: addressSchema,
+    chainId: chainIdSchema,
+    superToken: tokenSchema,
+    transferAmountEther: etherAmountSchema
+      .refine((x) => parseEther(x) > 0n, {
+        message:
+          "Upfront transfer amount must be greater than 0 when specified.",
+      })
+      .optional(),
+    flowRate: flowRateSchema
+      .refine((x) => parseEther(x.amountEther) > 0n, {
+        message: "Flow rate must be greater than 0.",
+      })
+      .optional(),
+    userData: z
+      .string()
+      .trim()
+      .transform((x) => x.toString() as `0x${string}`)
+      .optional(),
+  })
+  .refine(
+    (data) =>
+      !data.transferAmountEther ||
+      Boolean(data.transferAmountEther && data.flowRate),
+    {
+      path: ["transferAmount"],
+      message:
+        "The upfront payment can only be defined with a fixed flow rate.",
+    },
+  );
 
 /**
  * The details of a single payment option for the checkout flow.

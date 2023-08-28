@@ -33,13 +33,14 @@ export type EnableAutoWrapCommand = {
   underlyingTokenAddress: Address;
 };
 
-export type SendStreamCommand = {
+export type SubscribeCommand = {
   id: string;
-  type: "Send Stream";
+  type: "Subscribe";
   chainId: ChainId;
   superTokenAddress: Address;
   accountAddress: Address;
   receiverAddress: Address;
+  transferAmountWei: bigint;
   flowRate: {
     amountWei: bigint;
     period: TimePeriod;
@@ -50,6 +51,4 @@ export type SendStreamCommand = {
 export type Command =
   | WrapIntoSuperTokensCommand
   | EnableAutoWrapCommand
-  | SendStreamCommand;
-
-// export type CommandArray = Readonly<[ ...Command[], SendStreamCommand ]>;
+  | SubscribeCommand;

@@ -1,6 +1,7 @@
 import { supportedNetworks } from "@superfluid-finance/widget";
 import { w3mConnectors, w3mProvider } from "@web3modal/ethereum";
 import { configureChains, createConfig } from "wagmi";
+import { SafeConnector } from "wagmi/connectors/safe";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { publicProvider } from "wagmi/providers/public";
 
@@ -30,11 +31,23 @@ const { chains, publicClient } = configureChains(supportedNetworks, [
 ]);
 
 export const wagmiChains = chains;
+
+const safeConnector = new SafeConnector({
+  chains: wagmiChains,
+  options: {
+    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    debug: false,
+  },
+});
+
 export const wagmiConfig = createConfig({
   autoConnect: false,
-  connectors: w3mConnectors({
-    projectId: walletConnectProjectId,
-    chains: wagmiChains,
-  }),
+  connectors: [
+    ...w3mConnectors({
+      projectId: walletConnectProjectId,
+      chains: wagmiChains,
+    }),
+    ...(safeConnector.ready ? [safeConnector] : []),
+  ],
   publicClient,
 });

@@ -1,7 +1,7 @@
 import { Box, useMediaQuery } from "@mui/material";
-import Link from "next/link";
 import { FC } from "react";
 
+import Link from "../../Link";
 import theme from "../../theme";
 
 const TermsAndPrivacy: FC = () => {
@@ -25,7 +25,7 @@ const TermsAndPrivacy: FC = () => {
       <Link href="https://www.superfluid.finance/termsofuse/" target="_blank">
         Terms of Use
       </Link>
-      {" and "}
+      {" & "}
       <Link
         href="https://www.iubenda.com/privacy-policy/34415583/legal"
         target="_blank"

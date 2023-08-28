@@ -1,6 +1,17 @@
 {
   "rewrites": [
     { "source": "/:hash", "destination": "/[hash]" },
-    { "source": "/demo/:hash", "destination": "/demo/[[...hash]]" }
+    { "source": "/:hash/manifest.json", "destination": "/manifest.json" },
+    { "source": "/demo/:hash", "destination": "/demo/[[...hash]]" },
+    { "source": "/demo/:hash/manifest.json", "destination": "/manifest.json" },
+    { "source": "/load/manifest.json", "destination": "/manifest.json" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://app.safe.global" }
+      ]
+    }
   ]
 }
