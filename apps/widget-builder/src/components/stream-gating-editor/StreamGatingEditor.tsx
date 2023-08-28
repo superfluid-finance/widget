@@ -40,6 +40,7 @@ const StreamGatingEditor: FC = () => {
   >([]);
 
   const [isDeploying, setDeploying] = useState(false);
+  const [isDeployed, setDeployed] = useState(false);
 
   // Collect networks used in payment options
   const paymentOptionNetworks = useMemo(() => {
@@ -91,6 +92,7 @@ const StreamGatingEditor: FC = () => {
     } catch (error) {
       console.error("Deploying NFT failed. Reason:", error);
     } finally {
+      setDeployed(true);
       setDeploying(false);
     }
   }, [tokenName, tokenSymbol, nftImage, selectedPaymentOptions]);
@@ -101,8 +103,16 @@ const StreamGatingEditor: FC = () => {
       !tokenSymbol ||
       !nftImage ||
       paymentOptions.length === 0 ||
-      deployedCloneAddresses.length > 0,
-    [tokenName, tokenSymbol, nftImage, paymentOptions],
+      deployedCloneAddresses.length > 0 ||
+      isDeployed,
+    [
+      tokenName,
+      tokenSymbol,
+      nftImage,
+      paymentOptions,
+      deployedCloneAddresses,
+      isDeployed,
+    ],
   );
 
   return (
