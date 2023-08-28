@@ -1,3 +1,4 @@
+import metadata from "@superfluid-finance/metadata";
 import {
   ChainId,
   mapTimePeriodToSeconds,
@@ -23,8 +24,6 @@ import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
 const pk = "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
 const account = privateKeyToAccount(pk);
 
-const contractAddress: Address = "0xD7774fA18E40c06b0320493183D840f0f6c5Ca96";
-
 // @ts-ignore polyfill
 BigInt.prototype.toJSON = function () {
   return this.toString();
@@ -49,6 +48,9 @@ const handler: NextApiHandler = async (req, res) => {
       const chain = Object.values(chains).find(
         (chain) => chain.id === Number(chainId) ?? chains.polygonMumbai,
       ) as Chain;
+
+      const contractAddress = metadata.getNetworkByChainId(chain.id)
+        ?.contractsV1.existentialNFTCloneFactory as Address;
 
       return {
         paymentOptions,
