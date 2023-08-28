@@ -26,7 +26,8 @@
         "NEXT_PUBLIC_SEGMENT_WRITE_KEY",
         "NEXT_PUBLIC_PINATA_API_KEY",
         "NEXT_PUBLIC_PINATA_API_SECRET",
-        "NEXT_PUBLIC_INTERCOM_SURVEY_ID"
+        "NEXT_PUBLIC_INTERCOM_SURVEY_ID",
+        "DEPLOYER_MNEMONIC"
       ]
     },
     "@superfluid-finance/hosted-widget#build": {
