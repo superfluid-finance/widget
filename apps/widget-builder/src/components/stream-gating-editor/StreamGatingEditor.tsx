@@ -9,7 +9,15 @@ import {
 } from "@mui/material";
 import { ChainId, PaymentOption } from "@superfluid-finance/widget";
 import uniqBy from "lodash/uniqBy";
-import { FC, useCallback, useMemo, useState } from "react";
+import {
+  createRef,
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useFormContext } from "react-hook-form";
 import { Address } from "viem";
 
@@ -20,9 +28,14 @@ import ImageSelect from "../image-select/ImageSelect";
 import NFTDeploymentDialog from "../nft-deployment-modal/NFTDeploymentDialog";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
+const recaptchaKey =
+  process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "invalid-key";
+
 const StreamGatingEditor: FC = () => {
   const { watch } = useFormContext<WidgetProps>();
   const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
+  const recaptchaRef = createRef<ReCAPTCHA>();
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
 
   const [tokenSymbol, setTokenSymbol] = useState("");
   const [tokenName, setTokenName] = useState("");
@@ -41,6 +54,16 @@ const StreamGatingEditor: FC = () => {
 
   const [isDeploying, setDeploying] = useState(false);
   const [isDeployed, setDeployed] = useState(false);
+
+  useEffect(() => {
+    if (recaptchaRef.current) {
+      recaptchaRef.current.execute();
+    }
+  }, [recaptchaRef]);
+
+  const onRecaptchaChange = useCallback((token: string | null) => {
+    setRecaptchaToken(token);
+  }, []);
 
   // Collect networks used in payment options
   const paymentOptionNetworks = useMemo(() => {
@@ -75,6 +98,10 @@ const StreamGatingEditor: FC = () => {
   const deployNFT = useCallback(async () => {
     try {
       setDeploying(true);
+      if (!recaptchaToken) {
+        throw new Error("Recaptcha token is missing");
+      }
+
       const response = await fetch("/api/deploy-enft", {
         method: "POST",
         body: JSON.stringify({
@@ -82,8 +109,14 @@ const StreamGatingEditor: FC = () => {
           tokenName,
           tokenSymbol,
           nftImage,
+          recaptchaToken,
         }),
       });
+
+      if (!response.ok) {
+        console.error("Deploying NFT failed. Reason:", response.statusText);
+        return;
+      }
 
       const { deployments }: { deployments: Record<ChainId, Address>[] } =
         await response.json();
@@ -95,7 +128,7 @@ const StreamGatingEditor: FC = () => {
       setDeployed(true);
       setDeploying(false);
     }
-  }, [tokenName, tokenSymbol, nftImage, selectedPaymentOptions]);
+  }, [tokenName, tokenSymbol, nftImage, selectedPaymentOptions, recaptchaKey]);
 
   const isDeployDisabled = useMemo(
     () =>
@@ -118,7 +151,7 @@ const StreamGatingEditor: FC = () => {
   return (
     <Stack>
       <Stack direction="column" gap={1} sx={{ mb: 3 }}>
-        <Typography variant="subtitle1">Add Payment Options</Typography>
+        <Typography variant="subtitle1">Gate your content with NFTS</Typography>
         <Typography color="grey.800">
           Create NFT your users will hold while they are paying for your product
           or service
@@ -193,6 +226,12 @@ const StreamGatingEditor: FC = () => {
         open={deployedCloneAddresses.length > 0}
         cloneAddresses={deployedCloneAddresses}
         onClose={() => setDeployedCloneAddresses([])}
+      />
+      <ReCAPTCHA
+        ref={recaptchaRef}
+        sitekey={recaptchaKey}
+        size="invisible"
+        onChange={onRecaptchaChange}
       />
     </Stack>
   );

@@ -5,6 +5,7 @@ import {
   PaymentOption,
 } from "@superfluid-finance/widget";
 import { NextApiHandler } from "next";
+import requestIp from "request-ip";
 import { ExistentialNFTCloneFactory__factory } from "stream-gating";
 import {
   Address,
@@ -20,15 +21,21 @@ import { mnemonicToAccount, privateKeyToAccount } from "viem/accounts";
 import * as chains from "viem/chains";
 
 import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
+import rateLimit from "../../utils/rate-limit";
+
+const limiter = rateLimit({
+  interval: 60 * 1000,
+  uniqueTokenPerInterval: 500,
+});
 
 const mnemonic = process.env.DEPLOYER_MNEMONIC ?? "";
-const pk = process.env.DEPLOYER_PRIVATE_KEY ?? "";
 const account = mnemonic
   ? mnemonicToAccount(mnemonic)
   : privateKeyToAccount(
-      (pk as `0x${string}`) ??
-        "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161",
+      "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161",
     );
+
+const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY ?? "";
 
 // @ts-ignore polyfill
 BigInt.prototype.toJSON = function () {
@@ -41,12 +48,40 @@ const handler: NextApiHandler = async (req, res) => {
     tokenSymbol,
     nftImage,
     selectedPaymentOptions,
+    recaptchaToken,
   }: {
     tokenName: string;
     tokenSymbol: string;
     nftImage: string;
     selectedPaymentOptions: Partial<Record<ChainId, PaymentOption[]>>;
+    recaptchaToken: string;
   } = JSON.parse(req.body);
+
+  try {
+    const clientIp = requestIp.getClientIp(req);
+
+    if (clientIp) {
+      await limiter.check(res, 1, clientIp);
+    }
+  } catch {
+    return res.status(429);
+  }
+
+  try {
+    const recaptchaVerifyResult = await (
+      await fetch("https://www.google.com/recaptcha/api/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `secret=${recaptchaSecretKey}&response=${recaptchaToken}`,
+      })
+    ).json();
+
+    if (!recaptchaVerifyResult.success) {
+      throw new Error("Invalid recaptcha token");
+    }
+  } catch {
+    return res.status(400).json({ error: "Invalid recaptcha token" });
+  }
 
   const deployConfig = Object.entries(selectedPaymentOptions).map(
     ([chainId, paymentOptions]) => {

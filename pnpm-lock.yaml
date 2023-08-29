@@ -181,6 +181,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      lru-cache:
+        specifier: ^10.0.1
+        version: 10.0.1
       monaco-editor:
         specifier: ^0.41.0
         version: 0.41.0
@@ -196,9 +199,15 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      react-google-recaptcha:
+        specifier: ^3.1.0
+        version: 3.1.0(react@18.2.0)
       react-hook-form:
         specifier: ~7.44.3
         version: 7.44.3(react@18.2.0)
+      request-ip:
+        specifier: ^3.3.0
+        version: 3.3.0
       stream-gating:
         specifier: ^0.0.15
         version: 0.0.15(typescript@5.2.2)(zod@3.22.2)
@@ -227,6 +236,12 @@ importers:
       '@types/react':
         specifier: ^18.2.21
         version: 18.2.21
+      '@types/react-google-recaptcha':
+        specifier: ^2.1.5
+        version: 2.1.5
+      '@types/request-ip':
+        specifier: ^0.0.38
+        version: 0.0.38
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -4916,6 +4931,12 @@ packages:
     dependencies:
       '@types/react': 18.2.21
 
+  /@types/react-google-recaptcha@2.1.5:
+    resolution: {integrity: sha512-iWTjmVttlNgp0teyh7eBXqNOQzVq2RWNiFROWjraOptRnb1OcHJehQnji0sjqIRAk9K0z8stjyhU+OLpPb0N6w==}
+    dependencies:
+      '@types/react': 18.2.21
+    dev: true
+
   /@types/react-is@18.2.1:
     resolution: {integrity: sha512-wyUkmaaSZEzFZivD8F2ftSyAfk6L+DfFliVj/mYdOXbVjRcS87fQJLTnhk6dRZPuJjI+9g6RZJO4PNCngUrmyw==}
     dependencies:
@@ -4932,6 +4953,12 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
+
+  /@types/request-ip@0.0.38:
+    resolution: {integrity: sha512-1yeq8UuK/tUBqLXRY24gjeFvrSNaGNcOcZLQjHlnuw8iu+qE/vTQ64TUcLWorr607NKLfFakdoYEXXHXrLLKCw==}
+    dependencies:
+      '@types/node': 20.5.6
+    dev: true
 
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
@@ -11804,6 +11831,11 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
+  /lru-cache@10.0.1:
+    resolution: {integrity: sha512-IJ4uwUTi2qCccrioU6g9g/5rvvVl13bsdczUUcqbciD9iLr095yj8DQKdObriEvuNSx325N1rV1O0sJFszx75g==}
+    engines: {node: 14 || >=16.14}
+    dev: false
+
   /lru-cache@4.1.5:
     resolution: {integrity: sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==}
     dependencies:
@@ -13546,6 +13578,16 @@ packages:
       unpipe: 1.0.0
     dev: true
 
+  /react-async-script@1.2.0(react@18.2.0):
+    resolution: {integrity: sha512-bCpkbm9JiAuMGhkqoAiC0lLkb40DJ0HOEJIku+9JDjxX3Rcs+ztEOG13wbrOskt3n2DTrjshhaQ/iay+SnGg5Q==}
+    peerDependencies:
+      react: '>=16.4.1'
+    dependencies:
+      hoist-non-react-statics: 3.3.2
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
   /react-blockies@1.4.1(react@18.2.0):
     resolution: {integrity: sha512-4N015X5oPNnD3xQPsiqolOFzPZSSWyc5mJhJUZShUCHtiGUxVN+1qsWTcglkHMNySux9hUofaispqcw9QkWP5Q==}
     peerDependencies:
@@ -13563,6 +13605,16 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+
+  /react-google-recaptcha@3.1.0(react@18.2.0):
+    resolution: {integrity: sha512-cYW2/DWas8nEKZGD7SCu9BSuVz8iOcOLHChHyi7upUuVhkpkhYG/6N3KDiTQ3XAiZ2UAZkfvYKMfAHOzBOcGEg==}
+    peerDependencies:
+      react: '>=16.4.1'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-async-script: 1.2.0(react@18.2.0)
+    dev: false
 
   /react-hook-form@7.44.3(react@18.2.0):
     resolution: {integrity: sha512-/tHId6p2ViAka1wECMw8FEPn/oz/w226zehHrJyQ1oIzCBNMIJCaj6ZkQcv+MjDxYh9MWR7RQic7Qqwe4a5nkw==}
@@ -13856,6 +13908,10 @@ packages:
       lodash: 4.17.21
       strip-ansi: 6.0.1
     dev: true
+
+  /request-ip@3.3.0:
+    resolution: {integrity: sha512-cA6Xh6e0fDBBBwH77SLJaJPBmD3nWVAcF9/XAcsrIHdjhFzFiB5aNQFytdjCGPezU3ROwrR11IddKAM08vohxA==}
+    dev: false
 
   /request-progress@3.0.0:
     resolution: {integrity: sha512-MnWzEHHaxHO2iWiQuHrUPBi/1WeBf5PkxQqNyNvLl9VAYSdXkP8tQ3pBSeCPD+yw0v0Aq1zosWLz0BdeXpWwZg==}
