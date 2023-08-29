@@ -24,6 +24,7 @@ import * as chains from "viem/chains";
 import { IPFS_GATEWAY } from "../../constants";
 import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
 import { base64ToStream } from "../../utils/b64ToReadableStream";
+import { createNFTmeta } from "../../utils/createNFTmeta";
 import rateLimit from "../../utils/rate-limit";
 
 const pinata = new pinataSDK({
@@ -93,13 +94,33 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(400).json({ error: "Invalid recaptcha token" });
   }
 
-  const readableStream = await base64ToStream(nftImage);
-
-  const { IpfsHash } = await pinata.pinFileToIPFS(readableStream, {
-    pinataMetadata: {
-      name: `StreamGating NFT Image (${tokenName}, ${tokenSymbol})`,
+  const { IpfsHash: imageHash } = await pinata.pinFileToIPFS(
+    base64ToStream(nftImage),
+    {
+      pinataMetadata: {
+        name: `StreamGating NFT Image (${tokenName}, ${tokenSymbol})`,
+      },
     },
-  });
+  );
+
+  const { IpfsHash: metaHash } = await pinata.pinJSONToIPFS(
+    createNFTmeta({
+      name: `${tokenName} (${tokenSymbol})`,
+      description: "StreamGating NFT Image",
+      image: `${IPFS_GATEWAY}/ipfs/${imageHash}`,
+      attributes: Object.values(selectedPaymentOptions)
+        .flat()
+        .map((paymentOption) => ({
+          trait_type: "Payment Options",
+          value: `network: ${paymentOption.chainId}, flowRate: ${paymentOption.flowRate?.amountEther}/${paymentOption.flowRate?.period}, superToken: ${paymentOption.superToken}`,
+        })),
+    }),
+    {
+      pinataMetadata: {
+        name: `StreamGating NFT MetaData (${tokenName}, ${tokenSymbol})`,
+      },
+    },
+  );
 
   const deployConfig = Object.entries(selectedPaymentOptions).map(
     ([chainId, paymentOptions]) => {
@@ -155,7 +176,7 @@ const handler: NextApiHandler = async (req, res) => {
             ),
             tokenName,
             tokenSymbol,
-            `${IPFS_GATEWAY}/ipfs/${IpfsHash}`,
+            `${IPFS_GATEWAY}/ipfs/${metaHash}`,
           ] as const;
 
           const gas = await publicClient.estimateContractGas({
