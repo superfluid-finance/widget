@@ -10,18 +10,18 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@sentry/nextjs": "^7.64.0",
+    "@sentry/nextjs": "^7.65.0",
     "@superfluid-finance/widget": "workspace:*",
-    "@types/node": "20.5.1",
-    "@types/react": "18.2.20",
+    "@types/node": "20.5.7",
+    "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.1.6",
-    "viem": "^1.6.0",
+    "typescript": "5.2.2",
+    "viem": "^1.8.1",
     "wagmi": "^1.3.10",
     "zod": "^3.22.1"
   }

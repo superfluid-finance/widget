@@ -28,7 +28,7 @@ export const superfluidRpcUrls = superfluidMetadata.networks.reduce(
   (acc, network) => {
     acc[
       network.chainId
-    ] = `https://rpc-endpoints.superfluid.dev/${network.name}}`;
+    ] = `https://rpc-endpoints.superfluid.dev/${network.name}`;
     return acc;
   },
   {} as Record<number, string>,
@@ -76,6 +76,7 @@ export default function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
+        <title>Superfluid Checkout Builder | Web3 Subscriptions Toolkit</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>

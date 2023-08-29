@@ -77,11 +77,15 @@ export function FormEffects() {
           parseEther(
             paymentOptionWithTokenInfo.paymentOption.transferAmountEther ?? "0",
           );
+        const defaultWrapAmountEther = formatEther(
+          defaultWrapAmountWei,
+        ) as `${number}`;
         resetField("wrapAmountInUnits", {
           keepDirty: false,
           keepTouched: true,
-          defaultValue: formatEther(defaultWrapAmountWei) as `${number}`,
+          defaultValue: defaultWrapAmountEther,
         });
+        setValue("wrapAmountInUnits", defaultWrapAmountEther);
       }
     }
   }, [paymentOptionWithTokenInfo, flowRate]);
