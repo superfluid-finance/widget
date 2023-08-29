@@ -1,30 +1,22 @@
 import CodeIcon from "@mui/icons-material/Code";
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
-import WebIcon from "@mui/icons-material/Web";
-import WebAssetIcon from "@mui/icons-material/WebAsset";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   AppBar,
   Box,
   Button,
   Drawer,
-  FormControlLabel,
   MobileStepper,
   Paper,
   Stack,
-  Switch,
   Tab,
-  ToggleButton,
-  ToggleButtonGroup,
   Toolbar,
   Typography,
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
 import ExportEditor from "../components/export-editor/ExportEditor";
@@ -35,7 +27,7 @@ import UiEditor from "../components/ui-editor/UiEditor";
 import WidgetPreview, {
   WidgetProps,
 } from "../components/widget-preview/WidgetPreview";
-import useDemoMode from "../hooks/useDemoMode";
+import { defaultWidgetProps } from "../hooks/useDemoMode";
 
 export const drawerWidth = "480px";
 
@@ -53,10 +45,8 @@ export default function Builder() {
     setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
   };
 
-  const { widgetProps, demoMode, toggleDemoMode } = useDemoMode();
-
   const formMethods = useForm<WidgetProps>({
-    values: widgetProps,
+    values: defaultWidgetProps,
   });
 
   const { watch, control, getValues, setValue } = formMethods;
@@ -86,31 +76,11 @@ export default function Builder() {
       >
         <TabContext value={activeStep.toString()}>
           <AppBar position="sticky" color="primary" elevation={3}>
-            <Stack
-              component={Toolbar}
-              // bgcolor="primary.main"
-              direction="row"
-              sx={{
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-              gap={1}
-            >
+            <Toolbar component={Toolbar}>
               <Typography variant="subtitle1" component="h1" fontWeight="500">
                 Checkout Builder
               </Typography>
-              <FormControlLabel
-                data-testid="demo-mode-switch"
-                control={
-                  <Switch
-                    color="secondary"
-                    checked={demoMode}
-                    onChange={toggleDemoMode}
-                  />
-                }
-                label="Demo Mode"
-              />
-            </Stack>
+            </Toolbar>
             <Box bgcolor="background.paper">
               <TabList
                 variant="fullWidth"
@@ -149,7 +119,7 @@ export default function Builder() {
               sx={{
                 bgcolor: "background.paper",
               }}
-              variant="text"
+              variant="dots"
               steps={stepCount}
               position="static"
               activeStep={activeStep}
@@ -218,56 +188,16 @@ export default function Builder() {
             type,
           }}
         />
-        <Box
-          sx={{
-            position: "fixed",
-            left: "calc(50%-96px)",
-            backgroundColor: theme.palette.common.white,
-            bottom: 0,
-            borderRadius: 1,
-            zIndex: 100,
-          }}
-        >
-          <Controller
-            control={control}
-            name="type"
-            render={({ field: { value, onChange } }) => (
-              <ToggleButtonGroup
-                value={value}
-                exclusive
-                onChange={(_, value) => onChange(value)}
-                sx={{
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
-                }}
-              >
-                <ToggleButton value="dialog" aria-label="dialog" title="Dialog">
-                  <WebAssetIcon />
-                </ToggleButton>
-                <ToggleButton value="drawer" aria-label="drawer" title="Drawer">
-                  <ViewSidebarIcon />
-                </ToggleButton>
-                <ToggleButton
-                  value="full-screen"
-                  aria-label="full-screen"
-                  title="Full Screen"
-                >
-                  <FullscreenIcon />
-                </ToggleButton>
-                <ToggleButton value="page" aria-label="page" title="Page">
-                  <WebIcon />
-                </ToggleButton>
-              </ToggleButtonGroup>
-            )}
-          />
-        </Box>
       </Stack>
       <TermsAndPrivacy />
       <Box sx={{ position: "absolute", top: 5, right: 5 }}>
         <Button
-          variant="text"
+          variant="outlined"
           onClick={() => setConfigEditorOpen((isOpen) => !isOpen)}
           startIcon={<CodeIcon />}
+          sx={{
+            bgcolor: "background.paper",
+          }}
         >
           JSON Editor
         </Button>

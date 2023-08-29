@@ -189,9 +189,6 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
       <InputWrapper
         title="Network"
         tooltip="Select the network you'd like to request payment on."
-        helperText={
-          selectedNetwork ? `Chain ID: ${selectedNetwork.id}` : undefined
-        }
       >
         {(id) => (
           <Select
@@ -248,9 +245,6 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         id="token-select"
         title="Super Token"
         tooltip="Select the SuperToken you'd like to request payment in."
-        helperText={
-          selectedToken ? `Address: ${selectedToken.address}` : undefined
-        }
       >
         {(id) => (
           <Autocomplete
@@ -307,7 +301,6 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
           <InputWrapper
             title="Stream Rate"
             tooltip="Set the amount of tokens per month for the payment."
-            sx={{ pt: 1.5 }}
           >
             {(id) => (
               <Stack
@@ -380,7 +373,6 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
               <InputWrapper
                 title="Upfront Payment Amount"
                 tooltip="The ERC-20 transfer amount the user should send as an upfront payment."
-                sx={{ pt: 1.5 }}
               >
                 {(id) => (
                   <TextField

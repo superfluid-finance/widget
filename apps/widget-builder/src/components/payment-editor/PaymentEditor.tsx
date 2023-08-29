@@ -1,7 +1,17 @@
-import { Box,Divider, Stack, Typography, Zoom } from "@mui/material";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography,
+  Zoom,
+} from "@mui/material";
 import { FC, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
+import useDemoMode from "../../hooks/useDemoMode";
 import theme from "../../theme";
 import PaymentOptionView from "../payment-option-view/PaymentOptionView";
 import SelectPaymentOption from "../select-payment-option/SelectPaymentOption";
@@ -18,13 +28,25 @@ const ProductEditor: FC = () => {
   const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
 
   const [addCount, setAddCount] = useState(0);
+  const { setDemoPaymentDetails } = useDemoMode();
 
   return (
     <Stack gap={1}>
       <Stack direction="column" gap={1.5}>
-        <Typography variant="subtitle1" component="h2">
-          Add Payment Option
-        </Typography>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="subtitle1" component="h2">
+            Add Payment Option
+          </Typography>
+          <Tooltip title="Add demo product details" arrow>
+            <IconButton onClick={setDemoPaymentDetails}>
+              <AutoFixHighIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
         <Controller
           key={addCount.toString()}
           control={control}

@@ -1,7 +1,15 @@
-import { Stack, TextField, Typography } from "@mui/material";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import {
+  IconButton,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { FC } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
+import useDemoMode from "../../hooks/useDemoMode";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
@@ -15,13 +23,25 @@ const ProductEditor: FC = () => {
   });
 
   const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
+  const { setDemoProductDetails } = useDemoMode();
 
   return (
     <Stack gap={1}>
       <Stack mb={4} gap={2}>
-        <Typography variant="subtitle1" component="h2">
-          Edit Product Details
-        </Typography>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="subtitle1" component="h2">
+            Edit Product Details
+          </Typography>
+          <Tooltip title="Add demo product details" arrow>
+            <IconButton onClick={setDemoProductDetails}>
+              <AutoFixHighIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
         <Controller
           control={control}
           name="productDetails.name"

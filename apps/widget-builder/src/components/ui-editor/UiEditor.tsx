@@ -25,20 +25,10 @@ const UiEditor: FC = () => {
 
   return (
     <Stack direction="column" gap={2}>
-      <Stack direction="row" gap={2}>
-        {/* <Controller
-          control={control}
-          name="displaySettings.logo"
-          render={({ field: { value, onChange } }) => (
-            <ImageSelect
-              label="Logo"
-              onClick={(file) => onChange({ target: { value: file } })}
-              onRemove={() => onChange({ target: { value: "" } })}
-              imageSrc={value ? URL.createObjectURL(value) : ""}
-            />
-          )}
-        /> */}
-      </Stack>
+      <Typography variant="subtitle1" component="h2">
+        {"Edit Widget's Styling"}
+      </Typography>
+
       <Controller
         control={control}
         name="displaySettings.darkMode"
@@ -50,6 +40,44 @@ const UiEditor: FC = () => {
               <Typography>{`Dark mode: ${value ? "on" : "off"}`}</Typography>
             }
           />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="type"
+        render={({ field: { value, onChange } }) => (
+          <InputWrapper title="View type">
+            {(id) => (
+              <ToggleButtonGroup
+                id={id}
+                value={value}
+                exclusive
+                onChange={(_, value) => onChange(value)}
+                sx={{
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                }}
+              >
+                <ToggleButton value="page" aria-label="page" title="Page">
+                  Inline
+                </ToggleButton>
+                <ToggleButton value="dialog" aria-label="dialog" title="Dialog">
+                  Dialog
+                </ToggleButton>
+                <ToggleButton value="drawer" aria-label="drawer" title="Drawer">
+                  Drawer
+                </ToggleButton>
+                <ToggleButton
+                  value="full-screen"
+                  aria-label="full-screen"
+                  title="Full Screen"
+                >
+                  Full-screen
+                </ToggleButton>
+              </ToggleButtonGroup>
+            )}
+          </InputWrapper>
         )}
       />
 
