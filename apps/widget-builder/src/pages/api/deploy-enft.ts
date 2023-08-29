@@ -96,7 +96,7 @@ const handler: NextApiHandler = async (req, res) => {
   const { IpfsHash: metaHash } = await pinata.pinJSONToIPFS(
     createNFTmeta({
       name: `${tokenName} (${tokenSymbol})`,
-      description: "StreamGating NFT Image",
+      description: "StreamGating NFT MetaData",
       image: nftImage,
       attributes: Object.values(selectedPaymentOptions)
         .flat()
