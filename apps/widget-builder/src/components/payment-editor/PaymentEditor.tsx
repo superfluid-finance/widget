@@ -20,7 +20,9 @@ const ProductEditor: FC = () => {
   return (
     <Stack gap={1}>
       <Stack direction="column" gap={1.5}>
-        <Typography variant="subtitle1">Add Payment Options</Typography>
+        <Typography variant="subtitle1" component="h2">
+          Add Payment Option
+        </Typography>
         <Controller
           control={control}
           name="paymentDetails.paymentOptions"
@@ -38,7 +40,9 @@ const ProductEditor: FC = () => {
               alignItems: "center",
             }}
           >
-            <Typography variant="subtitle1">Payment Details Summary</Typography>
+            <Typography variant="subtitle1" component="h2">
+              Payment Options
+            </Typography>
             <Typography
               data-testid="added-payment-options-count"
               sx={{ color: theme.palette.grey[500] }}

@@ -19,8 +19,9 @@ const ProductEditor: FC = () => {
   return (
     <Stack gap={1}>
       <Stack mb={4} gap={2}>
-        <Typography variant="subtitle1">Payment Configuration</Typography>
-
+        <Typography variant="subtitle1" component="h2">
+          Edit Product Details
+        </Typography>
         <Controller
           control={control}
           name="productDetails.name"

@@ -413,7 +413,8 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
       <Button
         data-testid="add-option-button"
         color="primary"
-        variant="outlined"
+        size="large"
+        variant="contained"
         disabled={!(selectedNetwork && selectedToken)}
         onClick={handleAdd}
         sx={{ mt: 1.5 }}

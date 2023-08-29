@@ -1,7 +1,7 @@
 import CodeIcon from "@mui/icons-material/Code";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import WebIcon from "@mui/icons-material/Web";
 import WebAssetIcon from "@mui/icons-material/WebAsset";
@@ -37,7 +37,7 @@ import WidgetPreview, {
 } from "../components/widget-preview/WidgetPreview";
 import useDemoMode from "../hooks/useDemoMode";
 
-const drawerWidth = "480px";
+export const drawerWidth = "480px";
 
 export default function Builder() {
   const theme = useTheme();
@@ -124,7 +124,7 @@ export default function Builder() {
             </Box>
           </AppBar>
 
-          <Box height="100%">
+          <Box height="100%" overflow="scroll">
             <FormProvider {...formMethods}>
               <TabPanel value="0">
                 <ProductEditor />
@@ -155,21 +155,32 @@ export default function Builder() {
               activeStep={activeStep}
               nextButton={
                 <Button
-                  size="small"
+                  size="medium"
+                  variant="outlined"
+                  color="primary"
                   onClick={handleNext}
                   disabled={activeStep === stepCount - 1}
+                  sx={{
+                    visibility:
+                      activeStep === stepCount - 1 ? "hidden" : "visible",
+                  }}
                 >
                   Next
-                  <KeyboardArrowRight />
+                  <KeyboardArrowRightIcon />
                 </Button>
               }
               backButton={
                 <Button
-                  size="small"
+                  size="medium"
+                  variant="outlined"
+                  color="primary"
                   onClick={handleBack}
                   disabled={activeStep === 0}
+                  sx={{
+                    visibility: activeStep === 0 ? "hidden" : "visible",
+                  }}
                 >
-                  <KeyboardArrowLeft />
+                  <KeyboardArrowLeftIcon />
                   Back
                 </Button>
               }
