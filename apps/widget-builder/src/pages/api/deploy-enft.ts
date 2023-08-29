@@ -23,7 +23,6 @@ import * as chains from "viem/chains";
 
 import { IPFS_GATEWAY } from "../../constants";
 import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
-import { base64ToStream } from "../../utils/b64ToReadableStream";
 import { createNFTmeta } from "../../utils/createNFTmeta";
 import rateLimit from "../../utils/rate-limit";
 
@@ -94,25 +93,20 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(400).json({ error: "Invalid recaptcha token" });
   }
 
-  const { IpfsHash: imageHash } = await pinata.pinFileToIPFS(
-    base64ToStream(nftImage),
-    {
-      pinataMetadata: {
-        name: `StreamGating NFT Image (${tokenName}, ${tokenSymbol})`,
-      },
-    },
-  );
-
   const { IpfsHash: metaHash } = await pinata.pinJSONToIPFS(
     createNFTmeta({
       name: `${tokenName} (${tokenSymbol})`,
       description: "StreamGating NFT Image",
-      image: `${IPFS_GATEWAY}/ipfs/${imageHash}`,
+      image: nftImage,
       attributes: Object.values(selectedPaymentOptions)
         .flat()
         .map((paymentOption) => ({
           trait_type: "Payment Options",
-          value: `network: ${paymentOption.chainId}, flowRate: ${paymentOption.flowRate?.amountEther}/${paymentOption.flowRate?.period}, superToken: ${paymentOption.superToken}`,
+          value: `
+           network: ${paymentOption.chainId},
+           flowRate: ${paymentOption.flowRate?.amountEther}/${paymentOption.flowRate?.period}, 
+           superToken: ${paymentOption.superToken.address}
+          `,
         })),
     }),
     {
