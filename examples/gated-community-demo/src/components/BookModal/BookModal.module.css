@@ -1,0 +1,60 @@
+.BookModal {
+  padding: 4rem 2rem 3rem;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+  text-align: center;
+  width: min(100vw - 20px, 510px);
+  white-space: break-spaces;
+  font-family: "Inter", sans-serif;
+}
+
+.BookModal h3 {
+  margin-bottom: 0.5rem;
+}
+
+.BookModal p {
+  max-width: 390px;
+  margin: 0 auto 1.5rem;
+}
+
+.ActionsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.PrimaryButton,
+.SecondaryButton {
+  display: inline-block;
+  height: 52px;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  line-height: 50px;
+  font-weight: 500;
+  font-family: inherit;
+  font-size: 1rem;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.PrimaryButton {
+  background-color: #1db227;
+  color: white;
+}
+
+.SecondaryButton {
+  color: #1db227;
+  border: 1px solid #1db227;
+}
+
+.CloseBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+}

@@ -2,53 +2,120 @@ import {
   Alert,
   AlertTitle,
   createTheme,
-  ThemeOptions,
   ThemeProvider,
+  Typography,
 } from "@mui/material";
 import { deepmerge } from "@mui/utils";
-import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
+import defaultTokenList, {
+  SuperTokenInfo,
+  TokenInfo,
+} from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
 import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
 import { Address, zeroAddress } from "viem";
+import { useConnect, useNetwork } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 import { fromZodError } from "zod-validation-error";
 
-import { CheckoutConfig, checoutConfigSchema } from "./CheckoutConfig.js";
-import { ChainId, SupportedNetwork, supportedNetworks } from "./core/index.js";
-import { EventListeners } from "./EventListeners.js";
+import {
+  CheckoutConfig,
+  checkoutConfigSchema,
+  WidgetProps,
+} from "./CheckoutConfig.js";
+import {
+  ChainId,
+  defaultNetworkAssets,
+  SupportedNetwork,
+  supportedNetworks,
+} from "./core/index.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList.js";
 import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions.js";
 import { buildThemeOptions } from "./theme.js";
-import { WalletManager } from "./WalletManager.js";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext.js";
 import { ViewProps, WidgetView } from "./WidgetView.js";
-
-export type WidgetProps = ViewProps &
-  CheckoutConfig & {
-    eventListeners?: EventListeners;
-    walletManager: WalletManager;
-    theme?: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
-    stepper?: {
-      orientation: "vertical" | "horizontal";
-    };
-  };
 
 /**
  * The entrypoint to the Superfluid widget.
  */
 export function Widget({
-  productDetails,
-  paymentDetails,
-  tokenList,
+  productDetails: productDetails_ = {
+    name: "",
+  },
+  paymentDetails: paymentDetails_,
+  tokenList = defaultTokenList,
   theme: theme_,
-  walletManager,
+  walletManager: walletManager_,
   stepper: stepper_ = { orientation: "vertical" },
   eventListeners,
-  ...viewProps
-}: WidgetProps) {
-  const { paymentOptions } = paymentDetails;
+  type = "page",
+  networkAssets = defaultNetworkAssets,
+  ..._viewProps
+}: WidgetProps & Partial<ViewProps>) {
+  const viewProps: ViewProps =
+    type === "page" ? { type } : ({ type, ..._viewProps } as ViewProps);
+
+  const { connect, connectors } = useConnect();
+  const { chains } = useNetwork();
+  const walletManager = useMemo(() => {
+    if (walletManager_) {
+      return walletManager_;
+    }
+
+    // Note that there's no good reason to use the default wallet manager in production. It is only to make setting up the widget easier for the _first time_.
+    const defaultWalletManager = {
+      isOpen: false,
+      open: () =>
+        connect({
+          connector:
+            connectors.find((x) => x.id === "injected") ??
+            new InjectedConnector({
+              chains,
+              options: { shimDisconnect: true },
+            }),
+        }),
+    };
+
+    return defaultWalletManager;
+  }, [walletManager_, connectors, connect, chains]);
+
+  const paymentDetailsInputStringified = JSON.stringify(paymentDetails_);
+  const productDetailsInputStringified = JSON.stringify(productDetails_);
+
+  const validationResult = useMemo(
+    () =>
+      checkoutConfigSchema.safeParse({
+        productDetails: productDetails_,
+        paymentDetails: paymentDetails_,
+      }),
+    [productDetailsInputStringified, paymentDetailsInputStringified],
+  );
+
+  const {
+    productDetails,
+    paymentDetails,
+  }: {
+    productDetails: CheckoutConfig["productDetails"];
+    paymentDetails: CheckoutConfig["paymentDetails"];
+  } = useMemo(() => {
+    if (validationResult.success) {
+      return {
+        productDetails: validationResult.data.productDetails,
+        paymentDetails: validationResult.data.paymentDetails,
+      };
+    } else {
+      return {
+        productDetails: {
+          name: "",
+        },
+        paymentDetails: {
+          paymentOptions: [],
+        },
+      };
+    }
+  }, [validationResult]);
 
   const { superTokens, underlyingTokens } = useMemo(
     () => filterSuperTokensFromTokenList(tokenList),
@@ -57,8 +124,8 @@ export function Widget({
 
   // TODO: Check if network is configured in wagmi.
   const networks: ReadonlyArray<SupportedNetwork> = useMemo(
-    () => mapSupportedNetworksFromPaymentOptions(paymentOptions),
-    [paymentOptions],
+    () => mapSupportedNetworksFromPaymentOptions(paymentDetails.paymentOptions),
+    [validationResult],
   );
 
   const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>(
@@ -67,7 +134,9 @@ export function Widget({
         (x) => x.address.toLowerCase() === address.toLowerCase(),
       );
       if (!superToken) {
-        throw new Error("Super Token not found from token list.");
+        throw new Error(
+          `Super Token [${address}] not found from token list (which contains ${superTokens.length} Super Tokens).`,
+        );
       }
       return superToken;
     }),
@@ -80,7 +149,9 @@ export function Widget({
         (x) => x.address.toLowerCase() === address.toLowerCase(),
       );
       if (!underlyingToken) {
-        throw new Error("Super Token not found from token list.");
+        throw new Error(
+          `Underlying token [${address}] not found from token list (which contains ${underlyingTokens.length} underlying tokens).`,
+        );
       }
       return underlyingToken;
     }),
@@ -116,12 +187,17 @@ export function Widget({
     useMemo(
       () =>
         addSuperTokenInfoToPaymentOptions(
-          paymentOptions,
+          paymentDetails.paymentOptions,
           getSuperToken,
           getUnderlyingToken,
           getNativeAsset,
         ),
-      [paymentOptions, getSuperToken, getUnderlyingToken, getNativeAsset],
+      [
+        paymentDetails.paymentOptions,
+        getSuperToken,
+        getUnderlyingToken,
+        getNativeAsset,
+      ],
     );
 
   const stepper = useMemo(
@@ -153,6 +229,8 @@ export function Widget({
         onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
         onSuccessButtonClick:
           eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,
+        onPaymentOptionUpdate:
+          eventListeners?.onPaymentOptionUpdate ?? NOOP_FUNCTION,
       },
     }),
     [
@@ -181,14 +259,11 @@ export function Widget({
     return createTheme(themeOptions);
   }, [theme_]);
 
-  const validationResult = checoutConfigSchema.safeParse({
-    productDetails,
-    paymentDetails,
-  });
+  // TODO(KK): debug message about what token list is used?
 
   const paymentDetailsKey = useMemo(
     () => nanoid(),
-    [JSON.stringify(paymentDetails)],
+    [paymentDetailsInputStringified],
   );
 
   return (
@@ -201,7 +276,13 @@ export function Widget({
         ) : (
           <Alert data-testid="widget-error" severity="error">
             <AlertTitle>Input Error</AlertTitle>
-            {fromZodError(validationResult.error).message}
+            <Typography variant="inherit" whiteSpace="pre-wrap">
+              {
+                fromZodError(validationResult.error, {
+                  issueSeparator: "\n",
+                }).message
+              }
+            </Typography>
           </Alert>
         )}
       </ThemeProvider>

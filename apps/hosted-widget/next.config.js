@@ -1,22 +1,18 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination:
-          process.env.ROOT_REDIRECT_URL ??
-          "https://www.superfluid.finance/subscriptions",
-        permanent: false,
-      },
-    ];
-  },
+  output: "export",
+  images: { unoptimized: true },
 
   reactStrictMode: true,
   webpack: (config) => {
     config.resolve.fallback = { fs: false, net: false, tls: false };
 
     return config;
+  },
+  env: {
+    NEXT_PUBLIC_ROOT_REDIRECT_URL:
+      process.env.ROOT_REDIRECT_URL ??
+      "https://www.superfluid.finance/subscriptions",
   },
 };
 
@@ -47,7 +43,7 @@ module.exports = withSentryConfig(
     transpileClientSDK: true,
 
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: "/monitoring",
+    // tunnelRoute: "/monitoring",
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,

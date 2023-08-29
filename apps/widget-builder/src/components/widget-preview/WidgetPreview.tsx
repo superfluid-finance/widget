@@ -1,10 +1,10 @@
 import { Button, colors, SelectChangeEvent, ThemeOptions } from "@mui/material";
-import tokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget, {
   PaymentDetails,
   ProductDetails,
   WalletManager,
 } from "@superfluid-finance/widget";
+import tokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import {
   createContext,
@@ -167,13 +167,18 @@ export const mapDisplaySettingsToTheme = (
 const WidgetPreview: FC<WidgetProps> = (props) => {
   const { displaySettings, paymentDetails, productDetails, type } = props;
 
-  const { open, isOpen } = useWeb3Modal();
-  const walletManager = useMemo(
+  const { open, isOpen, setDefaultChain } = useWeb3Modal();
+  const walletManager = useMemo<WalletManager>(
     () => ({
-      open,
+      open: ({ chain }) => {
+        if (chain) {
+          setDefaultChain(chain);
+        }
+        open();
+      },
       isOpen,
     }),
-    [open, isOpen],
+    [open, isOpen, setDefaultChain],
   );
 
   const [mounted, setMounted] = useState(false);

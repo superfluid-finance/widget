@@ -3,6 +3,10 @@
   "globalEnv": ["GITHUB_TOKEN"],
   "globalDependencies": ["**/.env.*local", "tsconfig.json"],
   "pipeline": {
+    "tsc": {
+      "dependsOn": ["^tsc"],
+      "cache": false
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
@@ -34,10 +38,15 @@
         "NEXT_PUBLIC_SEGMENT_WRITE_KEY",
         "NEXT_PUBLIC_THE_THING",
         "NEXT_PUBLIC_DEMO_IPFS",
-        "ROOT_REDIRECT_URL"
+        "ROOT_REDIRECT_URL",
+        "NEXT_PUBLIC_ROOT_REDIRECT_URL"
       ]
     },
     "@superfluid-finance/b2b-service-demo#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "@superfluid-finance/gated-community-demo#build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]
     },

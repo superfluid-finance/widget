@@ -23,40 +23,46 @@ const ProductEditor: FC = () => {
       <Stack mb={4} gap={2}>
         <Typography variant="subtitle1">Payment Configuration</Typography>
 
-        <InputWrapper title="Product Name">
-          <Controller
-            control={control}
-            name="productDetails.name"
-            render={({ field: { value, onChange } }) => (
-              <TextField
-                placeholder="Your Product Name"
-                data-testid="product-name-field"
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          />
-        </InputWrapper>
+        <Controller
+          control={control}
+          name="productDetails.name"
+          render={({ field: { value, onChange } }) => (
+            <InputWrapper title="Product Name">
+              {(id) => (
+                <TextField
+                  id={id}
+                  placeholder=""
+                  data-testid="product-name-field"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            </InputWrapper>
+          )}
+        />
 
-        <InputWrapper title="Product Description">
-          <Controller
-            control={control}
-            name="productDetails.description"
-            render={({ field: { value, onChange } }) => (
-              <TextField
-                data-testid="product-description-field"
-                placeholder="Your Product Description"
-                multiline
-                minRows={4}
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          />
-        </InputWrapper>
+        <Controller
+          control={control}
+          name="productDetails.description"
+          render={({ field: { value, onChange } }) => (
+            <InputWrapper title="Product Description">
+              {(id) => (
+                <TextField
+                  id={id}
+                  data-testid="product-description-field"
+                  placeholder=""
+                  multiline
+                  minRows={4}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            </InputWrapper>
+          )}
+        />
       </Stack>
 
-      <Stack direction="column" gap={2}>
+      <Stack direction="column" gap={1.5}>
         <Typography variant="subtitle1">Add Payment Options</Typography>
         <Controller
           control={control}
@@ -87,9 +93,19 @@ const ProductEditor: FC = () => {
           <Stack direction="column" gap={2.5}>
             {paymentOptions.length ? (
               paymentOptions.map(
-                ({ superToken, chainId, flowRate, receiverAddress }, i) => (
+                (
+                  {
+                    superToken,
+                    chainId,
+                    transferAmountEther,
+                    flowRate,
+                    receiverAddress,
+                  },
+                  i,
+                ) => (
                   <PaymentOptionView
                     key={`${superToken.address}-${i}`}
+                    upfrontPaymentAmountEther={transferAmountEther}
                     flowRate={
                       flowRate ?? {
                         amountEther: "0",

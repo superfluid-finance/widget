@@ -15,14 +15,18 @@ export function CheckoutContent() {
     layout: { elevated },
     stepper: { orientation },
     type,
+    productDetails,
   } = useWidget();
+
+  const showProductCard =
+    !!productDetails.name?.trim() || !!productDetails.description?.trim();
 
   const containerMediaQuery = useMemo(
     () =>
-      orientation === "vertical"
+      orientation === "vertical" && showProductCard
         ? `@container wrapper (width >= ${theme.breakpoints.values.md}${theme.breakpoints.unit})`
         : "",
-    [theme, orientation],
+    [theme, showProductCard, orientation],
   );
 
   const containerType = useMemo(
@@ -57,18 +61,20 @@ export function CheckoutContent() {
             },
           }}
         >
-          <CheckoutProduct
-            CardProps={{
-              sx: {
-                flex: 1,
-                width: "100%",
-                maxWidth: "510px",
-                [containerMediaQuery]: {
-                  width: "480px",
+          {showProductCard && (
+            <CheckoutProduct
+              CardProps={{
+                sx: {
+                  flex: 1,
+                  width: "100%",
+                  maxWidth: "510px",
+                  [containerMediaQuery]: {
+                    width: "480px",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          )}
 
           <Card
             variant={elevated ? "elevation" : "outlined"}

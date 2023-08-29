@@ -13,7 +13,7 @@ export function TokenAvatar({ tokenInfo, ...AvatarProps }: Props) {
       alt={`${tokenInfo.symbol} logo`}
       src={tokenInfo.logoURI}
       {...AvatarProps}
-      sx={{ width: 24, height: 24, ...AvatarSx }}
+      sx={{ width: 24, height: 24, objectFit: "contain", ...AvatarSx }}
     />
   ) : (
     <Avatar

@@ -6,7 +6,7 @@ import { useContractRead, useContractReads } from "wagmi";
 import {
   Command,
   EnableAutoWrapCommand,
-  SendStreamCommand,
+  SubscribeCommand,
   WrapIntoSuperTokensCommand,
 } from "./commands.js";
 import { ContractWrite } from "./ContractWrite.js";
@@ -36,8 +36,8 @@ export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
       return <EnableAutoWrapCommandMapper command={cmd} {...props} />;
     case "Wrap into Super Tokens":
       return <WrapIntoSuperTokensCommandMapper command={cmd} {...props} />;
-    case "Send Stream":
-      return <SendStreamCommandMapper command={cmd} {...props} />;
+    case "Subscribe":
+      return <SubscribeCommandMapper command={cmd} {...props} />;
   }
 }
 
@@ -215,18 +215,19 @@ export function WrapIntoSuperTokensCommandMapper({
   return <>{children?.(contractWrites)}</>;
 }
 
-export function SendStreamCommandMapper({
+export function SubscribeCommandMapper({
   command: cmd,
   onMapped,
   children,
-}: CommandMapperProps<SendStreamCommand>) {
-  const { isSuccess, data: existingFlowRate } = useContractRead({
-    chainId: cmd.chainId,
-    address: cfAv1ForwarderAddress[cmd.chainId],
-    abi: cfAv1ForwarderABI,
-    functionName: "getFlowrate",
-    args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
-  });
+}: CommandMapperProps<SubscribeCommand>) {
+  const { isSuccess: isSuccessForGetFlowRate, data: existingFlowRate } =
+    useContractRead({
+      chainId: cmd.chainId,
+      address: cfAv1ForwarderAddress[cmd.chainId],
+      abi: cfAv1ForwarderABI,
+      functionName: "getFlowrate",
+      args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
+    });
 
   const flowRate =
     cmd.flowRate.amountWei /
@@ -236,6 +237,20 @@ export function SendStreamCommandMapper({
     const contractWrites_: ContractWrite[] = [];
 
     if (existingFlowRate !== undefined) {
+      if (cmd.transferAmountWei > 0n) {
+        contractWrites_.push(
+          createContractWrite({
+            commandId: cmd.id,
+            displayTitle: "Transfer",
+            abi: erc20ABI,
+            address: cmd.superTokenAddress,
+            chainId: cmd.chainId,
+            functionName: "transfer",
+            args: [cmd.receiverAddress, cmd.transferAmountWei],
+          }),
+        );
+      }
+
       if (existingFlowRate > 0n) {
         const updatedFlowRate = existingFlowRate + flowRate;
 
@@ -279,10 +294,10 @@ export function SendStreamCommandMapper({
     }
 
     return contractWrites_;
-  }, [cmd.id, isSuccess]);
+  }, [cmd.id, isSuccessForGetFlowRate]);
 
   useEffect(
-    () => (isSuccess ? onMapped?.(contractWrites) : void 0),
+    () => (isSuccessForGetFlowRate ? onMapped?.(contractWrites) : void 0),
     [contractWrites],
   );
 
@@ -299,5 +314,6 @@ const createContractWrite = <
 ): ContractWrite =>
   ({
     id: nanoid(),
+    value: 0n, // Gnosis Safe has a bug that required "value" to be specified: https://github.com/wagmi-dev/wagmi/issues/2887
     ...arg,
   }) as ContractWrite;

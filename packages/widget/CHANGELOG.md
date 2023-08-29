@@ -1,5 +1,59 @@
 # @superfluid-finance/widget
 
+## 0.3.0
+
+### Minor Changes
+
+- 6a451c8: Validate uniqueness of inputted payment options
+
+### Patch Changes
+
+- 90eb900: Update dependencies
+- db5865d: Fix small bug of default wrap amount not always being set
+
+## 0.2.0
+
+### Minor Changes
+
+- 19eea2e: Re-export "@superfluid-finance/metadata" from "@superfluid-finance/widget/metadata"
+- 19eea2e: Re-export "@superfluid-finance/tokenlist" from "@superflud-finance/widget/tokenlist". Remove the re-export from "@superfluid-finance/widget".
+
+### Patch Changes
+
+- d742691: Pass payment option's Chain with WalletManager.open()
+- 81ae750: Make network asset config configurable through "networkAssets"
+- d742691: Add EventListeners.onPaymentOptionUpdate callback
+- ecd03dc: Update dependencies
+- 6f8e126: Add Base Goerli support
+- e03f8a5: Add Base network support
+
+## 0.1.0
+
+### Minor Changes
+
+- 8f75760: Remove unnecessary exports (possibly breaking but unlikely) and clean-up the reference docs
+
+### Patch Changes
+
+- 02d58a2: Allow a single payment option to be passed in instead of a array.
+- ff64818: Default to token list from '@superfluid-finance/tokenlist' when not specified
+- 59f439b: Update dependencies
+- 8e2f6f1: When 'type' is not specified, default to "page".
+- 8e2f6f1: Use a default 'walletManager' with injected connector when 'walletManager' is not specified. The use-case is to ease use of the widget for developers when using for the first time, not requiring to choose wallet connecting library (RainbowKit, Web3Modal, etc) right away.
+
+## 0.0.14
+
+### Patch Changes
+
+- ff5dda3: Update dependencies
+- df7ef12: Fix issue of `wagmi` complaining about ENS Resolver when Mainnet not added to the supported chains. Before querying for ENS, check whether Mainnet is configured with an ENS Resolver.
+
+## 0.0.13
+
+### Patch Changes
+
+- 0571635: Fix validation logic issue with decimals (#117)
+
 ## 0.0.12
 
 ### Patch Changes

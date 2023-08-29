@@ -1,0 +1,80 @@
+.Card {
+  border-radius: 20px;
+  border: 1px solid #dbdee2;
+  background: #fff;
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.05);
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.Left {
+  padding: 28px 40px;
+}
+
+.Right {
+  padding: 28px 40px;
+  border-radius: 20px;
+  border: 1px solid #dbdee2;
+  background: #f1f1f1;
+  margin: -1px;
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.Right:hover {
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.05);
+}
+
+.Right h5 {
+  margin-bottom: 16px;
+}
+
+.TitleWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.TitleWrapper h4 {
+  margin: 0;
+}
+
+.Requirements {
+  list-style: none;
+}
+
+.Requirements li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.Requirements li::before {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 48px;
+  background-image: url("/icons/requirement.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media screen and (max-width: 960px) {
+  .Card {
+    grid-template-columns: 1fr;
+  }
+
+  .TitleWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .Left,
+  .Right {
+    padding: 20px 28px;
+  }
+}

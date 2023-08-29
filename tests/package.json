@@ -3,12 +3,12 @@
   "version": "0.0.3",
   "private": true,
   "devDependencies": {
-    "@currents/playwright": "^0.6.3",
-    "@playwright/test": "^1.36.1",
+    "@currents/playwright": "^0.7.2",
+    "@playwright/test": "^1.37.1",
     "@synthetixio/synpress": "^3.7.1",
     "dotenv": "16.3.1",
-    "ethers": "6.6.4",
-    "typescript": "5.1.6"
+    "ethers": "6.7.1",
+    "typescript": "5.2.2"
   },
   "scripts": {
     "lint:check-no-focused-tests": "grep -FR test.only specs || { echo '✅ No test is focused.';exit 0; } && { echo '❌ You have focused tests.'; exit 1; }",

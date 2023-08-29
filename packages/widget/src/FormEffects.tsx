@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 
 import { DraftFormValues } from "./formValues.js";
+import { useWidget } from "./WidgetContext.js";
 
 export function FormEffects() {
   const {
@@ -70,11 +72,20 @@ export function FormEffects() {
         superToken.extensions.superTokenInfo.type === "Pure";
 
       if (!isWrapDirty && !isPureSuperToken) {
+        const defaultWrapAmountWei =
+          parseEther(flowRate.amountEther) +
+          parseEther(
+            paymentOptionWithTokenInfo.paymentOption.transferAmountEther ?? "0",
+          );
+        const defaultWrapAmountEther = formatEther(
+          defaultWrapAmountWei,
+        ) as `${number}`;
         resetField("wrapAmountInUnits", {
           keepDirty: false,
           keepTouched: true,
-          defaultValue: flowRate.amountEther,
+          defaultValue: defaultWrapAmountEther,
         });
+        setValue("wrapAmountInUnits", defaultWrapAmountEther);
       }
     }
   }, [paymentOptionWithTokenInfo, flowRate]);
@@ -96,6 +107,13 @@ export function FormEffects() {
       });
     }
   }, [address]);
+
+  const { eventListeners } = useWidget();
+  useEffect(() => {
+    eventListeners.onPaymentOptionUpdate(
+      paymentOptionWithTokenInfo?.paymentOption,
+    );
+  }, [eventListeners.onPaymentOptionUpdate, paymentOptionWithTokenInfo]);
 
   return null;
 }

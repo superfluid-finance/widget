@@ -37,23 +37,30 @@ export default function TokenAutocomplete() {
           options={autocompleteOptions}
           autoHighlight
           getOptionLabel={(option) => option.superToken.symbol}
-          renderOption={(props, option) => (
-            <Stack
-              {...props}
-              key={`${option.superToken.symbol}-${option.paymentOption.flowRate?.amountEther}`}
-              component="li"
-              direction="row"
-              alignItems="center"
-              spacing={1}
-            >
-              <TokenAvatar tokenInfo={option.superToken} />
-              <Typography data-testid="token-option">
-                {option.paymentOption.flowRate
-                  ? `${option.paymentOption.flowRate.amountEther} ${option.superToken.symbol}/${option.paymentOption.flowRate.period}`
-                  : `${option.superToken.symbol} - Custom amount`}
-              </Typography>
-            </Stack>
-          )}
+          renderOption={(props, option) => {
+            const key = option.paymentOption.flowRate
+              ? `${
+                  option.paymentOption.transferAmountEther
+                    ? `${option.paymentOption.transferAmountEther} + `
+                    : ""
+                }${option.paymentOption.flowRate.amountEther} ${
+                  option.superToken.symbol
+                }/${option.paymentOption.flowRate.period}`
+              : `${option.superToken.symbol} - Custom amount`;
+            return (
+              <Stack
+                {...props}
+                key={key}
+                component="li"
+                direction="row"
+                alignItems="center"
+                spacing={1}
+              >
+                <TokenAvatar tokenInfo={option.superToken} />
+                <Typography data-testid="token-option">{key}</Typography>
+              </Stack>
+            );
+          }}
           renderInput={(params) => (
             <TextField
               data-testid="token-selection-button"

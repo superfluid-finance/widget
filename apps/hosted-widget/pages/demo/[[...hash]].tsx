@@ -1,7 +1,7 @@
 import { Box, Container, Fade } from "@mui/material";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
-import tokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget from "@superfluid-finance/widget";
+import tokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -10,11 +10,11 @@ import { useMemo, useState } from "react";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 
 import DemoWalletDisplay from "../../src/components/demo-wallet-display/DemoWalletDisplay";
+import { WagmiDemoProviders } from "../../src/DEMO-providers";
 import useAnalyticsBrowser from "../../src/hooks/useAnalyticsBrowser";
 import useFontLoader from "../../src/hooks/useFontLoader";
 import useLoadFromIPFS from "../../src/hooks/useLoadFromIPFS";
 import useWalletAnalytics from "../../src/hooks/useWalletAnalytics";
-import { WagmiDemoProviders } from "../../src/providers";
 import { deleteFlow } from "../../src/utils/deleteDemoFlow";
 
 function generateRandomReceiver() {

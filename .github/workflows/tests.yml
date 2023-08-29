@@ -12,8 +12,7 @@ on:
 
 jobs:
   test:
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – widget-builder'
-    name: ${{ github.event.deployment_status.environment }}
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – widget-builder' || github.event_name == 'workflow_dispatch '
     timeout-minutes: 60
     defaults:
       run:

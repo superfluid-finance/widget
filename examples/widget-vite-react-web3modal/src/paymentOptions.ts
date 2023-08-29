@@ -1256,39 +1256,6 @@ const paymentOptions: PaymentOption[] = [
     },
   },
   {
-    chainId: 43113,
-    receiverAddress: "0x7BDa037dFdf9CD9Ad261D27f489924aebbcE71Ac",
-    superToken: {
-      address: "0x296e9c01f80d408741f6e15d62013ddbe1041f1d",
-    },
-    flowRate: {
-      amountEther: "1",
-      period: "month",
-    },
-  },
-  {
-    chainId: 43113,
-    receiverAddress: "0x7BDa037dFdf9CD9Ad261D27f489924aebbcE71Ac",
-    superToken: {
-      address: "0x36bbf94e66f0c953cb451b302e345d6e50c2a215",
-    },
-    flowRate: {
-      amountEther: "1",
-      period: "month",
-    },
-  },
-  {
-    chainId: 43113,
-    receiverAddress: "0x7BDa037dFdf9CD9Ad261D27f489924aebbcE71Ac",
-    superToken: {
-      address: "0x896c3e90446237be3e27eb4d67e0d3c97fb3b03f",
-    },
-    flowRate: {
-      amountEther: "1",
-      period: "month",
-    },
-  },
-  {
     chainId: 43114,
     receiverAddress: "0x7BDa037dFdf9CD9Ad261D27f489924aebbcE71Ac",
     superToken: {

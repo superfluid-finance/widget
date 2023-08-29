@@ -82,11 +82,12 @@ export const formValuesToCommands = (
 
   commands.push({
     id: nanoid(),
-    type: "Send Stream",
+    type: "Subscribe",
     chainId,
     superTokenAddress,
     accountAddress,
     receiverAddress: paymentOption.receiverAddress,
+    transferAmountWei: parseEther(paymentOption.transferAmountEther ?? "0"),
     flowRate: {
       amountWei: parseEther(flowRate.amountEther),
       period: flowRate.period,

@@ -1,4 +1,5 @@
 import { ThemeOptions } from "@mui/material";
+import * as Sentry from "@sentry/nextjs";
 import { PaymentDetails, ProductDetails } from "@superfluid-finance/widget";
 import { useEffect, useState } from "react";
 
@@ -32,6 +33,13 @@ const useLoadConfigFromIPFS = (hash: string): Result => {
 
       try {
         const res = await fetch(`${gateway}/ipfs/${hash}`);
+
+        if (!res.ok) {
+          throw new Error(
+            `Could not load config from IPFS: ${res.statusText} (${res.status})`,
+          );
+        }
+
         const data = await res.json();
 
         setData(data);
@@ -39,6 +47,7 @@ const useLoadConfigFromIPFS = (hash: string): Result => {
         setLoading(false);
       } catch (e) {
         setError(e as Error);
+        Sentry.captureException(e);
       }
     };
 

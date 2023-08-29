@@ -2,14 +2,15 @@ import { Fade } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
-import tokenList from "@superfluid-finance/tokenlist";
 import SuperfluidWidget from "@superfluid-finance/widget";
+import tokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
+import AutoConnect from "../src/components/auto-connect/AutoConnect";
 import DemoWalletDisconnect from "../src/components/startup-disconnect/DemoWalletDisconnect";
 import useAnalyticsBrowser from "../src/hooks/useAnalyticsBrowser";
 import useFontLoader from "../src/hooks/useFontLoader";
@@ -48,6 +49,7 @@ const IPFSWidgetPage: NextPage = () => {
   return (
     <WagmiProviders>
       <DemoWalletDisconnect />
+      <AutoConnect />
       {showLoader ? (
         <Box
           sx={{

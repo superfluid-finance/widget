@@ -7,12 +7,16 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import superTokenList from "@superfluid-finance/tokenlist";
-import { ChainId, FlowRate } from "@superfluid-finance/widget";
+import {
+  ChainId,
+  FlowRate,
+  supportedNetworks,
+} from "@superfluid-finance/widget";
+import superTokenList from "@superfluid-finance/widget/tokenlist";
 import Image from "next/image";
 import { FC, ReactNode, useMemo } from "react";
 
-import { networks } from "../../networkDefinitions";
+import NetworkAvatar from "../NetworkAvatar";
 
 type PaymentOptionRowProps = {
   label: string;
@@ -46,6 +50,7 @@ const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
 
 type PaymentOptionViewProps = {
   superToken: { address: `0x${string}` };
+  upfrontPaymentAmountEther?: string;
   flowRate: FlowRate;
   receiverAddress: `0x${string}`;
   chainId: ChainId;
@@ -55,6 +60,7 @@ type PaymentOptionViewProps = {
 
 const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   superToken,
+  upfrontPaymentAmountEther,
   flowRate,
   receiverAddress,
   chainId,
@@ -62,15 +68,15 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   remove,
 }) => {
   const theme = useTheme();
-  const network = networks.find((n) => n.chainId === chainId);
+  const network = supportedNetworks.find((n) => n.id === chainId)!;
   const token = Object.values(superTokenList.tokens).find(
     (token) => token.address === superToken.address,
   );
 
   const flowRateValue = useMemo(() => {
     if (!flowRate) return "Custom amount";
-    return `${flowRate.amountEther} / ${flowRate.period}`;
-  }, [flowRate]);
+    return `${flowRate.amountEther} ${token?.symbol ?? "x"}/${flowRate.period}`;
+  }, [flowRate, token]);
 
   return (
     <Paper variant="outlined" sx={{ p: 2 }}>
@@ -84,9 +90,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
               gap={1}
               sx={{ alignItems: "center" }}
             >
-              {network?.logoUrl && (
-                <Image src={network.logoUrl} alt="" width={24} height={24} />
-              )}
+              <NetworkAvatar network={network} />
               {network?.name}
             </Stack>
           }
@@ -101,13 +105,25 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
               sx={{ alignItems: "center" }}
             >
               {token?.logoURI && (
-                <Image src={token.logoURI} alt="" width={24} height={24} />
+                <Image
+                  src={token.logoURI}
+                  alt=""
+                  width={24}
+                  height={24}
+                  objectFit="contain"
+                />
               )}
               {token?.name}
             </Stack>
           }
         />
         <PaymentOptionRow label="Stream Rate" value={flowRateValue} />
+        {upfrontPaymentAmountEther && (
+          <PaymentOptionRow
+            label="Upfront Payment Amount"
+            value={`${upfrontPaymentAmountEther} ${token?.symbol ?? ""}`}
+          />
+        )}
         <PaymentOptionRow
           label="Receiver"
           value={

@@ -42,18 +42,20 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   const monaco = useMonaco();
 
   useEffect(() => {
-    monaco?.languages.json.jsonDefaults.setDiagnosticsOptions({
-      validate: true,
-      allowComments: true,
-      schemaValidation: "error",
-      schemas: [
-        {
-          uri: "https://superfluid.finance/widget",
-          fileMatch: ["*"],
-          schema: zodToJsonSchema(schema.describe("widgetConfig")),
-        },
-      ],
-    });
+    if (monaco) {
+      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+        validate: true,
+        allowComments: true,
+        schemaValidation: "error",
+        schemas: [
+          {
+            uri: "https://superfluid.finance/widget",
+            fileMatch: ["*"],
+            schema: zodToJsonSchema(schema.describe("widgetConfig")),
+          },
+        ],
+      });
+    }
   }, [monaco]);
 
   const handleEditorDidMount: OnMount = (editor, _monaco) => {
@@ -79,7 +81,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
     // If there are no errors in markers, the JSON is valid.
     setIsJsonValid(
       markers.every(
-        (marker) => marker.severity !== monaco!.MarkerSeverity.Error,
+        (marker) => marker.severity !== 8, // MarkerSeverity.Error
       ),
     );
   }, []);
@@ -95,21 +97,25 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
     debounce((isJsonValid: boolean, editorValue: string) => {
       setErrorMessage(null);
       if (isJsonValid) {
-        const parseResult = schema.safeParse(JSON.parse(editorValue));
-        if (parseResult.success) {
-          setValue("productDetails", parseResult.data.productDetails);
-          setValue("type", parseResult.data.type);
-          setValue("paymentDetails", parseResult.data.paymentDetails);
-          setSaved(true);
-          setTimeout(() => {
-            setSaved(false);
-          }, 1000);
-        } else {
-          setErrorMessage(parseResult.error.message);
+        try {
+          const parseResult = schema.safeParse(JSON.parse(editorValue));
+          if (parseResult.success) {
+            setValue("productDetails", parseResult.data.productDetails);
+            setValue("type", parseResult.data.type);
+            setValue("paymentDetails", parseResult.data.paymentDetails);
+            setSaved(true);
+            setTimeout(() => {
+              setSaved(false);
+            }, 1000);
+          } else {
+            setErrorMessage(parseResult.error.message);
+          }
+        } catch (error) {
+          setErrorMessage("Could not parse JSON");
         }
       }
     }, 250),
-    [setValue, setSaved],
+    [setValue, setSaved, setErrorMessage],
   );
 
   useEffect(() => {
