@@ -40,8 +40,7 @@ const StreamGatingEditor: FC = () => {
   const [tokenSymbol, setTokenSymbol] = useState("");
   const [tokenName, setTokenName] = useState("");
 
-  const [nftImage, setNftImage] = useState("");
-  // TODO: forward base64 image to deployment, and use NFT API
+  const [nftImage, setNftImage] = useState<File>();
   const { base64: nftImageBase64 } = useReadAsBase64(nftImage);
 
   const [selectedPaymentOptions, setSelectedPaymentOptions] = useState<
@@ -207,9 +206,9 @@ const StreamGatingEditor: FC = () => {
       <Stack direction="column" gap={4} sx={{ mt: 4 }}>
         <ImageSelect
           label="Customize NFT Image"
-          imageSrc={nftImage}
-          onClick={(file) => setNftImage(URL.createObjectURL(file))}
-          onRemove={() => setNftImage("")}
+          imageSrc={nftImage ? URL.createObjectURL(nftImage) : undefined}
+          onClick={(file) => setNftImage(file)}
+          onRemove={() => setNftImage(undefined)}
           sizeLimit={256 * 1024} // 256 kB
         />
         <LoadingButton
