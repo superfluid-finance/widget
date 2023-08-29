@@ -97,7 +97,7 @@ export default function Builder() {
               gap={1}
             >
               <Typography variant="subtitle1" component="h1" fontWeight="500">
-                Widget Builder
+                Checkout Builder
               </Typography>
               <FormControlLabel
                 data-testid="demo-mode-switch"
