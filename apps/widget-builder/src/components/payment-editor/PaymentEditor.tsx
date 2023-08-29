@@ -1,5 +1,5 @@
-import { Divider, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import { Box,Divider, Stack, Typography, Zoom } from "@mui/material";
+import { FC, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
 import theme from "../../theme";
@@ -17,6 +17,8 @@ const ProductEditor: FC = () => {
 
   const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
 
+  const [addCount, setAddCount] = useState(0);
+
   return (
     <Stack gap={1}>
       <Stack direction="column" gap={1.5}>
@@ -24,9 +26,17 @@ const ProductEditor: FC = () => {
           Add Payment Option
         </Typography>
         <Controller
+          key={addCount.toString()}
           control={control}
           name="paymentDetails.paymentOptions"
-          render={() => <SelectPaymentOption onAdd={append} />}
+          render={() => (
+            <SelectPaymentOption
+              onAdd={(params) => {
+                setAddCount((x) => x + 1);
+                append(params);
+              }}
+            />
+          )}
         />
 
         <Divider sx={{ my: 2 }} />
@@ -53,34 +63,46 @@ const ProductEditor: FC = () => {
 
           <Stack direction="column" gap={2.5}>
             {paymentOptions.length ? (
-              paymentOptions.map(
-                (
-                  {
-                    superToken,
-                    chainId,
-                    transferAmountEther,
-                    flowRate,
-                    receiverAddress,
-                  },
-                  i,
-                ) => (
-                  <PaymentOptionView
-                    key={`${superToken.address}-${i}`}
-                    upfrontPaymentAmountEther={transferAmountEther}
-                    flowRate={
-                      flowRate ?? {
-                        amountEther: "0",
-                        period: "month",
-                      }
-                    }
-                    receiverAddress={receiverAddress}
-                    superToken={superToken}
-                    chainId={chainId}
-                    index={i}
-                    remove={remove}
-                  />
-                ),
-              )
+              paymentOptions
+                .map(
+                  (
+                    {
+                      superToken,
+                      chainId,
+                      transferAmountEther,
+                      flowRate,
+                      receiverAddress,
+                    },
+                    i,
+                  ) => (
+                    <Zoom
+                      in
+                      appear={!!addCount}
+                      key={`${superToken.address}-${i}`}
+                    >
+                      <Box>
+                        <PaymentOptionView
+                          upfrontPaymentAmountEther={transferAmountEther}
+                          flowRate={
+                            flowRate ?? {
+                              amountEther: "0",
+                              period: "month",
+                            }
+                          }
+                          receiverAddress={receiverAddress}
+                          superToken={superToken}
+                          chainId={chainId}
+                          index={i}
+                          remove={(params) => {
+                            remove(params);
+                            setAddCount(0);
+                          }}
+                        />
+                      </Box>
+                    </Zoom>
+                  ),
+                )
+                .reverse()
             ) : (
               <Typography data-testid="no-options-message" variant="caption">
                 - None

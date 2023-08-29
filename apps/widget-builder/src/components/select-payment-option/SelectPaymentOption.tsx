@@ -2,7 +2,6 @@ import {
   Autocomplete,
   Avatar,
   Button,
-  Chip,
   Collapse,
   FormControlLabel,
   FormGroup,
@@ -10,6 +9,7 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  ListSubheader,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -150,8 +150,15 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
   const [upfrontPaymentAmount, setUpfrontPaymentAmount] = useState<
     `${number}` | ""
   >("");
-  const onShowUpfrontPaymentChanged = (_e: ChangeEvent, checked: boolean) =>
-    setShowUpfrontPayment(checked);
+  const onShowUpfrontPaymentChanged = (_e: ChangeEvent, checked: boolean) => {
+    if (checked) {
+      setShowUpfrontPayment(true);
+      setUpfrontPaymentAmount(flowRateAmount);
+    } else {
+      setShowUpfrontPayment(false);
+      setUpfrontPaymentAmount("");
+    }
+  };
 
   return (
     <Stack direction="column" gap={1.5}>
@@ -179,24 +186,26 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
         )}
       </InputWrapper>
 
-      <Stack
-        sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
-        gap={1.25}
+      <InputWrapper
+        title="Network"
+        tooltip="Select the network you'd like to request payment on."
+        helperText={
+          selectedNetwork ? `Chain ID: ${selectedNetwork.id}` : undefined
+        }
       >
-        <InputWrapper
-          title="Network"
-          tooltip="Select the network you'd like to request payment on."
-        >
-          {(id) => (
-            <Select
-              labelId={`label-${id}`}
-              id={id}
-              data-testid="network-selection"
-              value={selectedNetwork?.name}
-              onChange={handleNetworkSelect}
-              fullWidth
-            >
-              {filteredNetworks.map((network) => (
+        {(id) => (
+          <Select
+            labelId={`label-${id}`}
+            id={id}
+            data-testid="network-selection"
+            value={selectedNetwork?.name}
+            onChange={handleNetworkSelect}
+            fullWidth
+          >
+            <ListSubheader>Mainnets</ListSubheader>
+            {filteredNetworks
+              .filter((x) => !x.testnet)
+              .map((network) => (
                 <MenuItem
                   data-testid={network.id}
                   value={network.name}
@@ -208,87 +217,90 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({ onAdd }) => {
                     sx={{ alignItems: "center", width: "100%" }}
                   >
                     <NetworkAvatar network={network} />
-                    <Stack
-                      direction="row"
-                      sx={{
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        flex: 1,
-                      }}
-                    >
-                      {network.name}
-                      {network.testnet && (
-                        <Chip
-                          data-testid="testnet-chip"
-                          variant="filled"
-                          color="primary"
-                          label="test"
-                          size="small"
-                        />
-                      )}
-                    </Stack>
+                    {network.name}
                   </Stack>
                 </MenuItem>
               ))}
-            </Select>
-          )}
-        </InputWrapper>
+            <ListSubheader>Testnets</ListSubheader>
+            {filteredNetworks
+              .filter((x) => x.testnet)
+              .map((network) => (
+                <MenuItem
+                  data-testid={network.id}
+                  value={network.name}
+                  key={`${network.id}`}
+                >
+                  <Stack
+                    direction="row"
+                    gap={1}
+                    sx={{ alignItems: "center", width: "100%" }}
+                  >
+                    <NetworkAvatar network={network} />
+                    {network.name}
+                  </Stack>
+                </MenuItem>
+              ))}
+          </Select>
+        )}
+      </InputWrapper>
 
-        <InputWrapper
-          id="token-select"
-          title="Super Token"
-          tooltip="Select the SuperToken you'd like to request payment in."
-        >
-          {(id) => (
-            <Autocomplete
-              fullWidth
-              disabled={!selectedNetwork}
-              value={selectedToken}
-              onChange={(_, value) => setSelectedToken(value!)}
-              id={id}
-              options={autoCompleteTokenOptions}
-              getOptionLabel={(token) => token.symbol}
-              componentsProps={{
-                popper: {
-                  placement: "bottom-end",
-                },
-              }}
-              renderOption={(props, option) => (
-                <ListItem {...props}>
-                  <ListItemAvatar sx={{ minWidth: 40 }}>
-                    {option.logoURI && (
-                      <Avatar
-                        sx={{ width: 24, height: 24, objectFit: "contain" }}
-                        src={option.logoURI}
-                      />
-                    )}
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={option.symbol}
-                    secondary={option.name}
-                    secondaryTypographyProps={{ variant: "caption" }}
-                    sx={{ m: 0 }}
-                  />
-                </ListItem>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  InputProps={{
-                    ...params.InputProps,
-                    startAdornment: selectedToken?.logoURI && (
-                      <Avatar
-                        sx={{ width: 24, height: 24, objectFit: "contain" }}
-                        src={selectedToken.logoURI}
-                      />
-                    ),
-                  }}
+      <InputWrapper
+        id="token-select"
+        title="Super Token"
+        tooltip="Select the SuperToken you'd like to request payment in."
+        helperText={
+          selectedToken ? `Address: ${selectedToken.address}` : undefined
+        }
+      >
+        {(id) => (
+          <Autocomplete
+            fullWidth
+            disabled={!selectedNetwork}
+            value={selectedToken}
+            onChange={(_, value) => setSelectedToken(value!)}
+            id={id}
+            options={autoCompleteTokenOptions}
+            getOptionLabel={(token) => token.symbol}
+            componentsProps={{
+              popper: {
+                placement: "bottom-end",
+              },
+            }}
+            renderOption={(props, option) => (
+              <ListItem {...props}>
+                <ListItemAvatar sx={{ minWidth: 40 }}>
+                  {option.logoURI && (
+                    <Avatar
+                      sx={{ width: 24, height: 24, objectFit: "contain" }}
+                      src={option.logoURI}
+                    />
+                  )}
+                </ListItemAvatar>
+                <ListItemText
+                  primary={option.symbol}
+                  secondary={option.name}
+                  secondaryTypographyProps={{ variant: "caption" }}
+                  sx={{ m: 0 }}
                 />
-              )}
-            />
-          )}
-        </InputWrapper>
-      </Stack>
+              </ListItem>
+            )}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                InputProps={{
+                  ...params.InputProps,
+                  startAdornment: selectedToken?.logoURI && (
+                    <Avatar
+                      sx={{ width: 24, height: 24, objectFit: "contain" }}
+                      src={selectedToken.logoURI}
+                    />
+                  ),
+                }}
+              />
+            )}
+          />
+        )}
+      </InputWrapper>
 
       <Collapse in={!isCustomAmount}>
         <Stack spacing={1}>
