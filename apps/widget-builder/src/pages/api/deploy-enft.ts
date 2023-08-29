@@ -1,3 +1,4 @@
+import pinataSDK from "@pinata/sdk";
 import metadata from "@superfluid-finance/metadata";
 import {
   ChainId,
@@ -20,8 +21,15 @@ import {
 import { mnemonicToAccount, privateKeyToAccount } from "viem/accounts";
 import * as chains from "viem/chains";
 
+import { IPFS_GATEWAY } from "../../constants";
 import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
+import { base64ToStream } from "../../utils/b64ToReadableStream";
 import rateLimit from "../../utils/rate-limit";
+
+const pinata = new pinataSDK({
+  pinataApiKey: process.env.NEXT_PUBLIC_PINATA_API_KEY,
+  pinataSecretApiKey: process.env.NEXT_PUBLIC_PINATA_API_SECRET,
+});
 
 const limiter = rateLimit({
   interval: 60 * 1000,
@@ -85,6 +93,14 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(400).json({ error: "Invalid recaptcha token" });
   }
 
+  const readableStream = await base64ToStream(nftImage);
+
+  const { IpfsHash } = await pinata.pinFileToIPFS(readableStream, {
+    pinataMetadata: {
+      name: `StreamGating NFT Image (${tokenName}, ${tokenSymbol})`,
+    },
+  });
+
   const deployConfig = Object.entries(selectedPaymentOptions).map(
     ([chainId, paymentOptions]) => {
       const rpcUrl = getNetworkByChainIdOrThrow(Number(chainId)).rpcUrl;
@@ -139,7 +155,7 @@ const handler: NextApiHandler = async (req, res) => {
             ),
             tokenName,
             tokenSymbol,
-            nftImage,
+            `${IPFS_GATEWAY}/ipfs/${IpfsHash}`,
           ] as const;
 
           const gas = await publicClient.estimateContractGas({
