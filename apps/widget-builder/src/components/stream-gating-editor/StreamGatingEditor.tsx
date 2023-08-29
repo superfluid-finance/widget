@@ -127,7 +127,14 @@ const StreamGatingEditor: FC = () => {
       setDeployed(true);
       setDeploying(false);
     }
-  }, [tokenName, tokenSymbol, nftImage, selectedPaymentOptions, recaptchaKey]);
+  }, [
+    tokenName,
+    tokenSymbol,
+    nftImage,
+    selectedPaymentOptions,
+    recaptchaKey,
+    nftImageBase64,
+  ]);
 
   const isDeployDisabled = useMemo(
     () =>

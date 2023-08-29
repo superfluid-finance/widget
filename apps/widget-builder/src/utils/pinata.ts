@@ -1,6 +1,7 @@
 import pinataSDK from "@pinata/sdk";
 import { ChainId, PaymentOption } from "@superfluid-finance/widget";
 
+import { base64ToStream } from "./b64ToReadableStream";
 import { createNFTmeta } from "./createNFTmeta";
 
 const pinata = new pinataSDK({
@@ -19,20 +20,29 @@ export const pinNFTMetaToIPFS = async ({
   nftImage: string;
   selectedPaymentOptions: Partial<Record<ChainId, PaymentOption[]>>;
 }) => {
-  const { IpfsHash } = await pinata.pinJSONToIPFS(
+  const { IpfsHash: imageHash } = await pinata.pinFileToIPFS(
+    base64ToStream(nftImage),
+    {
+      pinataMetadata: {
+        name: `StreamGating NFT Image (${tokenName}, ${tokenSymbol})`,
+      },
+    },
+  );
+
+  const { IpfsHash: metaHash } = await pinata.pinJSONToIPFS(
     createNFTmeta({
       name: `${tokenName} (${tokenSymbol})`,
       description: "StreamGating NFT MetaData",
-      image: nftImage,
+      image: `https://cloudflare-ipfs.com/ipfs/${imageHash}`,
       attributes: Object.values(selectedPaymentOptions)
         .flat()
         .map((paymentOption) => ({
-          trait_type: "Payment Option",
-          value: `
-               network: ${paymentOption.chainId},
-               flowRate: ${paymentOption.flowRate?.amountEther}/${paymentOption.flowRate?.period}, 
-               superToken: ${paymentOption.superToken.address}
-              `,
+          trait_type: "payment_option",
+          value: [
+            `chainId: ${paymentOption.chainId}`,
+            `flowRate: ${paymentOption.flowRate?.amountEther}/${paymentOption.flowRate?.period}`,
+            `superToken: ${paymentOption.superToken.address}`,
+          ].join(", "),
         })),
     }),
     {
@@ -42,5 +52,5 @@ export const pinNFTMetaToIPFS = async ({
     },
   );
 
-  return IpfsHash;
+  return metaHash;
 };
