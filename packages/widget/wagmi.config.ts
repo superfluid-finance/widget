@@ -1,7 +1,4 @@
-import superfluidGovernanceJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/gov/SuperfluidGovernanceII.sol/SuperfluidGovernanceII.json" assert { type: "json" };
-import superTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/superfluid/SuperToken.sol/SuperToken.json" assert { type: "json" };
-import pureSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/PureSuperToken.sol/PureSuperToken.json" assert { type: "json" };
-import nativeAssetSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/SETH.sol/SETHProxy.json" assert { type: "json" };
+import bundledAbi from "@superfluid-finance/ethereum-contracts/build/bundled-abi.json" assert { type: "json" };
 import superfluidMetadata from "@superfluid-finance/metadata";
 import { defineConfig } from "@wagmi/cli";
 import { actions, erc, etherscan } from "@wagmi/cli/plugins";
@@ -18,19 +15,19 @@ export default defineConfig({
   contracts: [
     {
       name: "Super Token",
-      abi: superTokenJSON.abi as Abi,
+      abi: bundledAbi.SuperToken as Abi,
     },
     {
       name: "Native Asset Super Token",
-      abi: nativeAssetSuperTokenJSON.abi as Abi,
+      abi: bundledAbi.ISETH as Abi,
     },
     {
       name: "Pure Super Token",
-      abi: pureSuperTokenJSON.abi as Abi,
+      abi: bundledAbi.IPureSuperToken as Abi,
     },
     {
       name: "SuperfluidGovernance",
-      abi: superfluidGovernanceJSON.abi as Abi,
+      abi: bundledAbi.SuperfluidGovernanceII as Abi,
       address: superfluidMetadata.networks.reduce(
         (acc, network) => {
           acc[network.chainId] = network.contractsV1
