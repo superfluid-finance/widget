@@ -13,7 +13,7 @@ import {
   createRef,
   FC,
   useCallback,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
 } from "react";
@@ -55,11 +55,11 @@ const StreamGatingEditor: FC = () => {
   const [isDeploying, setDeploying] = useState(false);
   const [isDeployed, setDeployed] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (recaptchaRef.current) {
       recaptchaRef.current.execute();
     }
-  }, [recaptchaRef]);
+  }, []);
 
   const onRecaptchaChange = useCallback((token: string | null) => {
     setRecaptchaToken(token);
@@ -108,7 +108,7 @@ const StreamGatingEditor: FC = () => {
           selectedPaymentOptions,
           tokenName,
           tokenSymbol,
-          nftImage,
+          nftImage: nftImageBase64,
           recaptchaToken,
         }),
       });
@@ -210,6 +210,7 @@ const StreamGatingEditor: FC = () => {
           imageSrc={nftImage}
           onClick={(file) => setNftImage(URL.createObjectURL(file))}
           onRemove={() => setNftImage("")}
+          sizeLimit={256 * 1024} // 256 kB
         />
         <LoadingButton
           color="primary"

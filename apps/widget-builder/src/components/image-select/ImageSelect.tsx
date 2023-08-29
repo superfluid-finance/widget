@@ -13,6 +13,7 @@ import { ChangeEvent, FC, useRef } from "react";
 type ImageSelectProps = {
   label: string;
   imageSrc?: string;
+  sizeLimit?: number;
   onClick: (file: File) => void;
   onRemove: () => void;
 };
@@ -20,6 +21,7 @@ type ImageSelectProps = {
 const ImageSelect: FC<ImageSelectProps> = ({
   label,
   imageSrc,
+  sizeLimit,
   onClick,
   onRemove,
 }) => {
@@ -33,6 +35,14 @@ const ImageSelect: FC<ImageSelectProps> = ({
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
+      if (sizeLimit && event.target.files[0].size > sizeLimit) {
+        alert(
+          `File size is too large. Please upload a file smaller than ${Math.floor(
+            sizeLimit / 1024,
+          )} kB.`,
+        );
+        return;
+      }
       onClick(event.target.files[0]);
     }
   };
@@ -74,6 +84,7 @@ const ImageSelect: FC<ImageSelectProps> = ({
             data-testid="file-upload-field"
             hidden
             type="file"
+            accept="image/*"
             name={label}
             ref={inputRef}
             onChange={handleFileUpload}
