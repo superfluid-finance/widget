@@ -43,12 +43,14 @@ export default function Builder() {
   const theme = useTheme();
 
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = 4;
+  const stepCount = 4;
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) =>
+      Math.min(prevActiveStep + 1, stepCount - 1),
+    );
   };
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
   };
 
   const { widgetProps, demoMode, toggleDemoMode } = useDemoMode();
@@ -148,14 +150,14 @@ export default function Builder() {
                 bgcolor: "background.paper",
               }}
               variant="text"
-              steps={4}
+              steps={stepCount}
               position="static"
               activeStep={activeStep}
               nextButton={
                 <Button
                   size="small"
                   onClick={handleNext}
-                  disabled={activeStep === maxSteps - 1}
+                  disabled={activeStep === stepCount - 1}
                 >
                   Next
                   <KeyboardArrowRight />
