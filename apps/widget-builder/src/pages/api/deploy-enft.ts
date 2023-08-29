@@ -101,7 +101,7 @@ const handler: NextApiHandler = async (req, res) => {
       attributes: Object.values(selectedPaymentOptions)
         .flat()
         .map((paymentOption) => ({
-          trait_type: "Payment Options",
+          trait_type: "Payment Option",
           value: `
            network: ${paymentOption.chainId},
            flowRate: ${paymentOption.flowRate?.amountEther}/${paymentOption.flowRate?.period}, 
