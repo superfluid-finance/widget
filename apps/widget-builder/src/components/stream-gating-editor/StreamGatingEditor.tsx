@@ -141,6 +141,7 @@ const StreamGatingEditor: FC = () => {
       !tokenName ||
       !tokenSymbol ||
       !nftImage ||
+      !recaptchaToken ||
       paymentOptions.length === 0 ||
       deployedCloneAddresses.length > 0 ||
       isDeployed,
@@ -150,6 +151,7 @@ const StreamGatingEditor: FC = () => {
       nftImage,
       paymentOptions,
       deployedCloneAddresses,
+      recaptchaToken,
       isDeployed,
     ],
   );
