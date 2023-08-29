@@ -1,4 +1,3 @@
-import pinataSDK from "@pinata/sdk";
 import metadata from "@superfluid-finance/metadata";
 import {
   ChainId,
@@ -6,7 +5,6 @@ import {
   PaymentOption,
 } from "@superfluid-finance/widget";
 import { NextApiHandler } from "next";
-import requestIp from "request-ip";
 import { ExistentialNFTCloneFactory__factory } from "stream-gating";
 import {
   Address,
@@ -23,13 +21,10 @@ import * as chains from "viem/chains";
 
 import { IPFS_GATEWAY } from "../../constants";
 import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
-import { createNFTmeta } from "../../utils/createNFTmeta";
+import { verifyCaptcha } from "../../utils/captcha";
+import { checkRateLimit } from "../../utils/ip";
+import { pinNFTMetaToIPFS } from "../../utils/pinata";
 import rateLimit from "../../utils/rate-limit";
-
-const pinata = new pinataSDK({
-  pinataApiKey: process.env.NEXT_PUBLIC_PINATA_API_KEY,
-  pinataSecretApiKey: process.env.NEXT_PUBLIC_PINATA_API_SECRET,
-});
 
 const limiter = rateLimit({
   interval: 60 * 1000,
@@ -42,8 +37,6 @@ const account = mnemonic
   : privateKeyToAccount(
       "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161",
     );
-
-const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY ?? "";
 
 // @ts-ignore polyfill
 BigInt.prototype.toJSON = function () {
@@ -66,55 +59,23 @@ const handler: NextApiHandler = async (req, res) => {
   } = JSON.parse(req.body);
 
   try {
-    const clientIp = requestIp.getClientIp(req);
-
-    if (clientIp) {
-      await limiter.check(res, 3, clientIp);
-    } else {
-      throw new Error("Invalid client ip");
-    }
+    await checkRateLimit(req, res, limiter.check);
   } catch {
     return res.status(429);
   }
 
   try {
-    const recaptchaVerifyResult = await (
-      await fetch("https://www.google.com/recaptcha/api/siteverify", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `secret=${recaptchaSecretKey}&response=${recaptchaToken}`,
-      })
-    ).json();
-
-    if (!recaptchaVerifyResult.success) {
-      throw new Error("Invalid recaptcha token");
-    }
+    await verifyCaptcha(recaptchaToken);
   } catch {
     return res.status(400).json({ error: "Invalid recaptcha token" });
   }
 
-  const { IpfsHash: metaHash } = await pinata.pinJSONToIPFS(
-    createNFTmeta({
-      name: `${tokenName} (${tokenSymbol})`,
-      description: "StreamGating NFT MetaData",
-      image: nftImage,
-      attributes: Object.values(selectedPaymentOptions)
-        .flat()
-        .map((paymentOption) => ({
-          trait_type: "Payment Option",
-          value: `
-           network: ${paymentOption.chainId},
-           flowRate: ${paymentOption.flowRate?.amountEther}/${paymentOption.flowRate?.period}, 
-           superToken: ${paymentOption.superToken.address}
-          `,
-        })),
-    }),
-    {
-      pinataMetadata: {
-        name: `StreamGating NFT MetaData (${tokenName}, ${tokenSymbol})`,
-      },
-    },
-  );
+  const metaHash = await pinNFTMetaToIPFS({
+    tokenName,
+    tokenSymbol,
+    nftImage,
+    selectedPaymentOptions,
+  });
 
   const deployConfig = Object.entries(selectedPaymentOptions).map(
     ([chainId, paymentOptions]) => {
