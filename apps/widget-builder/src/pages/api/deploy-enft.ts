@@ -61,7 +61,9 @@ const handler: NextApiHandler = async (req, res) => {
     const clientIp = requestIp.getClientIp(req);
 
     if (clientIp) {
-      await limiter.check(res, 1, clientIp);
+      await limiter.check(res, 3, clientIp);
+    } else {
+      throw new Error("Invalid client ip");
     }
   } catch {
     return res.status(429);
