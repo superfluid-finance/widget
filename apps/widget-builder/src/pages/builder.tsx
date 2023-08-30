@@ -17,7 +17,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
@@ -28,15 +28,17 @@ import UiEditor from "../components/ui-editor/UiEditor";
 import WidgetPreview, {
   WidgetProps,
 } from "../components/widget-preview/WidgetPreview";
+import useAnalyticsBrowser from "../hooks/useAnalyticsBrowser";
 import useDemoMode from "../hooks/useDemoMode";
 
 const drawerWidth = "480px";
+type Tab = "ui" | "product" | "export";
 
 export default function Builder() {
   const theme = useTheme();
-  const [activeTab, setActiveTab] = useState<"ui" | "product" | "export">(
-    "product",
-  );
+  const [activeTab, setActiveTab] = useState<Tab>("product");
+
+  const ajs = useAnalyticsBrowser();
 
   const { widgetProps, demoMode, toggleDemoMode } = useDemoMode();
 
@@ -54,6 +56,14 @@ export default function Builder() {
   ]);
 
   const [isConfigEditorOpen, setConfigEditorOpen] = useState(false);
+
+  const onTabChange = useCallback(
+    (_: React.SyntheticEvent, value: Tab) => {
+      ajs.track("tab_changed", { tab: value });
+      setActiveTab(value);
+    },
+    [activeTab, ajs],
+  );
 
   return (
     <Box sx={{ display: "flex", position: "relative", height: "100vh" }}>
@@ -91,7 +101,7 @@ export default function Builder() {
         </Stack>
 
         <TabContext value={activeTab}>
-          <TabList onChange={(_, value) => setActiveTab(value)} sx={{ px: 2 }}>
+          <TabList onChange={onTabChange} sx={{ px: 2 }}>
             <Tab label="1. Product" value="product" data-testid="product-tab" />
             <Tab label="2. UI" value="ui" data-testid="ui-tab" />
             <Tab label="3. Export" value="export" data-testid="export-tab" />

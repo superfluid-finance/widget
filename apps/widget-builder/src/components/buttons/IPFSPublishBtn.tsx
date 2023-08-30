@@ -1,8 +1,9 @@
 import { LoadingButton } from "@mui/lab";
 import { Stack, Typography } from "@mui/material";
 import { SuperfluidButton } from "@superfluid-finance/widget/components";
-import { FC } from "react";
+import { FC, useCallback } from "react";
 
+import useAnalyticsBrowser from "../../hooks/useAnalyticsBrowser";
 import usePinataIpfs from "../../hooks/usePinataIPFS";
 import { ExportJSON } from "../../types/export-json";
 
@@ -15,6 +16,13 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
     pinataMetadata: { name: `${json.productDetails.name}-superfluid-widget` },
   });
 
+  const ajs = useAnalyticsBrowser();
+
+  const onPublish = useCallback(() => {
+    ajs.track("publish_ipfs", { json });
+    publish(json);
+  }, [ajs, publish, json]);
+
   return (
     <Stack direction="column" gap={2}>
       <LoadingButton
@@ -22,7 +30,7 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
         size="large"
         loading={isLoading}
         variant="contained"
-        onClick={() => publish(json)}
+        onClick={onPublish}
       >
         Publish
       </LoadingButton>
