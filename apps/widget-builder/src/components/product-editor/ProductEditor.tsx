@@ -1,6 +1,6 @@
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import {
-  IconButton,
+  Fab,
   Stack,
   TextField,
   Tooltip,
@@ -26,73 +26,88 @@ const ProductEditor: FC = () => {
   const { setDemoProductDetails } = useDemoMode();
 
   return (
-    <Stack gap={1}>
-      <Stack mb={4} gap={2}>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Typography variant="subtitle1" component="h2">
-            Edit Product Details
-          </Typography>
-          <Tooltip title="Replace with demo product details" arrow>
-            <IconButton onClick={setDemoProductDetails}>
-              <AutoFixHighIcon />
-            </IconButton>
-          </Tooltip>
-        </Stack>
-        <Controller
-          control={control}
-          name="productDetails.name"
-          render={({ field: { value, onChange } }) => (
-            <InputWrapper title="Product Name" optional>
-              {(id) => (
-                <TextField
-                  id={id}
-                  placeholder=""
-                  data-testid="product-name-field"
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-            </InputWrapper>
-          )}
-        />
+    <>
+      <Stack gap={1}>
+        <Stack mb={4} gap={2}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography variant="subtitle1" component="h2">
+              Edit Product Details
+            </Typography>
+          </Stack>
+          <Controller
+            control={control}
+            name="productDetails.name"
+            render={({ field: { value, onChange } }) => (
+              <InputWrapper title="Product Name" optional>
+                {(id) => (
+                  <TextField
+                    id={id}
+                    placeholder=""
+                    data-testid="product-name-field"
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
+              </InputWrapper>
+            )}
+          />
 
-        <Controller
-          control={control}
-          name="productDetails.description"
-          render={({ field: { value, onChange } }) => (
-            <InputWrapper title="Product Description" optional>
-              {(id) => (
-                <TextField
-                  id={id}
-                  data-testid="product-description-field"
-                  placeholder=""
-                  multiline
-                  minRows={4}
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
-            </InputWrapper>
-          )}
-        />
-        <Controller
-          control={control}
-          name="productDetails.imageURI"
-          render={({ field: { value, onChange } }) => (
-            <ImageSelect
-              label="Product Image"
-              onClick={(file) => onChange(URL.createObjectURL(file))}
-              onRemove={() => onChange("")}
-              imageSrc={value}
-            />
-          )}
-        />
+          <Controller
+            control={control}
+            name="productDetails.description"
+            render={({ field: { value, onChange } }) => (
+              <InputWrapper title="Product Description" optional>
+                {(id) => (
+                  <TextField
+                    id={id}
+                    data-testid="product-description-field"
+                    placeholder=""
+                    multiline
+                    minRows={4}
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
+              </InputWrapper>
+            )}
+          />
+          <Controller
+            control={control}
+            name="productDetails.imageURI"
+            render={({ field: { value, onChange } }) => (
+              <ImageSelect
+                label="Product Image"
+                onClick={(file) => onChange(URL.createObjectURL(file))}
+                onRemove={() => onChange("")}
+                imageSrc={value}
+              />
+            )}
+          />
+        </Stack>
       </Stack>
-    </Stack>
+      <Tooltip
+        title="Replace with demo product details"
+        placement="right"
+        arrow
+      >
+        <Fab
+          size="medium"
+          color="secondary"
+          onClick={setDemoProductDetails}
+          sx={{
+            position: "absolute",
+            bottom: 72,
+            left: 20,
+          }}
+        >
+          <AutoFixHighIcon />
+        </Fab>
+      </Tooltip>
+    </>
   );
 };
 

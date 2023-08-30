@@ -4,9 +4,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import {
   AppBar,
   Box,
+  Button,
   Dialog,
   Fab,
   IconButton,
+  Slide,
+  SlideProps,
   Stack,
   Toolbar,
   Tooltip,
@@ -17,7 +20,6 @@ import { FC, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
 import useDemoMode from "../../hooks/useDemoMode";
-import theme from "../../theme";
 import PaymentOptionView from "../payment-option-view/PaymentOptionView";
 import SelectPaymentOption from "../select-payment-option/SelectPaymentOption";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
@@ -46,113 +48,104 @@ const ProductEditor: FC = () => {
   const { setDemoPaymentDetails } = useDemoMode();
 
   return (
-    <Stack gap={1}>
-      <Stack direction="column" gap={1.5}>
-        <Zoom in unmountOnExit>
-          <Fab
-            color="primary"
-            onClick={handleOpen}
-            sx={{
-              position: "absolute",
-              bottom: 68,
-              right: 16,
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        </Zoom>
-
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+    <>
+      <Stack gap={1}>
+        <Stack direction="column" gap={1.5}>
           <Typography variant="subtitle1" component="h2">
             Edit Payment Details
           </Typography>
-          <Tooltip title="Replace with demo payment details" arrow>
-            <IconButton
-              onClick={() => {
-                setAddCount((x) => x + 1);
-                setDemoPaymentDetails();
+          <Stack direction="column">
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{
+                mb: 2,
               }}
             >
-              <AutoFixHighIcon />
-            </IconButton>
-          </Tooltip>
-        </Stack>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <Typography variant="subtitle2">Payment Options</Typography>
+                <Typography
+                  data-testid="added-payment-options-count"
+                  color="text.secondary"
+                >
+                  ({paymentOptions.length})
+                </Typography>
+              </Stack>
+              <Stack direction="row" gap={1}>
+                <Button
+                  variant="contained"
+                  size="small"
+                  color="primary"
+                  onClick={handleOpen}
+                  startIcon={<AddIcon />}
+                >
+                  Add
+                </Button>
+              </Stack>
+            </Stack>
 
-        <Stack direction="column">
-          <Stack
-            direction="row"
-            sx={{
-              mb: 2,
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="subtitle2">Payment Options</Typography>
-            <Typography
-              data-testid="added-payment-options-count"
-              sx={{ color: theme.palette.grey[500] }}
-            >
-              Added: {paymentOptions.length}
-            </Typography>
-          </Stack>
-
-          <Stack direction="column" gap={2.5}>
-            {paymentOptions.length ? (
-              paymentOptions
-                .map(
-                  (
-                    {
-                      superToken,
-                      chainId,
-                      transferAmountEther,
-                      flowRate,
-                      receiverAddress,
-                    },
-                    i,
-                  ) => (
-                    <Zoom
-                      in
-                      appear={!!addCount}
-                      key={`${superToken.address}-${i}`}
-                    >
-                      <Box>
-                        <PaymentOptionView
-                          key={`${superToken.address}-${i}`}
-                          upfrontPaymentAmountEther={transferAmountEther}
-                          flowRate={
-                            flowRate ?? {
-                              amountEther: "0",
-                              period: "month",
+            <Stack direction="column" gap={2.5}>
+              {paymentOptions.length ? (
+                paymentOptions
+                  .map(
+                    (
+                      {
+                        superToken,
+                        chainId,
+                        transferAmountEther,
+                        flowRate,
+                        receiverAddress,
+                      },
+                      i,
+                    ) => (
+                      <Zoom
+                        in
+                        appear={!!addCount}
+                        key={`${superToken.address}-${i}`}
+                      >
+                        <Box>
+                          <PaymentOptionView
+                            upfrontPaymentAmountEther={transferAmountEther}
+                            flowRate={
+                              flowRate ?? {
+                                amountEther: "0",
+                                period: "month",
+                              }
                             }
-                          }
-                          receiverAddress={receiverAddress}
-                          superToken={superToken}
-                          chainId={chainId}
-                          index={i}
-                          remove={(params) => {
-                            remove(params);
-                            setAddCount(0);
-                          }}
-                        />
-                      </Box>
-                    </Zoom>
-                  ),
-                )
-                .reverse()
-            ) : (
-              <Typography data-testid="no-options-message" variant="caption">
-                - None
-              </Typography>
-            )}
+                            receiverAddress={receiverAddress}
+                            superToken={superToken}
+                            chainId={chainId}
+                            index={i}
+                            remove={(params) => {
+                              remove(params);
+                              setAddCount(0);
+                            }}
+                          />
+                        </Box>
+                      </Zoom>
+                    ),
+                  )
+                  .reverse()
+              ) : (
+                <Typography data-testid="no-options-message" variant="caption">
+                  - None
+                </Typography>
+              )}
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
-
-      <Dialog open={isAdding}>
+      <Dialog
+        open={isAdding}
+        TransitionComponent={Slide}
+        TransitionProps={
+          {
+            direction: "right",
+          } as SlideProps
+        }
+        keepMounted
+      >
         <AppBar color="primary" sx={{ position: "relative" }}>
           <Stack
             component={Toolbar}
@@ -175,6 +168,7 @@ const ProductEditor: FC = () => {
           name="paymentDetails.paymentOptions"
           render={() => (
             <SelectPaymentOption
+              key={addCount.toString()}
               onAdd={(props) => {
                 setAddCount((x) => x + 1);
                 append(props);
@@ -185,7 +179,28 @@ const ProductEditor: FC = () => {
           )}
         />
       </Dialog>
-    </Stack>
+      <Tooltip
+        title="Replace with demo payment details"
+        placement="right"
+        arrow
+      >
+        <Fab
+          size="medium"
+          color="secondary"
+          sx={{
+            position: "absolute",
+            bottom: 72,
+            left: 20,
+          }}
+          onClick={() => {
+            setAddCount((x) => x + 1);
+            setDemoPaymentDetails();
+          }}
+        >
+          <AutoFixHighIcon />
+        </Fab>
+      </Tooltip>
+    </>
   );
 };
 
