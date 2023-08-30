@@ -96,16 +96,16 @@ export default function Builder() {
 
           <Box height="100%" overflow="scroll">
             <FormProvider {...formMethods}>
-              <TabPanel value="0">
+              <TabPanel value="0" sx={{ height: "100%" }}>
                 <PaymentEditor />
               </TabPanel>
-              <TabPanel value="1">
+              <TabPanel value="1" sx={{ height: "100%" }}>
                 <ProductEditor />
               </TabPanel>
-              <TabPanel value="2">
+              <TabPanel value="2" sx={{ height: "100%" }}>
                 <UiEditor />
               </TabPanel>
-              <TabPanel value="3">
+              <TabPanel value="3" sx={{ height: "100%" }}>
                 <ExportEditor />
               </TabPanel>
             </FormProvider>

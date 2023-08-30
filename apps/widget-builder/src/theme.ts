@@ -155,7 +155,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "uppercase",
-          fontSize: "0.875rem",
+          fontSize: "1rem",
         },
       },
     },

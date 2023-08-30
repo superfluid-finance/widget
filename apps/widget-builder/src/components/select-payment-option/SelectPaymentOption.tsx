@@ -5,6 +5,7 @@ import {
   Collapse,
   DialogActions,
   DialogContent,
+  Divider,
   FormControlLabel,
   FormGroup,
   InputAdornment,
@@ -59,7 +60,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
     null,
   );
 
-  const [isCustomAmount, setIsCustomAmount] = useState(true);
+  const [isCustomAmount, setIsCustomAmount] = useState(false);
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}` | "">("");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
 
@@ -314,8 +315,8 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                 fullWidth
                 color="primary"
               >
-                <ToggleButton value={true}>User-defined rate</ToggleButton>
                 <ToggleButton value={false}>Fixed rate</ToggleButton>
+                <ToggleButton value={true}>User-defined rate</ToggleButton>
               </ToggleButtonGroup>
             )}
           </InputWrapper>
@@ -423,28 +424,32 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           </Collapse>
         </Stack>
       </DialogContent>
+      <Divider />
       <DialogActions>
-        <Stack spacing={1} sx={{ width: "100%" }}>
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{ width: "100%" }}
+          justifyContent="flex-end"
+        >
           <Button
             size="large"
-            fullWidth
             data-testid="add-option-button"
             color="primary"
-            variant="contained"
-            disabled={!(selectedNetwork && selectedToken)}
-            onClick={handleAdd}
-          >
-            Add Payment Option
-          </Button>
-          <Button
-            size="large"
-            fullWidth
-            data-testid="add-option-button"
-            color="primary"
-            variant="outlined"
+            variant="text"
             onClick={onDiscard}
           >
             Discard
+          </Button>
+          <Button
+            size="large"
+            data-testid="add-option-button"
+            color="primary"
+            variant="contained"
+            disabled={!(selectedNetwork && selectedToken && receiver)}
+            onClick={handleAdd}
+          >
+            Add Payment Option
           </Button>
         </Stack>
       </DialogActions>

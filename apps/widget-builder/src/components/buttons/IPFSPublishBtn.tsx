@@ -1,3 +1,4 @@
+import UploadIcon from "@mui/icons-material/Upload";
 import { LoadingButton } from "@mui/lab";
 import { Stack, Typography } from "@mui/material";
 import { SuperfluidButton } from "@superfluid-finance/widget/components";
@@ -14,6 +15,7 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
   const { publish, isLoading, ipfsHash } = usePinataIpfs({
     pinataMetadata: { name: `${json.productDetails.name}-superfluid-widget` },
   });
+  const isPublished = !!ipfsHash;
 
   return (
     <Stack direction="column" gap={2}>
@@ -21,13 +23,14 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
         data-testid="publish-button"
         size="large"
         loading={isLoading}
+        disabled={isPublished}
         variant="contained"
         onClick={() => publish(json)}
+        startIcon={<UploadIcon />}
       >
-        Publish
+        {isPublished ? "Publish to IPFS" : "Published to IPFS"}
       </LoadingButton>
-
-      {ipfsHash && (
+      {isPublished && (
         <Stack direction="column" sx={{ alignItems: "center", mt: 4 }} gap={2}>
           <Typography
             data-testid="published-message"

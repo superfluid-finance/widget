@@ -1,4 +1,3 @@
-import ClearIcon from "@mui/icons-material/Clear";
 import {
   Button,
   Card,
@@ -6,7 +5,10 @@ import {
   CardContent,
   Divider,
   Stack,
+  styled,
   Tooltip,
+  tooltipClasses,
+  TooltipProps,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -26,6 +28,14 @@ type PaymentOptionRowProps = {
   value: ReactNode;
 };
 
+const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: "none",
+  },
+});
+
 const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
   const theme = useTheme();
   return (
@@ -36,11 +46,7 @@ const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
       direction="row"
       sx={{ width: "100%", justifyContent: "space-between" }}
     >
-      <Typography
-        data-testid="payment-option-label"
-        color="text.secondary"
-        fontWeight="500"
-      >
+      <Typography data-testid="payment-option-label" fontWeight="500">
         {label}
       </Typography>
       {value}
@@ -51,7 +57,7 @@ const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
 type PaymentOptionViewProps = {
   superToken: { address: `0x${string}` };
   upfrontPaymentAmountEther?: string;
-  flowRate: FlowRate;
+  flowRate: FlowRate | undefined;
   receiverAddress: `0x${string}`;
   chainId: ChainId;
   index: number;
@@ -74,12 +80,12 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   );
 
   const flowRateValue = useMemo(() => {
-    if (!flowRate) return "Custom amount";
+    if (!flowRate) return "User-defined";
     return `${flowRate.amountEther} ${token?.symbol ?? "x"}/${flowRate.period}`;
   }, [flowRate, token]);
 
   return (
-    <Card variant="outlined">
+    <Card variant="elevation" elevation={1}>
       <CardContent>
         <Stack direction="column" gap={1}>
           <PaymentOptionRow
@@ -128,11 +134,21 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
           <PaymentOptionRow
             label="Receiver"
             value={
-              <Tooltip
+              <NoMaxWidthTooltip
                 title={receiverAddress}
                 data-testid="added-payment-receiver-tooltip"
+                placement="bottom"
+                arrow
+                PopperProps={{
+                  sx: {
+                    maxWidth: "none",
+                  },
+                }}
               >
-                <Typography data-testid="added-payment-receiver">
+                <Typography
+                  data-testid="added-payment-receiver"
+                  fontFamily="monospace"
+                >
                   {`${receiverAddress.substring(
                     0,
                     6,
@@ -142,24 +158,32 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
                   )}
                 `}
                 </Typography>
-              </Tooltip>
+              </NoMaxWidthTooltip>
             }
           />
         </Stack>
       </CardContent>
       <Divider />
-      <CardActions>
+      <Stack
+        component={CardActions}
+        direction="row"
+        justifyContent="flex-end"
+        bgcolor="grey.50"
+      >
         <Button
           data-testid="delete-payment-option-button"
-          fullWidth
           color="error"
           variant="text"
           onClick={() => remove(index)}
-          startIcon={<ClearIcon />}
         >
           Remove
         </Button>
-      </CardActions>
+        {/* <Tooltip title="Remove payment option" placement="bottom" arrow>
+          <IconButton color="error">
+            <ClearIcon />
+          </IconButton>
+        </Tooltip> */}
+      </Stack>
     </Card>
   );
 };

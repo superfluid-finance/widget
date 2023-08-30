@@ -1,12 +1,6 @@
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, IconButton, Stack, useTheme } from "@mui/material";
 import { ChangeEvent, FC, useRef } from "react";
 
 type ImageSelectProps = {
@@ -38,13 +32,13 @@ const ImageSelect: FC<ImageSelectProps> = ({
 
   return (
     <Stack direction="column" gap={1} sx={{ flex: 1 }}>
-      <Stack direction="row" justifyContent="flex-end">
-        {imageSrc && (
+      {imageSrc && (
+        <Stack direction="row" justifyContent="flex-end">
           <IconButton onClick={onRemove} size="small" sx={{ p: 0 }}>
             <CancelIcon data-testid="remove-image-button" />
           </IconButton>
-        )}
-      </Stack>
+        </Stack>
+      )}
 
       {imageSrc ? (
         <Box
