@@ -1,9 +1,14 @@
+import AddIcon from "@mui/icons-material/Add";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import CloseIcon from "@mui/icons-material/Close";
 import {
+  AppBar,
   Box,
-  Divider,
+  Dialog,
+  Fab,
   IconButton,
   Stack,
+  Toolbar,
   Tooltip,
   Typography,
   Zoom,
@@ -27,41 +32,55 @@ const ProductEditor: FC = () => {
 
   const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
 
+  const [isAdding, setIsAdding] = useState(false);
   const [addCount, setAddCount] = useState(0);
+
+  const handleOpen = () => {
+    setIsAdding(true);
+  };
+
+  const handleClose = () => {
+    setIsAdding(false);
+  };
+
   const { setDemoPaymentDetails } = useDemoMode();
 
   return (
     <Stack gap={1}>
       <Stack direction="column" gap={1.5}>
+        <Zoom in unmountOnExit>
+          <Fab
+            color="primary"
+            onClick={handleOpen}
+            sx={{
+              position: "absolute",
+              bottom: 68,
+              right: 16,
+            }}
+          >
+            <AddIcon />
+          </Fab>
+        </Zoom>
+
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
         >
           <Typography variant="subtitle1" component="h2">
-            Add Payment Option
+            Edit Payment Details
           </Typography>
-          <Tooltip title="Add demo product details" arrow>
-            <IconButton onClick={setDemoPaymentDetails}>
+          <Tooltip title="Replace with demo payment details" arrow>
+            <IconButton
+              onClick={() => {
+                setAddCount((x) => x + 1);
+                setDemoPaymentDetails();
+              }}
+            >
               <AutoFixHighIcon />
             </IconButton>
           </Tooltip>
         </Stack>
-        <Controller
-          key={addCount.toString()}
-          control={control}
-          name="paymentDetails.paymentOptions"
-          render={() => (
-            <SelectPaymentOption
-              onAdd={(params) => {
-                setAddCount((x) => x + 1);
-                append(params);
-              }}
-            />
-          )}
-        />
-
-        <Divider sx={{ my: 2 }} />
 
         <Stack direction="column">
           <Stack
@@ -72,9 +91,7 @@ const ProductEditor: FC = () => {
               alignItems: "center",
             }}
           >
-            <Typography variant="subtitle1" component="h2">
-              Payment Options
-            </Typography>
+            <Typography variant="subtitle2">Payment Options</Typography>
             <Typography
               data-testid="added-payment-options-count"
               sx={{ color: theme.palette.grey[500] }}
@@ -104,6 +121,7 @@ const ProductEditor: FC = () => {
                     >
                       <Box>
                         <PaymentOptionView
+                          key={`${superToken.address}-${i}`}
                           upfrontPaymentAmountEther={transferAmountEther}
                           flowRate={
                             flowRate ?? {
@@ -133,6 +151,40 @@ const ProductEditor: FC = () => {
           </Stack>
         </Stack>
       </Stack>
+
+      <Dialog open={isAdding}>
+        <AppBar color="primary" sx={{ position: "relative" }}>
+          <Stack
+            component={Toolbar}
+            direction="row"
+            justifyContent="space-between"
+          >
+            <Typography variant="subtitle1">Add Payment Option</Typography>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        </AppBar>
+        <Controller
+          control={control}
+          name="paymentDetails.paymentOptions"
+          render={() => (
+            <SelectPaymentOption
+              onAdd={(props) => {
+                setAddCount((x) => x + 1);
+                append(props);
+                handleClose();
+              }}
+              onDiscard={handleClose}
+            />
+          )}
+        />
+      </Dialog>
     </Stack>
   );
 };

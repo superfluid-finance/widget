@@ -36,7 +36,7 @@ const ProductEditor: FC = () => {
           <Typography variant="subtitle1" component="h2">
             Edit Product Details
           </Typography>
-          <Tooltip title="Add demo product details" arrow>
+          <Tooltip title="Replace with demo product details" arrow>
             <IconButton onClick={setDemoProductDetails}>
               <AutoFixHighIcon />
             </IconButton>
@@ -79,7 +79,6 @@ const ProductEditor: FC = () => {
             </InputWrapper>
           )}
         />
-
         <Controller
           control={control}
           name="productDetails.imageURI"

@@ -1,9 +1,4 @@
-import {
-  colors,
-  Fab,
-  SelectChangeEvent,
-  ThemeOptions,
-} from "@mui/material";
+import { colors, Fab, SelectChangeEvent, ThemeOptions } from "@mui/material";
 import SuperfluidWidget, {
   PaymentDetails,
   ProductDetails,
