@@ -46,7 +46,7 @@ const ProductEditor: FC = () => {
           control={control}
           name="productDetails.name"
           render={({ field: { value, onChange } }) => (
-            <InputWrapper title="Product Name">
+            <InputWrapper title="Product Name" optional>
               {(id) => (
                 <TextField
                   id={id}
@@ -64,7 +64,7 @@ const ProductEditor: FC = () => {
           control={control}
           name="productDetails.description"
           render={({ field: { value, onChange } }) => (
-            <InputWrapper title="Product Description">
+            <InputWrapper title="Product Description" optional>
               {(id) => (
                 <TextField
                   id={id}

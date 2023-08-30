@@ -88,7 +88,7 @@ export default function Builder() {
               >
                 <Tab label="1. Product" value="0" data-testid="product-tab" />
                 <Tab label="2. Payment" value="1" data-testid="payment-tab" />
-                <Tab label="3. UI" value="2" data-testid="ui-tab" />
+                <Tab label="3. Styling" value="2" data-testid="ui-tab" />
                 <Tab label="4. Export" value="3" data-testid="export-tab" />
               </TabList>
             </Box>

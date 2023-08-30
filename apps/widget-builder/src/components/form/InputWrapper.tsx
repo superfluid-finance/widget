@@ -6,6 +6,7 @@ import {
   Stack,
   SxProps,
   Tooltip,
+  Typography,
   useTheme,
 } from "@mui/material";
 import { FC, PropsWithChildren, useId } from "react";
@@ -30,6 +31,7 @@ interface InputWrapperProps {
   tooltip?: string;
   sx?: SxProps;
   helperText?: string;
+  optional?: boolean;
   children: (inputId: string) => PropsWithChildren["children"];
 }
 
@@ -39,6 +41,7 @@ const InputWrapper: FC<InputWrapperProps> = ({
   sx = {},
   helperText,
   children,
+  optional,
   ...props
 }) => {
   const generatedId = useId();
@@ -50,6 +53,16 @@ const InputWrapper: FC<InputWrapperProps> = ({
         {!!title && (
           <FormLabel id={labelId} htmlFor={inputId} focused={false}>
             {title}
+            {!!optional && (
+              <Typography
+                component="span"
+                variant="caption"
+                color="text.secondary"
+                sx={{ ml: 1 }}
+              >
+                (optional)
+              </Typography>
+            )}
           </FormLabel>
         )}
         {!!tooltip && <InputInfo tooltip={tooltip} />}
