@@ -126,7 +126,7 @@ const defaultPaymentDetails: PaymentDetails = {
 
 const type: Layout = "page";
 
-const displaySettings: DisplaySettings = {
+const defaultDisplaySettings: DisplaySettings = {
   darkMode: false,
   containerRadius: 20,
   buttonRadius: 10,
@@ -144,7 +144,7 @@ export const defaultWidgetProps: WidgetProps = {
   productDetails: defaultProductDetails,
   paymentDetails: defaultPaymentDetails,
   type,
-  displaySettings,
+  displaySettings: defaultDisplaySettings,
 };
 
 const useDemoMode = () => {
@@ -154,6 +154,7 @@ const useDemoMode = () => {
     () => setValue("paymentDetails", demoPaymentDetails),
     [setValue],
   );
+
   const setDemoProductDetails = useCallback(() => {
     const demoProductDetails: ProductDetails = {
       name: `${faker.commerce.productName()}`,
@@ -163,9 +164,23 @@ const useDemoMode = () => {
     setValue("productDetails", demoProductDetails);
   }, [setValue]);
 
+  const setDemoStyling = useCallback(() => {
+    const demoStyling: DisplaySettings = {
+      ...defaultDisplaySettings,
+      darkMode: faker.datatype.boolean(),
+      primaryColor: faker.color.rgb() as `#${string}`,
+      secondaryColor: faker.color.rgb() as `#${string}`,
+      containerRadius: faker.number.int({ min: 0, max: 50 }),
+      buttonRadius: faker.number.int({ min: 0, max: 25 }),
+      inputRadius: faker.number.int({ min: 0, max: 25 }),
+    };
+    setValue("displaySettings", demoStyling);
+  }, [setValue]);
+
   return {
     setDemoPaymentDetails,
     setDemoProductDetails,
+    setDemoStyling,
   };
 };
 
