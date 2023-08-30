@@ -76,20 +76,20 @@ export default function Builder() {
       >
         <TabContext value={activeStep.toString()}>
           <AppBar position="sticky" color="primary" elevation={3}>
-            <Toolbar component={Toolbar}>
-              <Typography variant="subtitle1" component="h1" fontWeight="500">
+            <Stack component={Toolbar} justifyContent="center">
+              <Typography variant="h6" component="h1">
                 Checkout Builder
               </Typography>
-            </Toolbar>
+            </Stack>
             <Box bgcolor="background.paper">
               <TabList
                 variant="fullWidth"
                 onChange={(_, value) => setActiveStep(Number(value))}
               >
-                <Tab label="1. Product" value="0" data-testid="product-tab" />
-                <Tab label="2. Payment" value="1" data-testid="payment-tab" />
-                <Tab label="3. Styling" value="2" data-testid="ui-tab" />
-                <Tab label="4. Export" value="3" data-testid="export-tab" />
+                <Tab label="Payment" value="0" data-testid="payment-tab" />
+                <Tab label="Product" value="1" data-testid="product-tab" />
+                <Tab label="Styling" value="2" data-testid="ui-tab" />
+                <Tab label="Export" value="3" data-testid="export-tab" />
               </TabList>
             </Box>
           </AppBar>
@@ -97,10 +97,10 @@ export default function Builder() {
           <Box height="100%" overflow="scroll">
             <FormProvider {...formMethods}>
               <TabPanel value="0">
-                <ProductEditor />
+                <PaymentEditor />
               </TabPanel>
               <TabPanel value="1">
-                <PaymentEditor />
+                <ProductEditor />
               </TabPanel>
               <TabPanel value="2">
                 <UiEditor />

@@ -28,8 +28,8 @@ const ProductEditor: FC = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="subtitle1" component="h2">
-              Edit Product Details
+            <Typography variant="h6" component="h2">
+              Checkout Product Details
             </Typography>
           </Stack>
           <Controller
@@ -73,12 +73,16 @@ const ProductEditor: FC = () => {
             control={control}
             name="productDetails.imageURI"
             render={({ field: { value, onChange } }) => (
-              <ImageSelect
-                label="Product Image"
-                onClick={(file) => onChange(URL.createObjectURL(file))}
-                onRemove={() => onChange("")}
-                imageSrc={value}
-              />
+              <InputWrapper id="product-image" title="Product Image" optional>
+                {(id) => (
+                  <ImageSelect
+                    id={id}
+                    onClick={(file) => onChange(URL.createObjectURL(file))}
+                    onRemove={() => onChange("")}
+                    imageSrc={value}
+                  />
+                )}
+              </InputWrapper>
             )}
           />
         </Stack>

@@ -51,8 +51,8 @@ const ProductEditor: FC = () => {
     <>
       <Stack gap={1}>
         <Stack direction="column" gap={1.5}>
-          <Typography variant="subtitle1" component="h2">
-            Edit Payment Details
+          <Typography variant="h6" component="h2">
+            Checkout Payment Details
           </Typography>
           <Stack direction="column">
             <Stack
@@ -63,19 +63,22 @@ const ProductEditor: FC = () => {
                 mb: 2,
               }}
             >
-              <Stack direction="row" alignItems="center" gap={1}>
-                <Typography variant="subtitle2">Payment Options</Typography>
-                <Typography
-                  data-testid="added-payment-options-count"
-                  color="text.secondary"
-                >
-                  ({paymentOptions.length})
-                </Typography>
-              </Stack>
+              <Typography variant="subtitle1" component="h3">
+                <Stack direction="row" alignItems="center" gap={1}>
+                  Payment Options
+                  <Typography
+                    component="span"
+                    data-testid="added-payment-options-count"
+                    color="text.secondary"
+                  >
+                    ({paymentOptions.length})
+                  </Typography>
+                </Stack>
+              </Typography>
               <Stack direction="row" gap={1}>
                 <Button
                   variant="contained"
-                  size="small"
+                  size="medium"
                   color="primary"
                   onClick={handleOpen}
                   startIcon={<AddIcon />}

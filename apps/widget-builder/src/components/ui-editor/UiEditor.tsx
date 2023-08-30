@@ -32,8 +32,8 @@ const UiEditor: FC = () => {
   return (
     <>
       <Stack direction="column" gap={2}>
-        <Typography variant="subtitle1" component="h2">
-          {"Edit Widget's Styling"}
+        <Typography variant="h6" component="h2">
+          {"Checkout Widget Styling"}
         </Typography>
 
         <Controller
