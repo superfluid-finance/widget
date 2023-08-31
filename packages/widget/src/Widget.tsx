@@ -272,7 +272,10 @@ export function Widget({
         {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
         {/* TODO: (M) Add ScopedCssBaseline to handle scrollbar styles */}
         {validationResult.success ? (
-          <WidgetView key={paymentDetailsKey} {...viewProps} />
+          <WidgetView
+            key={`${viewProps.type}-${paymentDetailsKey}`}
+            {...viewProps}
+          />
         ) : (
           <Alert data-testid="widget-error" severity="error">
             <AlertTitle>Input Error</AlertTitle>
