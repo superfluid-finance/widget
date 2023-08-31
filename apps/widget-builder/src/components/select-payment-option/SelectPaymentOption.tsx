@@ -25,6 +25,8 @@ import {
 import {
   ChainId,
   NetworkAssetInfo,
+  PaymentOption,
+  paymentOptionSchema,
   supportedNetworks,
   TimePeriod,
   timePeriods,
@@ -35,12 +37,13 @@ import tokenList, {
 import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend } from "react-hook-form";
 import { Chain } from "wagmi";
+import { ZodError } from "zod";
 
 import InputWrapper, { InputInfo } from "../form/InputWrapper";
 import NetworkAvatar from "../NetworkAvatar";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
-export type PaymentOption = {
+export type PaymentOptionWithSuperTokenAndNetwork = {
   network: NetworkAssetInfo;
   superToken: SuperTokenInfo;
 };
@@ -93,38 +96,41 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
     }
   };
 
+  const [errors, setErrors] = useState<ZodError<PaymentOption> | null>(null);
+
   const handleAdd = () => {
-    if (!selectedToken) {
-      return;
-    }
+    setErrors(null);
 
-    const network = supportedNetworks.find(
-      (n) => n.id === selectedToken.chainId,
-    );
+    const thePaymentOption: Partial<PaymentOption> = {
+      receiverAddress: receiver as `0x${string}`,
+      superToken: selectedToken
+        ? {
+            address: selectedToken.address as `0x${string}`,
+          }
+        : undefined,
+      chainId: selectedToken ? (selectedToken.chainId as ChainId) : undefined,
+      ...(!isCustomAmount
+        ? {
+            ...(showUpfrontPayment
+              ? {
+                  transferAmountEther: upfrontPaymentAmount
+                    ? upfrontPaymentAmount
+                    : "0",
+                }
+              : {}),
+            flowRate: {
+              amountEther: flowRateAmount ? flowRateAmount : "0",
+              period: flowRateInterval,
+            },
+          }
+        : {}),
+    };
 
-    if (network && receiver) {
-      onAdd({
-        receiverAddress: receiver,
-        superToken: {
-          address: selectedToken.address as `0x${string}`,
-        },
-        chainId: selectedToken.chainId as ChainId,
-        ...(!isCustomAmount
-          ? {
-              ...(showUpfrontPayment
-                ? {
-                    transferAmountEther: upfrontPaymentAmount
-                      ? upfrontPaymentAmount
-                      : "0",
-                  }
-                : {}),
-              flowRate: {
-                amountEther: flowRateAmount ? flowRateAmount : "0",
-                period: flowRateInterval,
-              },
-            }
-          : {}),
-      });
+    const validationResult = paymentOptionSchema.safeParse(thePaymentOption);
+    if (validationResult.success) {
+      onAdd(validationResult.data);
+    } else {
+      setErrors(validationResult.error);
     }
   };
 
@@ -174,6 +180,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           <InputWrapper
             title="Network"
             tooltip="Select the network you'd like to request payment on."
+            error={Boolean(errors?.formErrors?.fieldErrors?.chainId)}
           >
             {(id) => (
               <Select
@@ -229,10 +236,12 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           <InputWrapper
             title="Receiver Address"
             tooltip="Set your wallet or multisig address on the relevant network."
+            error={Boolean(errors?.formErrors?.fieldErrors?.receiverAddress)}
           >
-            {(id) => (
+            {(id, error) => (
               <TextField
                 id={id}
+                error={error}
                 data-testid="receiver-input-field"
                 value={receiver}
                 onChange={({ target }) =>
@@ -246,8 +255,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             id="token-select"
             title="Super Token"
             tooltip="Select the SuperToken you'd like to request payment in."
+            error={Boolean(errors?.formErrors?.fieldErrors?.superToken)}
           >
-            {(id) => (
+            {(id, error) => (
               <Autocomplete
                 fullWidth
                 disabled={!selectedNetwork}
@@ -282,6 +292,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    error={error}
                     InputProps={{
                       ...params.InputProps,
                       startAdornment: selectedToken?.logoURI && (
@@ -326,14 +337,16 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
               <InputWrapper
                 title="Stream Rate"
                 tooltip="Set the amount of tokens per month for the payment."
+                error={Boolean(errors?.formErrors?.fieldErrors?.flowRate)}
               >
-                {(id) => (
+                {(id, error) => (
                   <Stack
                     gap="-1px"
                     sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
                   >
                     <TextField
                       id={id}
+                      error={error}
                       data-testid="flow-rate-input"
                       fullWidth
                       value={flowRateAmount}
@@ -398,10 +411,14 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                   <InputWrapper
                     title="Upfront Payment Amount"
                     tooltip="The ERC-20 transfer amount the user should send as an upfront payment."
+                    error={Boolean(
+                      errors?.formErrors?.fieldErrors?.transferAmountEther,
+                    )}
                   >
-                    {(id) => (
+                    {(id, error) => (
                       <TextField
                         id={id}
+                        error={error}
                         data-testid="upfront-payment-amount-input"
                         fullWidth
                         value={upfrontPaymentAmount}
@@ -446,7 +463,6 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
             data-testid="add-option-button"
             color="primary"
             variant="contained"
-            disabled={!(selectedNetwork && selectedToken && receiver)}
             onClick={handleAdd}
           >
             Add Payment Option

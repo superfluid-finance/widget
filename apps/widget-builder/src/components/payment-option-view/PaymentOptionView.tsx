@@ -73,10 +73,15 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   index,
   remove,
 }) => {
-  const theme = useTheme();
   const network = supportedNetworks.find((n) => n.id === chainId)!;
-  const token = Object.values(superTokenList.tokens).find(
-    (token) => token.address === superToken.address,
+
+  const token = useMemo(
+    () =>
+      Object.values(superTokenList.tokens).find(
+        (token) =>
+          token.address.toLowerCase() === superToken.address.toLowerCase(),
+      ),
+    [superTokenList, superToken.address],
   );
 
   const flowRateValue = useMemo(() => {
