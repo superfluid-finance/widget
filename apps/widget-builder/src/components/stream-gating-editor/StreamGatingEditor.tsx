@@ -8,7 +8,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ChainId, PaymentOption } from "@superfluid-finance/widget";
+import {
+  ChainId,
+  PaymentOption,
+  SupportedNetwork,
+  supportedNetworks,
+} from "@superfluid-finance/widget";
 import uniqBy from "lodash/uniqBy";
 import {
   createRef,
@@ -21,9 +26,9 @@ import {
 import ReCAPTCHA from "react-google-recaptcha";
 import { useFormContext } from "react-hook-form";
 import { Address } from "viem";
+import { Chain } from "wagmi";
 
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
-import { getNetworkByChainIdOrThrow, Network } from "../../networkDefinitions";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
 import NFTDeploymentDialog from "../nft-deployment-modal/NFTDeploymentDialog";
@@ -66,10 +71,12 @@ const StreamGatingEditor: FC = () => {
   }, []);
 
   // Collect networks used in payment options
-  const paymentOptionNetworks = useMemo(() => {
+  const paymentOptionNetworks = useMemo<SupportedNetwork[]>(() => {
     try {
       const result = uniqBy(paymentOptions, "chainId").map(({ chainId }) => {
-        return getNetworkByChainIdOrThrow(chainId);
+        const result = supportedNetworks.find(({ id }) => id === chainId);
+        if (!result) throw new Error("Network not found.");
+        return result;
       });
 
       return result;
@@ -80,14 +87,14 @@ const StreamGatingEditor: FC = () => {
 
   // Group payment options by network
   const selectPaymentOptions = useCallback(
-    (checked: boolean, network: Network) => {
+    (checked: boolean, network: Chain) => {
       const paymentOptionsByNetwork = paymentOptions.filter(
-        ({ chainId }) => network.chainId === chainId,
+        ({ chainId }) => network.id === chainId,
       );
 
       setSelectedPaymentOptions((prev) => ({
         ...prev,
-        [network.chainId]: checked ? paymentOptionsByNetwork : undefined,
+        [network.id]: checked ? paymentOptionsByNetwork : undefined,
       }));
 
       return;
@@ -210,13 +217,13 @@ const StreamGatingEditor: FC = () => {
           <FormGroup sx={{ px: 1 }}>
             {paymentOptionNetworks.map((network) => (
               <FormControlLabel
-                key={network.chainId}
+                key={network.id}
                 sx={{ fontWeight: "bold" }}
                 control={
                   <Checkbox
                     color="primary"
                     value={network}
-                    checked={Boolean(selectedPaymentOptions[network.chainId])}
+                    checked={Boolean(selectedPaymentOptions[network.id])}
                     onChange={({ target }) =>
                       selectPaymentOptions(target.checked, network)
                     }
