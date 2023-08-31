@@ -1,11 +1,11 @@
-import { Divider, Stack, TextField, Typography } from "@mui/material";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import { Box, Fab, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { FC } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
-import theme from "../../theme";
+import useDemoMode from "../../hooks/useDemoMode";
 import InputWrapper from "../form/InputWrapper";
-import PaymentOptionView from "../payment-option-view/PaymentOptionView";
-import SelectPaymentOption from "../select-payment-option/SelectPaymentOption";
+import ImageSelect from "../image-select/ImageSelect";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 const ProductEditor: FC = () => {
@@ -17,17 +17,25 @@ const ProductEditor: FC = () => {
   });
 
   const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
+  const { setDemoProductDetails } = useDemoMode();
 
   return (
-    <Stack gap={1}>
-      <Stack mb={4} gap={2}>
-        <Typography variant="subtitle1">Payment Configuration</Typography>
-
+    <>
+      <Stack gap={2}>
+        <Box mb={1}>
+          <Typography variant="h6" component="h2">
+            Checkout Product Details
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Define the product you want to receive ongoing real-time payments
+            for.
+          </Typography>
+        </Box>
         <Controller
           control={control}
           name="productDetails.name"
           render={({ field: { value, onChange } }) => (
-            <InputWrapper title="Product Name">
+            <InputWrapper title="Product Name" optional>
               {(id) => (
                 <TextField
                   id={id}
@@ -45,7 +53,7 @@ const ProductEditor: FC = () => {
           control={control}
           name="productDetails.description"
           render={({ field: { value, onChange } }) => (
-            <InputWrapper title="Product Description">
+            <InputWrapper title="Product Description" optional>
               {(id) => (
                 <TextField
                   id={id}
@@ -60,75 +68,42 @@ const ProductEditor: FC = () => {
             </InputWrapper>
           )}
         />
-      </Stack>
-
-      <Stack direction="column" gap={1.5}>
-        <Typography variant="subtitle1">Add Payment Options</Typography>
         <Controller
           control={control}
-          name="paymentDetails.paymentOptions"
-          render={() => <SelectPaymentOption onAdd={append} />}
+          name="productDetails.imageURI"
+          render={({ field: { value, onChange } }) => (
+            <InputWrapper id="product-image" title="Product Image" optional>
+              {(id) => (
+                <ImageSelect
+                  id={id}
+                  onClick={(file) => onChange(URL.createObjectURL(file))}
+                  onRemove={() => onChange("")}
+                  imageSrc={value}
+                />
+              )}
+            </InputWrapper>
+          )}
         />
-
-        <Divider sx={{ my: 4 }} />
-
-        <Stack direction="column">
-          <Stack
-            direction="row"
-            sx={{
-              mb: 2,
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="subtitle1">Payment Details Summary</Typography>
-            <Typography
-              data-testid="added-payment-options-count"
-              sx={{ color: theme.palette.grey[500] }}
-            >
-              Added: {paymentOptions.length}
-            </Typography>
-          </Stack>
-
-          <Stack direction="column" gap={2.5}>
-            {paymentOptions.length ? (
-              paymentOptions.map(
-                (
-                  {
-                    superToken,
-                    chainId,
-                    transferAmountEther,
-                    flowRate,
-                    receiverAddress,
-                  },
-                  i,
-                ) => (
-                  <PaymentOptionView
-                    key={`${superToken.address}-${i}`}
-                    upfrontPaymentAmountEther={transferAmountEther}
-                    flowRate={
-                      flowRate ?? {
-                        amountEther: "0",
-                        period: "month",
-                      }
-                    }
-                    receiverAddress={receiverAddress}
-                    superToken={superToken}
-                    chainId={chainId}
-                    index={i}
-                    remove={remove}
-                  />
-                ),
-              )
-            ) : (
-              <Typography data-testid="no-options-message" variant="caption">
-                - None
-              </Typography>
-            )}
-          </Stack>
-        </Stack>
       </Stack>
-    </Stack>
+      <Tooltip
+        title="Replace with demo product details"
+        placement="right"
+        arrow
+      >
+        <Fab
+          size="medium"
+          color="secondary"
+          onClick={setDemoProductDetails}
+          sx={{
+            position: "absolute",
+            bottom: 72,
+            left: 20,
+          }}
+        >
+          <AutoFixHighIcon />
+        </Fab>
+      </Tooltip>
+    </>
   );
 };
 

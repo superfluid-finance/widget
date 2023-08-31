@@ -1,3 +1,4 @@
+import DownloadIcon from "@mui/icons-material/Download";
 import { Button } from "@mui/material";
 import { FC } from "react";
 
@@ -12,12 +13,13 @@ const DownloadJsonBtn: FC<DownloadJsonBtnProps> = ({ json }) => (
     data-testid="download-button"
     fullWidth
     size="large"
+    color="primary"
     variant="contained"
     href={URL.createObjectURL(
       new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),
     )}
     download={`widget.json`}
-    sx={{ color: "white" }}
+    startIcon={<DownloadIcon />}
   >
     Download JSON
   </Button>
