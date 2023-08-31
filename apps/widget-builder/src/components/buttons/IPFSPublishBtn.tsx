@@ -1,3 +1,5 @@
+import CloudDoneIcon from "@mui/icons-material/CloudDone";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { LoadingButton } from "@mui/lab";
 import { Stack, Typography } from "@mui/material";
 import { SuperfluidButton } from "@superfluid-finance/widget/components";
@@ -16,6 +18,8 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
     pinataMetadata: { name: `${json.productDetails.name}-superfluid-widget` },
   });
 
+  const isPublished = !!ipfsHash;
+
   const ajs = useAnalyticsBrowser();
 
   const onPublish = useCallback(() => {
@@ -29,13 +33,14 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
         data-testid="publish-button"
         size="large"
         loading={isLoading}
+        disabled={isPublished}
         variant="contained"
         onClick={onPublish}
+        startIcon={isPublished ? <CloudDoneIcon /> : <CloudUploadIcon />}
       >
-        Publish
+        {isPublished ? "Published to IPFS" : "Publish to IPFS"}
       </LoadingButton>
-
-      {ipfsHash && (
+      {isPublished && (
         <Stack direction="column" sx={{ alignItems: "center", mt: 4 }} gap={2}>
           <Typography
             data-testid="published-message"

@@ -1,4 +1,4 @@
-import { Button, colors, SelectChangeEvent, ThemeOptions } from "@mui/material";
+import { colors, Fab, SelectChangeEvent, ThemeOptions } from "@mui/material";
 import SuperfluidWidget, {
   PaymentDetails,
   ProductDetails,
@@ -115,7 +115,11 @@ const switchLayout = (
       stepper={{ orientation: stepperOrientation }}
     >
       {({ openModal }) => (
-        <Button onClick={() => openModal()}>{`Open ${layout}`}</Button>
+        <Fab
+          color="primary"
+          variant="extended"
+          onClick={() => openModal()}
+        >{`Open Checkout in ${layout.toUpperCase()}`}</Fab>
       )}
     </SuperfluidWidget>
   );
