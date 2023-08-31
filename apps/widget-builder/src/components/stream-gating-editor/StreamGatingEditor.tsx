@@ -214,7 +214,7 @@ const StreamGatingEditor: FC = () => {
       </Stack>
       <Stack direction="column" gap={4} sx={{ mt: 4 }}>
         <ImageSelect
-          label="Customize NFT Image"
+          id="Customize NFT Image"
           imageSrc={nftImage ? URL.createObjectURL(nftImage) : undefined}
           onClick={(file) => setNftImage(file)}
           onRemove={() => setNftImage(undefined)}

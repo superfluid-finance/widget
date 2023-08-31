@@ -2909,26 +2909,11 @@ packages:
       '@noble/hashes': 1.3.2
       '@scure/base': 1.1.2
 
-  /@scure/bip32@1.3.1:
-    resolution: {integrity: sha512-osvveYtyzdEVbt3OfwwXFr4P2iVBL5u1Q3q4ONBfDY/UpOuXmOlbgwc1xECEboY8wIays8Yt6onaWMUdUbfl0A==}
-    dependencies:
-      '@noble/curves': 1.1.0
-      '@noble/hashes': 1.3.2
-      '@scure/base': 1.1.2
-    dev: true
-
   /@scure/bip39@1.2.0:
     resolution: {integrity: sha512-SX/uKq52cuxm4YFXWFaVByaSHJh2w3BnokVSeUJVCv6K7WulT9u2BuNRBhuFl8vAuYnzx9bEu9WgpcNYTrYieg==}
     dependencies:
       '@noble/hashes': 1.3.2
       '@scure/base': 1.1.2
-
-  /@scure/bip39@1.2.1:
-    resolution: {integrity: sha512-Z3/Fsz1yr904dduJD0NpiyRHhRYHdcnyh73FZWiV+/qhWi83wNJ3NWolYqCEN+ZWsUz2TWwajJggcRE9r1zUYg==}
-    dependencies:
-      '@noble/hashes': 1.3.2
-      '@scure/base': 1.1.2
-    dev: true
 
   /@segment/analytics-core@1.3.0:
     resolution: {integrity: sha512-ujScWZH49NK1hYlp2/EMw45nOPEh+pmTydAnR6gSkRNucZD4fuinvpPL03rmFCw8ibaMuKLAdgPJfQ0gkLKZ5A==}
@@ -4972,7 +4957,7 @@ packages:
   /@types/request-ip@0.0.38:
     resolution: {integrity: sha512-1yeq8UuK/tUBqLXRY24gjeFvrSNaGNcOcZLQjHlnuw8iu+qE/vTQ64TUcLWorr607NKLfFakdoYEXXHXrLLKCw==}
     dependencies:
-      '@types/node': 20.5.6
+      '@types/node': 20.5.7
     dev: true
 
   /@types/responselike@1.0.0:
@@ -8898,7 +8883,7 @@ packages:
       array.prototype.flatmap: 1.3.1
       array.prototype.tosorted: 1.1.1
       doctrine: 2.1.0
-      es-iterator-helpers: 1.0.12
+      es-iterator-helpers: 1.0.13
       eslint: 8.48.0
       estraverse: 5.3.0
       jsx-ast-utils: 3.3.5
@@ -14739,7 +14724,7 @@ packages:
     resolution: {integrity: sha512-cgCcUV8eooTxwZl3dK7g8gc/OvACdkxmtf05Na91cO1Bkt8L/XX/MhTWosyLFYl96VAtzLMZAmVV/Y6MUMoIbw==}
     dependencies:
       ethers: 6.7.0
-      viem: 1.7.0(typescript@5.2.2)(zod@3.22.2)
+      viem: 1.8.1(typescript@5.2.2)(zod@3.22.2)
     transitivePeerDependencies:
       - bufferutil
       - typescript
