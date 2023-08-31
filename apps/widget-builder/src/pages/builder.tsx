@@ -13,7 +13,6 @@ import {
   Tab,
   Toolbar,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -32,8 +31,6 @@ import { defaultWidgetProps } from "../hooks/useDemoMode";
 export const drawerWidth = "480px";
 
 export default function Builder() {
-  const theme = useTheme();
-
   const [activeStep, setActiveStep] = useState(0);
   const stepCount = 4;
   const handleNext = () => {
@@ -86,21 +83,26 @@ export default function Builder() {
                 variant="fullWidth"
                 onChange={(_, value) => setActiveStep(Number(value))}
               >
-                <Tab label="Payment" value="0" data-testid="payment-tab" />
-                <Tab label="Product" value="1" data-testid="product-tab" />
+                <Tab label="Product" value="0" data-testid="product-tab" />
+                <Tab label="Payment" value="1" data-testid="payment-tab" />
                 <Tab label="Styling" value="2" data-testid="ui-tab" />
                 <Tab label="Export" value="3" data-testid="export-tab" />
               </TabList>
             </Box>
           </AppBar>
 
-          <Box height="100%" overflow="scroll">
+          <Box
+            height="100%"
+            sx={{
+              overflowY: "scroll",
+            }}
+          >
             <FormProvider {...formMethods}>
               <TabPanel value="0" sx={{ height: "100%" }}>
-                <PaymentEditor />
+                <ProductEditor />
               </TabPanel>
               <TabPanel value="1" sx={{ height: "100%" }}>
-                <ProductEditor />
+                <PaymentEditor />
               </TabPanel>
               <TabPanel value="2" sx={{ height: "100%" }}>
                 <UiEditor />

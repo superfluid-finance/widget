@@ -20,6 +20,7 @@ import {
 import superTokenList from "@superfluid-finance/widget/tokenlist";
 import Image from "next/image";
 import { FC, ReactNode, useMemo } from "react";
+import { getAddress } from "viem";
 
 import NetworkAvatar from "../NetworkAvatar";
 
@@ -68,12 +69,19 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   superToken,
   upfrontPaymentAmountEther,
   flowRate,
-  receiverAddress,
+  receiverAddress: receiverAddress_,
   chainId,
   index,
   remove,
 }) => {
-  const network = supportedNetworks.find((n) => n.id === chainId)!;
+  const network = useMemo(
+    () => supportedNetworks.find((n) => n.id === chainId)!,
+    [chainId],
+  );
+  const receiverAddress = useMemo(
+    () => getAddress(receiverAddress_),
+    [receiverAddress_],
+  );
 
   const token = useMemo(
     () =>
@@ -150,10 +158,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
                   },
                 }}
               >
-                <Typography
-                  data-testid="added-payment-receiver"
-                  fontFamily="monospace"
-                >
+                <Typography data-testid="added-payment-receiver">
                   {`${receiverAddress.substring(
                     0,
                     6,
@@ -183,11 +188,6 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         >
           Remove
         </Button>
-        {/* <Tooltip title="Remove payment option" placement="bottom" arrow>
-          <IconButton color="error">
-            <ClearIcon />
-          </IconButton>
-        </Tooltip> */}
       </Stack>
     </Card>
   );

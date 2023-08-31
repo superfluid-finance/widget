@@ -27,7 +27,6 @@ const BookDemoBtn: FC<BookDemoBtnProps> = ({ children, sx = {} }) => {
       variant="outlined"
       color="primary"
       sx={sx}
-      // startIcon={<EventNoteIcon />}
     >
       {children}
     </Button>
