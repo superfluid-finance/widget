@@ -1,9 +1,9 @@
-import metadata from "@superfluid-finance/metadata";
 import {
   ChainId,
   mapTimePeriodToSeconds,
   PaymentOption,
 } from "@superfluid-finance/widget";
+import metadata from "@superfluid-finance/widget/metadata";
 import { NextApiHandler } from "next";
 import { ExistentialNFTCloneFactory__factory } from "stream-gating";
 import {

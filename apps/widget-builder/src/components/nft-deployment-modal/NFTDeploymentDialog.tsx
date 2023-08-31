@@ -90,6 +90,7 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
             <Link
               href="https://docs.superfluid.finance/superfluid/protocol-tutorials/nft-gating"
               style={{ width: "100%" }}
+              target="_blank"
             >
               <Button variant="outlined" color="primary" size="large" fullWidth>
                 See documentation

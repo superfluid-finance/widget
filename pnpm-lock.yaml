@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: false
@@ -163,9 +163,6 @@ importers:
       '@sentry/nextjs':
         specifier: ^7.65.0
         version: 7.65.0(next@13.4.19)(react@18.2.0)
-      '@superfluid-finance/metadata':
-        specifier: ^1.1.13
-        version: 1.1.13
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
