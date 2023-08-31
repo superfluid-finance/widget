@@ -132,7 +132,7 @@ const StreamGatingEditor: FC = () => {
     tokenSymbol,
     nftImage,
     selectedPaymentOptions,
-    recaptchaKey,
+    recaptchaToken,
     nftImageBase64,
   ]);
 
