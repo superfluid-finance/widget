@@ -1,4 +1,5 @@
-import UploadIcon from "@mui/icons-material/Upload";
+import CloudDoneIcon from "@mui/icons-material/CloudDone";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { LoadingButton } from "@mui/lab";
 import { Stack, Typography } from "@mui/material";
 import { SuperfluidButton } from "@superfluid-finance/widget/components";
@@ -26,9 +27,9 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
         disabled={isPublished}
         variant="contained"
         onClick={() => publish(json)}
-        startIcon={<UploadIcon />}
+        startIcon={isPublished ? <CloudDoneIcon /> : <CloudUploadIcon />}
       >
-        {isPublished ? "Publish to IPFS" : "Published to IPFS"}
+        {isPublished ? "Published to IPFS" : "Publish to IPFS"}
       </LoadingButton>
       {isPublished && (
         <Stack direction="column" sx={{ alignItems: "center", mt: 4 }} gap={2}>
