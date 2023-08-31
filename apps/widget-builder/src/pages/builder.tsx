@@ -1,27 +1,25 @@
 import CodeIcon from "@mui/icons-material/Code";
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
-import WebIcon from "@mui/icons-material/Web";
-import WebAssetIcon from "@mui/icons-material/WebAsset";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
+  AppBar,
   Box,
   Button,
   Drawer,
-  FormControlLabel,
+  MobileStepper,
+  Paper,
   Stack,
-  Switch,
   Tab,
-  ToggleButton,
-  ToggleButtonGroup,
+  Toolbar,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { useCallback, useState } from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
 import ExportEditor from "../components/export-editor/ExportEditor";
+import PaymentEditor from "../components/payment-editor/PaymentEditor";
 import ProductEditor from "../components/product-editor/ProductEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
@@ -29,21 +27,30 @@ import WidgetPreview, {
   WidgetProps,
 } from "../components/widget-preview/WidgetPreview";
 import useAnalyticsBrowser from "../hooks/useAnalyticsBrowser";
-import useDemoMode from "../hooks/useDemoMode";
+import { defaultWidgetProps } from "../hooks/useDemoMode";
 
-const drawerWidth = "480px";
-type Tab = "ui" | "product" | "export";
+export const drawerWidth = "480px";
 
 export default function Builder() {
-  const theme = useTheme();
-  const [activeTab, setActiveTab] = useState<Tab>("product");
+  const [activeStep, setActiveStep] = useState(0);
+  const stepCount = 4;
 
   const ajs = useAnalyticsBrowser();
 
-  const { widgetProps, demoMode, toggleDemoMode } = useDemoMode();
+  const handleNext = () => {
+    ajs.track("next_step", { step: activeStep + 1 });
+
+    setActiveStep((prevActiveStep) =>
+      Math.min(prevActiveStep + 1, stepCount - 1),
+    );
+  };
+  const handleBack = () => {
+    ajs.track("previous_step", { step: activeStep - 1 });
+    setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
+  };
 
   const formMethods = useForm<WidgetProps>({
-    values: widgetProps,
+    values: defaultWidgetProps,
   });
 
   const { watch, control, getValues, setValue } = formMethods;
@@ -58,11 +65,11 @@ export default function Builder() {
   const [isConfigEditorOpen, setConfigEditorOpen] = useState(false);
 
   const onTabChange = useCallback(
-    (_: React.SyntheticEvent, value: Tab) => {
+    (_: React.SyntheticEvent, value: string) => {
       ajs.track("tab_changed", { tab: value });
-      setActiveTab(value);
+      setActiveStep(Number(value));
     },
-    [activeTab, ajs],
+    [activeStep, ajs],
   );
 
   return (
@@ -79,45 +86,90 @@ export default function Builder() {
           },
         }}
       >
-        <Stack
-          direction="row"
-          sx={{
-            alignItems: "center",
-            justifyContent: "space-between",
-            px: 3.5,
-            pt: 3.5,
-            pb: 1,
-          }}
-          gap={1}
-        >
-          <Typography variant="subtitle1" fontWeight="500">
-            Widget Builder
-          </Typography>
-          <FormControlLabel
-            data-testid="demo-mode-switch"
-            control={<Switch checked={demoMode} onChange={toggleDemoMode} />}
-            label={<Typography>Demo</Typography>}
-          />
-        </Stack>
+        <TabContext value={activeStep.toString()}>
+          <AppBar position="sticky" color="primary" elevation={3}>
+            <Stack component={Toolbar} justifyContent="center">
+              <Typography variant="h6" component="h1">
+                Checkout Builder
+              </Typography>
+            </Stack>
+            <Box bgcolor="background.paper">
+              <TabList variant="fullWidth" onChange={onTabChange}>
+                <Tab label="Product" value="0" data-testid="product-tab" />
+                <Tab label="Payment" value="1" data-testid="payment-tab" />
+                <Tab label="Styling" value="2" data-testid="ui-tab" />
+                <Tab label="Export" value="3" data-testid="export-tab" />
+              </TabList>
+            </Box>
+          </AppBar>
 
-        <TabContext value={activeTab}>
-          <TabList onChange={onTabChange} sx={{ px: 2 }}>
-            <Tab label="1. Product" value="product" data-testid="product-tab" />
-            <Tab label="2. UI" value="ui" data-testid="ui-tab" />
-            <Tab label="3. Export" value="export" data-testid="export-tab" />
-          </TabList>
+          <Box
+            height="100%"
+            sx={{
+              overflowY: "scroll",
+            }}
+          >
+            <FormProvider {...formMethods}>
+              <TabPanel value="0" sx={{ height: "100%" }}>
+                <ProductEditor />
+              </TabPanel>
+              <TabPanel value="1" sx={{ height: "100%" }}>
+                <PaymentEditor />
+              </TabPanel>
+              <TabPanel value="2" sx={{ height: "100%" }}>
+                <UiEditor />
+              </TabPanel>
+              <TabPanel value="3" sx={{ height: "100%" }}>
+                <ExportEditor />
+              </TabPanel>
+            </FormProvider>
+          </Box>
 
-          <FormProvider {...formMethods}>
-            <TabPanel value="ui">
-              <UiEditor />
-            </TabPanel>
-            <TabPanel value="product">
-              <ProductEditor />
-            </TabPanel>
-            <TabPanel value="export">
-              <ExportEditor />
-            </TabPanel>
-          </FormProvider>
+          <Paper
+            sx={{ position: "sticky", bottom: 0, left: 0, right: 0 }}
+            elevation={3}
+          >
+            <MobileStepper
+              sx={{
+                bgcolor: "background.paper",
+              }}
+              variant="dots"
+              steps={stepCount}
+              position="static"
+              activeStep={activeStep}
+              nextButton={
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleNext}
+                  disabled={activeStep === stepCount - 1}
+                  sx={{
+                    visibility:
+                      activeStep === stepCount - 1 ? "hidden" : "visible",
+                  }}
+                >
+                  Next
+                  <KeyboardArrowRightIcon />
+                </Button>
+              }
+              backButton={
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                  sx={{
+                    visibility: activeStep === 0 ? "hidden" : "visible",
+                  }}
+                >
+                  <KeyboardArrowLeftIcon />
+                  Back
+                </Button>
+              }
+            />
+          </Paper>
         </TabContext>
       </Drawer>
       <Stack
@@ -150,56 +202,16 @@ export default function Builder() {
             type,
           }}
         />
-        <Box
-          sx={{
-            position: "fixed",
-            left: "calc(50%-96px)",
-            backgroundColor: theme.palette.common.white,
-            bottom: 0,
-            borderRadius: 1,
-            zIndex: 100,
-          }}
-        >
-          <Controller
-            control={control}
-            name="type"
-            render={({ field: { value, onChange } }) => (
-              <ToggleButtonGroup
-                value={value}
-                exclusive
-                onChange={(_, value) => onChange(value)}
-                sx={{
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
-                }}
-              >
-                <ToggleButton value="dialog" aria-label="dialog" title="Dialog">
-                  <WebAssetIcon />
-                </ToggleButton>
-                <ToggleButton value="drawer" aria-label="drawer" title="Drawer">
-                  <ViewSidebarIcon />
-                </ToggleButton>
-                <ToggleButton
-                  value="full-screen"
-                  aria-label="full-screen"
-                  title="Full Screen"
-                >
-                  <FullscreenIcon />
-                </ToggleButton>
-                <ToggleButton value="page" aria-label="page" title="Page">
-                  <WebIcon />
-                </ToggleButton>
-              </ToggleButtonGroup>
-            )}
-          />
-        </Box>
       </Stack>
       <TermsAndPrivacy />
       <Box sx={{ position: "absolute", top: 5, right: 5 }}>
         <Button
-          variant="text"
+          variant="outlined"
           onClick={() => setConfigEditorOpen((isOpen) => !isOpen)}
           startIcon={<CodeIcon />}
+          sx={{
+            bgcolor: "background.paper",
+          }}
         >
           JSON Editor
         </Button>

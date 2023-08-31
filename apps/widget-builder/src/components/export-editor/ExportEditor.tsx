@@ -1,11 +1,4 @@
-import {
-  Box,
-  Divider,
-  MenuItem,
-  Select,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, MenuItem, Select, Stack, Typography } from "@mui/material";
 import { FC, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -76,10 +69,13 @@ const ExportEditor: FC = () => {
     useState<ExportOption>("ipfs");
 
   return (
-    <Stack gap={4}>
+    <Stack height="100%" gap={2}>
+      <Typography variant="h6" component="h2">
+        Checkout Export
+      </Typography>
       <Box>
         <InputWrapper
-          title="Select export option"
+          title="Export option"
           sx={{
             width: "100%",
           }}
@@ -104,10 +100,10 @@ const ExportEditor: FC = () => {
           )}
         </InputWrapper>
         <Box textAlign="center" sx={{ my: 3 }}>
-          <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
+          <Typography variant="h6" component="h3" sx={{ mb: 1 }}>
             How does it work?
           </Typography>
-          <Typography color="grey.800">
+          <Typography color="text.secondary">
             {selectedExportOption === "ipfs"
               ? "You’ll create a hosted link to your checkout which you can embed in your CTAs."
               : selectedExportOption === "json"
@@ -118,17 +114,15 @@ const ExportEditor: FC = () => {
         {switchExportOption(selectedExportOption, json)}
       </Box>
 
-      <Divider />
-
-      <Box textAlign="center">
-        <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
+      <Stack height="100%" justifyContent="flex-end" alignItems="center">
+        <Typography variant="h6" component="h3" sx={{ mb: 1 }}>
           Do you have more questions?
         </Typography>
-        <Typography color="grey.800" sx={{ mb: 3 }}>
+        <Typography color="text.secondary" sx={{ mb: 3 }}>
           We’ll show you how your business can benefit from using our checkout.
         </Typography>
         <BookDemoBtn>Book a Demo</BookDemoBtn>
-      </Box>
+      </Stack>
     </Stack>
   );
 };
