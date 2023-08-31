@@ -14,7 +14,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
@@ -31,7 +31,7 @@ import { defaultWidgetProps } from "../hooks/useDemoMode";
 
 const drawerWidth = "480px";
 
-const tabLabelMap: Record<number, string> = {
+const tabLabels: Record<number, string> = {
   0: "Product",
   1: "Payment",
   2: "Styling",
@@ -41,14 +41,21 @@ const tabLabelMap: Record<number, string> = {
 export default function Builder() {
   const [activeStep, setActiveStep] = useState(0);
   const stepCount = 4;
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) =>
-      Math.min(prevActiveStep + 1, stepCount - 1),
-    );
-  };
-  const handleBack = () => {
+  const lastStep = stepCount - 1;
+  const isLastStep = activeStep === lastStep;
+  const isFirstStep = activeStep === 0;
+
+  const ajs = useAnalyticsBrowser();
+
+  const handleNext = useCallback(() => {
+    setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, lastStep));
+    ajs.track("next_step", { currentTab: tabLabels[activeStep] });
+  }, [ajs, activeStep]);
+
+  const handleBack = useCallback(() => {
     setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
-  };
+    ajs.track("previous_step", { currentTab: tabLabels[activeStep] });
+  }, [ajs, activeStep]);
 
   const formMethods = useForm<WidgetProps>({
     values: defaultWidgetProps,
@@ -65,12 +72,14 @@ export default function Builder() {
 
   const [isConfigEditorOpen, setConfigEditorOpen] = useState(false);
 
-  const ajs = useAnalyticsBrowser();
-
-  const onTabChange = (_: React.SyntheticEvent, value: number) => {
-    ajs.track("tab_changed", { tab: tabLabelMap[value] });
-    setActiveStep(value);
-  };
+  const onTabChange = useCallback(
+    (_: React.SyntheticEvent, value: string) => {
+      const tabNumber = Number(value);
+      setActiveStep(tabNumber);
+      ajs.track("tab_changed", { tab: tabLabels[tabNumber] });
+    },
+    [ajs],
+  );
 
   return (
     <Box sx={{ display: "flex", position: "relative", height: "100vh" }}>
@@ -94,26 +103,11 @@ export default function Builder() {
               </Typography>
             </Stack>
             <Box bgcolor="background.paper">
-              <TabList
-                variant="fullWidth"
-                onChange={(_, value) => setActiveStep(Number(value))}
-              >
-                <Tab
-                  label={tabLabelMap[0]}
-                  value="0"
-                  data-testid="product-tab"
-                />
-                <Tab
-                  label={tabLabelMap[1]}
-                  value="1"
-                  data-testid="payment-tab"
-                />
-                <Tab label={tabLabelMap[2]} value="2" data-testid="ui-tab" />
-                <Tab
-                  label={tabLabelMap[3]}
-                  value="3"
-                  data-testid="export-tab"
-                />
+              <TabList variant="fullWidth" onChange={onTabChange}>
+                <Tab label={tabLabels[0]} value="0" data-testid="product-tab" />
+                <Tab label={tabLabels[1]} value="1" data-testid="payment-tab" />
+                <Tab label={tabLabels[2]} value="2" data-testid="ui-tab" />
+                <Tab label={tabLabels[3]} value="3" data-testid="export-tab" />
               </TabList>
             </Box>
           </AppBar>
@@ -158,10 +152,9 @@ export default function Builder() {
                   variant="outlined"
                   color="primary"
                   onClick={handleNext}
-                  disabled={activeStep === stepCount - 1}
+                  disabled={isLastStep}
                   sx={{
-                    visibility:
-                      activeStep === stepCount - 1 ? "hidden" : "visible",
+                    visibility: isLastStep ? "hidden" : "visible",
                   }}
                 >
                   Next
@@ -174,9 +167,9 @@ export default function Builder() {
                   variant="outlined"
                   color="primary"
                   onClick={handleBack}
-                  disabled={activeStep === 0}
+                  disabled={isFirstStep}
                   sx={{
-                    visibility: activeStep === 0 ? "hidden" : "visible",
+                    visibility: isFirstStep ? "hidden" : "visible",
                   }}
                 >
                   <KeyboardArrowLeftIcon />
