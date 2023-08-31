@@ -1,5 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import {
+  Box,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -157,79 +158,86 @@ const StreamGatingEditor: FC = () => {
   );
 
   return (
-    <Stack>
-      <Stack direction="column" gap={1} sx={{ mb: 3 }}>
-        <Typography variant="subtitle1">Gate your content with NFTS</Typography>
-        <Typography color="grey.800">
-          Create NFT your users will hold while they are paying for your product
-          or service
-        </Typography>
-      </Stack>
-      <Stack gap={2}>
+    <>
+      <Stack gap={2} height="100%">
+        <Box mb={1}>
+          <Typography variant="h6" component="h2">
+            Gate your content with NFTs
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Create NFT your users will hold while they are paying for your
+            product or service.
+          </Typography>
+        </Box>
         <InputWrapper title="NFT Symbol">
-          {() => (
+          {(id) => (
             <TextField
+              id={id}
               value={tokenSymbol}
               onChange={({ target }) => setTokenSymbol(target.value)}
             />
           )}
         </InputWrapper>
         <InputWrapper title="NFT Name">
-          {() => (
+          {(id) => (
             <TextField
+              id={id}
               value={tokenName}
               onChange={({ target }) => setTokenName(target.value)}
             />
           )}
         </InputWrapper>
-      </Stack>
-      <Stack direction="column" sx={{ my: 2 }}>
-        <Typography variant="subtitle1" sx={{ fontSize: "1.1rem" }}>
-          Select networks you want to deploy your NFT to.
-        </Typography>
-        <Typography color="grey.800">
-          The following networks are used in your checkout widget:
-        </Typography>
-      </Stack>
-      <Stack sx={{ px: 1 }}>
-        <FormGroup>
-          {paymentOptionNetworks.map((network) => (
-            <FormControlLabel
-              key={network.chainId}
-              sx={{ fontWeight: "bold" }}
-              control={
-                <Checkbox
-                  color="primary"
-                  value={network}
-                  checked={Boolean(selectedPaymentOptions[network.chainId])}
-                  onChange={({ target }) =>
-                    selectPaymentOptions(target.checked, network)
-                  }
-                />
-              }
-              label={network?.name}
+        <InputWrapper id="nft-image" title="NFT Image">
+          {(id) => (
+            <ImageSelect
+              id={id}
+              imageSrc={nftImage ? URL.createObjectURL(nftImage) : undefined}
+              onClick={(file) => setNftImage(file)}
+              onRemove={() => setNftImage(undefined)}
+              sizeLimit={256 * 1024} // 256 kB
             />
-          ))}
-        </FormGroup>
-      </Stack>
-      <Stack direction="column" gap={4} sx={{ mt: 4 }}>
-        <ImageSelect
-          id="Customize NFT Image"
-          imageSrc={nftImage ? URL.createObjectURL(nftImage) : undefined}
-          onClick={(file) => setNftImage(file)}
-          onRemove={() => setNftImage(undefined)}
-          sizeLimit={256 * 1024} // 256 kB
-        />
-        <LoadingButton
-          color="primary"
-          variant="contained"
-          size="large"
-          onClick={deployNFT}
-          loading={isDeploying}
-          disabled={isDeployDisabled}
-        >
-          Create NFT
-        </LoadingButton>
+          )}
+        </InputWrapper>
+        <Stack direction="column" sx={{ mt: 2 }}>
+          <Typography variant="subtitle1" sx={{ fontSize: "1.1rem" }}>
+            Select networks you want to deploy your NFT to.
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            The following networks are used in your checkout widget:
+          </Typography>
+        </Stack>
+        <Stack justifyContent="space-between" height="100%">
+          <FormGroup sx={{ px: 1 }}>
+            {paymentOptionNetworks.map((network) => (
+              <FormControlLabel
+                key={network.chainId}
+                sx={{ fontWeight: "bold" }}
+                control={
+                  <Checkbox
+                    color="primary"
+                    value={network}
+                    checked={Boolean(selectedPaymentOptions[network.chainId])}
+                    onChange={({ target }) =>
+                      selectPaymentOptions(target.checked, network)
+                    }
+                  />
+                }
+                label={network?.name}
+              />
+            ))}
+          </FormGroup>
+          <LoadingButton
+            color="primary"
+            variant="contained"
+            size="large"
+            onClick={deployNFT}
+            loading={isDeploying}
+            disabled={isDeployDisabled}
+            sx={{ mt: 1 }}
+          >
+            Create NFT
+          </LoadingButton>
+        </Stack>
       </Stack>
       <NFTDeploymentDialog
         open={deployedCloneAddresses.length > 0}
@@ -242,7 +250,7 @@ const StreamGatingEditor: FC = () => {
         size="invisible"
         onChange={onRecaptchaChange}
       />
-    </Stack>
+    </>
   );
 };
 
