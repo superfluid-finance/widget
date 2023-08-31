@@ -3,7 +3,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  Divider,
   Stack,
   styled,
   Tooltip,
@@ -173,7 +172,6 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
           />
         </Stack>
       </CardContent>
-      <Divider />
       <Stack
         component={CardActions}
         direction="row"
