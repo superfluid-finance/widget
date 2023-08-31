@@ -1,6 +1,7 @@
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import {
   Autocomplete,
+  Box,
   Fab,
   FormControlLabel,
   Slider,
@@ -32,23 +33,14 @@ const UiEditor: FC = () => {
   return (
     <>
       <Stack direction="column" gap={2}>
-        <Typography variant="h6" component="h2">
-          {"Checkout Widget Styling"}
-        </Typography>
-
-        <Controller
-          control={control}
-          name="displaySettings.darkMode"
-          render={({ field: { value, onChange } }) => (
-            <FormControlLabel
-              data-testid="dark-mode-switch"
-              control={<Switch checked={value ?? false} onChange={onChange} />}
-              label={
-                <Typography>{`Dark mode: ${value ? "on" : "off"}`}</Typography>
-              }
-            />
-          )}
-        />
+        <Box mb={1}>
+          <Typography variant="h6" component="h2">
+            Checkout Widget Styling
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            You are free to customize the look and feel of the checkout widget.
+          </Typography>
+        </Box>
 
         <Controller
           control={control}
@@ -95,7 +87,19 @@ const UiEditor: FC = () => {
             </InputWrapper>
           )}
         />
-
+        <Controller
+          control={control}
+          name="displaySettings.darkMode"
+          render={({ field: { value, onChange } }) => (
+            <FormControlLabel
+              data-testid="dark-mode-switch"
+              control={<Switch checked={value ?? false} onChange={onChange} />}
+              label={
+                <Typography>{`Dark mode: ${value ? "on" : "off"}`}</Typography>
+              }
+            />
+          )}
+        />
         <Controller
           control={control}
           name="displaySettings.containerRadius"

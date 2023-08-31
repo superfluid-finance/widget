@@ -1,5 +1,5 @@
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import { Fab, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import { Box, Fab, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { FC } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
@@ -22,15 +22,15 @@ const ProductEditor: FC = () => {
   return (
     <>
       <Stack gap={2}>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box mb={1}>
           <Typography variant="h6" component="h2">
             Checkout Product Details
           </Typography>
-        </Stack>
+          <Typography variant="body2" color="text.secondary">
+            Define the product you want to receive ongoing real-time payments
+            for.
+          </Typography>
+        </Box>
         <Controller
           control={control}
           name="productDetails.name"

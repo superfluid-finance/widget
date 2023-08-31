@@ -55,9 +55,15 @@ const ProductEditor: FC = () => {
   return (
     <>
       <Stack direction="column" gap={2}>
-        <Typography variant="h6" component="h2">
-          Checkout Payment Details
-        </Typography>
+        <Box mb={1}>
+          <Typography variant="h6" component="h2">
+            Checkout Payment Details
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Enter your preferred payment options to start receiving ongoing
+            real-time payments powered by the Superfluid Protocol.
+          </Typography>
+        </Box>
         <Stack direction="column">
           <Stack
             direction="row"
