@@ -29,11 +29,11 @@ import WidgetPreview, {
 } from "../components/widget-preview/WidgetPreview";
 import { defaultWidgetProps } from "../hooks/useDemoMode";
 
-export const drawerWidth = "480px";
+export const drawerWidth = "540px";
+const stepCount = 5;
 
 export default function Builder() {
   const [activeStep, setActiveStep] = useState(0);
-  const stepCount = 4;
   const handleNext = () => {
     setActiveStep((prevActiveStep) =>
       Math.min(prevActiveStep + 1, stepCount - 1),
