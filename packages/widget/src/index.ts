@@ -26,6 +26,10 @@ export type { EventListeners } from "./EventListeners";
 export type { WalletManager } from "./WalletManager";
 
 // TODO: Export Zod schemas from @superfluid-finance/widget/zod
-export { paymentDetailsSchema, productDetailsSchema } from "./core/index.js";
+export {
+  paymentDetailsSchema,
+  paymentOptionSchema,
+  productDetailsSchema,
+} from "./core/index.js";
 
 export default Widget;

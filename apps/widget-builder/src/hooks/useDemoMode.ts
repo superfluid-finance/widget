@@ -4,19 +4,14 @@ import {
   ProductDetails,
   supportedNetwork,
 } from "@superfluid-finance/widget";
-import { useMemo, useState } from "react";
+import { useCallback } from "react";
+import { useFormContext } from "react-hook-form";
 
 import {
   DisplaySettings,
   Layout,
   WidgetProps,
 } from "../components/widget-preview/WidgetPreview";
-
-const demoProductDetails: ProductDetails = {
-  name: `${faker.commerce.productName()}`,
-  description: `${faker.commerce.productDescription()}`,
-  imageURI: "https://picsum.photos/200/200",
-};
 
 const defaultProductDetails: ProductDetails = {
   name: "",
@@ -131,7 +126,7 @@ const defaultPaymentDetails: PaymentDetails = {
 
 const type: Layout = "page";
 
-const displaySettings: DisplaySettings = {
+const defaultDisplaySettings: DisplaySettings = {
   darkMode: false,
   containerRadius: 20,
   buttonRadius: 10,
@@ -145,36 +140,47 @@ const displaySettings: DisplaySettings = {
   stepperOrientation: "vertical",
 };
 
+export const defaultWidgetProps: WidgetProps = {
+  productDetails: defaultProductDetails,
+  paymentDetails: defaultPaymentDetails,
+  type,
+  displaySettings: defaultDisplaySettings,
+};
+
 const useDemoMode = () => {
-  const [demoMode, setDemoMode] = useState<boolean>(false);
+  const { setValue } = useFormContext<WidgetProps>();
 
-  const toggleDemoMode = () => {
-    setDemoMode(!demoMode);
-  };
-
-  const widgetProps = useMemo<WidgetProps>(
-    () => ({
-      ...(demoMode
-        ? {
-            productDetails: demoProductDetails,
-            paymentDetails: demoPaymentDetails,
-            type,
-            displaySettings,
-          }
-        : {
-            productDetails: defaultProductDetails,
-            paymentDetails: defaultPaymentDetails,
-            type,
-            displaySettings,
-          }),
-    }),
-    [demoMode],
+  const setDemoPaymentDetails = useCallback(
+    () => setValue("paymentDetails", demoPaymentDetails),
+    [setValue],
   );
 
+  const setDemoProductDetails = useCallback(() => {
+    const demoProductDetails: ProductDetails = {
+      name: `${faker.commerce.productName()}`,
+      description: `${faker.commerce.productDescription()}`,
+      imageURI: "https://picsum.photos/200/200",
+    };
+    setValue("productDetails", demoProductDetails);
+  }, [setValue]);
+
+  const setDemoStyling = useCallback(() => {
+    const demoStyling: DisplaySettings = {
+      ...defaultDisplaySettings,
+      darkMode: faker.datatype.boolean(),
+      primaryColor: faker.color.rgb() as `#${string}`,
+      secondaryColor: faker.color.rgb() as `#${string}`,
+      containerRadius: faker.number.int({ min: 0, max: 50 }),
+      buttonRadius: faker.number.int({ min: 0, max: 25 }),
+      inputRadius: faker.number.int({ min: 0, max: 25 }),
+    };
+    setValue("displaySettings", demoStyling);
+  }, [setValue]);
+
   return {
-    demoMode,
-    toggleDemoMode,
-    widgetProps,
+    setDemoPaymentDetails,
+    setDemoProductDetails,
+    setDemoStyling,
   };
 };
 

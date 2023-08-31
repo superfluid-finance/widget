@@ -1,9 +1,14 @@
-import CloseIcon from "@mui/icons-material/Close";
 import {
   Button,
-  Paper,
+  Card,
+  CardActions,
+  CardContent,
+  Divider,
   Stack,
+  styled,
   Tooltip,
+  tooltipClasses,
+  TooltipProps,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -15,6 +20,7 @@ import {
 import superTokenList from "@superfluid-finance/widget/tokenlist";
 import Image from "next/image";
 import { FC, ReactNode, useMemo } from "react";
+import { getAddress } from "viem";
 
 import NetworkAvatar from "../NetworkAvatar";
 
@@ -22,6 +28,14 @@ type PaymentOptionRowProps = {
   label: string;
   value: ReactNode;
 };
+
+const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: "none",
+  },
+});
 
 const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
   const theme = useTheme();
@@ -33,14 +47,7 @@ const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
       direction="row"
       sx={{ width: "100%", justifyContent: "space-between" }}
     >
-      <Typography
-        data-testid="payment-option-label"
-        sx={{
-          color: theme.palette.grey[700],
-          fontSize: "14px",
-          fontWeight: 500,
-        }}
-      >
+      <Typography data-testid="payment-option-label" fontWeight="500">
         {label}
       </Typography>
       {value}
@@ -51,7 +58,7 @@ const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
 type PaymentOptionViewProps = {
   superToken: { address: `0x${string}` };
   upfrontPaymentAmountEther?: string;
-  flowRate: FlowRate;
+  flowRate: FlowRate | undefined;
   receiverAddress: `0x${string}`;
   chainId: ChainId;
   index: number;
@@ -62,135 +69,127 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   superToken,
   upfrontPaymentAmountEther,
   flowRate,
-  receiverAddress,
+  receiverAddress: receiverAddress_,
   chainId,
   index,
   remove,
 }) => {
-  const theme = useTheme();
-  const network = supportedNetworks.find((n) => n.id === chainId)!;
-  const token = Object.values(superTokenList.tokens).find(
-    (token) => token.address === superToken.address,
+  const network = useMemo(
+    () => supportedNetworks.find((n) => n.id === chainId)!,
+    [chainId],
+  );
+  const receiverAddress = useMemo(
+    () => getAddress(receiverAddress_),
+    [receiverAddress_],
+  );
+
+  const token = useMemo(
+    () =>
+      Object.values(superTokenList.tokens).find(
+        (token) =>
+          token.address.toLowerCase() === superToken.address.toLowerCase(),
+      ),
+    [superTokenList, superToken.address],
   );
 
   const flowRateValue = useMemo(() => {
-    if (!flowRate) return "Custom amount";
+    if (!flowRate) return "User-defined";
     return `${flowRate.amountEther} ${token?.symbol ?? "x"}/${flowRate.period}`;
   }, [flowRate, token]);
 
   return (
-    <Paper variant="outlined" sx={{ p: 2 }}>
-      <Stack direction="column" gap={1} sx={{ mb: 2 }}>
-        <PaymentOptionRow
-          label="Network"
-          value={
-            <Stack
-              data-testid="added-network-option"
-              direction="row"
-              gap={1}
-              sx={{ alignItems: "center" }}
-            >
-              <NetworkAvatar network={network} />
-              {network?.name}
-            </Stack>
-          }
-        />
-        <PaymentOptionRow
-          label="Token"
-          value={
-            <Stack
-              data-testid="added-token-option"
-              direction="row"
-              gap={1}
-              sx={{ alignItems: "center" }}
-            >
-              {token?.logoURI && (
-                <Image
-                  src={token.logoURI}
-                  alt=""
-                  width={24}
-                  height={24}
-                  objectFit="contain"
-                />
-              )}
-              {token?.name}
-            </Stack>
-          }
-        />
-        <PaymentOptionRow label="Stream Rate" value={flowRateValue} />
-        {upfrontPaymentAmountEther && (
+    <Card variant="elevation" elevation={1}>
+      <CardContent>
+        <Stack direction="column" gap={1}>
           <PaymentOptionRow
-            label="Upfront Payment Amount"
-            value={`${upfrontPaymentAmountEther} ${token?.symbol ?? ""}`}
+            label="Network"
+            value={
+              <Stack
+                data-testid="added-network-option"
+                direction="row"
+                gap={1}
+                sx={{ alignItems: "center" }}
+              >
+                <NetworkAvatar network={network} />
+                {network?.name}
+              </Stack>
+            }
           />
-        )}
-        <PaymentOptionRow
-          label="Receiver"
-          value={
-            <Tooltip
-              title={receiverAddress}
-              data-testid="added-payment-receiver-tooltip"
-            >
-              <Typography data-testid="added-payment-receiver">
-                {`${receiverAddress.substring(
-                  0,
-                  6,
-                )}...${receiverAddress.substring(
-                  receiverAddress.length - 4,
-                  receiverAddress.length,
+          <PaymentOptionRow
+            label="Token"
+            value={
+              <Stack
+                data-testid="added-token-option"
+                direction="row"
+                gap={1}
+                sx={{ alignItems: "center" }}
+              >
+                {token?.logoURI && (
+                  <Image
+                    src={token.logoURI}
+                    alt=""
+                    width={24}
+                    height={24}
+                    objectFit="contain"
+                  />
                 )}
+                {token?.name}
+              </Stack>
+            }
+          />
+          <PaymentOptionRow label="Stream Rate" value={flowRateValue} />
+          {upfrontPaymentAmountEther && (
+            <PaymentOptionRow
+              label="Upfront Payment Amount"
+              value={`${upfrontPaymentAmountEther} ${token?.symbol ?? ""}`}
+            />
+          )}
+          <PaymentOptionRow
+            label="Receiver"
+            value={
+              <NoMaxWidthTooltip
+                title={receiverAddress}
+                data-testid="added-payment-receiver-tooltip"
+                placement="bottom"
+                arrow
+                PopperProps={{
+                  sx: {
+                    maxWidth: "none",
+                  },
+                }}
+              >
+                <Typography data-testid="added-payment-receiver">
+                  {`${receiverAddress.substring(
+                    0,
+                    6,
+                  )}...${receiverAddress.substring(
+                    receiverAddress.length - 4,
+                    receiverAddress.length,
+                  )}
                 `}
-              </Typography>
-            </Tooltip>
-          }
-        />
-      </Stack>
-
+                </Typography>
+              </NoMaxWidthTooltip>
+            }
+          />
+        </Stack>
+      </CardContent>
+      <Divider />
       <Stack
+        component={CardActions}
         direction="row"
-        sx={{ width: "100%", justifyContent: "center" }}
-        gap={1}
+        justifyContent="flex-end"
+        bgcolor="grey.50"
       >
-        {/* <Button
-          color="primary"
-          variant="contained"
-          size="small"
-          sx={{
-            width: "160px",
-            color: theme.palette.primary.main,
-            backgroundColor: theme.palette.primary.light,
-            boxShadow: "none",
-            textTransform: "none",
-
-            "&:hover:enabled": {
-              color: theme.palette.common.white,
-            },
-          }}
-        >
-          Edit
-          <EditIcon sx={{ fontSize: 16, ml: 1 }} />
-        </Button> */}
         <Button
           data-testid="delete-payment-option-button"
-          fullWidth
           color="error"
-          sx={{
-            color: theme.palette.error.main,
-            backgroundColor: theme.palette.error.light,
-            boxShadow: "none",
-            textTransform: "none",
-            "&:hover:enabled": {
-              color: theme.palette.common.white,
-            },
-          }}
-          variant="contained"
+          variant="text"
           onClick={() => remove(index)}
         >
-          Delete
-          <CloseIcon sx={{ fontSize: 16, ml: 1 }} />
+          Remove
         </Button>
       </Stack>
-    </Paper>
+    </Card>
   );
 };
 

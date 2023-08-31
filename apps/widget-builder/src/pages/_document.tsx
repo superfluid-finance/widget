@@ -22,7 +22,6 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
     <Html lang="en" className={notoSans.className}>
       <Head>
-        <title>Superfluid Checkout Builder | Web3 Subscriptions Toolkit</title>
         <meta
           name="description"
           content="Superfluid Subscriptions enable web3 services to eliminate merchant fees, accept recurring crypto payments, grow their user base, and seamlessly generate revenue."
