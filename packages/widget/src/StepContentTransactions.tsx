@@ -1,13 +1,15 @@
 import CloseIcon_ from "@mui/icons-material/Close.js";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import ContractWriteButton from "./ContractWriteButton.js";
 import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress.js";
 import { ContractWriteStatus } from "./ContractWriteStatus.js";
+import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { useStepper } from "./StepperContext.js";
+import { useWidget } from "./WidgetContext.js";
 
 const CloseIcon = normalizeIcon(CloseIcon_);
 
@@ -17,12 +19,23 @@ export function StepContentTransactions() {
   const { contractWrites, contractWriteResults, writeIndex } =
     useCommandHandler(); // Cleaner to pass with props.
 
+  const { eventListeners } = useWidget();
+
+  useEffect(() => {
+    eventListeners.onRouteChange({ route: "transactions" });
+  }, []);
+
   useEffect(() => {
     if (writeIndex > 0 && writeIndex === contractWriteResults.length) {
       // TODO(KK): Check for success statuses. Maybe if not everything is a success, provide an explicit continue button.
       handleNext(); // i.e. all transactions handled
     }
   }, [writeIndex, contractWriteResults, handleNext]);
+
+  const onBack = useCallback(() => {
+    handleBack();
+    runEventListener(eventListeners.onButtonClick, { type: "back" });
+  }, [handleBack, eventListeners.onButtonClick]);
 
   const total = contractWrites.length;
   const currentResult = contractWriteResults[writeIndex];
@@ -33,7 +46,7 @@ export function StepContentTransactions() {
         <IconButton
           edge="start"
           color="inherit"
-          onClick={handleBack}
+          onClick={onBack}
           aria-label="back"
           sx={{ mr: -1 }}
         >

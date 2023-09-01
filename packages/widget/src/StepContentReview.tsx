@@ -1,8 +1,9 @@
 import { Alert, Collapse, Divider, Stack } from "@mui/material";
-import { Fragment, useCallback } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import { useQuery } from "wagmi";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
+import { runEventListener } from "./EventListeners.js";
 import { CommandPreview } from "./previews/CommandPreview.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
@@ -16,10 +17,14 @@ export default function StepContentReview() {
 
   const { eventListeners } = useWidget();
 
+  useEffect(() => {
+    eventListeners.onRouteChange({ route: "review" });
+  }, [eventListeners.onRouteChange]);
+
   const onContinue = useCallback(() => {
     handleNext();
-    eventListeners.onContinue("Review");
-  }, [handleNext, eventListeners]);
+    runEventListener(eventListeners.onButtonClick, { type: "continue" });
+  }, [handleNext, eventListeners.onButtonClick]);
 
   const commandValidationSchema = useCommandValidationSchema();
 

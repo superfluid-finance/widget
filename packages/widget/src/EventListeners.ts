@@ -11,8 +11,20 @@ import { PaymentOption } from "./core";
  * }} />
  */
 export interface EventListeners {
-  /** Called when the "Continue" button is pressed */
-  onContinue?: (step?: "Network&Token" | "Wrap" | "Review") => void;
+  /** Called when a button is pressed */
+  onButtonClick?: (props?: {
+    type:
+      | "continue"
+      | "back"
+      | "connect_wallet"
+      | "skip"
+      | "stepper"
+      | "transaction"
+      | "open_dashboard";
+  }) => void;
+  onRouteChange?: (props?: {
+    route: "payment_option" | "wrap" | "transactions" | "review" | "summary";
+  }) => void;
   /** Called when the checkout is successfully finished. */
   onSuccess?: () => void;
   /** Called when the merchant's success button is defined in the schema and it's clicked. */
@@ -26,4 +38,5 @@ export interface EventListeners {
 /**
  * Run the event callback in non-blocking manner.
  */
-export const runEventListener = (func: () => void) => setTimeout(func, 0);
+export const runEventListener = <T>(func: (args?: T) => any, args?: T) =>
+  setTimeout(() => func(args), 0);

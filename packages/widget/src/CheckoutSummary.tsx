@@ -51,6 +51,10 @@ export function CheckoutSummary() {
     [accountAddress],
   );
 
+  useEffect(() => {
+    runEventListener(eventListeners.onRouteChange, { route: "summary" });
+  }, [eventListeners.onRouteChange]);
+
   // Note: calling "onSuccess" through the "useEffect" hook is not optimal.
   // We make the assumption that "CheckoutSummary" is only rendered when the checkout is successful.
   // A more proper place would be inside a central state machine.
@@ -162,6 +166,11 @@ export function CheckoutSummary() {
           variant="outlined"
           href={dashboardURL}
           target="_blank"
+          onClick={() =>
+            runEventListener(eventListeners.onButtonClick, {
+              type: "open_dashboard",
+            })
+          }
         >
           Open Superfluid Dashboard
         </Button>

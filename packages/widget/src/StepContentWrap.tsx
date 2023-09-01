@@ -9,11 +9,19 @@ import {
   useTheme,
 } from "@mui/material";
 import { TokenInfo } from "@superfluid-finance/tokenlist";
-import { FC, PropsWithChildren, useCallback, useMemo, useState } from "react";
+import {
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { parseEther } from "viem";
 import { Address, useBalance } from "wagmi";
 
+import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
 import { UpgradeIcon } from "./previews/CommandPreview.js";
 import { useStepper } from "./StepperContext.js";
@@ -150,15 +158,20 @@ export default function StepContentWrap() {
 
   const { handleNext } = useStepper();
 
+  useEffect(() => {
+    eventListeners.onRouteChange({ route: "wrap" });
+  }, []);
+
   const onContinue = useCallback(() => {
     handleNext();
-    eventListeners.onContinue("Wrap");
-  }, [handleNext, eventListeners]);
+    runEventListener(eventListeners.onButtonClick, { type: "continue" });
+  }, [handleNext, eventListeners.onButtonClick]);
 
-  const onSkipWrapping = () => {
+  const onSkipWrapping = useCallback(() => {
     setValue("wrapAmountInUnits", "" as `${number}`);
     handleNext();
-  };
+    runEventListener(eventListeners.onButtonClick, { type: "skip" });
+  }, [handleNext, setValue, eventListeners.onButtonClick]);
 
   const onInputFocus = () => setFocusedOnce(true);
 

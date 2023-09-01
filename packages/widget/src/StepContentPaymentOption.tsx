@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
 
+import { runEventListener } from "./EventListeners.js";
 import FlowRateInput from "./FlowRateInput.js";
 import { DraftFormValues } from "./formValues.js";
 import NetworkAutocomplete from "./NetworkAutocomplete.js";
@@ -43,10 +44,14 @@ export default function StepContentPaymentOption() {
     getNetwork,
   } = useWidget();
 
+  useEffect(() => {
+    eventListeners.onRouteChange({ route: "payment_option" });
+  });
+
   const onContinue = useCallback(() => {
     handleNext();
-    eventListeners.onContinue("Network&Token");
-  }, [handleNext, eventListeners]);
+    runEventListener(eventListeners.onButtonClick, { type: "continue" });
+  }, [handleNext, eventListeners.onButtonClick]);
 
   return (
     <Stack
@@ -96,6 +101,9 @@ export default function StepContentPaymentOption() {
                 : undefined,
             });
             setNextOnConnect(true);
+            runEventListener(() =>
+              eventListeners.onButtonClick({ type: "connect_wallet" }),
+            );
           }}
         >
           Connect Wallet to Continue
