@@ -23,7 +23,7 @@ export function StepContentTransactions() {
 
   useEffect(() => {
     runEventListener(eventListeners.onRouteChange, { route: "transactions" });
-  }, []);
+  }, [eventListeners.onRouteChange]);
 
   useEffect(() => {
     if (writeIndex > 0 && writeIndex === contractWriteResults.length) {

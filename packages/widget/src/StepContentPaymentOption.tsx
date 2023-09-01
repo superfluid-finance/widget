@@ -47,7 +47,7 @@ export default function StepContentPaymentOption() {
 
   useEffect(() => {
     runEventListener(eventListeners.onRouteChange, { route: "payment_option" });
-  });
+  }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
     handleNext();
