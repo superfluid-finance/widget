@@ -40,7 +40,6 @@ export interface EventListeners {
   onPaymentOptionUpdate?: (paymentOption?: PaymentOption) => void;
   /** Called when the wallet is connected */
   onWalletConnected?: (props?: { address: Address }) => void;
-  g;
 }
 
 /**

@@ -99,6 +99,7 @@ const IPFSWidgetPage: NextPage = () => {
               />
             )}
           </Box>
+          p
           <Analytics />
         </Container>
       )}
