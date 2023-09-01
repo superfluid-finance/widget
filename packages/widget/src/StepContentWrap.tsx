@@ -160,7 +160,7 @@ export default function StepContentWrap() {
 
   useEffect(() => {
     runEventListener(eventListeners.onRouteChange, { route: "wrap" });
-  }, [eventListeners.onRouteChangeg]);
+  }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
     handleNext();
