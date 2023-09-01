@@ -15,17 +15,24 @@ export interface EventListeners {
   /** Called when a button is pressed */
   onButtonClick?: (props?: {
     type:
-      | "continue"
-      | "back"
+      | "next_step"
+      | "skip_step"
+      | "step_label"
       | "connect_wallet"
-      | "skip"
-      | "stepper"
-      | "transaction"
-      | "open_dashboard";
+      | "switch_network"
+      | "invoke_transaction"
+      | "back_transactions"
+      | "success_button"
+      | "superfluid_dashboard";
   }) => void;
   /** Called when the widget route changes */
   onRouteChange?: (props?: {
-    route: "payment_option" | "wrap" | "transactions" | "review" | "summary";
+    route:
+      | "step_payment_option"
+      | "step_wrap"
+      | "step_review"
+      | "transactions"
+      | "success_summary";
   }) => void;
   /** Called when the checkout is successfully finished. */
   onSuccess?: () => void;

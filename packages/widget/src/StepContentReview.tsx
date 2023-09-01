@@ -18,12 +18,12 @@ export default function StepContentReview() {
   const { eventListeners } = useWidget();
 
   useEffect(() => {
-    runEventListener(eventListeners.onRouteChange, { route: "review" });
+    runEventListener(eventListeners.onRouteChange, { route: "step_review" });
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
     handleNext();
-    runEventListener(eventListeners.onButtonClick, { type: "continue" });
+    runEventListener(eventListeners.onButtonClick, { type: "next_step" });
   }, [handleNext, eventListeners.onButtonClick]);
 
   const commandValidationSchema = useCommandValidationSchema();

@@ -45,12 +45,14 @@ export default function StepContentPaymentOption() {
   } = useWidget();
 
   useEffect(() => {
-    runEventListener(eventListeners.onRouteChange, { route: "payment_option" });
+    runEventListener(eventListeners.onRouteChange, {
+      route: "step_payment_option",
+    });
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
     handleNext();
-    runEventListener(eventListeners.onButtonClick, { type: "continue" });
+    runEventListener(eventListeners.onButtonClick, { type: "next_step" });
   }, [handleNext, eventListeners.onButtonClick]);
 
   return (

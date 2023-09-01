@@ -34,7 +34,9 @@ export function StepContentTransactions() {
 
   const onBack = useCallback(() => {
     handleBack();
-    runEventListener(eventListeners.onButtonClick, { type: "back" });
+    runEventListener(eventListeners.onButtonClick, {
+      type: "back_transactions",
+    });
   }, [handleBack, eventListeners.onButtonClick]);
 
   const total = contractWrites.length;
