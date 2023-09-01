@@ -89,15 +89,12 @@ const IPFSWidgetPage: NextPage = () => {
                 type="page"
                 walletManager={walletManager}
                 eventListeners={{
-                  onButtonClick: (props) => {
-                    ajs.track("button_click", { type: props?.type });
-                  },
-                  onRouteChange: (props) => {
-                    ajs.track("route_change", { route: props?.route });
-                  },
-                  onSuccess: () => {
-                    ajs.track("stream_started");
-                  },
+                  onButtonClick: (props) =>
+                    ajs.track("button_click", { type: props?.type }),
+                  onRouteChange: (props) =>
+                    ajs.track("route_change", { route: props?.route }),
+                  onSuccess: () => ajs.track("stream_started"),
+                  onWalletConnected: (props) => ajs.identify(props?.address),
                 }}
               />
             )}

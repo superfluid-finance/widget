@@ -233,6 +233,7 @@ export function Widget({
           eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,
         onPaymentOptionUpdate:
           eventListeners?.onPaymentOptionUpdate ?? NOOP_FUNCTION,
+        onWalletConnected: eventListeners?.onWalletConnected ?? NOOP_FUNCTION,
       },
     }),
     [
