@@ -94,7 +94,6 @@ const IPFSWidgetPage: NextPage = () => {
                   onRouteChange: (props) =>
                     ajs.track("route_change", { route: props?.route }),
                   onSuccess: () => ajs.track("stream_started"),
-                  onWalletConnected: (props) => ajs.identify(props?.address),
                 }}
               />
             )}

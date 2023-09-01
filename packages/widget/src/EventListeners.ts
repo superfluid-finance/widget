@@ -1,5 +1,3 @@
-import { Address } from "viem";
-
 import { PaymentOption } from "./core";
 
 /**
@@ -11,7 +9,6 @@ import { PaymentOption } from "./core";
  *   onSuccess: () => console.log('Checkout is successfully finished!'),
  *   onSuccessButtonClick: () => console.log('Merchant success button is clicked!')
  *   onPaymentOptionUpdate: (paymentOption) => setChainId(paymentOption?.chainId);
- *   onWalletConnected: (props) => console.log(`Wallet ${props?.address} is connected!`),
  * }} />
  */
 export interface EventListeners {
@@ -38,12 +35,14 @@ export interface EventListeners {
    * Called when the payment option is initialized or changed by the user.
    */
   onPaymentOptionUpdate?: (paymentOption?: PaymentOption) => void;
-  /** Called when the wallet is connected */
-  onWalletConnected?: (props?: { address: Address }) => void;
 }
 
 /**
  * Run the event callback in non-blocking manner.
  */
-export const runEventListener = <T>(func: (args?: T) => any, args?: T) =>
+export const runEventListener = <T>(
+  func: (args?: T) => void,
+  args?: T,
+): void => {
   setTimeout(() => func(args), 0);
+};

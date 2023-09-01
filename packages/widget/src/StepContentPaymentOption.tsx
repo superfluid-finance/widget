@@ -32,12 +32,11 @@ export default function StepContentPaymentOption() {
 
   const { handleNext } = useStepper();
   useEffect(() => {
-    if (nextStepOnConnect && isConnected && address && isStepComplete) {
+    if (nextStepOnConnect && isConnected && isStepComplete) {
       setNextOnConnect(false);
       handleNext();
-      runEventListener(eventListeners.onWalletConnected, { address });
     }
-  }, [handleNext, nextStepOnConnect, address, isConnected, isStepComplete]);
+  }, [handleNext, nextStepOnConnect, isConnected, isStepComplete]);
 
   const {
     walletManager: { open: openWalletManager },
