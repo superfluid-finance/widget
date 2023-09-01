@@ -32,6 +32,8 @@ const IPFSWidgetPage: NextPage = () => {
 
   const { data, loading, error } = useLoadFromIPFS(query.hash as string);
 
+  const ajs = useAnalyticsBrowser();
+
   const fontFamily = useMemo(() => {
     const typography = data?.theme?.typography as TypographyOptions;
 
@@ -86,9 +88,17 @@ const IPFSWidgetPage: NextPage = () => {
                 tokenList={tokenList}
                 type="page"
                 walletManager={walletManager}
+                eventListeners={{
+                  onButtonClick: (props) =>
+                    ajs.track("button_click", { type: props?.type }),
+                  onRouteChange: (props) =>
+                    ajs.track("route_change", { route: props?.route }),
+                  onSuccess: () => ajs.track("stream_started"),
+                }}
               />
             )}
           </Box>
+          p
           <Analytics />
         </Container>
       )}

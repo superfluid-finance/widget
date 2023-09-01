@@ -1,8 +1,9 @@
 import { Box, Collapse, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
 
+import { runEventListener } from "./EventListeners.js";
 import FlowRateInput from "./FlowRateInput.js";
 import { DraftFormValues } from "./formValues.js";
 import NetworkAutocomplete from "./NetworkAutocomplete.js";
@@ -25,7 +26,7 @@ export default function StepContentPaymentOption() {
   );
 
   const isStepComplete = isValid && !isValidating; // Might be better to solve with "getFieldState".
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
 
   const [nextStepOnConnect, setNextOnConnect] = useState(false);
 
@@ -39,8 +40,20 @@ export default function StepContentPaymentOption() {
 
   const {
     walletManager: { open: openWalletManager },
+    eventListeners,
     getNetwork,
   } = useWidget();
+
+  useEffect(() => {
+    runEventListener(eventListeners.onRouteChange, {
+      route: "step_payment_option",
+    });
+  }, [eventListeners.onRouteChange]);
+
+  const onContinue = useCallback(() => {
+    handleNext();
+    runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+  }, [handleNext, eventListeners.onButtonClick]);
 
   return (
     <Stack
@@ -90,12 +103,15 @@ export default function StepContentPaymentOption() {
                 : undefined,
             });
             setNextOnConnect(true);
+            runEventListener(() =>
+              eventListeners.onButtonClick({ type: "connect_wallet" }),
+            );
           }}
         >
           Connect Wallet to Continue
         </StepperCTAButton>
       ) : (
-        <StepperCTAButton disabled={!isStepComplete} onClick={handleNext}>
+        <StepperCTAButton disabled={!isStepComplete} onClick={onContinue}>
           Continue
         </StepperCTAButton>
       )}
