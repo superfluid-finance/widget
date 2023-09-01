@@ -30,8 +30,6 @@ export interface EventListeners {
   onRouteChange?: (props?: {
     route: "payment_option" | "wrap" | "transactions" | "review" | "summary";
   }) => void;
-  /** Called when the wallet is connected */
-  onWalletConnected?: (props?: { address: Address }) => void;
   /** Called when the checkout is successfully finished. */
   onSuccess?: () => void;
   /** Called when the merchant's success button is defined in the schema and it's clicked. */
@@ -40,6 +38,9 @@ export interface EventListeners {
    * Called when the payment option is initialized or changed by the user.
    */
   onPaymentOptionUpdate?: (paymentOption?: PaymentOption) => void;
+  /** Called when the wallet is connected */
+  onWalletConnected?: (props?: { address: Address }) => void;
+  g;
 }
 
 /**
