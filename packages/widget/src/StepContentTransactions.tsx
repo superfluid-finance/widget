@@ -22,7 +22,7 @@ export function StepContentTransactions() {
   const { eventListeners } = useWidget();
 
   useEffect(() => {
-    eventListeners.onRouteChange({ route: "transactions" });
+    runEventListener(eventListeners.onRouteChange, { route: "transactions" });
   }, []);
 
   useEffect(() => {

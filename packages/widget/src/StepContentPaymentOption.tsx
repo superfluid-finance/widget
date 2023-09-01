@@ -26,17 +26,18 @@ export default function StepContentPaymentOption() {
   );
 
   const isStepComplete = isValid && !isValidating; // Might be better to solve with "getFieldState".
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
 
   const [nextStepOnConnect, setNextOnConnect] = useState(false);
 
   const { handleNext } = useStepper();
   useEffect(() => {
-    if (nextStepOnConnect && isConnected && isStepComplete) {
+    if (nextStepOnConnect && isConnected && address && isStepComplete) {
       setNextOnConnect(false);
       handleNext();
+      runEventListener(eventListeners.onWalletConnected, { address });
     }
-  }, [handleNext, nextStepOnConnect, isConnected, isStepComplete]);
+  }, [handleNext, nextStepOnConnect, address, isConnected, isStepComplete]);
 
   const {
     walletManager: { open: openWalletManager },
@@ -45,7 +46,7 @@ export default function StepContentPaymentOption() {
   } = useWidget();
 
   useEffect(() => {
-    eventListeners.onRouteChange({ route: "payment_option" });
+    runEventListener(eventListeners.onRouteChange, { route: "payment_option" });
   });
 
   const onContinue = useCallback(() => {

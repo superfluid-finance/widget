@@ -1,3 +1,5 @@
+import { Address } from "viem";
+
 import { PaymentOption } from "./core";
 
 /**
@@ -25,6 +27,7 @@ export interface EventListeners {
   onRouteChange?: (props?: {
     route: "payment_option" | "wrap" | "transactions" | "review" | "summary";
   }) => void;
+  onWalletConnected?: (props?: { address: Address }) => void;
   /** Called when the checkout is successfully finished. */
   onSuccess?: () => void;
   /** Called when the merchant's success button is defined in the schema and it's clicked. */

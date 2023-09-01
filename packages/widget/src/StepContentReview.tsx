@@ -18,7 +18,7 @@ export default function StepContentReview() {
   const { eventListeners } = useWidget();
 
   useEffect(() => {
-    eventListeners.onRouteChange({ route: "review" });
+    runEventListener(eventListeners.onRouteChange, { route: "review" });
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
