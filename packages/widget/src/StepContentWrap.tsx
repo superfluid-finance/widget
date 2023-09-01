@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { TokenInfo } from "@superfluid-finance/tokenlist";
-import { FC, PropsWithChildren, useMemo, useState } from "react";
+import { FC, PropsWithChildren, useCallback, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { parseEther } from "viem";
 import { Address, useBalance } from "wagmi";
@@ -98,7 +98,7 @@ export default function StepContentWrap() {
   ]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
-  const { getUnderlyingToken } = useWidget();
+  const { getUnderlyingToken, eventListeners } = useWidget();
 
   // Find the underlying token of the Super Token.
   const underlyingToken = useMemo(() => {
@@ -149,6 +149,11 @@ export default function StepContentWrap() {
   }, [superTokenBalance, paymentOptionWithTokenInfo, flowRate]);
 
   const { handleNext } = useStepper();
+
+  const onContinue = useCallback(() => {
+    handleNext();
+    eventListeners.onContinue("Wrap");
+  }, [handleNext, eventListeners]);
 
   const onSkipWrapping = () => {
     setValue("wrapAmountInUnits", "" as `${number}`);
@@ -266,7 +271,7 @@ export default function StepContentWrap() {
         >
           <StepperCTAButton
             disabled={!isValid || isValidating}
-            onClick={handleNext}
+            onClick={onContinue}
           >
             Continue
           </StepperCTAButton>

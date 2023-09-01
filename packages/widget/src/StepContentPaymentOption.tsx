@@ -1,5 +1,5 @@
 import { Box, Collapse, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
 
@@ -39,8 +39,14 @@ export default function StepContentPaymentOption() {
 
   const {
     walletManager: { open: openWalletManager },
+    eventListeners,
     getNetwork,
   } = useWidget();
+
+  const onContinue = useCallback(() => {
+    handleNext();
+    eventListeners.onContinue("Network&Token");
+  }, [handleNext, eventListeners]);
 
   return (
     <Stack
@@ -95,7 +101,7 @@ export default function StepContentPaymentOption() {
           Connect Wallet to Continue
         </StepperCTAButton>
       ) : (
-        <StepperCTAButton disabled={!isStepComplete} onClick={handleNext}>
+        <StepperCTAButton disabled={!isStepComplete} onClick={onContinue}>
           Continue
         </StepperCTAButton>
       )}

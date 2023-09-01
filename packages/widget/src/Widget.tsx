@@ -226,6 +226,7 @@ export function Widget({
       },
       type: viewProps.type,
       eventListeners: {
+        onContinue: eventListeners?.onContinue ?? NOOP_FUNCTION,
         onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
         onSuccessButtonClick:
           eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,

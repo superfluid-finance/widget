@@ -1,5 +1,5 @@
 import { Alert, Collapse, Divider, Stack } from "@mui/material";
-import { Fragment } from "react";
+import { Fragment, useCallback } from "react";
 import { useQuery } from "wagmi";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
@@ -7,11 +7,19 @@ import { CommandPreview } from "./previews/CommandPreview.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
 import { useCommandValidationSchema } from "./useCommandValidationSchema.js";
+import { useWidget } from "./WidgetContext.js";
 
 export default function StepContentReview() {
   const { commands, sessionId } = useCommandHandler();
 
   const { handleNext } = useStepper();
+
+  const { eventListeners } = useWidget();
+
+  const onContinue = useCallback(() => {
+    handleNext();
+    eventListeners.onContinue("Review");
+  }, [handleNext, eventListeners]);
 
   const commandValidationSchema = useCommandValidationSchema();
 
@@ -47,7 +55,7 @@ export default function StepContentReview() {
       </Stack>
       <StepperCTAButton
         disabled={!isValid || isValidating}
-        onClick={handleNext}
+        onClick={onContinue}
       >
         Continue
       </StepperCTAButton>
