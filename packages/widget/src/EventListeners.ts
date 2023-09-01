@@ -12,7 +12,7 @@ import { PaymentOption } from "./core";
  * }} />
  */
 export interface EventListeners {
-  /** Called when a button is pressed */
+  /** Called when a button is pressed. Usually a call to action (CTA). */
   onButtonClick?: (props?: {
     type:
       | "next_step"
@@ -25,7 +25,7 @@ export interface EventListeners {
       | "success_button"
       | "superfluid_dashboard";
   }) => void;
-  /** Called when the widget route changes */
+  /** Called when the widget route changes. "Route" is a term to define the _view_ the user sees. */
   onRouteChange?: (props?: {
     route:
       | "step_payment_option"
