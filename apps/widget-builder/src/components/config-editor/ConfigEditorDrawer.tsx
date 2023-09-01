@@ -19,6 +19,7 @@ export const ConfigEditorDrawer: FC<ConfigEditorDrawerProps> = ({
   setValue,
 }) => (
   <Drawer
+    variant="temporary"
     open={isOpen}
     onClose={() => setIsOpen(false)}
     keepMounted={true}

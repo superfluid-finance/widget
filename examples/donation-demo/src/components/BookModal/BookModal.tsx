@@ -23,7 +23,7 @@ const BookModal: FC<ModalProps> = ({ show, onClose }) => {
             href="https://checkout-builder.superfluid.finance/"
             target="_blank"
           >
-            Try the Widget Builder
+            Try the Checkout Builder
           </a>
           <a
             className={styles.SecondaryButton}

@@ -1,24 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, IconButton, Stack, useTheme } from "@mui/material";
 import { ChangeEvent, FC, useRef } from "react";
 
 type ImageSelectProps = {
-  label: string;
+  id: string;
   imageSrc?: string;
   onClick: (file: File) => void;
   onRemove: () => void;
 };
 
 const ImageSelect: FC<ImageSelectProps> = ({
-  label,
+  id,
   imageSrc,
   onClick,
   onRemove,
@@ -39,19 +32,13 @@ const ImageSelect: FC<ImageSelectProps> = ({
 
   return (
     <Stack direction="column" gap={1} sx={{ flex: 1 }}>
-      <Stack
-        direction="row"
-        sx={{ alignItems: "center", justifyContent: "space-between" }}
-      >
-        <Typography variant="body1" fontWeight="500">
-          {label}
-        </Typography>
-        {imageSrc && (
+      {imageSrc && (
+        <Stack direction="row" justifyContent="flex-end">
           <IconButton onClick={onRemove} size="small" sx={{ p: 0 }}>
             <CancelIcon data-testid="remove-image-button" />
           </IconButton>
-        )}
-      </Stack>
+        </Stack>
+      )}
 
       {imageSrc ? (
         <Box
@@ -74,7 +61,7 @@ const ImageSelect: FC<ImageSelectProps> = ({
             data-testid="file-upload-field"
             hidden
             type="file"
-            name={label}
+            name={id}
             ref={inputRef}
             onChange={handleFileUpload}
           />
@@ -92,16 +79,6 @@ const ImageSelect: FC<ImageSelectProps> = ({
               height: 90,
             }}
           >
-            <Typography
-              variant="caption"
-              sx={{
-                color: theme.palette.grey[500],
-                textTransform: "none",
-                textAlign: "left",
-              }}
-            >
-              Optional
-            </Typography>
             <Box
               sx={{
                 display: "flex",
