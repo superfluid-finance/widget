@@ -6,10 +6,12 @@ import { PaymentOption } from "./core";
  * A set of non-blocking callback functions that are triggered in response to the widget events.
  * @example
  * <SuperfluidWidget eventListeners={{
- *   onContinue: (step) => console.log(`Continue button is clicked on step! ${step}`),
+ *   onButtonClick: (props) => console.log(`${props?.type} button is clicked`),
+ *   onRouteChange: (props) => console.log(`Route is changed to ${props?.route}`),
  *   onSuccess: () => console.log('Checkout is successfully finished!'),
  *   onSuccessButtonClick: () => console.log('Merchant success button is clicked!')
  *   onPaymentOptionUpdate: (paymentOption) => setChainId(paymentOption?.chainId);
+ *   onWalletConnected: (props) => console.log(`Wallet ${props?.address} is connected!`),
  * }} />
  */
 export interface EventListeners {
@@ -24,9 +26,11 @@ export interface EventListeners {
       | "transaction"
       | "open_dashboard";
   }) => void;
+  /** Called when the widget route changes */
   onRouteChange?: (props?: {
     route: "payment_option" | "wrap" | "transactions" | "review" | "summary";
   }) => void;
+  /** Called when the wallet is connected */
   onWalletConnected?: (props?: { address: Address }) => void;
   /** Called when the checkout is successfully finished. */
   onSuccess?: () => void;
