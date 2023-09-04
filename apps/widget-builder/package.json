@@ -22,7 +22,6 @@
     "@mui/material": "^5.14.6",
     "@pinata/sdk": "^2.1.0",
     "@segment/analytics-next": "^1.53.4",
-    "@superfluid-finance/metadata": "^1.1.13",
     "@sentry/nextjs": "^7.65.0",
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.7.1",

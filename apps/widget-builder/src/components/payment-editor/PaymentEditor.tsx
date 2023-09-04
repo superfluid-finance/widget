@@ -15,6 +15,7 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  useTheme,
   Zoom,
 } from "@mui/material";
 import { FC, useCallback, useState } from "react";
@@ -26,6 +27,7 @@ import SelectPaymentOption from "../select-payment-option/SelectPaymentOption";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
 const ProductEditor: FC = () => {
+  const theme = useTheme();
   const { control, watch } = useFormContext<WidgetProps>();
 
   const { fields, append, remove } = useFieldArray({
@@ -167,6 +169,10 @@ const ProductEditor: FC = () => {
           } as SlideProps
         }
         keepMounted
+        transitionDuration={{
+          enter: theme.transitions.duration.enteringScreen,
+          exit: theme.transitions.duration.shortest,
+        }}
       >
         <AppBar color="transparent" position="relative" elevation={0}>
           <Stack
@@ -174,7 +180,7 @@ const ProductEditor: FC = () => {
             direction="row"
             justifyContent="space-between"
           >
-            <Typography variant="subtitle1">Add Payment Option</Typography>
+            <Typography variant="h6">Add Payment Option</Typography>
             <IconButton
               edge="start"
               color="inherit"

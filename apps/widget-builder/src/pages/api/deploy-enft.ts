@@ -18,7 +18,7 @@ import {
 import { mnemonicToAccount, privateKeyToAccount } from "viem/accounts";
 import * as chains from "viem/chains";
 
-import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
+import { superfluidRpcUrls } from "../../superfluidRpcUrls";
 import { ExistentialNFTCloneFactoryABI } from "../../types/abi-types";
 import { createBaseURI } from "../../utils/baseURI";
 import { verifyCaptcha } from "../../utils/captcha";
@@ -79,7 +79,11 @@ const handler: NextApiHandler = async (req, res) => {
 
   const deployConfig = Object.entries(selectedPaymentOptions).map(
     ([chainId, paymentOptions]) => {
-      const rpcUrl = getNetworkByChainIdOrThrow(Number(chainId)).rpcUrl;
+      const rpcUrl = superfluidRpcUrls[Number(chainId)];
+      if (rpcUrl) {
+        throw new Error("Superfluid RPC URL not found.");
+      }
+
       const chain = Object.values(chains).find(
         (chain) => chain.id === Number(chainId) ?? chains.polygonMumbai,
       ) as Chain;
