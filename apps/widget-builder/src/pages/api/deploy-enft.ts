@@ -1,11 +1,10 @@
-import metadata from "@superfluid-finance/metadata";
 import {
   ChainId,
   mapTimePeriodToSeconds,
   PaymentOption,
+  ProductDetails,
 } from "@superfluid-finance/widget";
 import { NextApiHandler } from "next";
-import { ExistentialNFTCloneFactory__factory } from "stream-gating";
 import {
   Address,
   Chain,
@@ -19,12 +18,12 @@ import {
 import { mnemonicToAccount, privateKeyToAccount } from "viem/accounts";
 import * as chains from "viem/chains";
 
-import { IPFS_GATEWAY } from "../../constants";
 import { getNetworkByChainIdOrThrow } from "../../networkDefinitions";
+import { ExistentialNFTCloneFactoryABI } from "../../types/abi-types";
+import { createBaseURI } from "../../utils/baseURI";
 import { verifyCaptcha } from "../../utils/captcha";
-import { checkRateLimit } from "../../utils/ip";
-import { pinNFTMetaToIPFS } from "../../utils/pinata";
-import rateLimit from "../../utils/rate-limit";
+import { pinNFTImageToIPFS } from "../../utils/pinata";
+import rateLimit, { checkRateLimit } from "../../utils/rate-limit";
 
 const limiter = rateLimit({
   interval: 60 * 1000,
@@ -45,12 +44,14 @@ BigInt.prototype.toJSON = function () {
 
 const handler: NextApiHandler = async (req, res) => {
   const {
+    productDetails,
+    selectedPaymentOptions,
     tokenName,
     tokenSymbol,
     nftImage,
-    selectedPaymentOptions,
     recaptchaToken,
   }: {
+    productDetails: ProductDetails;
     tokenName: string;
     tokenSymbol: string;
     nftImage: string;
@@ -70,11 +71,10 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(400).json({ error: "Invalid recaptcha token" });
   }
 
-  const metaHash = await pinNFTMetaToIPFS({
+  const nftImageHash = await pinNFTImageToIPFS({
     tokenName,
     tokenSymbol,
     nftImage,
-    selectedPaymentOptions,
   });
 
   const deployConfig = Object.entries(selectedPaymentOptions).map(
@@ -84,8 +84,9 @@ const handler: NextApiHandler = async (req, res) => {
         (chain) => chain.id === Number(chainId) ?? chains.polygonMumbai,
       ) as Chain;
 
-      const contractAddress = metadata.getNetworkByChainId(chain.id)
-        ?.contractsV1.existentialNFTCloneFactory as Address;
+      const contractAddress: Address =
+        "0x227a2239Add53F753eA3e201E97608E817B46f38"; // metadata.getNetworkByChainId(chain.id)
+      //?.contractsV1.existentialNFTCloneFactory as Address;
 
       return {
         paymentOptions,
@@ -115,7 +116,7 @@ const handler: NextApiHandler = async (req, res) => {
           chain,
         }) => {
           const cloneFactory = getContract({
-            abi: ExistentialNFTCloneFactory__factory.abi,
+            abi: ExistentialNFTCloneFactoryABI,
             address: contractAddress,
             publicClient,
             walletClient,
@@ -131,12 +132,17 @@ const handler: NextApiHandler = async (req, res) => {
             ),
             tokenName,
             tokenSymbol,
-            `${IPFS_GATEWAY}/ipfs/${metaHash}`,
+            createBaseURI({
+              name: productDetails.name,
+              description: productDetails.description ?? "",
+              chain: chain.id.toString(),
+              ipfs: nftImageHash,
+            }),
           ] as const;
 
           const gas = await publicClient.estimateContractGas({
             address: contractAddress,
-            abi: ExistentialNFTCloneFactory__factory.abi,
+            abi: ExistentialNFTCloneFactoryABI,
             functionName: "deployClone",
             account,
             args: cloneArgs,
@@ -152,7 +158,7 @@ const handler: NextApiHandler = async (req, res) => {
             eventName: "ExistentialNFT_CloneDeployed";
             args: { clone: Address };
           } = decodeEventLog({
-            abi: ExistentialNFTCloneFactory__factory.abi,
+            abi: ExistentialNFTCloneFactoryABI,
             data: rc.logs[0].data,
             topics: rc.logs[0].topics,
           });

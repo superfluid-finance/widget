@@ -33,7 +33,10 @@ const recaptchaKey =
 
 const StreamGatingEditor: FC = () => {
   const { watch } = useFormContext<WidgetProps>();
-  const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
+  const [paymentOptions, productDetails] = watch([
+    "paymentDetails.paymentOptions",
+    "productDetails",
+  ]);
   const recaptchaRef = createRef<ReCAPTCHA>();
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
 
@@ -104,6 +107,7 @@ const StreamGatingEditor: FC = () => {
       const response = await fetch("/api/deploy-enft", {
         method: "POST",
         body: JSON.stringify({
+          productDetails,
           selectedPaymentOptions,
           tokenName,
           tokenSymbol,
