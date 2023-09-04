@@ -32,8 +32,8 @@ test("Adding a payment new option", async ({ page }) => {
   await builderPage.changeProductName("Testing");
   await builderPage.addPaymentOption(testOption);
   await builderPage.verifyAddedPaymentOptions([
-    defaultPaymentOption,
     testOption,
+    defaultPaymentOption,
   ]);
   await builderPage.validateAddedPaymentOptionCount("2");
   await widgetPage.selectPaymentNetwork("Goerli");
@@ -44,6 +44,7 @@ test("Adding a payment new option", async ({ page }) => {
 test("Deleting a payment option", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
+  await builderPage.switchToPaymentTab();
   await builderPage.deleteLastAddedPaymentOption();
   await builderPage.validateAddedPaymentOptionCount("0");
   await builderPage.validateNoPaymentOptionsAddedMessage();
@@ -81,7 +82,6 @@ test("Uploading a product image", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
   await builderPage.changeProductName("Testing");
-  await builderPage.openUITab();
   await builderPage.uploadTestImage();
   await widgetPage.validateUsedTestImage();
 });

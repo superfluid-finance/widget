@@ -8,6 +8,7 @@ export class BuilderPage extends BasePage {
   readonly uiTab: Locator;
   readonly productTab: Locator;
   readonly exportTab: Locator;
+  readonly paymentTab: Locator;
   readonly productNameField: Locator;
   readonly productDescriptionField: Locator;
   readonly networkOptions: Locator;
@@ -45,6 +46,9 @@ export class BuilderPage extends BasePage {
   readonly publishedWidgetMessage: Locator;
   readonly noOptionsMessage: Locator;
   readonly uploadImageField: Locator;
+  readonly addPaymentOptionFormButton: Locator;
+  readonly discordPaymentOption: Locator;
+  readonly paymentDetailsWand: Locator;
   paymentOptionDuringTest: PaymentOption | undefined;
 
   constructor(page: Page) {
@@ -120,10 +124,20 @@ export class BuilderPage extends BasePage {
     this.demoModeSwitch = page.getByTestId("demo-mode-switch");
     this.goToHostedWidgetButton = page.getByTestId("go-to-widget-button");
     this.noOptionsMessage = page.getByTestId("no-options-message");
+    this.paymentTab = page.getByTestId("payment-tab");
+    this.addPaymentOptionFormButton = page.getByTestId(
+      "add-payment-option-button",
+    );
+    this.discordPaymentOption = page.getByTestId("discard-option-button");
+    this.paymentDetailsWand = page.getByTestId("payment-options-wand-button");
   }
 
   async changeDescription(description = "Testing description") {
     await this.productDescriptionField.fill(description);
+  }
+
+  async clickOnPaymentDetailsWandButton() {
+    await this.paymentDetailsWand.click();
   }
 
   async changeProductName(name = "Testing name") {
@@ -132,6 +146,8 @@ export class BuilderPage extends BasePage {
 
   async addPaymentOption(paymentOption: PaymentOption) {
     this.paymentOptionDuringTest = paymentOption;
+    await this.paymentTab.click();
+    await this.addPaymentOptionFormButton.click();
     await this.networkOptions.click();
     await this.page.locator(`[data-value=${paymentOption.network}]`).click();
     await this.superTokenOption.click();
@@ -186,6 +202,10 @@ export class BuilderPage extends BasePage {
     await this.uiTab.click();
   }
 
+  async switchToPaymentTab() {
+    await this.paymentTab.click();
+  }
+
   async openProductTab() {
     await this.productTab.click();
   }
@@ -217,11 +237,13 @@ export class BuilderPage extends BasePage {
   }
 
   async validateAddedPaymentOptionCount(count: string) {
-    await expect(this.paymentOptionCount).toHaveText(`Added: ${count}`);
+    await expect(this.paymentOptionCount).toHaveText(`(${count})`);
   }
 
   async validateNoPaymentOptionsAddedMessage() {
-    await expect(this.noOptionsMessage).toHaveText("- None");
+    await expect(this.noOptionsMessage).toHaveText(
+      "You haven't added any payment options yet. Add your first one or replace with demo data.",
+    );
   }
 
   async chooseExportOption(exportType: string) {
