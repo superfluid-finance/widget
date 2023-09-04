@@ -9,11 +9,19 @@ import {
   useTheme,
 } from "@mui/material";
 import { TokenInfo } from "@superfluid-finance/tokenlist";
-import { FC, PropsWithChildren, useMemo, useState } from "react";
+import {
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { parseEther } from "viem";
 import { Address, useBalance } from "wagmi";
 
+import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
 import { UpgradeIcon } from "./previews/CommandPreview.js";
 import { useStepper } from "./StepperContext.js";
@@ -98,7 +106,7 @@ export default function StepContentWrap() {
   ]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
-  const { getUnderlyingToken } = useWidget();
+  const { getUnderlyingToken, eventListeners } = useWidget();
 
   // Find the underlying token of the Super Token.
   const underlyingToken = useMemo(() => {
@@ -150,10 +158,20 @@ export default function StepContentWrap() {
 
   const { handleNext } = useStepper();
 
-  const onSkipWrapping = () => {
+  useEffect(() => {
+    runEventListener(eventListeners.onRouteChange, { route: "step_wrap" });
+  }, [eventListeners.onRouteChange]);
+
+  const onContinue = useCallback(() => {
+    handleNext();
+    runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+  }, [handleNext, eventListeners.onButtonClick]);
+
+  const onSkipWrapping = useCallback(() => {
     setValue("wrapAmountInUnits", "" as `${number}`);
     handleNext();
-  };
+    runEventListener(eventListeners.onButtonClick, { type: "skip_step" });
+  }, [handleNext, setValue, eventListeners.onButtonClick]);
 
   const onInputFocus = () => setFocusedOnce(true);
 
@@ -266,7 +284,7 @@ export default function StepContentWrap() {
         >
           <StepperCTAButton
             disabled={!isValid || isValidating}
-            onClick={handleNext}
+            onClick={onContinue}
           >
             Continue
           </StepperCTAButton>

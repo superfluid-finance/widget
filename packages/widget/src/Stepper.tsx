@@ -14,6 +14,7 @@ import React, { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { CheckoutSummary } from "./CheckoutSummary.js";
+import { runEventListener } from "./EventListeners.js";
 import ExpandIcon from "./ExpandIcon.js";
 import { DraftFormValues } from "./formValues.js";
 import StepContentPaymentOption from "./StepContentPaymentOption.js";
@@ -21,8 +22,10 @@ import StepContentReview from "./StepContentReview.js";
 import { StepContentTransactions } from "./StepContentTransactions.js";
 import StepContentWrap from "./StepContentWrap.js";
 import { StepperProvider } from "./StepperProvider.js";
+import { useWidget } from "./WidgetContext.js";
 
 export default function Stepper() {
+  const { eventListeners } = useWidget();
   const {
     watch,
     formState: { isValid },
@@ -104,7 +107,14 @@ export default function Stepper() {
 
                       return (
                         <Step key={index}>
-                          <StepButton onClick={() => setActiveStep(index)}>
+                          <StepButton
+                            onClick={() => {
+                              setActiveStep(index);
+                              runEventListener(eventListeners.onButtonClick, {
+                                type: "step_label",
+                              });
+                            }}
+                          >
                             <StepLabel
                               sx={{ position: "relative", width: "100%" }}
                             >

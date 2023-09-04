@@ -1,8 +1,11 @@
 import { LoadingButton } from "@mui/lab";
 import { Button, Stack } from "@mui/material";
+import { useCallback } from "react";
 import { useNetwork, useSwitchNetwork } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
+import { runEventListener } from "./EventListeners.js";
+import { useWidget } from "./WidgetContext.js";
 
 export type ContractWriteButtonProps = ContractWriteResult;
 
@@ -12,6 +15,8 @@ export default function ContractWriteButton({
   writeResult,
   transactionResult,
 }: ContractWriteButtonProps) {
+  const { eventListeners } = useWidget();
+
   const write = writeResult.write;
 
   const isLoading =
@@ -24,6 +29,18 @@ export default function ContractWriteButton({
   const { switchNetwork } = useSwitchNetwork();
   const needsToSwitchNetwork = expectedChainId !== chain?.id;
 
+  const onSwitchNetworkButtonClick = useCallback(() => {
+    switchNetwork?.(expectedChainId);
+    runEventListener(eventListeners.onButtonClick, { type: "switch_network" });
+  }, [switchNetwork, expectedChainId, eventListeners.onButtonClick]);
+
+  const onContractWriteButtonClick = useCallback(() => {
+    write?.();
+    runEventListener(eventListeners.onButtonClick, {
+      type: "invoke_transaction",
+    });
+  }, [write, eventListeners.onButtonClick]);
+
   return (
     <Stack direction="column" alignItems="stretch" sx={{ width: "100%" }}>
       {needsToSwitchNetwork ? (
@@ -32,7 +49,7 @@ export default function ContractWriteButton({
           size="large"
           variant="contained"
           fullWidth
-          onClick={() => switchNetwork?.(expectedChainId)}
+          onClick={onSwitchNetworkButtonClick}
         >
           Switch Network
         </Button>
@@ -44,7 +61,7 @@ export default function ContractWriteButton({
           variant="contained"
           fullWidth
           disabled={!write || transactionResult.isSuccess}
-          onClick={() => write?.()}
+          onClick={onContractWriteButtonClick}
           loading={isLoading}
         >
           {contractWrite.displayTitle}
