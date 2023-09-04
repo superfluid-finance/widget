@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
 
 settings:
   autoInstallPeers: false
@@ -482,8 +482,8 @@ importers:
   examples/widget-webcomponent:
     dependencies:
       '@superfluid-finance/tokenlist':
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^2.3.1
+        version: 2.3.1
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
@@ -536,8 +536,8 @@ importers:
         specifier: ^1.1.13
         version: 1.1.13
       '@superfluid-finance/tokenlist':
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^2.3.1
+        version: 2.3.1
       blockies-ts:
         specifier: ^1.0.0
         version: 1.0.0
@@ -4365,8 +4365,8 @@ packages:
     resolution: {integrity: sha512-AZ7kNAYyOVNZkaNvcn01iqA9GwT5vN6q3KA5GlP6eRfhnicxIVmbdK2316tUCvAQKRJ3NGOEjARfhUViEMmtOg==}
     dev: false
 
-  /@superfluid-finance/tokenlist@2.2.0:
-    resolution: {integrity: sha512-Q2vnWxKr9tHqd/647DPjcEhPVqCTD5HCGQwB8LZN4yg6Jj/+O5/7FqqJs1i8RbaMijFj/sSkREiq0HxoFpXHag==}
+  /@superfluid-finance/tokenlist@2.3.1:
+    resolution: {integrity: sha512-DmlT7EA0atisSS0VyJyVTxNQt7WefTN+2ia6DYRFSj5fM5AHUQaXMMnz1bfoAmUkTANip8cv9rxCSLgLz2B5Fw==}
     dependencies:
       '@uniswap/token-lists': 1.0.0-beta.33
     dev: false
