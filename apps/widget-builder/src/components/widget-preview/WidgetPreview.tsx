@@ -4,7 +4,10 @@ import SuperfluidWidget, {
   ProductDetails,
   WalletManager,
 } from "@superfluid-finance/widget";
-import tokenList from "@superfluid-finance/widget/tokenlist";
+import tokenList, {
+  SuperTokenList,
+  TokenInfo,
+} from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import {
   createContext,
@@ -17,6 +20,40 @@ import {
 } from "react";
 
 import useFontLoader from "../../hooks/useFontLoader";
+
+const permitTokens: TokenInfo[] = [
+  {
+    address: "0x50c988f2c2cce525cc2067c93b8c4a43ec62a166",
+    name: "PERMIT: Super fUSDC Fake Token",
+    symbol: "pfUSDCx",
+    decimals: 18,
+    chainId: 80001,
+    extensions: {
+      superTokenInfo: {
+        type: "Wrapper",
+        underlyingTokenAddress: "0x60974a03baaa984ea79f4590ac1e88aaae31158a",
+      },
+    },
+    logoURI:
+      "https://raw.githubusercontent.com/superfluid-finance/assets/master/public/tokens/usdc/icon.svg",
+    tags: ["supertoken", "testnet"],
+  },
+  {
+    address: "0x60974a03baaa984ea79f4590ac1e88aaae31158a",
+    name: "PERMIT: fUSDC Fake Token",
+    symbol: "pfUSDC",
+    decimals: 18,
+    chainId: 80001,
+    logoURI:
+      "https://raw.githubusercontent.com/superfluid-finance/assets/master/public/tokens/usdc/icon.svg",
+    tags: ["underlying", "testnet"],
+  },
+];
+
+export const widgetTokenList = {
+  ...tokenList,
+  tokens: [...tokenList.tokens, ...permitTokens],
+} as SuperTokenList;
 
 export interface FontSettings {
   family: string;
@@ -98,7 +135,7 @@ const switchLayout = (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
-      tokenList={tokenList}
+      tokenList={widgetTokenList}
       type={layout}
       theme={theme}
       walletManager={walletManager}
@@ -108,7 +145,7 @@ const switchLayout = (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
-      tokenList={tokenList}
+      tokenList={widgetTokenList}
       type={layout}
       theme={theme}
       walletManager={walletManager}

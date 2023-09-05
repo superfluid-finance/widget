@@ -84,8 +84,6 @@ export function CommandHandlerProvider({ children }: Props) {
                 onChange={(_e, checked) => {
                   setBatch(true);
 
-                  console.log("hey");
-
                   if (
                     contractWrites.filter((x) => !x.materializeForBatchCall)
                       .length === 0
@@ -100,17 +98,15 @@ export function CommandHandlerProvider({ children }: Props) {
                             commandId: nanoid(),
                             displayTitle: "Batch Call",
                             chainId: chainId,
-                            materialize: () => {
+                            signatureRequest: contractWrites.find(
+                              (x) => x.signatureRequest,
+                            )?.signatureRequest,
+                            materialize: (signature) => {
                               const args = [
                                 contractWrites.map(
-                                  (x) => x.materializeForBatchCall!()!,
+                                  (x) => x.materializeForBatchCall!(signature)!,
                                 ),
                               ] as const; // TODO(KK): bangs
-
-                              console.log({
-                                args,
-                              });
-
                               return {
                                 abi: superfluidHostABI,
                                 address: superfluidHostAddress[chainId],
@@ -193,17 +189,11 @@ const createContractWrite = <
     id: nanoid(),
     ...arg, // TODO(KK): handle gnosis safe bug
     materializeForBatchCall: (signature) => {
-      console.log("foo");
-
       if (!arg.materializeForBatchCall) {
         return undefined;
       }
       const [operationType, target, call] =
         arg.materializeForBatchCall(signature);
-
-      console.log({
-        call,
-      });
 
       return { operationType, target, data: encodeFunctionData(call) };
     },

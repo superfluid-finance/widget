@@ -11,6 +11,7 @@ export type ContractWriteButtonProps = ContractWriteResult;
 
 export default function ContractWriteButton({
   contractWrite,
+  signatureResult,
   prepareResult,
   writeResult,
   transactionResult,
@@ -41,19 +42,7 @@ export default function ContractWriteButton({
     });
   }, [write, eventListeners.onButtonClick]);
 
-  // encodeFunctionData({
-  //   abi: ,
-  // });
-
-  // useContractWrite({
-  //   abi: superfluidHostABI,
-  //   address: superfluidHostAddress[expectedChainId as keyof typeof superfluidHostAddress],
-  //   functionName: "batchCall",
-  //   args: [
-  //     // SuperUpgrader
-  //     // createFlow
-  //   ]
-  // })
+  // const { data: signatureData, isLoading: isSignatureLoading, isSuccess: isSignatureSuccess, isError: isSignatureError, signTypedData } = useSignTypedData(contractWrite.signatureRequest);
 
   return (
     <Stack direction="column" alignItems="stretch" sx={{ width: "100%" }}>
@@ -69,9 +58,17 @@ export default function ContractWriteButton({
         </Button>
       ) : (
         <>
-          {/* <Button disabled={isSignatureLoading} onClick={() => signTypedData()}>Sign</Button>
-        {isSignatureSuccess && <div>Signature: {signatureData}</div>}
-        {isSignatureError && <div>Error signing message</div>} */}
+          {Boolean(contractWrite.signatureRequest && !signatureResult.data) && (
+            <>
+              <Button
+                disabled={signatureResult.isLoading}
+                onClick={() => signatureResult.signTypedData()}
+              >
+                Sign
+              </Button>
+              {signatureResult.isError && <div>Error signing message</div>}
+            </>
+          )}
           <LoadingButton
             loadingIndicator="Loading…"
             data-testid="transaction-button"
@@ -89,63 +86,3 @@ export default function ContractWriteButton({
     </Stack>
   );
 }
-
-// const typedData: Parameters<typeof useSignTypedData>[0] = {
-//   "types": {
-//     // "EIP712Domain": [
-//     //   {
-//     //     "name": "name",
-//     //     "type": "string"
-//     //   },
-//     //   {
-//     //     "name": "version",
-//     //     "type": "string"
-//     //   },
-//     //   {
-//     //     "name": "chainId",
-//     //     "type": "uint256"
-//     //   },
-//     //   {
-//     //     "name": "verifyingContract",
-//     //     "type": "address"
-//     //   }
-//     // ],
-//     "Permit": [
-//       {
-//         "name": "owner",
-//         "type": "address"
-//       },
-//       {
-//         "name": "spender",
-//         "type": "address"
-//       },
-//       {
-//         "name": "value",
-//         "type": "uint256"
-//       },
-//       {
-//         "name": "nonce",
-//         "type": "uint256"
-//       },
-//       {
-//         "name": "deadline",
-//         "type": "uint256"
-//       }
-//     ],
-//   },
-//   "primaryType": "Permit",
-//   // "domain": {
-//   //   "name": erc20name,
-//   //   "version": version,
-//   //   "chainId": chainid,
-//   //   "verifyingContract": tokenAddress
-//   // },
-//   // "message": {
-//   //   "owner": owner,
-//   //   "spender": spender,
-//   //   "value": value,
-//   //   "nonce": nonce,
-//   //   "deadline": deadline
-//   // }
-// };
-// const { data: signatureData, signTypedData, isLoading: isSignatureLoading, isSuccess: isSignatureSuccess, isError: isSignatureError } = useSignTypedData();

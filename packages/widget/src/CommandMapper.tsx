@@ -7,6 +7,7 @@ import {
   encodeAbiParameters,
   encodeFunctionData,
   GetValue,
+  hexToSignature,
   parseAbiParameters,
 } from "viem";
 import { useContractRead, useContractReads, useSignTypedData } from "wagmi";
@@ -15,6 +16,7 @@ import {
   Command,
   EnableAutoWrapCommand,
   SubscribeCommand,
+  SuperWrapIntoSuperTokensCommand,
   WrapIntoSuperTokensCommand,
 } from "./commands.js";
 import { ContractWrite } from "./ContractWrite.js";
@@ -30,9 +32,14 @@ import {
   mapTimePeriodToSeconds,
   nativeAssetSuperTokenABI,
   superTokenABI,
+  superUpgraderABI,
+  superUpgraderAddress,
 } from "./core/index.js";
 import { ChildrenProp, MaxUint256 } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
+
+const NONCES_FN = "0x7ecebe00";
+const NAME_FN = "0x06fdde03";
 
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
@@ -48,43 +55,212 @@ export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
       return <WrapIntoSuperTokensCommandMapper command={cmd} {...props} />;
     case "Subscribe":
       return <SubscribeCommandMapper command={cmd} {...props} />;
-    // case "Batch":
-    //   return <BatchCommandMapper command={cmd} {...props} />;
+    case "Super Wrap into Super Tokens":
+      return <SuperWrapIntoSuperTokensCommandMapper command={cmd} {...props} />;
   }
 }
 
-// export function BatchCommandMapper({
-//   command: cmd,
-//   onMapped,
-//   children,
-// }: CommandMapperProps<BatchCallCommand>) {
-//   const contractWrites = useMemo(() => {
-//     const contractWrites_: ContractWrite[] = [];
+export function SuperWrapIntoSuperTokensCommandMapper({
+  command: cmd,
+  onMapped,
+  children,
+}: CommandMapperProps<SuperWrapIntoSuperTokensCommand>) {
+  const { getSuperToken, getUnderlyingToken } = useWidget();
 
-//     contractWrites_.push(
-//       createContractWrite({
-//         commandId: cmd.id,
-//         displayTitle: "Batch Call",
-//         chainId: cmd.chainId,
-//         materialize: () => ({
-//           abi: superfluidHostABI,
-//           address: superfluidHostAddress[cmd.chainId],
-//           functionName: "batchCall",
-//           args: cmd.innerWrites.map(x => x.materializeForBatchCall!()!) as any // TODO(KK): readonly type annoyance
-//         }),
-//       }),
-//     );
+  const isNativeAssetUnderlyingToken = cmd.underlyingToken.isNativeAsset;
 
-//     return contractWrites_;
-//   }, [cmd.id]);
+  const { data: allowance, isSuccess } = useContractRead(
+    !isNativeAssetUnderlyingToken
+      ? {
+          chainId: cmd.chainId,
+          address: cmd.underlyingToken.address,
+          abi: erc20ABI,
+          functionName: "allowance",
+          args: [cmd.accountAddress, cmd.superTokenAddress],
+        }
+      : undefined,
+  );
 
-//   useEffect(
-//     () => (onMapped?.(contractWrites)),
-//     [contractWrites],
-//   );
+  const contractWrites = useMemo(() => {
+    const contractWrites_: ContractWrite[] = [];
 
-//   return <>{children?.(contractWrites)}</>;
-// }
+    if (isNativeAssetUnderlyingToken) {
+      contractWrites_.push(
+        createContractWrite({
+          commandId: cmd.id,
+          displayTitle: `Wrap to ${
+            getSuperToken(cmd.superTokenAddress).symbol
+          }`,
+          chainId: cmd.chainId,
+          materialize: () => ({
+            abi: nativeAssetSuperTokenABI,
+            functionName: "upgradeByETH",
+            address: cmd.superTokenAddress,
+            value: cmd.amountWeiFromUnderlyingTokenDecimals,
+          }),
+          materializeForBatchCall: () => [
+            101,
+            cmd.superTokenAddress,
+            {
+              abi: nativeAssetSuperTokenABI,
+              functionName: "upgradeByETH",
+              address: cmd.superTokenAddress,
+              value: cmd.amountWeiFromUnderlyingTokenDecimals,
+            },
+          ],
+        }),
+      );
+    } else {
+      if (allowance !== undefined) {
+        if (true) {
+          // TODO(KK)
+          const underlyingTokenAddress = cmd.underlyingToken.address;
+          contractWrites_.push(
+            createContractWrite({
+              commandId: cmd.id,
+              displayTitle: `Approve ${
+                getUnderlyingToken(underlyingTokenAddress).symbol
+              } Allowance & Wrap`,
+              chainId: cmd.chainId,
+              signatureRequest: {
+                types: {
+                  EIP712Domain: [
+                    {
+                      name: "name",
+                      type: "string",
+                    },
+                    {
+                      name: "version",
+                      type: "string",
+                    },
+                    {
+                      name: "chainId",
+                      type: "uint256",
+                    },
+                    {
+                      name: "verifyingContract",
+                      type: "address",
+                    },
+                  ],
+                  Permit: [
+                    {
+                      name: "owner",
+                      type: "address",
+                    },
+                    {
+                      name: "spender",
+                      type: "address",
+                    },
+                    {
+                      name: "value",
+                      type: "uint256",
+                    },
+                    {
+                      name: "nonce",
+                      type: "uint256",
+                    },
+                    {
+                      name: "deadline",
+                      type: "uint256",
+                    },
+                  ],
+                },
+                primaryType: "Permit",
+                domain: {
+                  name: "8848c041d28adfad9910e0d402153ad1ab9333ba4ffe59cd611a2bf96f398366",
+                  version:
+                    "c89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6",
+                  chainId: cmd.chainId,
+                  verifyingContract: underlyingTokenAddress,
+                },
+                message: {
+                  owner: cmd.accountAddress,
+                  spender:
+                    superUpgraderAddress[
+                      cmd.chainId as keyof typeof superUpgraderAddress
+                    ],
+                  value: cmd.amountWeiFromUnderlyingTokenDecimals * 2n,
+                  nonce: 0, // TODO(KK): figure out
+                  deadline:
+                    "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                },
+              },
+              materialize: (signature) => {
+                const sig = hexToSignature(signature!);
+
+                console.log({
+                  v: Number(sig.v.toString()),
+                });
+
+                return {
+                  abi: superUpgraderABI,
+                  functionName: "manualUpgradeWithAuthorization",
+                  address:
+                    superUpgraderAddress[
+                      cmd.chainId as keyof typeof superUpgraderAddress
+                    ],
+                  args: [
+                    cmd.amountWeiFromUnderlyingTokenDecimals,
+                    cmd.amountWeiFromUnderlyingTokenDecimals * 2n,
+                    BigInt(
+                      "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                    ),
+                    Number(sig.v.toString()),
+                    sig.r,
+                    sig.s,
+                    "0x",
+                  ] as const,
+                };
+              },
+              materializeForBatchCall: (signature) => {
+                const sig = hexToSignature(signature!);
+
+                console.log({
+                  v: Number(sig.v.toString()),
+                });
+
+                return [
+                  202,
+                  superUpgraderAddress[
+                    cmd.chainId as keyof typeof superUpgraderAddress
+                  ],
+                  {
+                    abi: superUpgraderABI,
+                    functionName: "manualUpgradeWithAuthorization",
+                    address:
+                      superUpgraderAddress[
+                        cmd.chainId as keyof typeof superUpgraderAddress
+                      ],
+                    args: [
+                      cmd.amountWeiFromUnderlyingTokenDecimals,
+                      cmd.amountWeiFromUnderlyingTokenDecimals * 2n,
+                      BigInt(
+                        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                      ),
+                      Number(sig.v.toString()),
+                      sig.r,
+                      sig.s,
+                      "0x",
+                    ] as const,
+                  },
+                ];
+              },
+            }),
+          );
+        }
+      }
+    }
+
+    return contractWrites_;
+  }, [cmd.id, isSuccess]);
+
+  useEffect(
+    () => (isSuccess ? onMapped?.(contractWrites) : void 0),
+    [contractWrites],
+  );
+
+  return <>{children?.(contractWrites)}</>;
+}
 
 export function EnableAutoWrapCommandMapper({
   command: cmd,
@@ -453,8 +629,6 @@ const createContractWrite = <
     id: nanoid(),
     ...arg, // TODO(KK): handle gnosis safe bug
     materializeForBatchCall: (signature) => {
-      console.log("???");
-
       if (!arg.materializeForBatchCall) {
         return undefined;
       }
@@ -462,19 +636,11 @@ const createContractWrite = <
       const [operationType, target, call] =
         arg.materializeForBatchCall(signature);
 
-      console.log({
-        call,
-      });
-
       const callData = encodeFunctionData(call);
       const data = encodeAbiParameters(parseAbiParameters("bytes, bytes"), [
         callData,
         "0x",
       ]);
-
-      console.log({
-        callData,
-      });
 
       return { operationType, target, data };
     },

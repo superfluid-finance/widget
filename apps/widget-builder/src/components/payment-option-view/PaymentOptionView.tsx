@@ -16,12 +16,12 @@ import {
   FlowRate,
   supportedNetworks,
 } from "@superfluid-finance/widget";
-import superTokenList from "@superfluid-finance/widget/tokenlist";
 import Image from "next/image";
 import { FC, ReactNode, useMemo } from "react";
 import { getAddress } from "viem";
 
 import NetworkAvatar from "../NetworkAvatar";
+import { widgetTokenList } from "../widget-preview/WidgetPreview";
 
 type PaymentOptionRowProps = {
   label: string;
@@ -84,11 +84,11 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
 
   const token = useMemo(
     () =>
-      Object.values(superTokenList.tokens).find(
+      Object.values(widgetTokenList.tokens).find(
         (token) =>
           token.address.toLowerCase() === superToken.address.toLowerCase(),
       ),
-    [superTokenList, superToken.address],
+    [superToken.address],
   );
 
   const flowRateValue = useMemo(() => {

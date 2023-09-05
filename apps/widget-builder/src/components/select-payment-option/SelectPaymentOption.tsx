@@ -41,7 +41,7 @@ import { ZodError } from "zod";
 
 import InputWrapper, { InputInfo } from "../form/InputWrapper";
 import NetworkAvatar from "../NetworkAvatar";
-import { WidgetProps } from "../widget-preview/WidgetPreview";
+import { WidgetProps, widgetTokenList } from "../widget-preview/WidgetPreview";
 
 export type PaymentOptionWithSuperTokenAndNetwork = {
   network: NetworkAssetInfo;
@@ -138,7 +138,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
     const network = supportedNetworks.find(
       ({ name }) => name === selectedNetwork?.name,
     );
-    return tokenList.tokens.filter(
+    return widgetTokenList.tokens.filter(
       (token) =>
         token.chainId === network?.id && token.tags?.includes("supertoken"),
     );

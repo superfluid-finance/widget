@@ -24,6 +24,28 @@ export type WrapIntoSuperTokensCommand = {
   amountWeiFromUnderlyingTokenDecimals: bigint;
 };
 
+export type SuperWrapIntoSuperTokensCommand = {
+  id: string;
+  type: "Super Wrap into Super Tokens";
+  chainId: ChainId;
+  accountAddress: Address;
+  superTokenAddress: Address;
+  underlyingToken:
+    | {
+        isNativeAsset: false;
+        address: Address;
+        decimals: number;
+      }
+    | {
+        isNativeAsset: true;
+        address: undefined;
+        decimals: number;
+      };
+  amountInUnits: `${number}`;
+  amountWeiFromSuperTokenDecimals: bigint;
+  amountWeiFromUnderlyingTokenDecimals: bigint;
+};
+
 export type EnableAutoWrapCommand = {
   id: string;
   type: "Enable Auto-Wrap";
@@ -59,5 +81,6 @@ export type SubscribeCommand = {
 export type Command =
   | WrapIntoSuperTokensCommand
   | EnableAutoWrapCommand
-  | SubscribeCommand;
+  | SubscribeCommand
+  | SuperWrapIntoSuperTokensCommand;
 // | BatchCallCommand;

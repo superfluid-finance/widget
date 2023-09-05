@@ -4,6 +4,7 @@ import {
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
+  useSignTypedData,
   useWaitForTransaction,
 } from "wagmi";
 
@@ -12,6 +13,7 @@ import { ChildrenProp } from "./utils.js";
 
 export type ContractWriteResult = {
   contractWrite: ContractWrite;
+  signatureResult: ReturnType<typeof useSignTypedData>;
   prepareResult: ReturnType<typeof usePrepareContractWrite>;
   writeResult: ReturnType<typeof useContractWrite>;
   transactionResult: ReturnType<typeof useWaitForTransaction>;
@@ -32,16 +34,23 @@ export function ContractWriteManager({
   children,
 }: ContractWriteManagerProps) {
   const { chain } = useNetwork();
-  const prepare = _prepare && contractWrite.chainId === chain?.id;
+
+  const signatureResult = useSignTypedData(contractWrite.signatureRequest);
 
   const materialized = useMemo(
-    () => contractWrite.materialize(),
-    [contractWrite.id],
+    () =>
+      !contractWrite.signatureRequest || signatureResult.data
+        ? contractWrite.materialize(signatureResult.data)
+        : undefined,
+    [contractWrite.id, signatureResult.data],
   );
 
+  const prepare =
+    _prepare && materialized && contractWrite.chainId === chain?.id;
   const prepareResult = usePrepareContractWrite(
     prepare ? materialized : undefined,
   );
+
   const writeResult = useContractWrite(prepareResult.config);
   const transactionResult = useWaitForTransaction({
     hash: writeResult.data?.hash,
@@ -55,15 +64,18 @@ export function ContractWriteManager({
       >, // TODO(KK): weird type mismatch
       writeResult,
       transactionResult,
+      signatureResult,
       latestError: (transactionResult.error ||
         writeResult.error ||
-        prepareResult.error) as unknown as BaseError,
+        prepareResult.error ||
+        signatureResult.error) as unknown as BaseError,
     }),
     [
       contractWrite.id,
       prepareResult.status,
       writeResult.status,
       transactionResult.status,
+      signatureResult.status,
     ],
   );
 

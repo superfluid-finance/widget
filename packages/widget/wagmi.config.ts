@@ -71,8 +71,12 @@ export default defineConfig({
     }),
     etherscan({
       apiKey: "WW2B6KB1FAXNTWP8EJQJYFTK1CMG1W4DWZ",
-      chainId: 5,
+      chainId: 80001,
       contracts: [
+        {
+          name: "SuperUpgrader",
+          address: "0x80a18e53a1761cba151af445640c06046f0b62a5",
+        },
         {
           name: "CFAv1Forwarder",
           address: superfluidMetadata.networks.reduce(
