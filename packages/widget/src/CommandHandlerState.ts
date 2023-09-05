@@ -7,24 +7,27 @@ export type State = Idle | Initialized | Handling;
 type Idle = {
   status: "idle";
   commands: ReadonlyArray<never>;
+  contractWrites: ReadonlyArray<never>;
   sessionId: null;
 };
 
 type Initialized = {
   status: "initialized";
-  commands: ReadonlyArray<CommandHandlingAggregate>;
+  commands: ReadonlyArray<Command>;
+  contractWrites: ReadonlyArray<
+    ContractWrite & {
+      result?: ContractWriteResult | undefined;
+    }
+  >;
   sessionId: null;
 };
 
 type Handling = {
   status: "handling";
-  commands: ReadonlyArray<
-    Command & {
-      contractWrites: ReadonlyArray<
-        ContractWrite & {
-          result: ContractWriteResult;
-        }
-      >;
+  commands: ReadonlyArray<Command>;
+  contractWrites: ReadonlyArray<
+    ContractWrite & {
+      result: ContractWriteResult;
     }
   >;
   sessionId: string;
@@ -45,12 +48,12 @@ type Handling = {
 //   sessionId: string;
 // };
 
-export type CommandHandlingAggregate = Command & {
-  contractWrites?:
-    | ReadonlyArray<
-        ContractWrite & {
-          result?: ContractWriteResult | undefined;
-        }
-      >
-    | undefined;
-};
+// export type ContractWriteAggregate = {
+//   contractWrites?:
+//     | ReadonlyArray<
+//         ContractWrite & {
+//           result?: ContractWriteResult | undefined;
+//         }
+//       >
+//     | undefined;
+// };

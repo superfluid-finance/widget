@@ -34,8 +34,13 @@ export function ContractWriteManager({
   const { chain } = useNetwork();
   const prepare = _prepare && contractWrite.chainId === chain?.id;
 
+  const materialized = useMemo(
+    () => contractWrite.materialize(),
+    [contractWrite.id],
+  );
+
   const prepareResult = usePrepareContractWrite(
-    prepare ? contractWrite : undefined,
+    prepare ? materialized : undefined,
   );
   const writeResult = useContractWrite(prepareResult.config);
   const transactionResult = useWaitForTransaction({

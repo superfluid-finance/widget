@@ -13,14 +13,18 @@ export type Action =
   | {
       type: "set contract writes";
       payload: {
-        commandId: string;
+        contractWrites: ReadonlyArray<ContractWrite>;
+      };
+    }
+  | {
+      type: "add contract writes";
+      payload: {
         contractWrites: ReadonlyArray<ContractWrite>;
       };
     }
   | {
       type: "set contract write result";
       payload: {
-        commandId: string;
         writeId: string;
         result: ContractWriteResult;
       };
@@ -33,36 +37,35 @@ export const useCommandHandlerReducer = () =>
         case "reset": {
           draft.status = "idle";
           draft.commands = [];
+          draft.contractWrites = [];
           draft.sessionId = null;
           break;
         }
         case "set commands": {
           draft.status = "initialized";
           draft.commands = castDraft(action.payload);
+          draft.contractWrites = [];
           draft.sessionId = nanoid();
           break;
         }
         case "set contract writes": {
-          const command = draft.commands.find(
-            (x) => x.id === action.payload.commandId,
-          );
-
-          if (!command)
-            throw new Error(
-              `Command not found with ID: ${action.payload.commandId}`,
-            );
-
-          command.contractWrites = castDraft(action.payload.contractWrites);
+          draft.contractWrites = castDraft(action.payload.contractWrites);
+          break;
+        }
+        case "add contract writes": {
+          for (const write of action.payload.contractWrites) {
+            (draft.contractWrites as ContractWrite[]).push(write);
+          }
           break;
         }
         case "set contract write result": {
-          const contractWrite = draft.commands
-            .find((x) => x.id === action.payload.commandId)
-            ?.contractWrites?.find((x) => x.id === action.payload.writeId);
+          const contractWrite = (draft.contractWrites ?? []).find(
+            (x) => x.id === action.payload.writeId,
+          );
 
           if (!contractWrite)
             throw new Error(
-              `ContractWrite not found with ID: ${action.payload.commandId}.${action.payload.writeId}`,
+              `ContractWrite not found with ID: ${action.payload.writeId}`,
             );
 
           // Initialize session when first transaction invoked.
@@ -79,5 +82,5 @@ export const useCommandHandlerReducer = () =>
         }
       }
     },
-    { status: "idle", commands: [], sessionId: null },
+    { status: "idle", commands: [], contractWrites: [], sessionId: null },
   );

@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import { CommandHandlingAggregate, State } from "./CommandHandlerState.js";
+import { State } from "./CommandHandlerState.js";
 import { Command } from "./commands.js";
 import { ContractWrite } from "./ContractWrite.js";
 import { ContractWriteResult } from "./ContractWriteManager.js";
@@ -8,7 +8,7 @@ import { ContractWriteResult } from "./ContractWriteManager.js";
 // TODO(KK): nested structure
 export type CommandHandlerContextValue = {
   status: State["status"];
-  commands: ReadonlyArray<CommandHandlingAggregate>;
+  commands: ReadonlyArray<Command>;
   contractWrites: ReadonlyArray<ContractWrite>;
   contractWriteResults: ReadonlyArray<ContractWriteResult>;
   sessionId: string | null;

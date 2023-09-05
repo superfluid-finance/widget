@@ -28,6 +28,12 @@ export function ContractWriteStatus(
       ? theme.palette.warning.main
       : theme.palette.action.selected;
 
+  if (latestError) {
+    console.log({
+      latestError,
+    });
+  }
+
   return (
     <Paper
       variant="outlined"

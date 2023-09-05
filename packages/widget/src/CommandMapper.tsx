@@ -1,7 +1,15 @@
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
-import { Abi, ContractFunctionConfig, GetValue } from "viem";
-import { useContractRead, useContractReads } from "wagmi";
+import {
+  Abi,
+  Address,
+  ContractFunctionConfig,
+  encodeAbiParameters,
+  encodeFunctionData,
+  GetValue,
+  parseAbiParameters,
+} from "viem";
+import { useContractRead, useContractReads, useSignTypedData } from "wagmi";
 
 import {
   Command,
@@ -16,6 +24,8 @@ import {
   autoWrapStrategyAddress,
   cfAv1ForwarderABI,
   cfAv1ForwarderAddress,
+  constantFlowAgreementV1ABI,
+  constantFlowAgreementV1Address,
   erc20ABI,
   mapTimePeriodToSeconds,
   nativeAssetSuperTokenABI,
@@ -38,8 +48,43 @@ export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
       return <WrapIntoSuperTokensCommandMapper command={cmd} {...props} />;
     case "Subscribe":
       return <SubscribeCommandMapper command={cmd} {...props} />;
+    // case "Batch":
+    //   return <BatchCommandMapper command={cmd} {...props} />;
   }
 }
+
+// export function BatchCommandMapper({
+//   command: cmd,
+//   onMapped,
+//   children,
+// }: CommandMapperProps<BatchCallCommand>) {
+//   const contractWrites = useMemo(() => {
+//     const contractWrites_: ContractWrite[] = [];
+
+//     contractWrites_.push(
+//       createContractWrite({
+//         commandId: cmd.id,
+//         displayTitle: "Batch Call",
+//         chainId: cmd.chainId,
+//         materialize: () => ({
+//           abi: superfluidHostABI,
+//           address: superfluidHostAddress[cmd.chainId],
+//           functionName: "batchCall",
+//           args: cmd.innerWrites.map(x => x.materializeForBatchCall!()!) as any // TODO(KK): readonly type annoyance
+//         }),
+//       }),
+//     );
+
+//     return contractWrites_;
+//   }, [cmd.id]);
+
+//   useEffect(
+//     () => (onMapped?.(contractWrites)),
+//     [contractWrites],
+//   );
+
+//   return <>{children?.(contractWrites)}</>;
+// }
 
 export function EnableAutoWrapCommandMapper({
   command: cmd,
@@ -87,17 +132,19 @@ export function EnableAutoWrapCommandMapper({
             commandId: cmd.id,
             displayTitle: "Enable Auto-Wrap",
             chainId: cmd.chainId,
-            abi: autoWrapManagerABI,
-            address: autoWrapManagerAddress[cmd.chainId],
-            functionName: "createWrapSchedule",
-            args: [
-              cmd.superTokenAddress,
-              autoWrapStrategyAddress[cmd.chainId],
-              cmd.underlyingTokenAddress,
-              3000000000n,
-              172800n,
-              604800n,
-            ],
+            materialize: () => ({
+              abi: autoWrapManagerABI,
+              address: autoWrapManagerAddress[cmd.chainId],
+              functionName: "createWrapSchedule",
+              args: [
+                cmd.superTokenAddress,
+                autoWrapStrategyAddress[cmd.chainId],
+                cmd.underlyingTokenAddress,
+                3000000000n,
+                172800n,
+                604800n,
+              ] as const,
+            }),
           }),
         );
       }
@@ -110,10 +157,12 @@ export function EnableAutoWrapCommandMapper({
               getUnderlyingToken(cmd.underlyingTokenAddress).symbol
             } Allowance`,
             chainId: cmd.chainId,
-            abi: erc20ABI,
-            functionName: "approve",
-            address: cmd.underlyingTokenAddress,
-            args: [autoWrapStrategyAddress[cmd.chainId], MaxUint256],
+            materialize: () => ({
+              abi: erc20ABI,
+              functionName: "approve",
+              address: cmd.underlyingTokenAddress,
+              args: [autoWrapStrategyAddress[cmd.chainId], MaxUint256] as const,
+            }),
           }),
         );
       }
@@ -161,29 +210,44 @@ export function WrapIntoSuperTokensCommandMapper({
             getSuperToken(cmd.superTokenAddress).symbol
           }`,
           chainId: cmd.chainId,
-          abi: nativeAssetSuperTokenABI,
-          functionName: "upgradeByETH",
-          address: cmd.superTokenAddress,
-          value: cmd.amountWeiFromUnderlyingTokenDecimals,
+          materialize: () => ({
+            abi: nativeAssetSuperTokenABI,
+            functionName: "upgradeByETH",
+            address: cmd.superTokenAddress,
+            value: cmd.amountWeiFromUnderlyingTokenDecimals,
+          }),
+          materializeForBatchCall: () => [
+            101,
+            cmd.superTokenAddress,
+            {
+              abi: nativeAssetSuperTokenABI,
+              functionName: "upgradeByETH",
+              address: cmd.superTokenAddress,
+              value: cmd.amountWeiFromUnderlyingTokenDecimals,
+            },
+          ],
         }),
       );
     } else {
       if (allowance !== undefined) {
         if (allowance < cmd.amountWeiFromUnderlyingTokenDecimals) {
+          const underlyingTokenAddress = cmd.underlyingToken.address;
           contractWrites_.push(
             createContractWrite({
               commandId: cmd.id,
               displayTitle: `Approve ${
-                getUnderlyingToken(cmd.underlyingToken.address).symbol
+                getUnderlyingToken(underlyingTokenAddress).symbol
               } Allowance`,
               chainId: cmd.chainId,
-              abi: erc20ABI,
-              functionName: "approve",
-              address: cmd.underlyingToken.address,
-              args: [
-                cmd.superTokenAddress,
-                cmd.amountWeiFromUnderlyingTokenDecimals,
-              ],
+              materialize: () => ({
+                abi: erc20ABI,
+                functionName: "approve",
+                address: underlyingTokenAddress,
+                args: [
+                  cmd.superTokenAddress,
+                  cmd.amountWeiFromUnderlyingTokenDecimals,
+                ] as const,
+              }),
             }),
           );
         }
@@ -195,10 +259,22 @@ export function WrapIntoSuperTokensCommandMapper({
               getUnderlyingToken(cmd.underlyingToken.address).symbol
             } into ${getSuperToken(cmd.superTokenAddress).symbol}`,
             chainId: cmd.chainId,
-            abi: superTokenABI,
-            address: cmd.superTokenAddress,
-            functionName: "upgrade",
-            args: [cmd.amountWeiFromSuperTokenDecimals],
+            materialize: () => ({
+              abi: superTokenABI,
+              address: cmd.superTokenAddress,
+              functionName: "upgrade",
+              args: [cmd.amountWeiFromSuperTokenDecimals] as const,
+            }),
+            materializeForBatchCall: () => [
+              101,
+              cmd.superTokenAddress,
+              {
+                abi: superTokenABI,
+                address: cmd.superTokenAddress,
+                functionName: "upgrade",
+                args: [cmd.amountWeiFromSuperTokenDecimals] as const,
+              },
+            ],
           }),
         );
       }
@@ -242,11 +318,24 @@ export function SubscribeCommandMapper({
           createContractWrite({
             commandId: cmd.id,
             displayTitle: "Transfer",
-            abi: erc20ABI,
-            address: cmd.superTokenAddress,
             chainId: cmd.chainId,
-            functionName: "transfer",
-            args: [cmd.receiverAddress, cmd.transferAmountWei],
+            materialize: () => ({
+              abi: erc20ABI,
+              address: cmd.superTokenAddress,
+              functionName: "transfer",
+              args: [cmd.receiverAddress, cmd.transferAmountWei] as const,
+            }),
+            // TODO(KK): Is 2 correct?
+            materializeForBatchCall: () => [
+              2,
+              cmd.superTokenAddress,
+              {
+                abi: erc20ABI,
+                address: cmd.superTokenAddress,
+                functionName: "transfer",
+                args: [cmd.receiverAddress, cmd.transferAmountWei] as const,
+              },
+            ],
           }),
         );
       }
@@ -259,16 +348,33 @@ export function SubscribeCommandMapper({
           createContractWrite({
             commandId: cmd.id,
             displayTitle: "Modify Stream",
-            abi: cfAv1ForwarderABI,
-            address: cfAv1ForwarderAddress[cmd.chainId],
             chainId: cmd.chainId,
-            functionName: "updateFlow",
-            args: [
-              cmd.superTokenAddress,
-              cmd.accountAddress,
-              cmd.receiverAddress,
-              updatedFlowRate,
-              cmd.userData,
+            materialize: () => ({
+              abi: cfAv1ForwarderABI,
+              address: cfAv1ForwarderAddress[cmd.chainId],
+              functionName: "updateFlow",
+              args: [
+                cmd.superTokenAddress,
+                cmd.accountAddress,
+                cmd.receiverAddress,
+                updatedFlowRate,
+                cmd.userData,
+              ] as const,
+            }),
+            materializeForBatchCall: () => [
+              201,
+              constantFlowAgreementV1Address[cmd.chainId],
+              {
+                abi: constantFlowAgreementV1ABI,
+                address: constantFlowAgreementV1Address[cmd.chainId],
+                functionName: "updateFlow",
+                args: [
+                  cmd.superTokenAddress,
+                  cmd.receiverAddress,
+                  updatedFlowRate,
+                  cmd.userData,
+                ] as const,
+              },
             ],
           }),
         );
@@ -277,16 +383,33 @@ export function SubscribeCommandMapper({
           createContractWrite({
             commandId: cmd.id,
             displayTitle: "Send Stream",
-            abi: cfAv1ForwarderABI,
-            address: cfAv1ForwarderAddress[cmd.chainId],
             chainId: cmd.chainId,
-            functionName: "createFlow",
-            args: [
-              cmd.superTokenAddress,
-              cmd.accountAddress,
-              cmd.receiverAddress,
-              flowRate,
-              cmd.userData,
+            materialize: () => ({
+              abi: cfAv1ForwarderABI,
+              address: cfAv1ForwarderAddress[cmd.chainId],
+              functionName: "createFlow",
+              args: [
+                cmd.superTokenAddress,
+                cmd.accountAddress,
+                cmd.receiverAddress,
+                flowRate,
+                cmd.userData,
+              ] as const,
+            }),
+            materializeForBatchCall: () => [
+              201,
+              constantFlowAgreementV1Address[cmd.chainId],
+              {
+                abi: constantFlowAgreementV1ABI,
+                address: constantFlowAgreementV1Address[cmd.chainId],
+                functionName: "createFlow",
+                args: [
+                  cmd.superTokenAddress,
+                  cmd.receiverAddress,
+                  flowRate,
+                  cmd.userData,
+                ] as const,
+              },
             ],
           }),
         );
@@ -304,16 +427,55 @@ export function SubscribeCommandMapper({
   return <>{children?.(contractWrites)}</>;
 }
 
+// TODO(KK): Get rid of batch call?
+// TODO(KK): viem had some function to extract a call...
 const createContractWrite = <
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
 >(
-  arg: ContractFunctionConfig<TAbi, TFunctionName, "payable" | "nonpayable"> &
-    GetValue<TAbi, TFunctionName> &
-    Pick<ContractWrite, "commandId" | "displayTitle" | "chainId">,
+  arg: Pick<ContractWrite, "commandId" | "displayTitle" | "chainId"> & {
+    signatureRequest?: Parameters<typeof useSignTypedData>[0];
+    materialize: (
+      signature?: ReturnType<typeof useSignTypedData>["data"],
+    ) => ContractFunctionConfig<TAbi, TFunctionName, "payable" | "nonpayable"> &
+      GetValue<TAbi, TFunctionName>;
+    materializeForBatchCall?: (
+      signature?: ReturnType<typeof useSignTypedData>["data"],
+    ) => [
+      number,
+      Address,
+      ContractFunctionConfig<Abi, string, "payable" | "nonpayable"> &
+        GetValue<Abi, string>,
+    ];
+  },
 ): ContractWrite =>
   ({
     id: nanoid(),
-    value: 0n, // Gnosis Safe has a bug that required "value" to be specified: https://github.com/wagmi-dev/wagmi/issues/2887
-    ...arg,
+    ...arg, // TODO(KK): handle gnosis safe bug
+    materializeForBatchCall: (signature) => {
+      console.log("???");
+
+      if (!arg.materializeForBatchCall) {
+        return undefined;
+      }
+
+      const [operationType, target, call] =
+        arg.materializeForBatchCall(signature);
+
+      console.log({
+        call,
+      });
+
+      const callData = encodeFunctionData(call);
+      const data = encodeAbiParameters(parseAbiParameters("bytes, bytes"), [
+        callData,
+        "0x",
+      ]);
+
+      console.log({
+        callData,
+      });
+
+      return { operationType, target, data };
+    },
   }) as ContractWrite;

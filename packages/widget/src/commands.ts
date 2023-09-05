@@ -48,7 +48,16 @@ export type SubscribeCommand = {
   userData: `0x${string}`;
 };
 
+// export type BatchCallCommand = {
+//   id: string;
+//   type: "Batch";
+//   chainId: ChainId;
+//   superTokenAddress: Address;
+//   innerWrites: Pick<ContractWrite, "signatureRequest" | "materializeForBatchCall">[]
+// }
+
 export type Command =
   | WrapIntoSuperTokensCommand
   | EnableAutoWrapCommand
   | SubscribeCommand;
+// | BatchCallCommand;
