@@ -51,7 +51,17 @@ export function ContractWriteManager({
     prepare ? materialized : undefined,
   );
 
-  const writeResult = useContractWrite(prepareResult.config);
+  console.log({
+    materialized,
+  });
+
+  const writeResult = useContractWrite(
+    prepareResult.isSuccess
+      ? prepareResult.config
+      : materialized
+      ? (materialized as any)
+      : prepareResult.config,
+  );
   const transactionResult = useWaitForTransaction({
     hash: writeResult.data?.hash,
   });

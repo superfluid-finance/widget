@@ -179,7 +179,7 @@ export function SuperWrapIntoSuperTokensCommandMapper({
                       cmd.chainId as keyof typeof superUpgraderAddress
                     ],
                   value: cmd.amountWeiFromUnderlyingTokenDecimals * 2n,
-                  nonce: 0, // TODO(KK): figure out
+                  nonce: 2, // TODO(KK): figure out
                   deadline:
                     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 },
@@ -635,12 +635,17 @@ const createContractWrite = <
       const [operationType, target, call] =
         arg.materializeForBatchCall(signature);
 
-      const callData = encodeFunctionData(call);
-      const data = encodeAbiParameters(parseAbiParameters("bytes, bytes"), [
-        callData,
-        "0x",
-      ]);
+      if (operationType === 201) {
+        const callData = encodeFunctionData(call);
+        const data = encodeAbiParameters(parseAbiParameters("bytes, bytes"), [
+          callData,
+          "0x",
+        ]);
 
-      return { operationType, target, data };
+        return { operationType, target, data };
+      } else {
+        const callData = encodeFunctionData(call);
+        return { operationType, target, data: callData };
+      }
     },
   }) as ContractWrite;
