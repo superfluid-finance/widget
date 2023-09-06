@@ -167,9 +167,8 @@ export function SuperWrapIntoSuperTokensCommandMapper({
                 },
                 primaryType: "Permit",
                 domain: {
-                  name: "8848c041d28adfad9910e0d402153ad1ab9333ba4ffe59cd611a2bf96f398366",
-                  version:
-                    "c89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6",
+                  name: "Fake Permit USDC",
+                  version: "1",
                   chainId: cmd.chainId,
                   verifyingContract: underlyingTokenAddress,
                 },
@@ -189,7 +188,7 @@ export function SuperWrapIntoSuperTokensCommandMapper({
                 const sig = hexToSignature(signature!);
 
                 console.log({
-                  v: Number(sig.v.toString()),
+                  sig,
                 });
 
                 return {
@@ -216,7 +215,7 @@ export function SuperWrapIntoSuperTokensCommandMapper({
                 const sig = hexToSignature(signature!);
 
                 console.log({
-                  v: Number(sig.v.toString()),
+                  sig,
                 });
 
                 return [

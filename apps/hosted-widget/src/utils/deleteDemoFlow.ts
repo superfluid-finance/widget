@@ -1,6 +1,6 @@
 import { cfAv1ForwarderABI } from "@superfluid-finance/widget";
 import { getContract } from "viem";
-import { polygonMumbai } from "wagmi/chains";
+import { polygonMumbai } from "viem/chains";
 
 import { wagmiConfigDemo } from "../DEMO-wagmi";
 

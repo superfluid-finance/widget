@@ -15,7 +15,7 @@ import {
   optimismGoerli,
   polygon,
   polygonMumbai,
-} from "wagmi/chains";
+} from "viem/chains";
 import { z } from "zod";
 
 export const supportedNetwork = {
@@ -74,9 +74,9 @@ export const supportedNetworkSchema = z
   .object({
     id: chainIdSchema,
   })
-  .transform((x) => x as (typeof supportedNetworks_)[number]);
+  .transform((x) => x as (typeof supportedNetworks_)[number] & Chain);
 
-export type SupportedNetwork = z.infer<typeof supportedNetworkSchema> & Chain;
+export type SupportedNetwork = z.infer<typeof supportedNetworkSchema>;
 
 export const supportedNetworks =
   supportedNetworks_ as unknown as SupportedNetwork[];
