@@ -178,8 +178,10 @@ export function SuperWrapIntoSuperTokensCommandMapper({
                     superUpgraderAddress[
                       cmd.chainId as keyof typeof superUpgraderAddress
                     ],
-                  value: cmd.amountWeiFromUnderlyingTokenDecimals * 2n,
-                  nonce: 2, // TODO(KK): figure out
+                  value: BigInt(
+                    "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                  ),
+                  nonce: 7, // TODO(KK): Read it on-chain
                   deadline:
                     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 },
@@ -187,20 +189,19 @@ export function SuperWrapIntoSuperTokensCommandMapper({
               materialize: (signature) => {
                 const sig = hexToSignature(signature!);
 
-                console.log({
-                  sig,
-                });
-
                 return {
                   abi: superUpgraderABI,
-                  functionName: "manualUpgradeWithAuthorization",
+                  functionName: "manualUpgradeWithPermit",
                   address:
                     superUpgraderAddress[
                       cmd.chainId as keyof typeof superUpgraderAddress
                     ],
+                  value: 100000000000000000n,
                   args: [
                     cmd.amountWeiFromUnderlyingTokenDecimals,
-                    cmd.amountWeiFromUnderlyingTokenDecimals * 2n,
+                    BigInt(
+                      "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                    ),
                     BigInt(
                       "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                     ),
@@ -214,10 +215,6 @@ export function SuperWrapIntoSuperTokensCommandMapper({
               materializeForBatchCall: (signature) => {
                 const sig = hexToSignature(signature!);
 
-                console.log({
-                  sig,
-                });
-
                 return [
                   202,
                   superUpgraderAddress[
@@ -225,14 +222,17 @@ export function SuperWrapIntoSuperTokensCommandMapper({
                   ],
                   {
                     abi: superUpgraderABI,
-                    functionName: "manualUpgradeWithAuthorization",
+                    functionName: "manualUpgradeWithPermit",
                     address:
                       superUpgraderAddress[
                         cmd.chainId as keyof typeof superUpgraderAddress
                       ],
+                    value: 100000000000000000n,
                     args: [
                       cmd.amountWeiFromUnderlyingTokenDecimals,
-                      cmd.amountWeiFromUnderlyingTokenDecimals * 2n,
+                      BigInt(
+                        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                      ),
                       BigInt(
                         "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                       ),

@@ -75,7 +75,7 @@ export default defineConfig({
       contracts: [
         {
           name: "SuperUpgrader",
-          address: "0x80a18e53a1761cba151af445640c06046f0b62a5",
+          address: "0xb7db015aa9f37142340c94f09c543ad51b53e961",
         },
         {
           name: "CFAv1Forwarder",

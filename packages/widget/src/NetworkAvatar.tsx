@@ -1,7 +1,7 @@
 import { Avatar, AvatarProps } from "@mui/material";
 import { FC, useMemo } from "react";
 
-import { defaultNetworkAssets,SupportedNetwork } from "./core/index.js";
+import { defaultNetworkAssets, SupportedNetwork } from "./core/index.js";
 
 export interface NetworkAvatarProps {
   network: SupportedNetwork;
