@@ -33,9 +33,7 @@ export default function StepContentReview() {
     async () =>
       await commandValidationSchema.safeParseAsync({
         wrapIntoSuperTokensCommand: commands.find(
-          (x) =>
-            x.type === "Wrap into Super Tokens" ||
-            x.type === "Super Wrap into Super Tokens", // TODO(KK)
+          (x) => x.type === "Wrap into Super Tokens",
         ),
         subscribeCommand: commands.find((x) => x.type === "Subscribe"),
       }),

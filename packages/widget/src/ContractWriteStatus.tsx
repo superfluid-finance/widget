@@ -11,6 +11,8 @@ export function ContractWriteStatus(
   index: number,
 ) {
   const {
+    contractWrite,
+    signatureResult,
     contractWrite: { id, displayTitle },
     transactionResult,
     writeResult,
@@ -44,18 +46,18 @@ export function ContractWriteStatus(
         }. ${displayTitle}`}</Typography>
         <CircleIcon sx={{ color: borderColor, width: 12, height: 12 }} />
 
-        {!latestError && (
-          <Typography data-testid="transaction-status" variant="body2">
-            {
-              // latestError ? "Something went wrong." this is a temporary fix
-              transactionResult.isSuccess
-                ? "Completed"
-                : writeResult?.isSuccess
-                ? "In progress"
-                : "Not started"
-            }
-          </Typography>
-        )}
+        <Typography data-testid="transaction-status" variant="body2">
+          {
+            // latestError ? "Something went wrong." this is a temporary fix
+            transactionResult.isSuccess
+              ? "Completed"
+              : writeResult?.isSuccess
+              ? "In progress"
+              : contractWrite.signatureRequest && !signatureResult.data
+              ? "Needs signature"
+              : "Not started"
+          }
+        </Typography>
       </Stack>
     </Paper>
   );

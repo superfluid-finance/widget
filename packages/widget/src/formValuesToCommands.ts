@@ -54,7 +54,7 @@ export const formValuesToCommands = (
     if (amountWeiFromUnderlyingTokenDecimals !== 0n) {
       commands.push({
         id: nanoid(),
-        type: "Super Wrap into Super Tokens",
+        type: "Wrap into Super Tokens",
         chainId: chainId,
         superTokenAddress,
         accountAddress,

@@ -16,7 +16,6 @@ import {
   Command,
   EnableAutoWrapCommand,
   SubscribeCommand,
-  SuperWrapIntoSuperTokensCommand,
   WrapIntoSuperTokensCommand,
 } from "./commands.js";
 import { ContractWrite } from "./ContractWrite.js";
@@ -46,23 +45,32 @@ type CommandMapperProps<TCommand extends Command = Command> = {
 };
 
 export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
+  const { getUnderlyingToken } = useWidget();
+
   switch (cmd.type) {
     case "Enable Auto-Wrap":
       return <EnableAutoWrapCommandMapper command={cmd} {...props} />;
     case "Wrap into Super Tokens":
-      return <WrapIntoSuperTokensCommandMapper command={cmd} {...props} />;
+      const underlyingToken = cmd.underlyingToken.address
+        ? getUnderlyingToken(cmd.underlyingToken.address)
+        : undefined;
+      if (underlyingToken && underlyingToken.tags?.includes("permit")) {
+        return (
+          <PermitWrapIntoSuperTokensCommandMapper command={cmd} {...props} />
+        );
+      } else {
+        return <WrapIntoSuperTokensCommandMapper command={cmd} {...props} />;
+      }
     case "Subscribe":
       return <SubscribeCommandMapper command={cmd} {...props} />;
-    case "Super Wrap into Super Tokens":
-      return <SuperWrapIntoSuperTokensCommandMapper command={cmd} {...props} />;
   }
 }
 
-export function SuperWrapIntoSuperTokensCommandMapper({
+export function PermitWrapIntoSuperTokensCommandMapper({
   command: cmd,
   onMapped,
   children,
-}: CommandMapperProps<SuperWrapIntoSuperTokensCommand>) {
+}: CommandMapperProps<WrapIntoSuperTokensCommand>) {
   const { getSuperToken, getUnderlyingToken } = useWidget();
 
   const isNativeAssetUnderlyingToken = cmd.underlyingToken.isNativeAsset;

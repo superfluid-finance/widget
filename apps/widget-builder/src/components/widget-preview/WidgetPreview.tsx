@@ -46,7 +46,7 @@ const mumbaiPermitTokens: TokenInfo[] = [
     chainId: 80001,
     logoURI:
       "https://raw.githubusercontent.com/superfluid-finance/assets/master/public/tokens/usdc/icon.svg",
-    tags: ["underlying", "testnet"],
+    tags: ["permit", "underlying", "testnet"],
   },
 ];
 
@@ -75,7 +75,7 @@ const goerliPermitTokens: TokenInfo[] = [
     chainId: 5,
     logoURI:
       "https://raw.githubusercontent.com/superfluid-finance/assets/master/public/tokens/usdc/icon.svg",
-    tags: ["underlying", "testnet"],
+    tags: ["permit", "underlying", "testnet"],
   },
 ];
 

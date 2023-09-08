@@ -205,6 +205,11 @@ const createContractWrite = <
       const [operationType, target, call] =
         arg.materializeForBatchCall(signature);
 
-      return { operationType, target, data: encodeFunctionData(call) };
+      return {
+        operationType,
+        target,
+        data: encodeFunctionData(call),
+        value: call.value,
+      };
     },
   }) as ContractWrite;
