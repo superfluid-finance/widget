@@ -3264,7 +3264,8 @@ export const superTokenABI = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb7db015aa9f37142340c94f09c543ad51b53e961)
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAEf1F1Ee5b5652560f305e9c0278d137a6AB5e9C)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb7db015aa9f37142340c94f09c543ad51b53e961)
  */
 export const superUpgraderABI = [
   {
@@ -3556,14 +3557,17 @@ export const superUpgraderABI = [
 ] as const;
 
 /**
- * [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb7db015aa9f37142340c94f09c543ad51b53e961)
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAEf1F1Ee5b5652560f305e9c0278d137a6AB5e9C)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb7db015aa9f37142340c94f09c543ad51b53e961)
  */
 export const superUpgraderAddress = {
+  5: "0xAEf1F1Ee5b5652560f305e9c0278d137a6AB5e9C",
   80001: "0xb7DB015AA9F37142340C94F09c543Ad51B53e961",
 } as const;
 
 /**
- * [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb7db015aa9f37142340c94f09c543ad51b53e961)
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAEf1F1Ee5b5652560f305e9c0278d137a6AB5e9C)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb7db015aa9f37142340c94f09c543ad51b53e961)
  */
 export const superUpgraderConfig = {
   address: superUpgraderAddress,

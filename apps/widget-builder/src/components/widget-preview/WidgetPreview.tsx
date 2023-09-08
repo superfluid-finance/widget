@@ -21,7 +21,7 @@ import {
 
 import useFontLoader from "../../hooks/useFontLoader";
 
-const permitTokens: TokenInfo[] = [
+const mumbaiPermitTokens: TokenInfo[] = [
   {
     address: "0x50c988f2c2cce525cc2067c93b8c4a43ec62a166",
     name: "PERMIT: Super fUSDC Fake Token",
@@ -50,9 +50,38 @@ const permitTokens: TokenInfo[] = [
   },
 ];
 
+const goerliPermitTokens: TokenInfo[] = [
+  {
+    address: "0x19E6F96A887D0a27d60ef63942d7BF707fb1aD08",
+    name: "PERMIT: Super fUSDC Fake Token",
+    symbol: "pfUSDCx",
+    decimals: 18,
+    chainId: 5,
+    extensions: {
+      superTokenInfo: {
+        type: "Wrapper",
+        underlyingTokenAddress: "0xc3cA859682786B0f97Fa9c1239C249cbBb20cDaC",
+      },
+    },
+    logoURI:
+      "https://raw.githubusercontent.com/superfluid-finance/assets/master/public/tokens/usdc/icon.svg",
+    tags: ["supertoken", "testnet"],
+  },
+  {
+    address: "0xc3cA859682786B0f97Fa9c1239C249cbBb20cDaC",
+    name: "PERMIT: fUSDC Fake Token",
+    symbol: "pfUSDC",
+    decimals: 18,
+    chainId: 5,
+    logoURI:
+      "https://raw.githubusercontent.com/superfluid-finance/assets/master/public/tokens/usdc/icon.svg",
+    tags: ["underlying", "testnet"],
+  },
+];
+
 export const widgetTokenList = {
   ...tokenList,
-  tokens: [...tokenList.tokens, ...permitTokens],
+  tokens: [...tokenList.tokens, ...mumbaiPermitTokens, ...goerliPermitTokens],
 } as SuperTokenList;
 
 export interface FontSettings {

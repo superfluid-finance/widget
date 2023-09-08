@@ -38,9 +38,6 @@ import {
 import { ChildrenProp, MaxUint256 } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
-const NONCES_FN = "0x7ecebe00";
-const NAME_FN = "0x06fdde03";
-
 type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
   onMapped?: (contractWrites: ReadonlyArray<ContractWrite>) => void;
@@ -181,7 +178,7 @@ export function SuperWrapIntoSuperTokensCommandMapper({
                   value: BigInt(
                     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                   ),
-                  nonce: 7, // TODO(KK): Read it on-chain
+                  nonce: 1, // TODO(KK): Read it on-chain
                   deadline:
                     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 },
