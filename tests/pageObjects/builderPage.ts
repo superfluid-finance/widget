@@ -1,11 +1,11 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, Locator, Page, test } from "@playwright/test";
 import fs from "fs";
 
-import { BasePage } from "./basePage";
+import { BasePage, randomDetailsSet } from "./basePage";
 
 export class BuilderPage extends BasePage {
   readonly page: Page;
-  readonly uiTab: Locator;
+  readonly stylingTab: Locator;
   readonly productTab: Locator;
   readonly exportTab: Locator;
   readonly paymentTab: Locator;
@@ -47,14 +47,38 @@ export class BuilderPage extends BasePage {
   readonly noOptionsMessage: Locator;
   readonly uploadImageField: Locator;
   readonly addPaymentOptionFormButton: Locator;
-  readonly discordPaymentOption: Locator;
-  readonly paymentDetailsWand: Locator;
+  readonly discardPaymentOption: Locator;
+  readonly wandButton: Locator;
+  readonly selectedProductImage: Locator;
+  readonly nextButton: Locator;
+  readonly backButton: Locator;
+  readonly inlineButton: Locator;
+  readonly dialogButton: Locator;
+  readonly drawerButton: Locator;
+  readonly fullScreenButton: Locator;
+  readonly bookDemoButton: Locator;
+  readonly tooltip: Locator;
+  readonly removeImageButton: Locator;
+  readonly paymentFormNetworkTooltip: Locator;
+  readonly paymentFormReceiverAddressTooltip: Locator;
+  readonly paymentFormSuperTokenTooltip: Locator;
+  readonly paymentFormStreamRateTooltip: Locator;
+  readonly paymentFormUpfrontPaymentAmountTooltip: Locator;
+  readonly paymentFormUpfrontPaymentSwitchTooltip: Locator;
+  readonly fixedRateButton: Locator;
+  readonly userDefinedRateButton: Locator;
+  readonly upfrontPaymentInputField: Locator;
+  readonly upfrontPaymentSwitch: Locator;
+  readonly rateHelperText: Locator;
+  readonly closeButton: Locator;
+  readonly dialogs: Locator;
+
   paymentOptionDuringTest: PaymentOption | undefined;
 
   constructor(page: Page) {
     super();
     this.page = page;
-    this.uiTab = page.getByTestId("ui-tab");
+    this.stylingTab = page.getByTestId("ui-tab");
     this.productTab = page.getByTestId("product-tab");
     this.exportTab = page.getByTestId("export-tab");
     this.publishedWidgetMessage = page.getByTestId("published-message");
@@ -128,86 +152,319 @@ export class BuilderPage extends BasePage {
     this.addPaymentOptionFormButton = page.getByTestId(
       "add-payment-option-button",
     );
-    this.discordPaymentOption = page.getByTestId("discard-option-button");
-    this.paymentDetailsWand = page.getByTestId("payment-options-wand-button");
+    this.discardPaymentOption = page.getByTestId("discard-option-button");
+    this.wandButton = page.getByTestId("wand-button");
+    this.selectedProductImage = page.getByTestId("product-image");
+    this.nextButton = page.getByTestId("next-button");
+    this.backButton = page.getByTestId("back-button");
+    this.inlineButton = page.getByTestId("inline-button");
+    this.dialogButton = page.getByTestId("dialog-button");
+    this.drawerButton = page.getByTestId("drawer-button");
+    this.fullScreenButton = page.getByTestId("full-screen-button");
+    this.bookDemoButton = page.getByTestId("book-demo-button");
+    this.tooltip = page.locator("[role=tooltip]");
+    this.removeImageButton = page.getByTestId("remove-image-button");
+    this.paymentFormNetworkTooltip = page.locator(
+      "[data-testid=network-title] + [data-testid=tooltip-icon]",
+    );
+    this.paymentFormReceiverAddressTooltip = page.locator(
+      "[data-testid=receiver-title] + [data-testid=tooltip-icon]",
+    );
+    this.paymentFormSuperTokenTooltip = page.locator(
+      "[data-testid=super-token-title] + [data-testid=tooltip-icon]",
+    );
+    this.paymentFormStreamRateTooltip = page.locator(
+      "[data-testid=stream-rate-title] + [data-testid=tooltip-icon]",
+    );
+    this.paymentFormUpfrontPaymentAmountTooltip = page.locator(
+      "[data-testid=upfront-payment-title] + [data-testid=tooltip-icon]",
+    );
+    this.paymentFormUpfrontPaymentSwitchTooltip = page.locator(
+      "[data-testid=upfront-payment-label] + [data-testid=tooltip-icon]",
+    );
+    this.fixedRateButton = page.getByTestId("fixed-rate-button");
+    this.userDefinedRateButton = page.getByTestId("user-defined-rate-button");
+    this.upfrontPaymentInputField = page
+      .getByTestId("upfront-payment-amount-input")
+      .locator("input");
+    this.upfrontPaymentSwitch = page.getByTestId("upfront-payment-switch");
+    this.rateHelperText = page.getByTestId("helper-text");
+    this.closeButton = page.getByTestId("CloseIcon");
+    this.dialogs = page.locator("[role=dialog]");
+  }
+
+  async validateNetworksInDropdown() {
+    const supportedNetworks = [
+      "Arbitrum One",
+      "Avalanche",
+      "Base",
+      "BNB Smart Chain",
+      "Celo",
+      "Gnosis",
+      "OP Mainnet",
+      "Polygon",
+      "Avalanche Fuji",
+      "Base Goerli",
+      "Goerli",
+      "Polygon Mumbai",
+    ];
+    for (const [index, network] of supportedNetworks.entries()) {
+      await expect(
+        this.page.locator(`[data-value="${network}"]`),
+      ).toBeVisible();
+    }
+    await expect(this.page.locator(`[data-value=Ethereum]`)).not.toBeVisible(); // Mainnet disabled at the moment
+  }
+
+  async clickPaymentFormNetworkDropdown() {
+    await this.networkOptions.click();
+  }
+
+  async closeFormWithXButton() {
+    await this.closeButton.click();
+  }
+  async clickDiscardPaymentOptionButton() {
+    await this.discardPaymentOption.click();
+  }
+  async validateAddPaymentFormIsOpen() {
+    await expect(this.networkOptions).toBeVisible();
+    await expect(this.receiverOption).toBeVisible();
+    await expect(this.superTokenOption).toBeVisible();
+    await expect(this.fixedRateButton).toBeVisible();
+    await expect(this.userDefinedRateButton).toBeVisible();
+    await expect(this.flowRateOption).toBeVisible();
+  }
+
+  async validateAddPaymentFormIsNotOpen() {
+    await expect(this.dialogs).not.toBeVisible();
+    await expect(this.networkOptions).not.toBeVisible();
+    await expect(this.receiverOption).not.toBeVisible();
+    await expect(this.superTokenOption).not.toBeVisible();
+    await expect(this.fixedRateButton).not.toBeVisible();
+    await expect(this.userDefinedRateButton).not.toBeVisible();
+    await expect(this.flowRateOption).not.toBeVisible();
+  }
+
+  async removeUsedTestImage() {
+    await test.step(`Removing the image set for the widget`, async () => {
+      await this.removeImageButton.click();
+    });
+  }
+
+  async hoverOnWandButtonAndValidateTooltipText(text: string) {
+    await test.step(`Hovering on wand button and validating it is saying "${text}"`, async () => {
+      await this.wandButton.hover();
+      await expect(this.tooltip).toBeVisible();
+      await expect(this.tooltip).toHaveText(text);
+    });
+  }
+
+  async validateRandomProductSectionIsSet() {
+    await test.step(`Validating the product name , description and image is randomly set in the builder`, async () => {
+      await expect(this.productNameField).not.toHaveValue("");
+      await expect(this.productDescriptionField).not.toHaveValue("");
+      randomDetailsSet.name = await this.productNameField.inputValue();
+      randomDetailsSet.description =
+        await this.productDescriptionField.inputValue();
+      await expect(this.uploadImageField).not.toBeVisible();
+      await expect(this.selectedProductImage).toHaveAttribute(
+        "src",
+        "https://picsum.photos/200/200",
+      );
+    });
+  }
+  async validateProductsTabIsOpen() {
+    await test.step(`Checking that products tab components are visible`, async () => {
+      await expect(this.backButton).not.toBeVisible();
+      await expect(this.productNameField).toBeVisible();
+      await expect(this.productDescriptionField).toBeVisible();
+      await expect(this.uploadImageField).toHaveCount(1);
+      await expect(this.wandButton).toBeVisible();
+      await expect(this.nextButton).toBeVisible();
+    });
+  }
+
+  async clickFooterNextButton() {
+    await test.step(`Clicking on the builder footer "Next" button`, async () => {
+      await this.nextButton.click();
+    });
+  }
+
+  async clickAddPaymentOptionFormButton() {
+    await this.addPaymentOptionFormButton.click();
+  }
+
+  async validatePaymentsTabIsOpen() {
+    await test.step(`Checking that payments tab components are visible`, async () => {
+      await expect(this.backButton).toBeVisible();
+      await expect(this.addPaymentOptionFormButton).toBeVisible();
+      await expect(this.paymentOptionCount).toBeVisible();
+      await expect(this.summaryDeleteButtons).toBeVisible();
+      await expect(this.wandButton).toBeVisible();
+      await expect(this.nextButton).toBeVisible();
+    });
+  }
+
+  async validateUITabIsOpen() {
+    await test.step(`Checking that styling tab components are visible`, async () => {
+      await expect(this.backButton).toBeVisible();
+      await expect(this.darkModeSwitch).toBeVisible();
+      await expect(this.containerBorderSlider).toBeVisible();
+      await expect(this.fieldBorderSlider).toBeVisible();
+      await expect(this.buttonBorderSlider).toBeVisible();
+      await expect(this.primaryColorPicker).toBeVisible();
+      await expect(this.secondaryColorPicker).toBeVisible();
+      await expect(this.fontPicker).toBeVisible();
+      await expect(this.stepperPositionVertical).toBeVisible();
+      await expect(this.stepperPossitionHorizontal).toBeVisible();
+      await expect(this.inlineButton).toBeVisible();
+      await expect(this.dialogButton).toBeVisible();
+      await expect(this.drawerButton).toBeVisible();
+      await expect(this.fullScreenButton).toBeVisible();
+      await expect(this.wandButton).toBeVisible();
+      await expect(this.nextButton).toBeVisible();
+    });
+  }
+
+  async validateExportTabIsOpen() {
+    await test.step(`Checking that export tab components are visible`, async () => {
+      await expect(this.backButton).toBeVisible();
+      await expect(this.exportOptions).toBeVisible();
+      await expect(this.publishButton).toBeVisible();
+      await expect(this.bookDemoButton).toBeVisible();
+      await expect(this.wandButton).not.toBeVisible();
+      await expect(this.nextButton).not.toBeVisible();
+    });
+  }
+
+  async clickFooterBackButton() {
+    await test.step(`Clicking on the builder footer "Next" button`, async () => {
+      await this.backButton.click();
+    });
+  }
+  async uploadInvalidFormatTestImage() {
+    await test.step(`Uploading a JSON instead of an image and validating the "not found" element`, async () => {
+      await this.uploadImageField.setInputFiles("./data/export.json");
+      await expect(this.selectedProductImage).toHaveAttribute(
+        "alt",
+        "not found",
+      );
+      const screenshot = await this.selectedProductImage.screenshot();
+      await expect(screenshot).toMatchSnapshot(
+        "./data/invalidImageUploaded.png",
+      );
+    });
   }
 
   async changeDescription(description = "Testing description") {
-    await this.productDescriptionField.fill(description);
+    await test.step(`Changing the products description to "${description}"`, async () => {
+      await this.productDescriptionField.fill(description);
+    });
   }
 
-  async clickOnPaymentDetailsWandButton() {
-    await this.paymentDetailsWand.click();
+  async clickOnWandButton() {
+    await test.step(`Clicking on the magic wand button`, async () => {
+      await this.wandButton.click();
+    });
   }
 
   async changeProductName(name = "Testing name") {
-    await this.productNameField.fill(name);
+    await test.step(`Changing the products name to "${name}"`, async () => {
+      await this.productNameField.fill(name);
+    });
   }
 
   async addPaymentOption(paymentOption: PaymentOption) {
-    this.paymentOptionDuringTest = paymentOption;
-    await this.paymentTab.click();
-    await this.addPaymentOptionFormButton.click();
-    await this.networkOptions.click();
-    await this.page.locator(`[data-value=${paymentOption.network}]`).click();
-    await this.superTokenOption.click();
-    await this.page.getByText(paymentOption.superToken).click();
-    await this.flowRateOption.fill(paymentOption.flowRate);
-    if (paymentOption.timeUnit != "month") {
-      await this.timeUnitSelection.click();
-      await this.page.locator(`[data-value=${paymentOption.timeUnit}]`).click();
-    }
-    await this.receiverOption.fill(paymentOption.receiver);
-    // No more option like that
-    // if (paymentOption.useAsDefault) {
-    //   await this.useAsDefaultPaymentSwitch.click();
-    // }
-    await this.addPaymentOptionButton.click();
+    await test.step(`Adding a new payment option`, async () => {
+      this.paymentOptionDuringTest = paymentOption;
+      await this.paymentTab.click();
+      await this.addPaymentOptionFormButton.click();
+      await this.networkOptions.click();
+      await this.page.locator(`[data-value=${paymentOption.network}]`).click();
+      await this.superTokenOption.click();
+      await this.page
+        .getByRole("option", { name: paymentOption.superToken })
+        .click();
+      if (paymentOption.userDefinedRate !== true) {
+        await this.flowRateOption.fill(paymentOption.flowRate);
+        if (paymentOption.timeUnit != "month") {
+          await this.timeUnitSelection.click();
+          await this.page
+            .locator(`[data-value=${paymentOption.timeUnit}]`)
+            .click();
+        }
+      } else {
+        await this.userDefinedRateButton.click();
+      }
+
+      await this.receiverOption.fill(paymentOption.receiver);
+      if (paymentOption.upfrontPayment) {
+        await this.upfrontPaymentSwitch.click();
+        await this.upfrontPaymentInputField.fill(paymentOption.upfrontPayment);
+      }
+      await this.addPaymentOptionButton.click();
+    });
   }
 
   async verifyAddedPaymentOptions(paymentOptions: PaymentOption[]) {
-    for (const [index, option] of paymentOptions.entries()) {
-      paymentOptions.forEach(async (option: PaymentOption, index: number) => {
-        await expect(
-          this.summaryNetworks
-            .nth(index)
-            .getByTestId(`${option.chainId}-badge`),
-        ).toBeVisible();
-        await expect(this.summaryNetworks.nth(index)).toContainText(
-          option.network,
-        );
-        await expect(this.summaryTokens.nth(index)).toHaveText(
-          option.superTokenName,
-        );
-        await expect(this.summaryFlowRate.nth(index)).toHaveText(
-          `Stream Rate${option.flowRate} ${option.superToken}/${option.timeUnit}`,
-        );
-        await expect(this.summaryReceiver.nth(index)).toContainText(
-          `${BasePage.shortenHex(option.receiver)}`,
-          { ignoreCase: true },
-        );
-      });
-    }
+    await test.step(`Verifying added payment options`, async () => {
+      for (const [index, option] of paymentOptions.entries()) {
+        paymentOptions.forEach(async (option: PaymentOption, index: number) => {
+          await expect(
+            this.summaryNetworks
+              .nth(index)
+              .getByTestId(`${option.chainId}-badge`),
+          ).toBeVisible();
+          await expect(this.summaryNetworks.nth(index)).toContainText(
+            option.network,
+          );
+          await expect(this.summaryTokens.nth(index)).toHaveText(
+            option.superTokenName,
+          );
+
+          let expectedFlowRateString = option.userDefinedRate
+            ? "Stream RateUser-defined"
+            : `Stream Rate${option.flowRate} ${option.superToken}/${option.timeUnit}`;
+          await expect(this.summaryFlowRate.nth(index)).toHaveText(
+            expectedFlowRateString,
+          );
+          await expect(this.summaryReceiver.nth(index)).toContainText(
+            `${BasePage.shortenHex(option.receiver)}`,
+            { ignoreCase: true },
+          );
+        });
+      }
+    });
   }
 
   async deleteLastAddedPaymentOption() {
-    await this.summaryDeleteButtons.click();
+    await test.step(`Deleting last payment option`, async () => {
+      await this.summaryDeleteButtons.click();
+    });
   }
 
   async openExportTab() {
-    await this.exportTab.click();
+    await test.step(`Opening Export Tab`, async () => {
+      await this.exportTab.click();
+    });
   }
 
-  async openUITab() {
-    await this.uiTab.click();
+  async openStylingTab() {
+    await test.step(`Opening Styling Tab`, async () => {
+      await this.stylingTab.click();
+    });
   }
 
-  async switchToPaymentTab() {
-    await this.paymentTab.click();
+  async openPaymentTab() {
+    await test.step(`Opening Payment Tab`, async () => {
+      await this.paymentTab.click();
+    });
   }
 
   async openProductTab() {
-    await this.productTab.click();
+    await test.step(`Opening Product Tab`, async () => {
+      await this.productTab.click();
+    });
   }
 
   async enableDemoMode() {
@@ -219,70 +476,92 @@ export class BuilderPage extends BasePage {
   }
 
   async selectIPFSExportOption() {
-    await this.exportOptions.click();
-    await this.exportIPFSOption.click();
+    await test.step(`Selecting IPFS as the export option`, async () => {
+      await this.exportOptions.click();
+      await this.exportIPFSOption.click();
+    });
   }
 
   async selectJSONExportOption() {
-    await this.exportOptions.click();
-    await this.exportJSONoption.click();
+    await test.step(`Selecting JSON as the export option`, async () => {
+      await this.exportOptions.click();
+      await this.exportJSONoption.click();
+    });
   }
 
   async publishToIPFS() {
-    await this.publishButton.click();
+    await test.step(`Publishing the widget to IPFS`, async () => {
+      await this.publishButton.click();
+    });
   }
 
   async visitPublishedWidget() {
-    await this.goToHostedWidgetButton.click();
+    await test.step(`Visiting the freshly hosted widget`, async () => {
+      await this.goToHostedWidgetButton.click();
+    });
   }
 
   async validateAddedPaymentOptionCount(count: string) {
-    await expect(this.paymentOptionCount).toHaveText(`(${count})`);
+    await test.step(`Checking if the payment option count is ${count}`, async () => {
+      await expect(this.paymentOptionCount).toHaveText(`(${count})`);
+    });
   }
 
   async validateNoPaymentOptionsAddedMessage() {
-    await expect(this.noOptionsMessage).toHaveText(
-      "You haven't added any payment options yet. Add your first one or replace with demo data.",
-    );
+    await test.step(`Validating the message shown when no options are added`, async () => {
+      await expect(this.noOptionsMessage).toHaveText(
+        "You haven't added any payment options yet. Add your first one or replace with demo data.",
+      );
+    });
   }
 
   async chooseExportOption(exportType: string) {
-    await this.exportOptions.click();
-    await this.page.locator(`[data-value=${exportType}]`).click();
+    await test.step(`Choosing ${exportType} as the export option`, async () => {
+      await this.exportOptions.click();
+      await this.page.locator(`[data-value=${exportType}]`).click();
+    });
   }
 
   async exportWidget(exportType: string) {
-    let buttonToPress =
-      exportType === "json" ? this.downloadButton : this.publishButton;
-    if (exportType === "json") {
-      const downloadPromise = this.page.waitForEvent("download");
-      await buttonToPress.click();
-      const download = await downloadPromise;
-      await download.saveAs("downloads/exportedWidget.json");
-    } else {
-      await buttonToPress.click();
-    }
+    await test.step(`Exporting the widget as ${exportType}`, async () => {
+      let buttonToPress =
+        exportType === "json" ? this.downloadButton : this.publishButton;
+      if (exportType === "json") {
+        const downloadPromise = this.page.waitForEvent("download");
+        await buttonToPress.click();
+        const download = await downloadPromise;
+        await download.saveAs("downloads/exportedWidget.json");
+      } else {
+        await buttonToPress.click();
+      }
+    });
   }
 
   async validateIPFSPublishMessage() {
-    await expect(this.publishedWidgetMessage).toHaveText(
-      "Your config is published to IPFS. Test it with our hosted widget:",
-    );
+    await test.step(`Validating the message you get after publishing widget to IPFS`, async () => {
+      await expect(this.publishedWidgetMessage).toHaveText(
+        "Your config is published to IPFS. Test it with our hosted widget:",
+      );
+    });
   }
 
   async validateExportedJsonFile() {
-    const downloadPath = "./downloads/exportedWidget.json";
-    const dataPath = "./data/export.json";
-    const downloadedWidgetContents = JSON.parse(
-      fs.readFileSync(downloadPath, "utf-8"),
-    );
-    const savedWidgetExportContents = JSON.parse(
-      fs.readFileSync(dataPath, "utf-8"),
-    );
-    await expect(downloadedWidgetContents).toEqual(savedWidgetExportContents);
+    await test.step(`Validating the exported JSON file`, async () => {
+      const downloadPath = "./downloads/exportedWidget.json";
+      const dataPath = "./data/export.json";
+      const downloadedWidgetContents = JSON.parse(
+        fs.readFileSync(downloadPath, "utf-8"),
+      );
+      const savedWidgetExportContents = JSON.parse(
+        fs.readFileSync(dataPath, "utf-8"),
+      );
+      await expect(downloadedWidgetContents).toEqual(savedWidgetExportContents);
+    });
   }
 
   async uploadTestImage() {
-    await this.uploadImageField.setInputFiles("./data/Superfluid_logo.png");
+    await test.step(`Uploading the Superfluid logo to the widget`, async () => {
+      await this.uploadImageField.setInputFiles("./data/Superfluid_logo.png");
+    });
   }
 }

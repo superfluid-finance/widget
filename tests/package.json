@@ -14,5 +14,8 @@
     "lint:check-no-focused-tests": "grep -FR test.only specs || { echo '✅ No test is focused.';exit 0; } && { echo '❌ You have focused tests.'; exit 1; }",
     "build": "tsc --noEmit --project ./tsconfig.json",
     "tests": "npx playwright test --headed"
+  },
+  "dependencies": {
+    "@bgotink/playwright-coverage": "^0.2.1"
   }
 }

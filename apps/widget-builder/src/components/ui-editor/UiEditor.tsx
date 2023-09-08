@@ -58,10 +58,16 @@ const UiEditor: FC = () => {
                     borderBottomRightRadius: 0,
                   }}
                 >
-                  <ToggleButton value="page" aria-label="page" title="Page">
+                  <ToggleButton
+                    data-testid="inline-button"
+                    value="page"
+                    aria-label="page"
+                    title="Page"
+                  >
                     Inline
                   </ToggleButton>
                   <ToggleButton
+                    data-testid="dialog-button"
                     value="dialog"
                     aria-label="dialog"
                     title="Dialog"
@@ -69,6 +75,7 @@ const UiEditor: FC = () => {
                     Dialog
                   </ToggleButton>
                   <ToggleButton
+                    data-testid="drawer-button"
                     value="drawer"
                     aria-label="drawer"
                     title="Drawer"
@@ -76,6 +83,7 @@ const UiEditor: FC = () => {
                     Drawer
                   </ToggleButton>
                   <ToggleButton
+                    data-testid="full-screen-button"
                     value="full-screen"
                     aria-label="full-screen"
                     title="Full Screen"
@@ -173,6 +181,7 @@ const UiEditor: FC = () => {
               <InputWrapper title="Primary color">
                 {(id) => (
                   <MuiColorInput
+                    data-testid="primary-color-picker"
                     id={id}
                     fallbackValue={"#000"}
                     format="hex"
@@ -270,6 +279,7 @@ const UiEditor: FC = () => {
       </Stack>
       <Tooltip title="Replace with random styling" placement="right" arrow>
         <Fab
+          data-testid="wand-button"
           size="medium"
           color="secondary"
           onClick={setDemoStyling}

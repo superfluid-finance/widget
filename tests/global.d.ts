@@ -21,5 +21,6 @@ type PaymentOption = {
   receiver: string;
   timeUnit: string;
   chainId: string;
-  // useAsDefault: boolean;
+  upfrontPayment?: string;
+  userDefinedRate?: boolean;
 };

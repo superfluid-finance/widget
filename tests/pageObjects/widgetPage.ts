@@ -1,8 +1,8 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, Locator, Page, test } from "@playwright/test";
 import * as metamask from "@synthetixio/synpress/commands/metamask";
 
 import * as EthHelper from "../helpers/ethHelper";
-import { BasePage } from "./basePage";
+import { BasePage, randomDetailsSet } from "./basePage";
 
 export class WidgetPage extends BasePage {
   readonly page: Page;
@@ -47,6 +47,8 @@ export class WidgetPage extends BasePage {
   readonly transactionSpinningProgress: Locator;
   readonly reviewStepError: Locator;
   readonly switchNetworkButton: Locator;
+  readonly customAmountInput: Locator;
+  readonly customAmountTimeUnitDropdown: Locator;
   // readonly copyButtons: Locator;
   // readonly productDetails: Locator;
   // readonly poweredBySuperfluidButton: Locator;
@@ -129,42 +131,110 @@ export class WidgetPage extends BasePage {
     );
     this.reviewStepError = page.getByTestId("review-error");
     this.switchNetworkButton = page.getByTestId("switch-network-button");
+    this.customAmountInput = page
+      .getByTestId("custom-flow-rate-input-field")
+      .locator("input");
+    this.customAmountTimeUnitDropdown = page.getByTestId(
+      "custom-time-unit-dropdown",
+    );
+  }
+
+  async changeCustomPaymentAmount(amount: string, timeunit = "month") {
+    await this.customAmountInput.fill(amount);
+    if (timeunit !== "month") {
+      //Default is month
+      this.customAmountTimeUnitDropdown.click();
+      this.page.locator(`[data-value=${timeunit}]`).click();
+    }
+  }
+
+  async validateNoTestImageIsSet() {
+    await test.step(`Validate no image is set in the widget`, async () => {
+      await expect(this.productImage).not.toBeVisible();
+    });
+  }
+  async validateRandomProductDetailsIsShown() {
+    await test.step(`Make sure the magic wand random details are seen in the widget`, async () => {
+      await expect(this.productDescription).toHaveText(
+        randomDetailsSet.description,
+      );
+      await expect(this.productName).toHaveText(randomDetailsSet.name);
+      await expect(this.productImage).toBeVisible();
+      await expect(this.productImage).toHaveCSS(
+        "background-image",
+        `url("https://picsum.photos/200/200")`,
+      );
+    });
+  }
+  async validateInvalidTestImage() {
+    await test.step(`Making sure the widget shows a blank picture if the image format is invalid`, async () => {
+      const screenshot = await this.productImage.screenshot();
+      //Snapshot is saved in specs/specFileName.ts-snapshots
+      //Sometimes the rounded edges can show up abit different than the screenshot in different viewports, so the 1% threshold
+      await expect(screenshot).toMatchSnapshot("./data/emptyImage.png", {
+        maxDiffPixelRatio: 1,
+      });
+    });
   }
 
   async clickContinueButton() {
-    await this.continueButton.click();
+    await test.step(`Clicking on the continue button`, async () => {
+      await this.continueButton.click();
+    });
   }
 
   async connectWallet() {
-    await this.clickContinueButton();
-    await this.metamaskWalletButton.click();
-    metamask.acceptAccess();
+    await test.step(`Clicking continue button and accepting Metamask access`, async () => {
+      await this.clickContinueButton();
+      await this.metamaskWalletButton.click();
+      metamask.acceptAccess();
+    });
   }
 
   async selectPaymentNetwork(network: string) {
-    await this.networkSelectionButton.click();
-    await this.page
-      .getByTestId("network-option")
-      .filter({ hasText: network })
-      .click();
+    await test.step(`Selecting ${network} as the payment network`, async () => {
+      await this.networkSelectionButton.click();
+      await this.page
+        .getByTestId("network-option")
+        .filter({ hasText: network })
+        .click();
+    });
   }
 
   async selectPaymentToken(token: string) {
-    await this.tokenSelectionButton.click();
-    await this.page
-      .getByTestId("token-option")
-      .filter({ hasText: token })
-      .click();
-    this.selectedTokenDuringTest = token;
+    await test.step(`Selecting ${token} as the token used for the payment`, async () => {
+      await this.tokenSelectionButton.click();
+      await this.page
+        .getByTestId("token-option")
+        .filter({ hasText: token })
+        .click();
+      this.selectedTokenDuringTest = token;
+    });
   }
+
+  async selectPaymentOption(paymentOption: PaymentOption) {
+    await test.step(`Selecting ${paymentOption.flowRate} ${paymentOption.superToken}/${paymentOption.timeUnit} payment option`, async () => {
+      await this.selectPaymentNetwork(paymentOption.network);
+      let optionString = paymentOption.upfrontPayment
+        ? `${paymentOption.upfrontPayment} + ${paymentOption.flowRate} ${paymentOption.superToken}/${paymentOption.timeUnit}`
+        : `${paymentOption.flowRate} ${paymentOption.superToken}/${paymentOption.timeUnit}`;
+      if (paymentOption.userDefinedRate === true) {
+        optionString = `${paymentOption.superToken} - Custom amount`;
+      }
+      await this.selectPaymentToken(optionString);
+    });
+  }
+
   async setWrapAmount(amount: string) {
-    this.wrapAmountDuringTest = amount;
-    await this.wrapAmountInput.fill(amount);
-    await expect(this.wrapAmountMirrorAmount).toHaveValue(amount);
-    await expect(this.weRecomendMessage).toBeVisible();
-    await expect(this.weRecomendMessage).toHaveText(
-      "We recommend wrapping at least 1 month of the subscription amount.",
-    );
+    await test.step(`Setting the wrap amount to ${amount}`, async () => {
+      this.wrapAmountDuringTest = amount;
+      await this.wrapAmountInput.fill(amount);
+      await expect(this.wrapAmountMirrorAmount).toHaveValue(amount);
+      await expect(this.weRecomendMessage).toBeVisible();
+      await expect(this.weRecomendMessage).toHaveText(
+        "We recommend wrapping at least 1 month of the subscription amount.",
+      );
+    });
   }
 
   getTransactionTypeString(type: string) {
@@ -189,191 +259,229 @@ export class WidgetPage extends BasePage {
     transactionList: string[],
     statusList: string[],
   ) {
-    for (const [index, transaction] of transactionList.entries()) {
-      await expect(this.transactionTypes.nth(index)).toHaveText(
-        index + 1 + ". " + this.getTransactionTypeString(transaction),
-      );
-      await expect(this.transactionStatuses.nth(index)).toHaveText(
-        statusList[index],
-        { timeout: 60000 },
-      );
-    }
-    await this.validateTransactionCounter(statusList);
+    await test.step(`Validating transaction statuses`, async () => {
+      for (const [index, transaction] of transactionList.entries()) {
+        await expect(this.transactionTypes.nth(index)).toHaveText(
+          index + 1 + ". " + this.getTransactionTypeString(transaction),
+        );
+        await expect(this.transactionStatuses.nth(index)).toHaveText(
+          statusList[index],
+          { timeout: 60000 },
+        );
+      }
+      await this.validateTransactionCounter(statusList);
+    });
   }
 
   async validateTransactionButtonTextAndClick(text: string) {
-    await expect(this.transactionButton).toHaveText(
-      this.getTransactionTypeString(text)!,
-    );
-    await this.transactionButton.click();
+    await test.step(`Making sure the transaction text is ${text} and clicking it`, async () => {
+      await expect(this.transactionButton).toHaveText(
+        this.getTransactionTypeString(text)!,
+      );
+      await this.transactionButton.click();
+    });
   }
 
   async validateTransactionButtonLoading() {
-    await expect(this.transactionButton).toBeDisabled();
-    await expect(this.transactionButtonLoadingSpinner).toBeVisible();
+    await test.step(`Making sure the transaction button is disabled and a loading spinner is visible`, async () => {
+      await expect(this.transactionButton).toBeDisabled();
+      await expect(this.transactionButtonLoadingSpinner).toBeVisible();
+    });
   }
 
   async acceptMetamaskTransaction() {
-    metamask.confirmTransaction("aggressive");
+    await test.step(`Accepting Metamask transaction (aggressive)`, async () => {
+      metamask.confirmTransaction("aggressive");
+    });
   }
 
   async acceptMetamaskAllowanceTransaction(allowance: string) {
-    metamask.confirmPermissionToSpend(allowance);
+    await test.step(`Giving permission to spend ${allowance} tokens`, async () => {
+      metamask.confirmPermissionToSpend(allowance);
+    });
   }
 
   async validateSuccessMessage(flowRatePerMonth: string) {
-    const flowRateInWei = parseFloat(flowRatePerMonth) / 2628000;
-    await this.successStreamedAmount.isVisible({ timeout: 60000 });
-    const amountShownInSuccessScreen =
-      await this.successStreamedAmount.innerText();
-    const expectedFlowAmountIncrease = flowRateInWei * 2;
-    const expectedAmount =
-      parseFloat(amountShownInSuccessScreen) + expectedFlowAmountIncrease;
-    await this.page.waitForTimeout(2000);
-    expect(
-      parseFloat(await this.successStreamedAmount.innerText()),
-    ).toBeGreaterThan(parseFloat(amountShownInSuccessScreen));
-    expect(
-      parseFloat(await this.successStreamedAmount.innerText()),
-    ).toBeCloseTo(expectedAmount, flowRateInWei / 1e17);
-    await expect(this.senderAddress.last()).toHaveText(
-      BasePage.shortenHex(this.senderAddressDuringTest!),
-    );
-    await expect(this.receiverAddress.last()).toHaveText(
-      BasePage.shortenHex(this.receiverAddressDuringTest!),
-    );
+    await test.step(`Validating that the success message is correctly shown for ${flowRatePerMonth} per month`, async () => {
+      const flowRateInWei = parseFloat(flowRatePerMonth) / 2628000;
+      await this.successStreamedAmount.isVisible({ timeout: 60000 });
+      const amountShownInSuccessScreen =
+        await this.successStreamedAmount.innerText();
+      const expectedFlowAmountIncrease = flowRateInWei * 2;
+      const expectedAmount =
+        parseFloat(amountShownInSuccessScreen) + expectedFlowAmountIncrease;
+      await this.page.waitForTimeout(2000);
+      expect(
+        parseFloat(await this.successStreamedAmount.innerText()),
+      ).toBeGreaterThan(parseFloat(amountShownInSuccessScreen));
+      expect(
+        parseFloat(await this.successStreamedAmount.innerText()),
+      ).toBeCloseTo(expectedAmount, flowRateInWei / 1e17);
+      await expect(this.senderAddress.last()).toHaveText(
+        BasePage.shortenHex(this.senderAddressDuringTest!),
+      );
+      await expect(this.receiverAddress.last()).toHaveText(
+        BasePage.shortenHex(this.receiverAddressDuringTest!),
+      );
+    });
   }
 
   async validateAndSaveSenderAndReceiverAddresses(
     sender: string,
     receiver: string,
   ) {
-    await expect(this.senderAddress).toHaveText(BasePage.shortenHex(sender));
-    await expect(this.receiverAddress).toHaveText(
-      BasePage.shortenHex(receiver),
-    );
-    this.senderAddressDuringTest = sender;
-    this.receiverAddressDuringTest = receiver;
+    await test.step(`Making sure the sender is ${sender} and receiver is ${receiver}`, async () => {
+      await expect(this.senderAddress).toHaveText(BasePage.shortenHex(sender));
+      await expect(this.receiverAddress).toHaveText(
+        BasePage.shortenHex(receiver),
+      );
+      this.senderAddressDuringTest = sender;
+      this.receiverAddressDuringTest = receiver;
+    });
   }
 
   async validateWrapReviewAmount(amount: string) {
-    await expect(this.reviewUnderlyingWrapAmount).toHaveText(amount);
+    await test.step(`Making sure the wrap amount in review tab is ${amount}`, async () => {
+      await expect(this.reviewUnderlyingWrapAmount).toHaveText(amount);
+    });
   }
 
   async skipWrapStep() {
-    await this.skipWrapButton.click();
+    await test.step(`Clicking on "Skip this step" button`, async () => {
+      await this.skipWrapButton.click();
+    });
   }
 
   async validateProductName(name: string) {
-    await expect(this.productName).toHaveText(name);
+    await test.step(`Making sure the product name shown in the widget is ${name}`, async () => {
+      await expect(this.productName).toHaveText(name);
+    });
   }
 
   async validateProductDescription(description: string) {
-    await expect(this.productDescription).toHaveText(description);
+    await test.step(`Making sure the product description shown in the widget is ${description}`, async () => {
+      await expect(this.productDescription).toHaveText(description);
+    });
   }
 
   async validateSelectedPaymentOption(option: PaymentOption) {
-    await expect(this.chosenFlowRate).toHaveText(option.flowRate);
-    await expect(this.chosenToken).toHaveText(option.superToken);
-    await expect(this.chosenFlowRatePeriod).toHaveText(
-      `per ${option.timeUnit}`,
-    );
-    await expect(
-      this.page
-        .getByTestId(`selected-option-paper`)
-        .getByTestId(`${option.chainId}-badge`),
-    ).toBeVisible();
+    await test.step(`Validating that the selected option is ${option.flowRate} ${option.superToken} per ${option.timeUnit}`, async () => {
+      await expect(this.chosenFlowRate).toHaveText(option.flowRate);
+      await expect(this.chosenToken).toHaveText(option.superToken);
+      await expect(this.chosenFlowRatePeriod).toHaveText(
+        `per ${option.timeUnit}`,
+      );
+      await expect(
+        this.page
+          .getByTestId(`selected-option-paper`)
+          .getByTestId(`${option.chainId}-badge`),
+      ).toBeVisible();
+    });
   }
 
   async validateWidgetNoPaymentOptionsError() {
-    await expect(this.widgetErrorTitle).toHaveText("Input Error");
-    //TODO validate the message too, playwright returns 17 strings??
-    //This will probobly be a nicer message in the future so wont spend time on it for now
+    await test.step(`Checking if an error is shown in the widget if no payment options are set`, async () => {
+      await expect(this.widgetErrorTitle).toHaveText("Input Error");
+      //TODO validate the message too, playwright returns 17 strings??
+      //This will probobly be a nicer message in the future so wont spend time on it for now
+    });
   }
   async validateUsedTestImage() {
-    const screenshot = await this.productImage.screenshot();
-    //Snapshot is saved in specs/specFileName.ts-snapshots
-    //Sometimes the rounded edges can show up abit different than the screenshot in different viewports, so the 1% threshold
-    await expect(screenshot).toMatchSnapshot("./data/Superfluid_logo.png", {
-      maxDiffPixelRatio: 1,
+    await test.step(`Making sure the Superfluid logo is shown in the widget`, async () => {
+      const screenshot = await this.productImage.screenshot();
+      //Snapshot is saved in specs/specFileName.ts-snapshots
+      //Sometimes the rounded edges can show up abit different than the screenshot in different viewports, so the 1% threshold
+      await expect(screenshot).toMatchSnapshot("./data/Superfluid_logo.png", {
+        maxDiffPixelRatio: 1,
+      });
     });
   }
 
   async validateTransactionCounter(statusList: string[]) {
-    if (statusList.length === 1) {
-      await expect(this.transactionSpinningProgress).toBeVisible();
-      await expect(this.transactionCount).not.toBeVisible();
-    } else {
-      let completedStatusCount = 0;
-      for (const [index, status] of statusList.entries()) {
-        if (status === "Completed") {
-          completedStatusCount++;
+    await test.step(`Checking if the transaction is correctly shown`, async () => {
+      if (statusList.length === 1) {
+        await expect(this.transactionSpinningProgress).toBeVisible();
+        await expect(this.transactionCount).not.toBeVisible();
+      } else {
+        let completedStatusCount = 0;
+        for (const [index, status] of statusList.entries()) {
+          if (status === "Completed") {
+            completedStatusCount++;
+          }
         }
+        let progressPercentage =
+          completedStatusCount === 0
+            ? (4).toString()
+            : Math.round(
+                (completedStatusCount / statusList.length) * 100,
+              ).toString();
+        await expect(this.transactionCount).toHaveText(
+          `${completedStatusCount}/${statusList.length}`,
+        );
+        await expect(this.transactionCircularProgress).toHaveAttribute(
+          "aria-valuenow",
+          progressPercentage,
+        );
       }
-      let progressPercentage =
-        completedStatusCount === 0
-          ? (4).toString()
-          : Math.round(
-              (completedStatusCount / statusList.length) * 100,
-            ).toString();
-      await expect(this.transactionCount).toHaveText(
-        `${completedStatusCount}/${statusList.length}`,
-      );
-      await expect(this.transactionCircularProgress).toHaveAttribute(
-        "aria-valuenow",
-        progressPercentage,
-      );
-    }
+    });
   }
 
   async validateTokenBalanceAfterWrap() {
-    let wrappedAmount = BigInt(1e18) * BigInt(this.wrapAmountDuringTest!);
-    await EthHelper.getUnderlyingTokenBalance().then(
-      async (underlyingBalance) => {
-        await expect(
-          this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
-        ).toEqual(underlyingBalance);
-      },
-    );
-
-    await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
-      await expect(this.superTokenBalanceBeforeWrap! + wrappedAmount).toEqual(
-        superTokenBalance[0],
+    await test.step(`Checking if token got wrapped succesfully`, async () => {
+      let wrappedAmount = BigInt(1e18) * BigInt(this.wrapAmountDuringTest!);
+      await EthHelper.getUnderlyingTokenBalance().then(
+        async (underlyingBalance) => {
+          await expect(
+            this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
+          ).toEqual(underlyingBalance);
+        },
       );
+
+      await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
+        await expect(this.superTokenBalanceBeforeWrap! + wrappedAmount).toEqual(
+          superTokenBalance[0],
+        );
+      });
     });
   }
 
   async validateAndSaveWrapPageBalances() {
-    await EthHelper.getUnderlyingTokenBalance().then(
-      async (underlyingBalance) => {
-        this.underlyingTokenBalanceBeforeWrap = underlyingBalance;
-        let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
-          (underlyingBalance.toString() / 1e18).toString(),
-        );
-        await expect(this.wrapUnderlyingBalance).toHaveText(
-          `Balance: ${underlyingBalanceToAssert}`,
-        );
-      },
-    );
+    await test.step(`Checking if wrap page shows correct token balances`, async () => {
+      await EthHelper.getUnderlyingTokenBalance().then(
+        async (underlyingBalance) => {
+          this.underlyingTokenBalanceBeforeWrap = underlyingBalance;
+          let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
+            (underlyingBalance.toString() / 1e18).toString(),
+          );
+          await expect(this.wrapUnderlyingBalance).toHaveText(
+            `Balance: ${underlyingBalanceToAssert}`,
+          );
+        },
+      );
 
-    await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
-      this.superTokenBalanceBeforeWrap = superTokenBalance[0];
-      let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
-        (superTokenBalance[0].toString() / 1e18).toString(),
-      );
-      await expect(this.wrapSuperTokenBalance).toHaveText(
-        `Balance: ${superTokenBalanceToAssert}`,
-      );
+      await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
+        this.superTokenBalanceBeforeWrap = superTokenBalance[0];
+        let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
+          (superTokenBalance[0].toString() / 1e18).toString(),
+        );
+        await expect(this.wrapSuperTokenBalance).toHaveText(
+          `Balance: ${superTokenBalanceToAssert}`,
+        );
+      });
     });
   }
 
   async validateReviewStepError(message: string) {
-    await expect(this.reviewStepError).toHaveText(message);
-    await expect(this.continueButton).toBeDisabled();
+    await test.step(`Checking the review step error and making sure its disabled`, async () => {
+      await expect(this.reviewStepError).toHaveText(message);
+      await expect(this.continueButton).toBeDisabled();
+    });
   }
 
   async clickSwitchNetworkButton() {
-    await expect(this.switchNetworkButton).toBeVisible();
-    await this.switchNetworkButton.click();
+    await test.step(`Clicking the switch network button`, async () => {
+      await expect(this.switchNetworkButton).toBeVisible();
+      await this.switchNetworkButton.click();
+    });
   }
 }
