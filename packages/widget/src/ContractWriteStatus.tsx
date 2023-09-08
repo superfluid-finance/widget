@@ -1,6 +1,5 @@
 import CircleIcon_ from "@mui/icons-material/Circle.js";
 import { Paper, Stack, Typography, useTheme } from "@mui/material";
-import { useEffect } from "react";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
@@ -21,12 +20,6 @@ export function ContractWriteStatus(
   } = result;
 
   const theme = useTheme();
-
-  useEffect(() => {
-    if (latestError) {
-      console.error(latestError);
-    }
-  }, [latestError]);
 
   const borderColor = // latestError
     // ? theme.palette.error.main
