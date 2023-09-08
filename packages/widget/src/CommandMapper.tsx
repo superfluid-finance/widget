@@ -31,6 +31,7 @@ import {
   erc20ABI,
   mapTimePeriodToSeconds,
   nativeAssetSuperTokenABI,
+  permitUnderlyingABI,
   superTokenABI,
   superUpgraderABI,
   superUpgraderAddress,
@@ -74,6 +75,18 @@ export function SuperWrapIntoSuperTokensCommandMapper({
           abi: erc20ABI,
           functionName: "allowance",
           args: [cmd.accountAddress, cmd.superTokenAddress],
+        }
+      : undefined,
+  );
+
+  const { data: nonce, isLoading: isNonceLoading } = useContractRead(
+    !isNativeAssetUnderlyingToken
+      ? {
+          chainId: cmd.chainId,
+          address: cmd.underlyingToken.address,
+          abi: permitUnderlyingABI,
+          functionName: "nonces",
+          args: [cmd.accountAddress],
         }
       : undefined,
   );
@@ -178,7 +191,7 @@ export function SuperWrapIntoSuperTokensCommandMapper({
                   value: BigInt(
                     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                   ),
-                  nonce: 1, // TODO(KK): Read it on-chain
+                  nonce: nonce,
                   deadline:
                     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 },
@@ -248,7 +261,7 @@ export function SuperWrapIntoSuperTokensCommandMapper({
     }
 
     return contractWrites_;
-  }, [cmd.id, isSuccess]);
+  }, [cmd.id, isSuccess, nonce]);
 
   useEffect(
     () => (isSuccess ? onMapped?.(contractWrites) : void 0),
@@ -639,10 +652,15 @@ const createContractWrite = <
           "0x",
         ]);
 
-        return { operationType, target, data };
+        return { operationType, target, data, value: call.value ?? 0n };
       } else {
         const callData = encodeFunctionData(call);
-        return { operationType, target, data: callData };
+        return {
+          operationType,
+          target,
+          data: callData,
+          value: call.value ?? 0n,
+        };
       }
     },
   }) as ContractWrite;

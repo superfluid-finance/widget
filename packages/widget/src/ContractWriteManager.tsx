@@ -51,10 +51,6 @@ export function ContractWriteManager({
     prepare ? materialized : undefined,
   );
 
-  console.log({
-    materialized,
-  });
-
   const writeResult = useContractWrite(
     prepareResult.isSuccess
       ? prepareResult.config

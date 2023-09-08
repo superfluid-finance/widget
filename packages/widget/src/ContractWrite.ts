@@ -25,5 +25,6 @@ export type ContractWrite = {
     operationType: number;
     target: Address;
     data: ReturnType<typeof encodeFunctionData>;
+    value: bigint;
   }>;
 };

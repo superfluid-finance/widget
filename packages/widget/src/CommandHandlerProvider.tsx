@@ -102,15 +102,25 @@ export function CommandHandlerProvider({ children }: Props) {
                               (x) => x.signatureRequest,
                             )?.signatureRequest,
                             materialize: (signature) => {
-                              const args = [
-                                contractWrites.map(
-                                  (x) => x.materializeForBatchCall!(signature)!,
-                                ),
-                              ] as const; // TODO(KK): bangs
+                              let value = 0n;
+                              const individualCalls = contractWrites.map(
+                                (x) => {
+                                  const materialized =
+                                    x.materializeForBatchCall!(signature)!;
+                                  value += materialized.value;
+                                  return {
+                                    operationType: materialized.operationType,
+                                    target: materialized.target,
+                                    data: materialized.data,
+                                  };
+                                },
+                              );
+                              const args = [individualCalls] as const; // TODO(KK): bangs
                               return {
                                 abi: superfluidHostABI,
                                 address: superfluidHostAddress[chainId],
                                 functionName: "batchCall",
+                                value: value,
                                 args,
                               };
                             },

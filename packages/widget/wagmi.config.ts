@@ -81,6 +81,13 @@ export default defineConfig({
           },
         },
         {
+          name: "PermitUnderlying",
+          address: {
+            80001: "0x60974a03baaa984ea79f4590ac1e88aaae31158a",
+            5: "0xc3cA859682786B0f97Fa9c1239C249cbBb20cDaC",
+          },
+        },
+        {
           name: "CFAv1Forwarder",
           address: superfluidMetadata.networks.reduce(
             (acc, network) => {

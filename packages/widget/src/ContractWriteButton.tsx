@@ -58,29 +58,32 @@ export default function ContractWriteButton({
         </Button>
       ) : (
         <>
-          {Boolean(contractWrite.signatureRequest && !signatureResult.data) && (
-            <>
-              <Button
-                disabled={signatureResult.isLoading}
-                onClick={() => signatureResult.signTypedData()}
-              >
-                Sign
-              </Button>
-              {signatureResult.isError && <div>Error signing message</div>}
-            </>
+          {Boolean(contractWrite.signatureRequest && !signatureResult.data) ? (
+            <LoadingButton
+              loadingIndicator="Waiting for signature…"
+              data-testid="transaction-button"
+              size="large"
+              variant="contained"
+              fullWidth
+              disabled={signatureResult.isLoading}
+              onClick={() => signatureResult.signTypedData()}
+            >
+              Sign
+            </LoadingButton>
+          ) : (
+            <LoadingButton
+              loadingIndicator="Loading…"
+              data-testid="transaction-button"
+              size="large"
+              variant="contained"
+              fullWidth
+              disabled={!write || transactionResult.isSuccess}
+              onClick={onContractWriteButtonClick}
+              loading={isLoading}
+            >
+              {contractWrite.displayTitle}
+            </LoadingButton>
           )}
-          <LoadingButton
-            loadingIndicator="Loading…"
-            data-testid="transaction-button"
-            size="large"
-            variant="contained"
-            fullWidth
-            disabled={!write || transactionResult.isSuccess}
-            onClick={onContractWriteButtonClick}
-            loading={isLoading}
-          >
-            {contractWrite.displayTitle}
-          </LoadingButton>
         </>
       )}
     </Stack>
