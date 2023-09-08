@@ -3,6 +3,7 @@ import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { useCallback, useEffect } from "react";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
+import { BatchHandler } from "./CommandHandlerProvider.js";
 import ContractWriteButton from "./ContractWriteButton.js";
 import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress.js";
 import { ContractWriteStatus } from "./ContractWriteStatus.js";
@@ -55,6 +56,7 @@ export function StepContentTransactions() {
           <CloseIcon />
         </IconButton>
       </Stack>
+      <BatchHandler />
       <Stack
         direction="column"
         gap={2.25}

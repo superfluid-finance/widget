@@ -130,84 +130,113 @@ export function PermitWrapIntoSuperTokensCommandMapper({
       );
     } else {
       if (allowance !== undefined) {
-        if (true) {
-          // TODO(KK)
-          const underlyingTokenAddress = cmd.underlyingToken.address;
-          contractWrites_.push(
-            createContractWrite({
-              commandId: cmd.id,
-              displayTitle: `Approve ${
-                getUnderlyingToken(underlyingTokenAddress).symbol
-              } Allowance & Wrap`,
-              chainId: cmd.chainId,
-              signatureRequest: {
-                types: {
-                  EIP712Domain: [
-                    {
-                      name: "name",
-                      type: "string",
-                    },
-                    {
-                      name: "version",
-                      type: "string",
-                    },
-                    {
-                      name: "chainId",
-                      type: "uint256",
-                    },
-                    {
-                      name: "verifyingContract",
-                      type: "address",
-                    },
+        const underlyingTokenAddress = cmd.underlyingToken.address;
+        contractWrites_.push(
+          createContractWrite({
+            commandId: cmd.id,
+            displayTitle: `Approve ${
+              getUnderlyingToken(underlyingTokenAddress).symbol
+            } Allowance & Wrap`,
+            chainId: cmd.chainId,
+            signatureRequest: {
+              types: {
+                EIP712Domain: [
+                  {
+                    name: "name",
+                    type: "string",
+                  },
+                  {
+                    name: "version",
+                    type: "string",
+                  },
+                  {
+                    name: "chainId",
+                    type: "uint256",
+                  },
+                  {
+                    name: "verifyingContract",
+                    type: "address",
+                  },
+                ],
+                Permit: [
+                  {
+                    name: "owner",
+                    type: "address",
+                  },
+                  {
+                    name: "spender",
+                    type: "address",
+                  },
+                  {
+                    name: "value",
+                    type: "uint256",
+                  },
+                  {
+                    name: "nonce",
+                    type: "uint256",
+                  },
+                  {
+                    name: "deadline",
+                    type: "uint256",
+                  },
+                ],
+              },
+              primaryType: "Permit",
+              domain: {
+                name: "Fake Permit USDC",
+                version: "1",
+                chainId: cmd.chainId,
+                verifyingContract: underlyingTokenAddress,
+              },
+              message: {
+                owner: cmd.accountAddress,
+                spender:
+                  superUpgraderAddress[
+                    cmd.chainId as keyof typeof superUpgraderAddress
                   ],
-                  Permit: [
-                    {
-                      name: "owner",
-                      type: "address",
-                    },
-                    {
-                      name: "spender",
-                      type: "address",
-                    },
-                    {
-                      name: "value",
-                      type: "uint256",
-                    },
-                    {
-                      name: "nonce",
-                      type: "uint256",
-                    },
-                    {
-                      name: "deadline",
-                      type: "uint256",
-                    },
+                value: BigInt(
+                  "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                ),
+                nonce: nonce,
+                deadline:
+                  "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+              },
+            },
+            materialize: (signature) => {
+              const sig = hexToSignature(signature!);
+
+              return {
+                abi: superUpgraderABI,
+                functionName: "manualUpgradeWithPermit",
+                address:
+                  superUpgraderAddress[
+                    cmd.chainId as keyof typeof superUpgraderAddress
                   ],
-                },
-                primaryType: "Permit",
-                domain: {
-                  name: "Fake Permit USDC",
-                  version: "1",
-                  chainId: cmd.chainId,
-                  verifyingContract: underlyingTokenAddress,
-                },
-                message: {
-                  owner: cmd.accountAddress,
-                  spender:
-                    superUpgraderAddress[
-                      cmd.chainId as keyof typeof superUpgraderAddress
-                    ],
-                  value: BigInt(
+                value: 100000000000000000n,
+                args: [
+                  cmd.amountWeiFromUnderlyingTokenDecimals,
+                  BigInt(
                     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                   ),
-                  nonce: nonce,
-                  deadline:
+                  BigInt(
                     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                },
-              },
-              materialize: (signature) => {
-                const sig = hexToSignature(signature!);
+                  ),
+                  Number(sig.v.toString()),
+                  sig.r,
+                  sig.s,
+                  "0x",
+                ] as const,
+              };
+            },
+            materializeForBatchCall: (signature) => {
+              const sig = hexToSignature(signature!);
 
-                return {
+              return [
+                202,
+                superUpgraderAddress[
+                  cmd.chainId as keyof typeof superUpgraderAddress
+                ],
+                {
                   abi: superUpgraderABI,
                   functionName: "manualUpgradeWithPermit",
                   address:
@@ -228,43 +257,11 @@ export function PermitWrapIntoSuperTokensCommandMapper({
                     sig.s,
                     "0x",
                   ] as const,
-                };
-              },
-              materializeForBatchCall: (signature) => {
-                const sig = hexToSignature(signature!);
-
-                return [
-                  202,
-                  superUpgraderAddress[
-                    cmd.chainId as keyof typeof superUpgraderAddress
-                  ],
-                  {
-                    abi: superUpgraderABI,
-                    functionName: "manualUpgradeWithPermit",
-                    address:
-                      superUpgraderAddress[
-                        cmd.chainId as keyof typeof superUpgraderAddress
-                      ],
-                    value: 100000000000000000n,
-                    args: [
-                      cmd.amountWeiFromUnderlyingTokenDecimals,
-                      BigInt(
-                        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                      ),
-                      BigInt(
-                        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                      ),
-                      Number(sig.v.toString()),
-                      sig.r,
-                      sig.s,
-                      "0x",
-                    ] as const,
-                  },
-                ];
-              },
-            }),
-          );
-        }
+                },
+              ];
+            },
+          }),
+        );
       }
     }
 
@@ -645,30 +642,28 @@ const createContractWrite = <
   ({
     id: nanoid(),
     ...arg, // TODO(KK): handle gnosis safe bug
-    materializeForBatchCall: (signature) => {
-      if (!arg.materializeForBatchCall) {
-        return undefined;
-      }
+    materializeForBatchCall: !arg.materializeForBatchCall
+      ? undefined
+      : (signature) => {
+          const [operationType, target, call] =
+            arg.materializeForBatchCall!(signature);
 
-      const [operationType, target, call] =
-        arg.materializeForBatchCall(signature);
+          if (operationType === 201) {
+            const callData = encodeFunctionData(call);
+            const data = encodeAbiParameters(
+              parseAbiParameters("bytes, bytes"),
+              [callData, "0x"],
+            );
 
-      if (operationType === 201) {
-        const callData = encodeFunctionData(call);
-        const data = encodeAbiParameters(parseAbiParameters("bytes, bytes"), [
-          callData,
-          "0x",
-        ]);
-
-        return { operationType, target, data, value: call.value ?? 0n };
-      } else {
-        const callData = encodeFunctionData(call);
-        return {
-          operationType,
-          target,
-          data: callData,
-          value: call.value ?? 0n,
-        };
-      }
-    },
+            return { operationType, target, data, value: call.value ?? 0n };
+          } else {
+            const callData = encodeFunctionData(call);
+            return {
+              operationType,
+              target,
+              data: callData,
+              value: call.value ?? 0n,
+            };
+          }
+        },
   }) as ContractWrite;

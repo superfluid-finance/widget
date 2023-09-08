@@ -1,6 +1,6 @@
-import { FormControlLabel, FormGroup, Switch } from "@mui/material";
+import { FormControlLabel, Switch } from "@mui/material";
 import { nanoid } from "nanoid";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Abi,
   Address,
@@ -13,6 +13,7 @@ import { useSignTypedData } from "wagmi";
 import {
   CommandHandlerContext,
   CommandHandlerContextValue,
+  useCommandHandler,
 } from "./CommandHandlerContext.js";
 import { useCommandHandlerReducer } from "./commandHandlingReducer.js";
 import { CommandMapper } from "./CommandMapper.js";
@@ -53,10 +54,19 @@ export function CommandHandlerProvider({ children }: Props) {
     [dispatch],
   );
 
-  const [batch, setBatch] = useState(false);
+  const setContractWrites = useCallback(
+    (contractWrites: ReadonlyArray<ContractWrite>) =>
+      void dispatch({
+        type: "set contract writes",
+        payload: {
+          contractWrites: contractWrites,
+        },
+      }),
+    [dispatch],
+  );
+
   const reset = useCallback(() => {
     void dispatch({ type: "reset" });
-    setBatch(false);
   }, [dispatch]);
 
   const contextValue = useMemo(
@@ -67,6 +77,7 @@ export function CommandHandlerProvider({ children }: Props) {
       contractWriteResults,
       sessionId,
       submitCommands,
+      setContractWrites,
       reset,
       writeIndex,
     }),
@@ -75,69 +86,6 @@ export function CommandHandlerProvider({ children }: Props) {
 
   return (
     <>
-      {Boolean(contractWrites.length) && (
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={batch}
-                onChange={(_e, checked) => {
-                  setBatch(true);
-
-                  if (
-                    contractWrites.filter((x) => !x.materializeForBatchCall)
-                      .length === 0
-                  ) {
-                    const chainId = contractWrites[0]
-                      .chainId as keyof typeof superfluidHostAddress;
-                    dispatch({
-                      type: "set contract writes",
-                      payload: {
-                        contractWrites: [
-                          createContractWrite({
-                            commandId: nanoid(),
-                            displayTitle: "Batch Call",
-                            chainId: chainId,
-                            signatureRequest: contractWrites.find(
-                              (x) => x.signatureRequest,
-                            )?.signatureRequest,
-                            materialize: (signature) => {
-                              let value = 0n;
-                              const individualCalls = contractWrites.map(
-                                (x) => {
-                                  const materialized =
-                                    x.materializeForBatchCall!(signature)!;
-                                  value += materialized.value;
-                                  return {
-                                    operationType: materialized.operationType,
-                                    target: materialized.target,
-                                    data: materialized.data,
-                                  };
-                                },
-                              );
-                              const args = [individualCalls] as const; // TODO(KK): bangs
-                              return {
-                                abi: superfluidHostABI,
-                                address: superfluidHostAddress[chainId],
-                                functionName: "batchCall",
-                                value: value,
-                                args,
-                              };
-                            },
-                          }),
-                        ],
-                      },
-                    });
-                  } else {
-                    console.log("Should not be here...");
-                  }
-                }}
-              />
-            }
-            label="Batch?"
-          />
-        </FormGroup>
-      )}
       <CommandHandlerContext.Provider value={contextValue}>
         {typeof children === "function" ? children(contextValue) : children}
         {commands.map((cmd, commandIndex_) => (
@@ -172,6 +120,85 @@ export function CommandHandlerProvider({ children }: Props) {
         ))}
       </CommandHandlerContext.Provider>
     </>
+  );
+}
+
+export function BatchHandler() {
+  const { contractWrites, sessionId, setContractWrites } = useCommandHandler();
+
+  const [batch, setBatch] = useState(false);
+
+  useEffect(() => {
+    setBatch(false);
+  }, [sessionId]);
+
+  const [beforeBatchWrites, setBeforeBatchWrites] =
+    useState<ReadonlyArray<ContractWrite> | null>(null);
+
+  return (
+    <FormControlLabel
+      control={
+        <Switch
+          disabled={contractWrites.length === 0}
+          checked={batch}
+          onChange={(_e, checked) => {
+            if (checked) {
+              setBatch(true);
+              setBeforeBatchWrites(contractWrites);
+
+              const batchableCalls = contractWrites.filter(
+                (x) => x.materializeForBatchCall,
+              );
+              const nonBatchableCalls = contractWrites.filter(
+                (x) => !x.materializeForBatchCall,
+              );
+
+              const chainId = contractWrites[0]
+                .chainId as keyof typeof superfluidHostAddress;
+
+              const newContractWrites = [
+                ...nonBatchableCalls,
+                createContractWrite({
+                  commandId: nanoid(),
+                  displayTitle: "Batch Call",
+                  chainId: chainId,
+                  signatureRequest: batchableCalls.find(
+                    (x) => x.signatureRequest,
+                  )?.signatureRequest,
+                  materialize: (signature) => {
+                    let value = 0n;
+                    const individualCalls = batchableCalls.map((x) => {
+                      const materialized =
+                        x.materializeForBatchCall!(signature)!;
+                      value += materialized.value;
+                      return {
+                        operationType: materialized.operationType,
+                        target: materialized.target,
+                        data: materialized.data,
+                      };
+                    });
+                    const args = [individualCalls] as const;
+                    return {
+                      abi: superfluidHostABI,
+                      address: superfluidHostAddress[chainId],
+                      functionName: "batchCall",
+                      value: value,
+                      args,
+                    };
+                  },
+                }),
+              ];
+              setContractWrites(newContractWrites);
+            } else {
+              setBatch(false);
+              setContractWrites(beforeBatchWrites!);
+              setBeforeBatchWrites(null);
+            }
+          }}
+        />
+      }
+      label="Use batch call"
+    />
   );
 }
 
