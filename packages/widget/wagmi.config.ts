@@ -14,6 +14,12 @@ export default defineConfig({
   out: "./src/core/wagmi-generated.ts",
   contracts: [
     {
+      name: "SuperfluidErrors",
+      abi: (bundledAbi.ConstantFlowAgreementV1 as Abi)
+        .concat(bundledAbi.SuperToken as Abi)
+        .filter((x) => x.type === "error"),
+    },
+    {
       name: "Super Token",
       abi: bundledAbi.SuperToken as Abi,
     },
