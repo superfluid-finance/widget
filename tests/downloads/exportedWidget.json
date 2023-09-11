@@ -19,7 +19,7 @@
       }
     ]
   },
-  "layout": "page",
+  "type": "page",
   "theme": {
     "typography": {
       "fontFamily": "'Noto Sans', 'sans-serif'"

@@ -16,7 +16,8 @@ test.beforeEach(async ({ page }) => {
 test("Creating a flow", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
-  await builderPage.enableDemoMode();
+  await builderPage.switchToPaymentTab();
+  await builderPage.clickOnPaymentDetailsWandButton();
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("fDAIx");
   await widgetPage.connectWallet();
@@ -130,6 +131,7 @@ test("Not enough super token balance to cover buffer error", async ({
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("TDLx");
   await widgetPage.connectWallet();
+  await widgetPage.setWrapAmount("0");
   await widgetPage.clickContinueButton();
   await widgetPage.validateReviewStepError(
     "You don’t have enough Super Token balance to cover buffer.",
@@ -145,6 +147,7 @@ test("Need atleast 24 hours worth of stream error", async ({ page }) => {
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("TDLx");
   await widgetPage.connectWallet();
+  await widgetPage.setWrapAmount("0");
   await widgetPage.clickContinueButton();
   await widgetPage.validateReviewStepError(
     "You need to have Super Token balance for at least 24 hours of streaming.",
