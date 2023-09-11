@@ -74,7 +74,7 @@
     "nanoid": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "~7.44.3",
+    "react-hook-form": "~7.46.1",
     "use-immer": "^0.9.0",
     "zod": "^3.22.1",
     "zod-validation-error": "^1.4.0"
