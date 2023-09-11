@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useAccount } from "wagmi";
 
 import { AccountAddressCard } from "./AccountAddressCard.js";
@@ -51,12 +51,31 @@ export function CheckoutSummary() {
     [accountAddress],
   );
 
+  useEffect(() => {
+    runEventListener(eventListeners.onRouteChange, {
+      route: "success_summary",
+    });
+  }, [eventListeners.onRouteChange]);
+
   // Note: calling "onSuccess" through the "useEffect" hook is not optimal.
   // We make the assumption that "CheckoutSummary" is only rendered when the checkout is successful.
   // A more proper place would be inside a central state machine.
   useEffect(() => {
     runEventListener(eventListeners.onSuccess);
   }, [eventListeners.onSuccess]);
+
+  const onSuccessButtonClick = useCallback(() => {
+    runEventListener(eventListeners.onSuccessButtonClick);
+    runEventListener(eventListeners.onButtonClick, { type: "success_button" });
+  }, [eventListeners.onSuccessButtonClick, eventListeners.onButtonClick]);
+
+  const onOpenSuperfluidDashboardButtonClick = useCallback(
+    () =>
+      runEventListener(eventListeners.onButtonClick, {
+        type: "superfluid_dashboard",
+      }),
+    [eventListeners.onButtonClick],
+  );
 
   return (
     <Box>
@@ -148,9 +167,7 @@ export function CheckoutSummary() {
             variant="contained"
             size="large"
             href={successURL}
-            onClick={() =>
-              runEventListener(eventListeners.onSuccessButtonClick)
-            }
+            onClick={onSuccessButtonClick}
           >
             {successText}
           </Button>
@@ -162,6 +179,7 @@ export function CheckoutSummary() {
           variant="outlined"
           href={dashboardURL}
           target="_blank"
+          onClick={onOpenSuperfluidDashboardButtonClick}
         >
           Open Superfluid Dashboard
         </Button>

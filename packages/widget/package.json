@@ -1,6 +1,6 @@
 {
   "name": "@superfluid-finance/widget",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -65,7 +65,7 @@
     "@mui/lab": "5.0.0-alpha.141",
     "@mui/utils": "^5.14.6",
     "@superfluid-finance/metadata": "^1.1.13",
-    "@superfluid-finance/tokenlist": "^2.2.0",
+    "@superfluid-finance/tokenlist": "^2.3.1",
     "blockies-ts": "^1.0.0",
     "immer": "^10.0.2",
     "lodash.isequal": "^4.5.0",

@@ -1,5 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import { Button, Stack } from "@mui/material";
+import { useCallback } from "react";
 import {
   ContractFunctionExecutionError,
   ContractFunctionRevertedError,
@@ -8,6 +9,8 @@ import {
 import { useNetwork, useSwitchNetwork } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
+import { runEventListener } from "./EventListeners.js";
+import { useWidget } from "./WidgetContext.js";
 
 export type ContractWriteButtonProps = ContractWriteResult;
 
@@ -17,6 +20,8 @@ export default function ContractWriteButton({
   writeResult,
   transactionResult,
 }: ContractWriteButtonProps) {
+  const { eventListeners } = useWidget();
+
   const write = writeResult.write;
 
   const isLoading =
@@ -28,6 +33,18 @@ export default function ContractWriteButton({
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
   const needsToSwitchNetwork = expectedChainId !== chain?.id;
+
+  const onSwitchNetworkButtonClick = useCallback(() => {
+    switchNetwork?.(expectedChainId);
+    runEventListener(eventListeners.onButtonClick, { type: "switch_network" });
+  }, [switchNetwork, expectedChainId, eventListeners.onButtonClick]);
+
+  const onContractWriteButtonClick = useCallback(() => {
+    write?.();
+    runEventListener(eventListeners.onButtonClick, {
+      type: "invoke_transaction",
+    });
+  }, [write, eventListeners.onButtonClick]);
 
   const isSeriousPrepareError =
     prepareResult.isError &&
@@ -43,7 +60,7 @@ export default function ContractWriteButton({
           size="large"
           variant="contained"
           fullWidth
-          onClick={() => switchNetwork?.(expectedChainId)}
+          onClick={onSwitchNetworkButtonClick}
         >
           Switch Network
         </Button>
@@ -57,7 +74,7 @@ export default function ContractWriteButton({
           disabled={
             !write || transactionResult.isSuccess || isSeriousPrepareError
           }
-          onClick={() => write?.()}
+          onClick={onContractWriteButtonClick}
           loading={isLoading}
         >
           {contractWrite.displayTitle}
