@@ -12,7 +12,7 @@ interface DownloadJsonBtnProps {
 const DownloadJsonBtn: FC<DownloadJsonBtnProps> = ({ json }) => {
   const ajs = useAnalyticsBrowser();
 
-  const onDownload = useCallback(async () => {
+  const onDownload = useCallback(() => {
     ajs.track("download_json", { json });
 
     const jsonUrl = URL.createObjectURL(
