@@ -19,7 +19,7 @@ const DownloadJsonBtn: FC<DownloadJsonBtnProps> = ({ json }) => {
       new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),
     );
 
-    window.open(jsonUrl, "_blank");
+    window.open(jsonUrl, "_blank", "download=widget.json");
   }, [ajs, json]);
 
   return (
