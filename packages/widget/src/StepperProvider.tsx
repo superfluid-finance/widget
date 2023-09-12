@@ -28,15 +28,16 @@ export function StepperProvider({
 
   const handleNext = useCallback(() => {
     const isStepBeforeReview = activeStep === totalSteps - 4;
+    const nextActiveStep = Math.min(activeStep + 1, totalSteps - 1);
     if (isStepBeforeReview) {
       handleSubmit((formValues) => {
         submitCommands(formValuesToCommands(formValues as ValidFormValues));
-        setActiveStep((prevStep) => Math.min(prevStep + 1, totalSteps - 1));
+        setActiveStep(nextActiveStep);
       })(); // Don't do anything when invalid.
     } else {
-      setActiveStep((prevStep) => Math.min(prevStep + 1, totalSteps - 1));
+      setActiveStep(nextActiveStep);
     }
-  }, [submitCommands, handleSubmit, activeStep, setActiveStep, totalSteps]);
+  }, [submitCommands, handleSubmit, activeStep, totalSteps]);
 
   const handleBack = useCallback(() => {
     setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
