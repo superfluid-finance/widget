@@ -24,3 +24,15 @@ type PaymentOption = {
   upfrontPayment?: string;
   userDefinedRate?: boolean;
 };
+
+type PartialPaymentOption = {
+  network?: string;
+  superToken?: string;
+  superTokenName?: string;
+  flowRate?: string;
+  receiver?: string;
+  timeUnit?: string;
+  chainId?: string;
+  upfrontPayment?: string;
+  userDefinedRate?: boolean;
+};

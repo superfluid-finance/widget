@@ -72,8 +72,13 @@ export class BuilderPage extends BasePage {
   readonly rateHelperText: Locator;
   readonly closeButton: Locator;
   readonly dialogs: Locator;
+  readonly paymentFormNetworkTitle: Locator;
+  readonly paymentFormReceiverAddressTitle: Locator;
+  readonly paymentFormSuperTokenTitle: Locator;
+  readonly paymentFormStreamRateTitle: Locator;
+  readonly paymentFormUpfrontPaymentAmountTitle: Locator;
 
-  paymentOptionDuringTest: PaymentOption | undefined;
+  paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
 
   constructor(page: Page) {
     super();
@@ -100,7 +105,7 @@ export class BuilderPage extends BasePage {
       .getByTestId("receiver-input-field")
       .getByRole("textbox");
     this.useAsDefaultPaymentSwitch = page.getByLabel(
-      "Use as default payment option",
+      "Use as default payment option"
     );
     this.addPaymentOptionButton = page.getByTestId("add-option-button");
     this.paymentOptionCount = page.getByTestId("added-payment-options-count");
@@ -109,21 +114,21 @@ export class BuilderPage extends BasePage {
     this.summaryFlowRate = page.getByTestId("stream-rate-added-payment-option");
     this.summaryReceiver = page.getByTestId("added-payment-receiver");
     this.summaryDeleteButtons = page.getByTestId(
-      "delete-payment-option-button",
+      "delete-payment-option-button"
     );
     this.uploadImageField = page.getByTestId("file-upload-field");
     this.darkModeSwitch = page.getByLabel("Dark mode: off");
     this.containerBorderSlider = page.getByTestId("container-radius-slider");
     this.containerBorderSliderAmount = page.getByTestId(
-      "container-radius-slider-amount",
+      "container-radius-slider-amount"
     );
     this.fieldBorderSlider = page.getByTestId("field-border-slider");
     this.fieldBorderSliderAmount = page.getByTestId(
-      "field-border-slider-amount",
+      "field-border-slider-amount"
     );
     this.buttonBorderSlider = page.getByTestId("button-border-radius-slider");
     this.buttonBorderSliderAmount = page.getByTestId(
-      "button-border-radius-amount",
+      "button-border-radius-amount"
     );
     this.primaryColorPicker = page
       .getByTestId("primary-color-picker")
@@ -150,7 +155,7 @@ export class BuilderPage extends BasePage {
     this.noOptionsMessage = page.getByTestId("no-options-message");
     this.paymentTab = page.getByTestId("payment-tab");
     this.addPaymentOptionFormButton = page.getByTestId(
-      "add-payment-option-button",
+      "add-payment-option-button"
     );
     this.discardPaymentOption = page.getByTestId("discard-option-button");
     this.wandButton = page.getByTestId("wand-button");
@@ -165,22 +170,23 @@ export class BuilderPage extends BasePage {
     this.tooltip = page.locator("[role=tooltip]");
     this.removeImageButton = page.getByTestId("remove-image-button");
     this.paymentFormNetworkTooltip = page.locator(
-      "[data-testid=network-title] + [data-testid=tooltip-icon]",
+      "[data-testid=network-title] + [data-testid=tooltip-icon]"
     );
+    this.paymentFormNetworkTitle = page.locator("[data-testid=network-title]");
     this.paymentFormReceiverAddressTooltip = page.locator(
-      "[data-testid=receiver-title] + [data-testid=tooltip-icon]",
+      "[data-testid=receiver-title] + [data-testid=tooltip-icon]"
     );
     this.paymentFormSuperTokenTooltip = page.locator(
-      "[data-testid=super-token-title] + [data-testid=tooltip-icon]",
+      "[data-testid=super-token-title] + [data-testid=tooltip-icon]"
     );
     this.paymentFormStreamRateTooltip = page.locator(
-      "[data-testid=stream-rate-title] + [data-testid=tooltip-icon]",
+      "[data-testid=stream-rate-title] + [data-testid=tooltip-icon]"
     );
     this.paymentFormUpfrontPaymentAmountTooltip = page.locator(
-      "[data-testid=upfront-payment-title] + [data-testid=tooltip-icon]",
+      "[data-testid=upfront-payment-title] + [data-testid=tooltip-icon]"
     );
     this.paymentFormUpfrontPaymentSwitchTooltip = page.locator(
-      "[data-testid=upfront-payment-label] + [data-testid=tooltip-icon]",
+      "[data-testid=upfront-payment-label] + [data-testid=tooltip-icon]"
     );
     this.fixedRateButton = page.getByTestId("fixed-rate-button");
     this.userDefinedRateButton = page.getByTestId("user-defined-rate-button");
@@ -191,6 +197,111 @@ export class BuilderPage extends BasePage {
     this.rateHelperText = page.getByTestId("helper-text");
     this.closeButton = page.getByTestId("CloseIcon");
     this.dialogs = page.locator("[role=dialog]");
+    this.paymentFormReceiverAddressTitle = page.getByTestId("receiver-title");
+    this.paymentFormSuperTokenTitle = page.getByTestId("token-title");
+    this.paymentFormStreamRateTitle = page.getByTestId("stream-rate-title");
+    this.paymentFormUpfrontPaymentAmountTitle = page.getByTestId(
+      "upfront-payment-title"
+    );
+  }
+
+  async clickAddPaymentOptionButton() {
+    this.addPaymentOptionButton.click();
+  }
+
+  async addPartialPaymentOption(
+    partialOption: PaymentOption | PartialPaymentOption
+  ) {
+    await this.paymentTab.click();
+    await this.addPaymentOptionFormButton.click();
+
+    if (partialOption.chainId && partialOption.network) {
+      this.networkOptions.click();
+      await this.page.locator(`[data-value=${partialOption.network}]`).click();
+    }
+    if (partialOption.flowRate) {
+      if (partialOption.userDefinedRate !== true) {
+        await this.flowRateOption.fill(partialOption.flowRate);
+        if (partialOption.timeUnit != "month") {
+          await this.timeUnitSelection.click();
+          await this.page
+            .locator(`[data-value=${partialOption.timeUnit}]`)
+            .click();
+        }
+      } else {
+        await this.userDefinedRateButton.click();
+      }
+      this.flowRateOption.fill(partialOption.flowRate);
+    }
+    if (partialOption.network) {
+      await this.networkOptions.click();
+      await this.page.locator(`[data-value=${partialOption.network}]`).click();
+    }
+    if (partialOption.receiver) {
+      await this.receiverOption.fill(partialOption.receiver);
+    }
+    if (
+      partialOption.superToken &&
+      partialOption.chainId &&
+      partialOption.network
+    ) {
+      await this.superTokenOption.click();
+      await this.page
+        .getByRole("option", { name: partialOption.superToken })
+        .click();
+    }
+    await this.upfrontPaymentSwitch.click();
+    if (partialOption.upfrontPayment) {
+      await this.upfrontPaymentInputField.fill(partialOption.upfrontPayment);
+    }
+    this.addPaymentOptionButton.click();
+  }
+
+  async enableUpfrontPaymentSwitch() {
+    this.upfrontPaymentSwitch.check()
+  }
+
+  async validateOptionFormFieldError(field: string) {
+    let errorColor = "rgb(210, 37, 37)";
+    switch (field) {
+      case "network":
+      case "chain":
+      case "token":
+        await expect(this.paymentFormNetworkTitle).toHaveCSS(
+          "color",
+          errorColor
+        );
+        let border = await this.networkOptions.evaluate((el) => {
+          let style = window.getComputedStyle(el);
+          console.log("Border:", style.border);
+          console.log("rest:", style);
+        });
+        await expect(this.paymentFormSuperTokenTitle).toHaveCSS(
+          "color",
+          errorColor
+        );
+        //TODO border check
+
+        break;
+      case "receiver":
+        await expect(this.paymentFormReceiverAddressTitle).toHaveCSS(
+          "color",
+          errorColor
+        );
+        break;
+      case "flowRate":
+        await expect(this.paymentFormStreamRateTitle).toHaveCSS(
+          "color",
+          errorColor
+        );
+        break;
+      case "upfrontPaymentAmount":
+        await expect(this.paymentFormUpfrontPaymentAmountTitle).toHaveCSS(
+          "color",
+          errorColor
+        );
+        break;
+    }
   }
 
   async validateNetworksInDropdown() {
@@ -210,7 +321,7 @@ export class BuilderPage extends BasePage {
     ];
     for (const [index, network] of supportedNetworks.entries()) {
       await expect(
-        this.page.locator(`[data-value="${network}"]`),
+        this.page.locator(`[data-value="${network}"]`)
       ).toBeVisible();
     }
     await expect(this.page.locator(`[data-value=Ethereum]`)).not.toBeVisible(); // Mainnet disabled at the moment
@@ -269,7 +380,7 @@ export class BuilderPage extends BasePage {
       await expect(this.uploadImageField).not.toBeVisible();
       await expect(this.selectedProductImage).toHaveAttribute(
         "src",
-        "https://picsum.photos/200/200",
+        "https://picsum.photos/200/200"
       );
     });
   }
@@ -347,11 +458,11 @@ export class BuilderPage extends BasePage {
       await this.uploadImageField.setInputFiles("./data/export.json");
       await expect(this.selectedProductImage).toHaveAttribute(
         "alt",
-        "not found",
+        "not found"
       );
       const screenshot = await this.selectedProductImage.screenshot();
       await expect(screenshot).toMatchSnapshot(
-        "./data/invalidImageUploaded.png",
+        "./data/invalidImageUploaded.png"
       );
     });
   }
@@ -374,7 +485,7 @@ export class BuilderPage extends BasePage {
     });
   }
 
-  async addPaymentOption(paymentOption: PaymentOption) {
+  async addPaymentOption(paymentOption: PaymentOption | PartialPaymentOption) {
     await test.step(`Adding a new payment option`, async () => {
       this.paymentOptionDuringTest = paymentOption;
       await this.paymentTab.click();
@@ -385,7 +496,7 @@ export class BuilderPage extends BasePage {
       await this.page
         .getByRole("option", { name: paymentOption.superToken })
         .click();
-      if (paymentOption.userDefinedRate !== true) {
+      if (paymentOption.userDefinedRate !== true && paymentOption.flowRate) {
         await this.flowRateOption.fill(paymentOption.flowRate);
         if (paymentOption.timeUnit != "month") {
           await this.timeUnitSelection.click();
@@ -397,7 +508,9 @@ export class BuilderPage extends BasePage {
         await this.userDefinedRateButton.click();
       }
 
-      await this.receiverOption.fill(paymentOption.receiver);
+      if (paymentOption.receiver) {
+        await this.receiverOption.fill(paymentOption.receiver);
+      }
       if (paymentOption.upfrontPayment) {
         await this.upfrontPaymentSwitch.click();
         await this.upfrontPaymentInputField.fill(paymentOption.upfrontPayment);
@@ -413,24 +526,24 @@ export class BuilderPage extends BasePage {
           await expect(
             this.summaryNetworks
               .nth(index)
-              .getByTestId(`${option.chainId}-badge`),
+              .getByTestId(`${option.chainId}-badge`)
           ).toBeVisible();
           await expect(this.summaryNetworks.nth(index)).toContainText(
-            option.network,
+            option.network
           );
           await expect(this.summaryTokens.nth(index)).toHaveText(
-            option.superTokenName,
+            option.superTokenName
           );
 
           let expectedFlowRateString = option.userDefinedRate
             ? "Stream RateUser-defined"
             : `Stream Rate${option.flowRate} ${option.superToken}/${option.timeUnit}`;
           await expect(this.summaryFlowRate.nth(index)).toHaveText(
-            expectedFlowRateString,
+            expectedFlowRateString
           );
           await expect(this.summaryReceiver.nth(index)).toContainText(
             `${BasePage.shortenHex(option.receiver)}`,
-            { ignoreCase: true },
+            { ignoreCase: true }
           );
         });
       }
@@ -510,7 +623,7 @@ export class BuilderPage extends BasePage {
   async validateNoPaymentOptionsAddedMessage() {
     await test.step(`Validating the message shown when no options are added`, async () => {
       await expect(this.noOptionsMessage).toHaveText(
-        "You haven't added any payment options yet. Add your first one or replace with demo data.",
+        "You haven't added any payment options yet. Add your first one or replace with demo data."
       );
     });
   }
@@ -540,7 +653,7 @@ export class BuilderPage extends BasePage {
   async validateIPFSPublishMessage() {
     await test.step(`Validating the message you get after publishing widget to IPFS`, async () => {
       await expect(this.publishedWidgetMessage).toHaveText(
-        "Your config is published to IPFS. Test it with our hosted widget:",
+        "Your config is published to IPFS. Test it with our hosted widget:"
       );
     });
   }
@@ -550,10 +663,10 @@ export class BuilderPage extends BasePage {
       const downloadPath = "./downloads/exportedWidget.json";
       const dataPath = "./data/export.json";
       const downloadedWidgetContents = JSON.parse(
-        fs.readFileSync(downloadPath, "utf-8"),
+        fs.readFileSync(downloadPath, "utf-8")
       );
       const savedWidgetExportContents = JSON.parse(
-        fs.readFileSync(dataPath, "utf-8"),
+        fs.readFileSync(dataPath, "utf-8")
       );
       await expect(downloadedWidgetContents).toEqual(savedWidgetExportContents);
     });

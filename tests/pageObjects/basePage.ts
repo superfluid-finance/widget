@@ -7,6 +7,18 @@ export const rebounderAddresses = {
   goerli: "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
 };
 
+export const partialPaymentOptions: { [key: string]: PartialPaymentOption } = {
+  emptyPaymentOption: {
+    network: undefined,
+    chainId: undefined,
+    superToken: undefined,
+    superTokenName: undefined,
+    flowRate: undefined,
+    receiver: undefined,
+    timeUnit: undefined,
+  },
+};
+
 export const paymentOptions: { [key: string]: PaymentOption } = {
   defaultPaymentOption: {
     network: "Goerli",

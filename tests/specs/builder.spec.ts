@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { paymentOptions } from "../pageObjects/basePage";
+import { paymentOptions,partialPaymentOptions } from "../pageObjects/basePage";
 import { BuilderPage } from "../pageObjects/builderPage";
 import { WidgetPage } from "../pageObjects/widgetPage";
 
@@ -144,7 +144,7 @@ test("Trying to upload wrong image format", async ({ page }) => {
 test("Adding a new payment option - stream rate with a time unit", async ({
   page,
 }) => {
-  let testOption = paymentOptions.testOption;
+  let testOption: PaymentOption = paymentOptions.testOption as PaymentOption;
   testOption.timeUnit = "day";
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
@@ -157,7 +157,7 @@ test("Adding a new payment option - stream rate with a time unit", async ({
 });
 
 test("Adding a new payment option - user defined rate", async ({ page }) => {
-  let testOption = paymentOptions.testOption;
+  let testOption = paymentOptions.testOption as PaymentOption;
   testOption.userDefinedRate = true;
   testOption.flowRate = "0"; // Custom amount is 0 by default
   let widgetPage = new WidgetPage(page);
@@ -175,7 +175,7 @@ test("Adding a new payment option - user defined rate", async ({ page }) => {
 });
 
 test("Adding a new payment option - upfront payment", async ({ page }) => {
-  let testOption = paymentOptions.testOption;
+  let testOption = paymentOptions.testOption as PaymentOption;
   testOption.upfrontPayment = "1";
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
@@ -205,46 +205,19 @@ test("Adding a new payment option - close form with x", async ({ page }) => {
   await builderPage.validateAddPaymentFormIsNotOpen();
 });
 
-test("Add payment option form error - network not selected", async ({
+test("Add payment option form errors ( red borders and field titles )", async ({
   page,
 }) => {
-  let testOption = paymentOptions.testOption;
   let builderPage = new BuilderPage(page);
-  await builderPage.openPaymentTab();
-  await builderPage.addPaymentOption(optionWithoutNetwork);
+  await builderPage.openPaymentTab()
+  await builderPage.clickAddPaymentOptionFormButton()
+  await builderPage.enableUpfrontPaymentSwitch()
+  await builderPage.clickAddPaymentOptionButton();
   await builderPage.validateOptionFormFieldError("network");
-});
-
-test("Add payment option form error - receiver address not selected", async ({
-  page,
-}) => {
-  let builderPage = new BuilderPage(page);
-  await builderPage.addPaymentOption(optionWithoutReceiver);
-  await builderPage.validateOptionFormFieldError();
-});
-
-test("Add payment option form error - super token not selected", async ({
-  page,
-}) => {
-  let builderPage = new BuilderPage(page);
-  await builderPage.addPaymentOption(optionWithoutToken);
-  await builderPage.validateOptionFormFieldError();
-});
-
-test("Add payment option form error - stream rate not selected", async ({
-  page,
-}) => {
-  let builderPage = new BuilderPage(page);
-  await builderPage.addPaymentOption(optionWithoutStreamRate);
-  await builderPage.validateOptionFormFieldError();
-});
-
-test("Add payment option form error - upfront payment amount not selected", async ({
-  page,
-}) => {
-  let builderPage = new BuilderPage(page);
-  await builderPage.addPaymentOption(optionWithoutUpfrontPayment);
-  await builderPage.validateOptionFormFieldError();
+  await builderPage.validateOptionFormFieldError("receiver");
+  await builderPage.validateOptionFormFieldError("token");
+  await builderPage.validateOptionFormFieldError("flowRate");
+  await builderPage.validateOptionFormFieldError("upfrontPaymentAmount");
 });
 
 test("Add payment option form tooltips (network, receiver address, super token, stream rate, upfront switch and upfront payment amount)", async ({
