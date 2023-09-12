@@ -14,7 +14,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useRef,useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
@@ -48,6 +48,7 @@ export default function Builder() {
   const isFirstStep = activeStep === 0;
 
   const ajs = useAnalyticsBrowser();
+  const previewContainerRef = useRef<HTMLDivElement>(null);
 
   const handleNext = useCallback(() => {
     setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, lastStep));
@@ -135,7 +136,7 @@ export default function Builder() {
                 <ExportEditor />
               </TabPanel>
               <TabPanel value="4" sx={{ height: "100%" }}>
-                <StreamGatingEditor />
+                <StreamGatingEditor previewContainerRef={previewContainerRef} />
               </TabPanel>
             </FormProvider>
           </Box>
@@ -195,27 +196,32 @@ export default function Builder() {
           py: "8vh",
           overflow: "auto",
         }}
+        ref={previewContainerRef}
       >
-        <Box textAlign="center" sx={{ mb: 6.5 }}>
-          <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
-            Widget Preview
-          </Typography>
-          <Typography color="grey.800">
-            In this preview you can see all the changes you apply in the builder
-            menu.
-          </Typography>
-          <Typography color="grey.800">
-            This is how your checkout will look once you export it.
-          </Typography>
-        </Box>
-        <WidgetPreview
-          {...{
-            productDetails,
-            paymentDetails,
-            displaySettings,
-            type,
-          }}
-        />
+        {tabLabels[activeStep] !== "Gating" && (
+          <>
+            <Box textAlign="center" sx={{ mb: 6.5 }}>
+              <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
+                Widget Preview
+              </Typography>
+              <Typography color="grey.800">
+                In this preview you can see all the changes you apply in the
+                builder menu.
+              </Typography>
+              <Typography color="grey.800">
+                This is how your checkout will look once you export it.
+              </Typography>
+            </Box>
+            <WidgetPreview
+              {...{
+                productDetails,
+                paymentDetails,
+                displaySettings,
+                type,
+              }}
+            />
+          </>
+        )}
       </Stack>
       <TermsAndPrivacy />
       <Box sx={{ position: "absolute", top: 5, right: 5 }}>

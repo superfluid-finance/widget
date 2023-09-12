@@ -229,6 +229,9 @@ importers:
       '@types/react':
         specifier: ^18.2.21
         version: 18.2.21
+      '@types/react-dom':
+        specifier: ^18.2.7
+        version: 18.2.7
       '@types/react-google-recaptcha':
         specifier: ^2.1.5
         version: 2.1.5

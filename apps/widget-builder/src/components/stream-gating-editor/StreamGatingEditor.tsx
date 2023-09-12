@@ -18,11 +18,13 @@ import uniqBy from "lodash/uniqBy";
 import {
   createRef,
   FC,
+  RefObject,
   useCallback,
   useLayoutEffect,
   useMemo,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useFormContext } from "react-hook-form";
 import { Address } from "viem";
@@ -37,7 +39,13 @@ import { WidgetProps } from "../widget-preview/WidgetPreview";
 const recaptchaKey =
   process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "invalid-key";
 
-const StreamGatingEditor: FC = () => {
+type StreamGatingEditorProps = {
+  previewContainerRef: RefObject<HTMLDivElement>;
+};
+
+const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
+  previewContainerRef,
+}) => {
   const { watch } = useFormContext<WidgetProps>();
   const [paymentOptions, productDetails] = watch([
     "paymentDetails.paymentOptions",
@@ -272,6 +280,12 @@ const StreamGatingEditor: FC = () => {
         size="invisible"
         onChange={onRecaptchaChange}
       />
+      {previewContainerRef &&
+        createPortal(
+          <div>NFT Image Placeholder</div>,
+          // <img src="" width={400} height={400} alt="NFT Preview" />,
+          previewContainerRef.current!,
+        )}
     </>
   );
 };
