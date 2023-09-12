@@ -12,10 +12,8 @@ interface DownloadJsonBtnProps {
 const DownloadJsonBtn: FC<DownloadJsonBtnProps> = ({ json }) => {
   const ajs = useAnalyticsBrowser();
 
-  const onDownload = useCallback(async () => {
-    // This probably gets garbage collected if not awaited
-    // resulting in segment not tracking the event
-    await ajs.track("download_json", { json });
+  const onDownload = useCallback(() => {
+    ajs.track("download_json", { json });
 
     const jsonUrl = URL.createObjectURL(
       new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),

@@ -22,10 +22,8 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
 
   const ajs = useAnalyticsBrowser();
 
-  const onPublish = useCallback(async () => {
-    // This probably gets garbage collected if not awaited
-    // resulting in segment not tracking the event
-    await ajs.track("publish_ipfs", { json });
+  const onPublish = useCallback(() => {
+    ajs.track("publish_ipfs", { json });
     publish(json);
   }, [ajs, publish, json]);
 
