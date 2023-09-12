@@ -17,12 +17,6 @@ const DownloadJsonBtn: FC<DownloadJsonBtnProps> = ({ json }) => {
       productDetails: json.productDetails,
       paymentDetails: json.paymentDetails,
     });
-
-    const jsonUrl = URL.createObjectURL(
-      new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),
-    );
-
-    window.open(jsonUrl, "_blank");
   }, [ajs, json]);
 
   return (
@@ -32,6 +26,10 @@ const DownloadJsonBtn: FC<DownloadJsonBtnProps> = ({ json }) => {
       size="large"
       color="primary"
       variant="contained"
+      href={URL.createObjectURL(
+        new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),
+      )}
+      download="widget.json"
       startIcon={<DownloadIcon />}
       onClick={onDownload}
     >
