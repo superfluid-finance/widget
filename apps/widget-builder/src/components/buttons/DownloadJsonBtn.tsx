@@ -13,7 +13,7 @@ const DownloadJsonBtn: FC<DownloadJsonBtnProps> = ({ json }) => {
   const ajs = useAnalyticsBrowser();
 
   const onDownload = useCallback(async () => {
-    await ajs.track("download_json", { json });
+    ajs.track("download_json", { json });
 
     const jsonUrl = URL.createObjectURL(
       new Blob([JSON.stringify(json, null, 2)], { type: "application/json" }),

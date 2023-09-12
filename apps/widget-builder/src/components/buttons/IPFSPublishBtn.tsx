@@ -23,7 +23,7 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
   const ajs = useAnalyticsBrowser();
 
   const onPublish = useCallback(async () => {
-    await ajs.track("publish_ipfs", { json });
+    ajs.track("publish_ipfs", { json });
     publish(json);
   }, [ajs, publish, json]);
 
