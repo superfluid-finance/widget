@@ -26,21 +26,24 @@ export function StepperProvider({
 
   const { submitCommands } = useCommandHandler();
 
-  const handleNext = useCallback(() => {
-    const isStepBeforeReview = activeStep === totalSteps - 4;
-    const nextActiveStep = Math.min(activeStep + 1, totalSteps - 1);
-    if (isStepBeforeReview) {
-      handleSubmit((formValues) => {
-        submitCommands(formValuesToCommands(formValues as ValidFormValues));
+  const handleNext = useCallback(
+    (currentStep: number) => {
+      const isStepBeforeReview = currentStep === totalSteps - 4;
+      const nextActiveStep = Math.min(currentStep + 1, totalSteps - 1);
+      if (isStepBeforeReview) {
+        handleSubmit((formValues) => {
+          submitCommands(formValuesToCommands(formValues as ValidFormValues));
+          setActiveStep(nextActiveStep);
+        })(); // Don't do anything when invalid.
+      } else {
         setActiveStep(nextActiveStep);
-      })(); // Don't do anything when invalid.
-    } else {
-      setActiveStep(nextActiveStep);
-    }
-  }, [submitCommands, handleSubmit, activeStep, totalSteps]);
+      }
+    },
+    [submitCommands, handleSubmit, totalSteps],
+  );
 
-  const handleBack = useCallback(() => {
-    setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
+  const handleBack = useCallback((currentStep: number) => {
+    setActiveStep(Math.max(currentStep - 1, 0));
   }, []);
 
   const { isConnected } = useAccount();
