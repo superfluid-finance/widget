@@ -89,6 +89,7 @@ const ProductEditor: FC = () => {
             </Typography>
             <Stack direction="row" gap={1}>
               <Button
+                data-testid="add-payment-option-button"
                 variant="contained"
                 size="medium"
                 color="primary"
@@ -217,6 +218,7 @@ const ProductEditor: FC = () => {
         arrow
       >
         <Fab
+          data-testid="payment-options-wand-button"
           size="medium"
           color="secondary"
           sx={{
