@@ -57,11 +57,6 @@ export function ContractWriteStatus(
     [currentError],
   );
 
-  console.log({
-    errorName,
-    currentError,
-  });
-
   return (
     <Paper
       variant="outlined"

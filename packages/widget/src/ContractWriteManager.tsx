@@ -49,7 +49,7 @@ export function ContractWriteManager({
       ? (prepareResult.config as unknown as ContractWrite)
       : contractWrite),
     onError: console.error,
-  }); // TODO(KK): Get rid of any.
+  });
 
   useEffect(() => {
     if (writeResult.error instanceof TransactionExecutionError) {
