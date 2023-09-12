@@ -48,6 +48,7 @@ const StreamGatingEditor: FC = () => {
 
   const [tokenSymbol, setTokenSymbol] = useState("");
   const [tokenName, setTokenName] = useState("");
+  const [contractOwner, setContractOwner] = useState("");
 
   const [nftImage, setNftImage] = useState<File>();
   const { base64: nftImageBase64 } = useReadAsBase64(nftImage);
@@ -119,6 +120,7 @@ const StreamGatingEditor: FC = () => {
           selectedPaymentOptions,
           tokenName,
           tokenSymbol,
+          contractOwner,
           nftImage: nftImageBase64,
           recaptchaToken,
         }),
@@ -195,6 +197,15 @@ const StreamGatingEditor: FC = () => {
               id={id}
               value={tokenName}
               onChange={({ target }) => setTokenName(target.value)}
+            />
+          )}
+        </InputWrapper>
+        <InputWrapper title="Contract owner">
+          {(id) => (
+            <TextField
+              id={id}
+              value={contractOwner}
+              onChange={({ target }) => setContractOwner(target.value)}
             />
           )}
         </InputWrapper>

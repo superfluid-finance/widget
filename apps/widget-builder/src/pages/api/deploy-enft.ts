@@ -48,6 +48,7 @@ const handler: NextApiHandler = async (req, res) => {
     selectedPaymentOptions,
     tokenName,
     tokenSymbol,
+    contractOwner,
     nftImage,
     recaptchaToken,
   }: {
@@ -55,6 +56,7 @@ const handler: NextApiHandler = async (req, res) => {
     tokenName: string;
     tokenSymbol: string;
     nftImage: string;
+    contractOwner: Address;
     selectedPaymentOptions: Partial<Record<ChainId, PaymentOption[]>>;
     recaptchaToken: string;
   } = JSON.parse(req.body);
@@ -127,6 +129,7 @@ const handler: NextApiHandler = async (req, res) => {
           });
 
           const cloneArgs = [
+            contractOwner,
             paymentOptions.map(({ superToken }) => superToken.address),
             paymentOptions.map(({ receiverAddress }) => receiverAddress),
             paymentOptions.map(
@@ -156,18 +159,13 @@ const handler: NextApiHandler = async (req, res) => {
 
           const rc = await publicClient.waitForTransactionReceipt({ hash });
 
-          const {
-            args,
-          }: {
-            eventName: "ExistentialNFT_CloneDeployed";
-            args: { clone: Address };
-          } = decodeEventLog({
+          const { args } = decodeEventLog({
             abi: ExistentialNFTCloneFactoryABI,
             data: rc.logs[0].data,
             topics: rc.logs[0].topics,
           });
 
-          return { [chain.id]: args.clone };
+          return { [chain.id]: (args as { clone: `0x${string}` }).clone };
         },
       ),
     );

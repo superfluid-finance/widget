@@ -25,11 +25,48 @@ export const ExistentialNFTCloneFactoryABI = [
         type: "address",
       },
     ],
-    name: "ExistentialNFT_CloneDeployed",
+    name: "ExistentialNFTCloneFactory_CloneDeployed",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "implementation",
+        type: "address",
+      },
+    ],
+    name: "ExistentialNFTCloneFactory_ImplementationUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
     type: "event",
   },
   {
     inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
       {
         internalType: "contract ISuperToken[]",
         name: "incomingFlowTokens",
@@ -77,6 +114,52 @@ export const ExistentialNFTCloneFactoryABI = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_implementation",
+        type: "address",
+      },
+    ],
+    name: "updateImplementation",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ] as const;
