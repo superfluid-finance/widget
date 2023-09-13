@@ -3,7 +3,10 @@ import { Hash } from "viem";
 
 import { cfAv1ForwarderABI, PaymentOption } from "./core";
 
-export type TxFunctionName = ExtractAbiFunctionNames<typeof cfAv1ForwarderABI>;
+export type TxFunctionName = ExtractAbiFunctionNames<
+  typeof cfAv1ForwarderABI,
+  "nonpayable" | "payable"
+>;
 
 /**
  * A set of non-blocking callback functions that are triggered in response to the widget events.
