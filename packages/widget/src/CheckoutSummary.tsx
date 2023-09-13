@@ -23,7 +23,7 @@ export function CheckoutSummary() {
 
   const { address: accountAddress } = useAccount();
 
-  const { commands, contractWriteResults } = useCommandHandler();
+  const { commands } = useCommandHandler();
 
   const subscribeCommand = commands.find(
     (x) => x.type === "Subscribe",
@@ -61,13 +61,7 @@ export function CheckoutSummary() {
   // We make the assumption that "CheckoutSummary" is only rendered when the checkout is successful.
   // A more proper place would be inside a central state machine.
   useEffect(() => {
-    const subscribeResult = contractWriteResults.find(
-      (x) => x.contractWrite.functionName === "createFlow",
-    );
-
-    const hash = subscribeResult?.transactionResult.data?.transactionHash;
-
-    runEventListener(eventListeners.onSuccess, { hash });
+    runEventListener(eventListeners.onSuccess);
   }, [eventListeners.onSuccess]);
 
   const onSuccessButtonClick = useCallback(() => {
