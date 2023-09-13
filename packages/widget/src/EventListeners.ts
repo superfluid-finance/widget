@@ -50,7 +50,7 @@ export interface EventListeners {
   }) => void;
   /** Called when the checkout is successfully finished.
    * @deprecated Use `onTransactionExecuted` instead (filter for `functionName === 'createFlow | 'updateFlow'`).
-   *  */
+   */
   onSuccess?: () => void;
   /** Called when the merchant's success button is defined in the schema and it's clicked. */
   onSuccessButtonClick?: () => void;
