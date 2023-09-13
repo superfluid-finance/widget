@@ -104,7 +104,7 @@ const switchLayout = (
       walletManager={walletManager}
       stepper={{ orientation: stepperOrientation }}
       eventListeners={{
-        onTransactionExecuted: console.log,
+        onTransactionSent: console.log,
       }}
     />
   ) : (
