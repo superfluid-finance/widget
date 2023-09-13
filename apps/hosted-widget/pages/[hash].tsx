@@ -93,7 +93,15 @@ const IPFSWidgetPage: NextPage = () => {
                     ajs.track("button_click", { type: props?.type }),
                   onRouteChange: (props) =>
                     ajs.track("route_change", { route: props?.route }),
-                  onSuccess: () => ajs.track("stream_started"),
+                  onTransactionSent: (props) => {
+                    if (props?.functionName === "createFlow") {
+                      ajs.track("stream_started", { txHash: props.hash });
+                    }
+
+                    if (props?.functionName === "updateFlow") {
+                      ajs.track("stream_updated", { txHash: props.hash });
+                    }
+                  },
                 }}
               />
             )}

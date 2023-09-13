@@ -12,7 +12,9 @@ import {
 } from "wagmi";
 
 import { ContractWrite } from "./ContractWrite.js";
+import { TxFunctionName } from "./EventListeners.js";
 import { ChildrenProp } from "./utils.js";
+import { useWidget } from "./WidgetContext.js";
 
 export type ContractWriteResult = {
   contractWrite: ContractWrite;
@@ -38,6 +40,8 @@ export function ContractWriteManager({
   const { chain } = useNetwork();
   const prepare = _prepare && contractWrite.chainId === chain?.id;
 
+  const { eventListeners } = useWidget();
+
   const prepareResult = usePrepareContractWrite({
     ...(prepare ? contractWrite : undefined),
     onError: console.error,
@@ -49,6 +53,11 @@ export function ContractWriteManager({
       ? (prepareResult.config as unknown as ContractWrite)
       : contractWrite),
     onError: console.error,
+    onSuccess: ({ hash }) =>
+      eventListeners.onTransactionSent?.({
+        hash,
+        functionName: contractWrite.functionName as TxFunctionName,
+      }),
   });
 
   useEffect(() => {

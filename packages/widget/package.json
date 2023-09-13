@@ -66,6 +66,7 @@
     "@mui/utils": "^5.14.8",
     "@superfluid-finance/metadata": "^1.1.13",
     "@superfluid-finance/tokenlist": "^2.3.1",
+    "abitype": "^0.9.8",
     "blockies-ts": "^1.0.0",
     "immer": "^10.0.2",
     "lodash.isequal": "^4.5.0",
