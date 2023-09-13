@@ -66,6 +66,7 @@
     "@mui/utils": "^5.14.8",
     "@superfluid-finance/metadata": "^1.1.13",
     "@superfluid-finance/tokenlist": "^2.3.1",
+    "abitype": "^0.9.8",
     "blockies-ts": "^1.0.0",
     "immer": "^10.0.2",
     "lodash.isequal": "^4.5.0",
@@ -80,8 +81,8 @@
     "zod-validation-error": "^1.4.0"
   },
   "devDependencies": {
-    "@mui/material": "^5.14.8",
-    "@superfluid-finance/ethereum-contracts": "^1.8.1",
+    "@mui/material": "^5.14.6",
+    "@superfluid-finance/ethereum-contracts": "^1.7.2",
     "@testing-library/react": "^14.0.0",
     "@types/lodash.isequal": "^4.5.6",
     "@types/lodash.memoize": "^4.1.7",

@@ -14,7 +14,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useCallback, useRef,useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
@@ -51,13 +51,17 @@ export default function Builder() {
   const previewContainerRef = useRef<HTMLDivElement>(null);
 
   const handleNext = useCallback(() => {
-    setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, lastStep));
-    ajs.track("next_step", { currentTab: tabLabels[activeStep] });
+    const nextStep = Math.min(activeStep + 1, lastStep);
+    setActiveStep(nextStep);
+    ajs.track("next_step", {
+      tab: tabLabels[nextStep],
+    });
   }, [ajs, activeStep]);
 
   const handleBack = useCallback(() => {
-    setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
-    ajs.track("previous_step", { currentTab: tabLabels[activeStep] });
+    const prevStep = Math.max(activeStep - 1, 0);
+    setActiveStep(prevStep);
+    ajs.track("previous_step", { tab: tabLabels[prevStep] });
   }, [ajs, activeStep]);
 
   const formMethods = useForm<WidgetProps>({

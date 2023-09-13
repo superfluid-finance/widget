@@ -23,7 +23,10 @@ const IPFSPublishBtn: FC<IPFSPublishBtnProps> = ({ json }) => {
   const ajs = useAnalyticsBrowser();
 
   const onPublish = useCallback(() => {
-    ajs.track("publish_ipfs", { json });
+    ajs.track("publish_ipfs", {
+      productDetails: json.productDetails,
+      paymentDetails: json.paymentDetails,
+    });
     publish(json);
   }, [ajs, publish, json]);
 

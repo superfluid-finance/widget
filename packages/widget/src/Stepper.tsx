@@ -24,6 +24,10 @@ import StepContentWrap from "./StepContentWrap.js";
 import { StepperProvider } from "./StepperProvider.js";
 import { useWidget } from "./WidgetContext.js";
 
+export type StepProps = {
+  stepIndex: number;
+};
+
 export default function Stepper() {
   const { eventListeners } = useWidget();
   const {
@@ -34,34 +38,37 @@ export default function Stepper() {
   const paymentOptionWithTokenInfo = watch("paymentOptionWithTokenInfo");
 
   const visibleSteps = useMemo(
-    () => [
-      {
-        buttonText: "Select network and token",
-        shortText: "Network & Token",
-        Content: StepContentPaymentOption,
-      },
-      // Add wrap step only when Super Token has an underlying token.
-      ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
-        .type === "Wrapper" // TODO(KK): Enable native asset wrapping here.
-        ? [
-            {
-              buttonText: "Wrap to Super Tokens",
-              shortText: "Wrap",
-              Content: StepContentWrap,
-            },
-          ]
-        : []),
-      {
-        buttonText: "Review the transaction(s)",
-        shortText: "Review",
-        Content: StepContentReview,
-      },
-    ],
+    () =>
+      [
+        {
+          buttonText: "Select network and token",
+          shortText: "Network & Token",
+          Content: StepContentPaymentOption,
+        },
+        // Add wrap step only when Super Token has an underlying token.
+        ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
+          .type === "Wrapper" // TODO(KK): Enable native asset wrapping here.
+          ? [
+              {
+                buttonText: "Wrap to Super Tokens",
+                shortText: "Wrap",
+                Content: StepContentWrap,
+              },
+            ]
+          : []),
+        {
+          buttonText: "Review the transaction(s)",
+          shortText: "Review",
+          Content: StepContentReview,
+        },
+      ] as const,
     [paymentOptionWithTokenInfo],
   );
 
   const container = React.useRef(null);
   const totalSteps = visibleSteps.length + 2; // Add confirm and success. TODO(KK): not clean...
+  const transactionStep = totalSteps - 2;
+  const summaryStep = totalSteps - 1;
 
   return (
     <StepperProvider
@@ -69,8 +76,8 @@ export default function Stepper() {
       initialStep={isValid ? visibleSteps.length - 1 : 0}
     >
       {({ activeStep, setActiveStep, orientation }) => {
-        const isTransacting = activeStep === totalSteps - 2;
-        const isFinished = activeStep === totalSteps - 1;
+        const isTransacting = activeStep === transactionStep;
+        const isFinished = activeStep === summaryStep;
         const isForm = !isTransacting && !isFinished;
         const visualActiveStep = Math.min(2, activeStep);
 
@@ -92,11 +99,11 @@ export default function Stepper() {
                       const Content =
                         orientation === "vertical" ? (
                           <StepContent>
-                            <Content_ />
+                            <Content_ stepIndex={index} />
                           </StepContent>
                         ) : activeStep === index ? (
                           <Portal container={container.current}>
-                            <Content_ />
+                            <Content_ stepIndex={index} />
                           </Portal>
                         ) : null;
 
@@ -159,7 +166,7 @@ export default function Stepper() {
             <Collapse in={isTransacting} unmountOnExit>
               <Fade in={isTransacting}>
                 <Box sx={{ mx: 3, mb: 3, mt: 2 }}>
-                  <StepContentTransactions />
+                  <StepContentTransactions stepIndex={transactionStep} />
                 </Box>
               </Fade>
             </Collapse>
