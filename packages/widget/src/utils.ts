@@ -69,3 +69,18 @@ export function toFixedUsingString(numStr: string, decimalPlaces: number) {
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};
+
+type ExtractABIFunctionNames<T, S> = T extends {
+  type: "function";
+  stateMutability: S;
+  name: infer N;
+}
+  ? N
+  : never;
+
+export type MapABIFunctionNames<
+  T,
+  S extends "pure" | "view" | "payable" | "nonpayable",
+> = {
+  [K in keyof T]: ExtractABIFunctionNames<T[K], S>;
+};

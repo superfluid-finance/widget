@@ -1,4 +1,12 @@
-import { PaymentOption } from "./core";
+import { Hash } from "viem";
+
+import { cfAv1ForwarderABI,PaymentOption  } from "./core";
+import { MapABIFunctionNames } from "./utils";
+
+export type TxFunctionName = MapABIFunctionNames<
+  typeof cfAv1ForwarderABI,
+  "nonpayable"
+>[number];
 
 /**
  * A set of non-blocking callback functions that are triggered in response to the widget events.
@@ -11,6 +19,7 @@ import { PaymentOption } from "./core";
  *   onPaymentOptionUpdate: (paymentOption) => setChainId(paymentOption?.chainId);
  * }} />
  */
+
 export interface EventListeners {
   /** Called when a button is pressed. Usually a call to action (CTA). */
   onButtonClick?: (props?: {
@@ -34,7 +43,14 @@ export interface EventListeners {
       | "transactions"
       | "success_summary";
   }) => void;
-  /** Called when the checkout is successfully finished. */
+  /** Called when a transaction is executed. */
+  onTransactionExecuted?: (props?: {
+    hash?: Hash;
+    functionName?: TxFunctionName;
+  }) => void;
+  /** Called when the checkout is successfully finished.
+   * @deprecated Use `onTransactionExecuted` instead.
+   *  */
   onSuccess?: () => void;
   /** Called when the merchant's success button is defined in the schema and it's clicked. */
   onSuccessButtonClick?: () => void;
