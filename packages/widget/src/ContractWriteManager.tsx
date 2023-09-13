@@ -53,10 +53,10 @@ export function ContractWriteManager({
       ? (prepareResult.config as unknown as ContractWrite)
       : contractWrite),
     onError: console.error,
-    onSuccess: ({ hash }, { functionName }) =>
+    onSuccess: ({ hash }) =>
       eventListeners.onTransactionSent?.({
         hash,
-        functionName: functionName as TxFunctionName,
+        functionName: contractWrite.functionName as TxFunctionName,
       }),
   });
 
