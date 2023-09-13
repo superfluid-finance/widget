@@ -24,6 +24,7 @@ import { Address, useBalance } from "wagmi";
 import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
 import { UpgradeIcon } from "./previews/CommandPreview.js";
+import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
 import { TokenAvatar } from "./TokenAvatar.js";
@@ -88,7 +89,7 @@ const WrapCard: FC<WrapCardProps> = ({
   );
 };
 
-export default function StepContentWrap() {
+export default function StepContentWrap({ stepIndex }: StepProps) {
   const theme = useTheme();
   const [focusedOnce, setFocusedOnce] = useState(false);
 
@@ -163,15 +164,15 @@ export default function StepContentWrap() {
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    handleNext();
+    handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "next_step" });
-  }, [handleNext, eventListeners.onButtonClick]);
+  }, [handleNext, eventListeners.onButtonClick, stepIndex]);
 
   const onSkipWrapping = useCallback(() => {
     setValue("wrapAmountInUnits", "" as `${number}`);
-    handleNext();
+    handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "skip_step" });
-  }, [handleNext, setValue, eventListeners.onButtonClick]);
+  }, [handleNext, setValue, eventListeners.onButtonClick, stepIndex]);
 
   const onInputFocus = () => setFocusedOnce(true);
 

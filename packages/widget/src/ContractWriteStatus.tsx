@@ -14,22 +14,6 @@ import { normalizeIcon } from "./helpers/normalizeIcon.js";
 
 export const CircleIcon = normalizeIcon(CircleIcon_);
 
-const tryParseErrorName = (error: BaseError): string | undefined => {
-  try {
-    const rootError = error.walk();
-    if (rootError instanceof AbiErrorSignatureNotFoundError) {
-      return decodeErrorResult({
-        abi: superfluidErrorsABI,
-        data: rootError.signature,
-      }).errorName;
-    } else if (rootError instanceof ContractFunctionRevertedError) {
-      return rootError.name;
-    }
-  } catch (e) {
-    console.error(e);
-  }
-};
-
 export function ContractWriteStatus(
   result: ContractWriteResult,
   index: number,
@@ -85,3 +69,19 @@ export function ContractWriteStatus(
     </Paper>
   );
 }
+
+const tryParseErrorName = (error: BaseError): string | undefined => {
+  try {
+    const rootError = error.walk();
+    if (rootError instanceof AbiErrorSignatureNotFoundError) {
+      return decodeErrorResult({
+        abi: superfluidErrorsABI,
+        data: rootError.signature,
+      }).errorName;
+    } else if (rootError instanceof ContractFunctionRevertedError) {
+      return rootError.name;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
