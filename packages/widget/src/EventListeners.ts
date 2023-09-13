@@ -1,6 +1,6 @@
 import { Hash } from "viem";
 
-import { cfAv1ForwarderABI,PaymentOption  } from "./core";
+import { cfAv1ForwarderABI, PaymentOption } from "./core";
 import { MapABIFunctionNames } from "./utils";
 
 export type TxFunctionName = MapABIFunctionNames<
@@ -49,7 +49,7 @@ export interface EventListeners {
     functionName?: TxFunctionName;
   }) => void;
   /** Called when the checkout is successfully finished.
-   * @deprecated Use `onTransactionExecuted` instead.
+   * @deprecated Use `onTransactionExecuted` instead (filter for `functionName === 'createFlow | 'updateFlow'`).
    *  */
   onSuccess?: () => void;
   /** Called when the merchant's success button is defined in the schema and it's clicked. */
