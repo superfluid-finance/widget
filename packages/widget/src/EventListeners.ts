@@ -1,12 +1,9 @@
+import { ExtractAbiFunctionNames } from "abitype";
 import { Hash } from "viem";
 
 import { cfAv1ForwarderABI, PaymentOption } from "./core";
-import { MapABIFunctionNames } from "./utils";
 
-export type TxFunctionName = MapABIFunctionNames<
-  typeof cfAv1ForwarderABI,
-  "nonpayable"
->[number];
+export type TxFunctionName = ExtractAbiFunctionNames<typeof cfAv1ForwarderABI>;
 
 /**
  * A set of non-blocking callback functions that are triggered in response to the widget events.
@@ -44,7 +41,7 @@ export interface EventListeners {
       | "success_summary";
   }) => void;
   /** Called when a transaction is executed. */
-  onTransactionExecuted?: (props?: {
+  onTransactionSent?: (props?: {
     hash?: Hash;
     functionName?: TxFunctionName;
   }) => void;

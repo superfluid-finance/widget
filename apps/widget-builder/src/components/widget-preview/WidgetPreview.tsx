@@ -103,6 +103,9 @@ const switchLayout = (
       theme={theme}
       walletManager={walletManager}
       stepper={{ orientation: stepperOrientation }}
+      eventListeners={{
+        onTransactionExecuted: console.log,
+      }}
     />
   ) : (
     <SuperfluidWidget

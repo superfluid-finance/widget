@@ -54,7 +54,7 @@ export function ContractWriteManager({
       : contractWrite),
     onError: console.error,
     onSuccess: ({ hash }, { functionName }) =>
-      eventListeners.onTransactionExecuted?.({
+      eventListeners.onTransactionSent?.({
         hash,
         functionName: functionName as TxFunctionName,
       }),
