@@ -4,6 +4,8 @@ import { demoOptions, paymentOptions } from "../pageObjects/basePage";
 import { BuilderPage } from "../pageObjects/builderPage";
 import { WidgetPage } from "../pageObjects/widgetPage";
 
+test.describe.configure({ mode: "parallel" });
+
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });
