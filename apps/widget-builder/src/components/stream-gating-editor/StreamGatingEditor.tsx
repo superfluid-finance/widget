@@ -29,7 +29,6 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useFormContext } from "react-hook-form";
 import { Address } from "viem";
 import { Chain } from "wagmi";
-import { ZodError } from "zod";
 
 import useAnalyticsBrowser from "../../hooks/useAnalyticsBrowser";
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
@@ -70,7 +69,11 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     Record<ChainId, Address>[]
   >([]);
   const [isDeploying, setDeploying] = useState(false);
-  const [errors, setErrors] = useState<ZodError<any> | null>(null);
+  const [isDeploymentSuccessful, setDeploymentSuccessful] = useState(false);
+  const [errors, setErrors] = useState<{
+    error: string;
+    message?: string;
+  } | null>(null);
 
   useLayoutEffect(() => {
     if (recaptchaRef.current) {
@@ -107,7 +110,6 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       );
 
       setSelectedPaymentOptions((prev) => {
-        console.log({ prev, checked });
         if (checked) {
           return {
             ...prev,
@@ -125,7 +127,6 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     [paymentOptions, setSelectedPaymentOptions],
   );
 
-  console.log(selectedPaymentOptions);
   const deployNFT = useCallback(async () => {
     try {
       setDeploying(true);
@@ -167,16 +168,17 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       ajs.track("enft_deployment_succeeded", { deployments });
 
       setDeployedCloneAddresses(deployments);
-    } catch (error: any) {
+      setDeploymentSuccessful(true);
+    } catch (error) {
       console.error("Deploying NFT failed. Reason:", error);
       ajs.track("enft_deployment_failed", { reason: error });
-      setErrors(error);
     } finally {
       setDeploying(false);
     }
   }, [
     tokenName,
     tokenSymbol,
+    contractOwner,
     nftImage,
     selectedPaymentOptions,
     recaptchaToken,
@@ -197,7 +199,8 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       !recaptchaToken ||
       paymentOptions.length === 0 ||
       isEmpty(selectedPaymentOptions) ||
-      deployedCloneAddresses.length > 0,
+      deployedCloneAddresses.length > 0 ||
+      isDeploymentSuccessful,
     [
       tokenName,
       tokenSymbol,
@@ -206,6 +209,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       selectedPaymentOptions,
       deployedCloneAddresses,
       recaptchaToken,
+      isDeploymentSuccessful,
     ],
   );
 

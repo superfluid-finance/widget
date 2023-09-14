@@ -61,7 +61,7 @@ const handler: NextApiHandler = async (req, res) => {
   try {
     await checkRateLimit(req, res, limiter.check);
   } catch {
-    return res.status(429);
+    return res.status(429).json({ error: "Too many requests" });
   }
 
   try {
@@ -171,7 +171,7 @@ const handler: NextApiHandler = async (req, res) => {
     console.error(e);
     res
       .status(500)
-      .json({ error: "Something went wrong", message: JSON.stringify(e) });
+      .json({ error: "Internal Server Error", message: JSON.stringify(e) });
   }
 };
 
