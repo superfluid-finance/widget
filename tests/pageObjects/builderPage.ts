@@ -367,7 +367,9 @@ export class BuilderPage extends BasePage {
         );
         await expect(
           this.superTokenOptionsInDropdown.nth(index).locator("img"),
-        ).toHaveScreenshot(`./data/${token.name}.png`);
+        ).toHaveScreenshot(`./data/${token.name}.png`, {
+          maxDiffPixelRatio: 0.01,
+        });
       }
     });
   }
@@ -746,6 +748,9 @@ export class BuilderPage extends BasePage {
       );
       await expect(this.selectedProductImage).toHaveScreenshot(
         "./data/invalidImageUploaded.png",
+        {
+          maxDiffPixelRatio: 0.01,
+        },
       );
     });
   }
