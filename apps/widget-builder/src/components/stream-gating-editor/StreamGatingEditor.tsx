@@ -35,6 +35,7 @@ import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
 import { polyfill } from "../../utils";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
+import NetworkAvatar from "../NetworkAvatar";
 import NFTDeploymentDialog from "../nft-deployment-modal/NFTDeploymentDialog";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
 
@@ -301,7 +302,12 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
                     }
                   />
                 }
-                label={network?.name}
+                label={
+                  <Stack direction="row" gap={1} sx={{ alignItems: "center" }}>
+                    <NetworkAvatar network={network} />
+                    {network.name}
+                  </Stack>
+                }
               />
             ))}
           </FormGroup>
