@@ -113,6 +113,7 @@ const UiEditor: FC = () => {
           name="displaySettings.containerRadius"
           render={({ field: { value, onChange } }) => (
             <InputWrapper
+              dataTestid="container-radius-value"
               title={`Container border-radius: ${displaySettings.containerRadius}`}
             >
               {(id) => (
