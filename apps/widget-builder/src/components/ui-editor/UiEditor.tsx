@@ -158,6 +158,7 @@ const UiEditor: FC = () => {
           name="displaySettings.buttonRadius"
           render={({ field: { value, onChange } }) => (
             <InputWrapper
+              dataTestid="button-border-radius"
               title={`Button border-radius: ${displaySettings.buttonRadius}`}
             >
               {(id) => (
