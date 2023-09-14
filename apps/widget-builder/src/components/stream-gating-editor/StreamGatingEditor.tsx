@@ -32,7 +32,7 @@ import { Chain } from "wagmi";
 
 import useAnalyticsBrowser from "../../hooks/useAnalyticsBrowser";
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
-import { polyfill } from "../../utils";
+import { polyfill } from "../../utils/utils";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
 import NetworkAvatar from "../NetworkAvatar";

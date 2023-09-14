@@ -4,7 +4,7 @@ import { useWeb3Modal } from "@web3modal/react";
 import { FC } from "react";
 import { useAccount, useDisconnect } from "wagmi";
 
-import { shortenHex } from "../../utils";
+import { shortenHex } from "../../utils/utils";
 
 const ConnectWallet: FC = () => {
   const { address } = useAccount();

@@ -1,10 +1,10 @@
 import {
   ChainId,
-  mapTimePeriodToSeconds,
   PaymentOption,
   ProductDetails,
 } from "@superfluid-finance/widget";
 import metadata from "@superfluid-finance/widget/metadata";
+import sortBy from "lodash/sortBy";
 import { NextApiHandler } from "next";
 import {
   Address,
@@ -15,7 +15,6 @@ import {
   getContract,
   Hash,
   http,
-  parseEther,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import * as chains from "viem/chains";
@@ -23,9 +22,9 @@ import * as chains from "viem/chains";
 import { superfluidRpcUrls } from "../../superfluidRpcUrls";
 import { ExistentialNFTCloneFactoryABI } from "../../types/abi-types";
 import { createBaseURI } from "../../utils/baseURI";
-import { verifyCaptcha } from "../../utils/captcha";
 import { pinNFTImageToIPFS } from "../../utils/pinata";
 import rateLimit, { checkRateLimit } from "../../utils/rate-limit";
+import { calculatePerSecondFlowRate } from "../../utils/utils";
 
 const limiter = rateLimit({
   interval: 60 * 1000,
@@ -64,11 +63,11 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(429).json({ error: "Too many requests" });
   }
 
-  try {
-    await verifyCaptcha(recaptchaToken);
-  } catch {
-    return res.status(400).json({ error: "Invalid recaptcha token" });
-  }
+  // try {
+  //   await verifyCaptcha(recaptchaToken);
+  // } catch {
+  //   return res.status(400).json({ error: "Invalid recaptcha token" });
+  // }
 
   const nftImageHash = await pinNFTImageToIPFS({
     tokenName,
@@ -124,15 +123,16 @@ const handler: NextApiHandler = async (req, res) => {
             walletClient,
           });
 
+          const sortedPaymentOptions = sortBy(paymentOptions, ({ flowRate }) =>
+            flowRate ? calculatePerSecondFlowRate(flowRate) : 1,
+          );
+
           const cloneArgs = [
             contractOwner,
-            paymentOptions.map(({ superToken }) => superToken.address),
-            paymentOptions.map(({ receiverAddress }) => receiverAddress),
-            paymentOptions.map(({ flowRate }) =>
-              flowRate
-                ? parseEther(flowRate.amountEther) /
-                  mapTimePeriodToSeconds(flowRate!.period)
-                : BigInt(1),
+            sortedPaymentOptions.map(({ superToken }) => superToken.address),
+            sortedPaymentOptions.map(({ receiverAddress }) => receiverAddress),
+            sortedPaymentOptions.map(({ flowRate }) =>
+              flowRate ? calculatePerSecondFlowRate(flowRate) : BigInt(1),
             ),
             tokenName,
             tokenSymbol,
