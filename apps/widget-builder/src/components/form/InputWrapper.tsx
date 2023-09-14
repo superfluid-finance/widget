@@ -20,12 +20,17 @@ export const InputInfo: FC<InputInfoProps> = ({ tooltip }) => {
 
   return (
     <Tooltip title={tooltip}>
-      <InfoOutlinedIcon fontSize="small" sx={{ color: "text.secondary" }} />
+      <InfoOutlinedIcon
+        data-testid="tooltip-icon"
+        fontSize="small"
+        sx={{ color: "text.secondary" }}
+      />
     </Tooltip>
   );
 };
 
 interface InputWrapperProps {
+  dataTestid?: string;
   id?: string;
   title?: string;
   tooltip?: string;
@@ -37,6 +42,7 @@ interface InputWrapperProps {
 }
 
 const InputWrapper: FC<InputWrapperProps> = ({
+  dataTestid,
   title,
   tooltip,
   sx = {},
@@ -53,7 +59,12 @@ const InputWrapper: FC<InputWrapperProps> = ({
     <FormControl sx={sx} error={error}>
       <Stack direction="row" alignItems="center" gap={1} sx={{ mb: 0.75 }}>
         {!!title && (
-          <FormLabel id={labelId} htmlFor={inputId} focused={false}>
+          <FormLabel
+            data-testid={dataTestid}
+            id={labelId}
+            htmlFor={inputId}
+            focused={false}
+          >
             {title}
             {!!optional && (
               <Typography
@@ -71,7 +82,9 @@ const InputWrapper: FC<InputWrapperProps> = ({
       </Stack>
       {children(inputId, error)}
       {!!helperText && (
-        <FormHelperText aria-describedby={labelId}>{helperText}</FormHelperText>
+        <FormHelperText data-testid="helper-text" aria-describedby={labelId}>
+          {helperText}
+        </FormHelperText>
       )}
     </FormControl>
   );

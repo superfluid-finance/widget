@@ -152,6 +152,7 @@ export default function Builder() {
               activeStep={activeStep}
               nextButton={
                 <Button
+                  data-testid="next-button"
                   size="medium"
                   variant="outlined"
                   color="primary"
@@ -167,6 +168,7 @@ export default function Builder() {
               }
               backButton={
                 <Button
+                  data-testid="back-button"
                   size="medium"
                   variant="outlined"
                   color="primary"

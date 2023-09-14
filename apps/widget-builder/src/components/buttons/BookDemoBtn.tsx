@@ -19,6 +19,7 @@ const BookDemoBtn: FC<BookDemoBtnProps> = ({ children, sx = {} }) => {
 
   return (
     <Button
+      data-testid="book-demo-button"
       component={Link}
       href="https://use.superfluid.finance/subscriptions"
       target="_blank"

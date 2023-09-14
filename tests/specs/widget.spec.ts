@@ -1,10 +1,6 @@
 import * as metamask from "@synthetixio/synpress/commands/metamask";
 
-import {
-  rebounderAddresses,
-  streamToSelfOption,
-  testOption,
-} from "../pageObjects/basePage";
+import { paymentOptions, rebounderAddresses } from "../pageObjects/basePage";
 import { BuilderPage } from "../pageObjects/builderPage";
 import { WidgetPage } from "../pageObjects/widgetPage";
 import { test } from "../walletSetup";
@@ -16,8 +12,8 @@ test.beforeEach(async ({ page }) => {
 test("Creating a flow", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
-  await builderPage.switchToPaymentTab();
-  await builderPage.clickOnPaymentDetailsWandButton();
+  await builderPage.openPaymentTab();
+  await builderPage.clickOnWandButton();
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("fDAIx");
   await widgetPage.connectWallet();
@@ -101,7 +97,7 @@ test("Approving and wrapping tokens", async ({ page }) => {
 test("Can't stream to self error during review", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
-  await builderPage.addPaymentOption(streamToSelfOption);
+  await builderPage.addPaymentOption(paymentOptions.streamToSelfOption);
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("TDLx");
   await widgetPage.connectWallet();
@@ -126,8 +122,8 @@ test("Not enough super token balance to cover buffer error", async ({
 }) => {
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
-  testOption.flowRate = "99999999";
-  await builderPage.addPaymentOption(testOption);
+  paymentOptions.testOption.flowRate = "99999999";
+  await builderPage.addPaymentOption(paymentOptions.testOption);
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("TDLx");
   await widgetPage.connectWallet();
@@ -141,9 +137,9 @@ test("Not enough super token balance to cover buffer error", async ({
 test("Need atleast 24 hours worth of stream error", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
-  testOption.flowRate = "1";
-  testOption.timeUnit = "day";
-  await builderPage.addPaymentOption(testOption);
+  paymentOptions.testOption.flowRate = "1";
+  paymentOptions.testOption.timeUnit = "day";
+  await builderPage.addPaymentOption(paymentOptions.testOption);
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("TDLx");
   await widgetPage.connectWallet();

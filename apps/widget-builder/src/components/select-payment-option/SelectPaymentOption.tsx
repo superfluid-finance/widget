@@ -178,6 +178,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
       <DialogContent>
         <Stack direction="column" gap={1.5}>
           <InputWrapper
+            dataTestid="network-title"
             title="Network"
             tooltip="Select the network you'd like to request payment on."
             error={Boolean(errors?.formErrors?.fieldErrors?.chainId)}
@@ -234,6 +235,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           </InputWrapper>
 
           <InputWrapper
+            dataTestid="receiver-title"
             title="Receiver Address"
             tooltip="Set your wallet or multisig address on the relevant network."
             error={Boolean(errors?.formErrors?.fieldErrors?.receiverAddress)}
@@ -252,6 +254,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           </InputWrapper>
 
           <InputWrapper
+            dataTestid="token-title"
             id="token-select"
             title="Super Token"
             tooltip="Select the SuperToken you'd like to request payment in."
@@ -282,6 +285,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                       )}
                     </ListItemAvatar>
                     <ListItemText
+                      data-testid="token-selection-name-and-symbol"
                       primary={option.symbol}
                       secondary={option.name}
                       secondaryTypographyProps={{ variant: "caption" }}
@@ -326,8 +330,15 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                 fullWidth
                 color="primary"
               >
-                <ToggleButton value={false}>Fixed rate</ToggleButton>
-                <ToggleButton value={true}>User-defined rate</ToggleButton>
+                <ToggleButton data-testid="fixed-rate-button" value={false}>
+                  Fixed rate
+                </ToggleButton>
+                <ToggleButton
+                  data-testid="user-defined-rate-button"
+                  value={true}
+                >
+                  User-defined rate
+                </ToggleButton>
               </ToggleButtonGroup>
             )}
           </InputWrapper>
@@ -335,6 +346,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           <Collapse in={!isCustomAmount}>
             <Stack spacing={1}>
               <InputWrapper
+                dataTestid="stream-rate-title"
                 title="Stream Rate"
                 tooltip="Set the amount of tokens per month for the payment."
                 error={Boolean(errors?.formErrors?.fieldErrors?.flowRate)}
@@ -389,11 +401,13 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
               <FormGroup>
                 <Stack direction="row" alignItems="center" gap={1}>
                   <FormControlLabel
+                    data-testid="upfront-payment-label"
                     sx={{
                       mr: 0,
                     }}
                     control={
                       <Switch
+                        data-testid="upfront-payment-switch"
                         color="primary"
                         checked={showUpfrontPayment}
                         value={showUpfrontPayment}
@@ -409,6 +423,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
               <Collapse in={showUpfrontPayment}>
                 <FormGroup>
                   <InputWrapper
+                    dataTestid="upfront-payment-title"
                     title="Upfront Payment Amount"
                     tooltip="The ERC-20 transfer amount the user should send as an upfront payment."
                     error={Boolean(

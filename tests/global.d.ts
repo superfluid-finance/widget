@@ -21,5 +21,20 @@ type PaymentOption = {
   receiver: string;
   timeUnit: string;
   chainId: string;
-  // useAsDefault: boolean;
+  upfrontPayment?: string;
+  userDefinedRate?: boolean;
+  snapshotPath?: string;
+};
+
+type PartialPaymentOption = {
+  network?: string;
+  superToken?: string;
+  superTokenName?: string;
+  flowRate?: string;
+  receiver?: string;
+  timeUnit?: string;
+  chainId?: string;
+  upfrontPayment?: string;
+  userDefinedRate?: boolean;
+  snapshotPath?: string;
 };

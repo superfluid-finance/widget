@@ -38,6 +38,7 @@ const FlowRateInput: FC<FlowRateInputProps> = ({ value, onChange, onBlur }) => {
   return (
     <Stack gap="-1px" sx={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}>
       <TextField
+        data-testid="custom-flow-rate-input-field"
         fullWidth
         value={amountEther}
         onChange={onAmountEtherChange}
@@ -50,6 +51,7 @@ const FlowRateInput: FC<FlowRateInputProps> = ({ value, onChange, onBlur }) => {
         }}
       />
       <Select
+        data-testid="custom-time-unit-dropdown"
         value={period}
         onChange={onPeriodChange}
         onBlur={onBlur}
