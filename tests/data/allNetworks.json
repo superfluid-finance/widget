@@ -1,0 +1,144 @@
+{
+  "productDetails": {
+    "name": "",
+    "description": "",
+    "imageURI": ""
+  },
+  "paymentDetails": {
+    "paymentOptions": [
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 42161,
+        "superToken": {
+          "address": "0x1Dbc1809486460DcD189b8a15990bCa3272Ee04e"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 43114,
+        "superToken": {
+          "address": "0x288398F314D472B82C44855F3f6fF20b633c2A97"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 8453,
+        "superToken": {
+          "address": "0xD04383398dD2426297da660F9CCA3d439AF9ce1b"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 56,
+        "superToken": {
+          "address": "0x529A4116F160c833c61311569D6B33dFF41fD657"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 42220,
+        "superToken": {
+          "address": "0x3AcB9A08697b6Db4cD977e8Ab42b6f24722e6D6e"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 100,
+        "superToken": {
+          "address": "0x1234756ccf0660E866305289267211823Ae86eEc"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 10,
+        "superToken": {
+          "address": "0x8430F084B939208E2eDEd1584889C9A66B90562f"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 137,
+        "superToken": {
+          "address": "0xCAa7349CEA390F89641fe306D93591f87595dc1F"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 43113,
+        "superToken": {
+          "address": "0x00d05Eed85Bad962bA5237DD4aFFF12004455a8a"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 84531,
+        "superToken": {
+          "address": "0x15da1146DC9a7e10b3A9b256c9bebFa79fa8eDC3"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 5,
+        "superToken": {
+          "address": "0x8aE68021f6170E5a766bE613cEA0d75236ECCa9a"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      },
+      {
+        "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+        "chainId": 80001,
+        "superToken": {
+          "address": "0x42bb40bF79730451B11f6De1CbA222F17b87Afd7"
+        },
+        "flowRate": {
+          "amountEther": "1",
+          "period": "month"
+        }
+      }
+    ]
+  },
+  "type": "page"
+}

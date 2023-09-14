@@ -218,7 +218,7 @@ const ProductEditor: FC = () => {
         arrow
       >
         <Fab
-          data-testid="payment-options-wand-button"
+          data-testid="wand-button"
           size="medium"
           color="secondary"
           sx={{

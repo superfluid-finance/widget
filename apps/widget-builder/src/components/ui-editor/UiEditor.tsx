@@ -58,10 +58,16 @@ const UiEditor: FC = () => {
                     borderBottomRightRadius: 0,
                   }}
                 >
-                  <ToggleButton value="page" aria-label="page" title="Page">
+                  <ToggleButton
+                    data-testid="inline-button"
+                    value="page"
+                    aria-label="page"
+                    title="Page"
+                  >
                     Inline
                   </ToggleButton>
                   <ToggleButton
+                    data-testid="dialog-button"
                     value="dialog"
                     aria-label="dialog"
                     title="Dialog"
@@ -69,6 +75,7 @@ const UiEditor: FC = () => {
                     Dialog
                   </ToggleButton>
                   <ToggleButton
+                    data-testid="drawer-button"
                     value="drawer"
                     aria-label="drawer"
                     title="Drawer"
@@ -76,6 +83,7 @@ const UiEditor: FC = () => {
                     Drawer
                   </ToggleButton>
                   <ToggleButton
+                    data-testid="full-screen-button"
                     value="full-screen"
                     aria-label="full-screen"
                     title="Full Screen"
@@ -105,6 +113,7 @@ const UiEditor: FC = () => {
           name="displaySettings.containerRadius"
           render={({ field: { value, onChange } }) => (
             <InputWrapper
+              dataTestid="container-radius-value"
               title={`Container border-radius: ${displaySettings.containerRadius}`}
             >
               {(id) => (
@@ -127,6 +136,7 @@ const UiEditor: FC = () => {
           name="displaySettings.inputRadius"
           render={({ field: { value, onChange } }) => (
             <InputWrapper
+              dataTestid="field-border-radius-value"
               title={`Field border-radius: ${displaySettings.inputRadius}`}
             >
               {(id) => (
@@ -148,6 +158,7 @@ const UiEditor: FC = () => {
           name="displaySettings.buttonRadius"
           render={({ field: { value, onChange } }) => (
             <InputWrapper
+              dataTestid="button-border-radius"
               title={`Button border-radius: ${displaySettings.buttonRadius}`}
             >
               {(id) => (
@@ -170,9 +181,10 @@ const UiEditor: FC = () => {
             control={control}
             name="displaySettings.primaryColor"
             render={({ field: { value, onChange } }) => (
-              <InputWrapper title="Primary color">
+              <InputWrapper data-testid="primary-color" title="Primary color">
                 {(id) => (
                   <MuiColorInput
+                    data-testid="primary-color-picker"
                     id={id}
                     fallbackValue={"#000"}
                     format="hex"
@@ -270,6 +282,7 @@ const UiEditor: FC = () => {
       </Stack>
       <Tooltip title="Replace with random styling" placement="right" arrow>
         <Fab
+          data-testid="wand-button"
           size="medium"
           color="secondary"
           onClick={setDemoStyling}
