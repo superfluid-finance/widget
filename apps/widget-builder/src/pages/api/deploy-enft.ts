@@ -128,10 +128,11 @@ const handler: NextApiHandler = async (req, res) => {
             contractOwner,
             paymentOptions.map(({ superToken }) => superToken.address),
             paymentOptions.map(({ receiverAddress }) => receiverAddress),
-            paymentOptions.map(
-              ({ flowRate }) =>
-                parseEther(flowRate!.amountEther) /
-                mapTimePeriodToSeconds(flowRate!.period),
+            paymentOptions.map(({ flowRate }) =>
+              flowRate
+                ? parseEther(flowRate.amountEther) /
+                  mapTimePeriodToSeconds(flowRate!.period)
+                : BigInt(1),
             ),
             tokenName,
             tokenSymbol,
