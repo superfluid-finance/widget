@@ -63,6 +63,5 @@ jobs:
           CURRENTS_PROJECT_ID: 3TQU8o
           CURRENTS_RECORD_KEY: ${{ secrets.CURRENTS_RECORD_KEY }}
           CURRENTS_CI_BUILD_ID: ${{ github.repository }}-${{ github.run_id }}-${{ github.run_attempt}}
-          C
           WIDGET_WALLET_PRIVATE_KEY: ${{ secrets.WIDGET_WALLET_PRIVATE_KEY}}
           CI: true
