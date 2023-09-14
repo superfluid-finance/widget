@@ -121,7 +121,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         throw new Error("Recaptcha token is missing");
       }
 
-      ajs.track("request_nft_deployment", {
+      ajs.track("enft_deployment_requested", {
         selectedPaymentOptions,
       });
 
@@ -140,7 +140,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
 
       if (!response.ok) {
         console.error("Deploying NFT failed. Reason:", response.statusText);
-        ajs.track("nft_deployment_failed", { reason: response.statusText });
+        ajs.track("enft_deployment_failed", { reason: response.statusText });
 
         return;
       }
@@ -148,7 +148,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       const { deployments }: { deployments: Record<ChainId, Address>[] } =
         await response.json();
 
-      ajs.track("nft_deployment_succeeded", { deployments });
+      ajs.track("enft_deployment_succeeded", { deployments });
 
       setDeployedCloneAddresses(deployments);
     } catch (error) {
