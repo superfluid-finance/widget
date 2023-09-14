@@ -170,7 +170,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     () =>
       !tokenName ||
       !tokenSymbol ||
-      !nftImage ||
+      !contractOwner ||
       !recaptchaToken ||
       paymentOptions.length === 0 ||
       deployedCloneAddresses.length > 0 ||

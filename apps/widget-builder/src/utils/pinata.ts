@@ -14,8 +14,10 @@ export const pinNFTImageToIPFS = async ({
 }: {
   tokenName: string;
   tokenSymbol: string;
-  nftImage: string;
+  nftImage?: string;
 }) => {
+  if (!nftImage) return null;
+
   const { IpfsHash } = await pinata.pinFileToIPFS(base64ToStream(nftImage), {
     pinataMetadata: {
       name: `StreamGating NFT Image (${tokenName}, ${tokenSymbol})`,

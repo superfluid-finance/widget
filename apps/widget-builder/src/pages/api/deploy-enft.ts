@@ -52,10 +52,10 @@ const handler: NextApiHandler = async (req, res) => {
     productDetails: ProductDetails;
     tokenName: string;
     tokenSymbol: string;
-    nftImage: string;
     contractOwner: Address;
     selectedPaymentOptions: Partial<Record<ChainId, PaymentOption[]>>;
     recaptchaToken: string;
+    nftImage?: string;
   } = JSON.parse(req.body);
 
   try {
@@ -140,7 +140,7 @@ const handler: NextApiHandler = async (req, res) => {
               name: productDetails.name,
               description: productDetails.description ?? "",
               chain: chain.id.toString(),
-              ipfs: nftImageHash,
+              ...(nftImageHash ? { ipfs: nftImageHash } : {}),
             }),
           ] as const;
 
