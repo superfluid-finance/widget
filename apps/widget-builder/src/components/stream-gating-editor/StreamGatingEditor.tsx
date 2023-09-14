@@ -29,6 +29,7 @@ import { useFormContext } from "react-hook-form";
 import { Address } from "viem";
 import { Chain } from "wagmi";
 
+import useAnalyticsBrowser from "../../hooks/useAnalyticsBrowser";
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
 import { polyfill } from "../../utils";
 import InputWrapper from "../form/InputWrapper";
@@ -55,22 +56,17 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
   ]);
   const recaptchaRef = createRef<ReCAPTCHA>();
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
-
   const [tokenSymbol, setTokenSymbol] = useState("");
   const [tokenName, setTokenName] = useState("");
   const [contractOwner, setContractOwner] = useState("");
-
   const [nftImage, setNftImage] = useState<File>();
   const { base64: nftImageBase64 } = useReadAsBase64(nftImage);
-
   const [selectedPaymentOptions, setSelectedPaymentOptions] = useState<
     Partial<Record<ChainId, PaymentOption[]>>
   >({});
-
   const [deployedCloneAddresses, setDeployedCloneAddresses] = useState<
     Record<ChainId, Address>[]
   >([]);
-
   const [isDeploying, setDeploying] = useState(false);
   const [isDeployed, setDeployed] = useState(false);
 
@@ -83,6 +79,8 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
   const onRecaptchaChange = useCallback((token: string | null) => {
     setRecaptchaToken(token);
   }, []);
+
+  const ajs = useAnalyticsBrowser();
 
   // Collect networks used in payment options
   const paymentOptionNetworks = useMemo<SupportedNetwork[]>(() => {
@@ -123,6 +121,10 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         throw new Error("Recaptcha token is missing");
       }
 
+      ajs.track("request_nft_deployment", {
+        selectedPaymentOptions,
+      });
+
       const response = await fetch("/api/deploy-enft", {
         method: "POST",
         body: JSON.stringify({
@@ -138,11 +140,15 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
 
       if (!response.ok) {
         console.error("Deploying NFT failed. Reason:", response.statusText);
+        ajs.track("nft_deployment_failed", { reason: response.statusText });
+
         return;
       }
 
       const { deployments }: { deployments: Record<ChainId, Address>[] } =
         await response.json();
+
+      ajs.track("nft_deployment_succeeded", { deployments });
 
       setDeployedCloneAddresses(deployments);
     } catch (error) {
