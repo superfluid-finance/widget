@@ -31,12 +31,13 @@ const limiter = rateLimit({
   uniqueTokenPerInterval: 500,
 });
 
+const DEFAULT_ACCOUNT =
+  "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
+
 const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? "";
 const account = privateKey
   ? privateKeyToAccount(privateKey as Hash)
-  : privateKeyToAccount(
-      "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161",
-    );
+  : privateKeyToAccount(DEFAULT_ACCOUNT);
 
 const handler: NextApiHandler = async (req, res) => {
   const {
