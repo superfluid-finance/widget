@@ -18,9 +18,6 @@ jobs:
       run:
         working-directory: tests
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        shard: [1/4, 2/4, 3/4, 4/4]
 
     steps:
       - uses: actions/checkout@v3
@@ -56,7 +53,7 @@ jobs:
 
         # https://playwright.dev/docs/next/ci#running-headed  
       - name: Run Playwright tests
-        run: xvfb-run pnpm playwright test --shard ${{ matrix.shard }}
+        run: xvfb-run pnpm playwright test
         env:
           BASE_URL: ${{ env.BASE_URL }}
           WIDGET_WALLET_PUBLIC_KEY: "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD"

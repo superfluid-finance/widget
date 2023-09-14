@@ -181,7 +181,7 @@ const UiEditor: FC = () => {
             control={control}
             name="displaySettings.primaryColor"
             render={({ field: { value, onChange } }) => (
-              <InputWrapper title="Primary color">
+              <InputWrapper data-testid="primary-color" title="Primary color">
                 {(id) => (
                   <MuiColorInput
                     data-testid="primary-color-picker"
