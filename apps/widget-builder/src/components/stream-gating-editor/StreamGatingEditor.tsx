@@ -14,6 +14,7 @@ import {
   SupportedNetwork,
   supportedNetworks,
 } from "@superfluid-finance/widget";
+import isEmpty from "lodash/isEmpty";
 import uniqBy from "lodash/uniqBy";
 import {
   createRef,
@@ -69,8 +70,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     Record<ChainId, Address>[]
   >([]);
   const [isDeploying, setDeploying] = useState(false);
-  const [isDeployed, setDeployed] = useState(false);
-  const [errors, setErrors] = useState<ZodError<{}> | null>(null);
+  const [errors, setErrors] = useState<ZodError<any> | null>(null);
 
   useLayoutEffect(() => {
     if (recaptchaRef.current) {
@@ -106,16 +106,26 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         ({ chainId }) => network.id === chainId,
       );
 
-      setSelectedPaymentOptions((prev) => ({
-        ...prev,
-        [network.id]: checked ? paymentOptionsByNetwork : undefined,
-      }));
+      setSelectedPaymentOptions((prev) => {
+        console.log({ prev, checked });
+        if (checked) {
+          return {
+            ...prev,
+            [network.id]: paymentOptionsByNetwork,
+          };
+        } else {
+          delete prev[network.id as ChainId];
+
+          return Object.assign({}, prev);
+        }
+      });
 
       return;
     },
-    [paymentOptions],
+    [paymentOptions, setSelectedPaymentOptions],
   );
 
+  console.log(selectedPaymentOptions);
   const deployNFT = useCallback(async () => {
     try {
       setDeploying(true);
@@ -157,10 +167,11 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       ajs.track("enft_deployment_succeeded", { deployments });
 
       setDeployedCloneAddresses(deployments);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Deploying NFT failed. Reason:", error);
+      ajs.track("enft_deployment_failed", { reason: error });
+      setErrors(error);
     } finally {
-      setDeployed(true);
       setDeploying(false);
     }
   }, [
@@ -172,6 +183,12 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     nftImageBase64,
   ]);
 
+  const resetDeployment = () => {
+    setDeployedCloneAddresses([]);
+    setSelectedPaymentOptions({});
+    setErrors(null);
+  };
+
   const isDeployDisabled = useMemo(
     () =>
       !tokenName ||
@@ -179,16 +196,16 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       !contractOwner ||
       !recaptchaToken ||
       paymentOptions.length === 0 ||
-      deployedCloneAddresses.length > 0 ||
-      isDeployed,
+      isEmpty(selectedPaymentOptions) ||
+      deployedCloneAddresses.length > 0,
     [
       tokenName,
       tokenSymbol,
-      nftImage,
+      contractOwner,
       paymentOptions,
+      selectedPaymentOptions,
       deployedCloneAddresses,
       recaptchaToken,
-      isDeployed,
     ],
   );
 
@@ -288,12 +305,12 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             color="primary"
             variant="contained"
             size="large"
-            onClick={deployNFT}
+            onClick={errors ? () => resetDeployment() : deployNFT}
             loading={isDeploying}
             disabled={isDeployDisabled}
             sx={{ mt: 1 }}
           >
-            Create NFT
+            {errors ? "Deployment Failed, Reset?" : "Create NFT"}
           </LoadingButton>
         </Stack>
       </Stack>
