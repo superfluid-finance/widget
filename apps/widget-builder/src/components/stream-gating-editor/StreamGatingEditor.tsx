@@ -28,6 +28,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useFormContext } from "react-hook-form";
 import { Address } from "viem";
 import { Chain } from "wagmi";
+import { ZodError } from "zod";
 
 import useAnalyticsBrowser from "../../hooks/useAnalyticsBrowser";
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
@@ -69,6 +70,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
   >([]);
   const [isDeploying, setDeploying] = useState(false);
   const [isDeployed, setDeployed] = useState(false);
+  const [errors, setErrors] = useState<ZodError<{}> | null>(null);
 
   useLayoutEffect(() => {
     if (recaptchaRef.current) {
@@ -198,7 +200,10 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             product or service.
           </Typography>
         </Box>
-        <InputWrapper title="NFT Symbol">
+        <InputWrapper
+          title="NFT Symbol"
+          tooltip="The Symbol of your NFT. It will be displayed in your users' wallets."
+        >
           {(id) => (
             <TextField
               id={id}
@@ -207,7 +212,10 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             />
           )}
         </InputWrapper>
-        <InputWrapper title="NFT Name">
+        <InputWrapper
+          title="NFT Name"
+          tooltip="The Name of your NFT. It will be displayed in your users' wallets."
+        >
           {(id) => (
             <TextField
               id={id}
@@ -216,7 +224,10 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             />
           )}
         </InputWrapper>
-        <InputWrapper title="Contract owner">
+        <InputWrapper
+          title="Contract owner"
+          tooltip="The address with authority to add further PaymentOptions or deprecate the contract."
+        >
           {(id) => (
             <TextField
               id={id}
@@ -225,7 +236,12 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             />
           )}
         </InputWrapper>
-        <InputWrapper id="nft-image" title="NFT Image">
+        <InputWrapper
+          id="nft-image"
+          title="NFT Image"
+          optional
+          tooltip="The custom artwork for the NFT, which will be displayed in your users' wallets"
+        >
           {(id) => (
             <ImageSelect
               id={id}
