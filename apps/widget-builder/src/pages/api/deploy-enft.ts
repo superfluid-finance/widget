@@ -23,7 +23,6 @@ import * as chains from "viem/chains";
 import { superfluidRpcUrls } from "../../superfluidRpcUrls";
 import { ExistentialNFTCloneFactoryABI } from "../../types/abi-types";
 import { createBaseURI } from "../../utils/baseURI";
-import { verifyCaptcha } from "../../utils/captcha";
 import { pinNFTImageToIPFS } from "../../utils/pinata";
 import rateLimit, { checkRateLimit } from "../../utils/rate-limit";
 
@@ -64,11 +63,11 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(429);
   }
 
-  try {
-    await verifyCaptcha(recaptchaToken);
-  } catch {
-    return res.status(400).json({ error: "Invalid recaptcha token" });
-  }
+  // try {
+  //   await verifyCaptcha(recaptchaToken);
+  // } catch {
+  //   return res.status(400).json({ error: "Invalid recaptcha token" });
+  // }
 
   const nftImageHash = await pinNFTImageToIPFS({
     tokenName,
@@ -79,7 +78,7 @@ const handler: NextApiHandler = async (req, res) => {
   const deployConfig = Object.entries(selectedPaymentOptions).map(
     ([chainId, paymentOptions]) => {
       const rpcUrl = superfluidRpcUrls[Number(chainId)];
-      if (rpcUrl) {
+      if (!rpcUrl) {
         throw new Error("Superfluid RPC URL not found.");
       }
 
