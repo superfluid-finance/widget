@@ -228,6 +228,7 @@ export function Widget({
       eventListeners: {
         onButtonClick: eventListeners?.onButtonClick ?? NOOP_FUNCTION,
         onRouteChange: eventListeners?.onRouteChange ?? NOOP_FUNCTION,
+        onTransactionSent: eventListeners?.onTransactionSent ?? NOOP_FUNCTION,
         onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
         onSuccessButtonClick:
           eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,
@@ -248,7 +249,7 @@ export function Widget({
       walletManager,
       stepper,
       viewProps.type,
-      eventListeners?.onSuccess,
+      eventListeners?.onTransactionSent,
       eventListeners?.onSuccessButtonClick,
     ],
   );

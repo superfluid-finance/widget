@@ -1,5 +1,16 @@
 # @superfluid-finance/widget
 
+## 0.4.0
+
+### Minor Changes
+
+- f8af699: Updated @superfluid-finance/tokenlist to 2.3.1
+
+### Patch Changes
+
+- 778f670: Add new event handlers (onRouteChange & onButtonClick)
+- 68123ce: Update dependencies
+
 ## 0.3.0
 
 ### Minor Changes

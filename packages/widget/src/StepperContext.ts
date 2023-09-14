@@ -5,8 +5,8 @@ export type StepperContextValue = {
   activeStep: number;
   totalSteps: number;
   setActiveStep: (activeStep: number) => void;
-  handleNext: () => void;
-  handleBack: () => void;
+  handleNext: (fromStep: number) => void;
+  handleBack: (fromStep: number) => void;
   orientation: Orientation;
 };
 

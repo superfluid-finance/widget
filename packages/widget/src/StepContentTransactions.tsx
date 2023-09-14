@@ -8,13 +8,14 @@ import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress.j
 import { ContractWriteStatus } from "./ContractWriteStatus.js";
 import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
+import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { useWidget } from "./WidgetContext.js";
 
 const CloseIcon = normalizeIcon(CloseIcon_);
 
-export function StepContentTransactions() {
-  const { handleBack, handleNext } = useStepper();
+export function StepContentTransactions({ stepIndex }: StepProps) {
+  const { handleBack, handleNext, setActiveStep, totalSteps } = useStepper();
 
   const { contractWrites, contractWriteResults, writeIndex } =
     useCommandHandler(); // Cleaner to pass with props.
@@ -28,16 +29,16 @@ export function StepContentTransactions() {
   useEffect(() => {
     if (writeIndex > 0 && writeIndex === contractWriteResults.length) {
       // TODO(KK): Check for success statuses. Maybe if not everything is a success, provide an explicit continue button.
-      handleNext(); // i.e. all transactions handled
+      setActiveStep(totalSteps - 1); // i.e. all transactions handled
     }
-  }, [writeIndex, contractWriteResults, handleNext]);
+  }, [writeIndex, contractWriteResults, handleNext, totalSteps]);
 
   const onBack = useCallback(() => {
-    handleBack();
+    handleBack(stepIndex);
     runEventListener(eventListeners.onButtonClick, {
       type: "back_transactions",
     });
-  }, [handleBack, eventListeners.onButtonClick]);
+  }, [handleBack, eventListeners.onButtonClick, stepIndex]);
 
   const total = contractWrites.length;
   const currentResult = contractWriteResults[writeIndex];
