@@ -556,8 +556,8 @@ importers:
         specifier: ^5.14.8
         version: 5.14.8(react@18.2.0)
       '@superfluid-finance/metadata':
-        specifier: ^1.1.14
-        version: 1.1.14
+        specifier: ^1.1.15
+        version: 1.1.15
       '@superfluid-finance/tokenlist':
         specifier: ^2.3.1
         version: 2.3.1
@@ -4476,8 +4476,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@superfluid-finance/metadata@1.1.14:
-    resolution: {integrity: sha512-TRpZfiCsGJeaLkH3PnAkYhdm1LJoBndOU3nTtDkD0pNSREfGj+esYriVICsKQX97ny8lZtFThK4tggvOZl3VYQ==}
+  /@superfluid-finance/metadata@1.1.15:
+    resolution: {integrity: sha512-NFTamoi9K3tNXZk0iPZ2z4ngPitiCTgrqp3E37hkZC5vwKkVP8S0ejMsDdzfzTuY0QZTN33mhg4xddyGqJjGCQ==}
     dev: false
 
   /@superfluid-finance/tokenlist@2.3.1:
