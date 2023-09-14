@@ -141,7 +141,11 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       });
 
       if (!response.ok) {
-        console.error("Deploying NFT failed.", response);
+        const body = await response.json();
+        console.error("Deploying NFT failed.", body);
+
+        setErrors(body);
+
         ajs.track("enft_deployment_failed", { reason: response });
 
         return;
