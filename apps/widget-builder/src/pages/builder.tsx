@@ -53,15 +53,19 @@ export default function Builder() {
   const handleNext = useCallback(() => {
     const nextStep = Math.min(activeStep + 1, lastStep);
     setActiveStep(nextStep);
-    ajs.track("next_step", {
+    ajs.track("tab_changed", {
       tab: tabLabels[nextStep],
+      button: "next_button",
     });
   }, [ajs, activeStep]);
 
   const handleBack = useCallback(() => {
     const prevStep = Math.max(activeStep - 1, 0);
     setActiveStep(prevStep);
-    ajs.track("previous_step", { tab: tabLabels[prevStep] });
+    ajs.track("tab_changed", {
+      tab: tabLabels[prevStep],
+      button: "back_button",
+    });
   }, [ajs, activeStep]);
 
   const formMethods = useForm<WidgetProps>({
@@ -83,7 +87,10 @@ export default function Builder() {
     (_: React.SyntheticEvent, value: string) => {
       const tabNumber = Number(value);
       setActiveStep(tabNumber);
-      ajs.track("tab_changed", { tab: tabLabels[tabNumber] });
+      ajs.track("tab_changed", {
+        tab: tabLabels[tabNumber],
+        button: "tab_button",
+      });
     },
     [ajs],
   );
