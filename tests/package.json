@@ -3,8 +3,8 @@
   "version": "0.0.3",
   "private": true,
   "devDependencies": {
-    "@currents/playwright": "^0.7.2",
-    "@playwright/test": "^1.37.1",
+    "@currents/playwright": "^0.8.1",
+    "@playwright/test": "^1.38.0",
     "@synthetixio/synpress": "^3.7.1",
     "dotenv": "16.3.1",
     "ethers": "6.7.1",
@@ -14,8 +14,5 @@
     "lint:check-no-focused-tests": "grep -FR test.only specs || { echo '✅ No test is focused.';exit 0; } && { echo '❌ You have focused tests.'; exit 1; }",
     "build": "tsc --noEmit --project ./tsconfig.json",
     "tests": "npx playwright test --headed"
-  },
-  "dependencies": {
-    "@bgotink/playwright-coverage": "^0.2.1"
   }
 }

@@ -1,6 +1,6 @@
 import * as metamask from "@synthetixio/synpress/commands/metamask";
 
-import { paymentOptions,rebounderAddresses } from "../pageObjects/basePage";
+import { paymentOptions, rebounderAddresses } from "../pageObjects/basePage";
 import { BuilderPage } from "../pageObjects/builderPage";
 import { WidgetPage } from "../pageObjects/widgetPage";
 import { test } from "../walletSetup";

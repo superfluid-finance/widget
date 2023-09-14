@@ -23,6 +23,7 @@ type PaymentOption = {
   chainId: string;
   upfrontPayment?: string;
   userDefinedRate?: boolean;
+  snapshotPath?: string;
 };
 
 type PartialPaymentOption = {
@@ -35,4 +36,5 @@ type PartialPaymentOption = {
   chainId?: string;
   upfrontPayment?: string;
   userDefinedRate?: boolean;
+  snapshotPath?: string;
 };

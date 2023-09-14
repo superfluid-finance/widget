@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { paymentOptions,partialPaymentOptions } from "../pageObjects/basePage";
+import { demoOptions, paymentOptions } from "../pageObjects/basePage";
 import { BuilderPage } from "../pageObjects/builderPage";
 import { WidgetPage } from "../pageObjects/widgetPage";
 
@@ -26,7 +26,7 @@ test("Changing the products description", async ({ page }) => {
   await widgetPage.validateProductDescription(testString);
 });
 
-test("Adding a payment new option", async ({ page }) => {
+test("Adding a new payment option", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
   await builderPage.changeProductName("Testing");
@@ -209,9 +209,9 @@ test("Add payment option form errors ( red borders and field titles )", async ({
   page,
 }) => {
   let builderPage = new BuilderPage(page);
-  await builderPage.openPaymentTab()
-  await builderPage.clickAddPaymentOptionFormButton()
-  await builderPage.enableUpfrontPaymentSwitch()
+  await builderPage.openPaymentTab();
+  await builderPage.clickAddPaymentOptionFormButton();
+  await builderPage.enableUpfrontPaymentSwitch();
   await builderPage.clickAddPaymentOptionButton();
   await builderPage.validateOptionFormFieldError("network");
   await builderPage.validateOptionFormFieldError("receiver");
@@ -224,9 +224,10 @@ test("Add payment option form tooltips (network, receiver address, super token, 
   page,
 }) => {
   let builderPage = new BuilderPage(page);
-  await builderPage.hoverOnNetworkFieldAndValidateTooltipText(
-    "Select the network for the payment option",
-  );
+  await builderPage.openPaymentTab();
+  await builderPage.clickAddPaymentOptionFormButton();
+  await builderPage.enableUpfrontPaymentSwitch();
+  await builderPage.hoverAndValidateAllPaymentFormTooltipTexts();
 });
 
 test("Add payment option form - Networks shown in the dropdown", async ({
@@ -239,54 +240,113 @@ test("Add payment option form - Networks shown in the dropdown", async ({
   await builderPage.validateNetworksInDropdown();
 });
 
-test("Add payment option form - tokens shown in the dropdown", async ({
+test("Add payment option form - tokens and their icons shown in the dropdown", async ({
   page,
 }) => {
+  let testOption = {
+    network: "Goerli",
+  };
   let builderPage = new BuilderPage(page);
-  await builderPage.validateTokensInDropdown(tokensList);
+  await builderPage.addPartialPaymentOption(testOption);
+  await builderPage.validateTokensInDropdown("Goerli");
 });
 
 test("Add payment option form - searching for a token", async ({ page }) => {
   let builderPage = new BuilderPage(page);
-  await builderPage.searchAndValidateTokenInDropdown(testToken);
+  await builderPage.openPaymentTab();
+  await builderPage.clickAddPaymentOptionFormButton();
+  await builderPage.selectNetworkForPaymentOption("Goerli");
+  await builderPage.searchAndValidateTokenInDropdown("TDLx");
 });
 
-test("Add payment option form - invalid stream rate values ( negative , 0 , letters , scientific notion )", async ({
+test("Add payment option form - invalid receiver field values", async ({
   page,
 }) => {
   let builderPage = new BuilderPage(page);
-  await builderPage.validateInvalidStreamRateValues();
+  await builderPage.openPaymentTab();
+  await builderPage.clickAddPaymentOptionFormButton();
+  await builderPage.inputInvalidValuesAndVerifyPaymentFormError("receiver");
 });
 
-test("Add payment option form - invalid upfront payment amount values ( negative , 0 , letters , scientific notion )", async ({
+test("Add payment option form - invalid flow rate field values", async ({
   page,
 }) => {
   let builderPage = new BuilderPage(page);
-  await builderPage.validateInvalidUpfrontPaymentValues();
+  await builderPage.openPaymentTab();
+  await builderPage.clickAddPaymentOptionFormButton();
+  await builderPage.inputInvalidValuesAndVerifyPaymentFormError("flowRate");
+});
+
+test("Add payment option form - invalid upfront payment field values ", async ({
+  page,
+}) => {
+  let builderPage = new BuilderPage(page);
+  await builderPage.openPaymentTab();
+  await builderPage.clickAddPaymentOptionFormButton();
+  await builderPage.enableUpfrontPaymentSwitch();
+  await builderPage.inputInvalidValuesAndVerifyPaymentFormError(
+    "upfrontPaymentAmount",
+  );
 });
 
 test("Replace with demo data hyperlink adding demo options", async ({
   page,
 }) => {
   let builderPage = new BuilderPage(page);
-  await builderPage.clickReplaceWithDemoDataHyperlink();
-  await builderPage.validateDemoOptionsAdded();
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openPaymentTab();
+  await builderPage.deleteLastAddedPaymentOption();
+  await builderPage.clickReplaceWithDemoDatalink();
+  await builderPage.verifyAddedPaymentOptions(demoOptions);
+  await widgetPage.validateNoOptionIsSelected();
 });
 
-test("Using magic wand to generate payment options", async ({ page }) => {
+test("Using magic wand to generate payment options and its tooltip", async ({
+  page,
+}) => {
   let builderPage = new BuilderPage(page);
-  await builderPage.clickMagicWandButton();
-  await builderPage.validateGeneratedPaymentOptions();
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openPaymentTab();
+  await builderPage.hoverOnWandButtonAndValidateTooltipText(
+    "Replace with demo payment details",
+  );
+  await builderPage.clickOnWandButton();
+  await builderPage.verifyAddedPaymentOptions(demoOptions);
+  await builderPage.validateAddedPaymentOptionCount("8");
+  await widgetPage.validateNoOptionIsSelected();
 });
 
 test("Address tooltips shown in the payment list", async ({ page }) => {
   let builderPage = new BuilderPage(page);
-  await builderPage.hoverOnAddressInPaymentListAndValidateTooltip();
+  await builderPage.openPaymentTab();
+  await builderPage.hoverOnFirstAddressInPaymentListAndValidateTooltip();
 });
 
-test("Token icons shown correctly in the payment options cards", async ({
+test("Fixed and User defined rate descriptions in the add payment form", async ({
   page,
 }) => {
   let builderPage = new BuilderPage(page);
-  await builderPage.validateTokenIconsInPaymentOptions();
+  await builderPage.openPaymentTab();
+  await builderPage.clickAddPaymentOptionFormButton();
+  await builderPage.validateFixedRateHelperMessage();
+  await builderPage.clickDiscardPaymentOptionButton();
+  await builderPage.openProductTab();
+  await builderPage.addPartialPaymentOption({
+    flowRate: "1",
+    userDefinedRate: true,
+  });
+  await builderPage.validateUserDefinedRateHelperMessage();
+});
+
+test("Payment option form - Clearing the selected token with the x button", async ({
+  page,
+}) => {
+  let builderPage = new BuilderPage(page);
+  await builderPage.addPartialPaymentOption({
+    network: "Goerli",
+    superToken: "TDLx",
+    chainId: "5",
+  });
+  await builderPage.clearSelectedTokenWithXButton();
+  await builderPage.validateNoTokenIsSelectedInAddPaymentForm();
 });

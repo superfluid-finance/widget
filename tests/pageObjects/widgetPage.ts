@@ -148,6 +148,27 @@ export class WidgetPage extends BasePage {
     }
   }
 
+  async validateNoOptionIsSelected() {
+    await expect(this.networkSelectionButton.locator("input")).toHaveAttribute(
+      "placeholder",
+      "Network",
+    );
+    await expect(this.tokenSelectionButton.locator("input")).toHaveAttribute(
+      "placeholder",
+      "Token",
+    );
+    await this.networkSelectionButton
+      .getAttribute("value")
+      .then(async (value) => {
+        await expect(value).toBe(null);
+      });
+    await this.tokenSelectionButton
+      .getAttribute("value")
+      .then(async (value) => {
+        await expect(value).toBe(null);
+      });
+  }
+
   async validateNoTestImageIsSet() {
     await test.step(`Validate no image is set in the widget`, async () => {
       await expect(this.productImage).not.toBeVisible();
@@ -168,12 +189,14 @@ export class WidgetPage extends BasePage {
   }
   async validateInvalidTestImage() {
     await test.step(`Making sure the widget shows a blank picture if the image format is invalid`, async () => {
-      const screenshot = await this.productImage.screenshot();
       //Snapshot is saved in specs/specFileName.ts-snapshots
       //Sometimes the rounded edges can show up abit different than the screenshot in different viewports, so the 1% threshold
-      await expect(screenshot).toMatchSnapshot("./data/emptyImage.png", {
-        maxDiffPixelRatio: 1,
-      });
+      await expect(this.productImage).toHaveScreenshot(
+        "./data/emptyImage.png",
+        {
+          maxDiffPixelRatio: 0.01,
+        },
+      );
     });
   }
 
@@ -388,12 +411,14 @@ export class WidgetPage extends BasePage {
   }
   async validateUsedTestImage() {
     await test.step(`Making sure the Superfluid logo is shown in the widget`, async () => {
-      const screenshot = await this.productImage.screenshot();
       //Snapshot is saved in specs/specFileName.ts-snapshots
       //Sometimes the rounded edges can show up abit different than the screenshot in different viewports, so the 1% threshold
-      await expect(screenshot).toMatchSnapshot("./data/Superfluid_logo.png", {
-        maxDiffPixelRatio: 1,
-      });
+      await expect(this.productImage).toHaveScreenshot(
+        "./data/Superfluid_logo.png",
+        {
+          maxDiffPixelRatio: 0.01,
+        },
+      );
     });
   }
 

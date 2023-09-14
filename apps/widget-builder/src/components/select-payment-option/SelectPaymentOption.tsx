@@ -285,6 +285,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                       )}
                     </ListItemAvatar>
                     <ListItemText
+                      data-testid="token-selection-name-and-symbol"
                       primary={option.symbol}
                       secondary={option.name}
                       secondaryTypographyProps={{ variant: "caption" }}

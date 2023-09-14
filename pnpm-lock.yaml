@@ -221,9 +221,6 @@ importers:
       eslint-config-next:
         specifier: ^13.4.18
         version: 13.4.19(eslint@8.48.0)(typescript@5.2.2)
-      swc-plugin-coverage-instrument:
-        specifier: 0.0.20
-        version: 0.0.20
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -634,14 +631,14 @@ importers:
     dependencies:
       '@bgotink/playwright-coverage':
         specifier: ^0.2.1
-        version: 0.2.1(@playwright/test@1.37.1)
+        version: 0.2.1(@playwright/test@1.38.0)
     devDependencies:
       '@currents/playwright':
-        specifier: ^0.7.2
-        version: 0.7.2
+        specifier: ^0.8.1
+        version: 0.8.1
       '@playwright/test':
-        specifier: ^1.37.1
-        version: 1.37.1
+        specifier: ^1.38.0
+        version: 1.38.0
       '@synthetixio/synpress':
         specifier: ^3.7.1
         version: 3.7.1(typescript@5.2.2)
@@ -907,13 +904,13 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: false
 
-  /@bgotink/playwright-coverage@0.2.1(@playwright/test@1.37.1):
+  /@bgotink/playwright-coverage@0.2.1(@playwright/test@1.38.0):
     resolution: {integrity: sha512-W3SJA4PZjY1lsfEENR75oefksDxK0o4ychVY00FWE+c55Q4IO7Y2VSunbhpQzWS+YVR+PmE8oGGVB9t5Ms+Ssw==}
     peerDependencies:
       '@playwright/test': ^1.14.1
     dependencies:
       '@bcoe/v8-coverage': 0.2.3
-      '@playwright/test': 1.37.1
+      '@playwright/test': 1.38.0
       comlink: 4.4.1
       istanbul-lib-coverage: 3.2.0
       istanbul-lib-report: 3.0.1
@@ -1146,8 +1143,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /@currents/playwright@0.7.2:
-    resolution: {integrity: sha512-JBA6R6dB9iC9RZhoa4iXFRdTDkTpBO2WrssnkhbziQyENeuS+qV2TeYAjg0gGEYEDqC3FTl9TUam+MIRL+MtaQ==}
+  /@currents/playwright@0.8.1:
+    resolution: {integrity: sha512-2NwNpyVymXQ20eVQdre2HOZnKwl/F2/qgyQFHCONk4YEKtzQjHB9efFQfVI5lNjfsLYgLwXTkvkzdPMNquZgtQ==}
     hasBin: true
     dependencies:
       '@babel/code-frame': 7.22.10
@@ -1162,7 +1159,6 @@ packages:
       debug: 4.3.4(supports-color@8.1.1)
       dotenv: 16.3.1
       execa: 7.2.0
-      fast-safe-stringify: 2.1.1
       getos: 3.2.1
       image-size: 1.0.2
       json-stringify-safe: 5.0.1
@@ -2726,15 +2722,12 @@ packages:
       - debug
     dev: false
 
-  /@playwright/test@1.37.1:
-    resolution: {integrity: sha512-bq9zTli3vWJo8S3LwB91U0qDNQDpEXnw7knhxLM0nwDvexQAwx9tO8iKDZSqqneVq+URd/WIoz+BALMqUTgdSg==}
+  /@playwright/test@1.38.0:
+    resolution: {integrity: sha512-xis/RXXsLxwThKnlIXouxmIvvT3zvQj1JE39GsNieMUrMpb3/GySHDh2j8itCG22qKVD4MYLBp7xB73cUW/UUw==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      '@types/node': 20.5.7
-      playwright-core: 1.37.1
-    optionalDependencies:
-      fsevents: 2.3.2
+      playwright: 1.38.0
 
   /@popperjs/core@2.11.8:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
@@ -4410,7 +4403,7 @@ packages:
       '@cypress/webpack-dev-server': 3.5.2(debug@4.3.4)
       '@drptbl/gremlins.js': 2.2.1
       '@foundry-rs/easy-foundryup': 0.1.3
-      '@playwright/test': 1.37.1
+      '@playwright/test': 1.38.0
       '@testing-library/cypress': 9.0.0(cypress@12.17.3)
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
       '@types/testing-library__cypress': 5.0.9
@@ -13209,10 +13202,19 @@ packages:
       pathe: 1.1.1
     dev: true
 
-  /playwright-core@1.37.1:
-    resolution: {integrity: sha512-17EuQxlSIYCmEMwzMqusJ2ztDgJePjrbttaefgdsiqeLWidjYz9BxXaTaZWxH1J95SHGk6tjE+dwgWILJoUZfA==}
+  /playwright-core@1.38.0:
+    resolution: {integrity: sha512-f8z1y8J9zvmHoEhKgspmCvOExF2XdcxMW8jNRuX4vkQFrzV4MlZ55iwb5QeyiFQgOFCUolXiRHgpjSEnqvO48g==}
     engines: {node: '>=16'}
     hasBin: true
+
+  /playwright@1.38.0:
+    resolution: {integrity: sha512-fJGw+HO0YY+fU/F1N57DMO+TmXHTrmr905J05zwAQE9xkuwP/QLDk63rVhmyxh03dYnEhnRbsdbH9B0UVVRB3A==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      playwright-core: 1.38.0
+    optionalDependencies:
+      fsevents: 2.3.2
 
   /pngjs@5.0.0:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
@@ -14975,10 +14977,6 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
-    dev: true
-
-  /swc-plugin-coverage-instrument@0.0.20:
-    resolution: {integrity: sha512-WXTGILCZE2hW61yrmxi6doN/UB4RT2K1JJSQVPn9JMJ6X4WJpZsesHi4lHy6qRKVsNIlHZvTWofkpuRi/WQUig==}
     dev: true
 
   /symbol-tree@3.2.4:
