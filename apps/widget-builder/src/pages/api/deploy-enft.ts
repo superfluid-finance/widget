@@ -4,6 +4,7 @@ import {
   PaymentOption,
   ProductDetails,
 } from "@superfluid-finance/widget";
+import metadata from "@superfluid-finance/widget/metadata";
 import { NextApiHandler } from "next";
 import {
   Address,
@@ -12,10 +13,11 @@ import {
   createWalletClient,
   decodeEventLog,
   getContract,
+  Hash,
   http,
   parseEther,
 } from "viem";
-import { mnemonicToAccount, privateKeyToAccount } from "viem/accounts";
+import { privateKeyToAccount } from "viem/accounts";
 import * as chains from "viem/chains";
 
 import { superfluidRpcUrls } from "../../superfluidRpcUrls";
@@ -30,17 +32,12 @@ const limiter = rateLimit({
   uniqueTokenPerInterval: 500,
 });
 
-const mnemonic = process.env.DEPLOYER_MNEMONIC ?? "";
-const account = mnemonic
-  ? mnemonicToAccount(mnemonic)
+const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? "";
+const account = privateKey
+  ? privateKeyToAccount(privateKey as Hash)
   : privateKeyToAccount(
       "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161",
     );
-
-// @ts-ignore polyfill
-BigInt.prototype.toJSON = function () {
-  return this.toString();
-};
 
 const handler: NextApiHandler = async (req, res) => {
   const {
@@ -90,9 +87,8 @@ const handler: NextApiHandler = async (req, res) => {
         (chain) => chain.id === Number(chainId) ?? chains.polygonMumbai,
       ) as Chain;
 
-      const contractAddress: Address =
-        "0x227a2239Add53F753eA3e201E97608E817B46f38"; // metadata.getNetworkByChainId(chain.id)
-      //?.contractsV1.existentialNFTCloneFactory as Address;
+      const contractAddress: Address = metadata.getNetworkByChainId(chain.id)
+        ?.contractsV1.existentialNFTCloneFactory as Address;
 
       return {
         paymentOptions,
@@ -156,7 +152,6 @@ const handler: NextApiHandler = async (req, res) => {
           });
 
           const hash = await cloneFactory.write.deployClone(cloneArgs, { gas });
-
           const rc = await publicClient.waitForTransactionReceipt({ hash });
 
           const { args } = decodeEventLog({
@@ -165,7 +160,7 @@ const handler: NextApiHandler = async (req, res) => {
             topics: rc.logs[0].topics,
           });
 
-          return { [chain.id]: (args as { clone: `0x${string}` }).clone };
+          return { [chain.id]: (args as { clone: Address }).clone };
         },
       ),
     );

@@ -24,13 +24,13 @@ import {
   useMemo,
   useState,
 } from "react";
-import { createPortal } from "react-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useFormContext } from "react-hook-form";
 import { Address } from "viem";
 import { Chain } from "wagmi";
 
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
+import { polyfill } from "../../utils";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
 import NFTDeploymentDialog from "../nft-deployment-modal/NFTDeploymentDialog";
@@ -42,6 +42,8 @@ const recaptchaKey =
 type StreamGatingEditorProps = {
   previewContainerRef: RefObject<HTMLDivElement>;
 };
+
+polyfill();
 
 const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
   previewContainerRef,
@@ -280,12 +282,12 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         size="invisible"
         onChange={onRecaptchaChange}
       />
-      {previewContainerRef &&
+      {/* {previewContainerRef &&
         createPortal(
           <div>NFT Image Placeholder</div>,
           // <img src="" width={400} height={400} alt="NFT Preview" />,
           previewContainerRef.current!,
-        )}
+        )} */}
     </>
   );
 };

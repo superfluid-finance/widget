@@ -191,6 +191,8 @@ export default function Builder() {
           </Paper>
         </TabContext>
       </Drawer>
+      {/* TODO: Render this conditionally, and use a React Portal, 
+        from StreamGatingEditor, to show the custom preview of the NFT */}
       <Stack
         component="main"
         alignItems="center"
@@ -202,30 +204,26 @@ export default function Builder() {
         }}
         ref={previewContainerRef}
       >
-        {tabLabels[activeStep] !== "Gating" && (
-          <>
-            <Box textAlign="center" sx={{ mb: 6.5 }}>
-              <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
-                Widget Preview
-              </Typography>
-              <Typography color="grey.800">
-                In this preview you can see all the changes you apply in the
-                builder menu.
-              </Typography>
-              <Typography color="grey.800">
-                This is how your checkout will look once you export it.
-              </Typography>
-            </Box>
-            <WidgetPreview
-              {...{
-                productDetails,
-                paymentDetails,
-                displaySettings,
-                type,
-              }}
-            />
-          </>
-        )}
+        <Box textAlign="center" sx={{ mb: 6.5 }}>
+          <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>
+            Widget Preview
+          </Typography>
+          <Typography color="grey.800">
+            In this preview you can see all the changes you apply in the builder
+            menu.
+          </Typography>
+          <Typography color="grey.800">
+            This is how your checkout will look once you export it.
+          </Typography>
+        </Box>
+        <WidgetPreview
+          {...{
+            productDetails,
+            paymentDetails,
+            displaySettings,
+            type,
+          }}
+        />
       </Stack>
       <TermsAndPrivacy />
       <Box sx={{ position: "absolute", top: 5, right: 5 }}>

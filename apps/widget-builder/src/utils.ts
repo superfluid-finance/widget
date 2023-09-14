@@ -4,3 +4,11 @@ export function shortenHex(address: string, length = 4) {
     address.length,
   )}`;
 }
+
+export function polyfill() {
+  // Polyfill BigInt JSON serialization
+  // @ts-ignore
+  BigInt.prototype.toJSON = function () {
+    return this.toString();
+  };
+}
