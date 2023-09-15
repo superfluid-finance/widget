@@ -61,12 +61,6 @@ const handler: NextApiHandler = async (req, res) => {
     nftImage?: string;
   } = JSON.parse(req.body);
 
-  if (!productDetails.name || !productDetails.description) {
-    return res
-      .status(400)
-      .json({ error: "Deployment Failed: Invalid Product details" });
-  }
-
   try {
     await checkRateLimit(req, res, limiter.check);
   } catch {
@@ -81,6 +75,12 @@ const handler: NextApiHandler = async (req, res) => {
     return res
       .status(400)
       .json({ error: "Deployment Failed: Invalid recaptcha token" });
+  }
+
+  if (!productDetails.name || !productDetails.description) {
+    return res
+      .status(400)
+      .json({ error: "Deployment Failed: Invalid Product details" });
   }
 
   const nftImageHash = await pinNFTImageToIPFS({
