@@ -134,19 +134,19 @@ export default function Builder() {
             }}
           >
             <FormProvider {...formMethods}>
-              <TabPanel value="0" sx={{ height: "100%" }}>
+              <TabPanel value="0">
                 <ProductEditor />
               </TabPanel>
-              <TabPanel value="1" sx={{ height: "100%" }}>
+              <TabPanel value="1">
                 <PaymentEditor />
               </TabPanel>
-              <TabPanel value="2" sx={{ height: "100%" }}>
+              <TabPanel value="2">
                 <UiEditor />
               </TabPanel>
-              <TabPanel value="3" sx={{ height: "100%" }}>
+              <TabPanel value="3">
                 <ExportEditor />
               </TabPanel>
-              <TabPanel value="4" sx={{ height: "100%" }}>
+              <TabPanel value="4">
                 <StreamGatingEditor previewContainerRef={previewContainerRef} />
               </TabPanel>
             </FormProvider>
