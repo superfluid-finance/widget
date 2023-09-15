@@ -168,9 +168,8 @@ const handler: NextApiHandler = async (req, res) => {
 
           if (gas > DEPLOYMENT_GAS_LIMIT) {
             return {
-              [chain.id]: null,
-              error:
-                "Gas estimation reached maximum limit, try with less payment options.",
+              [chain.id]:
+                "Deployment Failed: Gas estimation reached maximum limit, try with less payment options on this network.",
             };
           }
 
