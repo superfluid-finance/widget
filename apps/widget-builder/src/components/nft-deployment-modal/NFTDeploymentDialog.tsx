@@ -47,10 +47,13 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
     link.click();
   }, [cloneAddresses]);
 
-  const successfulDeployments = useMemo(
-    () => Object.values(cloneAddresses).filter(Boolean).length,
-    [cloneAddresses],
-  );
+  const [successfulDeployments, failedDeployments] = useMemo(() => {
+    const succesfulDeployments =
+      Object.values(cloneAddresses).filter(Boolean).length;
+    const failedDeployments = cloneAddresses.length - succesfulDeployments;
+
+    return [succesfulDeployments, failedDeployments];
+  }, [cloneAddresses]);
 
   return (
     <Dialog open={open}>
@@ -77,9 +80,12 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
             <Typography
               variant="h6"
               textAlign="center"
-            >{`You deployed an NFT contract for ${successfulDeployments} networks. Failed: ${
-              cloneAddresses.length - successfulDeployments
-            } networks.`}</Typography>
+            >{`You deployed an NFT contract for ${successfulDeployments} networks.${
+              failedDeployments === 0
+                ? ""
+                : ` Failed to deploy for ${failedDeployments} networks.`
+            }`}</Typography>
+
             <Typography color="grey.800" textAlign="center">
               Export contract addresses or check how you can use them to gate
               your content.
