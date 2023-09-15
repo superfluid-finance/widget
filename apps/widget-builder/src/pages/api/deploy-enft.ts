@@ -35,6 +35,9 @@ const limiter = rateLimit({
 const DEFAULT_ACCOUNT =
   "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
 
+const DEPLOYMENT_GAS_LIMIT =
+  BigInt(Number(process.env.DEPLOYMENT_GAS_LIMIT)) ?? BigInt(800_000);
+
 const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? DEFAULT_ACCOUNT;
 const account = privateKeyToAccount(privateKey as Hash);
 
@@ -152,7 +155,7 @@ const handler: NextApiHandler = async (req, res) => {
             args: cloneArgs,
           });
 
-          if (gas > 800_000) {
+          if (gas > DEPLOYMENT_GAS_LIMIT) {
             return {
               [chain.id]: null,
               error:
