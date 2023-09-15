@@ -32,7 +32,7 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
       // TODO(KK): Check for success statuses. Maybe if not everything is a success, provide an explicit continue button.
       setActiveStep(totalSteps - 1); // i.e. all transactions handled
     }
-  }, [writeIndex, contractWriteResults, handleNext, totalSteps]);
+  }, [writeIndex, contractWriteResults, handleNext, totalSteps, setActiveStep]);
 
   const onBack = useCallback(() => {
     handleBack(stepIndex);
@@ -84,7 +84,15 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             total={total}
           />
         </Stack>
-        <Stack gap={1}>{contractWriteResults.map(ContractWriteStatus)}</Stack>
+        <Stack gap={1}>
+          {contractWriteResults.map((result, index) => (
+            <ContractWriteStatus
+              key={index.toString()}
+              result={result}
+              index={index}
+            />
+          ))}
+        </Stack>
         {/* // TODO(KK): We're not currently displaying the error anywhere.
         {currentResult?.relevantError && (
           <Alert severity="error">

@@ -54,7 +54,7 @@ export default function StepContentPaymentOption({ stepIndex }: StepProps) {
   const onContinue = useCallback(() => {
     handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "next_step" });
-  }, [handleNext, eventListeners.onButtonClick]);
+  }, [stepIndex, handleNext, eventListeners.onButtonClick]);
 
   return (
     <Stack

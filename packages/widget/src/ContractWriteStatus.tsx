@@ -14,10 +14,13 @@ import { normalizeIcon } from "./helpers/normalizeIcon.js";
 
 export const CircleIcon = normalizeIcon(CircleIcon_);
 
-export function ContractWriteStatus(
-  result: ContractWriteResult,
-  index: number,
-) {
+export function ContractWriteStatus({
+  result,
+  index,
+}: {
+  result: ContractWriteResult;
+  index: number;
+}) {
   const {
     contractWrite,
     signatureResult,
