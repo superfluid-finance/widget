@@ -35,8 +35,9 @@ const limiter = rateLimit({
 const DEFAULT_ACCOUNT =
   "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
 
-const DEPLOYMENT_GAS_LIMIT =
-  BigInt(Number(process.env.DEPLOYMENT_GAS_LIMIT)) ?? BigInt(800_000);
+const DEPLOYMENT_GAS_LIMIT = BigInt(
+  Number(process.env.DEPLOYMENT_GAS_LIMIT ?? 800_000),
+);
 
 const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? DEFAULT_ACCOUNT;
 const account = privateKeyToAccount(privateKey as Hash);
@@ -60,16 +61,26 @@ const handler: NextApiHandler = async (req, res) => {
     nftImage?: string;
   } = JSON.parse(req.body);
 
+  if (!productDetails.name || !productDetails.description) {
+    return res
+      .status(400)
+      .json({ error: "Deployment Failed: Invalid Product details" });
+  }
+
   try {
     await checkRateLimit(req, res, limiter.check);
   } catch {
-    return res.status(429).json({ error: "Too many requests" });
+    return res
+      .status(429)
+      .json({ error: "Deployment Failed: Too many requests" });
   }
 
   try {
     await verifyCaptcha(recaptchaToken);
   } catch {
-    return res.status(400).json({ error: "Invalid recaptcha token" });
+    return res
+      .status(400)
+      .json({ error: "Deployment Failed: Invalid recaptcha token" });
   }
 
   const nftImageHash = await pinNFTImageToIPFS({
@@ -180,9 +191,10 @@ const handler: NextApiHandler = async (req, res) => {
     res.status(200).json({ deployments });
   } catch (e) {
     console.error(e);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", message: JSON.stringify(e) });
+    res.status(500).json({
+      error: "Deployment Failed: Internal Server Error",
+      message: JSON.stringify(e),
+    });
   }
 };
 

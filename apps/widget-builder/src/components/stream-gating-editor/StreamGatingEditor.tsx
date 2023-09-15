@@ -21,6 +21,7 @@ import {
   FC,
   RefObject,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useState,
@@ -81,6 +82,12 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       recaptchaRef.current.execute();
     }
   }, []);
+
+  useEffect(() => {
+    if (!errors) return;
+    // Temporary until we have desings for error handling
+    alert(`${errors.error}${errors.message ? ": " + errors.message : ""}`);
+  }, [errors]);
 
   const onRecaptchaChange = useCallback((token: string | null) => {
     setRecaptchaToken(token);
