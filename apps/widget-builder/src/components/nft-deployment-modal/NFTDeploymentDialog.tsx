@@ -9,13 +9,13 @@ import {
 } from "@mui/material";
 import { ChainId } from "@superfluid-finance/widget";
 import Image from "next/image";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { Address } from "viem";
 
 import Link from "../../Link";
 
 type NFTDeploymentDialogProps = {
-  cloneAddresses: Record<ChainId, Address>[];
+  cloneAddresses: Record<ChainId, Address | null>[];
   open: boolean;
   onClose: () => void;
 };
@@ -47,6 +47,11 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
     link.click();
   }, [cloneAddresses]);
 
+  const successfulDeployments = useMemo(
+    () => Object.values(cloneAddresses).filter(Boolean).length,
+    [cloneAddresses],
+  );
+
   return (
     <Dialog open={open}>
       <Box
@@ -72,7 +77,9 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
             <Typography
               variant="h6"
               textAlign="center"
-            >{`You deployed an NFT contract for ${cloneAddresses.length} networks.`}</Typography>
+            >{`You deployed an NFT contract for ${successfulDeployments} networks. Failed: ${
+              cloneAddresses.length - successfulDeployments
+            } networks.`}</Typography>
             <Typography color="grey.800" textAlign="center">
               Export contract addresses or check how you can use them to gate
               your content.

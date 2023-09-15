@@ -68,7 +68,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     Partial<Record<ChainId, PaymentOption[]>>
   >({});
   const [deployedCloneAddresses, setDeployedCloneAddresses] = useState<
-    Record<ChainId, Address>[]
+    Record<ChainId, Address | null>[]
   >([]);
   const [isDeploying, setDeploying] = useState(false);
   const [isDeploymentSuccessful, setDeploymentSuccessful] = useState(false);
@@ -170,13 +170,15 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         return;
       }
 
-      const { deployments }: { deployments: Record<ChainId, Address>[] } =
+      const {
+        deployments,
+      }: { deployments: Record<ChainId, Address | null>[] } =
         await response.json();
 
       ajs.track("enft_deployment_succeeded", { deployments });
 
       setDeployedCloneAddresses(deployments);
-      setDeploymentSuccessful(true);
+      setDeploymentSuccessful(Object.values(deployments).every(Boolean));
     } catch (error) {
       console.error("Deploying NFT failed. Reason:", error);
       ajs.track("enft_deployment_failed", { reason: error });
