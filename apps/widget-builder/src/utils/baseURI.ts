@@ -1,5 +1,5 @@
 const nftAPIEndpoint =
-  "https://sfnft.superfluid.finance/api/v1/existential/getmeta";
+  "https://nft.superfluid.finance/api/v1/existential/getmeta";
 
 export const createBaseURI = (queryParams: Record<string, string>) =>
   `${nftAPIEndpoint}?${Object.entries(queryParams)

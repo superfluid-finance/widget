@@ -22,6 +22,7 @@ import * as chains from "viem/chains";
 import { superfluidRpcUrls } from "../../superfluidRpcUrls";
 import { ExistentialNFTCloneFactoryABI } from "../../types/abi-types";
 import { createBaseURI } from "../../utils/baseURI";
+import { verifyCaptcha } from "../../utils/captcha";
 import { pinNFTImageToIPFS } from "../../utils/pinata";
 import rateLimit, { checkRateLimit } from "../../utils/rate-limit";
 import { calculatePerSecondFlowRate } from "../../utils/utils";
@@ -33,6 +34,10 @@ const limiter = rateLimit({
 
 const DEFAULT_ACCOUNT =
   "0xb3fb798d8cc15dac3bcfb791900b745998ea4ae7a28ff9072cffdbb84fd4f161";
+
+const DEPLOYMENT_GAS_LIMIT = BigInt(
+  Number(process.env.DEPLOYMENT_GAS_LIMIT ?? 800_000),
+);
 
 const privateKey = process.env.DEPLOYER_PRIVATE_KEY ?? DEFAULT_ACCOUNT;
 const account = privateKeyToAccount(privateKey as Hash);
@@ -59,14 +64,18 @@ const handler: NextApiHandler = async (req, res) => {
   try {
     await checkRateLimit(req, res, limiter.check);
   } catch {
-    return res.status(429).json({ error: "Too many requests" });
+    return res
+      .status(429)
+      .json({ error: "Deployment Failed: Too many requests" });
   }
 
-  // try {
-  //   await verifyCaptcha(recaptchaToken);
-  // } catch {
-  //   return res.status(400).json({ error: "Invalid recaptcha token" });
-  // }
+  try {
+    await verifyCaptcha(recaptchaToken);
+  } catch {
+    return res
+      .status(400)
+      .json({ error: "Deployment Failed: Invalid recaptcha token" });
+  }
 
   const nftImageHash = await pinNFTImageToIPFS({
     tokenName,
@@ -123,7 +132,7 @@ const handler: NextApiHandler = async (req, res) => {
           });
 
           const sortedPaymentOptions = sortBy(paymentOptions, ({ flowRate }) =>
-            flowRate ? calculatePerSecondFlowRate(flowRate) : 1,
+            calculatePerSecondFlowRate(flowRate, 1n),
           );
 
           const cloneArgs = [
@@ -131,7 +140,7 @@ const handler: NextApiHandler = async (req, res) => {
             sortedPaymentOptions.map(({ superToken }) => superToken.address),
             sortedPaymentOptions.map(({ receiverAddress }) => receiverAddress),
             sortedPaymentOptions.map(({ flowRate }) =>
-              flowRate ? calculatePerSecondFlowRate(flowRate) : BigInt(1),
+              calculatePerSecondFlowRate(flowRate, 1n),
             ),
             tokenName,
             tokenSymbol,
@@ -151,6 +160,13 @@ const handler: NextApiHandler = async (req, res) => {
             args: cloneArgs,
           });
 
+          if (gas > DEPLOYMENT_GAS_LIMIT) {
+            return {
+              [chain.id]:
+                "Deployment Failed: Gas estimation reached maximum limit, try with less payment options on this network.",
+            };
+          }
+
           const hash = await cloneFactory.write.deployClone(cloneArgs, { gas });
           const rc = await publicClient.waitForTransactionReceipt({ hash });
 
@@ -168,9 +184,10 @@ const handler: NextApiHandler = async (req, res) => {
     res.status(200).json({ deployments });
   } catch (e) {
     console.error(e);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", message: JSON.stringify(e) });
+    res.status(500).json({
+      error: "Deployment Failed: Internal Server Error",
+      message: JSON.stringify(e),
+    });
   }
 };
 
