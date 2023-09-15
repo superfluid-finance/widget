@@ -34,36 +34,40 @@ export function ContractWriteStatus({
 
   const theme = useTheme();
 
+  const isWriting = index === writeIndex;
+
   const colors: {
     border: string;
     bullet: string;
     text: string;
   } = currentError
     ? {
-        border: theme.palette.error.main,
+        border: isWriting
+          ? theme.palette.action.active
+          : theme.palette.error.main,
         bullet: theme.palette.error.main,
         text: theme.palette.error.main,
       }
     : transactionResult.isSuccess
     ? {
-        border: theme.palette.success.main,
+        border: isWriting
+          ? theme.palette.action.active
+          : theme.palette.primary.main,
         bullet: theme.palette.success.main,
         text: theme.palette.success.main,
       }
     : writeResult?.isSuccess
     ? {
-        border:
-          index === writeIndex
-            ? theme.palette.action.active
-            : theme.palette.action.selected,
+        border: isWriting
+          ? theme.palette.action.active
+          : theme.palette.action.selected,
         bullet: theme.palette.warning.main,
-        text: theme.palette.warning.main,
+        text: theme.palette.text.secondary,
       }
     : {
-        border:
-          index === writeIndex
-            ? theme.palette.action.active
-            : theme.palette.action.selected,
+        border: isWriting
+          ? theme.palette.action.active
+          : theme.palette.action.selected,
         bullet: theme.palette.text.secondary,
         text: theme.palette.text.secondary,
       };
@@ -84,8 +88,14 @@ export function ContractWriteStatus({
       }}
     >
       <Stack direction="row" alignItems="center" gap={1}>
-        <Typography data-testid="transaction-type" flex={1} variant="body2">
-          {`${index + 1}. ${displayTitle}`}
+        <Typography
+          data-testid="transaction-type"
+          flex={1}
+          color={isWriting ? "text.primary" : "text.secondary"}
+          variant="body2"
+          fontWeight={isWriting ? 500 : 400}
+        >
+          {displayTitle}
         </Typography>
         <Typography
           data-testid="transaction-status"
@@ -97,7 +107,7 @@ export function ContractWriteStatus({
             : currentError
             ? "Error"
             : transactionResult.isSuccess
-            ? "Completed"
+            ? "Transaction succeeded"
             : writeResult?.isSuccess
             ? "Transaction sent"
             : prepareResult.isLoading

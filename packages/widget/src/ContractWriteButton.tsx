@@ -1,7 +1,7 @@
 import ReplayIcon_ from "@mui/icons-material/Replay";
 import SkipNextIcon_ from "@mui/icons-material/SkipNext";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Button, Stack } from "@mui/material";
+import { Alert, Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import {
   BaseError,
@@ -98,11 +98,11 @@ export default function ContractWriteButton({
         </Button>
       ) : (
         <>
-          {isSeriousPrepareError && (
+          <Collapse in={isSeriousPrepareError}>
             <Alert severity="error">
-              {(prepareResult.error as BaseError).shortMessage}
+              {(prepareResult.error as BaseError)?.shortMessage}
             </Alert>
-          )}
+          </Collapse>
           {isSeriousPrepareError ? (
             <Button
               variant="contained"
@@ -136,16 +136,17 @@ export default function ContractWriteButton({
               {/* {contractWrite.displayTitle} */}
             </LoadingButton>
           )}
-          {showNextWriteButton && (
+          <Collapse in={showNextWriteButton}>
             <Button
               variant="text"
               size="large"
+              fullWidth
               onClick={handleNextWrite}
               endIcon={<SkipNextIcon />}
             >
-              Transaction is taking a long time. Move to next?
+              Transaction is taking a long time. Skip waiting?
             </Button>
-          )}
+          </Collapse>
         </>
       )}
     </Stack>
