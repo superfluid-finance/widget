@@ -60,7 +60,9 @@ export default function StepContentReview({ stepIndex }: StepProps) {
         ))}
       </Stack>
       <StepperCTAButton
-        disabled={!isValid || isValidating}
+        loading={isValidating}
+        loadingIndicator="Validating..."
+        disabled={!isValid}
         onClick={onContinue}
       >
         Continue

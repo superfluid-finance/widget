@@ -15,6 +15,7 @@ export type CommandHandlerContextValue = {
   submitCommands: (commands: ReadonlyArray<Command>) => void;
   setContractWrites: (contractWrites: ReadonlyArray<ContractWrite>) => void;
   writeIndex: number;
+  handleNextWrite: (currentWriteIndex: number) => void;
 };
 
 export const CommandHandlerContext = createContext<

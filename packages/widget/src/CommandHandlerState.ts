@@ -9,6 +9,7 @@ type Idle = {
   commands: ReadonlyArray<never>;
   contractWrites: ReadonlyArray<never>;
   sessionId: null;
+  writeIndex: 0;
 };
 
 type Initialized = {
@@ -20,6 +21,7 @@ type Initialized = {
     }
   >;
   sessionId: null;
+  writeIndex: 0;
 };
 
 type Handling = {
@@ -31,6 +33,7 @@ type Handling = {
     }
   >;
   sessionId: string;
+  writeIndex: number;
 };
 
 // TODO(KK): Consider if we need this.

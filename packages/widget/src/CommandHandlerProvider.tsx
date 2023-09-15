@@ -16,10 +16,13 @@ import {
   useCommandHandler,
 } from "./CommandHandlerContext.js";
 import { useCommandHandlerReducer } from "./commandHandlingReducer.js";
-import { CommandMapper } from "./CommandMapper.js";
+import { CommandMapper, CommandMapperProps } from "./CommandMapper.js";
 import { Command } from "./commands.js";
 import { ContractWrite } from "./ContractWrite.js";
-import { ContractWriteManager } from "./ContractWriteManager.js";
+import {
+  ContractWriteManager,
+  ContractWriteManagerProps,
+} from "./ContractWriteManager.js";
 import {
   superfluidHostABI,
   superfluidHostAddress,
@@ -33,8 +36,10 @@ type Props = {
 };
 
 export function CommandHandlerProvider({ children }: Props) {
-  const [{ status, commands, contractWrites, sessionId }, dispatch] =
-    useCommandHandlerReducer();
+  const [
+    { status, commands, contractWrites, sessionId, writeIndex },
+    dispatch,
+  ] = useCommandHandlerReducer();
 
   const contractWriteResults = useMemo(() => {
     const contractWritesResults_ = contractWrites
@@ -44,9 +49,11 @@ export function CommandHandlerProvider({ children }: Props) {
     return contractWritesResults_;
   }, [contractWrites]);
 
-  const writeIndex = contractWriteResults.filter(
-    (x) => x.transactionResult.isSuccess,
-  ).length;
+  const handleNextWrite = useCallback(
+    (writeIndex: number) =>
+      void dispatch({ type: "set write index", payload: writeIndex + 1 }),
+    [dispatch],
+  );
 
   const submitCommands = useCallback(
     (commands: ReadonlyArray<Command>) =>
@@ -69,6 +76,41 @@ export function CommandHandlerProvider({ children }: Props) {
     void dispatch({ type: "reset" });
   }, [dispatch]);
 
+  const onContractWrites = useCallback<
+    Required<CommandMapperProps>["onMapped"]
+  >(
+    ({ commandId, contractWrites }) =>
+      void dispatch({
+        type: "add contract writes",
+        payload: {
+          contractWrites,
+        },
+      }),
+    [],
+  );
+
+  const onContractWriteResult = useCallback<
+    Required<ContractWriteManagerProps>["onChange"]
+  >(
+    (result) => {
+      void dispatch({
+        type: "set contract write result",
+        payload: {
+          writeId: result.contractWrite.id,
+          result,
+        },
+      });
+
+      if (
+        result.transactionResult.isSuccess &&
+        result.contractWrite.id === contractWrites[writeIndex]?.id
+      ) {
+        handleNextWrite(writeIndex);
+      }
+    },
+    [writeIndex, contractWrites, handleNextWrite],
+  );
+
   const contextValue = useMemo(
     () => ({
       status,
@@ -80,6 +122,7 @@ export function CommandHandlerProvider({ children }: Props) {
       setContractWrites,
       reset,
       writeIndex,
+      handleNextWrite,
     }),
     [
       status,
@@ -88,9 +131,9 @@ export function CommandHandlerProvider({ children }: Props) {
       contractWriteResults,
       sessionId,
       submitCommands,
-      setContractWrites,
       reset,
       writeIndex,
+      handleNextWrite,
     ],
   );
 
@@ -102,14 +145,7 @@ export function CommandHandlerProvider({ children }: Props) {
           <CommandMapper
             key={commandIndex_}
             command={cmd}
-            onMapped={(x) =>
-              void dispatch({
-                type: "add contract writes",
-                payload: {
-                  contractWrites: x,
-                },
-              })
-            }
+            onMapped={onContractWrites}
           />
         ))}
         {contractWrites.map((contractWrite, writeIndex_) => (
@@ -117,15 +153,7 @@ export function CommandHandlerProvider({ children }: Props) {
             key={writeIndex_}
             prepare={writeIndex_ === writeIndex}
             contractWrite={contractWrite}
-            onChange={(result) =>
-              void dispatch({
-                type: "set contract write result",
-                payload: {
-                  writeId: contractWrite.id,
-                  result,
-                },
-              })
-            }
+            onChange={onContractWriteResult}
           />
         ))}
       </CommandHandlerContext.Provider>

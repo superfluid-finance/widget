@@ -18,8 +18,12 @@ const CloseIcon = normalizeIcon(CloseIcon_);
 export function StepContentTransactions({ stepIndex }: StepProps) {
   const { handleBack, handleNext, setActiveStep, totalSteps } = useStepper();
 
-  const { contractWrites, contractWriteResults, writeIndex } =
-    useCommandHandler(); // Cleaner to pass with props.
+  const {
+    contractWrites,
+    contractWriteResults,
+    writeIndex,
+    handleNextWrite: handleNextWrite_,
+  } = useCommandHandler(); // Cleaner to pass with props.
 
   const { eventListeners } = useWidget();
 
@@ -43,6 +47,11 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
 
   const total = contractWrites.length;
   const currentResult = contractWriteResults[writeIndex];
+
+  const handleNextWrite = useCallback(
+    () => handleNextWrite_(writeIndex),
+    [handleNextWrite_, writeIndex],
+  );
 
   return (
     <Box>
@@ -93,14 +102,12 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             />
           ))}
         </Stack>
-        {/* // TODO(KK): We're not currently displaying the error anywhere.
-        {currentResult?.relevantError && (
-          <Alert severity="error">
-            <AlertTitle>Error</AlertTitle>
-            {currentResult.relevantError.shortMessage}
-          </Alert>
-        )} */}
-        {currentResult && <ContractWriteButton {...currentResult} />}
+        {currentResult && (
+          <ContractWriteButton
+            {...currentResult}
+            handleNextWrite={handleNextWrite}
+          />
+        )}
       </Stack>
     </Box>
   );

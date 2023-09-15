@@ -1,7 +1,10 @@
+import ReplayIcon_ from "@mui/icons-material/Replay";
+import SkipNextIcon_ from "@mui/icons-material/SkipNext";
 import { LoadingButton } from "@mui/lab";
-import { Button, Stack } from "@mui/material";
-import { useCallback } from "react";
+import { Alert, Button, Stack } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
 import {
+  BaseError,
   ContractFunctionExecutionError,
   ContractFunctionRevertedError,
   ContractFunctionZeroDataError,
@@ -10,11 +13,18 @@ import { useNetwork, useSwitchNetwork } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
 import { runEventListener } from "./EventListeners.js";
+import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { useWidget } from "./WidgetContext.js";
 
-export type ContractWriteButtonProps = ContractWriteResult;
+const ReplayIcon = normalizeIcon(ReplayIcon_);
+const SkipNextIcon = normalizeIcon(SkipNextIcon_);
+
+export type ContractWriteButtonProps = {
+  handleNextWrite: () => void;
+} & ContractWriteResult;
 
 export default function ContractWriteButton({
+  handleNextWrite: handleNextWrite_,
   contractWrite,
   signatureResult,
   prepareResult,
@@ -22,7 +32,6 @@ export default function ContractWriteButton({
   transactionResult,
 }: ContractWriteButtonProps) {
   const { eventListeners } = useWidget();
-
   const write = writeResult.write;
 
   const isLoading =
@@ -55,8 +64,31 @@ export default function ContractWriteButton({
       prepareResult.error instanceof ContractFunctionRevertedError ||
       prepareResult.error instanceof ContractFunctionZeroDataError);
 
+  const [showNextWriteButton, setShowNextWriteButton] = useState(false);
+
+  const handleNextWrite = useCallback(() => {
+    handleNextWrite_();
+    setShowNextWriteButton(false);
+  }, [handleNextWrite_]);
+
+  useEffect(() => {
+    if (transactionResult.isLoading) {
+      const timeoutId = setTimeout(() => {
+        setShowNextWriteButton(true);
+      }, 5000);
+      return () => clearTimeout(timeoutId);
+    } else {
+      setShowNextWriteButton(false);
+    }
+  }, [transactionResult.isLoading, handleNextWrite]);
+
   return (
-    <Stack direction="column" alignItems="stretch" sx={{ width: "100%" }}>
+    <Stack
+      direction="column"
+      alignItems="stretch"
+      gap={1}
+      sx={{ width: "100%" }}
+    >
       {needsToSwitchNetwork ? (
         <Button
           data-testid="switch-network-button"
@@ -82,20 +114,58 @@ export default function ContractWriteButton({
               Sign
             </LoadingButton>
           ) : (
-            <LoadingButton
-              loadingIndicator="Loading…"
-              data-testid="transaction-button"
+            <>
+              {isSeriousPrepareError && (
+                <Alert severity="error">
+                  {(prepareResult.error as BaseError).shortMessage}
+                </Alert>
+              )}
+              {isSeriousPrepareError ? (
+                <Button
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  onClick={() => prepareResult?.refetch()}
+                  endIcon={<ReplayIcon />}
+                >
+                  Transaction preparation failed. Retry?
+                </Button>
+              ) : (
+                <LoadingButton
+                  loadingIndicator={
+                    transactionResult.isLoading
+                      ? "Waiting for transaction..."
+                      : writeResult.isLoading
+                      ? "Waiting for wallet..."
+                      : "Loading..."
+                  }
+                  data-testid="transaction-button"
+                  size="large"
+                  variant="contained"
+                  fullWidth
+                  disabled={
+                    !write ||
+                    transactionResult.isSuccess ||
+                    isSeriousPrepareError
+                  }
+                  onClick={onContractWriteButtonClick}
+                  loading={isLoading}
+                >
+                  Send Transaction
+                  {/* {contractWrite.displayTitle} */}
+                </LoadingButton>
+              )}
+            </>
+          )}
+          {showNextWriteButton && (
+            <Button
+              variant="text"
               size="large"
-              variant="contained"
-              fullWidth
-              disabled={
-                !write || transactionResult.isSuccess || isSeriousPrepareError
-              }
-              onClick={onContractWriteButtonClick}
-              loading={isLoading}
+              onClick={handleNextWrite}
+              endIcon={<SkipNextIcon />}
             >
-              {contractWrite.displayTitle}
-            </LoadingButton>
+              Transaction is taking a long time. Move to next?
+            </Button>
           )}
         </>
       )}
