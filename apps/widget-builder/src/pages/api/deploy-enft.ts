@@ -22,6 +22,7 @@ import * as chains from "viem/chains";
 import { superfluidRpcUrls } from "../../superfluidRpcUrls";
 import { ExistentialNFTCloneFactoryABI } from "../../types/abi-types";
 import { createBaseURI } from "../../utils/baseURI";
+import { verifyCaptcha } from "../../utils/captcha";
 import { pinNFTImageToIPFS } from "../../utils/pinata";
 import rateLimit, { checkRateLimit } from "../../utils/rate-limit";
 import { calculatePerSecondFlowRate } from "../../utils/utils";
@@ -62,11 +63,11 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(429).json({ error: "Too many requests" });
   }
 
-  // try {
-  //   await verifyCaptcha(recaptchaToken);
-  // } catch {
-  //   return res.status(400).json({ error: "Invalid recaptcha token" });
-  // }
+  try {
+    await verifyCaptcha(recaptchaToken);
+  } catch {
+    return res.status(400).json({ error: "Invalid recaptcha token" });
+  }
 
   const nftImageHash = await pinNFTImageToIPFS({
     tokenName,
@@ -150,6 +151,14 @@ const handler: NextApiHandler = async (req, res) => {
             account,
             args: cloneArgs,
           });
+
+          if (gas > 800_000) {
+            return {
+              [chain.id]: null,
+              error:
+                "Gas estimation reached maximum limit, try with less payment options.",
+            };
+          }
 
           const hash = await cloneFactory.write.deployClone(cloneArgs, { gas });
           const rc = await publicClient.waitForTransactionReceipt({ hash });
