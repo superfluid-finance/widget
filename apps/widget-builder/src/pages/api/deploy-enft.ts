@@ -78,9 +78,10 @@ const handler: NextApiHandler = async (req, res) => {
   }
 
   if (!productDetails.name || !productDetails.description) {
-    return res
-      .status(400)
-      .json({ error: "Deployment Failed: Invalid Product details" });
+    return res.status(400).json({
+      error:
+        "Deployment Failed: The Product Name and Product Description field must be filled to be able to deploy an NFT. Please go to the `Product Details` tab, and fill the missing fields",
+    });
   }
 
   const nftImageHash = await pinNFTImageToIPFS({
