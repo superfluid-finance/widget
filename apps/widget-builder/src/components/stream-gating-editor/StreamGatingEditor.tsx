@@ -227,11 +227,13 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
           </Typography>
         </Box>
         <InputWrapper
+          dataTestid="nft-symbol-title"
           title="NFT Symbol"
           tooltip="The Symbol of your NFT. It will be displayed in your users' wallets."
         >
           {(id) => (
             <TextField
+              data-testid="nft-symbol-input-field"
               id={id}
               value={tokenSymbol}
               onChange={({ target }) => setTokenSymbol(target.value)}
@@ -239,11 +241,13 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
           )}
         </InputWrapper>
         <InputWrapper
+          dataTestid="nft-name-title"
           title="NFT Name"
           tooltip="The Name of your NFT. It will be displayed in your users' wallets."
         >
           {(id) => (
             <TextField
+              data-testid="nft-name-input-field"
               id={id}
               value={tokenName}
               onChange={({ target }) => setTokenName(target.value)}
@@ -251,11 +255,13 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
           )}
         </InputWrapper>
         <InputWrapper
+          data-testid="contract-owner-title"
           title="Contract owner"
           tooltip="The address with authority to add further PaymentOptions or deprecate the contract."
         >
           {(id) => (
             <TextField
+              data-testid="contract-owner-input-field"
               id={id}
               value={contractOwner}
               onChange={({ target }) => setContractOwner(target.value)}
@@ -263,6 +269,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
           )}
         </InputWrapper>
         <InputWrapper
+          dataTestid="nft-image-title"
           id="nft-image"
           title="NFT Image"
           optional
@@ -270,6 +277,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         >
           {(id) => (
             <ImageSelect
+              data-testid="nft-image-upload-field"
               id={id}
               imageSrc={nftImage ? URL.createObjectURL(nftImage) : undefined}
               onClick={(file) => setNftImage(file)}
@@ -294,8 +302,9 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
                 sx={{ fontWeight: "bold" }}
                 control={
                   <Checkbox
+                    data-testid={`${network.name}-checkbox`}
                     color="primary"
-                    value={network}
+                    value={network.name}
                     checked={Boolean(selectedPaymentOptions[network.id])}
                     onChange={({ target }) =>
                       selectPaymentOptions(target.checked, network)
@@ -312,6 +321,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             ))}
           </FormGroup>
           <LoadingButton
+            data-testid="create-nft-button"
             color="primary"
             variant="contained"
             size="large"

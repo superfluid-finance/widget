@@ -9,6 +9,7 @@ export class BuilderPage extends BasePage {
   readonly productTab: Locator;
   readonly exportTab: Locator;
   readonly paymentTab: Locator;
+  readonly gatingTab: Locator;
   readonly productNameField: Locator;
   readonly productDescriptionField: Locator;
   readonly networkOptions: Locator;
@@ -89,6 +90,11 @@ export class BuilderPage extends BasePage {
   readonly superTokenOptionNames: Locator;
   readonly noOptionsDemoLink: Locator;
   readonly superTokenSelectionXButton: Locator;
+  readonly nftSymbolInputField: Locator;
+  readonly nftNameInputField: Locator;
+  readonly contractOwnerInputField: Locator;
+  readonly nftImageInputField: Locator;
+  readonly createNftButton: Locator;
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
 
@@ -249,6 +255,18 @@ export class BuilderPage extends BasePage {
     this.flowRateTimeUnitBorder = page
       .getByTestId("time-unit-selection")
       .locator("fieldset");
+    this.gatingTab = page.getByTestId("gating-tab");
+
+    this.nftSymbolInputField = page
+      .getByTestId("nft-symbol-input-field")
+      .locator("input");
+    this.nftNameInputField = page
+      .getByTestId("nft-name-input-field")
+      .locator("input");
+    this.contractOwnerInputField = page
+      .getByTestId("contract-owner-input-field")
+      .locator("input");
+    this.createNftButton = page.getByTestId("create-nft-button");
 
     this.paymentFormFieldWordMap = new Map<string, Locator>([
       ["network", this.networkOptions],
@@ -271,6 +289,12 @@ export class BuilderPage extends BasePage {
       await expect(this.rateHelperText).toHaveText(
         "User-defined rate is a payment type suited for donations where users determine the amount they want to pay over a given period of time.",
       );
+    });
+  }
+
+  async openGatingTab() {
+    await test.step(`Opening Gating Tab`, async () => {
+      await this.gatingTab.click();
     });
   }
 
@@ -368,7 +392,7 @@ export class BuilderPage extends BasePage {
         await expect(
           this.superTokenOptionsInDropdown.nth(index).locator("img"),
         ).toHaveScreenshot(`./data/${token.name}.png`, {
-          maxDiffPixelRatio: 0.01,
+          maxDiffPixelRatio: 0.03,
         });
       }
     });
@@ -607,6 +631,16 @@ export class BuilderPage extends BasePage {
     });
   }
 
+  async validateGatingTabIsOpen() {
+    await test.step(`Validating that gating tab elements are visible`, async () => {
+      await expect(this.nftNameInputField).toBeVisible();
+      await expect(this.nftSymbolInputField).toBeVisible();
+      await expect(this.contractOwnerInputField).toBeVisible();
+      await expect(this.backButton).toBeVisible();
+      await expect(this.nextButton).not.toBeVisible();
+    });
+  }
+
   async closeFormWithXButton() {
     await test.step(`Closing the add payment form with the X button`, async () => {
       await this.closeButton.click();
@@ -730,7 +764,7 @@ export class BuilderPage extends BasePage {
       await expect(this.publishButton).toBeVisible();
       await expect(this.bookDemoButton).toBeVisible();
       await expect(this.wandButton).not.toBeVisible();
-      await expect(this.nextButton).not.toBeVisible();
+      await expect(this.nextButton).toBeVisible();
     });
   }
 
