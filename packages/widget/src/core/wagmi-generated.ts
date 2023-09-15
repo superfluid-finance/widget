@@ -5578,26 +5578,26 @@ export const superTokenABI = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAEf1F1Ee5b5652560f305e9c0278d137a6AB5e9C)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb7db015aa9f37142340c94f09c543ad51b53e961)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x429DF352d27637A49DA83BB81A067CD8137138cf)
  */
 export const superUpgraderABI = [
   {
     stateMutability: "nonpayable",
     type: "constructor",
     inputs: [
-      { name: "_usdc", internalType: "contract FakeUSDC", type: "address" },
-      { name: "_usdcx", internalType: "contract ISuperToken", type: "address" },
+      { name: "_host", internalType: "contract ISuperfluid", type: "address" },
       { name: "_permit2", internalType: "contract IPermit2", type: "address" },
       { name: "_automate", internalType: "address", type: "address" },
     ],
   },
   { type: "error", inputs: [], name: "BAD_ETH_TRANSFER" },
+  { type: "error", inputs: [], name: "INVALID_CTX" },
   { type: "error", inputs: [], name: "INVALID_HOST" },
   { type: "error", inputs: [], name: "LOWER_LIMIT_NOT_REACHED" },
   { type: "error", inputs: [], name: "NOT_ENOUGH_GAS_TANK_BALANCE" },
   { type: "error", inputs: [], name: "NOT_NEGATIVE_FLOW_RATE" },
   { type: "error", inputs: [], name: "TASK_ALREADY_EXISTS_FOR_USER" },
+  { type: "error", inputs: [], name: "UNDERLYING_MISMATCH" },
   {
     stateMutability: "view",
     type: "function",
@@ -5655,6 +5655,20 @@ export const superUpgraderABI = [
     outputs: [{ name: "", internalType: "bytes", type: "bytes" }],
   },
   {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "superToken",
+        internalType: "contract ISuperToken",
+        type: "address",
+      },
+      { name: "account", internalType: "address", type: "address" },
+    ],
+    name: "autoUpgrade",
+    outputs: [],
+  },
+  {
     stateMutability: "view",
     type: "function",
     inputs: [],
@@ -5705,7 +5719,14 @@ export const superUpgraderABI = [
   {
     stateMutability: "view",
     type: "function",
-    inputs: [{ name: "account", internalType: "address", type: "address" }],
+    inputs: [
+      {
+        name: "superToken",
+        internalType: "contract ISuperToken",
+        type: "address",
+      },
+      { name: "account", internalType: "address", type: "address" },
+    ],
     name: "checker",
     outputs: [
       { name: "canExec", internalType: "bool", type: "bool" },
@@ -5743,64 +5764,6 @@ export const superUpgraderABI = [
     ],
   },
   {
-    stateMutability: "payable",
-    type: "function",
-    inputs: [
-      {
-        name: "initialUpgradeAmount",
-        internalType: "uint256",
-        type: "uint256",
-      },
-      {
-        name: "totalAllowanceAmount",
-        internalType: "uint256",
-        type: "uint256",
-      },
-      { name: "deadline", internalType: "uint256", type: "uint256" },
-      { name: "v", internalType: "uint8", type: "uint8" },
-      { name: "r", internalType: "bytes32", type: "bytes32" },
-      { name: "s", internalType: "bytes32", type: "bytes32" },
-      { name: "ctx", internalType: "bytes", type: "bytes" },
-    ],
-    name: "manualUpgradeWithPermit",
-    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
-  },
-  {
-    stateMutability: "payable",
-    type: "function",
-    inputs: [
-      {
-        name: "permitSingle",
-        internalType: "struct IAllowanceTransfer.PermitSingle",
-        type: "tuple",
-        components: [
-          {
-            name: "details",
-            internalType: "struct IAllowanceTransfer.PermitDetails",
-            type: "tuple",
-            components: [
-              { name: "token", internalType: "address", type: "address" },
-              { name: "amount", internalType: "uint160", type: "uint160" },
-              { name: "expiration", internalType: "uint48", type: "uint48" },
-              { name: "nonce", internalType: "uint48", type: "uint48" },
-            ],
-          },
-          { name: "spender", internalType: "address", type: "address" },
-          { name: "sigDeadline", internalType: "uint256", type: "uint256" },
-        ],
-      },
-      { name: "signature", internalType: "bytes", type: "bytes" },
-      {
-        name: "initialUpgradeAmount",
-        internalType: "uint160",
-        type: "uint160",
-      },
-      { name: "ctx", internalType: "bytes", type: "bytes" },
-    ],
-    name: "manualUpgradeWithPermit2",
-    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
-  },
-  {
     stateMutability: "view",
     type: "function",
     inputs: [],
@@ -5810,8 +5773,11 @@ export const superUpgraderABI = [
   {
     stateMutability: "view",
     type: "function",
-    inputs: [{ name: "", internalType: "address", type: "address" }],
-    name: "taskIds",
+    inputs: [
+      { name: "", internalType: "contract ISuperToken", type: "address" },
+      { name: "", internalType: "address", type: "address" },
+    ],
+    name: "taskIdsByToken",
     outputs: [{ name: "", internalType: "bytes32", type: "bytes32" }],
   },
   {
@@ -5835,27 +5801,91 @@ export const superUpgraderABI = [
     outputs: [],
   },
   {
-    stateMutability: "nonpayable",
+    stateMutability: "payable",
     type: "function",
-    inputs: [{ name: "account", internalType: "address", type: "address" }],
-    name: "upgradeWithAutomation",
-    outputs: [],
-  },
-  {
-    stateMutability: "view",
-    type: "function",
-    inputs: [],
-    name: "usdc",
-    outputs: [{ name: "", internalType: "contract FakeUSDC", type: "address" }],
-  },
-  {
-    stateMutability: "view",
-    type: "function",
-    inputs: [],
-    name: "usdcx",
-    outputs: [
-      { name: "", internalType: "contract ISuperToken", type: "address" },
+    inputs: [
+      {
+        name: "superToken",
+        internalType: "contract ISuperToken",
+        type: "address",
+      },
+      {
+        name: "initialUpgradeAmount",
+        internalType: "uint256",
+        type: "uint256",
+      },
+      { name: "ctx", internalType: "bytes", type: "bytes" },
     ],
+    name: "upgradeWithAllowance",
+    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "payable",
+    type: "function",
+    inputs: [
+      {
+        name: "superToken",
+        internalType: "contract ISuperToken",
+        type: "address",
+      },
+      {
+        name: "initialUpgradeAmount",
+        internalType: "uint256",
+        type: "uint256",
+      },
+      {
+        name: "totalAllowanceAmount",
+        internalType: "uint256",
+        type: "uint256",
+      },
+      { name: "deadline", internalType: "uint256", type: "uint256" },
+      { name: "v", internalType: "uint8", type: "uint8" },
+      { name: "r", internalType: "bytes32", type: "bytes32" },
+      { name: "s", internalType: "bytes32", type: "bytes32" },
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+    ],
+    name: "upgradeWithPermit",
+    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "payable",
+    type: "function",
+    inputs: [
+      {
+        name: "superToken",
+        internalType: "contract ISuperToken",
+        type: "address",
+      },
+      {
+        name: "permitSingle",
+        internalType: "struct IAllowanceTransfer.PermitSingle",
+        type: "tuple",
+        components: [
+          {
+            name: "details",
+            internalType: "struct IAllowanceTransfer.PermitDetails",
+            type: "tuple",
+            components: [
+              { name: "token", internalType: "address", type: "address" },
+              { name: "amount", internalType: "uint160", type: "uint160" },
+              { name: "expiration", internalType: "uint48", type: "uint48" },
+              { name: "nonce", internalType: "uint48", type: "uint48" },
+            ],
+          },
+          { name: "spender", internalType: "address", type: "address" },
+          { name: "sigDeadline", internalType: "uint256", type: "uint256" },
+        ],
+      },
+      { name: "signature", internalType: "bytes", type: "bytes" },
+      {
+        name: "initialUpgradeAmount",
+        internalType: "uint256",
+        type: "uint256",
+      },
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+    ],
+    name: "upgradeWithPermit2",
+    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
   },
   {
     stateMutability: "nonpayable",
@@ -5871,17 +5901,14 @@ export const superUpgraderABI = [
 ] as const;
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAEf1F1Ee5b5652560f305e9c0278d137a6AB5e9C)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb7db015aa9f37142340c94f09c543ad51b53e961)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x429DF352d27637A49DA83BB81A067CD8137138cf)
  */
 export const superUpgraderAddress = {
-  5: "0xAEf1F1Ee5b5652560f305e9c0278d137a6AB5e9C",
-  80001: "0xb7DB015AA9F37142340C94F09c543Ad51B53e961",
+  5: "0x429DF352d27637A49DA83BB81A067CD8137138cf",
 } as const;
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAEf1F1Ee5b5652560f305e9c0278d137a6AB5e9C)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb7db015aa9f37142340c94f09c543ad51b53e961)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x429DF352d27637A49DA83BB81A067CD8137138cf)
  */
 export const superUpgraderConfig = {
   address: superUpgraderAddress,

@@ -79,8 +79,8 @@ export default defineConfig({
         {
           name: "SuperUpgrader",
           address: {
-            80001: "0xb7db015aa9f37142340c94f09c543ad51b53e961",
-            5: "0xAEf1F1Ee5b5652560f305e9c0278d137a6AB5e9C",
+            // 80001: "0xb7db015aa9f37142340c94f09c543ad51b53e961",
+            5: "0x429DF352d27637A49DA83BB81A067CD8137138cf",
           },
         },
         {

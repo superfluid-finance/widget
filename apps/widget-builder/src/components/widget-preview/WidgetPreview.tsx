@@ -81,7 +81,8 @@ const goerliPermitTokens: TokenInfo[] = [
 
 export const widgetTokenList = {
   ...tokenList,
-  tokens: [...tokenList.tokens, ...mumbaiPermitTokens, ...goerliPermitTokens],
+  tokens: [...tokenList.tokens, ...goerliPermitTokens],
+  // ...mumbaiPermitTokens,
 } as SuperTokenList;
 
 export interface FontSettings {
