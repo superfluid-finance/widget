@@ -1,9 +1,4 @@
-import constantFlowAgreementV1JSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/agreements/ConstantFlowAgreementV1.sol/ConstantFlowAgreementV1.json" assert { type: "json" };
-import superfluidGovernanceJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/gov/SuperfluidGovernanceII.sol/SuperfluidGovernanceII.json" assert { type: "json" };
-import superfluidHostJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/superfluid/Superfluid.sol/Superfluid.json" assert { type: "json" };
-import superTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/superfluid/SuperToken.sol/SuperToken.json" assert { type: "json" };
-import pureSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/PureSuperToken.sol/PureSuperToken.json" assert { type: "json" };
-import nativeAssetSuperTokenJSON from "@superfluid-finance/ethereum-contracts/artifacts/contracts/tokens/SETH.sol/SETHProxy.json" assert { type: "json" };
+import bundledAbi from "@superfluid-finance/ethereum-contracts/build/bundled-abi.json" assert { type: "json" };
 import superfluidMetadata from "@superfluid-finance/metadata";
 import { defineConfig } from "@wagmi/cli";
 import { actions, erc, etherscan } from "@wagmi/cli/plugins";
@@ -19,20 +14,26 @@ export default defineConfig({
   out: "./src/core/wagmi-generated.ts",
   contracts: [
     {
+      name: "SuperfluidErrors",
+      abi: (bundledAbi.ConstantFlowAgreementV1 as Abi)
+        .concat(bundledAbi.SuperToken as Abi)
+        .filter((x) => x.type === "error"),
+    },
+    {
       name: "Super Token",
-      abi: superTokenJSON.abi as Abi,
+      abi: bundledAbi.SuperToken as Abi,
     },
     {
       name: "Native Asset Super Token",
-      abi: nativeAssetSuperTokenJSON.abi as Abi,
+      abi: bundledAbi.ISETH as Abi,
     },
     {
       name: "Pure Super Token",
-      abi: pureSuperTokenJSON.abi as Abi,
+      abi: bundledAbi.IPureSuperToken as Abi,
     },
     {
       name: "Constant Flow Agreement V1",
-      abi: constantFlowAgreementV1JSON.abi as Abi,
+      abi: bundledAbi.ConstantFlowAgreementV1 as Abi,
       address: superfluidMetadata.networks.reduce(
         (acc, network) => {
           acc[network.chainId] = network.contractsV1.cfaV1 as `0x${string}`;
@@ -43,7 +44,7 @@ export default defineConfig({
     },
     {
       name: "SuperfluidHost",
-      abi: superfluidHostJSON.abi as Abi,
+      abi: bundledAbi.Superfluid as Abi,
       address: superfluidMetadata.networks.reduce(
         (acc, network) => {
           acc[network.chainId] = network.contractsV1.host as `0x${string}`;
@@ -54,7 +55,7 @@ export default defineConfig({
     },
     {
       name: "SuperfluidGovernance",
-      abi: superfluidGovernanceJSON.abi as Abi,
+      abi: bundledAbi.SuperfluidGovernanceII as Abi,
       address: superfluidMetadata.networks.reduce(
         (acc, network) => {
           acc[network.chainId] = network.contractsV1

@@ -91,6 +91,7 @@ const ProductEditor: FC = () => {
         arrow
       >
         <Fab
+          data-testid="wand-button"
           size="medium"
           color="secondary"
           onClick={setDemoProductDetails}

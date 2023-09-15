@@ -74,7 +74,7 @@ export const supportedNetworkSchema = z
   .object({
     id: chainIdSchema,
   })
-  .transform((x) => x as (typeof supportedNetworks_)[number] & Chain);
+  .transform((x) => x as Chain & (typeof supportedNetworks_)[number]);
 
 export type SupportedNetwork = z.infer<typeof supportedNetworkSchema>;
 

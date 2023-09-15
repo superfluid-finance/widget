@@ -1,6 +1,11 @@
 import { LoadingButton } from "@mui/lab";
 import { Button, Stack } from "@mui/material";
 import { useCallback } from "react";
+import {
+  ContractFunctionExecutionError,
+  ContractFunctionRevertedError,
+  ContractFunctionZeroDataError,
+} from "viem";
 import { useNetwork, useSwitchNetwork } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
@@ -44,6 +49,12 @@ export default function ContractWriteButton({
 
   // const { data: signatureData, isLoading: isSignatureLoading, isSuccess: isSignatureSuccess, isError: isSignatureError, signTypedData } = useSignTypedData(contractWrite.signatureRequest);
 
+  const isSeriousPrepareError =
+    prepareResult.isError &&
+    (prepareResult.error instanceof ContractFunctionExecutionError ||
+      prepareResult.error instanceof ContractFunctionRevertedError ||
+      prepareResult.error instanceof ContractFunctionZeroDataError);
+
   return (
     <Stack direction="column" alignItems="stretch" sx={{ width: "100%" }}>
       {needsToSwitchNetwork ? (
@@ -77,7 +88,9 @@ export default function ContractWriteButton({
               size="large"
               variant="contained"
               fullWidth
-              disabled={!write || transactionResult.isSuccess}
+              disabled={
+                !write || transactionResult.isSuccess || isSeriousPrepareError
+              }
               onClick={onContractWriteButtonClick}
               loading={isLoading}
             >

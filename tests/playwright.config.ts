@@ -17,8 +17,8 @@ export default defineConfig({
   },
   timeout: 300000,
   use: {
+    actionTimeout: 10000,
     baseURL: process.env.BASE_URL,
-    actionTimeout: 15000,
     trace: process.env.CI ? "on-first-retry" : "on",
     timezoneId: "Europe/Riga",
     viewport: { width: 1280, height: 720 },

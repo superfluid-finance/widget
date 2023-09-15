@@ -7,12 +7,13 @@ import { runEventListener } from "./EventListeners.js";
 import FlowRateInput from "./FlowRateInput.js";
 import { DraftFormValues } from "./formValues.js";
 import NetworkAutocomplete from "./NetworkAutocomplete.js";
+import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
 import TokenAutocomplete from "./TokenAutocomplete.js";
 import { useWidget } from "./WidgetContext.js";
 
-export default function StepContentPaymentOption() {
+export default function StepContentPaymentOption({ stepIndex }: StepProps) {
   const {
     watch,
     control,
@@ -34,9 +35,9 @@ export default function StepContentPaymentOption() {
   useEffect(() => {
     if (nextStepOnConnect && isConnected && isStepComplete) {
       setNextOnConnect(false);
-      handleNext();
+      handleNext(stepIndex);
     }
-  }, [handleNext, nextStepOnConnect, isConnected, isStepComplete]);
+  }, [handleNext, nextStepOnConnect, isConnected, isStepComplete, stepIndex]);
 
   const {
     walletManager: { open: openWalletManager },
@@ -51,7 +52,7 @@ export default function StepContentPaymentOption() {
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    handleNext();
+    handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "next_step" });
   }, [handleNext, eventListeners.onButtonClick]);
 

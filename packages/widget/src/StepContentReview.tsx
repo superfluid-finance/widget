@@ -5,12 +5,13 @@ import { useQuery } from "wagmi";
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { runEventListener } from "./EventListeners.js";
 import { CommandPreview } from "./previews/CommandPreview.js";
+import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
 import { useCommandValidationSchema } from "./useCommandValidationSchema.js";
 import { useWidget } from "./WidgetContext.js";
 
-export default function StepContentReview() {
+export default function StepContentReview({ stepIndex }: StepProps) {
   const { commands, sessionId } = useCommandHandler();
 
   const { handleNext } = useStepper();
@@ -22,9 +23,9 @@ export default function StepContentReview() {
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    handleNext();
+    handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "next_step" });
-  }, [handleNext, eventListeners.onButtonClick]);
+  }, [handleNext, eventListeners.onButtonClick, stepIndex]);
 
   const commandValidationSchema = useCommandValidationSchema();
 

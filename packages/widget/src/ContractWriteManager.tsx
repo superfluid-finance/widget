@@ -1,5 +1,9 @@
 import { useEffect, useMemo } from "react";
-import { BaseError } from "viem";
+import {
+  BaseError,
+  TransactionExecutionError,
+  UserRejectedRequestError,
+} from "viem";
 import {
   useContractWrite,
   useNetwork,
@@ -9,7 +13,9 @@ import {
 } from "wagmi";
 
 import { ContractWrite } from "./ContractWrite.js";
+import { TxFunctionName } from "./EventListeners.js";
 import { ChildrenProp } from "./utils.js";
+import { useWidget } from "./WidgetContext.js";
 
 export type ContractWriteResult = {
   contractWrite: ContractWrite;
@@ -17,7 +23,7 @@ export type ContractWriteResult = {
   prepareResult: ReturnType<typeof usePrepareContractWrite>;
   writeResult: ReturnType<typeof useContractWrite>;
   transactionResult: ReturnType<typeof useWaitForTransaction>;
-  latestError: BaseError | null;
+  currentError: BaseError | null;
 };
 
 type ContractWriteManagerProps = {
@@ -45,21 +51,40 @@ export function ContractWriteManager({
     [contractWrite.id, signatureResult.data],
   );
 
+  const { eventListeners } = useWidget();
+
   const prepare =
     _prepare && materialized && contractWrite.chainId === chain?.id;
-  const prepareResult = usePrepareContractWrite(
-    prepare ? materialized : undefined,
-  );
 
-  const writeResult = useContractWrite(
-    prepareResult.isSuccess
-      ? prepareResult.config
-      : materialized
-      ? (materialized as any)
-      : prepareResult.config,
-  );
+  const prepareResult = usePrepareContractWrite({
+    ...(prepare ? materialized : undefined),
+    onError: console.error,
+  });
+
+  // Always have a write ready.
+  const writeResult = useContractWrite({
+    ...(prepareResult.config.request
+      ? (prepareResult.config as any) // TODO(KK): any
+      : materialized),
+    onError: console.error,
+    onSuccess: ({ hash }) =>
+      eventListeners.onTransactionSent?.({
+        hash,
+        functionName: materialized?.functionName as TxFunctionName,
+      }),
+  });
+
+  useEffect(() => {
+    if (writeResult.error instanceof TransactionExecutionError) {
+      if (writeResult.error.walk() instanceof UserRejectedRequestError) {
+        writeResult.reset(); // Clear wallet rejection errors.
+      }
+    }
+  }, [writeResult.error]);
+
   const transactionResult = useWaitForTransaction({
     hash: writeResult.data?.hash,
+    onError: console.error,
   });
 
   const result: ContractWriteResult = useMemo(
@@ -71,10 +96,10 @@ export function ContractWriteManager({
       writeResult,
       transactionResult,
       signatureResult,
-      latestError: (transactionResult.error ||
-        writeResult.error ||
-        prepareResult.error ||
-        signatureResult.error) as unknown as BaseError,
+      currentError: (transactionResult.error ||
+        (transactionResult.isSuccess ? null : writeResult.error) ||
+        (writeResult.isSuccess ? null : prepareResult.error) ||
+        signatureResult.error) as unknown as BaseError | null,
     }),
     [
       contractWrite.id,
