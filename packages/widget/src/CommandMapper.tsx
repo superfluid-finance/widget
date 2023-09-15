@@ -208,14 +208,15 @@ export function PermitWrapIntoSuperTokensCommandMapper({
 
               return {
                 abi: superUpgraderABI,
-                functionName: "manualUpgradeWithPermit",
+                functionName: "upgradeWithPermit",
                 address:
                   superUpgraderAddress[
                     cmd.chainId as keyof typeof superUpgraderAddress
                   ],
                 value: 100000000000000000n,
                 args: [
-                  cmd.amountWeiFromUnderlyingTokenDecimals,
+                  cmd.superTokenAddress,
+                  cmd.amountWeiFromSuperTokenDecimals,
                   BigInt(
                     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                   ),
@@ -239,14 +240,15 @@ export function PermitWrapIntoSuperTokensCommandMapper({
                 ],
                 {
                   abi: superUpgraderABI,
-                  functionName: "manualUpgradeWithPermit",
+                  functionName: "upgradeWithPermit",
                   address:
                     superUpgraderAddress[
                       cmd.chainId as keyof typeof superUpgraderAddress
                     ],
                   value: 100000000000000000n,
                   args: [
-                    cmd.amountWeiFromUnderlyingTokenDecimals,
+                    cmd.superTokenAddress,
+                    cmd.amountWeiFromSuperTokenDecimals,
                     BigInt(
                       "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                     ),

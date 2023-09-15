@@ -103,12 +103,12 @@ export default function ContractWriteButton({
         <>
           {Boolean(contractWrite.signatureRequest && !signatureResult.data) ? (
             <LoadingButton
-              loadingIndicator="Waiting for signature…"
+              loading={signatureResult.isLoading}
+              loadingIndicator="Waiting for wallet…"
               data-testid="transaction-button"
               size="large"
               variant="contained"
               fullWidth
-              disabled={signatureResult.isLoading}
               onClick={() => signatureResult.signTypedData()}
             >
               Sign
