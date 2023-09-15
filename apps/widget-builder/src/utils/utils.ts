@@ -16,9 +16,11 @@ export function polyfill() {
   };
 }
 
-export function calculatePerSecondFlowRate({
-  amountEther,
-  period,
-}: FlowRate): bigint {
-  return parseEther(amountEther) / mapTimePeriodToSeconds(period);
+export function calculatePerSecondFlowRate(
+  flowRate?: FlowRate,
+  defaultFlowRate: bigint = 0n,
+): bigint {
+  return flowRate
+    ? parseEther(flowRate.amountEther) / mapTimePeriodToSeconds(flowRate.period)
+    : defaultFlowRate;
 }

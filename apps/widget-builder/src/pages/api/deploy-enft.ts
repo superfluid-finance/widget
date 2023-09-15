@@ -138,7 +138,7 @@ const handler: NextApiHandler = async (req, res) => {
           });
 
           const sortedPaymentOptions = sortBy(paymentOptions, ({ flowRate }) =>
-            flowRate ? calculatePerSecondFlowRate(flowRate) : 1,
+            calculatePerSecondFlowRate(flowRate, 1n),
           );
 
           const cloneArgs = [
@@ -146,7 +146,7 @@ const handler: NextApiHandler = async (req, res) => {
             sortedPaymentOptions.map(({ superToken }) => superToken.address),
             sortedPaymentOptions.map(({ receiverAddress }) => receiverAddress),
             sortedPaymentOptions.map(({ flowRate }) =>
-              flowRate ? calculatePerSecondFlowRate(flowRate) : BigInt(1),
+              calculatePerSecondFlowRate(flowRate, 1n),
             ),
             tokenName,
             tokenSymbol,
