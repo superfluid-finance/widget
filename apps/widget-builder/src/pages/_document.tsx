@@ -54,7 +54,7 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         {emotionStyleTags}
         <style>
           {`.grecaptcha-badge {
-            bottom: 50px !important;
+            bottom: 75px !important;
           }`}
         </style>
       </Head>
