@@ -13,7 +13,6 @@ import {
 
 import { ContractWrite } from "./ContractWrite.js";
 import { TxFunctionName } from "./EventListeners.js";
-import { ChildrenProp } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 export type ContractWriteResult = {
@@ -24,18 +23,16 @@ export type ContractWriteResult = {
   currentError: BaseError | null;
 };
 
-type ContractWriteManagerProps = {
+export type ContractWriteManagerProps = {
   prepare: boolean;
   contractWrite: ContractWrite;
   onChange?: (result: ContractWriteResult) => void;
-  children?: (result: ContractWriteResult) => ChildrenProp;
 };
 
 export function ContractWriteManager({
   prepare: _prepare,
   contractWrite,
   onChange,
-  children,
 }: ContractWriteManagerProps) {
   const { chain } = useNetwork();
   const prepare = _prepare && contractWrite.chainId === chain?.id;
@@ -60,25 +57,29 @@ export function ContractWriteManager({
       }),
   });
 
-  useEffect(() => {
-    if (writeResult.error instanceof TransactionExecutionError) {
-      if (writeResult.error.walk() instanceof UserRejectedRequestError) {
-        writeResult.reset(); // Clear wallet rejection errors.
-      }
-    }
-  }, [writeResult.error]);
-
   const transactionResult = useWaitForTransaction({
     hash: writeResult.data?.hash,
     onError: console.error,
   });
 
-  const result: ContractWriteResult = useMemo(
-    () => ({
+  const result: ContractWriteResult = useMemo(() => {
+    if (
+      writeResult.isError &&
+      writeResult.error instanceof TransactionExecutionError
+    ) {
+      if (
+        writeResult.error.cause instanceof UserRejectedRequestError ||
+        writeResult.error.walk() instanceof UserRejectedRequestError
+      ) {
+        writeResult.reset(); // Clear wallet rejection errors.
+      }
+    }
+
+    return {
       contractWrite,
       prepareResult: prepareResult as ReturnType<
         typeof usePrepareContractWrite
-      >, // TODO(KK): weird type mismatch
+      >,
       writeResult,
       transactionResult,
       currentError: (transactionResult.error ||
@@ -86,16 +87,28 @@ export function ContractWriteManager({
         (writeResult.isSuccess
           ? null
           : prepareResult.error)) as unknown as BaseError | null,
-    }),
-    [
-      contractWrite.id,
-      prepareResult.status,
-      writeResult.status,
-      transactionResult.status,
-    ],
-  );
+    };
+  }, [
+    contractWrite.id,
+    prepareResult.status,
+    writeResult.status,
+    transactionResult.status,
+  ]);
+
+  // console.log({
+  //   currentError: result.currentError,
+  //   writeResult
+  // })
+
+  // # Retry
+  // useEffect(() => {
+  //   if (prepare && result.currentError && result.currentError === prepareResult.error) {
+  //     const timeoutId = setTimeout(() => prepareResult.refetch(), 5000);
+  //     return () => clearTimeout(timeoutId);
+  //   }
+  // }, [prepare, result.currentError, prepareResult.error, prepareResult.refetch]);
 
   useEffect(() => void onChange?.(result), [result]);
 
-  return <>{children?.(result)}</>;
+  return null;
 }

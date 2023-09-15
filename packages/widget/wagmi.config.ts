@@ -8,15 +8,17 @@ import {
   autoWrapManagerAddress,
   autoWrapStrategyAddress,
   cfAv1ForwarderAddress,
+  erc20ABI,
 } from "./src/core/wagmi-generated";
 
 export default defineConfig({
   out: "./src/core/wagmi-generated.ts",
   contracts: [
     {
-      name: "SuperfluidErrors",
+      name: "Errors",
       abi: (bundledAbi.ConstantFlowAgreementV1 as Abi)
         .concat(bundledAbi.SuperToken as Abi)
+        .concat(erc20ABI)
         .filter((x) => x.type === "error"),
     },
     {
