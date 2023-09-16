@@ -4,7 +4,6 @@ import { LoadingButton } from "@mui/lab";
 import { Alert, Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import {
-  BaseError,
   ContractFunctionExecutionError,
   ContractFunctionRevertedError,
   ContractFunctionZeroDataError,
@@ -29,6 +28,7 @@ export default function ContractWriteButton({
   prepareResult,
   writeResult,
   transactionResult,
+  currentError,
 }: ContractWriteButtonProps) {
   const { eventListeners } = useWidget();
   const write = writeResult.write;
@@ -79,6 +79,10 @@ export default function ContractWriteButton({
     }
   }, [transactionResult.isLoading, handleNextWrite]);
 
+  const isPrepareError = Boolean(
+    currentError && currentError === prepareResult.error,
+  );
+
   return (
     <Stack
       direction="column"
@@ -98,17 +102,15 @@ export default function ContractWriteButton({
         </Button>
       ) : (
         <>
-          <Collapse in={isSeriousPrepareError}>
-            <Alert severity="error">
-              {(prepareResult.error as BaseError)?.shortMessage}
-            </Alert>
+          <Collapse in={!!currentError}>
+            <Alert severity="error">{currentError?.shortMessage}</Alert>
           </Collapse>
-          {isSeriousPrepareError ? (
+          {isPrepareError ? (
             <Button
               variant="contained"
               size="large"
               fullWidth
-              onClick={() => prepareResult?.refetch()}
+              onClick={() => prepareResult.refetch()}
               endIcon={<ReplayIcon />}
             >
               Transaction preparation failed. Retry?
@@ -136,11 +138,23 @@ export default function ContractWriteButton({
               {/* {contractWrite.displayTitle} */}
             </LoadingButton>
           )}
+          <Collapse in={Boolean(isPrepareError && write)}>
+            <Button
+              variant="text"
+              size="large"
+              color="error"
+              fullWidth
+              onClick={() => write?.()}
+            >
+              Force transaction?
+            </Button>
+          </Collapse>
           <Collapse in={showNextWriteButton}>
             <Button
               variant="text"
               size="large"
               fullWidth
+              color="warning"
               onClick={handleNextWrite}
               endIcon={<SkipNextIcon />}
             >
