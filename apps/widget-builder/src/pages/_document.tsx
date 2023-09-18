@@ -52,6 +52,11 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
+        <style>
+          {`.grecaptcha-badge {
+            bottom: 75px !important;
+          }`}
+        </style>
       </Head>
       <body>
         <Main />

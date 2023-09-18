@@ -4,7 +4,14 @@ import { FC } from "react";
 import Link from "../../Link";
 
 const TermsAndPrivacy: FC = () => (
-  <Box sx={{ position: "absolute", p: 2, bottom: 0, right: 0 }}>
+  <Box
+    sx={{
+      position: "absolute",
+      p: 2,
+      bottom: 0,
+      left: "540px",
+    }}
+  >
     <Link
       data-testid="terms-link"
       href="https://www.superfluid.finance/termsofuse/"

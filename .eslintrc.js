@@ -10,6 +10,7 @@ module.exports = {
   plugins: ["simple-import-sort", "unused-imports"],
   rules: {
     "react-hooks/exhaustive-deps": "off",
+    "react/display-name": "off",
     "unused-imports/no-unused-imports": "warn",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
