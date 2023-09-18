@@ -158,6 +158,7 @@ test("Switch network button shown in the transaction view", async ({
   await widgetPage.selectPaymentToken("fUSDCx");
   await widgetPage.connectWallet();
   await widgetPage.clickContinueButton();
+  await widgetPage.validateReviewStepIsOpen();
   await widgetPage.clickContinueButton();
   await metamask.changeNetwork("Sepolia");
   await widgetPage.clickSwitchNetworkButton();
