@@ -53,8 +53,7 @@ export default function ContractWriteButton({
   }, [write, eventListeners.onButtonClick]);
 
   const [showNextWriteButton_, setShowNextWriteButton] = useState(false);
-  const showNextWriteButton =
-    showNextWriteButton_ || !transactionResult.isError;
+  const showNextWriteButton = showNextWriteButton_ || transactionResult.isError;
 
   const handleNextWrite = useCallback(() => {
     handleNextWrite_();
