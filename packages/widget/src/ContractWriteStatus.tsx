@@ -7,6 +7,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Paper,
   useTheme,
 } from "@mui/material";
 import { useMemo } from "react";
@@ -109,7 +110,9 @@ export function ContractWriteStatus({
   );
 
   return (
-    <ListItem
+    <Paper
+      component={ListItem}
+      variant="outlined"
       sx={{
         bgcolor: isWriting
           ? theme.palette.action.selected
@@ -117,8 +120,11 @@ export function ContractWriteStatus({
         pl: 0,
         "&:hover": {
           bgcolor: isWriting
-            ? theme.palette.action.selected
+            ? theme.palette.action.focus
             : theme.palette.action.hover,
+        },
+        "&:not(:last-child)": {
+          mb: 1,
         },
       }}
       secondaryAction={
@@ -159,7 +165,7 @@ export function ContractWriteStatus({
             : "Queued"
         }
       ></ListItemText>
-    </ListItem>
+    </Paper>
   );
 }
 

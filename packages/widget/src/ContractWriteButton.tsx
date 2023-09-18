@@ -88,10 +88,7 @@ export default function ContractWriteButton({
   const showRetryButton = Boolean(isPrepareError && !writeResult.isLoading);
 
   return (
-    <Stack
-      direction="column"
-      spacing={showForceSubmitButton || showNextWriteButton ? 1 : 0}
-    >
+    <Stack direction="column" spacing={1}>
       {needsToSwitchNetwork ? (
         <Button
           data-testid="switch-network-button"
@@ -106,13 +103,13 @@ export default function ContractWriteButton({
         <>
           {showRetryButton ? (
             <Button
-              variant="outlined"
+              variant="contained"
               size="large"
               fullWidth
               onClick={() => prepareResult.refetch()}
               endIcon={<ReplayIcon />}
             >
-              Retry transaction preparation
+              Retry transaction gas estimation
             </Button>
           ) : (
             <LoadingButton
@@ -128,10 +125,10 @@ export default function ContractWriteButton({
               {writeButtonText}
             </LoadingButton>
           )}
-          <Collapse in={showForceSubmitButton}>
+          <Collapse in={showForceSubmitButton} unmountOnExit>
             <Button
               variant="outlined"
-              size="large"
+              size="medium"
               color="error"
               fullWidth
               onClick={() => write!()}
@@ -141,8 +138,9 @@ export default function ContractWriteButton({
           </Collapse>
           <Collapse in={showNextWriteButton} unmountOnExit>
             <Button
-              variant="text"
-              size="large"
+              variant="outlined"
+              color="warning"
+              size="medium"
               fullWidth
               onClick={handleNextWrite}
             >

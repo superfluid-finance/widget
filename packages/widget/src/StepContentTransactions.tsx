@@ -109,7 +109,11 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
         <List
           disablePadding
           dense
-          subheader={<ListSubheader>Transactions</ListSubheader>}
+          subheader={
+            <ListSubheader sx={{ bgcolor: "transparent" }}>
+              Transactions
+            </ListSubheader>
+          }
         >
           {contractWriteResults.map((result, index) => (
             <ContractWriteStatus
