@@ -391,7 +391,6 @@ export class BuilderPage extends BasePage {
         );
         //The SVG sometimes loads fuzzy and leads to a breaking test for FUNDx
         let diffRatio = token.name === "FUNDx" ? 0.2 : 0.03;
-        console.log(token.name, diffRatio);
         await expect(
           this.superTokenOptionsInDropdown.nth(index).locator("img"),
         ).toHaveScreenshot(`./data/${token.name}.png`, {
