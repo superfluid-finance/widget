@@ -77,7 +77,7 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
           aria-label="back"
           sx={{ mr: -1 }}
         >
-          <CloseIcon fontSize="inherit" />
+          <CloseIcon fontSize="small" />
         </IconButton>
       </Stack>
       <Stack
@@ -91,7 +91,7 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             {`You're almost there!`}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Submit the transactions from your wallet to finish your purchase.
+            Send the transactions from your wallet to finish your purchase.
           </Typography>
         </Box>
         {/* <Stack
@@ -111,7 +111,7 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
           dense
           subheader={
             <ListSubheader sx={{ bgcolor: "transparent" }}>
-              Transactions
+              Transactions ({total})
             </ListSubheader>
           }
         >

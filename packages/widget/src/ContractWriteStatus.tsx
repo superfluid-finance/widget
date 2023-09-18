@@ -155,13 +155,13 @@ export function ContractWriteStatus({
             : transactionResult.isSuccess
             ? "Completed"
             : prepareResult.isLoading
-            ? "Preparing..."
+            ? "Estimating..."
             : currentError
             ? "Error"
             : writeResult?.isSuccess
-            ? "Transaction submitted"
+            ? "Transaction sent"
             : prepareResult.isSuccess
-            ? "Ready to submit"
+            ? "Ready to send"
             : "Queued"
         }
       ></ListItemText>

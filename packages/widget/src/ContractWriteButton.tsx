@@ -1,5 +1,6 @@
 import ReplayIcon_ from "@mui/icons-material/Replay";
 import SkipNextIcon_ from "@mui/icons-material/SkipNext";
+import WarningAmberIcon_ from "@mui/icons-material/WarningAmber";
 import { LoadingButton } from "@mui/lab";
 import { Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import { useWidget } from "./WidgetContext.js";
 
 const ReplayIcon = normalizeIcon(ReplayIcon_);
 const SkipNextIcon = normalizeIcon(SkipNextIcon_);
+const WarningAmberIcon = normalizeIcon(WarningAmberIcon_);
 
 export type ContractWriteButtonProps = {
   handleNextWrite: () => void;
@@ -61,7 +63,7 @@ export default function ContractWriteButton({
     if (transactionResult.isLoading) {
       const timeoutId = setTimeout(() => {
         setShowNextWriteButton(true);
-      }, 5000); // TODO(KK): increase the time
+      }, 15000); // TODO(KK): is 15 sec okay?
       return () => clearTimeout(timeoutId);
     } else {
       setShowNextWriteButton(false);
@@ -72,18 +74,18 @@ export default function ContractWriteButton({
     currentError && currentError === prepareResult.error,
   );
 
-  const showForceSubmitButton = Boolean(
+  const showForceSendButton = Boolean(
     isPrepareError && write && !writeResult.isLoading,
   );
 
   const isWriteButtonDisabled = Boolean(
-    !write || transactionResult.isSuccess || isPrepareError,
+    isPrepareError || transactionResult.isSuccess || !write,
   );
   const writeButtonText = transactionResult.isLoading
     ? "Waiting for transaction..."
     : writeResult.isLoading
     ? "Waiting for wallet..."
-    : "Submit transaction";
+    : "Send transaction";
 
   const showRetryButton = Boolean(isPrepareError && !writeResult.isLoading);
 
@@ -125,26 +127,28 @@ export default function ContractWriteButton({
               {writeButtonText}
             </LoadingButton>
           )}
-          <Collapse in={showForceSubmitButton} unmountOnExit>
+          <Collapse in={showForceSendButton} unmountOnExit>
             <Button
               variant="outlined"
               size="medium"
               color="error"
+              startIcon={<WarningAmberIcon />}
               fullWidth
               onClick={() => write!()}
             >
-              Force submit transaction
+              Force transaction to be sent
             </Button>
           </Collapse>
           <Collapse in={showNextWriteButton} unmountOnExit>
             <Button
               variant="outlined"
-              color="warning"
+              color="primary"
               size="medium"
+              endIcon={<SkipNextIcon />}
               fullWidth
               onClick={handleNextWrite}
             >
-              Skip waiting for transaction
+              Skip to next transaction
             </Button>
           </Collapse>
         </>

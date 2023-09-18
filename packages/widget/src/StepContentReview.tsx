@@ -43,7 +43,7 @@ export default function StepContentReview({ stepIndex }: StepProps) {
   const isValidationError = validationResult?.success === false;
 
   return (
-    <Stack sx={{ pb: 3, px: 3.5 }} spacing={1}>
+    <Stack sx={{ pb: 3, px: 3.5 }} spacing={3}>
       <Stack direction="column" spacing={3}>
         {commands.map((cmd, index) => (
           <Fragment key={cmd.id}>
@@ -52,21 +52,27 @@ export default function StepContentReview({ stepIndex }: StepProps) {
           </Fragment>
         ))}
       </Stack>
-      <Collapse in={isValidationError} unmountOnExit>
-        {isValidationError && (
-          <Alert variant="standard" data-testid="review-error" severity="error">
-            {validationResult.error.issues[0].message}
-          </Alert>
-        )}
-      </Collapse>
-      <StepperCTAButton
-        loadingPosition="end"
-        loading={isValidating}
-        disabled={!isValid}
-        onClick={onContinue}
-      >
-        {isValidating ? "Validating..." : "Continue"}
-      </StepperCTAButton>
+      <Stack direction="column" spacing={1}>
+        <Collapse in={isValidationError} unmountOnExit>
+          {isValidationError && (
+            <Alert
+              variant="standard"
+              data-testid="review-error"
+              severity="error"
+            >
+              {validationResult.error.issues[0].message}
+            </Alert>
+          )}
+        </Collapse>
+        <StepperCTAButton
+          loadingPosition="end"
+          loading={isValidating}
+          disabled={!isValid}
+          onClick={onContinue}
+        >
+          {isValidating ? "Validating..." : "Continue"}
+        </StepperCTAButton>
+      </Stack>
     </Stack>
   );
 }

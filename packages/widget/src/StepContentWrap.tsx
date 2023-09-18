@@ -60,7 +60,7 @@ const WrapCard: FC<WrapCardProps> = ({
           variant="outlined"
           direction="row"
           alignItems="center"
-          gap={0.5}
+          spacing={0.5}
           title={token.address}
           sx={{ pl: 1.25, pr: 2, py: 1, borderRadius: 0.5 }}
         >

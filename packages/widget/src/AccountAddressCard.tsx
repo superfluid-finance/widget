@@ -46,7 +46,7 @@ export function AccountAddressCard({
           checksumAddress,
           shortenedAddress,
         }) => (
-          <Stack direction="row" alignItems="center" gap={1}>
+          <Stack direction="row" alignItems="center" spacing={1}>
             {ensAvatarResult.data ? (
               <Avatar
                 alt="ENS avatar"
