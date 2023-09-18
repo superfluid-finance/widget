@@ -77,7 +77,7 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
           aria-label="back"
           sx={{ mr: -1 }}
         >
-          <CloseIcon fontSize="small" />
+          <CloseIcon fontSize="medium" />
         </IconButton>
       </Stack>
       <Stack
