@@ -6,6 +6,7 @@ export function StepperCTAButton(props: LoadingButtonProps) {
       data-testid="continue-button"
       size="large"
       variant="contained"
+      fullWidth
       {...props}
     />
   );

@@ -276,12 +276,12 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
           )}
         /> */}
 
-      <Stack direction="column" gap={2.5} textAlign="center">
+      <Stack direction="column" spacing={2.5} textAlign="center">
         <Stack
           direction="column"
           justifyContent="center"
           alignItems="stretch"
-          gap={1.5}
+          spacing={1}
         >
           <StepperCTAButton
             disabled={!isValid || isValidating}

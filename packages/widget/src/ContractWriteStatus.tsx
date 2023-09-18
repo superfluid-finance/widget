@@ -1,5 +1,14 @@
+import CheckCircleIcon_ from "@mui/icons-material/CheckCircle";
 import CircleIcon_ from "@mui/icons-material/Circle.js";
-import { Paper, Stack, Typography, useTheme } from "@mui/material";
+import CircleOutlinedIcon_ from "@mui/icons-material/CircleOutlined";
+import OpenInNewIcon_ from "@mui/icons-material/OpenInNew";
+import {
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  useTheme,
+} from "@mui/material";
 import { useMemo } from "react";
 import {
   AbiErrorSignatureNotFoundError,
@@ -7,6 +16,7 @@ import {
   ContractFunctionRevertedError,
   decodeErrorResult,
 } from "viem";
+import { useNetwork } from "wagmi";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { ContractWriteResult } from "./ContractWriteManager.js";
@@ -14,6 +24,9 @@ import { errorsABI } from "./core/wagmi-generated.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 
 export const CircleIcon = normalizeIcon(CircleIcon_);
+export const CircleOutlinedIcon = normalizeIcon(CircleOutlinedIcon_);
+export const OpenInNewIcon = normalizeIcon(OpenInNewIcon_);
+export const CheckCircleIcon = normalizeIcon(CheckCircleIcon_);
 
 export function ContractWriteStatus({
   result,
@@ -36,6 +49,7 @@ export function ContractWriteStatus({
 
   const isWriting = index === writeIndex;
 
+  // TODO(KK): clean-up
   const colors: {
     border: string;
     bullet: string;
@@ -43,7 +57,7 @@ export function ContractWriteStatus({
   } = currentError
     ? {
         border: isWriting
-          ? theme.palette.action.active
+          ? theme.palette.action.selected
           : theme.palette.error.main,
         bullet: theme.palette.error.main,
         text: theme.palette.error.main,
@@ -53,22 +67,32 @@ export function ContractWriteStatus({
         border: isWriting
           ? theme.palette.action.active
           : theme.palette.primary.main,
-        bullet: theme.palette.success.main,
+        bullet: theme.palette.success.dark,
         text: theme.palette.success.main,
       }
     : writeResult?.isSuccess
     ? {
         border: isWriting
-          ? theme.palette.action.active
-          : theme.palette.action.selected,
+          ? theme.palette.action.selected
+          : theme.palette.action.active,
+        bullet: theme.palette.warning.main,
+        text: theme.palette.text.secondary,
+      }
+    : prepareResult.isLoading
+    ? {
+        border: isWriting
+          ? theme.palette.action.selected
+          : theme.palette.action.active,
         bullet: theme.palette.warning.main,
         text: theme.palette.text.secondary,
       }
     : {
         border: isWriting
-          ? theme.palette.action.active
-          : theme.palette.action.selected,
-        bullet: theme.palette.text.secondary,
+          ? theme.palette.action.selected
+          : theme.palette.action.active,
+        bullet: isWriting
+          ? theme.palette.warning.main
+          : theme.palette.action.disabled,
         text: theme.palette.text.secondary,
       };
 
@@ -77,48 +101,65 @@ export function ContractWriteStatus({
     [currentError],
   );
 
+  const { chains } = useNetwork();
+
+  const chain = useMemo(
+    () => chains.find((x) => x.id === result.contractWrite.chainId)!,
+    [chains, result.contractWrite.chainId],
+  );
+
   return (
-    <Paper
-      variant="outlined"
-      key={id}
+    <ListItem
       sx={{
-        p: 1.5,
-        borderColor: colors.border,
-        borderRadius: "10px",
+        bgcolor: isWriting
+          ? theme.palette.action.selected
+          : theme.palette.background.paper,
+        pl: 0,
+        "&:hover": {
+          bgcolor: isWriting
+            ? theme.palette.action.selected
+            : theme.palette.action.hover,
+        },
       }}
+      secondaryAction={
+        writeResult?.data?.hash &&
+        chain.blockExplorers?.default && (
+          <IconButton
+            href={
+              chain.blockExplorers.default.url + "/tx/" + writeResult.data.hash
+            }
+            target="_blank"
+            size="small"
+            title="View on blockchain explorer"
+          >
+            <OpenInNewIcon fontSize="inherit" />
+          </IconButton>
+        )
+      }
     >
-      <Stack direction="row" alignItems="center" gap={1}>
-        <Typography
-          data-testid="transaction-type"
-          flex={1}
-          color={isWriting ? "text.primary" : "text.secondary"}
-          variant="body2"
-          fontWeight={isWriting ? 500 : 400}
-        >
-          {displayTitle}
-        </Typography>
-        <Typography
-          data-testid="transaction-status"
-          variant="body2"
-          color={colors.text}
-        >
-          {transactionResult.isError
-            ? "Transaction failed"
-            : currentError
-            ? "Error"
+      <ListItemIcon sx={{ justifyContent: "center" }}>
+        <CircleIcon fontSize="small" sx={{ color: colors.bullet }} />
+      </ListItemIcon>
+      <ListItemText
+        primaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
+        primary={displayTitle}
+        secondary={
+          transactionResult.isError
+            ? "Failed"
             : transactionResult.isSuccess
-            ? "Transaction succeeded"
-            : writeResult?.isSuccess
-            ? "Transaction sent"
+            ? "Completed"
             : prepareResult.isLoading
             ? "Preparing..."
+            : currentError
+            ? "Error"
+            : writeResult?.isSuccess
+            ? "Transaction submitted"
             : prepareResult.isSuccess
-            ? "Ready"
-            : "Queued"}
-        </Typography>
-        <CircleIcon sx={{ color: colors.bullet, width: 12, height: 12 }} />
-      </Stack>
-    </Paper>
+            ? "Ready to submit"
+            : "Queued"
+        }
+      ></ListItemText>
+    </ListItem>
   );
 }
 

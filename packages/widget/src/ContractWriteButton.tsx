@@ -1,13 +1,8 @@
 import ReplayIcon_ from "@mui/icons-material/Replay";
 import SkipNextIcon_ from "@mui/icons-material/SkipNext";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Button, Collapse, Stack } from "@mui/material";
+import { Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import {
-  ContractFunctionExecutionError,
-  ContractFunctionRevertedError,
-  ContractFunctionZeroDataError,
-} from "viem";
 import { useNetwork, useSwitchNetwork } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
@@ -55,12 +50,6 @@ export default function ContractWriteButton({
     });
   }, [write, eventListeners.onButtonClick]);
 
-  const isSeriousPrepareError =
-    prepareResult.isError &&
-    (prepareResult.error instanceof ContractFunctionExecutionError ||
-      prepareResult.error instanceof ContractFunctionRevertedError ||
-      prepareResult.error instanceof ContractFunctionZeroDataError);
-
   const [showNextWriteButton, setShowNextWriteButton] = useState(false);
 
   const handleNextWrite = useCallback(() => {
@@ -72,7 +61,7 @@ export default function ContractWriteButton({
     if (transactionResult.isLoading) {
       const timeoutId = setTimeout(() => {
         setShowNextWriteButton(true);
-      }, 5000);
+      }, 5000); // TODO(KK): increase the time
       return () => clearTimeout(timeoutId);
     } else {
       setShowNextWriteButton(false);
@@ -83,12 +72,25 @@ export default function ContractWriteButton({
     currentError && currentError === prepareResult.error,
   );
 
+  const showForceSubmitButton = Boolean(
+    isPrepareError && write && !writeResult.isLoading,
+  );
+
+  const isWriteButtonDisabled = Boolean(
+    !write || transactionResult.isSuccess || isPrepareError,
+  );
+  const writeButtonText = transactionResult.isLoading
+    ? "Waiting for transaction..."
+    : writeResult.isLoading
+    ? "Waiting for wallet..."
+    : "Submit transaction";
+
+  const showRetryButton = Boolean(isPrepareError && !writeResult.isLoading);
+
   return (
     <Stack
       direction="column"
-      alignItems="stretch"
-      gap={1}
-      sx={{ width: "100%" }}
+      spacing={showForceSubmitButton || showNextWriteButton ? 1 : 0}
     >
       {needsToSwitchNetwork ? (
         <Button
@@ -98,67 +100,53 @@ export default function ContractWriteButton({
           fullWidth
           onClick={onSwitchNetworkButtonClick}
         >
-          Switch Network
+          Switch network
         </Button>
       ) : (
         <>
-          <Collapse in={!!currentError}>
-            <Alert severity="error">{currentError?.shortMessage}</Alert>
-          </Collapse>
-          {isPrepareError ? (
+          {showRetryButton ? (
             <Button
-              variant="contained"
+              variant="outlined"
               size="large"
               fullWidth
               onClick={() => prepareResult.refetch()}
               endIcon={<ReplayIcon />}
             >
-              Transaction preparation failed. Retry?
+              Retry transaction preparation
             </Button>
           ) : (
             <LoadingButton
-              loadingIndicator={
-                transactionResult.isLoading
-                  ? "Waiting for transaction..."
-                  : writeResult.isLoading
-                  ? "Waiting for wallet..."
-                  : "Loading..."
-              }
+              loadingPosition="end"
               data-testid="transaction-button"
               size="large"
               variant="contained"
               fullWidth
-              disabled={
-                !write || transactionResult.isSuccess || isSeriousPrepareError
-              }
+              disabled={isWriteButtonDisabled}
               onClick={onContractWriteButtonClick}
               loading={isLoading}
             >
-              Send Transaction
-              {/* {contractWrite.displayTitle} */}
+              {writeButtonText}
             </LoadingButton>
           )}
-          <Collapse in={Boolean(isPrepareError && write)}>
+          <Collapse in={showForceSubmitButton}>
             <Button
-              variant="text"
+              variant="outlined"
               size="large"
               color="error"
               fullWidth
-              onClick={() => write?.()}
+              onClick={() => write!()}
             >
-              Force transaction?
+              Force submit transaction
             </Button>
           </Collapse>
-          <Collapse in={showNextWriteButton}>
+          <Collapse in={showNextWriteButton} unmountOnExit>
             <Button
               variant="text"
               size="large"
               fullWidth
-              color="warning"
               onClick={handleNextWrite}
-              endIcon={<SkipNextIcon />}
             >
-              Transaction is taking a long time. Skip waiting?
+              Skip waiting for transaction
             </Button>
           </Collapse>
         </>
