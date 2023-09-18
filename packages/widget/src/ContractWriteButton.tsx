@@ -52,7 +52,9 @@ export default function ContractWriteButton({
     });
   }, [write, eventListeners.onButtonClick]);
 
-  const [showNextWriteButton, setShowNextWriteButton] = useState(false);
+  const [showNextWriteButton_, setShowNextWriteButton] = useState(false);
+  const showNextWriteButton =
+    showNextWriteButton_ || !transactionResult.isError;
 
   const handleNextWrite = useCallback(() => {
     handleNextWrite_();
@@ -63,7 +65,7 @@ export default function ContractWriteButton({
     if (transactionResult.isLoading) {
       const timeoutId = setTimeout(() => {
         setShowNextWriteButton(true);
-      }, 15000); // TODO(KK): is 15 sec okay?
+      }, 20_000); // After 20 seconds, the button appears.
       return () => clearTimeout(timeoutId);
     } else {
       setShowNextWriteButton(false);
