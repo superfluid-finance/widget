@@ -67,15 +67,14 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
   );
 
   return (
-    <Stack spacing={1}>
+    <Stack>
       <Stack alignItems="end">
         <IconButton
           edge="start"
           size="medium"
-          color="inherit"
           onClick={onBack}
           aria-label="back"
-          sx={{ mr: -1 }}
+          sx={(theme) => ({ color: theme.palette.text.secondary, mr: -1 })}
         >
           <CloseIcon fontSize="medium" />
         </IconButton>
@@ -84,7 +83,7 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
         direction="column"
         spacing={2.25}
         alignItems="stretch"
-        sx={{ width: "100%" }}
+        sx={{ width: "100%", mt: -1 }}
       >
         <Box textAlign="center">
           <Typography variant="h5" component="span">
@@ -123,20 +122,11 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             />
           ))}
         </List>
-        {showErrorAlert && (
-          <Collapse
-            in={Boolean(
-              currentResult.currentError &&
-                currentResult.currentError.shortMessage,
-            )}
-            hidden={!showErrorAlert}
-            unmountOnExit
-          >
-            <Alert severity="error">
-              {currentResult.currentError?.shortMessage}
-            </Alert>
-          </Collapse>
-        )}
+        <Collapse in={showErrorAlert} hidden={!showErrorAlert} unmountOnExit>
+          <Alert severity="error">
+            {currentResult.currentError?.shortMessage}
+          </Alert>
+        </Collapse>
         {currentResult && (
           <ContractWriteButton
             {...currentResult}

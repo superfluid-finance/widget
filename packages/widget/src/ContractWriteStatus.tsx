@@ -148,6 +148,7 @@ export function ContractWriteStatus({
       </ListItemIcon>
       <ListItemText
         primaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
+        secondaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
         primary={displayTitle}
         secondary={
           transactionResult.isError
