@@ -62,7 +62,10 @@ export function ContractWriteManager({
   const writeResult = useContractWrite({
     ...(prepareResult.config.request
       ? (prepareResult.config as any) // TODO(KK): any
-      : materialized),
+      : {
+          mode: "prepared",
+          request: materialized,
+        }),
     onError: console.error,
     onSuccess: ({ hash }) =>
       eventListeners.onTransactionSent?.({

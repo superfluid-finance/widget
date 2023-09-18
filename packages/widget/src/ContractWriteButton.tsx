@@ -1,14 +1,8 @@
 import ReplayIcon_ from "@mui/icons-material/Replay";
 import SkipNextIcon_ from "@mui/icons-material/SkipNext";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Button, Collapse, Stack } from "@mui/material";
+import { Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import {
-  BaseError,
-  ContractFunctionExecutionError,
-  ContractFunctionRevertedError,
-  ContractFunctionZeroDataError,
-} from "viem";
 import { useNetwork, useSwitchNetwork } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
@@ -30,6 +24,7 @@ export default function ContractWriteButton({
   prepareResult,
   writeResult,
   transactionResult,
+  currentError,
 }: ContractWriteButtonProps) {
   const { eventListeners } = useWidget();
   const write = writeResult.write;
@@ -56,14 +51,6 @@ export default function ContractWriteButton({
     });
   }, [write, eventListeners.onButtonClick]);
 
-  // const { data: signatureData, isLoading: isSignatureLoading, isSuccess: isSignatureSuccess, isError: isSignatureError, signTypedData } = useSignTypedData(contractWrite.signatureRequest);
-
-  const isSeriousPrepareError =
-    prepareResult.isError &&
-    (prepareResult.error instanceof ContractFunctionExecutionError ||
-      prepareResult.error instanceof ContractFunctionRevertedError ||
-      prepareResult.error instanceof ContractFunctionZeroDataError);
-
   const [showNextWriteButton, setShowNextWriteButton] = useState(false);
 
   const handleNextWrite = useCallback(() => {
@@ -75,19 +62,40 @@ export default function ContractWriteButton({
     if (transactionResult.isLoading) {
       const timeoutId = setTimeout(() => {
         setShowNextWriteButton(true);
-      }, 5000);
+      }, 5000); // TODO(KK): increase the time
       return () => clearTimeout(timeoutId);
     } else {
       setShowNextWriteButton(false);
     }
   }, [transactionResult.isLoading, handleNextWrite]);
 
+  const isPrepareError = Boolean(
+    currentError && currentError === prepareResult.error,
+  );
+
+  const showForceSubmitButton = Boolean(
+    isPrepareError && write && !writeResult.isLoading,
+  );
+
+  const isWriteButtonDisabled = Boolean(
+    !write || transactionResult.isSuccess || isPrepareError,
+  );
+  const writeButtonText = transactionResult.isLoading
+    ? "Waiting for transaction..."
+    : writeResult.isLoading
+    ? "Waiting for wallet..."
+    : "Submit transaction";
+
+  const showRetryButton = Boolean(isPrepareError && !writeResult.isLoading);
+
+  const showSignatureButton = Boolean(
+    contractWrite.signatureRequest && !signatureResult.data,
+  );
+
   return (
     <Stack
       direction="column"
-      alignItems="stretch"
-      gap={1}
-      sx={{ width: "100%" }}
+      spacing={showForceSubmitButton || showNextWriteButton ? 1 : 0}
     >
       {needsToSwitchNetwork ? (
         <Button
@@ -97,75 +105,65 @@ export default function ContractWriteButton({
           fullWidth
           onClick={onSwitchNetworkButtonClick}
         >
-          Switch Network
+          Switch network
         </Button>
       ) : (
         <>
-          {Boolean(contractWrite.signatureRequest && !signatureResult.data) ? (
+          {showSignatureButton ? (
             <LoadingButton
+              loadingPosition="end"
               loading={signatureResult.isLoading}
-              loadingIndicator="Waiting for wallet…"
               data-testid="transaction-button"
               size="large"
               variant="contained"
               fullWidth
               onClick={() => signatureResult.signTypedData()}
             >
-              Sign
+              {signatureResult.isLoading ? "Waiting for wallet…" : "Sign"}
             </LoadingButton>
+          ) : showRetryButton ? (
+            <Button
+              variant="outlined"
+              size="large"
+              fullWidth
+              onClick={() => prepareResult.refetch()}
+              endIcon={<ReplayIcon />}
+            >
+              Retry transaction preparation
+            </Button>
           ) : (
-            <>
-              <Collapse in={isSeriousPrepareError}>
-                <Alert severity="error">
-                  {(prepareResult.error as BaseError)?.shortMessage}
-                </Alert>
-              </Collapse>
-              {isSeriousPrepareError ? (
-                <Button
-                  variant="contained"
-                  size="large"
-                  fullWidth
-                  onClick={() => prepareResult?.refetch()}
-                  endIcon={<ReplayIcon />}
-                >
-                  Transaction preparation failed. Retry?
-                </Button>
-              ) : (
-                <LoadingButton
-                  loadingIndicator={
-                    transactionResult.isLoading
-                      ? "Waiting for transaction..."
-                      : writeResult.isLoading
-                      ? "Waiting for wallet..."
-                      : "Loading..."
-                  }
-                  data-testid="transaction-button"
-                  size="large"
-                  variant="contained"
-                  fullWidth
-                  disabled={
-                    !write ||
-                    transactionResult.isSuccess ||
-                    isSeriousPrepareError
-                  }
-                  onClick={onContractWriteButtonClick}
-                  loading={isLoading}
-                >
-                  Send Transaction
-                  {/* {contractWrite.displayTitle} */}
-                </LoadingButton>
-              )}
-            </>
+            <LoadingButton
+              loadingPosition="end"
+              data-testid="transaction-button"
+              size="large"
+              variant="contained"
+              fullWidth
+              disabled={isWriteButtonDisabled}
+              onClick={onContractWriteButtonClick}
+              loading={isLoading}
+            >
+              {writeButtonText}
+            </LoadingButton>
           )}
-          <Collapse in={showNextWriteButton}>
+          <Collapse in={showForceSubmitButton}>
+            <Button
+              variant="outlined"
+              size="large"
+              color="error"
+              fullWidth
+              onClick={() => write!()}
+            >
+              Force submit transaction
+            </Button>
+          </Collapse>
+          <Collapse in={showNextWriteButton} unmountOnExit>
             <Button
               variant="text"
               size="large"
               fullWidth
               onClick={handleNextWrite}
-              endIcon={<SkipNextIcon />}
             >
-              Transaction is taking a long time. Skip waiting?
+              Skip waiting for transaction
             </Button>
           </Collapse>
         </>

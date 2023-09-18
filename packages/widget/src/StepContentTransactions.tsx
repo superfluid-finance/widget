@@ -1,11 +1,19 @@
 import CloseIcon_ from "@mui/icons-material/Close.js";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Collapse,
+  IconButton,
+  List,
+  ListSubheader,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useCallback, useEffect } from "react";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { BatchHandler } from "./CommandHandlerProvider.js";
 import ContractWriteButton from "./ContractWriteButton.js";
-import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress.js";
 import { ContractWriteStatus } from "./ContractWriteStatus.js";
 import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
@@ -53,23 +61,30 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
     [handleNextWrite_, writeIndex],
   );
 
+  const showErrorAlert = Boolean(
+    currentResult &&
+      currentResult.currentError &&
+      currentResult.currentError.shortMessage,
+  );
+
   return (
-    <Box>
+    <Stack spacing={1}>
       <Stack alignItems="end">
         <IconButton
           edge="start"
+          size="medium"
           color="inherit"
           onClick={onBack}
           aria-label="back"
           sx={{ mr: -1 }}
         >
-          <CloseIcon />
+          <CloseIcon fontSize="inherit" />
         </IconButton>
       </Stack>
       <BatchHandler />
       <Stack
         direction="column"
-        gap={2.25}
+        spacing={2.25}
         alignItems="stretch"
         sx={{ width: "100%" }}
       >
@@ -78,10 +93,10 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             {`You're almost there!`}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Send the transactions from your wallet to finish your purchase.
+            Submit the transactions from your wallet to finish your purchase.
           </Typography>
         </Box>
-        <Stack
+        {/* <Stack
           direction="column"
           alignItems="center"
           justifyContent="space-around"
@@ -92,8 +107,12 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             index={writeIndex}
             total={total}
           />
-        </Stack>
-        <Stack gap={1}>
+        </Stack> */}
+        <List
+          disablePadding
+          dense
+          subheader={<ListSubheader>Transactions</ListSubheader>}
+        >
           {contractWriteResults.map((result, index) => (
             <ContractWriteStatus
               key={index.toString()}
@@ -101,7 +120,21 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
               index={index}
             />
           ))}
-        </Stack>
+        </List>
+        {showErrorAlert && (
+          <Collapse
+            in={Boolean(
+              currentResult.currentError &&
+                currentResult.currentError.shortMessage,
+            )}
+            hidden={!showErrorAlert}
+            unmountOnExit
+          >
+            <Alert severity="error">
+              {currentResult.currentError?.shortMessage}
+            </Alert>
+          </Collapse>
+        )}
         {currentResult && (
           <ContractWriteButton
             {...currentResult}
@@ -109,6 +142,6 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
           />
         )}
       </Stack>
-    </Box>
+    </Stack>
   );
 }

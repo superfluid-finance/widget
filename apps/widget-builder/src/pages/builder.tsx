@@ -14,13 +14,14 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import ConfigEditorDrawer from "../components/config-editor/ConfigEditorDrawer";
 import ExportEditor from "../components/export-editor/ExportEditor";
 import PaymentEditor from "../components/payment-editor/PaymentEditor";
 import ProductEditor from "../components/product-editor/ProductEditor";
+import StreamGatingEditor from "../components/stream-gating-editor/StreamGatingEditor";
 import TermsAndPrivacy from "../components/terms-and-privacy/TermsAndPrivacy";
 import UiEditor from "../components/ui-editor/UiEditor";
 import WidgetPreview, {
@@ -29,36 +30,42 @@ import WidgetPreview, {
 import useAnalyticsBrowser from "../hooks/useAnalyticsBrowser";
 import { defaultWidgetProps } from "../hooks/useDemoMode";
 
-const drawerWidth = "480px";
+const drawerWidth = "540px";
+const stepCount = 5;
 
 const tabLabels: Record<number, string> = {
   0: "Product",
   1: "Payment",
   2: "Styling",
   3: "Export",
+  4: "Gating",
 };
 
 export default function Builder() {
   const [activeStep, setActiveStep] = useState(0);
-  const stepCount = 4;
   const lastStep = stepCount - 1;
   const isLastStep = activeStep === lastStep;
   const isFirstStep = activeStep === 0;
 
   const ajs = useAnalyticsBrowser();
+  const previewContainerRef = useRef<HTMLDivElement>(null);
 
   const handleNext = useCallback(() => {
     const nextStep = Math.min(activeStep + 1, lastStep);
     setActiveStep(nextStep);
-    ajs.track("next_step", {
+    ajs.track("tab_changed", {
       tab: tabLabels[nextStep],
+      button: "next_button",
     });
   }, [ajs, activeStep]);
 
   const handleBack = useCallback(() => {
     const prevStep = Math.max(activeStep - 1, 0);
     setActiveStep(prevStep);
-    ajs.track("previous_step", { tab: tabLabels[prevStep] });
+    ajs.track("tab_changed", {
+      tab: tabLabels[prevStep],
+      button: "back_button",
+    });
   }, [ajs, activeStep]);
 
   const formMethods = useForm<WidgetProps>({
@@ -80,7 +87,10 @@ export default function Builder() {
     (_: React.SyntheticEvent, value: string) => {
       const tabNumber = Number(value);
       setActiveStep(tabNumber);
-      ajs.track("tab_changed", { tab: tabLabels[tabNumber] });
+      ajs.track("tab_changed", {
+        tab: tabLabels[tabNumber],
+        button: "tab_button",
+      });
     },
     [ajs],
   );
@@ -112,6 +122,7 @@ export default function Builder() {
                 <Tab label={tabLabels[1]} value="1" data-testid="payment-tab" />
                 <Tab label={tabLabels[2]} value="2" data-testid="ui-tab" />
                 <Tab label={tabLabels[3]} value="3" data-testid="export-tab" />
+                <Tab label={tabLabels[4]} value="4" data-testid="gating-tab" />
               </TabList>
             </Box>
           </AppBar>
@@ -123,17 +134,20 @@ export default function Builder() {
             }}
           >
             <FormProvider {...formMethods}>
-              <TabPanel value="0" sx={{ height: "100%" }}>
+              <TabPanel value="0">
                 <ProductEditor />
               </TabPanel>
-              <TabPanel value="1" sx={{ height: "100%" }}>
+              <TabPanel value="1">
                 <PaymentEditor />
               </TabPanel>
-              <TabPanel value="2" sx={{ height: "100%" }}>
+              <TabPanel value="2">
                 <UiEditor />
               </TabPanel>
-              <TabPanel value="3" sx={{ height: "100%" }}>
+              <TabPanel value="3">
                 <ExportEditor />
+              </TabPanel>
+              <TabPanel value="4">
+                <StreamGatingEditor previewContainerRef={previewContainerRef} />
               </TabPanel>
             </FormProvider>
           </Box>
@@ -186,6 +200,8 @@ export default function Builder() {
           </Paper>
         </TabContext>
       </Drawer>
+      {/* TODO: Render this conditionally, and use a React Portal, 
+        from StreamGatingEditor, to show the custom preview of the NFT */}
       <Stack
         component="main"
         alignItems="center"
@@ -195,6 +211,7 @@ export default function Builder() {
           py: "8vh",
           overflow: "auto",
         }}
+        ref={previewContainerRef}
       >
         <Box textAlign="center" sx={{ mb: 6.5 }}>
           <Typography variant="h5" color="grey.900" sx={{ mb: 1 }}>

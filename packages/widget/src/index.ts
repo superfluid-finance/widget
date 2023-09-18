@@ -17,6 +17,7 @@ export type {
 export {
   cfAv1ForwarderABI, // TODO: Export ABI from @superfluid-finance/widget/abi"
   defaultNetworkAssets,
+  mapTimePeriodToSeconds,
   supportedNetwork,
   supportedNetworks,
   timePeriods,
