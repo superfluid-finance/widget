@@ -52,6 +52,7 @@ export class WidgetPage extends BasePage {
   readonly transactionStatusIcons: Locator;
   readonly circleIcons: Locator;
   readonly checkmarkIcons: Locator;
+  readonly transactionTypesAndStatuses: Locator;
   // readonly copyButtons: Locator;
   // readonly productDetails: Locator;
   // readonly poweredBySuperfluidButton: Locator;
@@ -103,6 +104,9 @@ export class WidgetPage extends BasePage {
     this.metamaskWalletButton = page.getByRole("button", {
       name: "MetaMask INSTALLED",
     });
+    this.transactionTypesAndStatuses = page.getByTestId(
+      "transaction-type-and-status",
+    );
     this.transactionStatuses = page
       .getByTestId("transaction-type-and-status")
       .locator("p");
@@ -303,13 +307,12 @@ export class WidgetPage extends BasePage {
   ) {
     await test.step(`Validating transaction statuses`, async () => {
       for (const [index, transaction] of transactionList.entries()) {
-        await expect(this.transactionTypes.nth(index)).toHaveText(
-          this.getTransactionTypeString(transaction) as string,
-        );
-        await expect(this.transactionStatuses.nth(index)).toHaveText(
-          statusList[index],
-          { timeout: 60000 },
-        );
+        await expect(
+          this.transactionTypesAndStatuses.nth(index).locator("span"),
+        ).toHaveText(this.getTransactionTypeString(transaction) as string);
+        await expect(
+          this.transactionTypesAndStatuses.nth(index).locator("p"),
+        ).toHaveText(statusList[index], { timeout: 60000 });
       }
       await this.validateTransactionCounterAndIcons(statusList);
     });
@@ -503,6 +506,9 @@ export class WidgetPage extends BasePage {
           let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
             (underlyingBalance.toString() / 1e18).toString(),
           );
+          await expect(this.wrapUnderlyingBalance).toBeVisible({
+            timeout: 20000,
+          });
           await expect(this.wrapUnderlyingBalance).toHaveText(
             `Balance: ${underlyingBalanceToAssert}`,
           );
