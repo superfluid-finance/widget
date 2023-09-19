@@ -188,7 +188,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
       >
         <Tooltip title="Edit Payment Option" arrow>
           <IconButton
-            data-testid="delete-payment-option-button"
+            data-testid="edit-payment-option-button"
             onClick={() => edit(index)}
             sx={{
               "&:hover .MuiSvgIcon-root": {
@@ -202,7 +202,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
 
         <Tooltip title="Copy Payment Option" arrow>
           <IconButton
-            data-testid="delete-payment-option-button"
+            data-testid="clone-payment-option-button"
             onClick={() => clone(index)}
             sx={{
               "&:hover .MuiSvgIcon-root": {
