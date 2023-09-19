@@ -64,7 +64,7 @@ export default function ContractWriteButton({
     if (transactionResult.isLoading) {
       const timeoutId = setTimeout(() => {
         setShowNextWriteButton(true);
-      }, 20_000); // After 20 seconds, the button appears.
+      }, 15_000); // After 15 seconds, the button appears.
       return () => clearTimeout(timeoutId);
     } else {
       setShowNextWriteButton(false);
