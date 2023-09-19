@@ -506,27 +506,15 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           >
             Discard
           </Button>
-          {dialogMode === "edit" ? (
-            <Button
-              size="large"
-              data-testid="add-option-button"
-              variant="contained"
-              color="primary"
-              onClick={handleAction}
-            >
-              Update Payment Option
-            </Button>
-          ) : (
-            <Button
-              size="large"
-              data-testid="add-option-button"
-              variant="contained"
-              color="primary"
-              onClick={handleAction}
-            >
-              Add Payment Option
-            </Button>
-          )}
+          <Button
+            size="large"
+            data-testid="add-option-button"
+            variant="contained"
+            color="primary"
+            onClick={handleAction}
+          >
+            {dialogMode === "edit" ? "Update" : "Add"} Payment Option
+          </Button>
         </Stack>
       </DialogActions>
     </>
