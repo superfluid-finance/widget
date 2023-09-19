@@ -1,8 +1,11 @@
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
+  IconButton,
   Stack,
   styled,
   Tooltip,
@@ -61,6 +64,7 @@ type PaymentOptionViewProps = {
   receiverAddress: `0x${string}`;
   chainId: ChainId;
   index: number;
+  clone: (index: number) => void;
   edit: (index: number) => void;
   remove: (index: number) => void;
 };
@@ -72,6 +76,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   receiverAddress: receiverAddress_,
   chainId,
   index,
+  clone,
   edit,
   remove,
 }) => {
@@ -180,22 +185,30 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         justifyContent="flex-end"
         bgcolor="grey.50"
       >
-        <Button
+        <IconButton
           data-testid="delete-payment-option-button"
-          color="primary"
-          variant="text"
           onClick={() => edit(index)}
+          title="Edit Payment Option"
+          size="small"
         >
-          Edit/Duplicate
-        </Button>
-        <Button
+          <EditIcon color="primary" />
+        </IconButton>
+        <IconButton
           data-testid="delete-payment-option-button"
-          color="error"
-          variant="text"
-          onClick={() => remove(index)}
+          onClick={() => clone(index)}
+          title="Copy Payment Option"
+          size="small"
         >
-          Remove
-        </Button>
+          <FileCopyIcon color="secondary" />
+        </IconButton>
+        <IconButton
+          data-testid="delete-payment-option-button"
+          onClick={() => remove(index)}
+          title="Delete Payment Option"
+          size="small"
+        >
+          <DeleteIcon color="error" />
+        </IconButton>
       </Stack>
     </Card>
   );

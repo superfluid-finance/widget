@@ -38,21 +38,17 @@ const ProductEditor: FC = () => {
 
   const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
 
-  const [isAdding, setIsAdding] = useState(false);
+  const [dialogMode, setDialogMode] = useState<"add" | "clone" | "edit">();
   const [targetedPaymentOption, setTargetedPaymentOption] = useState<{
     index: number;
     value: PaymentOption;
   }>();
   const [addCount, setAddCount] = useState(0);
 
-  const handleOpen = () => {
-    setIsAdding(true);
-  };
-
-  const handleClose = () => {
-    setIsAdding(false);
+  const handleClose = useCallback(() => {
+    setDialogMode(undefined);
     setTargetedPaymentOption(undefined);
-  };
+  }, []);
 
   const { setDemoPaymentDetails } = useDemoMode();
   const handleDemo = useCallback(() => {
@@ -99,7 +95,9 @@ const ProductEditor: FC = () => {
                 variant="contained"
                 size="medium"
                 color="primary"
-                onClick={handleOpen}
+                onClick={() => {
+                  setDialogMode("add");
+                }}
                 startIcon={<AddIcon />}
               >
                 Add
@@ -134,12 +132,19 @@ const ProductEditor: FC = () => {
                           superToken={superToken}
                           chainId={chainId}
                           index={i}
+                          clone={(index) => {
+                            setTargetedPaymentOption({
+                              index,
+                              value: paymentOptions[index],
+                            });
+                            setDialogMode("clone");
+                          }}
                           edit={(index) => {
                             setTargetedPaymentOption({
                               index,
                               value: paymentOptions[index],
                             });
-                            setIsAdding(true);
+                            setDialogMode("edit");
                           }}
                           remove={(params) => {
                             remove(params);
@@ -174,7 +179,7 @@ const ProductEditor: FC = () => {
         </Stack>
       </Stack>
       <Dialog
-        open={isAdding}
+        open={Boolean(dialogMode)}
         TransitionComponent={Slide}
         TransitionProps={
           {
@@ -213,15 +218,14 @@ const ProductEditor: FC = () => {
             <SelectPaymentOption
               key={addCount.toString()}
               selectedPaymentOption={targetedPaymentOption}
+              dialogMode={dialogMode}
               onAdd={(props) => {
                 setAddCount((x) => x + 1);
                 append(props);
-                setTargetedPaymentOption(undefined);
                 handleClose();
               }}
               onEdit={(index, value: PaymentOption) => {
                 update(index, value);
-                setTargetedPaymentOption(undefined);
                 handleClose();
               }}
               onDiscard={() => {

@@ -2,7 +2,6 @@ import {
   Autocomplete,
   Avatar,
   Button,
-  ButtonGroup,
   Collapse,
   DialogActions,
   DialogContent,
@@ -51,6 +50,7 @@ export type PaymentOptionWithSuperTokenAndNetwork = {
 
 type PaymentOptionSelectorProps = {
   selectedPaymentOption?: { index: number; value: PaymentOption };
+  dialogMode?: "add" | "clone" | "edit";
   onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
   onEdit: UseFieldArrayUpdate<WidgetProps, "paymentDetails.paymentOptions">;
   onDiscard: () => void;
@@ -58,6 +58,7 @@ type PaymentOptionSelectorProps = {
 
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   selectedPaymentOption,
+  dialogMode,
   onAdd,
   onEdit,
   onDiscard,
@@ -132,7 +133,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
   const [errors, setErrors] = useState<ZodError<PaymentOption> | null>(null);
 
-  const handleAction = (mode: "add" | "update") => () => {
+  const handleAction = () => {
     setErrors(null);
 
     const thePaymentOption: Partial<PaymentOption> = {
@@ -162,7 +163,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
     const validationResult = paymentOptionSchema.safeParse(thePaymentOption);
     if (validationResult.success) {
-      mode === "update" && selectedPaymentOption
+      dialogMode === "edit" && selectedPaymentOption
         ? onEdit(selectedPaymentOption.index, validationResult.data)
         : onAdd(validationResult.data);
     } else {
@@ -505,27 +506,27 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           >
             Discard
           </Button>
-          <ButtonGroup variant="contained">
-            {selectedPaymentOption && (
-              <Button
-                size="large"
-                data-testid="add-option-button"
-                color="secondary"
-                onClick={handleAction("update")}
-              >
-                Update
-              </Button>
-            )}
-
+          {dialogMode === "edit" ? (
             <Button
               size="large"
               data-testid="add-option-button"
+              variant="contained"
               color="primary"
-              onClick={handleAction("add")}
+              onClick={handleAction}
             >
-              {selectedPaymentOption ? "Add as New" : "Add"}
+              Update Payment Option
             </Button>
-          </ButtonGroup>
+          ) : (
+            <Button
+              size="large"
+              data-testid="add-option-button"
+              variant="contained"
+              color="primary"
+              onClick={handleAction}
+            >
+              Add Payment Option
+            </Button>
+          )}
         </Stack>
       </DialogActions>
     </>
