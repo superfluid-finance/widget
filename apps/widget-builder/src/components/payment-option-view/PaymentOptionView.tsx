@@ -61,6 +61,7 @@ type PaymentOptionViewProps = {
   receiverAddress: `0x${string}`;
   chainId: ChainId;
   index: number;
+  edit: (index: number) => void;
   remove: (index: number) => void;
 };
 
@@ -71,6 +72,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   receiverAddress: receiverAddress_,
   chainId,
   index,
+  edit,
   remove,
 }) => {
   const network = useMemo(
@@ -178,6 +180,14 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         justifyContent="flex-end"
         bgcolor="grey.50"
       >
+        <Button
+          data-testid="delete-payment-option-button"
+          color="primary"
+          variant="text"
+          onClick={() => edit(index)}
+        >
+          Edit/Duplicate
+        </Button>
         <Button
           data-testid="delete-payment-option-button"
           color="error"

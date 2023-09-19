@@ -18,6 +18,7 @@ import {
   useTheme,
   Zoom,
 } from "@mui/material";
+import { PaymentOption } from "@superfluid-finance/widget";
 import { FC, useCallback, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
@@ -30,7 +31,7 @@ const ProductEditor: FC = () => {
   const theme = useTheme();
   const { control, watch } = useFormContext<WidgetProps>();
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, update, remove } = useFieldArray({
     control,
     name: "paymentDetails.paymentOptions", // unique name for your Field Array
   });
@@ -38,6 +39,10 @@ const ProductEditor: FC = () => {
   const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
 
   const [isAdding, setIsAdding] = useState(false);
+  const [targetedPaymentOption, setTargetedPaymentOption] = useState<{
+    index: number;
+    value: PaymentOption;
+  }>();
   const [addCount, setAddCount] = useState(0);
 
   const handleOpen = () => {
@@ -46,6 +51,7 @@ const ProductEditor: FC = () => {
 
   const handleClose = () => {
     setIsAdding(false);
+    setTargetedPaymentOption(undefined);
   };
 
   const { setDemoPaymentDetails } = useDemoMode();
@@ -128,6 +134,13 @@ const ProductEditor: FC = () => {
                           superToken={superToken}
                           chainId={chainId}
                           index={i}
+                          edit={(index) => {
+                            setTargetedPaymentOption({
+                              index,
+                              value: paymentOptions[index],
+                            });
+                            setIsAdding(true);
+                          }}
                           remove={(params) => {
                             remove(params);
                             setAddCount(0);
@@ -196,17 +209,25 @@ const ProductEditor: FC = () => {
         <Controller
           control={control}
           name="paymentDetails.paymentOptions"
-          render={() => (
+          render={(val) => (
             <SelectPaymentOption
               key={addCount.toString()}
+              selectedPaymentOption={targetedPaymentOption}
               onAdd={(props) => {
                 setAddCount((x) => x + 1);
                 append(props);
+                setTargetedPaymentOption(undefined);
+                handleClose();
+              }}
+              onEdit={(index, value: PaymentOption) => {
+                update(index, value);
+                setTargetedPaymentOption(undefined);
                 handleClose();
               }}
               onDiscard={() => {
                 handleClose();
                 setAddCount((x) => x + 1);
+                setTargetedPaymentOption(undefined);
               }}
             />
           )}

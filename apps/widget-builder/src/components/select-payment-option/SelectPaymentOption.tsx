@@ -2,6 +2,7 @@ import {
   Autocomplete,
   Avatar,
   Button,
+  ButtonGroup,
   Collapse,
   DialogActions,
   DialogContent,
@@ -35,7 +36,7 @@ import tokenList, {
   SuperTokenInfo,
 } from "@superfluid-finance/widget/tokenlist";
 import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
-import { UseFieldArrayAppend } from "react-hook-form";
+import { UseFieldArrayAppend, UseFieldArrayUpdate } from "react-hook-form";
 import { Chain } from "wagmi";
 import { ZodError } from "zod";
 
@@ -49,15 +50,20 @@ export type PaymentOptionWithSuperTokenAndNetwork = {
 };
 
 type PaymentOptionSelectorProps = {
+  selectedPaymentOption?: { index: number; value: PaymentOption };
   onAdd: UseFieldArrayAppend<WidgetProps, "paymentDetails.paymentOptions">;
+  onEdit: UseFieldArrayUpdate<WidgetProps, "paymentDetails.paymentOptions">;
   onDiscard: () => void;
 };
 
 const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
+  selectedPaymentOption,
   onAdd,
+  onEdit,
   onDiscard,
 }) => {
   const [receiver, setReceiver] = useState<`0x${string}` | "">("");
+
   const [selectedNetwork, setSelectedNetwork] = useState<Chain | null>(null);
   const [selectedToken, setSelectedToken] = useState<SuperTokenInfo | null>(
     null,
@@ -66,6 +72,33 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   const [isCustomAmount, setIsCustomAmount] = useState(false);
   const [flowRateAmount, setFlowRateAmount] = useState<`${number}` | "">("");
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
+
+  useEffect(() => {
+    if (selectedPaymentOption) {
+      const { value } = selectedPaymentOption;
+
+      setReceiver(value.receiverAddress);
+      setSelectedNetwork(
+        supportedNetworks.find(({ id }) => id === value.chainId) ?? null,
+      );
+
+      if (value.superToken) {
+        setSelectedToken(
+          tokenList.tokens.find(
+            ({ address }) =>
+              address.toLowerCase() === value.superToken.address.toLowerCase(),
+          ) ?? null,
+        );
+      }
+
+      if (value.flowRate) {
+        setFlowRateAmount(value.flowRate.amountEther);
+        setFlowRateInterval(value.flowRate.period);
+      } else {
+        setIsCustomAmount(true);
+      }
+    }
+  }, [selectedPaymentOption]);
 
   const filteredNetworks = useMemo(
     () =>
@@ -93,12 +126,13 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
     if (network) {
       setSelectedNetwork(network);
+      setSelectedToken(null);
     }
   };
 
   const [errors, setErrors] = useState<ZodError<PaymentOption> | null>(null);
 
-  const handleAdd = () => {
+  const handleAction = (mode: "add" | "update") => () => {
     setErrors(null);
 
     const thePaymentOption: Partial<PaymentOption> = {
@@ -128,7 +162,9 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
     const validationResult = paymentOptionSchema.safeParse(thePaymentOption);
     if (validationResult.success) {
-      onAdd(validationResult.data);
+      mode === "update" && selectedPaymentOption
+        ? onEdit(selectedPaymentOption.index, validationResult.data)
+        : onAdd(validationResult.data);
     } else {
       setErrors(validationResult.error);
     }
@@ -154,10 +190,6 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
       }
     }
   };
-
-  useEffect(() => {
-    setSelectedToken(null);
-  }, [selectedNetwork]);
 
   const [showUpfrontPayment, setShowUpfrontPayment] = useState(false);
   const [upfrontPaymentAmount, setUpfrontPaymentAmount] = useState<
@@ -188,7 +220,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
                 labelId={`label-${id}`}
                 id={id}
                 data-testid="network-selection"
-                value={selectedNetwork?.name}
+                value={selectedNetwork?.name || ""}
                 onChange={handleNetworkSelect}
                 fullWidth
               >
@@ -467,21 +499,33 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           <Button
             size="large"
             data-testid="discard-option-button"
-            color="primary"
+            color="error"
             variant="text"
             onClick={onDiscard}
           >
             Discard
           </Button>
-          <Button
-            size="large"
-            data-testid="add-option-button"
-            color="primary"
-            variant="contained"
-            onClick={handleAdd}
-          >
-            Add Payment Option
-          </Button>
+          <ButtonGroup variant="contained">
+            {selectedPaymentOption && (
+              <Button
+                size="large"
+                data-testid="add-option-button"
+                color="secondary"
+                onClick={handleAction("update")}
+              >
+                Update
+              </Button>
+            )}
+
+            <Button
+              size="large"
+              data-testid="add-option-button"
+              color="primary"
+              onClick={handleAction("add")}
+            >
+              {selectedPaymentOption ? "Add as New" : "Add"}
+            </Button>
+          </ButtonGroup>
         </Stack>
       </DialogActions>
     </>
