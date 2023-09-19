@@ -186,42 +186,47 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         justifyContent="flex-end"
         bgcolor="grey.50"
       >
-        <IconButton
-          data-testid="delete-payment-option-button"
-          onClick={() => edit(index)}
-          title="Edit Payment Option"
-          sx={{
-            "&:hover .MuiSvgIcon-root": {
-              color: theme.palette.primary.main,
-            },
-          }}
-        >
-          <EditIcon sx={{ fontSize: 20 }} />
-        </IconButton>
-        <IconButton
-          data-testid="delete-payment-option-button"
-          onClick={() => clone(index)}
-          title="Copy Payment Option"
-          sx={{
-            "&:hover .MuiSvgIcon-root": {
-              color: theme.palette.secondary.main,
-            },
-          }}
-        >
-          <FileCopyIcon sx={{ fontSize: 20 }} />
-        </IconButton>
-        <IconButton
-          data-testid="delete-payment-option-button"
-          onClick={() => remove(index)}
-          title="Delete Payment Option"
-          sx={{
-            "&:hover .MuiSvgIcon-root": {
-              color: theme.palette.error.main,
-            },
-          }}
-        >
-          <DeleteIcon sx={{ fontSize: 20 }} />
-        </IconButton>
+        <Tooltip title="Edit Payment Option" arrow>
+          <IconButton
+            data-testid="delete-payment-option-button"
+            onClick={() => edit(index)}
+            sx={{
+              "&:hover .MuiSvgIcon-root": {
+                color: theme.palette.primary.main,
+              },
+            }}
+          >
+            <EditIcon sx={{ fontSize: 20 }} />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Copy Payment Option" arrow>
+          <IconButton
+            data-testid="delete-payment-option-button"
+            onClick={() => clone(index)}
+            sx={{
+              "&:hover .MuiSvgIcon-root": {
+                color: theme.palette.secondary.main,
+              },
+            }}
+          >
+            <FileCopyIcon sx={{ fontSize: 20 }} />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Delete Payment Option" arrow>
+          <IconButton
+            data-testid="delete-payment-option-button"
+            onClick={() => remove(index)}
+            sx={{
+              "&:hover .MuiSvgIcon-root": {
+                color: theme.palette.error.main,
+              },
+            }}
+          >
+            <DeleteIcon sx={{ fontSize: 20 }} />
+          </IconButton>
+        </Tooltip>
       </Stack>
     </Card>
   );
