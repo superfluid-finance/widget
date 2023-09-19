@@ -500,7 +500,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
           <Button
             size="large"
             data-testid="discard-option-button"
-            color="error"
+            color="primary"
             variant="text"
             onClick={onDiscard}
           >
