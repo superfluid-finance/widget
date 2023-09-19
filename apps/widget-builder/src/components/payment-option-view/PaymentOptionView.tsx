@@ -80,6 +80,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   edit,
   remove,
 }) => {
+  const theme = useTheme();
   const network = useMemo(
     () => supportedNetworks.find((n) => n.id === chainId)!,
     [chainId],
@@ -189,25 +190,37 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
           data-testid="delete-payment-option-button"
           onClick={() => edit(index)}
           title="Edit Payment Option"
-          size="small"
+          sx={{
+            "&:hover .MuiSvgIcon-root": {
+              color: theme.palette.primary.main,
+            },
+          }}
         >
-          <EditIcon color="primary" />
+          <EditIcon sx={{ fontSize: 20 }} />
         </IconButton>
         <IconButton
           data-testid="delete-payment-option-button"
           onClick={() => clone(index)}
           title="Copy Payment Option"
-          size="small"
+          sx={{
+            "&:hover .MuiSvgIcon-root": {
+              color: theme.palette.secondary.main,
+            },
+          }}
         >
-          <FileCopyIcon color="secondary" />
+          <FileCopyIcon sx={{ fontSize: 20 }} />
         </IconButton>
         <IconButton
           data-testid="delete-payment-option-button"
           onClick={() => remove(index)}
           title="Delete Payment Option"
-          size="small"
+          sx={{
+            "&:hover .MuiSvgIcon-root": {
+              color: theme.palette.error.main,
+            },
+          }}
         >
-          <DeleteIcon color="error" />
+          <DeleteIcon sx={{ fontSize: 20 }} />
         </IconButton>
       </Stack>
     </Card>
