@@ -13,6 +13,7 @@ import {
 } from "wagmi";
 
 import { ContractWrite } from "./ContractWrite.js";
+import { errorsABI } from "./core/wagmi-generated.js";
 import { TxFunctionName } from "./EventListeners.js";
 import { useWidget } from "./WidgetContext.js";
 
@@ -32,11 +33,20 @@ export type ContractWriteManagerProps = {
 
 export function ContractWriteManager({
   prepare: _prepare,
-  contractWrite,
+  contractWrite: contractWrite_,
   onChange,
 }: ContractWriteManagerProps) {
   const { chain } = useNetwork();
   const { isConnected, address: accountAddress } = useAccount();
+
+  // Add all known errors to the ABI so viem/wagmi could decode them.
+  const contractWrite = useMemo<ContractWrite>(
+    () => ({
+      ...contractWrite_,
+      abi: contractWrite_.abi.slice().concat(errorsABI),
+    }),
+    [contractWrite_],
+  );
 
   const prepare =
     accountAddress && _prepare && contractWrite.chainId === chain?.id;
