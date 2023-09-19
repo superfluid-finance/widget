@@ -113,7 +113,7 @@ export default function Stepper() {
                           : step.shortText;
 
                       return (
-                        <Step key={index}>
+                        <Step data-testid="test" key={index}>
                           <StepButton
                             onClick={() => {
                               setActiveStep(index);

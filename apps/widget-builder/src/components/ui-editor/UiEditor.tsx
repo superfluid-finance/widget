@@ -261,6 +261,7 @@ const UiEditor: FC = () => {
                   }}
                 >
                   <ToggleButton
+                    data-testid="vertical-stepper-button"
                     value="vertical"
                     aria-label="vertical stepper"
                     title="Choose vertical stepper"
@@ -268,6 +269,7 @@ const UiEditor: FC = () => {
                     Vertical
                   </ToggleButton>
                   <ToggleButton
+                    data-testid="horizontal-stepper-button"
                     value="horizontal"
                     aria-label="horizontal stepper"
                     title="Choose horizontal stepper"

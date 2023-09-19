@@ -119,6 +119,7 @@ const switchLayout = (
     >
       {({ openModal }) => (
         <Fab
+          data-testid="open-checkout-in-button"
           color="primary"
           variant="extended"
           onClick={() => openModal()}

@@ -94,7 +94,7 @@ test("Using magic wand to generate product details and its tooltip", async ({
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
   await builderPage.hoverOnWandButtonAndValidateTooltipText(
-    "Replace with demo product details",
+    "Replace with demo product details"
   );
   await builderPage.clickOnWandButton();
   await builderPage.validateRandomProductSectionIsSet();
@@ -291,7 +291,7 @@ test("Add payment option form - invalid upfront payment field values ", async ({
   await builderPage.clickAddPaymentOptionFormButton();
   await builderPage.enableUpfrontPaymentSwitch();
   await builderPage.inputInvalidValuesAndVerifyPaymentFormError(
-    "upfrontPaymentAmount",
+    "upfrontPaymentAmount"
   );
 });
 
@@ -314,7 +314,7 @@ test("Using magic wand to generate payment options and its tooltip", async ({
   let widgetPage = new WidgetPage(page);
   await builderPage.openPaymentTab();
   await builderPage.hoverOnWandButtonAndValidateTooltipText(
-    "Replace with demo payment details",
+    "Replace with demo payment details"
   );
   await builderPage.clickOnWandButton();
   await builderPage.verifyAddedPaymentOptions(demoOptions);
@@ -355,4 +355,151 @@ test("Payment option form - Clearing the selected token with the x button", asyn
   });
   await builderPage.clearSelectedTokenWithXButton();
   await builderPage.validateNoTokenIsSelectedInAddPaymentForm();
+});
+
+// Styling tab
+test("View types - Inline", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.clickInlineViewModeButton();
+  await widgetPage.validateInlineWidgetIsVisible();
+});
+
+test("View types - Dialog", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.clickDialogViewModeButton();
+  await widgetPage.clickOnOpenWidgetInButton();
+  await widgetPage.validateDialogViewWidgetIsVisible();
+});
+
+test("View types - Drawer", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.clickDrawerViewModeButton();
+  await widgetPage.clickOnOpenWidgetInButton();
+  await widgetPage.validateDrawerViewWidgetIsVisible();
+});
+
+test("View types - Full-screen", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.clickFullScreenViewModeButton();
+  await widgetPage.clickOnOpenWidgetInButton();
+  await widgetPage.validateFullScreenViewWidgetIsVisible();
+});
+
+test("Turning dark mode on", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.enableDarkMode();
+  await widgetPage.validateDarkModeIsEnabled();
+});
+
+test("Turning dark mode off", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.enableLightMode();
+  await widgetPage.validateLightModeIsEnabled();
+});
+
+test("Changing container border radius", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  let minRadius = 0
+  let maxRadius = 50
+  let defaultRadius = 20
+  await builderPage.openStylingTab();
+    await widgetPage.validateContainerBorderRadiusIs(defaultRadius);
+  await builderPage.changeBorderRadius("border",minRadius);
+  await widgetPage.validateContainerBorderRadiusIs(minRadius);
+    await builderPage.changeBorderRadius("border", maxRadius);
+    await widgetPage.validateContainerBorderRadiusIs(maxRadius);
+});
+
+test("Changing field border radius", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  let minRadius = 0
+  let maxRadius = 25
+  let defaultRadius = 10
+    await builderPage.openStylingTab();
+      await widgetPage.validateFieldBorderRadiusIs(defaultRadius);
+  await builderPage.changeBorderRadius("field",minRadius);
+  await widgetPage.validateFieldBorderRadiusIs(minRadius);
+    await builderPage.changeBorderRadius("field",maxRadius);
+    await widgetPage.validateFieldBorderRadiusIs(maxRadius);
+});
+
+test("Changing button border radius", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+    let minRadius = 0;
+    let maxRadius = 25;
+    let defaultRadius = 10;
+  await builderPage.openStylingTab();
+    await widgetPage.validateButtonBorderRadiusIs(defaultRadius);
+  await builderPage.changeBorderRadius("button",minRadius);
+  await widgetPage.validateButtonBorderRadiusIs(minRadius);
+    await builderPage.changeBorderRadius("button",maxRadius);
+    await widgetPage.validateButtonBorderRadiusIs(maxRadius);
+});
+
+test("Changing primary color", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  let defaultColor = "#1DB227";
+  let red = "#ff0000";
+  await builderPage.openStylingTab();
+    await widgetPage.validatePrimaryColorIs("#1DB227");
+  await builderPage.changePrimaryColorTo(red);
+      await widgetPage.validatePrimaryColorIs(red);
+});
+
+test("Changing secondary color", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+    let defaultColor = "#fff";
+    let red = "#ff0000";
+  await builderPage.openStylingTab();
+    await widgetPage.validateSecondaryColorIs(defaultColor);
+  await builderPage.changeSecondaryColorTo(red);
+  await widgetPage.validateSecondaryColorIs(red);
+});
+
+test("Changing the font of the widget", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  let defaultFont = "Noto Sans, sans-serif";
+  let testFont = "Azeret Mono, monospace";
+  await builderPage.openStylingTab();
+    await widgetPage.validateWidgetFontIs(defaultFont);
+  await builderPage.changeWidgetFontTo(testFont);
+  await widgetPage.validateWidgetFontIs(testFont);
+});
+
+test("Changing the stepper to vertical and horizontal", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+      await widgetPage.validateWidgetStepperIsHorizontal();
+  await builderPage.changeStepperToVertical();
+  await widgetPage.validateWidgetStepperIsVertical();
+    await builderPage.changeStepperToHorizontal();
+    await widgetPage.validateWidgetStepperIsHorizontal();
+});
+
+
+test("Using the magic wand button to generate styling", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.clickOnWandButton();
+  await widgetPage.validateRandomStylingIsGenerated();
 });

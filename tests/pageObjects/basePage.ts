@@ -1,3 +1,5 @@
+import { Locator,Page } from "@playwright/test";
+
 export let randomDetailsSet = {
   name: "",
   description: "",
@@ -117,7 +119,7 @@ export class BasePage {
   static shortenHex(address: string, length = 4) {
     return `${address.substring(0, 2 + length)}...${address.substring(
       address.length - length,
-      address.length,
+      address.length
     )}`;
   }
 
@@ -128,5 +130,39 @@ export class BasePage {
       return `≈${integerPart}`;
     }
     return numStr;
+  }
+
+  //Inspired by https://github.com/microsoft/playwright/issues/20032#issuecomment-1379006314
+  static async changeSlider(
+    page: Page,
+    thumb: Locator,
+    slider: Locator,
+    targetPercentage: number
+  ) {
+    const thumbBoundingBox = await thumb.boundingBox();
+    const sliderBoundingBox = await slider.boundingBox();
+
+    if (thumbBoundingBox === null || sliderBoundingBox === null) {
+      throw new Error(
+        "Could not get the bounding boxes of one of the elements"
+      );
+    }
+
+    // Start from the middle of the slider's thumb
+    const startPoint = {
+      x: thumbBoundingBox.x + thumbBoundingBox.width / 2,
+      y: thumbBoundingBox.y + thumbBoundingBox.height / 2,
+    };
+
+    // Slide it to some endpoint determined by the target percentage
+    const endPoint = {
+      x: sliderBoundingBox.x + sliderBoundingBox.width * targetPercentage,
+      y: thumbBoundingBox.y + thumbBoundingBox.height / 2,
+    };
+
+    await page.mouse.move(startPoint.x, startPoint.y);
+    await page.mouse.down();
+    await page.mouse.move(endPoint.x, endPoint.y);
+    await page.mouse.up();
   }
 }
