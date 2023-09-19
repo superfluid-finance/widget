@@ -92,7 +92,7 @@ export function ContractWriteStatus({
           ? theme.palette.action.selected
           : theme.palette.action.active,
         bullet: isWriting
-          ? theme.palette.warning.main
+          ? theme.palette.primary.light
           : theme.palette.action.disabled,
         text: theme.palette.text.secondary,
       };
@@ -115,14 +115,9 @@ export function ContractWriteStatus({
       variant="outlined"
       sx={{
         bgcolor: isWriting
-          ? theme.palette.action.selected
+          ? theme.palette.action.hover
           : theme.palette.background.paper,
         pl: 0,
-        "&:hover": {
-          bgcolor: isWriting
-            ? theme.palette.action.focus
-            : theme.palette.action.hover,
-        },
         "&:not(:last-child)": {
           mb: 1,
         },
@@ -144,7 +139,11 @@ export function ContractWriteStatus({
       }
     >
       <ListItemIcon sx={{ justifyContent: "center" }}>
-        <CircleIcon fontSize="small" sx={{ color: colors.bullet }} />
+        {transactionResult.isSuccess ? (
+          <CheckCircleIcon fontSize="small" sx={{ color: colors.bullet }} />
+        ) : (
+          <CircleIcon fontSize="small" sx={{ color: colors.bullet }} />
+        )}
       </ListItemIcon>
       <ListItemText
         primaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
