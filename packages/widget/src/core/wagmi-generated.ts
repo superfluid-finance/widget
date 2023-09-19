@@ -5578,7 +5578,7 @@ export const superTokenABI = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x429DF352d27637A49DA83BB81A067CD8137138cf)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5DD3C6c691Cf49Cc1858eC54862e2D67Bca5D07A)
  */
 export const superUpgraderABI = [
   {
@@ -5901,14 +5901,14 @@ export const superUpgraderABI = [
 ] as const;
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x429DF352d27637A49DA83BB81A067CD8137138cf)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5DD3C6c691Cf49Cc1858eC54862e2D67Bca5D07A)
  */
 export const superUpgraderAddress = {
-  5: "0x429DF352d27637A49DA83BB81A067CD8137138cf",
+  5: "0x5DD3C6c691Cf49Cc1858eC54862e2D67Bca5D07A",
 } as const;
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x429DF352d27637A49DA83BB81A067CD8137138cf)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5DD3C6c691Cf49Cc1858eC54862e2D67Bca5D07A)
  */
 export const superUpgraderConfig = {
   address: superUpgraderAddress,
