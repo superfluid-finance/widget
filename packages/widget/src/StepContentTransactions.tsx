@@ -122,7 +122,7 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             />
           ))}
         </List>
-        <Collapse in={showErrorAlert} hidden={!showErrorAlert} unmountOnExit>
+        <Collapse in={showErrorAlert} unmountOnExit>
           <Alert severity="error">
             {currentResult.currentError?.shortMessage}
           </Alert>

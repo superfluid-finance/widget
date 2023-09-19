@@ -5,6 +5,7 @@ import {
   UserRejectedRequestError,
 } from "viem";
 import {
+  useAccount,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -35,7 +36,10 @@ export function ContractWriteManager({
   onChange,
 }: ContractWriteManagerProps) {
   const { chain } = useNetwork();
-  const prepare = _prepare && contractWrite.chainId === chain?.id;
+  const { isConnected, address: accountAddress } = useAccount();
+
+  const prepare =
+    accountAddress && _prepare && contractWrite.chainId === chain?.id;
 
   const { eventListeners } = useWidget();
 
@@ -46,9 +50,24 @@ export function ContractWriteManager({
 
   // Always have a write ready.
   const writeResult = useContractWrite({
-    ...(prepareResult.config.request
-      ? (prepareResult.config as unknown as ContractWrite)
-      : contractWrite),
+    ...(prepare
+      ? prepareResult.isError
+        ? {
+            mode: "prepared",
+            request: {
+              account: accountAddress,
+              chain: chain,
+              abi: contractWrite.abi,
+              address: contractWrite.address,
+              functionName: contractWrite.functionName,
+              args: contractWrite.args,
+              value: contractWrite.value,
+            },
+          }
+        : prepareResult.isSuccess
+        ? prepareResult.config
+        : {}
+      : {}),
     onError: console.error,
     onSuccess: ({ hash }) =>
       eventListeners.onTransactionSent?.({
