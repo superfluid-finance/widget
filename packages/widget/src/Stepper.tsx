@@ -15,7 +15,6 @@ import { useFormContext } from "react-hook-form";
 
 import { CheckoutSummary } from "./CheckoutSummary.js";
 import { runEventListener } from "./EventListeners.js";
-import ExpandIcon from "./ExpandIcon.js";
 import { DraftFormValues } from "./formValues.js";
 import StepContentPaymentOption from "./StepContentPaymentOption.js";
 import StepContentReview from "./StepContentReview.js";
@@ -114,19 +113,33 @@ export default function Stepper() {
 
                       return (
                         <Step key={index}>
-                          <StepButton
-                            onClick={() => {
-                              setActiveStep(index);
-                              runEventListener(eventListeners.onButtonClick, {
-                                type: "step_label",
-                              });
-                            }}
-                          >
-                            <StepLabel
-                              sx={{ position: "relative", width: "100%" }}
+                          {visualActiveStep > index ? (
+                            <StepButton
+                              onClick={() => {
+                                setActiveStep(index);
+                                runEventListener(eventListeners.onButtonClick, {
+                                  type: "step_label",
+                                });
+                              }}
+                              sx={(theme) => ({
+                                position: "relative",
+                                width: "100%",
+                                "&:hover": {
+                                  bgcolor: theme.palette.action.hover,
+                                },
+                              })}
                             >
                               {labelText}
-                              {orientation === "vertical" && (
+                            </StepButton>
+                          ) : (
+                            <StepLabel
+                              sx={{
+                                position: "relative",
+                                width: "100%",
+                              }}
+                            >
+                              {labelText}
+                              {/* {orientation === "vertical" && (
                                 <ExpandIcon
                                   expanded={visualActiveStep === index}
                                   sx={{
@@ -135,9 +148,9 @@ export default function Stepper() {
                                     right: 28,
                                   }}
                                 />
-                              )}
+                              )} */}
                             </StepLabel>
-                          </StepButton>
+                          )}
                           {Content}
                         </Step>
                       );

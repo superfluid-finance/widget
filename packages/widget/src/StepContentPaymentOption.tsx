@@ -61,7 +61,7 @@ export default function StepContentPaymentOption({ stepIndex }: StepProps) {
       direction="column"
       alignItems="stretch"
       justifyContent="space-around"
-      gap={3}
+      spacing={3}
       sx={{ pb: 3, px: 3.5 }}
     >
       <Box>
@@ -69,7 +69,7 @@ export default function StepContentPaymentOption({ stepIndex }: StepProps) {
           direction="row"
           alignItems="center"
           justifyContent="space-between"
-          gap={1}
+          spacing={1}
           sx={{ position: "relative" }}
         >
           <Box sx={{ width: "100%" }}>

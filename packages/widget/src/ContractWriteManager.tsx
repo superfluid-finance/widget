@@ -5,6 +5,7 @@ import {
   UserRejectedRequestError,
 } from "viem";
 import {
+  useAccount,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -37,9 +38,11 @@ export function ContractWriteManager({
   onChange,
 }: ContractWriteManagerProps) {
   const { chain } = useNetwork();
+  const { isConnected, address: accountAddress } = useAccount();
 
   const signatureResult = useSignTypedData(contractWrite.signatureRequest);
 
+  // Add all known errors to the ABI so viem/wagmi could decode them.
   const materialized = useMemo(
     () =>
       !contractWrite.signatureRequest || signatureResult.data
@@ -51,7 +54,10 @@ export function ContractWriteManager({
   const { eventListeners } = useWidget();
 
   const prepare =
-    _prepare && materialized && contractWrite.chainId === chain?.id;
+    accountAddress &&
+    _prepare &&
+    materialized &&
+    contractWrite.chainId === chain?.id;
 
   const prepareResult = usePrepareContractWrite({
     ...(prepare ? materialized : undefined),
@@ -60,12 +66,24 @@ export function ContractWriteManager({
 
   // Always have a write ready.
   const writeResult = useContractWrite({
-    ...(prepareResult.config.request
-      ? (prepareResult.config as any) // TODO(KK): any
-      : {
-          mode: "prepared",
-          request: materialized,
-        }),
+    ...(prepare
+      ? prepareResult.isError
+        ? {
+            mode: "prepared",
+            request: {
+              account: accountAddress,
+              chain: chain,
+              abi: materialized.abi,
+              address: materialized.address,
+              functionName: materialized.functionName,
+              args: materialized.args,
+              value: materialized.value,
+            },
+          }
+        : prepareResult.isSuccess
+        ? prepareResult.config
+        : {}
+      : {}),
     onError: console.error,
     onSuccess: ({ hash }) =>
       eventListeners.onTransactionSent?.({

@@ -1,5 +1,6 @@
 import ReplayIcon_ from "@mui/icons-material/Replay";
 import SkipNextIcon_ from "@mui/icons-material/SkipNext";
+import WarningAmberIcon_ from "@mui/icons-material/WarningAmber";
 import { LoadingButton } from "@mui/lab";
 import { Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import { useWidget } from "./WidgetContext.js";
 
 const ReplayIcon = normalizeIcon(ReplayIcon_);
 const SkipNextIcon = normalizeIcon(SkipNextIcon_);
+const WarningAmberIcon = normalizeIcon(WarningAmberIcon_);
 
 export type ContractWriteButtonProps = {
   handleNextWrite: () => void;
@@ -51,7 +53,8 @@ export default function ContractWriteButton({
     });
   }, [write, eventListeners.onButtonClick]);
 
-  const [showNextWriteButton, setShowNextWriteButton] = useState(false);
+  const [showNextWriteButton_, setShowNextWriteButton] = useState(false);
+  const showNextWriteButton = showNextWriteButton_ || transactionResult.isError;
 
   const handleNextWrite = useCallback(() => {
     handleNextWrite_();
@@ -62,7 +65,7 @@ export default function ContractWriteButton({
     if (transactionResult.isLoading) {
       const timeoutId = setTimeout(() => {
         setShowNextWriteButton(true);
-      }, 5000); // TODO(KK): increase the time
+      }, 15_000); // After 15 seconds, the button appears.
       return () => clearTimeout(timeoutId);
     } else {
       setShowNextWriteButton(false);
@@ -73,18 +76,18 @@ export default function ContractWriteButton({
     currentError && currentError === prepareResult.error,
   );
 
-  const showForceSubmitButton = Boolean(
+  const showForceSendButton = Boolean(
     isPrepareError && write && !writeResult.isLoading,
   );
 
   const isWriteButtonDisabled = Boolean(
-    !write || transactionResult.isSuccess || isPrepareError,
+    isPrepareError || transactionResult.isSuccess || !write,
   );
   const writeButtonText = transactionResult.isLoading
     ? "Waiting for transaction..."
     : writeResult.isLoading
     ? "Waiting for wallet..."
-    : "Submit transaction";
+    : "Send transaction";
 
   const showRetryButton = Boolean(isPrepareError && !writeResult.isLoading);
 
@@ -93,10 +96,7 @@ export default function ContractWriteButton({
   );
 
   return (
-    <Stack
-      direction="column"
-      spacing={showForceSubmitButton || showNextWriteButton ? 1 : 0}
-    >
+    <Stack direction="column" spacing={1}>
       {needsToSwitchNetwork ? (
         <Button
           data-testid="switch-network-button"
@@ -123,13 +123,13 @@ export default function ContractWriteButton({
             </LoadingButton>
           ) : showRetryButton ? (
             <Button
-              variant="outlined"
+              variant="contained"
               size="large"
               fullWidth
               onClick={() => prepareResult.refetch()}
               endIcon={<ReplayIcon />}
             >
-              Retry transaction preparation
+              Retry transaction gas estimation
             </Button>
           ) : (
             <LoadingButton
@@ -145,25 +145,28 @@ export default function ContractWriteButton({
               {writeButtonText}
             </LoadingButton>
           )}
-          <Collapse in={showForceSubmitButton}>
+          <Collapse in={showForceSendButton} unmountOnExit>
             <Button
               variant="outlined"
-              size="large"
+              size="medium"
               color="error"
+              startIcon={<WarningAmberIcon />}
               fullWidth
               onClick={() => write!()}
             >
-              Force submit transaction
+              Force transaction to be sent
             </Button>
           </Collapse>
           <Collapse in={showNextWriteButton} unmountOnExit>
             <Button
-              variant="text"
-              size="large"
+              variant="outlined"
+              color="primary"
+              size="medium"
+              endIcon={<SkipNextIcon />}
               fullWidth
               onClick={handleNextWrite}
             >
-              Skip waiting for transaction
+              Skip to next transaction
             </Button>
           </Collapse>
         </>

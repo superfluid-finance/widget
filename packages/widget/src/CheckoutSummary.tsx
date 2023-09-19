@@ -94,7 +94,7 @@ export function CheckoutSummary() {
         <Typography variant="body2" color="text.secondary">
           {`You've streamed`}
         </Typography>
-        <Stack direction="row" alignItems="end" gap={0.5}>
+        <Stack direction="row" alignItems="end" spacing={0.5}>
           <Typography
             data-testid="streamed-amount"
             variant="h4"

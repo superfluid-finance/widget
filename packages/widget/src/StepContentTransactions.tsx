@@ -53,8 +53,9 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
     });
   }, [handleBack, eventListeners.onButtonClick, stepIndex]);
 
-  const total = contractWrites.length;
-  const currentResult = contractWriteResults[writeIndex];
+  const total = contractWriteResults.length;
+  const currentResult =
+    contractWriteResults[Math.min(writeIndex, total > 0 ? total - 1 : 0)];
 
   const handleNextWrite = useCallback(
     () => handleNextWrite_(writeIndex),
@@ -68,17 +69,16 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
   );
 
   return (
-    <Stack spacing={1}>
+    <Stack>
       <Stack alignItems="end">
         <IconButton
           edge="start"
           size="medium"
-          color="inherit"
           onClick={onBack}
           aria-label="back"
-          sx={{ mr: -1 }}
+          sx={(theme) => ({ color: theme.palette.text.secondary, mr: -1 })}
         >
-          <CloseIcon fontSize="inherit" />
+          <CloseIcon fontSize="medium" />
         </IconButton>
       </Stack>
       <BatchHandler />
@@ -86,14 +86,14 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
         direction="column"
         spacing={2.25}
         alignItems="stretch"
-        sx={{ width: "100%" }}
+        sx={{ width: "100%", mt: -1 }}
       >
         <Box textAlign="center">
           <Typography variant="h5" component="span">
             {`You're almost there!`}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Submit the transactions from your wallet to finish your purchase.
+            Send the transactions from your wallet to finish your purchase.
           </Typography>
         </Box>
         {/* <Stack
@@ -111,7 +111,11 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
         <List
           disablePadding
           dense
-          subheader={<ListSubheader>Transactions</ListSubheader>}
+          subheader={
+            <ListSubheader sx={{ bgcolor: "transparent" }}>
+              Transactions ({total})
+            </ListSubheader>
+          }
         >
           {contractWriteResults.map((result, index) => (
             <ContractWriteStatus
@@ -121,20 +125,11 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             />
           ))}
         </List>
-        {showErrorAlert && (
-          <Collapse
-            in={Boolean(
-              currentResult.currentError &&
-                currentResult.currentError.shortMessage,
-            )}
-            hidden={!showErrorAlert}
-            unmountOnExit
-          >
-            <Alert severity="error">
-              {currentResult.currentError?.shortMessage}
-            </Alert>
-          </Collapse>
-        )}
+        <Collapse in={showErrorAlert} unmountOnExit>
+          <Alert severity="error">
+            {currentResult?.currentError?.shortMessage}
+          </Alert>
+        </Collapse>
         {currentResult && (
           <ContractWriteButton
             {...currentResult}

@@ -7,6 +7,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Paper,
   useTheme,
 } from "@mui/material";
 import { useMemo } from "react";
@@ -93,7 +94,7 @@ export function ContractWriteStatus({
           ? theme.palette.action.selected
           : theme.palette.action.active,
         bullet: isWriting
-          ? theme.palette.warning.main
+          ? theme.palette.primary.light
           : theme.palette.action.disabled,
         text: theme.palette.text.secondary,
       };
@@ -111,16 +112,16 @@ export function ContractWriteStatus({
   );
 
   return (
-    <ListItem
+    <Paper
+      component={ListItem}
+      variant="outlined"
       sx={{
         bgcolor: isWriting
-          ? theme.palette.action.selected
+          ? theme.palette.action.hover
           : theme.palette.background.paper,
         pl: 0,
-        "&:hover": {
-          bgcolor: isWriting
-            ? theme.palette.action.selected
-            : theme.palette.action.hover,
+        "&:not(:last-child)": {
+          mb: 1,
         },
       }}
       secondaryAction={
@@ -140,10 +141,15 @@ export function ContractWriteStatus({
       }
     >
       <ListItemIcon sx={{ justifyContent: "center" }}>
-        <CircleIcon fontSize="small" sx={{ color: colors.bullet }} />
+        {transactionResult.isSuccess ? (
+          <CheckCircleIcon fontSize="small" sx={{ color: colors.bullet }} />
+        ) : (
+          <CircleIcon fontSize="small" sx={{ color: colors.bullet }} />
+        )}
       </ListItemIcon>
       <ListItemText
         primaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
+        secondaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
         primary={displayTitle}
         secondary={
           transactionResult.isError
@@ -151,19 +157,19 @@ export function ContractWriteStatus({
             : transactionResult.isSuccess
             ? "Completed"
             : prepareResult.isLoading
-            ? "Preparing..."
+            ? "Estimating..."
             : currentError
             ? "Error"
             : writeResult?.isSuccess
-            ? "Transaction submitted"
+            ? "Transaction sent"
             : contractWrite.signatureRequest && !signatureResult.data
             ? "Needs signature"
             : prepareResult.isSuccess
-            ? "Ready to submit"
+            ? "Ready to send"
             : "Queued"
         }
       ></ListItemText>
-    </ListItem>
+    </Paper>
   );
 }
 

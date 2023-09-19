@@ -60,6 +60,7 @@ export const useCommandHandlerReducer = () =>
           for (const write of action.payload.contractWrites) {
             (draft.contractWrites as ContractWrite[]).push(write);
           }
+          draft.writeIndex = 0;
           break;
         }
         case "set write index": {
