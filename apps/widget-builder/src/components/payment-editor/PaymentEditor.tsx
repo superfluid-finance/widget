@@ -199,7 +199,9 @@ const ProductEditor: FC = () => {
             direction="row"
             justifyContent="space-between"
           >
-            <Typography variant="h6">Add Payment Option</Typography>
+            <Typography variant="h6">
+              {dialogMode === "edit" ? "Edit" : "Add"} Payment Option
+            </Typography>
             <IconButton
               edge="start"
               color="inherit"
