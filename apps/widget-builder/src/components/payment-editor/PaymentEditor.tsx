@@ -187,7 +187,6 @@ const ProductEditor: FC = () => {
             exit: false,
           } as SlideProps
         }
-        keepMounted
         transitionDuration={{
           enter: theme.transitions.duration.enteringScreen,
           exit: theme.transitions.duration.shortest,

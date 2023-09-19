@@ -104,7 +104,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
         setUpfrontPaymentAmount(value.transferAmountEther);
       }
     }
-  }, [selectedPaymentOption, dialogMode]);
+  }, [selectedPaymentOption?.value, dialogMode]);
 
   const filteredNetworks = useMemo(
     () =>
