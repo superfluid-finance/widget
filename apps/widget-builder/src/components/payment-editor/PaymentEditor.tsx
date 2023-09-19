@@ -209,7 +209,7 @@ const ProductEditor: FC = () => {
         <Controller
           control={control}
           name="paymentDetails.paymentOptions"
-          render={(val) => (
+          render={() => (
             <SelectPaymentOption
               key={addCount.toString()}
               selectedPaymentOption={targetedPaymentOption}
