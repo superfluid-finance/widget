@@ -75,7 +75,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   const [flowRateInterval, setFlowRateInterval] = useState<TimePeriod>("month");
 
   useEffect(() => {
-    if (selectedPaymentOption) {
+    if (selectedPaymentOption && dialogMode !== "add") {
       const { value } = selectedPaymentOption;
 
       setReceiver(value.receiverAddress);
@@ -99,7 +99,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
         setIsCustomAmount(true);
       }
     }
-  }, [selectedPaymentOption]);
+  }, [selectedPaymentOption, dialogMode]);
 
   const filteredNetworks = useMemo(
     () =>

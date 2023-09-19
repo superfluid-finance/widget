@@ -231,9 +231,9 @@ const ProductEditor: FC = () => {
                 handleClose();
               }}
               onDiscard={() => {
-                handleClose();
                 setAddCount((x) => x + 1);
                 setTargetedPaymentOption(undefined);
+                handleClose();
               }}
             />
           )}
