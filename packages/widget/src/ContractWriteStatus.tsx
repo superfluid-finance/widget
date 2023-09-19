@@ -111,6 +111,7 @@ export function ContractWriteStatus({
 
   return (
     <Paper
+      data-testid="transaction-type-and-status"
       component={ListItem}
       variant="outlined"
       sx={{
@@ -138,7 +139,10 @@ export function ContractWriteStatus({
         )
       }
     >
-      <ListItemIcon sx={{ justifyContent: "center" }}>
+      <ListItemIcon
+        data-testid="transaction-status-icon"
+        sx={{ justifyContent: "center" }}
+      >
         {transactionResult.isSuccess ? (
           <CheckCircleIcon fontSize="small" sx={{ color: colors.bullet }} />
         ) : (
@@ -146,6 +150,7 @@ export function ContractWriteStatus({
         )}
       </ListItemIcon>
       <ListItemText
+        data-testid="transaction-type-and-status"
         primaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
         secondaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
         primary={displayTitle}

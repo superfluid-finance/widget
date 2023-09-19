@@ -109,7 +109,10 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
           disablePadding
           dense
           subheader={
-            <ListSubheader sx={{ bgcolor: "transparent" }}>
+            <ListSubheader
+              data-testid="transaction-count"
+              sx={{ bgcolor: "transparent" }}
+            >
               Transactions ({total})
             </ListSubheader>
           }
