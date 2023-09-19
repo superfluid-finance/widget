@@ -40,7 +40,6 @@ const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
 });
 
 const PaymentOptionRow: FC<PaymentOptionRowProps> = ({ label, value }) => {
-  const theme = useTheme();
   return (
     <Stack
       data-testid={`${label

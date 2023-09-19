@@ -98,6 +98,11 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
       } else {
         setIsCustomAmount(true);
       }
+
+      if (value.transferAmountEther) {
+        setShowUpfrontPayment(true);
+        setUpfrontPaymentAmount(value.transferAmountEther);
+      }
     }
   }, [selectedPaymentOption, dialogMode]);
 
