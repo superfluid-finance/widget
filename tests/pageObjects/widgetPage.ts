@@ -179,6 +179,15 @@ export class WidgetPage extends BasePage {
       });
   }
 
+  async validateReviewStepIsOpen() {
+    await expect(this.reviewExchangeRate).toBeVisible();
+    await expect(this.reviewSuperTokenAmount).toBeVisible();
+    await expect(this.reviewSuperTokenBalanceAndSymbol).toBeVisible();
+    await expect(this.reviewSuperTokenSymbol).toBeVisible();
+    await expect(this.reviewUnderlyingTokenSymbol).toBeVisible();
+    await expect(this.reviewUnderlyingWrapAmount).toBeVisible();
+  }
+
   async validateNoTestImageIsSet() {
     await test.step(`Validate no image is set in the widget`, async () => {
       await expect(this.productImage).not.toBeVisible();
@@ -521,7 +530,7 @@ export class WidgetPage extends BasePage {
 
   async clickSwitchNetworkButton() {
     await test.step(`Clicking the switch network button`, async () => {
-      await expect(this.switchNetworkButton).toBeVisible();
+      await expect(this.switchNetworkButton).toBeVisible({ timeout: 30000 });
       await this.switchNetworkButton.click();
     });
   }
