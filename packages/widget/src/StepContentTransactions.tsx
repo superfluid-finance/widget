@@ -47,10 +47,10 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
   }, [writeIndex, contractWriteResults, handleNext, totalSteps, setActiveStep]);
 
   const onBack = useCallback(() => {
-    handleBack(stepIndex);
     runEventListener(eventListeners.onButtonClick, {
       type: "back_transactions",
     });
+    handleBack(stepIndex);
   }, [handleBack, eventListeners.onButtonClick, stepIndex]);
 
   const total = contractWriteResults.length;
@@ -112,7 +112,10 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
           disablePadding
           dense
           subheader={
-            <ListSubheader sx={{ bgcolor: "transparent" }}>
+            <ListSubheader
+              data-testid="transaction-count"
+              sx={{ bgcolor: "transparent" }}
+            >
               Transactions ({total})
             </ListSubheader>
           }

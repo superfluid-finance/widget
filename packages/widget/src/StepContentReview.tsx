@@ -23,8 +23,8 @@ export default function StepContentReview({ stepIndex }: StepProps) {
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+    handleNext(stepIndex);
   }, [handleNext, eventListeners.onButtonClick, stepIndex]);
 
   const commandValidationSchema = useCommandValidationSchema();
@@ -41,6 +41,8 @@ export default function StepContentReview({ stepIndex }: StepProps) {
   );
   const isValid = Boolean(validationResult?.success);
   const isValidationError = validationResult?.success === false;
+
+  // const areContractWritesMapping = !commands.every((x) => x.contractWrites);
 
   return (
     <Stack sx={{ pb: 3, px: 3.5 }} spacing={3}>
@@ -70,7 +72,11 @@ export default function StepContentReview({ stepIndex }: StepProps) {
           disabled={!isValid}
           onClick={onContinue}
         >
-          {isValidating ? "Validating..." : "Continue"}
+          {isValidating
+            ? "Validating..."
+            : // : areContractWritesMapping
+              // ? "Preparing transactions..."
+              "Continue"}
         </StepperCTAButton>
       </Stack>
     </Stack>

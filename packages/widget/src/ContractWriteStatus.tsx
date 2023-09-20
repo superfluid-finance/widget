@@ -1,4 +1,4 @@
-import CheckCircleIcon_ from "@mui/icons-material/CheckCircle";
+import CheckIcon_ from "@mui/icons-material/Check";
 import CircleIcon_ from "@mui/icons-material/Circle.js";
 import CircleOutlinedIcon_ from "@mui/icons-material/CircleOutlined";
 import OpenInNewIcon_ from "@mui/icons-material/OpenInNew";
@@ -10,7 +10,7 @@ import {
   Paper,
   useTheme,
 } from "@mui/material";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import {
   AbiErrorSignatureNotFoundError,
   BaseError,
@@ -22,12 +22,14 @@ import { useNetwork } from "wagmi";
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { ContractWriteResult } from "./ContractWriteManager.js";
 import { errorsABI } from "./core/wagmi-generated.js";
+import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
+import { useWidget } from "./WidgetContext.js";
 
 export const CircleIcon = normalizeIcon(CircleIcon_);
 export const CircleOutlinedIcon = normalizeIcon(CircleOutlinedIcon_);
 export const OpenInNewIcon = normalizeIcon(OpenInNewIcon_);
-export const CheckCircleIcon = normalizeIcon(CheckCircleIcon_);
+export const CheckCircleIcon = normalizeIcon(CheckIcon_);
 
 export function ContractWriteStatus({
   result,
@@ -37,72 +39,43 @@ export function ContractWriteStatus({
   index: number;
 }) {
   const { writeIndex } = useCommandHandler();
+  const { eventListeners } = useWidget();
+
+  const onViewOnBlockExplorerButtonClick = useCallback(() => {
+    runEventListener(eventListeners.onButtonClick, {
+      type: "view_transaction_on_block_explorer",
+    });
+  }, [eventListeners.onButtonClick]);
 
   const {
     contractWrite,
     signatureResult,
-    contractWrite: { id, displayTitle },
+    contractWrite: { displayTitle },
     prepareResult,
     writeResult,
     transactionResult,
-    currentError,
   } = result;
 
-  const theme = useTheme();
-
+  const { palette } = useTheme();
   const isWriting = index === writeIndex;
 
-  // TODO(KK): clean-up
-  const colors: {
-    border: string;
-    bullet: string;
-    text: string;
-  } = currentError
-    ? {
-        border: isWriting
-          ? theme.palette.action.selected
-          : theme.palette.error.main,
-        bullet: theme.palette.error.main,
-        text: theme.palette.error.main,
-      }
-    : transactionResult.isSuccess
-    ? {
-        border: isWriting
-          ? theme.palette.action.active
-          : theme.palette.primary.main,
-        bullet: theme.palette.success.dark,
-        text: theme.palette.success.main,
-      }
-    : writeResult?.isSuccess
-    ? {
-        border: isWriting
-          ? theme.palette.action.selected
-          : theme.palette.action.active,
-        bullet: theme.palette.warning.main,
-        text: theme.palette.text.secondary,
-      }
-    : prepareResult.isLoading
-    ? {
-        border: isWriting
-          ? theme.palette.action.selected
-          : theme.palette.action.active,
-        bullet: theme.palette.warning.main,
-        text: theme.palette.text.secondary,
-      }
-    : {
-        border: isWriting
-          ? theme.palette.action.selected
-          : theme.palette.action.active,
-        bullet: isWriting
-          ? theme.palette.primary.light
-          : theme.palette.action.disabled,
-        text: theme.palette.text.secondary,
-      };
-
-  const errorName = useMemo(
-    () => (currentError ? tryParseErrorName(currentError) : undefined),
-    [currentError],
-  );
+  const status = transactionResult.isSuccess
+    ? { text: "Completed", iconColor: palette.success.dark }
+    : transactionResult.isError
+    ? { text: "Failed", iconColor: palette.error.main }
+    : contractWrite.signatureRequest && !signatureResult.data
+    ? { text: "Needs signature", iconColor: palette.success.main }
+    : prepareResult.isLoading && !prepareResult.isSuccess
+    ? { text: "Estimating transaction...", iconColor: palette.warning.main }
+    : prepareResult.isError
+    ? { text: "Estimation error", iconColor: palette.error.main }
+    : writeResult.isSuccess
+    ? { text: "Transaction sent", iconColor: palette.warning.main }
+    : writeResult.isError
+    ? { text: "Error", iconColor: palette.error.main }
+    : prepareResult.isSuccess
+    ? { text: "Ready to send", iconColor: palette.success.main }
+    : { text: "Queued", iconColor: palette.action.disabled };
 
   const { chains } = useNetwork();
 
@@ -113,12 +86,11 @@ export function ContractWriteStatus({
 
   return (
     <Paper
+      data-testid="transaction-type-and-status"
       component={ListItem}
       variant="outlined"
       sx={{
-        bgcolor: isWriting
-          ? theme.palette.action.hover
-          : theme.palette.background.paper,
+        bgcolor: isWriting ? palette.action.hover : palette.background.paper,
         pl: 0,
         "&:not(:last-child)": {
           mb: 1,
@@ -134,41 +106,30 @@ export function ContractWriteStatus({
             target="_blank"
             size="small"
             title="View on blockchain explorer"
+            onClick={onViewOnBlockExplorerButtonClick}
           >
             <OpenInNewIcon fontSize="inherit" />
           </IconButton>
         )
       }
     >
-      <ListItemIcon sx={{ justifyContent: "center" }}>
+      <ListItemIcon
+        data-testid="transaction-status-icon"
+        sx={{ justifyContent: "center" }}
+      >
         {transactionResult.isSuccess ? (
-          <CheckCircleIcon fontSize="small" sx={{ color: colors.bullet }} />
+          <CheckCircleIcon fontSize="medium" sx={{ color: status.iconColor }} />
         ) : (
-          <CircleIcon fontSize="small" sx={{ color: colors.bullet }} />
+          <CircleIcon fontSize="small" sx={{ color: status.iconColor }} />
         )}
       </ListItemIcon>
       <ListItemText
+        data-testid="transaction-type-and-status"
         primaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
         secondaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
         primary={displayTitle}
-        secondary={
-          transactionResult.isError
-            ? "Failed"
-            : transactionResult.isSuccess
-            ? "Completed"
-            : prepareResult.isLoading
-            ? "Estimating..."
-            : currentError
-            ? "Error"
-            : writeResult?.isSuccess
-            ? "Transaction sent"
-            : contractWrite.signatureRequest && !signatureResult.data
-            ? "Needs signature"
-            : prepareResult.isSuccess
-            ? "Ready to send"
-            : "Queued"
-        }
-      ></ListItemText>
+        secondary={status.text}
+      />
     </Paper>
   );
 }

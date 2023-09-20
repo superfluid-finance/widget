@@ -23,11 +23,11 @@ test("Creating a flow", async ({ page }) => {
     rebounderAddresses["goerli"],
   );
   await widgetPage.clickContinueButton();
-  await widgetPage.validateTransactionStatuses(["send"], ["Not started"]);
+  await widgetPage.validateTransactionStatuses(["send"], ["Ready to send"]);
   await widgetPage.validateTransactionButtonTextAndClick("send");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskTransaction();
-  await widgetPage.validateTransactionStatuses(["send"], ["In progress"]);
+  await widgetPage.validateTransactionStatuses(["send"], ["Transaction sent"]);
   await widgetPage.validateSuccessMessage("1");
 });
 
@@ -43,11 +43,14 @@ test("Modifying a flow", async ({ page }) => {
     rebounderAddresses["goerli"],
   );
   await widgetPage.clickContinueButton();
-  await widgetPage.validateTransactionStatuses(["modify"], ["Not started"]);
+  await widgetPage.validateTransactionStatuses(["modify"], ["Ready to send"]);
   await widgetPage.validateTransactionButtonTextAndClick("modify");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskTransaction();
-  await widgetPage.validateTransactionStatuses(["modify"], ["In progress"]);
+  await widgetPage.validateTransactionStatuses(
+    ["modify"],
+    ["Transaction sent"],
+  );
   await widgetPage.validateSuccessMessage("1");
 });
 
@@ -67,29 +70,29 @@ test("Approving and wrapping tokens", async ({ page }) => {
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Not started", "Not started", "Not started"],
+    ["Ready to send", "Queued", "Queued"],
   );
   await widgetPage.validateTransactionButtonTextAndClick("approve");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskAllowanceTransaction("1");
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["In progress", "Not started", "Not started"],
+    ["Transaction sent", "Ready to send", "Queued"],
   );
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Completed", "Not started", "Not started"],
+    ["Completed", "Ready to send", "Queued"],
   );
   await widgetPage.validateTransactionButtonTextAndClick("wrap");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskTransaction();
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Completed", "In progress", "Not started"],
+    ["Completed", "Transaction sent", "Queued"],
   );
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Completed", "Completed", "Not started"],
+    ["Completed", "Completed", "Ready to send"],
   );
   await widgetPage.validateTokenBalanceAfterWrap();
 });
@@ -158,13 +161,14 @@ test("Switch network button shown in the transaction view", async ({
   await widgetPage.selectPaymentToken("fUSDCx");
   await widgetPage.connectWallet();
   await widgetPage.clickContinueButton();
+  await widgetPage.validateReviewStepIsOpen();
   await widgetPage.clickContinueButton();
   await metamask.changeNetwork("Sepolia");
   await widgetPage.clickSwitchNetworkButton();
   await metamask.allowToSwitchNetwork();
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
-    ["Not started", "Not started", "Not started"],
+    ["Ready to send", "Queued", "Queued"],
   );
   await widgetPage.validateTransactionButtonTextAndClick("approve");
 });

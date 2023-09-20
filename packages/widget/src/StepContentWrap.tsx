@@ -164,14 +164,14 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+    handleNext(stepIndex);
   }, [handleNext, eventListeners.onButtonClick, stepIndex]);
 
   const onSkipWrapping = useCallback(() => {
+    runEventListener(eventListeners.onButtonClick, { type: "skip_step" });
     setValue("wrapAmountInUnits", "" as `${number}`);
     handleNext(stepIndex);
-    runEventListener(eventListeners.onButtonClick, { type: "skip_step" });
   }, [handleNext, setValue, eventListeners.onButtonClick, stepIndex]);
 
   const onInputFocus = () => setFocusedOnce(true);

@@ -307,6 +307,7 @@ export function EnableAutoWrapCommandMapper({
         args: [cmd.accountAddress, autoWrapStrategyAddress[cmd.chainId]],
       },
     ],
+    cacheOnBlock: true,
   });
 
   const [wrapScheduleData, allowanceData] = data ?? [];
@@ -380,11 +381,7 @@ export function WrapIntoSuperTokensCommandMapper({
 
   const isNativeAssetUnderlyingToken = cmd.underlyingToken.isNativeAsset;
 
-  const {
-    data: allowance,
-    isSuccess,
-    isFetchedAfterMount,
-  } = useContractRead(
+  const { data: allowance_, isSuccess } = useContractRead(
     !isNativeAssetUnderlyingToken
       ? {
           chainId: cmd.chainId,
@@ -392,6 +389,7 @@ export function WrapIntoSuperTokensCommandMapper({
           abi: erc20ABI,
           functionName: "allowance",
           args: [cmd.accountAddress, cmd.superTokenAddress],
+          cacheOnBlock: true,
         }
       : undefined,
   );
@@ -426,7 +424,8 @@ export function WrapIntoSuperTokensCommandMapper({
         }),
       );
     } else {
-      if (allowance !== undefined) {
+      if (allowance_ !== undefined) {
+        const allowance = BigInt(allowance_);
         if (allowance < cmd.amountWeiFromUnderlyingTokenDecimals) {
           const underlyingTokenAddress = cmd.underlyingToken.address;
           contractWrites_.push(
@@ -493,13 +492,14 @@ export function SubscribeCommandMapper({
   command: cmd,
   onMapped,
 }: CommandMapperProps<SubscribeCommand>) {
-  const { isSuccess: isSuccessForGetFlowRate, data: existingFlowRate } =
+  const { isSuccess: isSuccessForGetFlowRate, data: existingFlowRate_ } =
     useContractRead({
       chainId: cmd.chainId,
       address: cfAv1ForwarderAddress[cmd.chainId],
       abi: cfAv1ForwarderABI,
       functionName: "getFlowrate",
       args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
+      cacheOnBlock: true,
     });
 
   const flowRate =
@@ -509,7 +509,9 @@ export function SubscribeCommandMapper({
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
 
-    if (existingFlowRate !== undefined) {
+    if (existingFlowRate_ !== undefined) {
+      const existingFlowRate = BigInt(existingFlowRate_);
+
       if (cmd.transferAmountWei > 0n) {
         contractWrites_.push(
           createContractWrite({

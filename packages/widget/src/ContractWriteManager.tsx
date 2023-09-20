@@ -78,6 +78,7 @@ export function ContractWriteManager({
               functionName: materialized.functionName,
               args: materialized.args,
               value: materialized.value,
+              gas: 2_500_000n, // Set _some_ kind of a limit more reasonable than the default 28_500_000.
             },
           }
         : prepareResult.isSuccess
@@ -130,19 +131,6 @@ export function ContractWriteManager({
     transactionResult.status,
     signatureResult.status,
   ]);
-
-  // console.log({
-  //   currentError: result.currentError,
-  //   writeResult
-  // })
-
-  // # Retry
-  // useEffect(() => {
-  //   if (prepare && result.currentError && result.currentError === prepareResult.error) {
-  //     const timeoutId = setTimeout(() => prepareResult.refetch(), 5000);
-  //     return () => clearTimeout(timeoutId);
-  //   }
-  // }, [prepare, result.currentError, prepareResult.error, prepareResult.refetch]);
 
   useEffect(() => void onChange?.(result), [result]);
 
