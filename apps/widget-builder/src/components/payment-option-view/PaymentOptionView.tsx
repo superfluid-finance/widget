@@ -185,7 +185,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
         justifyContent="flex-end"
         bgcolor="grey.50"
       >
-        <Tooltip title="Edit Payment Option" arrow>
+        <Tooltip title="Edit payment option" arrow>
           <IconButton
             data-testid="edit-payment-option-button"
             onClick={() => edit(index)}
@@ -199,7 +199,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
           </IconButton>
         </Tooltip>
 
-        <Tooltip title="Copy Payment Option" arrow>
+        <Tooltip title="Copy payment option" arrow>
           <IconButton
             data-testid="clone-payment-option-button"
             onClick={() => clone(index)}
@@ -213,7 +213,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
           </IconButton>
         </Tooltip>
 
-        <Tooltip title="Delete Payment Option" arrow>
+        <Tooltip title="Delete payment option" arrow>
           <IconButton
             data-testid="delete-payment-option-button"
             onClick={() => remove(index)}

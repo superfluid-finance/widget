@@ -19,7 +19,7 @@ import {
   Zoom,
 } from "@mui/material";
 import { PaymentOption } from "@superfluid-finance/widget";
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
 import useDemoMode from "../../hooks/useDemoMode";
@@ -43,7 +43,11 @@ const ProductEditor: FC = () => {
     index: number;
     value: PaymentOption;
   }>();
-  const [addCount, setAddCount] = useState(0);
+
+  const [appearAnimation, setAppearAnimation] = useState(false);
+  useEffect(() => {
+    setAppearAnimation(true); // When new payment options are added then they appear with an animation now.
+  }, []);
 
   const handleClose = useCallback(() => {
     setDialogMode(undefined);
@@ -52,7 +56,7 @@ const ProductEditor: FC = () => {
 
   const { setDemoPaymentDetails } = useDemoMode();
   const handleDemo = useCallback(() => {
-    setAddCount((x) => x + 1);
+    setAppearAnimation(true);
     setDemoPaymentDetails();
   }, []);
 
@@ -121,7 +125,7 @@ const ProductEditor: FC = () => {
                   ) => (
                     <Zoom
                       in
-                      appear={!!addCount}
+                      appear={!!appearAnimation}
                       key={`${superToken.address}-${i}`}
                     >
                       <Box>
@@ -148,7 +152,6 @@ const ProductEditor: FC = () => {
                           }}
                           remove={(params) => {
                             remove(params);
-                            setAddCount(0);
                           }}
                         />
                       </Box>
@@ -180,6 +183,7 @@ const ProductEditor: FC = () => {
       </Stack>
       <Dialog
         open={Boolean(dialogMode)}
+        keepMounted={false} // To clear the unfinished user input.
         TransitionComponent={Slide}
         TransitionProps={
           {
@@ -217,11 +221,10 @@ const ProductEditor: FC = () => {
           name="paymentDetails.paymentOptions"
           render={() => (
             <SelectPaymentOption
-              key={addCount.toString()}
+              key={appearAnimation.toString()}
               selectedPaymentOption={targetedPaymentOption}
               dialogMode={dialogMode}
               onAdd={(props) => {
-                setAddCount((x) => x + 1);
                 append(props);
                 handleClose();
               }}
@@ -230,7 +233,6 @@ const ProductEditor: FC = () => {
                 handleClose();
               }}
               onDiscard={() => {
-                setAddCount((x) => x + 1);
                 setTargetedPaymentOption(undefined);
                 handleClose();
               }}
