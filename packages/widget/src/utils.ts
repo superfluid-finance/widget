@@ -76,10 +76,10 @@ export function mapFlowRateAndMultiplierToMonths(
     case "week":
       return parseEther(`${amountEther * multiplier * 4}`);
     case "year":
-      return parseEther(`${Math.floor((amountEther * multiplier) / 12)}`);
+      return parseEther(`${Math.ceil((amountEther * multiplier) / 12)}`);
     case "month":
     default:
-      return parseEther(`${multiplier}`);
+      return parseEther(`${amountEther * multiplier}`);
   }
 }
 
