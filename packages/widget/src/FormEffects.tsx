@@ -84,7 +84,6 @@ export function FormEffects() {
             paymentOptionWithTokenInfo.paymentOption.transferAmountEther ?? "0",
           );
 
-        console.log(defaultWrapAmountWei);
         const defaultWrapAmountEther = formatEther(
           defaultWrapAmountWei,
         ) as `${number}`;
