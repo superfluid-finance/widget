@@ -10,7 +10,7 @@ import {
   FormReturn as FormMethods,
   ValidFormValues,
 } from "./formValues.js";
-import { ChildrenProp } from "./utils.js";
+import { ChildrenProp, mapFlowRateAndMultiplierToMonths } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 type Props = {
@@ -51,11 +51,12 @@ export default function FormProvider({ children }: Props) {
     network: defaultNetwork,
     paymentOptionWithTokenInfo: defaultPaymentOption,
     wrapAmountInUnits: defaultPaymentOption?.paymentOption?.flowRate
-      ?.amountEther
-      ? `${
-          Number(defaultPaymentOption.paymentOption.flowRate.amountEther) *
-          paymentDetails.wrapAmountMultiplier
-        }`
+      ? `${Number(
+          mapFlowRateAndMultiplierToMonths(
+            3,
+            defaultPaymentOption.paymentOption.flowRate,
+          ),
+        )}`
       : "0",
     enableAutoWrap: false,
     flowRate: defaultPaymentOption?.paymentOption?.flowRate ?? {

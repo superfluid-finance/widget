@@ -18,7 +18,6 @@ import {
   useState,
 } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { parseEther } from "viem";
 import { Address, useBalance } from "wagmi";
 
 import { runEventListener } from "./EventListeners.js";
@@ -28,6 +27,7 @@ import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
 import { TokenAvatar } from "./TokenAvatar.js";
+import { mapFlowRateAndMultiplierToMonths } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 interface WrapCardProps extends PropsWithChildren {
@@ -102,19 +102,11 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
 
   const { paymentDetails } = useWidget();
 
-  const [
-    accountAddress,
-    paymentOptionWithTokenInfo,
-    flowRate,
-    wrapAmountInUnits,
-  ] = watch([
+  const [accountAddress, paymentOptionWithTokenInfo, flowRate] = watch([
     "accountAddress",
     "paymentOptionWithTokenInfo",
     "flowRate",
-    "wrapAmountInUnits",
   ]);
-
-  console.log({ wrapAmountInUnits });
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
   const { getUnderlyingToken, eventListeners } = useWidget();
@@ -162,9 +154,10 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
 
     if (!flowRate?.amountEther) return false;
 
-    const minWrapAmount =
-      parseEther(flowRate.amountEther) *
-      BigInt(paymentDetails.wrapAmountMultiplier);
+    const minWrapAmount = mapFlowRateAndMultiplierToMonths(
+      paymentDetails.wrapAmountMultiplier,
+      flowRate,
+    );
 
     return BigInt(superTokenBalance.value) > minWrapAmount;
   }, [superTokenBalance, paymentOptionWithTokenInfo, flowRate]);
