@@ -16,8 +16,8 @@
     "@web3modal/react": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "^1.10.9",
-    "wagmi": "^1.4.1",
+    "viem": "^1.11.0",
+    "wagmi": "^1.4.2",
     "zod": "^3.22.1"
   },
   "devDependencies": {
