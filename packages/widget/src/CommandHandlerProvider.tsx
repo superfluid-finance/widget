@@ -114,16 +114,12 @@ export function CommandHandlerProvider({ children }: Props) {
   return (
     <CommandHandlerContext.Provider value={contextValue}>
       {typeof children === "function" ? children(contextValue) : children}
-      {commands.map((cmd, commandIndex_) => (
-        <CommandMapper
-          key={commandIndex_}
-          command={cmd}
-          onMapped={onContractWrites}
-        />
+      {commands.map((cmd) => (
+        <CommandMapper key={cmd.id} command={cmd} onMapped={onContractWrites} />
       ))}
       {contractWrites.map((contractWrite, writeIndex_) => (
         <ContractWriteManager
-          key={writeIndex_}
+          key={contractWrite.id}
           prepare={writeIndex_ === writeIndex}
           contractWrite={contractWrite}
           onChange={onContractWriteResult}

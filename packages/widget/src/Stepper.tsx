@@ -10,7 +10,7 @@ import {
   StepLabel,
   Stepper as MUIStepper,
 } from "@mui/material";
-import { useMemo,useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { CheckoutSummary } from "./CheckoutSummary.js";
