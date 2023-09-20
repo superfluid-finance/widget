@@ -466,7 +466,11 @@ export class WidgetPage extends BasePage {
             this.transactionStatusIcons.nth(index).locator(this.checkmarkIcons),
           ).toHaveCSS("color", "rgb(0, 137, 0)");
         }
-        if (status === "Error") {
+        if (
+          status === "Error" ||
+          status === "Estimation error" ||
+          status === "Failed"
+        ) {
           await expect(
             this.transactionStatusIcons.nth(index).locator(this.circleIcons),
           ).toHaveCSS("color", "rgb(210, 37, 37)");

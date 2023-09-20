@@ -46,10 +46,10 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
   }, [writeIndex, contractWriteResults, handleNext, totalSteps]);
 
   const onBack = useCallback(() => {
-    handleBack(stepIndex);
     runEventListener(eventListeners.onButtonClick, {
       type: "back_transactions",
     });
+    handleBack(stepIndex);
   }, [handleBack, eventListeners.onButtonClick, stepIndex]);
 
   const total = contractWrites.length;

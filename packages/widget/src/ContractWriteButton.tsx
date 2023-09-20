@@ -41,24 +41,41 @@ export default function ContractWriteButton({
   const needsToSwitchNetwork = expectedChainId !== chain?.id;
 
   const onSwitchNetworkButtonClick = useCallback(() => {
-    switchNetwork?.(expectedChainId);
     runEventListener(eventListeners.onButtonClick, { type: "switch_network" });
+    switchNetwork?.(expectedChainId);
   }, [switchNetwork, expectedChainId, eventListeners.onButtonClick]);
 
   const onContractWriteButtonClick = useCallback(() => {
-    write?.();
     runEventListener(eventListeners.onButtonClick, {
       type: "invoke_transaction",
     });
+    write?.();
+  }, [write, eventListeners.onButtonClick]);
+
+  const onRetryTransactionButtonClick = useCallback(() => {
+    runEventListener(eventListeners.onButtonClick, {
+      type: "retry_gas_estimation",
+    });
+    prepareResult.refetch();
+  }, [prepareResult.refetch, eventListeners.onButtonClick]);
+
+  const onForceTransactionButtonClick = useCallback(() => {
+    runEventListener(eventListeners.onButtonClick, {
+      type: "force_invoke_transaction",
+    });
+    write!();
   }, [write, eventListeners.onButtonClick]);
 
   const [showNextWriteButton_, setShowNextWriteButton] = useState(false);
   const showNextWriteButton = showNextWriteButton_ || transactionResult.isError;
 
-  const handleNextWrite = useCallback(() => {
+  const onSkipButtonClick = useCallback(() => {
+    runEventListener(eventListeners.onButtonClick, {
+      type: "skip_to_next",
+    });
     handleNextWrite_();
     setShowNextWriteButton(false);
-  }, [handleNextWrite_]);
+  }, [handleNextWrite_, eventListeners.onButtonClick]);
 
   useEffect(() => {
     if (transactionResult.isLoading) {
@@ -69,7 +86,7 @@ export default function ContractWriteButton({
     } else {
       setShowNextWriteButton(false);
     }
-  }, [transactionResult.isLoading, handleNextWrite]);
+  }, [transactionResult.isLoading, onSkipButtonClick]);
 
   const isPrepareError = Boolean(
     currentError && currentError === prepareResult.error,
@@ -109,7 +126,7 @@ export default function ContractWriteButton({
               variant="contained"
               size="large"
               fullWidth
-              onClick={() => prepareResult.refetch()}
+              onClick={onRetryTransactionButtonClick}
               endIcon={<ReplayIcon />}
             >
               Retry transaction gas estimation
@@ -135,7 +152,7 @@ export default function ContractWriteButton({
               color="error"
               startIcon={<WarningAmberIcon />}
               fullWidth
-              onClick={() => write!()}
+              onClick={onForceTransactionButtonClick}
             >
               Force transaction to be sent
             </Button>
@@ -147,9 +164,9 @@ export default function ContractWriteButton({
               size="medium"
               endIcon={<SkipNextIcon />}
               fullWidth
-              onClick={handleNextWrite}
+              onClick={onSkipButtonClick}
             >
-              Skip to next transaction
+              Skip to next
             </Button>
           </Collapse>
         </>

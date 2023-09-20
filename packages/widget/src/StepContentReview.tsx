@@ -23,8 +23,8 @@ export default function StepContentReview({ stepIndex }: StepProps) {
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+    handleNext(stepIndex);
   }, [handleNext, eventListeners.onButtonClick, stepIndex]);
 
   const commandValidationSchema = useCommandValidationSchema();

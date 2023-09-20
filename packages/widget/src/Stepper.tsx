@@ -10,7 +10,7 @@ import {
   StepLabel,
   Stepper as MUIStepper,
 } from "@mui/material";
-import React, { useMemo } from "react";
+import { useMemo,useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { CheckoutSummary } from "./CheckoutSummary.js";
@@ -64,7 +64,7 @@ export default function Stepper() {
     [paymentOptionWithTokenInfo],
   );
 
-  const container = React.useRef(null);
+  const container = useRef(null);
   const totalSteps = visibleSteps.length + 2; // Add confirm and success. TODO(KK): not clean...
   const transactionStep = totalSteps - 2;
   const summaryStep = totalSteps - 1;
@@ -116,10 +116,10 @@ export default function Stepper() {
                           {visualActiveStep > index ? (
                             <StepButton
                               onClick={() => {
-                                setActiveStep(index);
                                 runEventListener(eventListeners.onButtonClick, {
                                   type: "step_label",
                                 });
+                                setActiveStep(index);
                               }}
                               sx={(theme) => ({
                                 position: "relative",
