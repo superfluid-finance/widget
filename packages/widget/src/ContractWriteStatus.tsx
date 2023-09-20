@@ -120,7 +120,6 @@ export function ContractWriteStatus({
         )}
       </ListItemIcon>
       <ListItemText
-        data-testid="transaction-type-and-status"
         primaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
         secondaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
         primary={displayTitle}
