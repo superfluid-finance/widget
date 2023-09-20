@@ -53,7 +53,10 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
   }, [handleBack, eventListeners.onButtonClick, stepIndex]);
 
   const total = contractWrites.length;
-  const currentResult = contractWriteResults[Math.min(writeIndex, total - 1)];
+  const lastWriteIndex = Math.max(total - 1, 0);
+  const isLastWrite = writeIndex === lastWriteIndex;
+  const currentResult =
+    contractWriteResults[Math.min(writeIndex, lastWriteIndex)];
 
   const handleNextWrite = useCallback(
     () => handleNextWrite_(writeIndex),
@@ -133,6 +136,7 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
         {currentResult && (
           <ContractWriteButton
             {...currentResult}
+            isLastWrite={isLastWrite}
             handleNextWrite={handleNextWrite}
           />
         )}
