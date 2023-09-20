@@ -534,11 +534,12 @@ test("Changing primary color by using the color picker", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
   await builderPage.openStylingTab();
+  await page.mouse.wheel(0, 50);
   await builderPage.openPrimaryColorPicker();
-  await builderPage.slideColorPickerHueSliderToLeft();
-  await widgetPage.validatePrimaryColorIs();
-  await builderPage.slideColorPickerAlphaSliderToLeft();
-  await widgetPage.validatePrimaryColorIs();
+  await builderPage.slideColorPickerHueSliderToMiddle();
+  await widgetPage.validatePrimaryColorIs("rgb(178, 29, 31)");
+  await builderPage.slideColorPickerAlphaSliderToMiddle();
+  await widgetPage.validatePrimaryColorIs("rgb(178, 29, 29)");
 });
 
 test("Changing seconday color by using the color picker", async ({ page }) => {
@@ -546,8 +547,9 @@ test("Changing seconday color by using the color picker", async ({ page }) => {
   let widgetPage = new WidgetPage(page);
   await builderPage.openStylingTab();
   await builderPage.openSecondaryColorPicker();
-  await builderPage.slideColorPickerHueSliderToLeft();
-  await widgetPage.validateSecondaryColorIs();
-  await builderPage.slideColorPickerAlphaSliderToLeft();
-  await widgetPage.validateSecondaryColorIs();
+  await builderPage.clickOnTheMiddleOfTheColorPallete();
+  await builderPage.slideColorPickerHueSliderToMiddle();
+  await widgetPage.validateSecondaryColorIs("rgb(178, 29, 29)");
+  await builderPage.slideColorPickerAlphaSliderToMiddle();
+  await widgetPage.validateSecondaryColorIs("rgb(178, 29, 29)");
 });

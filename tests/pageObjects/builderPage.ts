@@ -38,8 +38,8 @@ export class BuilderPage extends BasePage {
   readonly fieldBorderSliderValue: Locator;
   readonly buttonBorderSlider: Locator;
   readonly buttonBorderSliderValue: Locator;
-  readonly primaryColorPicker: Locator;
-  readonly secondaryColorPicker: Locator;
+  readonly primaryColorPickerTextField: Locator;
+  readonly secondaryColorPickerTextField: Locator;
   readonly fontPicker: Locator;
   readonly verticalStepperButton: Locator;
   readonly horizontalStepperButton: Locator;
@@ -98,6 +98,9 @@ export class BuilderPage extends BasePage {
   readonly colorPickerHueSliderThumb: Locator;
   readonly colorPickerAlphaSliderRail: Locator;
   readonly colorPickerAlphaSliderThumb: Locator;
+  readonly colorPallete: Locator;
+  readonly primaryColorPickerButton: Locator;
+  readonly secondaryColorPickerButton: Locator;
 
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
@@ -160,12 +163,18 @@ export class BuilderPage extends BasePage {
     this.fieldBorderSliderValue = page.getByTestId("field-border-radius-value");
     this.buttonBorderSlider = page.getByTestId("button-border-radius-slider");
     this.buttonBorderSliderValue = page.getByTestId("button-border-radius");
-    this.primaryColorPicker = page
+    this.primaryColorPickerTextField = page
       .getByTestId("primary-color-picker")
       .getByRole("textbox");
-    this.secondaryColorPicker = page
+    this.secondaryColorPickerTextField = page
       .getByTestId("secondary-color-picker")
       .getByRole("textbox");
+    this.primaryColorPickerButton = page
+      .getByTestId("primary-color-picker")
+      .locator("button");
+    this.secondaryColorPickerButton = page
+      .getByTestId("secondary-color-picker")
+      .locator("button");
     this.fontPicker = page.getByTestId("font-picker").getByRole("combobox");
     this.verticalStepperButton = page.getByTestId("vertical-stepper-button");
     this.horizontalStepperButton = page.getByTestId(
@@ -277,6 +286,7 @@ export class BuilderPage extends BasePage {
     this.colorPickerHueSliderThumb = page.locator(
       "#color-popover .MuiColorInput-HueSlider .MuiSlider-thumb",
     );
+    this.colorPallete = page.locator(".MuiColorInput-ColorSpace");
 
     this.paymentFormFieldWordMap = new Map<string, Locator>([
       ["network", this.networkOptions],
@@ -285,6 +295,10 @@ export class BuilderPage extends BasePage {
       ["flowRate", this.flowRateOption],
       ["upfrontPaymentAmount", this.upfrontPaymentInputField],
     ]);
+  }
+
+  async clickOnTheMiddleOfTheColorPallete() {
+    await this.colorPallete.click();
   }
 
   async validateFixedRateHelperMessage() {
@@ -755,8 +769,8 @@ export class BuilderPage extends BasePage {
       await expect(this.containerBorderSlider).toBeVisible();
       await expect(this.fieldBorderSlider).toBeVisible();
       await expect(this.buttonBorderSlider).toBeVisible();
-      await expect(this.primaryColorPicker).toBeVisible();
-      await expect(this.secondaryColorPicker).toBeVisible();
+      await expect(this.primaryColorPickerTextField).toBeVisible();
+      await expect(this.secondaryColorPickerTextField).toBeVisible();
       await expect(this.fontPicker).toBeVisible();
       await expect(this.verticalStepperButton).toBeVisible();
       await expect(this.horizontalStepperButton).toBeVisible();
@@ -1076,7 +1090,7 @@ export class BuilderPage extends BasePage {
     message: string,
   ) {
     let targetPercentage = (100 / (maxRadius - minRadius)) * targetRadius;
-    await BasePage.changeSlider(
+    await BasePage.slideSlider(
       page,
       thumbLocator,
       sliderRail,
@@ -1137,12 +1151,12 @@ export class BuilderPage extends BasePage {
 
   async changePrimaryColorTo(color: string) {
     await test.step(`Changing the primary color to ${color}`, async () => {
-      await this.primaryColorPicker.fill(color);
+      await this.primaryColorPickerTextField.fill(color);
     });
   }
   async changeSecondaryColorTo(color: string) {
     await test.step(`Changing the secondary color to ${color}`, async () => {
-      await this.secondaryColorPicker.fill(color);
+      await this.secondaryColorPickerTextField.fill(color);
     });
   }
   async changeWidgetFontTo(font: string) {
@@ -1171,26 +1185,30 @@ export class BuilderPage extends BasePage {
   }
 
   async openPrimaryColorPicker() {
-    await this.primaryColorPicker.click();
+    await this.primaryColorPickerButton.click();
   }
-  async slideColorPickerHueSliderToLeft() {
-    await BasePage.changeSlider(
+  async slideColorPickerHueSliderToMiddle() {
+    await BasePage.slideSlider(
       this.page,
       this.colorPickerHueSliderThumb,
       this.colorPickerHueSliderRail,
-      0,
+      5,
+      50,
+      -50,
     );
   }
-  async slideColorPickerAlphaSliderToRight() {
-    await BasePage.changeSlider(
+  async slideColorPickerAlphaSliderToMiddle() {
+    await BasePage.slideSlider(
       this.page,
       this.colorPickerAlphaSliderThumb,
       this.colorPickerAlphaSliderRail,
-      0,
+      5,
+      50,
+      -50,
     );
   }
 
   async openSecondaryColorPicker() {
-    await this.secondaryColorPicker.click();
+    await this.secondaryColorPickerButton.click();
   }
 }
