@@ -61,16 +61,16 @@ export function ContractWriteStatus({
     ? { text: "Completed", iconColor: palette.success.dark }
     : transactionResult.isError
     ? { text: "Failed", iconColor: palette.error.main }
-    : prepareResult.isFetching || !prepareResult.isSuccess
+    : prepareResult.isFetching && !prepareResult.isSuccess
     ? { text: "Estimating...", iconColor: palette.warning.main }
     : prepareResult.isError
     ? { text: "Estimation error", iconColor: palette.error.main }
     : writeResult.isSuccess
-    ? { text: "Transaction sent", iconColor: palette.success.dark }
+    ? { text: "Transaction sent", iconColor: palette.warning.main }
     : writeResult.isError
     ? { text: "Error", iconColor: palette.error.main }
     : prepareResult.isSuccess
-    ? { text: "Ready to send", iconColor: palette.success.light }
+    ? { text: "Ready to send", iconColor: palette.success.main }
     : { text: "Queued", iconColor: palette.action.disabled };
 
   const { chains } = useNetwork();

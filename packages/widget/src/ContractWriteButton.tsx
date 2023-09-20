@@ -93,7 +93,10 @@ export default function ContractWriteButton({
   );
 
   const showForceSendButton = Boolean(
-    isPrepareError && write && !writeResult.isLoading,
+    isPrepareError &&
+      !prepareResult.isFetching &&
+      write &&
+      !writeResult.isLoading,
   );
 
   const isWriteButtonDisabled = Boolean(
