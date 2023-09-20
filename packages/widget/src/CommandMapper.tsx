@@ -139,11 +139,7 @@ export function WrapIntoSuperTokensCommandMapper({
 
   const isNativeAssetUnderlyingToken = cmd.underlyingToken.isNativeAsset;
 
-  const {
-    data: allowance,
-    isSuccess,
-    isFetchedAfterMount,
-  } = useContractRead(
+  const { data: allowance_, isSuccess } = useContractRead(
     !isNativeAssetUnderlyingToken
       ? {
           chainId: cmd.chainId,
@@ -173,7 +169,8 @@ export function WrapIntoSuperTokensCommandMapper({
         }),
       );
     } else {
-      if (allowance !== undefined) {
+      if (allowance_ !== undefined) {
+        const allowance = BigInt(allowance_);
         if (allowance < cmd.amountWeiFromUnderlyingTokenDecimals) {
           contractWrites_.push(
             createContractWrite({
@@ -225,7 +222,7 @@ export function SubscribeCommandMapper({
   command: cmd,
   onMapped,
 }: CommandMapperProps<SubscribeCommand>) {
-  const { isSuccess: isSuccessForGetFlowRate, data: existingFlowRate } =
+  const { isSuccess: isSuccessForGetFlowRate, data: existingFlowRate_ } =
     useContractRead({
       chainId: cmd.chainId,
       address: cfAv1ForwarderAddress[cmd.chainId],
@@ -241,7 +238,9 @@ export function SubscribeCommandMapper({
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
 
-    if (existingFlowRate !== undefined) {
+    if (existingFlowRate_ !== undefined) {
+      const existingFlowRate = BigInt(existingFlowRate_);
+
       if (cmd.transferAmountWei > 0n) {
         contractWrites_.push(
           createContractWrite({
