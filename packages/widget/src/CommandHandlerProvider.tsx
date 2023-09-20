@@ -81,8 +81,9 @@ export function CommandHandlerProvider({ children }: Props) {
   >(
     ({ commandId, contractWrites }) =>
       void dispatch({
-        type: "add contract writes",
+        type: "set contract writes",
         payload: {
+          commandId,
           contractWrites,
         },
       }),

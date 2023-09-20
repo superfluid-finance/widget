@@ -13,12 +13,7 @@ export type Action =
   | {
       type: "set contract writes";
       payload: {
-        contractWrites: ReadonlyArray<ContractWrite>;
-      };
-    }
-  | {
-      type: "add contract writes";
-      payload: {
+        commandId?: string;
         contractWrites: ReadonlyArray<ContractWrite>;
       };
     }
@@ -52,13 +47,26 @@ export const useCommandHandlerReducer = () =>
           break;
         }
         case "set contract writes": {
-          draft.contractWrites = castDraft(action.payload.contractWrites);
-          draft.writeIndex = 0;
-          break;
-        }
-        case "add contract writes": {
-          for (const write of action.payload.contractWrites) {
-            (draft.contractWrites as ContractWrite[]).push(write);
+          if (action.payload.commandId) {
+            const command = draft.commands.find(
+              (x) => x.id === action.payload.commandId,
+            );
+
+            if (!command)
+              throw new Error(
+                `Command not found with ID: ${action.payload.commandId}`,
+              );
+
+            const withoutPreviousCommandContractWrites =
+              draft.contractWrites.filter(
+                (x) => x.commandId !== action.payload.commandId,
+              );
+            draft.contractWrites = castDraft([
+              ...withoutPreviousCommandContractWrites,
+              ...action.payload.contractWrites,
+            ]);
+          } else {
+            draft.contractWrites = castDraft(action.payload.contractWrites);
           }
           draft.writeIndex = 0;
           break;
