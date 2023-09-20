@@ -18,7 +18,8 @@ import {
   useTheme,
   Zoom,
 } from "@mui/material";
-import { FC, useCallback, useState } from "react";
+import { PaymentOption } from "@superfluid-finance/widget";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
 import useDemoMode from "../../hooks/useDemoMode";
@@ -30,27 +31,32 @@ const ProductEditor: FC = () => {
   const theme = useTheme();
   const { control, watch } = useFormContext<WidgetProps>();
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, update, remove } = useFieldArray({
     control,
     name: "paymentDetails.paymentOptions", // unique name for your Field Array
   });
 
   const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
 
-  const [isAdding, setIsAdding] = useState(false);
-  const [addCount, setAddCount] = useState(0);
+  const [dialogMode, setDialogMode] = useState<"add" | "clone" | "edit">();
+  const [targetedPaymentOption, setTargetedPaymentOption] = useState<{
+    index: number;
+    value: PaymentOption;
+  }>();
 
-  const handleOpen = () => {
-    setIsAdding(true);
-  };
+  const [showAppearAnimation, setShowAppearAnimation] = useState(false);
+  useEffect(() => {
+    setShowAppearAnimation(true); // When new payment options are added then they appear with an animation now.
+  }, []);
 
-  const handleClose = () => {
-    setIsAdding(false);
-  };
+  const handleClose = useCallback(() => {
+    setDialogMode(undefined);
+    setTargetedPaymentOption(undefined);
+  }, []);
 
   const { setDemoPaymentDetails } = useDemoMode();
   const handleDemo = useCallback(() => {
-    setAddCount((x) => x + 1);
+    setShowAppearAnimation(true);
     setDemoPaymentDetails();
   }, []);
 
@@ -93,7 +99,9 @@ const ProductEditor: FC = () => {
                 variant="contained"
                 size="medium"
                 color="primary"
-                onClick={handleOpen}
+                onClick={() => {
+                  setDialogMode("add");
+                }}
                 startIcon={<AddIcon />}
               >
                 Add
@@ -117,7 +125,7 @@ const ProductEditor: FC = () => {
                   ) => (
                     <Zoom
                       in
-                      appear={!!addCount}
+                      appear={!!showAppearAnimation}
                       key={`${superToken.address}-${i}`}
                     >
                       <Box>
@@ -128,9 +136,22 @@ const ProductEditor: FC = () => {
                           superToken={superToken}
                           chainId={chainId}
                           index={i}
+                          clone={(index) => {
+                            setTargetedPaymentOption({
+                              index,
+                              value: paymentOptions[index],
+                            });
+                            setDialogMode("clone");
+                          }}
+                          edit={(index) => {
+                            setTargetedPaymentOption({
+                              index,
+                              value: paymentOptions[index],
+                            });
+                            setDialogMode("edit");
+                          }}
                           remove={(params) => {
                             remove(params);
-                            setAddCount(0);
                           }}
                         />
                       </Box>
@@ -161,7 +182,8 @@ const ProductEditor: FC = () => {
         </Stack>
       </Stack>
       <Dialog
-        open={isAdding}
+        open={Boolean(dialogMode)}
+        keepMounted={false} // To clear the unfinished user input.
         TransitionComponent={Slide}
         TransitionProps={
           {
@@ -169,7 +191,6 @@ const ProductEditor: FC = () => {
             exit: false,
           } as SlideProps
         }
-        keepMounted
         transitionDuration={{
           enter: theme.transitions.duration.enteringScreen,
           exit: theme.transitions.duration.shortest,
@@ -181,7 +202,9 @@ const ProductEditor: FC = () => {
             direction="row"
             justifyContent="space-between"
           >
-            <Typography variant="h6">Add Payment Option</Typography>
+            <Typography variant="h6">
+              {dialogMode === "edit" ? "Edit" : "Add"} Payment Option
+            </Typography>
             <IconButton
               edge="start"
               color="inherit"
@@ -198,15 +221,20 @@ const ProductEditor: FC = () => {
           name="paymentDetails.paymentOptions"
           render={() => (
             <SelectPaymentOption
-              key={addCount.toString()}
+              key={showAppearAnimation.toString()}
+              selectedPaymentOption={targetedPaymentOption}
+              dialogMode={dialogMode}
               onAdd={(props) => {
-                setAddCount((x) => x + 1);
                 append(props);
                 handleClose();
               }}
-              onDiscard={() => {
+              onEdit={(index, value: PaymentOption) => {
+                update(index, value);
                 handleClose();
-                setAddCount((x) => x + 1);
+              }}
+              onDiscard={() => {
+                setTargetedPaymentOption(undefined);
+                handleClose();
               }}
             />
           )}
