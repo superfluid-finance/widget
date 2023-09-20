@@ -27,8 +27,8 @@
     "react": "^18.2.0",
     "react-blockies": "^1.4.1",
     "react-dom": "^18.2.0",
-    "viem": "^1.10.9",
-    "wagmi": "^1.4.1",
+    "viem": "^1.11.0",
+    "wagmi": "^1.4.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {
