@@ -150,7 +150,7 @@ export class WidgetPage extends BasePage {
     );
     this.transactionStatusIcons = page.getByTestId("transaction-status-icon");
     this.circleIcons = page.getByTestId("CircleIcon");
-    this.checkmarkIcons = page.getByTestId("CheckCircleIcon");
+    this.checkmarkIcons = page.getByTestId("CheckIcon");
   }
 
   async changeCustomPaymentAmount(amount: string, timeunit = "month") {
