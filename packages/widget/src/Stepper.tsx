@@ -83,7 +83,7 @@ export default function Stepper() {
 
         return (
           <>
-            <Collapse in={isForm} appear={false}>
+            <Collapse data-testid="widget-preview" in={isForm} appear={false}>
               <Fade in={isForm} appear={false}>
                 <Box>
                   <MUIStepper
@@ -113,8 +113,9 @@ export default function Stepper() {
                           : step.shortText;
 
                       return (
-                        <Step data-testid="test" key={index}>
+                        <Step data-testid={`step-${index + 1}`} key={index}>
                           <StepButton
+                            data-testid={`step-${index + 1}-button`}
                             onClick={() => {
                               setActiveStep(index);
                               runEventListener(eventListeners.onButtonClick, {
@@ -123,6 +124,7 @@ export default function Stepper() {
                             }}
                           >
                             <StepLabel
+                              data-testid={`step-${index + 1}-label`}
                               sx={{ position: "relative", width: "100%" }}
                             >
                               {labelText}

@@ -1,4 +1,4 @@
-import { Locator,Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export let randomDetailsSet = {
   name: "",
@@ -119,7 +119,7 @@ export class BasePage {
   static shortenHex(address: string, length = 4) {
     return `${address.substring(0, 2 + length)}...${address.substring(
       address.length - length,
-      address.length
+      address.length,
     )}`;
   }
 
@@ -137,14 +137,14 @@ export class BasePage {
     page: Page,
     thumb: Locator,
     slider: Locator,
-    targetPercentage: number
+    targetPercentage: number,
   ) {
     const thumbBoundingBox = await thumb.boundingBox();
     const sliderBoundingBox = await slider.boundingBox();
 
     if (thumbBoundingBox === null || sliderBoundingBox === null) {
       throw new Error(
-        "Could not get the bounding boxes of one of the elements"
+        "Could not get the bounding boxes of one of the elements",
       );
     }
 

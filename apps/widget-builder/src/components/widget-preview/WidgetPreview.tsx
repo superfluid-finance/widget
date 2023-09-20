@@ -30,8 +30,8 @@ export type DisplaySettings = {
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
   font: FontSettings | null;
-  primaryColor: `#${string}`;
-  secondaryColor: `#${string}`;
+  primaryColor: `rgb(${string})`;
+  secondaryColor: `rgb(${string})`;
 };
 
 export type PaymentInterval =

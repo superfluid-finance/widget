@@ -56,8 +56,8 @@ export class WidgetPage extends BasePage {
   readonly widgetContainer: Locator;
   // readonly copyButtons: Locator;
   // readonly productDetails: Locator;
-  // readonly poweredBySuperfluidButton: Locator;
   // readonly selectedNetworkBadge: Locator;
+  readonly poweredBySuperfluidButton: Locator;
   readonly closeButton: Locator;
   selectedTokenDuringTest?: string;
   senderAddressDuringTest?: string;
@@ -80,23 +80,23 @@ export class WidgetPage extends BasePage {
     this.wrapUnderlyingBalance = page.getByTestId("underlying-balance");
     this.wrapSuperTokenBalance = page.getByTestId("super-balance");
     this.wrapAmountInput = page.locator(
-      "[data-testid=wrap-amount-input] input"
+      "[data-testid=wrap-amount-input] input",
     );
     this.wrapAmountMirrorAmount = page.locator(
-      "[data-testid=wrap-amount-mirror-amount] input"
+      "[data-testid=wrap-amount-mirror-amount] input",
     );
     this.whyWrapTokensButton = page.getByTestId("why-wrap-tokens-button");
     this.reviewUnderlyingWrapAmount = page.getByTestId(
-      "review-underlying-wrap-amount"
+      "review-underlying-wrap-amount",
     );
     this.reviewUnderlyingTokenSymbol = page.getByTestId(
-      "review-underlying-token-symbol"
+      "review-underlying-token-symbol",
     );
     this.reviewSuperTokenAmount = page.getByTestId("review-super-wrap-amount");
     this.reviewSuperTokenSymbol = page.getByTestId("review-super-token-symbol");
     this.successStreamedAmount = page.getByTestId("streamed-amount");
     this.reviewSuperTokenBalanceAndSymbol = page.getByTestId(
-      "review-supertoken-balance-and-symbol"
+      "review-supertoken-balance-and-symbol",
     );
     this.reviewExchangeRate = page.getByTestId("exchange-rate");
     this.receiverAddress = page.getByTestId("receiver-address");
@@ -109,10 +109,10 @@ export class WidgetPage extends BasePage {
     this.transactionTypes = page.getByTestId("transaction-type");
     this.transactionButton = page.getByTestId("transaction-button");
     this.transactionButtonLoadingSpinner = page.locator(
-      ".MuiLoadingButton-loadingIndicator"
+      ".MuiLoadingButton-loadingIndicator",
     );
     this.continueToMerchantButton = page.getByTestId(
-      "continue-to-merchant-button"
+      "continue-to-merchant-button",
     );
     this.openSuperfluidDashboard = page.getByTestId("open-dashboard-button");
     this.skipWrapButton = page
@@ -121,18 +121,18 @@ export class WidgetPage extends BasePage {
     this.productName = page.getByTestId("product-name");
     this.productDescription = page.getByTestId("product-description");
     this.widgetErrorMessage = page.locator(
-      "[data-testid=widget-error] .MuiAlert-message"
+      "[data-testid=widget-error] .MuiAlert-message",
     );
     this.widgetErrorTitle = page.locator(
-      "[data-testid=widget-error] .MuiAlert-message div"
+      "[data-testid=widget-error] .MuiAlert-message div",
     );
     this.productImage = page.getByTestId("widget-product-image");
     this.transactionCount = page.getByTestId("transaction-count");
     this.transactionCircularProgress = page.getByTestId(
-      "transaction-progress-circular-progress"
+      "transaction-progress-circular-progress",
     );
     this.transactionSpinningProgress = page.getByTestId(
-      "spinning-circular-progress"
+      "spinning-circular-progress",
     );
     this.reviewStepError = page.getByTestId("review-error");
     this.switchNetworkButton = page.getByTestId("switch-network-button");
@@ -140,14 +140,15 @@ export class WidgetPage extends BasePage {
       .getByTestId("custom-flow-rate-input-field")
       .locator("input");
     this.customAmountTimeUnitDropdown = page.getByTestId(
-      "custom-time-unit-dropdown"
+      "custom-time-unit-dropdown",
     );
     this.openCheckoutInButton = page.getByTestId("open-checkout-in-button");
-    this.dialogView = page.locator(".MuiDialog-container")
-    this.drawerView = page.locator(".MuiDrawer-root[role=presentation]")
-    this.fullScreenView = page.locator(".MuiDialog-root[role=presentation]")
-    this.closeButton = page.getByTestId("CloseIcon")
-    this.widgetContainer = page.locator("main .MuiPaper-elevation")
+    this.dialogView = page.locator(".MuiDialog-container");
+    this.drawerView = page.locator(".MuiDrawer-root[role=presentation]");
+    this.fullScreenView = page.locator(".MuiDialog-root[role=presentation]");
+    this.closeButton = page.getByTestId("CloseIcon");
+    this.widgetContainer = page.locator(".MuiPaper-elevation1.MuiPaper-root");
+    this.poweredBySuperfluidButton = page.getByTestId("powered-by-superfluid");
   }
 
   async changeCustomPaymentAmount(amount: string, timeunit = "month") {
@@ -162,11 +163,11 @@ export class WidgetPage extends BasePage {
   async validateNoOptionIsSelected() {
     await expect(this.networkSelectionButton.locator("input")).toHaveAttribute(
       "placeholder",
-      "Network"
+      "Network",
     );
     await expect(this.tokenSelectionButton.locator("input")).toHaveAttribute(
       "placeholder",
-      "Token"
+      "Token",
     );
     await this.networkSelectionButton
       .getAttribute("value")
@@ -197,13 +198,13 @@ export class WidgetPage extends BasePage {
   async validateRandomProductDetailsIsShown() {
     await test.step(`Make sure the magic wand random details are seen in the widget`, async () => {
       await expect(this.productDescription).toHaveText(
-        randomDetailsSet.description
+        randomDetailsSet.description,
       );
       await expect(this.productName).toHaveText(randomDetailsSet.name);
       await expect(this.productImage).toBeVisible();
       await expect(this.productImage).toHaveCSS(
         "background-image",
-        `url("https://picsum.photos/200/200")`
+        `url("https://picsum.photos/200/200")`,
       );
     });
   }
@@ -215,7 +216,7 @@ export class WidgetPage extends BasePage {
         "./data/emptyImage.png",
         {
           maxDiffPixelRatio: 0.01,
-        }
+        },
       );
     });
   }
@@ -275,7 +276,7 @@ export class WidgetPage extends BasePage {
       await expect(this.wrapAmountMirrorAmount).toHaveValue(amount);
       await expect(this.weRecomendMessage).toBeVisible();
       await expect(this.weRecomendMessage).toHaveText(
-        "We recommend wrapping at least 1 month of the subscription amount."
+        "We recommend wrapping at least 1 month of the subscription amount.",
       );
     });
   }
@@ -293,23 +294,23 @@ export class WidgetPage extends BasePage {
       case "approve":
         return `Approve ${this.selectedTokenDuringTest!.slice(
           0,
-          -1
+          -1,
         )} Allowance`;
     }
   }
 
   async validateTransactionStatuses(
     transactionList: string[],
-    statusList: string[]
+    statusList: string[],
   ) {
     await test.step(`Validating transaction statuses`, async () => {
       for (const [index, transaction] of transactionList.entries()) {
         await expect(this.transactionTypes.nth(index)).toHaveText(
-          index + 1 + ". " + this.getTransactionTypeString(transaction)
+          index + 1 + ". " + this.getTransactionTypeString(transaction),
         );
         await expect(this.transactionStatuses.nth(index)).toHaveText(
           statusList[index],
-          { timeout: 60000 }
+          { timeout: 60000 },
         );
       }
       await this.validateTransactionCounter(statusList);
@@ -319,7 +320,7 @@ export class WidgetPage extends BasePage {
   async validateTransactionButtonTextAndClick(text: string) {
     await test.step(`Making sure the transaction text is ${text} and clicking it`, async () => {
       await expect(this.transactionButton).toHaveText(
-        this.getTransactionTypeString(text)!
+        this.getTransactionTypeString(text)!,
       );
       await this.transactionButton.click();
     });
@@ -355,28 +356,28 @@ export class WidgetPage extends BasePage {
         parseFloat(amountShownInSuccessScreen) + expectedFlowAmountIncrease;
       await this.page.waitForTimeout(2000);
       expect(
-        parseFloat(await this.successStreamedAmount.innerText())
+        parseFloat(await this.successStreamedAmount.innerText()),
       ).toBeGreaterThan(parseFloat(amountShownInSuccessScreen));
       expect(
-        parseFloat(await this.successStreamedAmount.innerText())
+        parseFloat(await this.successStreamedAmount.innerText()),
       ).toBeCloseTo(expectedAmount, flowRateInWei / 1e17);
       await expect(this.senderAddress.last()).toHaveText(
-        BasePage.shortenHex(this.senderAddressDuringTest!)
+        BasePage.shortenHex(this.senderAddressDuringTest!),
       );
       await expect(this.receiverAddress.last()).toHaveText(
-        BasePage.shortenHex(this.receiverAddressDuringTest!)
+        BasePage.shortenHex(this.receiverAddressDuringTest!),
       );
     });
   }
 
   async validateAndSaveSenderAndReceiverAddresses(
     sender: string,
-    receiver: string
+    receiver: string,
   ) {
     await test.step(`Making sure the sender is ${sender} and receiver is ${receiver}`, async () => {
       await expect(this.senderAddress).toHaveText(BasePage.shortenHex(sender));
       await expect(this.receiverAddress).toHaveText(
-        BasePage.shortenHex(receiver)
+        BasePage.shortenHex(receiver),
       );
       this.senderAddressDuringTest = sender;
       this.receiverAddressDuringTest = receiver;
@@ -412,12 +413,12 @@ export class WidgetPage extends BasePage {
       await expect(this.chosenFlowRate).toHaveText(option.flowRate);
       await expect(this.chosenToken).toHaveText(option.superToken);
       await expect(this.chosenFlowRatePeriod).toHaveText(
-        `per ${option.timeUnit}`
+        `per ${option.timeUnit}`,
       );
       await expect(
         this.page
           .getByTestId(`selected-option-paper`)
-          .getByTestId(`${option.chainId}-badge`)
+          .getByTestId(`${option.chainId}-badge`),
       ).toBeVisible();
     });
   }
@@ -437,7 +438,7 @@ export class WidgetPage extends BasePage {
         "./data/Superfluid_logo.png",
         {
           maxDiffPixelRatio: 0.01,
-        }
+        },
       );
     });
   }
@@ -458,14 +459,14 @@ export class WidgetPage extends BasePage {
           completedStatusCount === 0
             ? (4).toString()
             : Math.round(
-                (completedStatusCount / statusList.length) * 100
+                (completedStatusCount / statusList.length) * 100,
               ).toString();
         await expect(this.transactionCount).toHaveText(
-          `${completedStatusCount}/${statusList.length}`
+          `${completedStatusCount}/${statusList.length}`,
         );
         await expect(this.transactionCircularProgress).toHaveAttribute(
           "aria-valuenow",
-          progressPercentage
+          progressPercentage,
         );
       }
     });
@@ -477,14 +478,14 @@ export class WidgetPage extends BasePage {
       await EthHelper.getUnderlyingTokenBalance().then(
         async (underlyingBalance) => {
           await expect(
-            this.underlyingTokenBalanceBeforeWrap! - wrappedAmount
+            this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
           ).toEqual(underlyingBalance);
-        }
+        },
       );
 
       await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
         await expect(this.superTokenBalanceBeforeWrap! + wrappedAmount).toEqual(
-          superTokenBalance[0]
+          superTokenBalance[0],
         );
       });
     });
@@ -496,21 +497,21 @@ export class WidgetPage extends BasePage {
         async (underlyingBalance) => {
           this.underlyingTokenBalanceBeforeWrap = underlyingBalance;
           let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
-            (underlyingBalance.toString() / 1e18).toString()
+            (underlyingBalance.toString() / 1e18).toString(),
           );
           await expect(this.wrapUnderlyingBalance).toHaveText(
-            `Balance: ${underlyingBalanceToAssert}`
+            `Balance: ${underlyingBalanceToAssert}`,
           );
-        }
+        },
       );
 
       await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
         this.superTokenBalanceBeforeWrap = superTokenBalance[0];
         let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
-          (superTokenBalance[0].toString() / 1e18).toString()
+          (superTokenBalance[0].toString() / 1e18).toString(),
         );
         await expect(this.wrapSuperTokenBalance).toHaveText(
-          `Balance: ${superTokenBalanceToAssert}`
+          `Balance: ${superTokenBalanceToAssert}`,
         );
       });
     });
@@ -530,74 +531,230 @@ export class WidgetPage extends BasePage {
     });
   }
 
-    async validateInlineWidgetIsVisible() {
-    await expect(this.networkSelectionButton).toBeVisible()
-    await expect(this.tokenSelectionButton).toBeVisible()
-    await expect(this.continueButton).toBeVisible()
-    await expect(this.continueButton).toHaveText("Connect Wallet to Continue")
+  async validateInlineWidgetIsVisible() {
+    await test.step(`Make sure the inline widget is visible`, async () => {
+      await expect(this.widgetContainer).toBeVisible();
+      await expect(this.networkSelectionButton).toBeVisible();
+      await expect(this.tokenSelectionButton).toBeVisible();
+      await expect(this.continueButton).toBeVisible();
+      await expect(this.continueButton).toHaveText(
+        "Connect Wallet to Continue",
+      );
+    });
   }
   async clickOnOpenWidgetInButton() {
-    await this.openCheckoutInButton.click()
+    await test.step(`Clicking on the "Open checkout in X" button`, async () => {
+      await this.openCheckoutInButton.click();
+    });
   }
   async validateDialogViewWidgetIsVisible() {
-    await expect(this.dialogView.locator(this.networkSelectionButton)).toBeVisible()
-    await expect(this.dialogView.locator(this.tokenSelectionButton)).toBeVisible()
-    await expect(this.dialogView.locator(this.continueButton)).toBeVisible()
-    await expect(this.dialogView.locator(this.continueButton)).toHaveText("Connect Wallet to Continue")
+    await test.step(`Making sure the widget is open in a dialog`, async () => {
+      await expect(
+        this.dialogView.locator(this.networkSelectionButton),
+      ).toBeVisible();
+      await expect(
+        this.dialogView.locator(this.tokenSelectionButton),
+      ).toBeVisible();
+      await expect(this.dialogView.locator(this.continueButton)).toBeVisible();
+      await expect(this.dialogView.locator(this.continueButton)).toHaveText(
+        "Connect Wallet to Continue",
+      );
+    });
   }
 
   async validateDrawerViewWidgetIsVisible() {
-    await expect(this.drawerView.locator(this.networkSelectionButton)).toBeVisible()
-    await expect(this.drawerView.locator(this.tokenSelectionButton)).toBeVisible()
-    await expect(this.drawerView.locator(this.continueButton)).toBeVisible()
-    await expect(this.drawerView.locator(this.continueButton)).toHaveText("Connect Wallet to Continue")  
+    await test.step(`Making sure the widget is open in a drawer`, async () => {
+      await expect(
+        this.drawerView.locator(this.networkSelectionButton),
+      ).toBeVisible();
+      await expect(
+        this.drawerView.locator(this.tokenSelectionButton),
+      ).toBeVisible();
+      await expect(this.drawerView.locator(this.continueButton)).toBeVisible();
+      await expect(this.drawerView.locator(this.continueButton)).toHaveText(
+        "Connect Wallet to Continue",
+      );
+    });
   }
 
   async validateFullScreenViewWidgetIsVisible() {
-        await expect(this.fullScreenView.locator(this.networkSelectionButton)).toBeVisible()
-    await expect(this.fullScreenView.locator(this.tokenSelectionButton)).toBeVisible()
-    await expect(this.fullScreenView.locator(this.continueButton)).toBeVisible()
-    await expect(this.fullScreenView.locator(this.continueButton)).toHaveText("Connect Wallet to Continue")
-    await expect(this.closeButton).toBeVisible()
+    await test.step(`Making sure the widget is open in full screen view`, async () => {
+      await expect(
+        this.fullScreenView.locator(this.networkSelectionButton),
+      ).toBeVisible();
+      await expect(
+        this.fullScreenView.locator(this.tokenSelectionButton),
+      ).toBeVisible();
+      await expect(
+        this.fullScreenView.locator(this.continueButton),
+      ).toBeVisible();
+      await expect(this.fullScreenView.locator(this.continueButton)).toHaveText(
+        "Connect Wallet to Continue",
+      );
+      await expect(this.fullScreenView.locator(this.closeButton)).toBeVisible();
+    });
   }
 
   async validateDarkModeIsEnabled() {
-    await 
+    await test.step(`Checking if widget background color is dark grey`, async () => {
+      await expect(this.widgetContainer).toHaveCSS(
+        "background-color",
+        "rgb(21, 22, 25)",
+      );
+    });
   }
   async validateLightModeIsEnabled() {
-    await 
+    await test.step(`Checking if widget background color is white`, async () => {
+      await expect(this.widgetContainer).toHaveCSS(
+        "background-color",
+        "rgb(255, 255, 255)",
+      );
+    });
   }
-  
+
   async validateContainerBorderRadiusIs(radius: number) {
-    await expect(this.widgetContainer).toHaveCSS("border-radius",`${radius}px`)
+    await test.step(`Making sure the widget container border radius is ${radius}`, async () => {
+      await expect(this.widgetContainer).toHaveCSS(
+        "border-radius",
+        `${radius}px`,
+      );
+    });
   }
 
   async validateFieldBorderRadiusIs(radius: number) {
-    await expect(this.tokenSelectionButton.locator(".MuiInputBase-root")).toHaveCSS("border-radius",`${radius}px`)
-        await expect(this.networkSelectionButton.locator(".MuiInputBase-root")).toHaveCSS("border-radius",`${radius}px`)
-
+    await test.step(`Making sure the widget field border radius is ${radius}`, async () => {
+      await expect(
+        this.tokenSelectionButton.locator(".MuiInputBase-root"),
+      ).toHaveCSS("border-radius", `${radius}px`);
+      await expect(
+        this.networkSelectionButton.locator(".MuiInputBase-root"),
+      ).toHaveCSS("border-radius", `${radius}px`);
+    });
   }
 
   async validateButtonBorderRadiusIs(radius: number) {
-        await expect(this.continueButton.locator("span")).toHaveCSS("border-radius",`${radius}px`)
+    await test.step(`Making sure the widget button border radius is ${radius}`, async () => {
+      await expect(this.continueButton.locator("span")).toHaveCSS(
+        "border-radius",
+        `${radius}px`,
+      );
+    });
   }
   async validatePrimaryColorIs(color: string) {
-    await expect(this.continueButton).toHaveCSS("background-color","color")
-    await expect(this)
+    await test.step(`Checking if widgets primary color is ${color}`, async () => {
+      await expect(this.continueButton).toHaveCSS("background-color", color);
+      await expect(this.page.locator("[data-testid=step-1] circle")).toHaveCSS(
+        "color",
+        color,
+      );
+    });
   }
   async validateSecondaryColorIs(color: string) {
-    await 
+    await test.step(`Checking if widgets secondary color is ${color}`, async () => {
+      await expect(this.page.locator("[data-testid=step-1] text")).toHaveCSS(
+        "fill",
+        color,
+      );
+      await expect(this.page.locator("[data-testid=step-2] text")).toHaveCSS(
+        "fill",
+        color,
+      );
+      await expect(this.page.locator("[data-testid=step-3] text")).toHaveCSS(
+        "fill",
+        color,
+      );
+    });
   }
   async validateWidgetFontIs(font: string) {
-    await 
-  }
-  async validateWidgetStepperIsHorizontal() {
-    await 
+    await test.step(`Making sure the widget uses ${font} as the font`, async () => {
+      await expect(this.networkSelectionButton.locator("input")).toHaveCSS(
+        "font-family",
+        font,
+      );
+      await expect(this.tokenSelectionButton.locator("input")).toHaveCSS(
+        "font-family",
+        font,
+      );
+      await expect(this.continueButton).toHaveCSS("font-family", font);
+      await expect(
+        this.page.locator("[data-testid=step-1-label] span span"),
+      ).toHaveCSS("font-family", font);
+      await expect(
+        this.page.locator("[data-testid=step-2-label] span span"),
+      ).toHaveCSS("font-family", font);
+      await expect(
+        this.page.locator("[data-testid=step-3-label] span span"),
+      ).toHaveCSS("font-family", font);
+      await expect(this.page.locator("[data-testid=step-1] text")).toHaveCSS(
+        "font-family",
+        font,
+      );
+      await expect(this.page.locator("[data-testid=step-2] text")).toHaveCSS(
+        "font-family",
+        font,
+      );
+      await expect(this.page.locator("[data-testid=step-3] text")).toHaveCSS(
+        "font-family",
+        font,
+      );
+      await expect(this.poweredBySuperfluidButton).toHaveCSS(
+        "font-family",
+        font,
+      );
+      await expect(this.page).toHaveScreenshot(
+        `changedFont-${font.replace(/"/g, "")}.png`,
+      );
+    });
   }
   async validateWidgetStepperIsVertical() {
-    await 
+    await test.step(`Checking if the widget is using vertical stepper`, async () => {
+      await expect(
+        this.page.locator("[data-testid=step-1-label] span span"),
+      ).toHaveText("Select network and token");
+      await expect(
+        this.page.locator("[data-testid=step-2-label] span span"),
+      ).toHaveText("Wrap to Super Tokens");
+      await expect(
+        this.page.locator("[data-testid=step-3-label] span span"),
+      ).toHaveText("Review the transaction(s)");
+      await expect(this.widgetContainer).toHaveScreenshot("verticalWidget.png");
+    });
+  }
+
+  async validateWidgetStepperIsHorizontal() {
+    await test.step(`Checking if the widget is using horizontal stepper`, async () => {
+      await expect(
+        this.page.locator("[data-testid=step-1-label] span span"),
+      ).toHaveText("Network & Token");
+      await expect(
+        this.page.locator("[data-testid=step-2-label] span span"),
+      ).toHaveText("Wrap");
+      await expect(
+        this.page.locator("[data-testid=step-3-label] span span"),
+      ).toHaveText("Review");
+      await expect(this.widgetContainer).toHaveScreenshot(
+        "horizontalWidget.png",
+      );
+    });
   }
   async validateRandomStylingIsGenerated() {
-    await 
+    await test.step(`Comparing current widgets screenshot with the default one`, async () => {
+      await expect(this.widgetContainer).not.toHaveScreenshot(
+        "verticalWidget.png",
+      );
+    });
+  }
+
+  async clickFullScreenWidgetCloseButton() {
+    await this.fullScreenView.locator(this.closeButton).click();
+  }
+  async validateOpenWidgetInButtonIsVisible() {
+    await expect(this.openCheckoutInButton).toBeVisible();
+  }
+  async validateWidgetIsNotShown() {
+    await expect(this.widgetContainer).not.toBeVisible();
+    await expect(this.networkSelectionButton).not.toBeVisible();
+    await expect(this.tokenSelectionButton).not.toBeVisible();
+    await expect(this.continueButton).not.toBeVisible();
   }
 }

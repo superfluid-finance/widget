@@ -94,6 +94,10 @@ export class BuilderPage extends BasePage {
   readonly nftNameInputField: Locator;
   readonly contractOwnerInputField: Locator;
   readonly createNftButton: Locator;
+  readonly colorPickerHueSliderRail: Locator;
+  readonly colorPickerHueSliderThumb: Locator;
+  readonly colorPickerAlphaSliderRail: Locator;
+  readonly colorPickerAlphaSliderThumb: Locator;
 
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
@@ -116,16 +120,16 @@ export class BuilderPage extends BasePage {
       .getByRole("button");
     this.superTokenOption = page.locator("#token-select");
     this.superTokenOptionsInDropdown = page.locator(
-      "[id*=token-select-option]"
+      "[id*=token-select-option]",
     );
     this.superTokenOptionNames = page.locator(
-      "[data-testid=token-selection-name-and-symbol] span:last-of-type"
+      "[data-testid=token-selection-name-and-symbol] span:last-of-type",
     );
     this.superTokenOptionSymbols = page.locator(
-      "[data-testid=token-selection-name-and-symbol] span:first-of-type"
+      "[data-testid=token-selection-name-and-symbol] span:first-of-type",
     );
     this.superTokenSelectionXButton = page.locator(
-      "#token-select + div [data-testid=CloseIcon]"
+      "#token-select + div [data-testid=CloseIcon]",
     );
     this.flowRateOption = page
       .getByTestId("flow-rate-input")
@@ -135,7 +139,7 @@ export class BuilderPage extends BasePage {
       .getByTestId("receiver-input-field")
       .getByRole("textbox");
     this.useAsDefaultPaymentSwitch = page.getByLabel(
-      "Use as default payment option"
+      "Use as default payment option",
     );
     this.addPaymentOptionButton = page.getByTestId("add-option-button");
     this.paymentOptionCount = page.getByTestId("added-payment-options-count");
@@ -144,13 +148,13 @@ export class BuilderPage extends BasePage {
     this.summaryFlowRate = page.getByTestId("stream-rate-added-payment-option");
     this.summaryReceiver = page.getByTestId("added-payment-receiver");
     this.summaryDeleteButtons = page.getByTestId(
-      "delete-payment-option-button"
+      "delete-payment-option-button",
     );
     this.uploadImageField = page.getByTestId("file-upload-field");
     this.darkModeSwitch = page.getByLabel("Dark mode: off");
     this.containerBorderSlider = page.getByTestId("container-radius-slider");
     this.containerBorderSliderValue = page.getByTestId(
-      "container-radius-value"
+      "container-radius-value",
     );
     this.fieldBorderSlider = page.getByTestId("field-border-slider");
     this.fieldBorderSliderValue = page.getByTestId("field-border-radius-value");
@@ -165,7 +169,7 @@ export class BuilderPage extends BasePage {
     this.fontPicker = page.getByTestId("font-picker").getByRole("combobox");
     this.verticalStepperButton = page.getByTestId("vertical-stepper-button");
     this.horizontalStepperButton = page.getByTestId(
-      "horizontal-stepper-button"
+      "horizontal-stepper-button",
     );
     this.exportOptions = page.getByTestId("export-option");
     this.exportIPFSOption = page.getByRole("option", {
@@ -180,7 +184,7 @@ export class BuilderPage extends BasePage {
     this.noOptionsDemoLink = this.noOptionsMessage.locator("span");
     this.paymentTab = page.getByTestId("payment-tab");
     this.addPaymentOptionFormButton = page.getByTestId(
-      "add-payment-option-button"
+      "add-payment-option-button",
     );
     this.discardPaymentOption = page.getByTestId("discard-option-button");
     this.wandButton = page.getByTestId("wand-button");
@@ -195,23 +199,23 @@ export class BuilderPage extends BasePage {
     this.shownTooltip = page.locator("[role=tooltip]");
     this.removeImageButton = page.getByTestId("remove-image-button");
     this.paymentFormNetworkTooltip = page.locator(
-      "[data-testid=network-title] + [data-testid=tooltip-icon]"
+      "[data-testid=network-title] + [data-testid=tooltip-icon]",
     );
     this.paymentFormNetworkTitle = page.locator("[data-testid=network-title]");
     this.paymentFormReceiverAddressTooltip = page.locator(
-      "[data-testid=receiver-title] + [data-testid=tooltip-icon]"
+      "[data-testid=receiver-title] + [data-testid=tooltip-icon]",
     );
     this.paymentFormSuperTokenTooltip = page.locator(
-      "[data-testid=token-title] + [data-testid=tooltip-icon]"
+      "[data-testid=token-title] + [data-testid=tooltip-icon]",
     );
     this.paymentFormStreamRateTooltip = page.locator(
-      "[data-testid=stream-rate-title] + [data-testid=tooltip-icon]"
+      "[data-testid=stream-rate-title] + [data-testid=tooltip-icon]",
     );
     this.paymentFormUpfrontPaymentAmountTooltip = page.locator(
-      "[data-testid=upfront-payment-title] + [data-testid=tooltip-icon]"
+      "[data-testid=upfront-payment-title] + [data-testid=tooltip-icon]",
     );
     this.paymentFormUpfrontPaymentSwitchTooltip = page.locator(
-      "[data-testid=upfront-payment-label] + [data-testid=tooltip-icon]"
+      "[data-testid=upfront-payment-label] + [data-testid=tooltip-icon]",
     );
     this.fixedRateButton = page.getByTestId("fixed-rate-button");
     this.userDefinedRateButton = page.getByTestId("user-defined-rate-button");
@@ -229,7 +233,7 @@ export class BuilderPage extends BasePage {
     this.paymentFormSuperTokenTitle = page.getByTestId("token-title");
     this.paymentFormStreamRateTitle = page.getByTestId("stream-rate-title");
     this.paymentFormUpfrontPaymentAmountTitle = page.getByTestId(
-      "upfront-payment-title"
+      "upfront-payment-title",
     );
     this.networkOptionsBorder = page
       .getByTestId("network-selection")
@@ -261,9 +265,18 @@ export class BuilderPage extends BasePage {
       .getByTestId("contract-owner-input-field")
       .locator("input");
     this.createNftButton = page.getByTestId("create-nft-button");
-    this.inlineButton = page.getByTestId("inline-button");
-    this.dialogButton = page.getByTestId("dialog-button");
-    this.drawerButton = page.getByTestId("full-screen-button");
+    this.colorPickerAlphaSliderRail = page.locator(
+      "#color-popover .MuiColorInput-HueSlider .MuiSlider-rail",
+    );
+    this.colorPickerAlphaSliderThumb = page.locator(
+      "#color-popover .MuiColorInput-HueSlider .MuiSlider-rail",
+    );
+    this.colorPickerHueSliderRail = page.locator(
+      "#color-popover .MuiColorInput-HueSlider .MuiSlider-rail",
+    );
+    this.colorPickerHueSliderThumb = page.locator(
+      "#color-popover .MuiColorInput-HueSlider .MuiSlider-thumb",
+    );
 
     this.paymentFormFieldWordMap = new Map<string, Locator>([
       ["network", this.networkOptions],
@@ -277,14 +290,14 @@ export class BuilderPage extends BasePage {
   async validateFixedRateHelperMessage() {
     await test.step(`Validating fixed rate message`, async () => {
       await expect(this.rateHelperText).toHaveText(
-        "Fixed rate is a payment type suited for regular subscriptions where users pay a predetermined amount over a given period of time."
+        "Fixed rate is a payment type suited for regular subscriptions where users pay a predetermined amount over a given period of time.",
       );
     });
   }
   async validateUserDefinedRateHelperMessage() {
     await test.step(`Validating user defined rate message`, async () => {
       await expect(this.rateHelperText).toHaveText(
-        "User-defined rate is a payment type suited for donations where users determine the amount they want to pay over a given period of time."
+        "User-defined rate is a payment type suited for donations where users determine the amount they want to pay over a given period of time.",
       );
     });
   }
@@ -300,7 +313,7 @@ export class BuilderPage extends BasePage {
       await this.superTokenOption.click();
       await this.superTokenOption.type(tokenSymbol);
       await expect(
-        (await this.superTokenOptionsInDropdown.all()).length
+        (await this.superTokenOptionsInDropdown.all()).length,
       ).toBeGreaterThan(0);
       let allTokenSymbols = await this.superTokenOptionSymbols.all();
       for (let element of allTokenSymbols) {
@@ -317,7 +330,7 @@ export class BuilderPage extends BasePage {
       await this.validateOptionFormFieldError(field);
       await fieldToInteractWith?.clear();
       await fieldToInteractWith?.type(
-        "Hello !@£$%^&*() 😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗"
+        "Hello !@£$%^&*() 😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
       );
       await this.addPaymentOptionButton.click();
       await this.validateOptionFormFieldError(field);
@@ -381,15 +394,15 @@ export class BuilderPage extends BasePage {
       await this.superTokenOption.click();
       for (let [index, token] of currentlyListedGoerliTokens.entries()) {
         await expect(this.superTokenOptionNames.nth(index)).toHaveText(
-          token.symbol
+          token.symbol,
         );
         await expect(this.superTokenOptionSymbols.nth(index)).toHaveText(
-          token.name
+          token.name,
         );
         //The SVG sometimes loads fuzzy and leads to a breaking test for FUNDx
         let diffRatio = token.name === "FUNDx" ? 0.2 : 0.03;
         await expect(
-          this.superTokenOptionsInDropdown.nth(index).locator("img")
+          this.superTokenOptionsInDropdown.nth(index).locator("img"),
         ).toHaveScreenshot(`./data/${token.name}.png`, {
           maxDiffPixelRatio: diffRatio,
         });
@@ -428,7 +441,7 @@ export class BuilderPage extends BasePage {
       for (let testableTooltip of tooltipStringMap.keys()) {
         await testableTooltip.hover();
         await expect(this.shownTooltip.last()).toHaveText(
-          tooltipStringMap.get(testableTooltip) as string
+          tooltipStringMap.get(testableTooltip) as string,
         );
         await testableTooltip.click();
       }
@@ -454,7 +467,7 @@ export class BuilderPage extends BasePage {
   }
 
   async addPartialPaymentOption(
-    partialOption: PaymentOption | PartialPaymentOption
+    partialOption: PaymentOption | PartialPaymentOption,
   ) {
     await test.step(`Adding a partial payment option`, async () => {
       await this.paymentTab.click();
@@ -526,18 +539,18 @@ export class BuilderPage extends BasePage {
         case "token":
           await expect(this.paymentFormNetworkTitle).toHaveCSS(
             "color",
-            errorColor
+            errorColor,
           );
           await expect(this.paymentFormNetworkTitle).toHaveClass(
-            errorElementRegex
+            errorElementRegex,
           );
           await expect(this.networkOptionsBorder).toHaveCSS(
             "border",
-            errorBorder
+            errorBorder,
           );
           await expect(this.paymentFormSuperTokenTitle).toHaveCSS(
             "color",
-            errorColor
+            errorColor,
           );
           // Uncomment when this is fixed - https://github.com/superfluid-finance/widget/issues/164 , no border around token field if no network is selected
           // await expect(this.superTokenOptionBorder).toHaveCSS(
@@ -548,43 +561,43 @@ export class BuilderPage extends BasePage {
         case "receiver":
           await expect(this.paymentFormReceiverAddressTitle).toHaveCSS(
             "color",
-            errorColor
+            errorColor,
           );
           await expect(this.receiverOptionBorder).toHaveCSS(
             "border",
-            errorBorder
+            errorBorder,
           );
           break;
         case "flowRate":
           await expect(this.paymentFormStreamRateTitle).toHaveCSS(
             "color",
-            errorColor
+            errorColor,
           );
           await expect(this.flowRateOptionBorder).toHaveCSS(
             "border",
-            errorBorder
+            errorBorder,
           );
           await expect(this.flowRateTimeUnitBorder).toHaveCSS(
             "border",
-            errorBorder
+            errorBorder,
           );
           break;
         case "upfrontPaymentAmount":
           await expect(this.paymentFormUpfrontPaymentAmountTitle).toHaveCSS(
             "color",
-            errorColor
+            errorColor,
           );
           await expect(this.upfrontPaymentInputFieldBorder).toHaveCSS(
             "border",
-            errorBorder
+            errorBorder,
           );
           await expect(this.paymentFormUpfrontPaymentAmountTitle).toHaveCSS(
             "color",
-            errorColor
+            errorColor,
           );
           await expect(this.upfrontPaymentInputFieldBorder).toHaveCSS(
             "border",
-            errorBorder
+            errorBorder,
           );
           break;
       }
@@ -609,11 +622,11 @@ export class BuilderPage extends BasePage {
       ];
       for (const [index, network] of supportedNetworks.entries()) {
         await expect(
-          this.page.locator(`[data-value="${network}"]`)
+          this.page.locator(`[data-value="${network}"]`),
         ).toBeVisible();
       }
       await expect(
-        this.page.locator(`[data-value=Ethereum]`)
+        this.page.locator(`[data-value=Ethereum]`),
       ).not.toBeVisible(); // Mainnet disabled at the moment
     });
   }
@@ -697,7 +710,7 @@ export class BuilderPage extends BasePage {
       await expect(this.uploadImageField).not.toBeVisible();
       await expect(this.selectedProductImage).toHaveAttribute(
         "src",
-        "https://picsum.photos/200/200"
+        "https://picsum.photos/200/200",
       );
     });
   }
@@ -777,13 +790,13 @@ export class BuilderPage extends BasePage {
       await this.uploadImageField.setInputFiles("./data/export.json");
       await expect(this.selectedProductImage).toHaveAttribute(
         "alt",
-        "not found"
+        "not found",
       );
       await expect(this.selectedProductImage).toHaveScreenshot(
         "./data/invalidImageUploaded.png",
         {
           maxDiffPixelRatio: 0.01,
-        }
+        },
       );
     });
   }
@@ -865,13 +878,13 @@ export class BuilderPage extends BasePage {
           await expect(
             this.summaryNetworks
               .nth(index)
-              .getByTestId(`${option.chainId}-badge`)
+              .getByTestId(`${option.chainId}-badge`),
           ).toBeVisible();
           await expect(this.summaryNetworks.nth(index)).toContainText(
-            option.network
+            option.network,
           );
           await expect(this.summaryTokens.nth(index)).toHaveText(
-            option.superTokenName
+            option.superTokenName,
           );
           //TODO Playwright seems to take the screenshot quite flakily doing 24 +/- 1 by 24 +/- 1 , having wrong resolution fails the test, quite a low priority case IMO, will re-check other options when there is less stuff to do
           // await expect(
@@ -882,11 +895,11 @@ export class BuilderPage extends BasePage {
             ? "Stream RateUser-defined"
             : `Stream Rate${option.flowRate} ${option.superToken}/${option.timeUnit}`;
           await expect(this.summaryFlowRate.nth(index)).toHaveText(
-            expectedFlowRateString
+            expectedFlowRateString,
           );
           await expect(this.summaryReceiver.nth(index)).toContainText(
             `${BasePage.shortenHex(option.receiver)}`,
-            { ignoreCase: true }
+            { ignoreCase: true },
           );
         });
       }
@@ -966,7 +979,7 @@ export class BuilderPage extends BasePage {
   async validateNoPaymentOptionsAddedMessage() {
     await test.step(`Validating the message shown when no options are added`, async () => {
       await expect(this.noOptionsMessage).toHaveText(
-        "You haven't added any payment options yet. Add your first one or replace with demo data."
+        "You haven't added any payment options yet. Add your first one or replace with demo data.",
       );
     });
   }
@@ -996,7 +1009,7 @@ export class BuilderPage extends BasePage {
   async validateIPFSPublishMessage() {
     await test.step(`Validating the message you get after publishing widget to IPFS`, async () => {
       await expect(this.publishedWidgetMessage).toHaveText(
-        "Your config is published to IPFS. Test it with our hosted widget:"
+        "Your config is published to IPFS. Test it with our hosted widget:",
       );
     });
   }
@@ -1006,10 +1019,10 @@ export class BuilderPage extends BasePage {
       const downloadPath = "./downloads/exportedWidget.json";
       const dataPath = "./data/export.json";
       const downloadedWidgetContents = JSON.parse(
-        fs.readFileSync(downloadPath, "utf-8")
+        fs.readFileSync(downloadPath, "utf-8"),
       );
       const savedWidgetExportContents = JSON.parse(
-        fs.readFileSync(dataPath, "utf-8")
+        fs.readFileSync(dataPath, "utf-8"),
       );
       await expect(downloadedWidgetContents).toEqual(savedWidgetExportContents);
     });
@@ -1060,14 +1073,14 @@ export class BuilderPage extends BasePage {
     thumbLocator: Locator,
     sliderRail: Locator,
     valueLocator: Locator,
-    message: string
+    message: string,
   ) {
     let targetPercentage = (100 / (maxRadius - minRadius)) * targetRadius;
     await BasePage.changeSlider(
       page,
       thumbLocator,
       sliderRail,
-      targetPercentage
+      targetPercentage,
     );
     await expect(valueLocator).toHaveText(message);
   }
@@ -1105,7 +1118,7 @@ export class BuilderPage extends BasePage {
           break;
         default:
           throw new Error(
-            `You need to define ${field} field elements to slide those sliders`
+            `You need to define ${field} field elements to slide those sliders`,
           );
       }
 
@@ -1117,7 +1130,7 @@ export class BuilderPage extends BasePage {
         thumbSlider,
         sliderRail,
         valueLocator,
-        message
+        message,
       );
     });
   }
@@ -1135,7 +1148,7 @@ export class BuilderPage extends BasePage {
   async changeWidgetFontTo(font: string) {
     await test.step(`Changing the widget font to ${font}`, async () => {
       await this.fontPicker.click();
-      await this.page.getByText(font).click();
+      await this.page.getByText(font.replace(/"/g, "")).click();
     });
   }
 
@@ -1144,9 +1157,40 @@ export class BuilderPage extends BasePage {
       await this.verticalStepperButton.click();
     });
   }
+
+  async forcefullyChangeStepperToVertical() {
+    await test.step(`Forcing a click on the disabled vertical stepper button`, async () => {
+      await this.verticalStepperButton.click({ force: true });
+    });
+  }
+
   async changeStepperToHorizontal() {
     await test.step(`Clicking on the horizontal stepper button`, async () => {
       await this.horizontalStepperButton.click();
     });
+  }
+
+  async openPrimaryColorPicker() {
+    await this.primaryColorPicker.click();
+  }
+  async slideColorPickerHueSliderToLeft() {
+    await BasePage.changeSlider(
+      this.page,
+      this.colorPickerHueSliderThumb,
+      this.colorPickerHueSliderRail,
+      0,
+    );
+  }
+  async slideColorPickerAlphaSliderToRight() {
+    await BasePage.changeSlider(
+      this.page,
+      this.colorPickerAlphaSliderThumb,
+      this.colorPickerAlphaSliderRail,
+      0,
+    );
+  }
+
+  async openSecondaryColorPicker() {
+    await this.secondaryColorPicker.click();
   }
 }

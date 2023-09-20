@@ -94,7 +94,7 @@ test("Using magic wand to generate product details and its tooltip", async ({
   let widgetPage = new WidgetPage(page);
   let builderPage = new BuilderPage(page);
   await builderPage.hoverOnWandButtonAndValidateTooltipText(
-    "Replace with demo product details"
+    "Replace with demo product details",
   );
   await builderPage.clickOnWandButton();
   await builderPage.validateRandomProductSectionIsSet();
@@ -291,7 +291,7 @@ test("Add payment option form - invalid upfront payment field values ", async ({
   await builderPage.clickAddPaymentOptionFormButton();
   await builderPage.enableUpfrontPaymentSwitch();
   await builderPage.inputInvalidValuesAndVerifyPaymentFormError(
-    "upfrontPaymentAmount"
+    "upfrontPaymentAmount",
   );
 });
 
@@ -314,7 +314,7 @@ test("Using magic wand to generate payment options and its tooltip", async ({
   let widgetPage = new WidgetPage(page);
   await builderPage.openPaymentTab();
   await builderPage.hoverOnWandButtonAndValidateTooltipText(
-    "Replace with demo payment details"
+    "Replace with demo payment details",
   );
   await builderPage.clickOnWandButton();
   await builderPage.verifyAddedPaymentOptions(demoOptions);
@@ -412,63 +412,67 @@ test("Turning dark mode off", async ({ page }) => {
 test("Changing container border radius", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
-  let minRadius = 0
-  let maxRadius = 50
-  let defaultRadius = 20
+  let minRadius = 0;
+  let maxRadius = 50;
+  let defaultRadius = 20;
   await builderPage.openStylingTab();
-    await widgetPage.validateContainerBorderRadiusIs(defaultRadius);
-  await builderPage.changeBorderRadius("border",minRadius);
+  await widgetPage.validateContainerBorderRadiusIs(defaultRadius);
+  await builderPage.changeBorderRadius("container", minRadius);
   await widgetPage.validateContainerBorderRadiusIs(minRadius);
-    await builderPage.changeBorderRadius("border", maxRadius);
-    await widgetPage.validateContainerBorderRadiusIs(maxRadius);
+  await builderPage.changeBorderRadius("container", maxRadius);
+  await widgetPage.validateContainerBorderRadiusIs(maxRadius);
 });
 
 test("Changing field border radius", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
-  let minRadius = 0
-  let maxRadius = 25
-  let defaultRadius = 10
-    await builderPage.openStylingTab();
-      await widgetPage.validateFieldBorderRadiusIs(defaultRadius);
-  await builderPage.changeBorderRadius("field",minRadius);
+  let minRadius = 0;
+  let maxRadius = 25;
+  let defaultRadius = 10;
+  await builderPage.openStylingTab();
+  await widgetPage.validateFieldBorderRadiusIs(defaultRadius);
+  await builderPage.changeBorderRadius("field", minRadius);
   await widgetPage.validateFieldBorderRadiusIs(minRadius);
-    await builderPage.changeBorderRadius("field",maxRadius);
-    await widgetPage.validateFieldBorderRadiusIs(maxRadius);
+  await builderPage.changeBorderRadius("field", maxRadius);
+  await widgetPage.validateFieldBorderRadiusIs(maxRadius);
 });
 
 test("Changing button border radius", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
-    let minRadius = 0;
-    let maxRadius = 25;
-    let defaultRadius = 10;
+  let minRadius = 0;
+  let maxRadius = 25;
+  let defaultRadius = 10;
   await builderPage.openStylingTab();
-    await widgetPage.validateButtonBorderRadiusIs(defaultRadius);
-  await builderPage.changeBorderRadius("button",minRadius);
+  await widgetPage.validateButtonBorderRadiusIs(defaultRadius);
+  await builderPage.changeBorderRadius("button", minRadius);
   await widgetPage.validateButtonBorderRadiusIs(minRadius);
-    await builderPage.changeBorderRadius("button",maxRadius);
-    await widgetPage.validateButtonBorderRadiusIs(maxRadius);
+  await builderPage.changeBorderRadius("button", maxRadius);
+  await widgetPage.validateButtonBorderRadiusIs(maxRadius);
 });
 
-test("Changing primary color", async ({ page }) => {
+test("Changing primary color by typing color in the field", async ({
+  page,
+}) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
-  let defaultColor = "#1DB227";
-  let red = "#ff0000";
+  let defaultColor = "rgb(29, 178, 39)";
+  let red = "rgb(255, 0, 0)";
   await builderPage.openStylingTab();
-    await widgetPage.validatePrimaryColorIs("#1DB227");
+  await widgetPage.validatePrimaryColorIs(defaultColor);
   await builderPage.changePrimaryColorTo(red);
-      await widgetPage.validatePrimaryColorIs(red);
+  await widgetPage.validatePrimaryColorIs(red);
 });
 
-test("Changing secondary color", async ({ page }) => {
+test("Changing secondary color by typing color in the field", async ({
+  page,
+}) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
-    let defaultColor = "#fff";
-    let red = "#ff0000";
+  let defaultColor = "rgb(255, 255, 255)";
+  let red = "rgb(255, 0, 0)";
   await builderPage.openStylingTab();
-    await widgetPage.validateSecondaryColorIs(defaultColor);
+  await widgetPage.validateSecondaryColorIs(defaultColor);
   await builderPage.changeSecondaryColorTo(red);
   await widgetPage.validateSecondaryColorIs(red);
 });
@@ -476,10 +480,11 @@ test("Changing secondary color", async ({ page }) => {
 test("Changing the font of the widget", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
-  let defaultFont = "Noto Sans, sans-serif";
-  let testFont = "Azeret Mono, monospace";
+  let defaultFont = '"Noto Sans", "sans-serif"';
+  ('"Noto Sans", "sans-serif"');
+  let testFont = '"Azeret Mono", "monospace"';
   await builderPage.openStylingTab();
-    await widgetPage.validateWidgetFontIs(defaultFont);
+  await widgetPage.validateWidgetFontIs(defaultFont);
   await builderPage.changeWidgetFontTo(testFont);
   await widgetPage.validateWidgetFontIs(testFont);
 });
@@ -488,13 +493,23 @@ test("Changing the stepper to vertical and horizontal", async ({ page }) => {
   let builderPage = new BuilderPage(page);
   let widgetPage = new WidgetPage(page);
   await builderPage.openStylingTab();
-      await widgetPage.validateWidgetStepperIsHorizontal();
+  await widgetPage.validateWidgetStepperIsVertical();
+  await builderPage.changeStepperToHorizontal();
+  await widgetPage.validateWidgetStepperIsHorizontal();
   await builderPage.changeStepperToVertical();
   await widgetPage.validateWidgetStepperIsVertical();
-    await builderPage.changeStepperToHorizontal();
-    await widgetPage.validateWidgetStepperIsHorizontal();
 });
 
+//https://github.com/superfluid-finance/widget/issues/188
+test("Chosing the same stepper possitioning does not crash the page", async ({
+  page,
+}) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.forcefullyChangeStepperToVertical();
+  await widgetPage.validateWidgetStepperIsVertical();
+});
 
 test("Using the magic wand button to generate styling", async ({ page }) => {
   let builderPage = new BuilderPage(page);
@@ -502,4 +517,37 @@ test("Using the magic wand button to generate styling", async ({ page }) => {
   await builderPage.openStylingTab();
   await builderPage.clickOnWandButton();
   await widgetPage.validateRandomStylingIsGenerated();
+});
+
+test("View types - Closing full screen widget view", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.clickFullScreenViewModeButton();
+  await widgetPage.clickOnOpenWidgetInButton();
+  await widgetPage.clickFullScreenWidgetCloseButton();
+  await widgetPage.validateOpenWidgetInButtonIsVisible();
+  await widgetPage.validateWidgetIsNotShown();
+});
+
+test("Changing primary color by using the color picker", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.openPrimaryColorPicker();
+  await builderPage.slideColorPickerHueSliderToLeft();
+  await widgetPage.validatePrimaryColorIs();
+  await builderPage.slideColorPickerAlphaSliderToLeft();
+  await widgetPage.validatePrimaryColorIs();
+});
+
+test("Changing seconday color by using the color picker", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openStylingTab();
+  await builderPage.openSecondaryColorPicker();
+  await builderPage.slideColorPickerHueSliderToLeft();
+  await widgetPage.validateSecondaryColorIs();
+  await builderPage.slideColorPickerAlphaSliderToLeft();
+  await widgetPage.validateSecondaryColorIs();
 });
