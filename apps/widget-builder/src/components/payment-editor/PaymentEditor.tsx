@@ -44,9 +44,9 @@ const ProductEditor: FC = () => {
     value: PaymentOption;
   }>();
 
-  const [appearAnimation, setAppearAnimation] = useState(false);
+  const [showAppearAnimation, setShowAppearAnimation] = useState(false);
   useEffect(() => {
-    setAppearAnimation(true); // When new payment options are added then they appear with an animation now.
+    setShowAppearAnimation(true); // When new payment options are added then they appear with an animation now.
   }, []);
 
   const handleClose = useCallback(() => {
@@ -56,7 +56,7 @@ const ProductEditor: FC = () => {
 
   const { setDemoPaymentDetails } = useDemoMode();
   const handleDemo = useCallback(() => {
-    setAppearAnimation(true);
+    setShowAppearAnimation(true);
     setDemoPaymentDetails();
   }, []);
 
@@ -125,7 +125,7 @@ const ProductEditor: FC = () => {
                   ) => (
                     <Zoom
                       in
-                      appear={!!appearAnimation}
+                      appear={!!showAppearAnimation}
                       key={`${superToken.address}-${i}`}
                     >
                       <Box>
@@ -221,7 +221,7 @@ const ProductEditor: FC = () => {
           name="paymentDetails.paymentOptions"
           render={() => (
             <SelectPaymentOption
-              key={appearAnimation.toString()}
+              key={showAppearAnimation.toString()}
               selectedPaymentOption={targetedPaymentOption}
               dialogMode={dialogMode}
               onAdd={(props) => {
