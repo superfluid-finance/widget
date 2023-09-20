@@ -16,10 +16,12 @@ const SkipNextIcon = normalizeIcon(SkipNextIcon_);
 const WarningAmberIcon = normalizeIcon(WarningAmberIcon_);
 
 export type ContractWriteButtonProps = {
+  isLastWrite: boolean;
   handleNextWrite: () => void;
 } & ContractWriteResult;
 
 export default function ContractWriteButton({
+  isLastWrite,
   handleNextWrite: handleNextWrite_,
   contractWrite,
   signatureResult,
@@ -67,33 +69,34 @@ export default function ContractWriteButton({
     write!();
   }, [write, eventListeners.onButtonClick]);
 
-  const [showNextWriteButton_, setShowNextWriteButton] = useState(false);
-  const showNextWriteButton = showNextWriteButton_ || transactionResult.isError;
+  const isPrepareError = Boolean(
+    currentError &&
+      currentError === prepareResult.error &&
+      !prepareResult.isFetching,
+  );
+
+  const [allowNextWriteButton, setAllowNextWriteButton] = useState(false);
+  const showNextWriteButton =
+    (allowNextWriteButton || transactionResult.isError) && !isLastWrite; // Don't show the button for the last contract write. It would be confusing to show the success screen when possibly the last TX fails.
 
   const onSkipButtonClick = useCallback(() => {
     runEventListener(eventListeners.onButtonClick, {
       type: "skip_to_next",
     });
     handleNextWrite_();
-    setShowNextWriteButton(false);
+    setAllowNextWriteButton(false);
   }, [handleNextWrite_, eventListeners.onButtonClick]);
 
   useEffect(() => {
     if (transactionResult.isLoading) {
       const timeoutId = setTimeout(() => {
-        setShowNextWriteButton(true);
+        setAllowNextWriteButton(true);
       }, 15_000); // After 15 seconds, the button appears.
       return () => clearTimeout(timeoutId);
     } else {
-      setShowNextWriteButton(false);
+      setAllowNextWriteButton(false);
     }
   }, [transactionResult.isLoading, onSkipButtonClick]);
-
-  const isPrepareError = Boolean(
-    currentError &&
-      currentError === prepareResult.error &&
-      !prepareResult.isLoading,
-  );
 
   const showForceSendButton = Boolean(
     isPrepareError &&
@@ -167,6 +170,18 @@ export default function ContractWriteButton({
               {writeButtonText}
             </LoadingButton>
           )}
+          <Collapse in={showNextWriteButton} unmountOnExit>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="medium"
+              endIcon={<SkipNextIcon />}
+              fullWidth
+              onClick={onSkipButtonClick}
+            >
+              Skip to next transaction
+            </Button>
+          </Collapse>
           <Collapse in={showForceSendButton} unmountOnExit>
             <Button
               variant="outlined"
@@ -177,18 +192,6 @@ export default function ContractWriteButton({
               onClick={onForceTransactionButtonClick}
             >
               Force transaction to be sent
-            </Button>
-          </Collapse>
-          <Collapse in={showNextWriteButton} unmountOnExit>
-            <Button
-              variant="outlined"
-              color="primary"
-              size="medium"
-              endIcon={<SkipNextIcon />}
-              fullWidth
-              onClick={onSkipButtonClick}
-            >
-              Skip to next
             </Button>
           </Collapse>
         </>

@@ -127,9 +127,11 @@ export function ContractWriteManager({
   }, [
     contractWrite.id,
     prepareResult.status,
+    prepareResult.fetchStatus,
     writeResult.status,
     transactionResult.status,
     signatureResult.status,
+    transactionResult.fetchStatus,
   ]);
 
   useEffect(() => void onChange?.(result), [result]);

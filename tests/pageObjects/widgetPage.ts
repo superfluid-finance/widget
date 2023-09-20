@@ -308,7 +308,9 @@ export class WidgetPage extends BasePage {
     await test.step(`Validating transaction statuses`, async () => {
       for (const [index, transaction] of transactionList.entries()) {
         await expect(
-          this.transactionTypesAndStatuses.nth(index).locator("span"),
+          this.transactionTypesAndStatuses
+            .nth(index)
+            .locator("span.MuiTypography-root"),
         ).toHaveText(this.getTransactionTypeString(transaction) as string);
         await expect(
           this.transactionTypesAndStatuses.nth(index).locator("p"),
@@ -448,7 +450,7 @@ export class WidgetPage extends BasePage {
         if (status === "Ready to send") {
           await expect(
             this.transactionStatusIcons.nth(index).locator(this.circleIcons),
-          ).toHaveCSS("color", "rgb(74, 193, 82)");
+          ).toHaveCSS("color", "rgb(16, 187, 53)");
         }
         if (status === "Queued") {
           await expect(
@@ -460,11 +462,21 @@ export class WidgetPage extends BasePage {
           await expect(
             this.transactionStatusIcons.nth(index).locator(this.circleIcons),
           ).toHaveCSS("color", "rgb(243, 160, 2)");
+          await expect(
+            this.transactionTypesAndStatuses
+              .nth(index)
+              .locator("span.MuiTouchRipple-root"),
+          ).toBeVisible();
         }
         if (status === "Completed") {
           await expect(
             this.transactionStatusIcons.nth(index).locator(this.checkmarkIcons),
           ).toHaveCSS("color", "rgb(0, 137, 0)");
+          await expect(
+            this.transactionTypesAndStatuses
+              .nth(index)
+              .locator("span.MuiTouchRipple-root"),
+          ).toBeVisible();
         }
         if (
           status === "Error" ||

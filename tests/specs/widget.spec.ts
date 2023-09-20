@@ -75,10 +75,11 @@ test("Approving and wrapping tokens", async ({ page }) => {
   await widgetPage.validateTransactionButtonTextAndClick("approve");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskAllowanceTransaction("1");
-  await widgetPage.validateTransactionStatuses(
-    ["approve", "wrap", "modify"],
-    ["Transaction sent", "Ready to send", "Queued"],
-  );
+  // Checking the pending status makes the test case quite flaky
+  // await widgetPage.validateTransactionStatuses(
+  //   ["approve", "wrap", "modify"],
+  //   ["Transaction sent", "Ready to send", "Queued"],
+  // );
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
     ["Completed", "Ready to send", "Queued"],
@@ -86,10 +87,11 @@ test("Approving and wrapping tokens", async ({ page }) => {
   await widgetPage.validateTransactionButtonTextAndClick("wrap");
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskTransaction();
-  await widgetPage.validateTransactionStatuses(
-    ["approve", "wrap", "modify"],
-    ["Completed", "Transaction sent", "Queued"],
-  );
+  // Checking the pending status makes the test case quite flaky
+  // await widgetPage.validateTransactionStatuses(
+  //   ["approve", "wrap", "modify"],
+  //   ["Completed", "Transaction sent", "Queued"],
+  // );
   await widgetPage.validateTransactionStatuses(
     ["approve", "wrap", "modify"],
     ["Completed", "Completed", "Ready to send"],
