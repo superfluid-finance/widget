@@ -70,6 +70,7 @@ export function EnableAutoWrapCommandMapper({
         args: [cmd.accountAddress, autoWrapStrategyAddress[cmd.chainId]],
       },
     ],
+    cacheOnBlock: true,
   });
 
   const [wrapScheduleData, allowanceData] = data ?? [];
@@ -147,6 +148,7 @@ export function WrapIntoSuperTokensCommandMapper({
           abi: erc20ABI,
           functionName: "allowance",
           args: [cmd.accountAddress, cmd.superTokenAddress],
+          cacheOnBlock: true,
         }
       : undefined,
   );
@@ -229,6 +231,7 @@ export function SubscribeCommandMapper({
       abi: cfAv1ForwarderABI,
       functionName: "getFlowrate",
       args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
+      cacheOnBlock: true,
     });
 
   const flowRate =
