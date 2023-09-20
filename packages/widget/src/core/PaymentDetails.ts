@@ -5,7 +5,7 @@ import { z } from "zod";
 import { paymentOptionSchema } from "./PaymentOption.js";
 
 export const paymentDetailsSchema = z.object({
-  wrapAmountMultiplier: z.number().min(1).default(3),
+  wrapAmountMultiplier: z.number().int().min(1).default(3),
   paymentOptions: paymentOptionSchema
     .transform((x) => [x])
     .or(z.array(paymentOptionSchema).min(1))
