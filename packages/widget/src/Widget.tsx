@@ -112,6 +112,7 @@ export function Widget({
         },
         paymentDetails: {
           paymentOptions: [],
+          wrapAmountMultiplier: 3,
         },
       };
     }

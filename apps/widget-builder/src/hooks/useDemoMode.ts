@@ -20,6 +20,7 @@ const defaultProductDetails: ProductDetails = {
 };
 
 const demoPaymentDetails: PaymentDetails = {
+  wrapAmountMultiplier: 3,
   paymentOptions: [
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
@@ -109,6 +110,7 @@ const demoPaymentDetails: PaymentDetails = {
 };
 
 const defaultPaymentDetails: PaymentDetails = {
+  wrapAmountMultiplier: 3,
   paymentOptions: [
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder

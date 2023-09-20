@@ -75,6 +75,7 @@ const WidgetWrapper: FC<WidgetWrapperProps> = ({ children }) => {
   const paymentDetails = useMemo(
     () =>
       ({
+        wrapAmountMultiplier: 3,
         paymentOptions: [
           {
             receiverAddress: randomReceiver,

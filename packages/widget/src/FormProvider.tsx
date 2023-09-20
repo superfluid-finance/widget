@@ -28,6 +28,8 @@ export default function FormProvider({ children }: Props) {
     return networks.find((network) => network.id === chain?.id) ?? null;
   }, [chain, networks]);
 
+  const { paymentDetails } = useWidget();
+
   const defaultPaymentOption = useMemo(() => {
     if (!defaultNetwork) {
       return null;
@@ -48,8 +50,13 @@ export default function FormProvider({ children }: Props) {
     accountAddress: null,
     network: defaultNetwork,
     paymentOptionWithTokenInfo: defaultPaymentOption,
-    wrapAmountInUnits:
-      defaultPaymentOption?.paymentOption?.flowRate?.amountEther ?? "0",
+    wrapAmountInUnits: defaultPaymentOption?.paymentOption?.flowRate
+      ?.amountEther
+      ? `${
+          Number(defaultPaymentOption.paymentOption.flowRate.amountEther) *
+          paymentDetails.wrapAmountMultiplier
+        }`
+      : "0",
     enableAutoWrap: false,
     flowRate: defaultPaymentOption?.paymentOption?.flowRate ?? {
       amountEther: "0",

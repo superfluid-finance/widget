@@ -100,11 +100,21 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
     formState: { isValid, isValidating },
   } = useFormContext<DraftFormValues>();
 
-  const [accountAddress, paymentOptionWithTokenInfo, flowRate] = watch([
+  const { paymentDetails } = useWidget();
+
+  const [
+    accountAddress,
+    paymentOptionWithTokenInfo,
+    flowRate,
+    wrapAmountInUnits,
+  ] = watch([
     "accountAddress",
     "paymentOptionWithTokenInfo",
     "flowRate",
+    "wrapAmountInUnits",
   ]);
+
+  console.log({ wrapAmountInUnits });
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
   const { getUnderlyingToken, eventListeners } = useWidget();
@@ -152,9 +162,11 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
 
     if (!flowRate?.amountEther) return false;
 
-    const minAmount = parseEther(flowRate.amountEther);
+    const minWrapAmount =
+      parseEther(flowRate.amountEther) *
+      BigInt(paymentDetails.wrapAmountMultiplier);
 
-    return BigInt(superTokenBalance.value) > minAmount;
+    return BigInt(superTokenBalance.value) > minWrapAmount;
   }, [superTokenBalance, paymentOptionWithTokenInfo, flowRate]);
 
   const { handleNext } = useStepper();
@@ -250,8 +262,9 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
                   color="text.secondary"
                   sx={{ mt: 0.75, alignSelf: "start" }}
                 >
-                  We recommend wrapping at least 1 month of the subscription
-                  amount.
+                  We recommend wrapping at least{" "}
+                  {paymentDetails.wrapAmountMultiplier} month of the
+                  subscription amount.
                 </Typography>
               </Fade>
             </Collapse>

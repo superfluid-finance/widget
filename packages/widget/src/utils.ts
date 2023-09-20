@@ -1,4 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from "react";
+import { parseEther } from "viem";
+
+import { FlowRate } from "./core";
 
 export type ChildrenProp = PropsWithChildren["children"];
 
@@ -56,6 +59,28 @@ export function toFixedUsingString(numStr: string, decimalPlaces: number) {
   return (
     wholePart + "." + roundedDecimal.toString().padStart(decimalPlaces, "0")
   );
+}
+
+export function mapFlowRateAndMultiplierToMonths(
+  multiplier: number,
+  flowRate?: FlowRate,
+): bigint {
+  if (!flowRate) {
+    return 0n;
+  }
+
+  const amountEther = Number(flowRate.amountEther);
+  switch (flowRate.period) {
+    case "day":
+      return parseEther(`${amountEther * multiplier * 30}`);
+    case "week":
+      return parseEther(`${amountEther * multiplier * 4}`);
+    case "year":
+      return parseEther(`${Math.floor((amountEther * multiplier) / 12)}`);
+    case "month":
+    default:
+      return parseEther(`${multiplier}`);
+  }
 }
 
 /**

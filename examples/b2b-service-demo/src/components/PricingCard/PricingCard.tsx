@@ -144,6 +144,7 @@ const PricingCard: FC<PricingCardProps> = ({
 
   const paymentDetails: PaymentDetails = useMemo(
     () => ({
+      wrapAmountMultiplier: 3,
       paymentOptions: [
         {
           receiverAddress: randomReceiver,
