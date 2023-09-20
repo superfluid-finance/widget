@@ -61,8 +61,8 @@ export function ContractWriteStatus({
     ? { text: "Completed", iconColor: palette.success.dark }
     : transactionResult.isError
     ? { text: "Failed", iconColor: palette.error.main }
-    : prepareResult.isFetching && !prepareResult.isSuccess
-    ? { text: "Estimating...", iconColor: palette.warning.main }
+    : prepareResult.isLoading && !prepareResult.isSuccess
+    ? { text: "Estimating transaction...", iconColor: palette.warning.main }
     : prepareResult.isError
     ? { text: "Estimation error", iconColor: palette.error.main }
     : writeResult.isSuccess

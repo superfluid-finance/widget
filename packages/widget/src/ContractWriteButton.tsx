@@ -89,12 +89,14 @@ export default function ContractWriteButton({
   }, [transactionResult.isLoading, onSkipButtonClick]);
 
   const isPrepareError = Boolean(
-    currentError && currentError === prepareResult.error,
+    currentError &&
+      currentError === prepareResult.error &&
+      !prepareResult.isLoading,
   );
 
   const showForceSendButton = Boolean(
     isPrepareError &&
-      !prepareResult.isFetching &&
+      !prepareResult.isLoading &&
       write &&
       !writeResult.isLoading,
   );
