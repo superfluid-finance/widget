@@ -66,7 +66,6 @@ export const WidgetContext = createContext<WidgetProps>({
     imageURI: "https://picsum.photos/200/200",
   },
   paymentDetails: {
-    wrapAmountMultiplier: 3,
     paymentOptions: [],
   },
   type: "dialog",
