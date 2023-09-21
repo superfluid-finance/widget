@@ -232,6 +232,10 @@ export function BatchHandler() {
 
   return (
     <FormControlLabel
+      sx={{
+        color: "text.primary",
+        fontWeight: 400,
+      }}
       control={
         <Switch
           disabled={contractWrites.length === 0}
@@ -239,7 +243,7 @@ export function BatchHandler() {
           onChange={onSwitchChange}
         />
       }
-      label="Use batch call"
+      label="Batch"
     />
   );
 }

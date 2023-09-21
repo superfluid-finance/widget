@@ -83,7 +83,6 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
           <CloseIcon fontSize="medium" />
         </IconButton>
       </Stack>
-      <BatchHandler />
       <Stack
         direction="column"
         spacing={2.25}
@@ -118,7 +117,14 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
               data-testid="transaction-count"
               sx={{ bgcolor: "transparent" }}
             >
-              Transactions ({total})
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography>Transactions ({total})</Typography>
+                <BatchHandler />
+              </Stack>
             </ListSubheader>
           }
         >
