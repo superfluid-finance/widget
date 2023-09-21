@@ -4,7 +4,7 @@ import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 
 import { DraftFormValues } from "./formValues.js";
-import { mapFlowRateAndMultiplierToMonths } from "./utils.js";
+import { mapFlowRateToDefaultWrapAmount } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 export function FormEffects() {
@@ -76,8 +76,8 @@ export function FormEffects() {
 
       if (!isWrapDirty && !isPureSuperToken) {
         const defaultWrapAmountWei =
-          mapFlowRateAndMultiplierToMonths(
-            paymentDetails.wrapAmountMultiplier,
+          mapFlowRateToDefaultWrapAmount(
+            paymentDetails.defaultWrapAmount,
             flowRate,
           ) +
           parseEther(

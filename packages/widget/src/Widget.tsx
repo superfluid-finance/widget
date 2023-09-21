@@ -110,13 +110,17 @@ export function Widget({
         paymentDetails: validationResult.data.paymentDetails,
       };
     } else {
+      // TODO(KK): This should run through the validation as well to automatically populate with default values.
       return {
         productDetails: {
           name: "",
         },
         paymentDetails: {
           paymentOptions: [],
-          wrapAmountMultiplier: 3,
+          defaultWrapAmount: {
+            multiplier: 3,
+            period: "month",
+          },
         },
       };
     }

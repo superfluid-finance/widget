@@ -27,7 +27,7 @@ import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
 import { TokenAvatar } from "./TokenAvatar.js";
-import { mapFlowRateAndMultiplierToMonths } from "./utils.js";
+import { mapFlowRateToDefaultWrapAmount } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 interface WrapCardProps extends PropsWithChildren {
@@ -154,8 +154,8 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
 
     if (!flowRate?.amountEther) return false;
 
-    const minWrapAmount = mapFlowRateAndMultiplierToMonths(
-      paymentDetails.wrapAmountMultiplier,
+    const minWrapAmount = mapFlowRateToDefaultWrapAmount(
+      paymentDetails.defaultWrapAmount,
       flowRate,
     );
 
@@ -256,8 +256,12 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
                   sx={{ mt: 0.75, alignSelf: "start" }}
                 >
                   We recommend wrapping at least{" "}
-                  {paymentDetails.wrapAmountMultiplier} month of the
-                  subscription amount.
+                  {paymentDetails.defaultWrapAmount.multiplier}{" "}
+                  {paymentDetails.defaultWrapAmount.period ?? flowRate.period}
+                  {paymentDetails.defaultWrapAmount.multiplier > 1
+                    ? "s"
+                    : ""}{" "}
+                  of the subscription amount.
                 </Typography>
               </Fade>
             </Collapse>
