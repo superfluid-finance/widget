@@ -23,8 +23,8 @@ export default function StepContentReview({ stepIndex }: StepProps) {
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+    handleNext(stepIndex);
   }, [handleNext, eventListeners.onButtonClick, stepIndex]);
 
   const commandValidationSchema = useCommandValidationSchema();
@@ -42,16 +42,11 @@ export default function StepContentReview({ stepIndex }: StepProps) {
   const isValid = Boolean(validationResult?.success);
   const isValidationError = validationResult?.success === false;
 
+  const areContractWritesMapping = !commands.every((x) => x.contractWrites);
+
   return (
-    <Stack sx={{ pb: 3, px: 3.5 }} gap={3}>
+    <Stack sx={{ pb: 3, px: 3.5 }} spacing={3}>
       <Stack direction="column" spacing={3}>
-        <Collapse in={isValidationError}>
-          {isValidationError && (
-            <Alert data-testid="review-error" severity="error">
-              {validationResult.error.issues[0].message}
-            </Alert>
-          )}
-        </Collapse>
         {commands.map((cmd, index) => (
           <Fragment key={cmd.id}>
             {index > 0 && <Divider />}
@@ -59,12 +54,31 @@ export default function StepContentReview({ stepIndex }: StepProps) {
           </Fragment>
         ))}
       </Stack>
-      <StepperCTAButton
-        disabled={!isValid || isValidating}
-        onClick={onContinue}
-      >
-        Continue
-      </StepperCTAButton>
+      <Stack direction="column" spacing={1}>
+        <Collapse in={isValidationError} unmountOnExit>
+          {isValidationError && (
+            <Alert
+              variant="standard"
+              data-testid="review-error"
+              severity="error"
+            >
+              {validationResult.error.issues[0].message}
+            </Alert>
+          )}
+        </Collapse>
+        <StepperCTAButton
+          loadingPosition="end"
+          loading={isValidating || areContractWritesMapping}
+          disabled={!isValid}
+          onClick={onContinue}
+        >
+          {isValidating
+            ? "Validating..."
+            : areContractWritesMapping
+            ? "Preparing transactions..."
+            : "Continue"}
+        </StepperCTAButton>
+      </Stack>
     </Stack>
   );
 }

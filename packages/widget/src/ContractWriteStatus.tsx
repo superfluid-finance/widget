@@ -1,71 +1,130 @@
+import CheckIcon_ from "@mui/icons-material/Check";
 import CircleIcon_ from "@mui/icons-material/Circle.js";
-import { Paper, Stack, Typography, useTheme } from "@mui/material";
-import { useMemo } from "react";
+import CircleOutlinedIcon_ from "@mui/icons-material/CircleOutlined";
+import OpenInNewIcon_ from "@mui/icons-material/OpenInNew";
+import {
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  useTheme,
+} from "@mui/material";
+import { useCallback, useMemo } from "react";
 import {
   AbiErrorSignatureNotFoundError,
   BaseError,
   ContractFunctionRevertedError,
   decodeErrorResult,
 } from "viem";
+import { useNetwork } from "wagmi";
 
+import { useCommandHandler } from "./CommandHandlerContext.js";
 import { ContractWriteResult } from "./ContractWriteManager.js";
-import { superfluidErrorsABI } from "./core/wagmi-generated.js";
+import { errorsABI } from "./core/wagmi-generated.js";
+import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
+import { useWidget } from "./WidgetContext.js";
 
 export const CircleIcon = normalizeIcon(CircleIcon_);
+export const CircleOutlinedIcon = normalizeIcon(CircleOutlinedIcon_);
+export const OpenInNewIcon = normalizeIcon(OpenInNewIcon_);
+export const CheckCircleIcon = normalizeIcon(CheckIcon_);
 
-export function ContractWriteStatus(
-  result: ContractWriteResult,
-  index: number,
-) {
+export function ContractWriteStatus({
+  result,
+  index,
+}: {
+  result: ContractWriteResult;
+  index: number;
+}) {
+  const { writeIndex } = useCommandHandler();
+  const { eventListeners } = useWidget();
+
+  const onViewOnBlockExplorerButtonClick = useCallback(() => {
+    runEventListener(eventListeners.onButtonClick, {
+      type: "view_transaction_on_block_explorer",
+    });
+  }, [eventListeners.onButtonClick]);
+
   const {
-    contractWrite: { id, displayTitle },
+    contractWrite: { displayTitle },
     prepareResult,
     writeResult,
     transactionResult,
-    currentError,
   } = result;
 
-  const theme = useTheme();
+  const { palette } = useTheme();
+  const isWriting = index === writeIndex;
 
-  const borderColor = currentError
-    ? theme.palette.error.main
-    : transactionResult.isSuccess
-    ? theme.palette.success.main
-    : writeResult?.isSuccess
-    ? theme.palette.warning.main
-    : theme.palette.action.selected;
+  const status = transactionResult.isSuccess
+    ? { text: "Completed", iconColor: palette.success.dark }
+    : transactionResult.isError
+    ? { text: "Failed", iconColor: palette.error.main }
+    : prepareResult.isLoading && !prepareResult.isSuccess
+    ? { text: "Estimating transaction...", iconColor: palette.warning.main }
+    : prepareResult.isError
+    ? { text: "Estimation error", iconColor: palette.error.main }
+    : writeResult.isSuccess
+    ? { text: "Transaction sent", iconColor: palette.warning.main }
+    : writeResult.isError
+    ? { text: "Error", iconColor: palette.error.main }
+    : prepareResult.isSuccess
+    ? { text: "Ready to send", iconColor: palette.success.main }
+    : { text: "Queued", iconColor: palette.action.disabled };
 
-  const errorName = useMemo(
-    () => (currentError ? tryParseErrorName(currentError) : undefined),
-    [currentError],
+  const { chains } = useNetwork();
+
+  const chain = useMemo(
+    () => chains.find((x) => x.id === result.contractWrite.chainId)!,
+    [chains, result.contractWrite.chainId],
   );
 
   return (
     <Paper
+      data-testid="transaction-type-and-status"
+      component={ListItem}
       variant="outlined"
-      key={id}
       sx={{
-        p: 1.5,
-        borderColor: borderColor,
-        borderRadius: "10px",
+        bgcolor: isWriting ? palette.action.hover : palette.background.paper,
+        pl: 0,
+        "&:not(:last-child)": {
+          mb: 1,
+        },
       }}
+      secondaryAction={
+        writeResult?.data?.hash &&
+        chain.blockExplorers?.default && (
+          <IconButton
+            href={
+              chain.blockExplorers.default.url + "/tx/" + writeResult.data.hash
+            }
+            target="_blank"
+            size="small"
+            title="View on blockchain explorer"
+            onClick={onViewOnBlockExplorerButtonClick}
+          >
+            <OpenInNewIcon fontSize="inherit" />
+          </IconButton>
+        )
+      }
     >
-      <Stack direction="row" alignItems="center" gap={0.75}>
-        <Typography data-testid="transaction-type" flex={1} variant="body2">{`${
-          index + 1
-        }. ${displayTitle}`}</Typography>
-        <CircleIcon sx={{ color: borderColor, width: 12, height: 12 }} />
-        <Typography data-testid="transaction-status" variant="body2">
-          {currentError
-            ? errorName || "Something went wrong."
-            : transactionResult.isSuccess
-            ? "Completed"
-            : writeResult?.isSuccess
-            ? "In progress"
-            : "Not started"}
-        </Typography>
-      </Stack>
+      <ListItemIcon
+        data-testid="transaction-status-icon"
+        sx={{ justifyContent: "center" }}
+      >
+        {transactionResult.isSuccess ? (
+          <CheckCircleIcon fontSize="medium" sx={{ color: status.iconColor }} />
+        ) : (
+          <CircleIcon fontSize="small" sx={{ color: status.iconColor }} />
+        )}
+      </ListItemIcon>
+      <ListItemText
+        primaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
+        secondaryTypographyProps={{ fontWeight: isWriting ? 500 : 400 }}
+        primary={displayTitle}
+        secondary={status.text}
+      />
     </Paper>
   );
 }
@@ -75,7 +134,7 @@ const tryParseErrorName = (error: BaseError): string | undefined => {
     const rootError = error.walk();
     if (rootError instanceof AbiErrorSignatureNotFoundError) {
       return decodeErrorResult({
-        abi: superfluidErrorsABI,
+        abi: errorsABI,
         data: rootError.signature,
       }).errorName;
     } else if (rootError instanceof ContractFunctionRevertedError) {

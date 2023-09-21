@@ -17,6 +17,7 @@ export type Action =
         contractWrites: ReadonlyArray<ContractWrite>;
       };
     }
+  | { type: "set write index"; payload: number }
   | {
       type: "set contract write result";
       payload: {
@@ -34,12 +35,14 @@ export const useCommandHandlerReducer = () =>
           draft.status = "idle";
           draft.commands = [];
           draft.sessionId = null;
+          draft.writeIndex = 0;
           break;
         }
         case "set commands": {
           draft.status = "initialized";
           draft.commands = castDraft(action.payload);
           draft.sessionId = nanoid();
+          draft.writeIndex = 0;
           break;
         }
         case "set contract writes": {
@@ -53,6 +56,11 @@ export const useCommandHandlerReducer = () =>
             );
 
           command.contractWrites = castDraft(action.payload.contractWrites);
+          draft.writeIndex = 0;
+          break;
+        }
+        case "set write index": {
+          draft.writeIndex = action.payload;
           break;
         }
         case "set contract write result": {
@@ -79,5 +87,5 @@ export const useCommandHandlerReducer = () =>
         }
       }
     },
-    { status: "idle", commands: [], sessionId: null },
+    { status: "idle", commands: [], sessionId: null, writeIndex: 0 },
   );

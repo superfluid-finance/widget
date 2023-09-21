@@ -21,13 +21,15 @@ import {
   nativeAssetSuperTokenABI,
   superTokenABI,
 } from "./core/index.js";
-import { ChildrenProp, MaxUint256 } from "./utils.js";
+import { MaxUint256 } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
-type CommandMapperProps<TCommand extends Command = Command> = {
+export type CommandMapperProps<TCommand extends Command = Command> = {
   command: TCommand;
-  onMapped?: (contractWrites: ReadonlyArray<ContractWrite>) => void;
-  children?: (contractWrites: ReadonlyArray<ContractWrite>) => ChildrenProp;
+  onMapped?: (result: {
+    commandId: string;
+    contractWrites: ReadonlyArray<ContractWrite>;
+  }) => void;
 };
 
 export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
@@ -44,7 +46,6 @@ export function CommandMapper({ command: cmd, ...props }: CommandMapperProps) {
 export function EnableAutoWrapCommandMapper({
   command: cmd,
   onMapped,
-  children,
 }: CommandMapperProps<EnableAutoWrapCommand>) {
   const { getUnderlyingToken } = useWidget();
 
@@ -69,6 +70,7 @@ export function EnableAutoWrapCommandMapper({
         args: [cmd.accountAddress, autoWrapStrategyAddress[cmd.chainId]],
       },
     ],
+    cacheOnBlock: true,
   });
 
   const [wrapScheduleData, allowanceData] = data ?? [];
@@ -122,17 +124,17 @@ export function EnableAutoWrapCommandMapper({
   }, [cmd.id, isSuccess]);
 
   useEffect(
-    () => (isSuccess ? onMapped?.(contractWrites) : void 0),
-    [contractWrites],
+    () =>
+      isSuccess ? onMapped?.({ commandId: cmd.id, contractWrites }) : void 0,
+    [cmd.id, contractWrites, isSuccess],
   );
 
-  return <>{children?.(contractWrites)}</>;
+  return null;
 }
 
 export function WrapIntoSuperTokensCommandMapper({
   command: cmd,
   onMapped,
-  children,
 }: CommandMapperProps<WrapIntoSuperTokensCommand>) {
   const { getSuperToken, getUnderlyingToken } = useWidget();
 
@@ -146,6 +148,7 @@ export function WrapIntoSuperTokensCommandMapper({
           abi: erc20ABI,
           functionName: "allowance",
           args: [cmd.accountAddress, cmd.superTokenAddress],
+          cacheOnBlock: true,
         }
       : undefined,
   );
@@ -209,17 +212,17 @@ export function WrapIntoSuperTokensCommandMapper({
   }, [cmd.id, isSuccess]);
 
   useEffect(
-    () => (isSuccess ? onMapped?.(contractWrites) : void 0),
-    [contractWrites],
+    () =>
+      isSuccess ? onMapped?.({ commandId: cmd.id, contractWrites }) : void 0,
+    [cmd.id, contractWrites, isSuccess],
   );
 
-  return <>{children?.(contractWrites)}</>;
+  return null;
 }
 
 export function SubscribeCommandMapper({
   command: cmd,
   onMapped,
-  children,
 }: CommandMapperProps<SubscribeCommand>) {
   const { isSuccess: isSuccessForGetFlowRate, data: existingFlowRate_ } =
     useContractRead({
@@ -228,6 +231,7 @@ export function SubscribeCommandMapper({
       abi: cfAv1ForwarderABI,
       functionName: "getFlowrate",
       args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
+      cacheOnBlock: true,
     });
 
   const flowRate =
@@ -300,11 +304,14 @@ export function SubscribeCommandMapper({
   }, [cmd.id, isSuccessForGetFlowRate]);
 
   useEffect(
-    () => (isSuccessForGetFlowRate ? onMapped?.(contractWrites) : void 0),
-    [contractWrites],
+    () =>
+      isSuccessForGetFlowRate
+        ? onMapped?.({ commandId: cmd.id, contractWrites })
+        : void 0,
+    [cmd.id, contractWrites, isSuccessForGetFlowRate],
   );
 
-  return <>{children?.(contractWrites)}</>;
+  return null;
 }
 
 const createContractWrite = <

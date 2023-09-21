@@ -1,6 +1,9 @@
+"use client";
+
 import {
   Alert,
   AlertTitle,
+  Container,
   createTheme,
   ThemeProvider,
   Typography,
@@ -13,6 +16,7 @@ import defaultTokenList, {
 import memoize from "lodash.memoize";
 import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { Address, zeroAddress } from "viem";
 import { useConnect, useNetwork } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
@@ -271,29 +275,48 @@ export function Widget({
   );
 
   return (
-    <WidgetContext.Provider value={checkoutState}>
-      <ThemeProvider theme={theme}>
-        {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
-        {/* TODO: (M) Add ScopedCssBaseline to handle scrollbar styles */}
-        {validationResult.success ? (
-          <WidgetView
-            key={`${viewProps.type}-${paymentDetailsKey}`}
-            {...viewProps}
-          />
-        ) : (
-          <Alert data-testid="widget-error" severity="error">
-            <AlertTitle>Input Error</AlertTitle>
-            <Typography variant="inherit" whiteSpace="pre-wrap">
+    <ErrorBoundary
+      fallback={
+        <Container maxWidth="sm">
+          <Alert severity="error" variant="standard">
+            <AlertTitle>Oops! The Checkout Widget crashed</AlertTitle>
+            <p>
+              Apologies for any inconvenience caused, but the Checkout Widget
+              just experienced an unexpected problem and failed to load.
+            </p>
+            <p>
               {
-                fromZodError(validationResult.error, {
-                  issueSeparator: "\n",
-                }).message
+                "We appreciate your understanding and patience. You might want to try reloading the page or come back later. If the issue persists, please don't hesitate to get in touch with us."
               }
-            </Typography>
+            </p>
           </Alert>
-        )}
-      </ThemeProvider>
-    </WidgetContext.Provider>
+        </Container>
+      }
+    >
+      <WidgetContext.Provider value={checkoutState}>
+        <ThemeProvider theme={theme}>
+          {/* <CssBaseline /> // TODO(KK): Probably don't want this in the widget. */}
+          {/* TODO: (M) Add ScopedCssBaseline to handle scrollbar styles */}
+          {validationResult.success ? (
+            <WidgetView
+              key={`${viewProps.type}-${paymentDetailsKey}`}
+              {...viewProps}
+            />
+          ) : (
+            <Alert data-testid="widget-error" severity="error">
+              <AlertTitle>Input Error</AlertTitle>
+              <Typography variant="inherit" whiteSpace="pre-wrap">
+                {
+                  fromZodError(validationResult.error, {
+                    issueSeparator: "\n",
+                  }).message
+                }
+              </Typography>
+            </Alert>
+          )}
+        </ThemeProvider>
+      </WidgetContext.Provider>
+    </ErrorBoundary>
   );
 }
 

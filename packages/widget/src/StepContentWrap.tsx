@@ -60,7 +60,7 @@ const WrapCard: FC<WrapCardProps> = ({
           variant="outlined"
           direction="row"
           alignItems="center"
-          gap={0.5}
+          spacing={0.5}
           title={token.address}
           sx={{ pl: 1.25, pr: 2, py: 1, borderRadius: 0.5 }}
         >
@@ -169,14 +169,14 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
   }, [eventListeners.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    handleNext(stepIndex);
     runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+    handleNext(stepIndex);
   }, [handleNext, eventListeners.onButtonClick, stepIndex]);
 
   const onSkipWrapping = useCallback(() => {
+    runEventListener(eventListeners.onButtonClick, { type: "skip_step" });
     setValue("wrapAmountInUnits", "" as `${number}`);
     handleNext(stepIndex);
-    runEventListener(eventListeners.onButtonClick, { type: "skip_step" });
   }, [handleNext, setValue, eventListeners.onButtonClick, stepIndex]);
 
   const onInputFocus = () => setFocusedOnce(true);
@@ -282,12 +282,12 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
           )}
         /> */}
 
-      <Stack direction="column" gap={2.5} textAlign="center">
+      <Stack direction="column" spacing={2.5} textAlign="center">
         <Stack
           direction="column"
           justifyContent="center"
           alignItems="stretch"
-          gap={1.5}
+          spacing={1}
         >
           <StepperCTAButton
             disabled={!isValid || isValidating}

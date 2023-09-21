@@ -9,12 +9,14 @@ import {
   Typography,
 } from "@mui/material";
 import { create } from "blockies-ts";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Address } from "viem";
 
 import { AccountAddress } from "./AccountAddress.js";
+import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { copyToClipboard } from "./utils.js";
+import { useWidget } from "./WidgetContext.js";
 
 const ContentCopyIcon = normalizeIcon(ContentCopyIcon_);
 const CheckIcon = normalizeIcon(CheckIcon_);
@@ -34,6 +36,21 @@ export function AccountAddressCard({
     seed: address.toLowerCase(),
   }).toDataURL();
   const [copied, setCopied] = useState(false);
+
+  const { eventListeners } = useWidget();
+  const onCopyAddressButtonClick = useCallback(
+    async (checksumAddress: string) => {
+      runEventListener(eventListeners.onButtonClick, {
+        type: "switch_network",
+      });
+      await copyToClipboard(checksumAddress);
+      setCopied(true);
+      const timeoutId = setTimeout(() => setCopied(false), 1000);
+      return () => clearTimeout(timeoutId);
+    },
+    [eventListeners.onButtonClick],
+  );
+
   return (
     <Paper
       {...PaperProps}
@@ -46,7 +63,7 @@ export function AccountAddressCard({
           checksumAddress,
           shortenedAddress,
         }) => (
-          <Stack direction="row" alignItems="center" gap={1}>
+          <Stack direction="row" alignItems="center" spacing={1}>
             {ensAvatarResult.data ? (
               <Avatar
                 alt="ENS avatar"
@@ -74,12 +91,7 @@ export function AccountAddressCard({
             <IconButton
               size="small"
               title="Copy address to clipboard"
-              onClick={() =>
-                void copyToClipboard(checksumAddress).then(() => {
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 1000);
-                })
-              }
+              onClick={() => onCopyAddressButtonClick(checksumAddress)}
               sx={{
                 "&:hover": { color: (theme) => theme.palette.primary.main },
               }}

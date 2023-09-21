@@ -10,12 +10,11 @@ import {
   StepLabel,
   Stepper as MUIStepper,
 } from "@mui/material";
-import React, { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { CheckoutSummary } from "./CheckoutSummary.js";
 import { runEventListener } from "./EventListeners.js";
-import ExpandIcon from "./ExpandIcon.js";
 import { DraftFormValues } from "./formValues.js";
 import StepContentPaymentOption from "./StepContentPaymentOption.js";
 import StepContentReview from "./StepContentReview.js";
@@ -65,7 +64,7 @@ export default function Stepper() {
     [paymentOptionWithTokenInfo],
   );
 
-  const container = React.useRef(null);
+  const container = useRef(null);
   const totalSteps = visibleSteps.length + 2; // Add confirm and success. TODO(KK): not clean...
   const transactionStep = totalSteps - 2;
   const summaryStep = totalSteps - 1;
@@ -114,19 +113,33 @@ export default function Stepper() {
 
                       return (
                         <Step key={index}>
-                          <StepButton
-                            onClick={() => {
-                              setActiveStep(index);
-                              runEventListener(eventListeners.onButtonClick, {
-                                type: "step_label",
-                              });
-                            }}
-                          >
-                            <StepLabel
-                              sx={{ position: "relative", width: "100%" }}
+                          {visualActiveStep > index ? (
+                            <StepButton
+                              onClick={() => {
+                                runEventListener(eventListeners.onButtonClick, {
+                                  type: "step_label",
+                                });
+                                setActiveStep(index);
+                              }}
+                              sx={(theme) => ({
+                                position: "relative",
+                                width: "100%",
+                                "&:hover": {
+                                  bgcolor: theme.palette.action.hover,
+                                },
+                              })}
                             >
                               {labelText}
-                              {orientation === "vertical" && (
+                            </StepButton>
+                          ) : (
+                            <StepLabel
+                              sx={{
+                                position: "relative",
+                                width: "100%",
+                              }}
+                            >
+                              {labelText}
+                              {/* {orientation === "vertical" && (
                                 <ExpandIcon
                                   expanded={visualActiveStep === index}
                                   sx={{
@@ -135,9 +148,9 @@ export default function Stepper() {
                                     right: 28,
                                   }}
                                 />
-                              )}
+                              )} */}
                             </StepLabel>
-                          </StepButton>
+                          )}
                           {Content}
                         </Step>
                       );

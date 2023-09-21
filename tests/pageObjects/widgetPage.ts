@@ -49,6 +49,10 @@ export class WidgetPage extends BasePage {
   readonly switchNetworkButton: Locator;
   readonly customAmountInput: Locator;
   readonly customAmountTimeUnitDropdown: Locator;
+  readonly transactionStatusIcons: Locator;
+  readonly circleIcons: Locator;
+  readonly checkmarkIcons: Locator;
+  readonly transactionTypesAndStatuses: Locator;
   // readonly copyButtons: Locator;
   // readonly productDetails: Locator;
   // readonly poweredBySuperfluidButton: Locator;
@@ -100,8 +104,15 @@ export class WidgetPage extends BasePage {
     this.metamaskWalletButton = page.getByRole("button", {
       name: "MetaMask INSTALLED",
     });
-    this.transactionStatuses = page.getByTestId("transaction-status");
-    this.transactionTypes = page.getByTestId("transaction-type");
+    this.transactionTypesAndStatuses = page.getByTestId(
+      "transaction-type-and-status",
+    );
+    this.transactionStatuses = page
+      .getByTestId("transaction-type-and-status")
+      .locator("p");
+    this.transactionTypes = page
+      .getByTestId("transaction-type-and-status")
+      .locator("span");
     this.transactionButton = page.getByTestId("transaction-button");
     this.transactionButtonLoadingSpinner = page.locator(
       ".MuiLoadingButton-loadingIndicator",
@@ -137,6 +148,9 @@ export class WidgetPage extends BasePage {
     this.customAmountTimeUnitDropdown = page.getByTestId(
       "custom-time-unit-dropdown",
     );
+    this.transactionStatusIcons = page.getByTestId("transaction-status-icon");
+    this.circleIcons = page.getByTestId("CircleIcon");
+    this.checkmarkIcons = page.getByTestId("CheckIcon");
   }
 
   async changeCustomPaymentAmount(amount: string, timeunit = "month") {
@@ -293,23 +307,22 @@ export class WidgetPage extends BasePage {
   ) {
     await test.step(`Validating transaction statuses`, async () => {
       for (const [index, transaction] of transactionList.entries()) {
-        await expect(this.transactionTypes.nth(index)).toHaveText(
-          index + 1 + ". " + this.getTransactionTypeString(transaction),
-        );
-        await expect(this.transactionStatuses.nth(index)).toHaveText(
-          statusList[index],
-          { timeout: 60000 },
-        );
+        await expect(
+          this.transactionTypesAndStatuses
+            .nth(index)
+            .locator("span.MuiTypography-root"),
+        ).toHaveText(this.getTransactionTypeString(transaction) as string);
+        await expect(
+          this.transactionTypesAndStatuses.nth(index).locator("p"),
+        ).toHaveText(statusList[index], { timeout: 60000 });
       }
-      await this.validateTransactionCounter(statusList);
+      await this.validateTransactionCounterAndIcons(statusList);
     });
   }
 
   async validateTransactionButtonTextAndClick(text: string) {
     await test.step(`Making sure the transaction text is ${text} and clicking it`, async () => {
-      await expect(this.transactionButton).toHaveText(
-        this.getTransactionTypeString(text)!,
-      );
+      await expect(this.transactionButton).toHaveText("Send transaction");
       await this.transactionButton.click();
     });
   }
@@ -431,32 +444,54 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async validateTransactionCounter(statusList: string[]) {
+  async validateTransactionCounterAndIcons(statusList: string[]) {
     await test.step(`Checking if the transaction is correctly shown`, async () => {
-      if (statusList.length === 1) {
-        await expect(this.transactionSpinningProgress).toBeVisible();
-        await expect(this.transactionCount).not.toBeVisible();
-      } else {
-        let completedStatusCount = 0;
-        for (const [index, status] of statusList.entries()) {
-          if (status === "Completed") {
-            completedStatusCount++;
-          }
+      for (const [index, status] of statusList.entries()) {
+        if (status === "Ready to send") {
+          await expect(
+            this.transactionStatusIcons.nth(index).locator(this.circleIcons),
+          ).toHaveCSS("color", "rgb(16, 187, 53)");
         }
-        let progressPercentage =
-          completedStatusCount === 0
-            ? (4).toString()
-            : Math.round(
-                (completedStatusCount / statusList.length) * 100,
-              ).toString();
-        await expect(this.transactionCount).toHaveText(
-          `${completedStatusCount}/${statusList.length}`,
-        );
-        await expect(this.transactionCircularProgress).toHaveAttribute(
-          "aria-valuenow",
-          progressPercentage,
-        );
+        if (status === "Queued") {
+          await expect(
+            this.transactionStatusIcons.nth(index).locator(this.circleIcons),
+          ).toHaveCSS("color", "rgba(0, 0, 0, 0.26)");
+        }
+
+        if (status === "Transaction sent") {
+          await expect(
+            this.transactionStatusIcons.nth(index).locator(this.circleIcons),
+          ).toHaveCSS("color", "rgb(243, 160, 2)");
+          await expect(
+            this.transactionTypesAndStatuses
+              .nth(index)
+              .locator("span.MuiTouchRipple-root"),
+          ).toBeVisible();
+        }
+        if (status === "Completed") {
+          await expect(
+            this.transactionStatusIcons.nth(index).locator(this.checkmarkIcons),
+          ).toHaveCSS("color", "rgb(0, 137, 0)");
+          await expect(
+            this.transactionTypesAndStatuses
+              .nth(index)
+              .locator("span.MuiTouchRipple-root"),
+          ).toBeVisible();
+        }
+        if (
+          status === "Error" ||
+          status === "Estimation error" ||
+          status === "Failed"
+        ) {
+          await expect(
+            this.transactionStatusIcons.nth(index).locator(this.circleIcons),
+          ).toHaveCSS("color", "rgb(210, 37, 37)");
+        }
       }
+
+      await expect(this.transactionCount).toHaveText(
+        `Transactions (${statusList.length.toString()})`,
+      );
     });
   }
 
@@ -487,6 +522,9 @@ export class WidgetPage extends BasePage {
           let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
             (underlyingBalance.toString() / 1e18).toString(),
           );
+          await expect(this.wrapUnderlyingBalance).toBeVisible({
+            timeout: 20000,
+          });
           await expect(this.wrapUnderlyingBalance).toHaveText(
             `Balance: ${underlyingBalanceToAssert}`,
           );

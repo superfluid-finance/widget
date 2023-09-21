@@ -14,6 +14,7 @@ export type CommandHandlerContextValue = {
   sessionId: string | null;
   submitCommands: (commands: ReadonlyArray<Command>) => void;
   writeIndex: number;
+  handleNextWrite: (currentWriteIndex: number) => void;
 };
 
 export const CommandHandlerContext = createContext<

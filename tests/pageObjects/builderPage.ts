@@ -93,7 +93,7 @@ export class BuilderPage extends BasePage {
   readonly nftSymbolInputField: Locator;
   readonly nftNameInputField: Locator;
   readonly contractOwnerInputField: Locator;
-  readonly nftImageInputField: Locator;
+  readonly nftImageInputField?: Locator;
   readonly createNftButton: Locator;
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
