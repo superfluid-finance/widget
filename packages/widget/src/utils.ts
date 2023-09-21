@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { parseEther } from "viem";
 
-import { FlowRate, mapTimePeriodToSeconds,TimePeriod } from "./core";
+import { FlowRate, mapTimePeriodToSeconds, TimePeriod } from "./core";
 
 export type ChildrenProp = PropsWithChildren["children"];
 
