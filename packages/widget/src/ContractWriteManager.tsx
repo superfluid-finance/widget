@@ -60,7 +60,13 @@ export function ContractWriteManager({
     contractWrite.chainId === chain?.id;
 
   const prepareResult = usePrepareContractWrite({
-    ...(prepare ? materialized : undefined),
+    ...(prepare
+      ? {
+          ...materialized,
+          scopeKey: contractWrite.commandId,
+          staleTime: 120_000,
+        }
+      : undefined),
     onError: console.error,
   });
 

@@ -91,7 +91,7 @@ export default function ContractWriteButton({
     if (transactionResult.isLoading) {
       const timeoutId = setTimeout(() => {
         setAllowNextWriteButton(true);
-      }, 15_000); // After 15 seconds, the button appears.
+      }, 30_000); // After 30 seconds, the button appears as an escape hatch.
       return () => clearTimeout(timeoutId);
     } else {
       setAllowNextWriteButton(false);
