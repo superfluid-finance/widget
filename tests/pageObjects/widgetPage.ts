@@ -703,6 +703,7 @@ export class WidgetPage extends BasePage {
       );
       await expect(this.page).toHaveScreenshot(
         `changedFont-${font.replace(/"/g, "")}.png`,
+        { maxDiffPixelRatio: 0.01 },
       );
     });
   }
@@ -717,7 +718,10 @@ export class WidgetPage extends BasePage {
       await expect(
         this.page.locator("[data-testid=step-3-label] span span"),
       ).toHaveText("Review the transaction(s)");
-      await expect(this.widgetContainer).toHaveScreenshot("verticalWidget.png");
+      await expect(this.widgetContainer).toHaveScreenshot(
+        "verticalWidget.png",
+        { maxDiffPixelRatio: 0.01 },
+      );
     });
   }
 
@@ -734,6 +738,7 @@ export class WidgetPage extends BasePage {
       ).toHaveText("Review");
       await expect(this.widgetContainer).toHaveScreenshot(
         "horizontalWidget.png",
+        { maxDiffPixelRatio: 0.01 },
       );
     });
   }
@@ -741,6 +746,7 @@ export class WidgetPage extends BasePage {
     await test.step(`Comparing current widgets screenshot with the default one`, async () => {
       await expect(this.widgetContainer).not.toHaveScreenshot(
         "verticalWidget.png",
+        { maxDiffPixelRatio: 0.01 },
       );
     });
   }

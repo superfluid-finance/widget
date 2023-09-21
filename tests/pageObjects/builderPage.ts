@@ -1193,8 +1193,8 @@ export class BuilderPage extends BasePage {
       this.colorPickerHueSliderThumb,
       this.colorPickerHueSliderRail,
       5,
-      50,
-      -50,
+      0,
+      25,
     );
   }
   async slideColorPickerAlphaSliderToMiddle() {
@@ -1203,8 +1203,8 @@ export class BuilderPage extends BasePage {
       this.colorPickerAlphaSliderThumb,
       this.colorPickerAlphaSliderRail,
       5,
-      50,
-      -50,
+      0,
+      25,
     );
   }
 

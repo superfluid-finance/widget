@@ -227,7 +227,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     <>
       <Stack gap={2} height="100%">
         <Box mb={1}>
-          <Typography variant="h6" component="h2">
+          <Typography data-testid="gating-title" variant="h6" component="h2">
             Gate your content with NFTs
           </Typography>
           <Typography variant="body2" color="text.secondary">
