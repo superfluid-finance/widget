@@ -1185,30 +1185,38 @@ export class BuilderPage extends BasePage {
   }
 
   async openPrimaryColorPicker() {
-    await this.primaryColorPickerButton.click();
+    await test.step(`Opening primary color picker`, async () => {
+      await this.primaryColorPickerButton.click();
+    });
   }
   async slideColorPickerHueSliderToMiddle() {
-    await BasePage.slideSlider(
-      this.page,
-      this.colorPickerHueSliderThumb,
-      this.colorPickerHueSliderRail,
-      5,
-      0,
-      25,
-    );
+    await test.step(`Sliding the color picker hue slider to middle`, async () => {
+      await BasePage.slideSlider(
+        this.page,
+        this.colorPickerHueSliderThumb,
+        this.colorPickerHueSliderRail,
+        5,
+        0,
+        25,
+      );
+    });
   }
   async slideColorPickerAlphaSliderToMiddle() {
-    await BasePage.slideSlider(
-      this.page,
-      this.colorPickerAlphaSliderThumb,
-      this.colorPickerAlphaSliderRail,
-      5,
-      0,
-      25,
-    );
+    await test.step(`Sliding the color picker alpha slider to middle`, async () => {
+      await BasePage.slideSlider(
+        this.page,
+        this.colorPickerAlphaSliderThumb,
+        this.colorPickerAlphaSliderRail,
+        5,
+        0,
+        25,
+      );
+    });
   }
 
   async openSecondaryColorPicker() {
-    await this.secondaryColorPickerButton.click();
+    await test.step(`Opening secondary color picker`, async () => {
+      await this.secondaryColorPickerButton.click();
+    });
   }
 }

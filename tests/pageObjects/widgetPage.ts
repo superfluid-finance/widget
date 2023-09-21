@@ -752,15 +752,21 @@ export class WidgetPage extends BasePage {
   }
 
   async clickFullScreenWidgetCloseButton() {
-    await this.fullScreenView.locator(this.closeButton).click();
+    await test.step(`Closing the full screen widget view`, async () => {
+      await this.fullScreenView.locator(this.closeButton).click();
+    });
   }
   async validateOpenWidgetInButtonIsVisible() {
-    await expect(this.openCheckoutInButton).toBeVisible();
+    await test.step(`Making sure the "open widget in x" button is visible`, async () => {
+      await expect(this.openCheckoutInButton).toBeVisible();
+    });
   }
   async validateWidgetIsNotShown() {
-    await expect(this.widgetContainer).not.toBeVisible();
-    await expect(this.networkSelectionButton).not.toBeVisible();
-    await expect(this.tokenSelectionButton).not.toBeVisible();
-    await expect(this.continueButton).not.toBeVisible();
+    await test.step(`Making sure the widget preview is not visible`, async () => {
+      await expect(this.widgetContainer).not.toBeVisible();
+      await expect(this.networkSelectionButton).not.toBeVisible();
+      await expect(this.tokenSelectionButton).not.toBeVisible();
+      await expect(this.continueButton).not.toBeVisible();
+    });
   }
 }
