@@ -54,7 +54,13 @@ export function ContractWriteManager({
   const { eventListeners } = useWidget();
 
   const prepareResult = usePrepareContractWrite({
-    ...(prepare ? contractWrite : undefined),
+    ...(prepare
+      ? {
+          ...contractWrite,
+          scopeKey: contractWrite.commandId,
+          staleTime: 120_000,
+        }
+      : undefined),
     onError: console.error,
   });
 
