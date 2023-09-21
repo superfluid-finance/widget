@@ -138,9 +138,6 @@ export class BasePage {
     thumb: Locator,
     slider: Locator,
     targetPercentage: number,
-    //Playwright returns the bound boxes depending on the main frame, scrolling messes up the coordinates
-    xOffset?: number,
-    yOffset?: number,
   ) {
     const thumbBoundingBox = await thumb.boundingBox();
     const sliderBoundingBox = await slider.boundingBox();
@@ -153,17 +150,14 @@ export class BasePage {
 
     // Start from the middle of the slider's thumb
     const startPoint = {
-      x: thumbBoundingBox.x + thumbBoundingBox.width / 2 + xOffset!,
-      y: thumbBoundingBox.y + thumbBoundingBox.height / 2 + yOffset!,
+      x: thumbBoundingBox.x + thumbBoundingBox.width / 2,
+      y: thumbBoundingBox.y + thumbBoundingBox.height / 2,
     };
 
     // Slide it to some endpoint determined by the target percentage
     const endPoint = {
-      x:
-        sliderBoundingBox.x +
-        sliderBoundingBox.width * targetPercentage +
-        xOffset!,
-      y: thumbBoundingBox.y + thumbBoundingBox.height / 2 + yOffset!,
+      x: sliderBoundingBox.x + sliderBoundingBox.width * targetPercentage,
+      y: thumbBoundingBox.y + thumbBoundingBox.height / 2,
     };
 
     await page.mouse.move(startPoint.x, startPoint.y);

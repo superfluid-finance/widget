@@ -1196,8 +1196,6 @@ export class BuilderPage extends BasePage {
         this.colorPickerHueSliderThumb,
         this.colorPickerHueSliderRail,
         5,
-        0,
-        25,
       );
     });
   }
@@ -1208,8 +1206,6 @@ export class BuilderPage extends BasePage {
         this.colorPickerAlphaSliderThumb,
         this.colorPickerAlphaSliderRail,
         5,
-        0,
-        25,
       );
     });
   }
