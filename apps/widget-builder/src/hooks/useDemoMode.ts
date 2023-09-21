@@ -1,8 +1,5 @@
 import { faker } from "@faker-js/faker";
-import {
-  ProductDetails,
-  supportedNetwork,
-} from "@superfluid-finance/widget";
+import { ProductDetails, supportedNetwork } from "@superfluid-finance/widget";
 import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 

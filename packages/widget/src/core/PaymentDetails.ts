@@ -8,7 +8,7 @@ import { timePeriods } from "./TimePeriod.js";
 export const paymentDetailsSchema = z.object({
   defaultWrapAmount: z
     .object({
-      multiplier: z.number().int().min(1).default(3),
+      multiplier: z.number().int().min(1),
       period: z.enum(timePeriods).optional(),
     })
     .default({
