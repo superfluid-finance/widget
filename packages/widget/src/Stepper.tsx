@@ -7,7 +7,6 @@ import {
   StepButton,
   StepConnector,
   StepContent,
-  StepLabel,
   Stepper as MUIStepper,
 } from "@mui/material";
 import { useMemo, useRef } from "react";
@@ -89,8 +88,17 @@ export default function Stepper() {
                     orientation={orientation}
                     activeStep={visualActiveStep}
                     connector={
-                      orientation === "vertical" ? null : <StepConnector />
+                      orientation === "horizontal" ? <StepConnector /> : null
                     }
+                    sx={{
+                      ...(orientation === "horizontal"
+                        ? {
+                            pt: 2.5,
+                            pb: 1,
+                            px: 3,
+                          }
+                        : {}),
+                    }}
                   >
                     {visibleSteps.map((step, index) => {
                       const { Content: Content_ } = step;
@@ -113,46 +121,31 @@ export default function Stepper() {
 
                       return (
                         <Step data-testid={`step-${index + 1}`} key={index}>
-                          {visualActiveStep > index ? (
-                            <StepButton
-                              data-testid={`step-${index + 1}-button`}
-                              onClick={() => {
-                                runEventListener(eventListeners.onButtonClick, {
-                                  type: "step_label",
-                                });
-                                setActiveStep(index);
-                              }}
-                              sx={(theme) => ({
-                                position: "relative",
-                                width: "100%",
-                                "&:hover": {
-                                  bgcolor: theme.palette.action.hover,
-                                },
-                              })}
-                            >
-                              {labelText}
-                            </StepButton>
-                          ) : (
-                            <StepLabel
-                              data-testid={`step-${index + 1}-label`}
-                              sx={{
-                                position: "relative",
-                                width: "100%",
-                              }}
-                            >
-                              {labelText}
-                              {/* {orientation === "vertical" && (
-                                <ExpandIcon
-                                  expanded={visualActiveStep === index}
-                                  sx={{
-                                    position: "absolute",
-                                    top: "calc(50% - 0.5em)",
-                                    right: 28,
-                                  }}
-                                />
-                              )} */}
-                            </StepLabel>
-                          )}
+                          <StepButton
+                            disabled={visualActiveStep <= index}
+                            data-testid={`step-${index + 1}-button`}
+                            onClick={() => {
+                              runEventListener(eventListeners.onButtonClick, {
+                                type: "step_label",
+                              });
+                              setActiveStep(index);
+                            }}
+                            sx={(theme) => ({
+                              position: "relative",
+                              width: "100%",
+                              ...(orientation === "vertical"
+                                ? {
+                                    "&:hover": {
+                                      bgcolor: theme.palette.action.hover,
+                                    },
+                                  }
+                                : {
+                                    pl: 0,
+                                  }),
+                            })}
+                          >
+                            {labelText}
+                          </StepButton>
                           {Content}
                         </Step>
                       );
