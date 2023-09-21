@@ -5,6 +5,7 @@ import {
   UserRejectedRequestError,
 } from "viem";
 import {
+  useAccount,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -12,8 +13,8 @@ import {
 } from "wagmi";
 
 import { ContractWrite } from "./ContractWrite.js";
+import { errorsABI } from "./core/wagmi-generated.js";
 import { TxFunctionName } from "./EventListeners.js";
-import { ChildrenProp } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 export type ContractWriteResult = {
@@ -24,34 +25,66 @@ export type ContractWriteResult = {
   currentError: BaseError | null;
 };
 
-type ContractWriteManagerProps = {
+export type ContractWriteManagerProps = {
   prepare: boolean;
   contractWrite: ContractWrite;
   onChange?: (result: ContractWriteResult) => void;
-  children?: (result: ContractWriteResult) => ChildrenProp;
 };
 
 export function ContractWriteManager({
   prepare: _prepare,
-  contractWrite,
+  contractWrite: contractWrite_,
   onChange,
-  children,
 }: ContractWriteManagerProps) {
   const { chain } = useNetwork();
-  const prepare = _prepare && contractWrite.chainId === chain?.id;
+  const { isConnected, address: accountAddress } = useAccount();
+
+  // Add all known errors to the ABI so viem/wagmi could decode them.
+  const contractWrite = useMemo<ContractWrite>(
+    () => ({
+      ...contractWrite_,
+      abi: contractWrite_.abi.slice().concat(errorsABI),
+    }),
+    [contractWrite_],
+  );
+
+  const prepare =
+    accountAddress && _prepare && contractWrite.chainId === chain?.id;
 
   const { eventListeners } = useWidget();
 
   const prepareResult = usePrepareContractWrite({
-    ...(prepare ? contractWrite : undefined),
+    ...(prepare
+      ? {
+          ...contractWrite,
+          scopeKey: contractWrite.commandId,
+          staleTime: 120_000,
+        }
+      : undefined),
     onError: console.error,
   });
 
   // Always have a write ready.
   const writeResult = useContractWrite({
-    ...(prepareResult.config.request
-      ? (prepareResult.config as unknown as ContractWrite)
-      : contractWrite),
+    ...(prepare
+      ? prepareResult.isError
+        ? {
+            mode: "prepared",
+            request: {
+              account: accountAddress,
+              chain: chain,
+              abi: contractWrite.abi,
+              address: contractWrite.address,
+              functionName: contractWrite.functionName,
+              args: contractWrite.args,
+              value: contractWrite.value,
+              gas: 2_500_000n, // Set _some_ kind of a limit more reasonable than the default 28_500_000.
+            },
+          }
+        : prepareResult.isSuccess
+        ? prepareResult.config
+        : {}
+      : {}),
     onError: console.error,
     onSuccess: ({ hash }) =>
       eventListeners.onTransactionSent?.({
@@ -60,25 +93,29 @@ export function ContractWriteManager({
       }),
   });
 
-  useEffect(() => {
-    if (writeResult.error instanceof TransactionExecutionError) {
-      if (writeResult.error.walk() instanceof UserRejectedRequestError) {
-        writeResult.reset(); // Clear wallet rejection errors.
-      }
-    }
-  }, [writeResult.error]);
-
   const transactionResult = useWaitForTransaction({
     hash: writeResult.data?.hash,
     onError: console.error,
   });
 
-  const result: ContractWriteResult = useMemo(
-    () => ({
+  const result: ContractWriteResult = useMemo(() => {
+    if (
+      writeResult.isError &&
+      writeResult.error instanceof TransactionExecutionError
+    ) {
+      if (
+        writeResult.error.cause instanceof UserRejectedRequestError ||
+        writeResult.error.walk() instanceof UserRejectedRequestError
+      ) {
+        writeResult.reset(); // Clear wallet rejection errors.
+      }
+    }
+
+    return {
       contractWrite,
       prepareResult: prepareResult as ReturnType<
         typeof usePrepareContractWrite
-      >, // TODO(KK): weird type mismatch
+      >,
       writeResult,
       transactionResult,
       currentError: (transactionResult.error ||
@@ -86,16 +123,17 @@ export function ContractWriteManager({
         (writeResult.isSuccess
           ? null
           : prepareResult.error)) as unknown as BaseError | null,
-    }),
-    [
-      contractWrite.id,
-      prepareResult.status,
-      writeResult.status,
-      transactionResult.status,
-    ],
-  );
+    };
+  }, [
+    contractWrite.id,
+    prepareResult.status,
+    prepareResult.fetchStatus,
+    writeResult.status,
+    transactionResult.status,
+    transactionResult.fetchStatus,
+  ]);
 
   useEffect(() => void onChange?.(result), [result]);
 
-  return <>{children?.(result)}</>;
+  return null;
 }
