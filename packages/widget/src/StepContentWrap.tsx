@@ -159,7 +159,7 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
       flowRate,
     );
 
-    return BigInt(superTokenBalance.value) > minWrapAmount;
+    return BigInt(superTokenBalance.value) >= minWrapAmount;
   }, [superTokenBalance, paymentOptionWithTokenInfo, flowRate]);
 
   const { handleNext } = useStepper();

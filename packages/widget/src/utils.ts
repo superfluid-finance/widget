@@ -1,7 +1,12 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { parseEther } from "viem";
 
-import { FlowRate, mapTimePeriodToSeconds, TimePeriod } from "./core";
+import {
+  FlowRate,
+  flowRateSchema,
+  mapTimePeriodToSeconds,
+  TimePeriod,
+} from "./core";
 
 export type ChildrenProp = PropsWithChildren["children"];
 
@@ -72,9 +77,18 @@ export function mapFlowRateToDefaultWrapAmount(
     return 0n;
   }
 
+  // TODO(KK): not the cleanest solution to validate here...
+  const validation = flowRateSchema
+    .refine((x) => parseEther(x.amountEther) > 0n)
+    .safeParse(flowRate);
+  if (!validation.success) {
+    return 0n;
+  }
+
   const flowRatePerSecond =
     parseEther(flowRate.amountEther) /
     BigInt(mapTimePeriodToSeconds(flowRate.period));
+
   const trueWrapAmount =
     flowRatePerSecond *
     BigInt(defaultWrapAmount.multiplier) *
