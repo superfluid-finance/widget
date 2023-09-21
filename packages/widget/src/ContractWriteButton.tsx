@@ -4,7 +4,7 @@ import WarningAmberIcon_ from "@mui/icons-material/WarningAmber";
 import { LoadingButton } from "@mui/lab";
 import { Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { useNetwork, useSwitchNetwork } from "wagmi";
+import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
 import { runEventListener } from "./EventListeners.js";
@@ -40,6 +40,7 @@ export default function ContractWriteButton({
   const expectedChainId = contractWrite.chainId;
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
+  const { connector } = useAccount();
   const needsToSwitchNetwork = expectedChainId !== chain?.id;
 
   const onSwitchNetworkButtonClick = useCallback(() => {
@@ -76,7 +77,8 @@ export default function ContractWriteButton({
 
   const [allowNextWriteButton, setAllowNextWriteButton] = useState(false);
   const showNextWriteButton =
-    (allowNextWriteButton || transactionResult.isError) && !isLastWrite; // Don't show the button for the last contract write. It would be confusing to show the success screen when possibly the last TX fails.
+    (allowNextWriteButton || transactionResult.isError) &&
+    (!isLastWrite || connector?.id === "safe"); // Don't show the button for the last contract write, unless Gnosis Safe. It would be confusing to show the success screen when possibly the last TX fails.
 
   const onSkipButtonClick = useCallback(() => {
     runEventListener(eventListeners.onButtonClick, {
