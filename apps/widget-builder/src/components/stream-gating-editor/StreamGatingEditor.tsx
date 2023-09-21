@@ -230,7 +230,11 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
           <Typography data-testid="gating-title" variant="h6" component="h2">
             Gate your content with NFTs
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            data-testid="nft-gating-message"
+            variant="body2"
+            color="text.secondary"
+          >
             Create NFT your users will hold while they are paying for your
             product or service.
           </Typography>

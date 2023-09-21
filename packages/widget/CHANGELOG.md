@@ -1,5 +1,14 @@
 # @superfluid-finance/widget
 
+## 0.4.1
+
+### Patch Changes
+
+- 8b83a8a: Fix fast double-clicking continue button from moving 2 steps
+- b740912: Fix 'something went wrong' not displaying
+- 36fe45b: Add `onTransactionSent` event listener
+- 6f8df5b: Ensure BigInt when underlying dependency should lie about the type
+
 ## 0.4.0
 
 ### Minor Changes

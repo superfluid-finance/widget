@@ -2,4 +2,4 @@
 "@superfluid-finance/widget": patch
 ---
 
-Fix 'something went wrong' not displaying
+Redesign transaction view

@@ -1,10 +1,18 @@
 import CloseIcon_ from "@mui/icons-material/Close.js";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Collapse,
+  IconButton,
+  List,
+  ListSubheader,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useCallback, useEffect } from "react";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import ContractWriteButton from "./ContractWriteButton.js";
-import { ContractWriteCircularProgress } from "./ContractWriteCircularProgress.js";
 import { ContractWriteStatus } from "./ContractWriteStatus.js";
 import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
@@ -17,8 +25,12 @@ const CloseIcon = normalizeIcon(CloseIcon_);
 export function StepContentTransactions({ stepIndex }: StepProps) {
   const { handleBack, handleNext, setActiveStep, totalSteps } = useStepper();
 
-  const { contractWrites, contractWriteResults, writeIndex } =
-    useCommandHandler(); // Cleaner to pass with props.
+  const {
+    contractWrites,
+    contractWriteResults,
+    writeIndex,
+    handleNextWrite: handleNextWrite_,
+  } = useCommandHandler(); // Cleaner to pass with props.
 
   const { eventListeners } = useWidget();
 
@@ -34,33 +46,47 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
   }, [writeIndex, contractWriteResults, handleNext, totalSteps]);
 
   const onBack = useCallback(() => {
-    handleBack(stepIndex);
     runEventListener(eventListeners.onButtonClick, {
       type: "back_transactions",
     });
+    handleBack(stepIndex);
   }, [handleBack, eventListeners.onButtonClick, stepIndex]);
 
   const total = contractWrites.length;
-  const currentResult = contractWriteResults[writeIndex];
+  const lastWriteIndex = Math.max(total - 1, 0);
+  const isLastWrite = writeIndex === lastWriteIndex;
+  const currentResult =
+    contractWriteResults[Math.min(writeIndex, lastWriteIndex)];
+
+  const handleNextWrite = useCallback(
+    () => handleNextWrite_(writeIndex),
+    [handleNextWrite_, writeIndex],
+  );
+
+  const showErrorAlert = Boolean(
+    currentResult &&
+      currentResult.currentError &&
+      currentResult.currentError.shortMessage,
+  );
 
   return (
-    <Box>
+    <Stack>
       <Stack alignItems="end">
         <IconButton
           edge="start"
-          color="inherit"
+          size="medium"
           onClick={onBack}
           aria-label="back"
-          sx={{ mr: -1 }}
+          sx={(theme) => ({ color: theme.palette.text.secondary, mr: -1 })}
         >
-          <CloseIcon />
+          <CloseIcon fontSize="medium" />
         </IconButton>
       </Stack>
       <Stack
         direction="column"
-        gap={2.25}
+        spacing={2.25}
         alignItems="stretch"
-        sx={{ width: "100%" }}
+        sx={{ width: "100%", mt: -1 }}
       >
         <Box textAlign="center">
           <Typography variant="h5" component="span">
@@ -70,7 +96,7 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             Send the transactions from your wallet to finish your purchase.
           </Typography>
         </Box>
-        <Stack
+        {/* <Stack
           direction="column"
           alignItems="center"
           justifyContent="space-around"
@@ -81,17 +107,40 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
             index={writeIndex}
             total={total}
           />
-        </Stack>
-        <Stack gap={1}>{contractWriteResults.map(ContractWriteStatus)}</Stack>
-        {/* // TODO(KK): We're not currently displaying the error anywhere.
-        {currentResult?.relevantError && (
+        </Stack> */}
+        <List
+          disablePadding
+          dense
+          subheader={
+            <ListSubheader
+              data-testid="transaction-count"
+              sx={{ bgcolor: "transparent" }}
+            >
+              Transactions ({total})
+            </ListSubheader>
+          }
+        >
+          {contractWriteResults.map((result, index) => (
+            <ContractWriteStatus
+              key={index.toString()}
+              result={result}
+              index={index}
+            />
+          ))}
+        </List>
+        <Collapse in={showErrorAlert} unmountOnExit>
           <Alert severity="error">
-            <AlertTitle>Error</AlertTitle>
-            {currentResult.relevantError.shortMessage}
+            {currentResult.currentError?.shortMessage}
           </Alert>
-        )} */}
-        {currentResult && <ContractWriteButton {...currentResult} />}
+        </Collapse>
+        {currentResult && (
+          <ContractWriteButton
+            {...currentResult}
+            isLastWrite={isLastWrite}
+            handleNextWrite={handleNextWrite}
+          />
+        )}
       </Stack>
-    </Box>
+    </Stack>
   );
 }

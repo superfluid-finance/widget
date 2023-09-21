@@ -32,7 +32,12 @@ export interface EventListeners {
       | "invoke_transaction"
       | "back_transactions"
       | "success_button"
-      | "superfluid_dashboard";
+      | "superfluid_dashboard"
+      | "retry_gas_estimation"
+      | "force_invoke_transaction"
+      | "skip_to_next"
+      | "copy_account_address"
+      | "view_transaction_on_block_explorer";
   }) => void;
   /** Called when the widget route changes. "Route" is a term to define the _view_ the user sees. */
   onRouteChange?: (props?: {

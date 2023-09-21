@@ -18,7 +18,7 @@ const PoweredBySuperfluid: FC<PaperProps> = ({ sx = {} }) => (
       ...sx,
     }}
   >
-    <Stack direction="row" gap={1} alignItems="center">
+    <Stack direction="row" spacing={1} alignItems="center">
       <Typography variant="body2" color="text.secondary">
         Powered by
       </Typography>

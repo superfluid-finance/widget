@@ -8,12 +8,14 @@ type Idle = {
   status: "idle";
   commands: ReadonlyArray<never>;
   sessionId: null;
+  writeIndex: 0;
 };
 
 type Initialized = {
   status: "initialized";
   commands: ReadonlyArray<CommandHandlingAggregate>;
   sessionId: null;
+  writeIndex: 0;
 };
 
 type Handling = {
@@ -28,6 +30,7 @@ type Handling = {
     }
   >;
   sessionId: string;
+  writeIndex: number;
 };
 
 // TODO(KK): Consider if we need this.
