@@ -715,13 +715,13 @@ export class WidgetPage extends BasePage {
       );
       await expect(this.continueButton).toHaveCSS("font-family", font);
       await expect(
-        this.page.locator("[data-testid=step-1-label] span span"),
+        this.page.locator("[data-testid=step-1] .MuiStepLabel-label"),
       ).toHaveCSS("font-family", font);
       await expect(
-        this.page.locator("[data-testid=step-2-label] span span"),
+        this.page.locator("[data-testid=step-2] .MuiStepLabel-label"),
       ).toHaveCSS("font-family", font);
       await expect(
-        this.page.locator("[data-testid=step-3-label] span span"),
+        this.page.locator("[data-testid=step-3] .MuiStepLabel-label"),
       ).toHaveCSS("font-family", font);
       await expect(this.page.locator("[data-testid=step-1] text")).toHaveCSS(
         "font-family",
@@ -745,16 +745,17 @@ export class WidgetPage extends BasePage {
       );
     });
   }
+
   async validateWidgetStepperIsVertical() {
     await test.step(`Checking if the widget is using vertical stepper`, async () => {
       await expect(
-        this.page.locator("[data-testid=step-1-label] span span"),
+        this.page.locator("[data-testid=step-1] .MuiStepLabel-label"),
       ).toHaveText("Select network and token");
       await expect(
-        this.page.locator("[data-testid=step-2-label] span span"),
+        this.page.locator("[data-testid=step-2] .MuiStepLabel-label"),
       ).toHaveText("Wrap to Super Tokens");
       await expect(
-        this.page.locator("[data-testid=step-3-label] span span"),
+        this.page.locator("[data-testid=step-3] .MuiStepLabel-label"),
       ).toHaveText("Review the transaction(s)");
       await expect(this.widgetContainer).toHaveScreenshot(
         "verticalWidget.png",
@@ -766,13 +767,13 @@ export class WidgetPage extends BasePage {
   async validateWidgetStepperIsHorizontal() {
     await test.step(`Checking if the widget is using horizontal stepper`, async () => {
       await expect(
-        this.page.locator("[data-testid=step-1-label] span span"),
+        this.page.locator("[data-testid=step-1] .MuiStepLabel-label"),
       ).toHaveText("Network & Token");
       await expect(
-        this.page.locator("[data-testid=step-2-label] span span"),
+        this.page.locator("[data-testid=step-2] .MuiStepLabel-label"),
       ).toHaveText("Wrap");
       await expect(
-        this.page.locator("[data-testid=step-3-label] span span"),
+        this.page.locator("[data-testid=step-3] .MuiStepLabel-label"),
       ).toHaveText("Review");
       await expect(this.widgetContainer).toHaveScreenshot(
         "horizontalWidget.png",
@@ -780,6 +781,7 @@ export class WidgetPage extends BasePage {
       );
     });
   }
+
   async validateRandomStylingIsGenerated() {
     await test.step(`Comparing current widgets screenshot with the default one`, async () => {
       await expect(this.widgetContainer).not.toHaveScreenshot(
@@ -794,11 +796,13 @@ export class WidgetPage extends BasePage {
       await this.fullScreenView.locator(this.closeButton).click();
     });
   }
+
   async validateOpenWidgetInButtonIsVisible() {
     await test.step(`Making sure the "open widget in x" button is visible`, async () => {
       await expect(this.openCheckoutInButton).toBeVisible();
     });
   }
+
   async validateWidgetIsNotShown() {
     await test.step(`Making sure the widget preview is not visible`, async () => {
       await expect(this.widgetContainer).not.toBeVisible();
