@@ -233,7 +233,7 @@ export class WidgetPage extends BasePage {
     await test.step(`Clicking continue button and accepting Metamask access`, async () => {
       await this.clickContinueButton();
       await this.metamaskWalletButton.click();
-      metamask.acceptAccess();
+      await metamask.acceptAccess();
     });
   }
 
@@ -278,7 +278,7 @@ export class WidgetPage extends BasePage {
       await expect(this.wrapAmountMirrorAmount).toHaveValue(amount);
       await expect(this.weRecomendMessage).toBeVisible();
       await expect(this.weRecomendMessage).toHaveText(
-        "We recommend wrapping at least 1 month of the subscription amount.",
+        "We recommend wrapping at least 3 months of the subscription amount.",
       );
     });
   }
@@ -555,5 +555,11 @@ export class WidgetPage extends BasePage {
       await expect(this.switchNetworkButton).toBeVisible({ timeout: 30000 });
       await this.switchNetworkButton.click();
     });
+  }
+
+  async validateThatWrapAmountInputIs(amount: string) {
+    await expect(this.wrapAmountInput).toBeVisible();
+    await expect(this.wrapAmountInput).toHaveValue(amount);
+    await expect(this.wrapAmountMirrorAmount).toHaveValue(amount);
   }
 }
