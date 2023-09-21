@@ -137,7 +137,12 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
           alignItems="center"
           spacing={1}
         >
-          <Typography variant="h6" component="h2" color="white">
+          <Typography
+            data-testid="json-editor"
+            variant="h6"
+            component="h2"
+            color="white"
+          >
             JSON Editor
           </Typography>
           {saved && (

@@ -135,8 +135,8 @@ const defaultDisplaySettings: DisplaySettings = {
     family: "Noto Sans",
     category: "sans-serif",
   },
-  primaryColor: "#1DB227",
-  secondaryColor: "#fff",
+  primaryColor: "rgb(29, 178, 39)",
+  secondaryColor: "rgb(255, 255, 255)",
   stepperOrientation: "vertical",
 };
 
