@@ -31,8 +31,8 @@ export type DisplaySettings = {
   inputRadius: CSSProperties["borderRadius"];
   buttonRadius: CSSProperties["borderRadius"];
   font: FontSettings | null;
-  primaryColor: `#${string}`;
-  secondaryColor: `#${string}`;
+  primaryColor: `rgb(${string})` | `#${string}`;
+  secondaryColor: `rgb(${string})` | `#${string}`;
 };
 
 export type PaymentInterval =
@@ -122,6 +122,7 @@ const switchLayout = (
     >
       {({ openModal }) => (
         <Fab
+          data-testid="open-checkout-in-button"
           color="primary"
           variant="extended"
           onClick={() => openModal()}

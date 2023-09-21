@@ -33,16 +33,16 @@ export class BuilderPage extends BasePage {
   readonly summaryDeleteButtons: Locator;
   readonly darkModeSwitch: Locator;
   readonly containerBorderSlider: Locator;
-  readonly containerBorderSliderAmount: Locator;
+  readonly containerBorderSliderValue: Locator;
   readonly fieldBorderSlider: Locator;
-  readonly fieldBorderSliderAmount: Locator;
+  readonly fieldBorderSliderValue: Locator;
   readonly buttonBorderSlider: Locator;
-  readonly buttonBorderSliderAmount: Locator;
-  readonly primaryColorPicker: Locator;
-  readonly secondaryColorPicker: Locator;
+  readonly buttonBorderSliderValue: Locator;
+  readonly primaryColorPickerTextField: Locator;
+  readonly secondaryColorPickerTextField: Locator;
   readonly fontPicker: Locator;
-  readonly stepperPositionVertical: Locator;
-  readonly stepperPossitionHorizontal: Locator;
+  readonly verticalStepperButton: Locator;
+  readonly horizontalStepperButton: Locator;
   readonly exportOptions: Locator;
   readonly exportIPFSOption: Locator;
   readonly exportJSONoption: Locator;
@@ -93,8 +93,15 @@ export class BuilderPage extends BasePage {
   readonly nftSymbolInputField: Locator;
   readonly nftNameInputField: Locator;
   readonly contractOwnerInputField: Locator;
-  readonly nftImageInputField?: Locator;
   readonly createNftButton: Locator;
+  readonly colorPickerHueSliderRail: Locator;
+  readonly colorPickerHueSliderThumb: Locator;
+  readonly colorPickerAlphaSliderRail: Locator;
+  readonly colorPickerAlphaSliderThumb: Locator;
+  readonly colorPallete: Locator;
+  readonly primaryColorPickerButton: Locator;
+  readonly secondaryColorPickerButton: Locator;
+
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
 
@@ -149,30 +156,30 @@ export class BuilderPage extends BasePage {
     this.uploadImageField = page.getByTestId("file-upload-field");
     this.darkModeSwitch = page.getByLabel("Dark mode: off");
     this.containerBorderSlider = page.getByTestId("container-radius-slider");
-    this.containerBorderSliderAmount = page.getByTestId(
-      "container-radius-slider-amount",
+    this.containerBorderSliderValue = page.getByTestId(
+      "container-radius-value",
     );
     this.fieldBorderSlider = page.getByTestId("field-border-slider");
-    this.fieldBorderSliderAmount = page.getByTestId(
-      "field-border-slider-amount",
-    );
+    this.fieldBorderSliderValue = page.getByTestId("field-border-radius-value");
     this.buttonBorderSlider = page.getByTestId("button-border-radius-slider");
-    this.buttonBorderSliderAmount = page.getByTestId(
-      "button-border-radius-amount",
-    );
-    this.primaryColorPicker = page
+    this.buttonBorderSliderValue = page.getByTestId("button-border-radius");
+    this.primaryColorPickerTextField = page
       .getByTestId("primary-color-picker")
       .getByRole("textbox");
-    this.secondaryColorPicker = page
+    this.secondaryColorPickerTextField = page
       .getByTestId("secondary-color-picker")
       .getByRole("textbox");
+    this.primaryColorPickerButton = page
+      .getByTestId("primary-color-picker")
+      .locator("button");
+    this.secondaryColorPickerButton = page
+      .getByTestId("secondary-color-picker")
+      .locator("button");
     this.fontPicker = page.getByTestId("font-picker").getByRole("combobox");
-    this.stepperPositionVertical = page.getByRole("button", {
-      name: "vertical stepper",
-    });
-    this.stepperPossitionHorizontal = page.getByRole("button", {
-      name: "horizontal stepper",
-    });
+    this.verticalStepperButton = page.getByTestId("vertical-stepper-button");
+    this.horizontalStepperButton = page.getByTestId(
+      "horizontal-stepper-button",
+    );
     this.exportOptions = page.getByTestId("export-option");
     this.exportIPFSOption = page.getByRole("option", {
       name: "Publish to IPFS to get a hosted link",
@@ -267,6 +274,19 @@ export class BuilderPage extends BasePage {
       .getByTestId("contract-owner-input-field")
       .locator("input");
     this.createNftButton = page.getByTestId("create-nft-button");
+    this.colorPickerAlphaSliderRail = page.locator(
+      "#color-popover .MuiColorInput-HueSlider .MuiSlider-rail",
+    );
+    this.colorPickerAlphaSliderThumb = page.locator(
+      "#color-popover .MuiColorInput-HueSlider .MuiSlider-rail",
+    );
+    this.colorPickerHueSliderRail = page.locator(
+      "#color-popover .MuiColorInput-HueSlider .MuiSlider-rail",
+    );
+    this.colorPickerHueSliderThumb = page.locator(
+      "#color-popover .MuiColorInput-HueSlider .MuiSlider-thumb",
+    );
+    this.colorPallete = page.locator(".MuiColorInput-ColorSpace");
 
     this.paymentFormFieldWordMap = new Map<string, Locator>([
       ["network", this.networkOptions],
@@ -279,6 +299,10 @@ export class BuilderPage extends BasePage {
     this.nftImageInputField = page
       .getByTestId("nft-image-upload-field")
       .locator("input");
+  }
+
+  async clickOnTheMiddleOfTheColorPallete() {
+    await this.colorPallete.click();
   }
 
   async validateFixedRateHelperMessage() {
@@ -749,11 +773,11 @@ export class BuilderPage extends BasePage {
       await expect(this.containerBorderSlider).toBeVisible();
       await expect(this.fieldBorderSlider).toBeVisible();
       await expect(this.buttonBorderSlider).toBeVisible();
-      await expect(this.primaryColorPicker).toBeVisible();
-      await expect(this.secondaryColorPicker).toBeVisible();
+      await expect(this.primaryColorPickerTextField).toBeVisible();
+      await expect(this.secondaryColorPickerTextField).toBeVisible();
       await expect(this.fontPicker).toBeVisible();
-      await expect(this.stepperPositionVertical).toBeVisible();
-      await expect(this.stepperPossitionHorizontal).toBeVisible();
+      await expect(this.verticalStepperButton).toBeVisible();
+      await expect(this.horizontalStepperButton).toBeVisible();
       await expect(this.inlineButton).toBeVisible();
       await expect(this.dialogButton).toBeVisible();
       await expect(this.drawerButton).toBeVisible();
@@ -1025,6 +1049,174 @@ export class BuilderPage extends BasePage {
   async uploadTestImage() {
     await test.step(`Uploading the Superfluid logo to the widget`, async () => {
       await this.uploadImageField.setInputFiles("./data/Superfluid_logo.png");
+    });
+  }
+
+  async clickInlineViewModeButton() {
+    await test.step(`Setting the widget view type to inline`, async () => {
+      await this.inlineButton.click();
+    });
+  }
+  async clickDialogViewModeButton() {
+    await test.step(`Setting the widget view type to dialog`, async () => {
+      await this.dialogButton.click();
+    });
+  }
+  async clickDrawerViewModeButton() {
+    await test.step(`Setting the widget view type to drawer`, async () => {
+      await this.drawerButton.click();
+    });
+  }
+  async clickFullScreenViewModeButton() {
+    await test.step(`Setting the widget view type to full screen`, async () => {
+      await this.fullScreenButton.click();
+    });
+  }
+  async enableDarkMode() {
+    await test.step(`Enabling dark mode`, async () => {
+      await this.darkModeSwitch.check();
+    });
+  }
+  async enableLightMode() {
+    await test.step(`Enabling light mode`, async () => {
+      await this.darkModeSwitch.uncheck();
+    });
+  }
+
+  async changeSliderTo(
+    page: Page,
+    minRadius: number,
+    maxRadius: number,
+    targetRadius: number,
+    thumbLocator: Locator,
+    sliderRail: Locator,
+    valueLocator: Locator,
+    message: string,
+  ) {
+    let targetPercentage = (100 / (maxRadius - minRadius)) * targetRadius;
+    await BasePage.slideSlider(
+      page,
+      thumbLocator,
+      sliderRail,
+      targetPercentage,
+    );
+    await expect(valueLocator).toHaveText(message);
+  }
+
+  async changeBorderRadius(field: string, targetRadius: number) {
+    await test.step(`Sliding the ${field} field to ${targetRadius}`, async () => {
+      let sliderRail: Locator;
+      let thumbSlider: Locator;
+      let valueLocator: Locator;
+      let maxRadius: number;
+      let message: string;
+      let minRadius = 0;
+
+      switch (field.toLowerCase()) {
+        case "container":
+          sliderRail = this.containerBorderSlider.locator(".MuiSlider-rail");
+          thumbSlider = this.containerBorderSlider.locator("input");
+          valueLocator = this.containerBorderSliderValue;
+          message = `Container border-radius: ${targetRadius}`;
+          maxRadius = 50;
+          break;
+        case "field":
+          sliderRail = this.fieldBorderSlider.locator(".MuiSlider-rail");
+          thumbSlider = this.fieldBorderSlider.locator("input");
+          valueLocator = this.fieldBorderSliderValue;
+          message = `Field border-radius: ${targetRadius}`;
+          maxRadius = 25;
+          break;
+        case "button":
+          sliderRail = this.buttonBorderSlider.locator(".MuiSlider-rail");
+          thumbSlider = this.buttonBorderSlider.locator("input");
+          valueLocator = this.buttonBorderSliderValue;
+          message = `Button border-radius: ${targetRadius}`;
+          maxRadius = 25;
+          break;
+        default:
+          throw new Error(
+            `You need to define ${field} field elements to slide those sliders`,
+          );
+      }
+
+      await this.changeSliderTo(
+        this.page,
+        minRadius,
+        maxRadius,
+        targetRadius,
+        thumbSlider,
+        sliderRail,
+        valueLocator,
+        message,
+      );
+    });
+  }
+
+  async changePrimaryColorTo(color: string) {
+    await test.step(`Changing the primary color to ${color}`, async () => {
+      await this.primaryColorPickerTextField.fill(color);
+    });
+  }
+  async changeSecondaryColorTo(color: string) {
+    await test.step(`Changing the secondary color to ${color}`, async () => {
+      await this.secondaryColorPickerTextField.fill(color);
+    });
+  }
+  async changeWidgetFontTo(font: string) {
+    await test.step(`Changing the widget font to ${font}`, async () => {
+      await this.fontPicker.click();
+      await this.page.getByText(font.replace(/"/g, "")).click();
+    });
+  }
+
+  async changeStepperToVertical() {
+    await test.step(`Clicking on the vertical stepper button`, async () => {
+      await this.verticalStepperButton.click();
+    });
+  }
+
+  async forcefullyChangeStepperToVertical() {
+    await test.step(`Forcing a click on the disabled vertical stepper button`, async () => {
+      await this.verticalStepperButton.click({ force: true });
+    });
+  }
+
+  async changeStepperToHorizontal() {
+    await test.step(`Clicking on the horizontal stepper button`, async () => {
+      await this.horizontalStepperButton.click();
+    });
+  }
+
+  async openPrimaryColorPicker() {
+    await test.step(`Opening primary color picker`, async () => {
+      await this.primaryColorPickerButton.click();
+    });
+  }
+  async slideColorPickerHueSliderToMiddle() {
+    await test.step(`Sliding the color picker hue slider to middle`, async () => {
+      await BasePage.slideSlider(
+        this.page,
+        this.colorPickerHueSliderThumb,
+        this.colorPickerHueSliderRail,
+        5,
+      );
+    });
+  }
+  async slideColorPickerAlphaSliderToMiddle() {
+    await test.step(`Sliding the color picker alpha slider to middle`, async () => {
+      await BasePage.slideSlider(
+        this.page,
+        this.colorPickerAlphaSliderThumb,
+        this.colorPickerAlphaSliderRail,
+        5,
+      );
+    });
+  }
+
+  async openSecondaryColorPicker() {
+    await test.step(`Opening secondary color picker`, async () => {
+      await this.secondaryColorPickerButton.click();
     });
   }
 }

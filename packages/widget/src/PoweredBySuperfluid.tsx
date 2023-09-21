@@ -5,6 +5,7 @@ import SuperfluidLogo from "./SuperfluidLogo.js";
 
 const PoweredBySuperfluid: FC<PaperProps> = ({ sx = {} }) => (
   <Paper
+    data-testid="powered-by-superfluid"
     component={Link}
     variant="outlined"
     href="https://superfluid.finance"

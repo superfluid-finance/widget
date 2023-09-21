@@ -186,8 +186,8 @@ const UiEditor: FC = () => {
                   <MuiColorInput
                     data-testid="primary-color-picker"
                     id={id}
-                    fallbackValue={"#000"}
-                    format="hex"
+                    fallbackValue={"rgb(0, 0, 0)"}
+                    format="rgb"
                     value={value}
                     onChange={(x) => onChange(x as `#{string}`)}
                   />
@@ -205,8 +205,8 @@ const UiEditor: FC = () => {
                   <MuiColorInput
                     id={id}
                     data-testid="secondary-color-picker"
-                    fallbackValue={"#000"}
-                    format="hex"
+                    fallbackValue={"rgb(0, 0, 0)"}
+                    format="rgb"
                     value={value}
                     onChange={(x) => onChange(x as `#{string}`)}
                   />
@@ -261,16 +261,20 @@ const UiEditor: FC = () => {
                   }}
                 >
                   <ToggleButton
+                    data-testid="vertical-stepper-button"
                     value="vertical"
                     aria-label="vertical stepper"
                     title="Choose vertical stepper"
+                    disabled={value === "vertical"}
                   >
                     Vertical
                   </ToggleButton>
                   <ToggleButton
+                    data-testid="horizontal-stepper-button"
                     value="horizontal"
                     aria-label="horizontal stepper"
                     title="Choose horizontal stepper"
+                    disabled={value === "horizontal"}
                   >
                     Horizontal
                   </ToggleButton>

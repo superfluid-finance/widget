@@ -27,10 +27,10 @@
     "palette": {
       "mode": "light",
       "primary": {
-        "main": "#1DB227"
+        "main": "rgb(29, 178, 39)"
       },
       "secondary": {
-        "main": "#fff"
+        "main": "rgb(255, 255, 255)"
       }
     },
     "shape": {
@@ -40,7 +40,7 @@
       "MuiStepIcon": {
         "styleOverrides": {
           "text": {
-            "fill": "#fff"
+            "fill": "rgb(255, 255, 255)"
           }
         }
       },
