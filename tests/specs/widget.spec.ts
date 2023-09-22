@@ -174,3 +174,13 @@ test("Switch network button shown in the transaction view", async ({
   );
   await widgetPage.validateTransactionButtonTextAndClick("approve");
 });
+
+test("Suggested token amount getting input for the user (3x)", async ({
+  page,
+}) => {
+  let widgetPage = new WidgetPage(page);
+  await widgetPage.selectPaymentNetwork("Goerli");
+  await widgetPage.selectPaymentToken("fUSDCx");
+  await widgetPage.connectWallet();
+  await widgetPage.validateThatWrapAmountInputIs("3");
+});

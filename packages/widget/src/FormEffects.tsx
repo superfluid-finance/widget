@@ -4,6 +4,7 @@ import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 
 import { DraftFormValues } from "./formValues.js";
+import { mapFlowRateToDefaultWrapAmount } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 export function FormEffects() {
@@ -14,6 +15,8 @@ export function FormEffects() {
     getFieldState,
     // formState: { isValid, errors }, Creates form state subscription.
   } = useFormContext<DraftFormValues>();
+
+  const { paymentDetails } = useWidget();
 
   const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
@@ -73,10 +76,14 @@ export function FormEffects() {
 
       if (!isWrapDirty && !isPureSuperToken) {
         const defaultWrapAmountWei =
-          parseEther(flowRate.amountEther) +
+          mapFlowRateToDefaultWrapAmount(
+            paymentDetails.defaultWrapAmount,
+            flowRate,
+          ) +
           parseEther(
             paymentOptionWithTokenInfo.paymentOption.transferAmountEther ?? "0",
           );
+
         const defaultWrapAmountEther = formatEther(
           defaultWrapAmountWei,
         ) as `${number}`;

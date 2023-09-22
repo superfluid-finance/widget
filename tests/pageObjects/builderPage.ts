@@ -295,6 +295,10 @@ export class BuilderPage extends BasePage {
       ["flowRate", this.flowRateOption],
       ["upfrontPaymentAmount", this.upfrontPaymentInputField],
     ]);
+
+    this.nftImageInputField = page
+      .getByTestId("nft-image-upload-field")
+      .locator("input");
   }
 
   async clickOnTheMiddleOfTheColorPallete() {

@@ -1,8 +1,8 @@
-import { PaymentDetails } from "@superfluid-finance/widget";
+import { WidgetProps } from "@superfluid-finance/widget";
 
 import paymentOptions from "./paymentOptions";
 
-const paymentDetails: PaymentDetails = {
+const paymentDetails: WidgetProps["paymentDetails"] = {
   paymentOptions,
 };
 

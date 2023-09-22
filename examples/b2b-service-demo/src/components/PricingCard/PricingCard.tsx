@@ -1,5 +1,4 @@
 import SuperfluidWidget, {
-  PaymentDetails,
   ProductDetails,
   WidgetProps,
 } from "@superfluid-finance/widget";
@@ -142,7 +141,7 @@ const PricingCard: FC<PricingCardProps> = ({
     [open, isOpen],
   );
 
-  const paymentDetails: PaymentDetails = useMemo(
+  const paymentDetails: WidgetProps["paymentDetails"] = useMemo(
     () => ({
       paymentOptions: [
         {

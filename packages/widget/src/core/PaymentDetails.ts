@@ -3,8 +3,18 @@ import uniqWith from "lodash.uniqwith";
 import { z } from "zod";
 
 import { paymentOptionSchema } from "./PaymentOption.js";
+import { timePeriods } from "./TimePeriod.js";
 
 export const paymentDetailsSchema = z.object({
+  defaultWrapAmount: z
+    .object({
+      multiplier: z.number().int().min(1),
+      period: z.enum(timePeriods).optional(),
+    })
+    .default({
+      multiplier: 3,
+      period: "month",
+    }),
   paymentOptions: paymentOptionSchema
     .transform((x) => [x])
     .or(z.array(paymentOptionSchema).min(1))

@@ -10,7 +10,7 @@ import {
   FormReturn as FormMethods,
   ValidFormValues,
 } from "./formValues.js";
-import { ChildrenProp } from "./utils.js";
+import { ChildrenProp, mapFlowRateToDefaultWrapAmount } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 type Props = {
@@ -27,6 +27,8 @@ export default function FormProvider({ children }: Props) {
     }
     return networks.find((network) => network.id === chain?.id) ?? null;
   }, [chain, networks]);
+
+  const { paymentDetails } = useWidget();
 
   const defaultPaymentOption = useMemo(() => {
     if (!defaultNetwork) {
@@ -48,8 +50,14 @@ export default function FormProvider({ children }: Props) {
     accountAddress: null,
     network: defaultNetwork,
     paymentOptionWithTokenInfo: defaultPaymentOption,
-    wrapAmountInUnits:
-      defaultPaymentOption?.paymentOption?.flowRate?.amountEther ?? "0",
+    wrapAmountInUnits: defaultPaymentOption?.paymentOption?.flowRate
+      ? `${Number(
+          mapFlowRateToDefaultWrapAmount(
+            paymentDetails.defaultWrapAmount,
+            defaultPaymentOption.paymentOption.flowRate,
+          ),
+        )}`
+      : "0",
     enableAutoWrap: false,
     flowRate: defaultPaymentOption?.paymentOption?.flowRate ?? {
       amountEther: "0",

@@ -1,4 +1,12 @@
 import { PropsWithChildren, useEffect, useState } from "react";
+import { parseEther } from "viem";
+
+import {
+  FlowRate,
+  flowRateSchema,
+  mapTimePeriodToSeconds,
+  TimePeriod,
+} from "./core";
 
 export type ChildrenProp = PropsWithChildren["children"];
 
@@ -56,6 +64,64 @@ export function toFixedUsingString(numStr: string, decimalPlaces: number) {
   return (
     wholePart + "." + roundedDecimal.toString().padStart(decimalPlaces, "0")
   );
+}
+
+export function mapFlowRateToDefaultWrapAmount(
+  defaultWrapAmount: {
+    multiplier: number;
+    period?: TimePeriod;
+  },
+  flowRate?: FlowRate,
+): bigint {
+  if (!flowRate) {
+    return 0n;
+  }
+
+  // TODO(KK): not the cleanest solution to validate here...
+  const validation = flowRateSchema
+    .refine((x) => parseEther(x.amountEther) > 0n)
+    .safeParse(flowRate);
+  if (!validation.success) {
+    return 0n;
+  }
+
+  const flowRatePerSecond =
+    parseEther(flowRate.amountEther) /
+    BigInt(mapTimePeriodToSeconds(flowRate.period));
+
+  const trueWrapAmount =
+    flowRatePerSecond *
+    BigInt(defaultWrapAmount.multiplier) *
+    BigInt(mapTimePeriodToSeconds(defaultWrapAmount.period ?? flowRate.period));
+  const wrapAmountRounded = roundWeiToPrettyAmount(trueWrapAmount);
+  return wrapAmountRounded;
+}
+
+// "23023402845098425" will become "0000000000000000"
+/**
+ * Round wei amount to a pretty amount so that when it's converted to ethers amount it would not have many decimals.
+ * @example
+ * "23023402845098425" will become "20000000000000000"
+ * "26834587324572943" will become "30000000000000000"
+ */
+function roundWeiToPrettyAmount(value: bigint) {
+  let valueAsString = value.toString();
+
+  let firstDigit = parseInt(valueAsString[0]);
+  let secondDigit = parseInt(valueAsString[1] || "0"); // '0' as a fallback for one-digit numbers
+
+  // Keep the order if the second number is less than 5.
+  if (secondDigit >= 5) {
+    firstDigit++;
+  }
+
+  // After this create a string of zeroes having length of str.length - 1
+  let zeroes = "0".repeat(valueAsString.length - 1);
+
+  // Concatenate firstDigit and zeroes to get the final number
+  let result = firstDigit.toString().concat(zeroes);
+
+  return BigInt(result);
 }
 
 /**

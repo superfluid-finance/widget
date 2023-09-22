@@ -1,5 +1,4 @@
 import SuperfluidWidget, {
-  PaymentDetails,
   ProductDetails,
   WidgetProps,
 } from "@superfluid-finance/widget";
@@ -72,23 +71,22 @@ const WidgetWrapper: FC<WidgetWrapperProps> = ({ children }) => {
     setRandomReceiver(generateRandomReceiver());
   }, [closeModalRef]);
 
-  const paymentDetails = useMemo(
-    () =>
-      ({
-        paymentOptions: [
-          {
-            receiverAddress: randomReceiver,
-            chainId: 80001,
-            superToken: {
-              address: Token,
-            },
-            flowRate: {
-              amountEther: "5",
-              period: "month",
-            },
+  const paymentDetails = useMemo<WidgetProps["paymentDetails"]>(
+    () => ({
+      paymentOptions: [
+        {
+          receiverAddress: randomReceiver,
+          chainId: 80001,
+          superToken: {
+            address: Token,
           },
-        ],
-      }) as PaymentDetails,
+          flowRate: {
+            amountEther: "5",
+            period: "month",
+          },
+        },
+      ],
+    }),
     [randomReceiver],
   );
 

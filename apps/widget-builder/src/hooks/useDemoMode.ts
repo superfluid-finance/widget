@@ -1,9 +1,5 @@
 import { faker } from "@faker-js/faker";
-import {
-  PaymentDetails,
-  ProductDetails,
-  supportedNetwork,
-} from "@superfluid-finance/widget";
+import { ProductDetails, supportedNetwork } from "@superfluid-finance/widget";
 import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -19,7 +15,7 @@ const defaultProductDetails: ProductDetails = {
   imageURI: "",
 };
 
-const demoPaymentDetails: PaymentDetails = {
+const demoPaymentDetails: WidgetProps["paymentDetails"] = {
   paymentOptions: [
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
@@ -108,7 +104,7 @@ const demoPaymentDetails: PaymentDetails = {
   ],
 };
 
-const defaultPaymentDetails: PaymentDetails = {
+const defaultPaymentDetails: WidgetProps["paymentDetails"] = {
   paymentOptions: [
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder

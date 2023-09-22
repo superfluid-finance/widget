@@ -18,7 +18,6 @@ import {
   useState,
 } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { parseEther } from "viem";
 import { Address, useBalance } from "wagmi";
 
 import { runEventListener } from "./EventListeners.js";
@@ -28,6 +27,7 @@ import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
 import { TokenAvatar } from "./TokenAvatar.js";
+import { mapFlowRateToDefaultWrapAmount } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 interface WrapCardProps extends PropsWithChildren {
@@ -100,6 +100,8 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
     formState: { isValid, isValidating },
   } = useFormContext<DraftFormValues>();
 
+  const { paymentDetails } = useWidget();
+
   const [accountAddress, paymentOptionWithTokenInfo, flowRate] = watch([
     "accountAddress",
     "paymentOptionWithTokenInfo",
@@ -152,9 +154,12 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
 
     if (!flowRate?.amountEther) return false;
 
-    const minAmount = parseEther(flowRate.amountEther);
+    const minWrapAmount = mapFlowRateToDefaultWrapAmount(
+      paymentDetails.defaultWrapAmount,
+      flowRate,
+    );
 
-    return BigInt(superTokenBalance.value) > minAmount;
+    return BigInt(superTokenBalance.value) >= minWrapAmount;
   }, [superTokenBalance, paymentOptionWithTokenInfo, flowRate]);
 
   const { handleNext } = useStepper();
@@ -250,8 +255,13 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
                   color="text.secondary"
                   sx={{ mt: 0.75, alignSelf: "start" }}
                 >
-                  We recommend wrapping at least 1 month of the subscription
-                  amount.
+                  We recommend wrapping at least{" "}
+                  {paymentDetails.defaultWrapAmount.multiplier}{" "}
+                  {paymentDetails.defaultWrapAmount.period ?? flowRate.period}
+                  {paymentDetails.defaultWrapAmount.multiplier > 1
+                    ? "s"
+                    : ""}{" "}
+                  of the subscription amount.
                 </Typography>
               </Fade>
             </Collapse>

@@ -1,8 +1,9 @@
 import { colors, Fab, SelectChangeEvent, ThemeOptions } from "@mui/material";
 import SuperfluidWidget, {
-  PaymentDetails,
+  PaymentOption,
   ProductDetails,
   WalletManager,
+  WidgetProps as WidgetProps_,
 } from "@superfluid-finance/widget";
 import tokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
@@ -49,7 +50,9 @@ export type Layout = (typeof layouts)[number];
 
 export type WidgetProps = {
   productDetails: ProductDetails;
-  paymentDetails: PaymentDetails;
+  paymentDetails: WidgetProps_["paymentDetails"] & {
+    paymentOptions: PaymentOption[];
+  };
   displaySettings: DisplaySettings;
   type: Layout;
 };
@@ -89,7 +92,7 @@ export const useWidgetContext = () => useContext(WidgetContext);
 const switchLayout = (
   layout: Layout,
   productDetails: ProductDetails,
-  paymentDetails: PaymentDetails,
+  paymentDetails: WidgetProps_["paymentDetails"],
   theme: ThemeOptions,
   walletManager: WalletManager,
   stepperOrientation: "vertical" | "horizontal",
