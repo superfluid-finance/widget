@@ -531,8 +531,12 @@ export function SubscribeCommandMapper({
               {
                 abi: erc20ABI,
                 address: cmd.superTokenAddress,
-                functionName: "transfer",
-                args: [cmd.receiverAddress, cmd.transferAmountWei] as const,
+                functionName: "transferFrom",
+                args: [
+                  cmd.accountAddress,
+                  cmd.receiverAddress,
+                  cmd.transferAmountWei,
+                ] as const,
               },
             ],
           }),
@@ -669,17 +673,31 @@ const createContractWrite = <
             );
 
             return { operationType, target, data, value: call.value ?? 0n };
-          } else {
-            const data = encodeAbiParameters(parseAbiParameters("bytes"), [
-              callData,
-            ]);
-
+          } else if (operationType === 202) {
             return {
               operationType,
               target,
-              data: data,
+              data: callData,
+              value: call.value ?? 0n,
+            };
+          } else {
+            return {
+              operationType,
+              target,
+              data: removeSigHashFromCallData(callData),
               value: call.value ?? 0n,
             };
           }
         },
   }) as ContractWrite;
+
+const EMPTY = "0x";
+
+/**
+ * Removes the 8-character (4 byte) signature hash from `callData`.
+ * @param callData
+ * @returns function parameters
+ */
+export const removeSigHashFromCallData = (
+  callData: `0x${string}`,
+): `0x${string}` => EMPTY.concat(callData.slice(10)) as `0x${string}`;
