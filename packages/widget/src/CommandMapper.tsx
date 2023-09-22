@@ -663,31 +663,26 @@ const createContractWrite = <
       : (signature) => {
           const [operationType, target, call] =
             arg.materializeForBatchCall!(signature);
+          const originalCallData = encodeFunctionData(call);
 
-          const callData = encodeFunctionData(call);
-
+          let adjustedCallData: `0x${string}`;
           if (operationType === 201) {
-            const data = encodeAbiParameters(
+            adjustedCallData = encodeAbiParameters(
               parseAbiParameters("bytes, bytes"),
-              [callData, "0x"],
+              [originalCallData, "0x"],
             );
-
-            return { operationType, target, data, value: call.value ?? 0n };
           } else if (operationType === 202) {
-            return {
-              operationType,
-              target,
-              data: callData,
-              value: call.value ?? 0n,
-            };
+            adjustedCallData = originalCallData;
           } else {
-            return {
-              operationType,
-              target,
-              data: removeSigHashFromCallData(callData),
-              value: call.value ?? 0n,
-            };
+            adjustedCallData = removeSigHashFromCallData(originalCallData);
           }
+
+          return {
+            operationType,
+            target,
+            data: adjustedCallData,
+            value: call.value ?? 0n,
+          };
         },
   }) as ContractWrite;
 
