@@ -6,9 +6,11 @@ import {
 } from "@superfluid-finance/widget";
 import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
+import { Address } from "viem";
 
 import {
   DisplaySettings,
+  goerliPermitTokens,
   Layout,
   WidgetProps,
 } from "../components/widget-preview/WidgetPreview";
@@ -111,10 +113,12 @@ const demoPaymentDetails: PaymentDetails = {
 const defaultPaymentDetails: PaymentDetails = {
   paymentOptions: [
     {
-      receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
+      receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
       chainId: supportedNetwork.goerli.id,
       superToken: {
-        address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a", // fUSDCx
+        address: goerliPermitTokens.find((x) =>
+          (x.tags ?? []).includes("supertoken"),
+        )!.address as Address,
       },
       flowRate: {
         amountEther: "1",

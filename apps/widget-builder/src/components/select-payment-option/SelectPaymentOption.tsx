@@ -85,7 +85,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
       if (value.superToken) {
         setSelectedToken(
-          tokenList.tokens.find(
+          widgetTokenList.tokens.find(
             ({ address }) =>
               address.toLowerCase() === value.superToken.address.toLowerCase(),
           ) ?? null,

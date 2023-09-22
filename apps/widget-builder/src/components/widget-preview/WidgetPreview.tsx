@@ -50,7 +50,7 @@ const mumbaiPermitTokens: TokenInfo[] = [
   },
 ];
 
-const goerliPermitTokens: TokenInfo[] = [
+export const goerliPermitTokens: TokenInfo[] = [
   {
     address: "0x19E6F96A887D0a27d60ef63942d7BF707fb1aD08",
     name: "PERMIT: Super fUSDC Fake Token",
@@ -81,7 +81,7 @@ const goerliPermitTokens: TokenInfo[] = [
 
 export const widgetTokenList = {
   ...tokenList,
-  tokens: [...tokenList.tokens, ...goerliPermitTokens],
+  tokens: [...goerliPermitTokens, ...tokenList.tokens],
   // ...mumbaiPermitTokens,
 } as SuperTokenList;
 
