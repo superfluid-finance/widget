@@ -6,6 +6,7 @@ import { paymentOptionSchema } from "./PaymentOption.js";
 import { timePeriods } from "./TimePeriod.js";
 
 export const paymentDetailsSchema = z.object({
+  attemptIdempotency: z.boolean().default(false),
   defaultWrapAmount: z
     .object({
       multiplier: z.number().int().min(1),

@@ -1,7 +1,13 @@
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
-import { Abi, ContractFunctionConfig, GetValue } from "viem";
-import { useContractRead, useContractReads } from "wagmi";
+import { Abi, ContractFunctionConfig, getAbiItem, GetValue } from "viem";
+import {
+  useBlockNumber,
+  useContractRead,
+  useContractReads,
+  usePublicClient,
+  useQuery,
+} from "wagmi";
 
 import {
   Command,
@@ -220,31 +226,112 @@ export function WrapIntoSuperTokensCommandMapper({
   return null;
 }
 
+const transferEventAbi = getAbiItem({ abi: superTokenABI, name: "Transfer" });
+
 export function SubscribeCommandMapper({
   command: cmd,
   onMapped,
 }: CommandMapperProps<SubscribeCommand>) {
-  const { isSuccess: isSuccessForGetFlowRate, data: existingFlowRate_ } =
-    useContractRead({
-      chainId: cmd.chainId,
-      address: cfAv1ForwarderAddress[cmd.chainId],
-      abi: cfAv1ForwarderABI,
-      functionName: "getFlowrate",
-      args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
-      cacheOnBlock: true,
-    });
+  const {
+    paymentDetails: { attemptIdempotency },
+  } = useWidget();
+
+  const {
+    isSuccess: isSuccessForGetFlowRate,
+    isLoading: isLoadingForGetFlowRate,
+    data: existingFlowRate_,
+  } = useContractRead({
+    chainId: cmd.chainId,
+    address: cfAv1ForwarderAddress[cmd.chainId],
+    abi: cfAv1ForwarderABI,
+    functionName: "getFlowrate",
+    args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
+    cacheOnBlock: true,
+  });
 
   const flowRate =
     cmd.flowRate.amountWei /
     BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
 
+  const checkExistingUpfrontTransfer =
+    attemptIdempotency ?? cmd.transferAmountWei > 0n;
+  const {
+    isSuccess: isSuccessForBlockNumber,
+    isIdle: isIdleForBlockNumber,
+    data: blockNumber,
+  } = useBlockNumber({
+    chainId: cmd.chainId,
+    enabled: checkExistingUpfrontTransfer,
+  });
+
+  const publicClient = usePublicClient({
+    chainId: cmd.chainId,
+  });
+  const {
+    isSuccess: isSuccessForTransferEvents,
+    isIdle: isIdleForTransferEvents,
+    data: transferEvents,
+  } = useQuery(
+    [cmd.id, blockNumber],
+    async () => {
+      if (blockNumber === undefined)
+        throw new Error("The query should not run without the block number.");
+
+      const logs = await publicClient.getLogs({
+        event: transferEventAbi,
+        address: cmd.superTokenAddress,
+        args: {
+          from: cmd.accountAddress,
+          to: cmd.receiverAddress,
+        },
+        strict: true,
+        toBlock: blockNumber,
+        fromBlock: blockNumber - 10_000n, // 10k is Alchemy limit, some places have 50k. Move into environment variable?
+      });
+      return logs;
+    },
+    {
+      enabled: checkExistingUpfrontTransfer && isSuccessForBlockNumber,
+    },
+  );
+
+  const skipTransfer = useMemo(() => {
+    if (checkExistingUpfrontTransfer && isSuccessForTransferEvents) {
+      return transferEvents!.filter(
+        (e) => !e.removed && e.args.value === cmd.transferAmountWei,
+      );
+      // TODO(KK): Figure out whether should try to match one log event or should sum together all the transfers?
+    } else {
+      return false;
+    }
+  }, [checkExistingUpfrontTransfer, isSuccessForTransferEvents]);
+
+  const didAllQueriesSucceed = useMemo(
+    () =>
+      !isLoadingForGetFlowRate &&
+      isSuccessForGetFlowRate &&
+      (isIdleForBlockNumber || isSuccessForBlockNumber) &&
+      (isIdleForTransferEvents || isSuccessForTransferEvents),
+    [
+      isLoadingForGetFlowRate,
+      isSuccessForGetFlowRate,
+      isIdleForBlockNumber,
+      isSuccessForBlockNumber,
+      isIdleForTransferEvents,
+      isSuccessForTransferEvents,
+    ],
+  );
+
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
+    if (!didAllQueriesSucceed) {
+      return contractWrites_;
+    }
 
     if (existingFlowRate_ !== undefined) {
       const existingFlowRate = BigInt(existingFlowRate_);
 
-      if (cmd.transferAmountWei > 0n) {
+      if (cmd.transferAmountWei > 0n && !skipTransfer) {
         contractWrites_.push(
           createContractWrite({
             commandId: cmd.id,
@@ -259,26 +346,46 @@ export function SubscribeCommandMapper({
       }
 
       if (existingFlowRate > 0n) {
-        const updatedFlowRate = existingFlowRate + flowRate;
-
-        // TODO(KK): Is this the right behaviour, to update the flow rate?
-        contractWrites_.push(
-          createContractWrite({
-            commandId: cmd.id,
-            displayTitle: "Modify Stream",
-            abi: cfAv1ForwarderABI,
-            address: cfAv1ForwarderAddress[cmd.chainId],
-            chainId: cmd.chainId,
-            functionName: "updateFlow",
-            args: [
-              cmd.superTokenAddress,
-              cmd.accountAddress,
-              cmd.receiverAddress,
-              updatedFlowRate,
-              cmd.userData,
-            ],
-          }),
-        );
+        if (attemptIdempotency) {
+          if (existingFlowRate < flowRate) {
+            contractWrites_.push(
+              createContractWrite({
+                commandId: cmd.id,
+                displayTitle: "Modify Stream",
+                abi: cfAv1ForwarderABI,
+                address: cfAv1ForwarderAddress[cmd.chainId],
+                chainId: cmd.chainId,
+                functionName: "updateFlow",
+                args: [
+                  cmd.superTokenAddress,
+                  cmd.accountAddress,
+                  cmd.receiverAddress,
+                  flowRate,
+                  cmd.userData,
+                ],
+              }),
+            );
+          }
+        } else {
+          const updatedFlowRate = existingFlowRate + flowRate;
+          contractWrites_.push(
+            createContractWrite({
+              commandId: cmd.id,
+              displayTitle: "Modify Stream",
+              abi: cfAv1ForwarderABI,
+              address: cfAv1ForwarderAddress[cmd.chainId],
+              chainId: cmd.chainId,
+              functionName: "updateFlow",
+              args: [
+                cmd.superTokenAddress,
+                cmd.accountAddress,
+                cmd.receiverAddress,
+                updatedFlowRate,
+                cmd.userData,
+              ],
+            }),
+          );
+        }
       } else {
         contractWrites_.push(
           createContractWrite({
@@ -301,14 +408,14 @@ export function SubscribeCommandMapper({
     }
 
     return contractWrites_;
-  }, [cmd.id, isSuccessForGetFlowRate]);
+  }, [cmd.id, didAllQueriesSucceed]);
 
   useEffect(
     () =>
-      isSuccessForGetFlowRate
+      didAllQueriesSucceed
         ? onMapped?.({ commandId: cmd.id, contractWrites })
         : void 0,
-    [cmd.id, contractWrites, isSuccessForGetFlowRate],
+    [cmd.id, contractWrites, didAllQueriesSucceed],
   );
 
   return null;

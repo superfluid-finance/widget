@@ -116,6 +116,7 @@ export function Widget({
           name: "",
         },
         paymentDetails: {
+          attemptIdempotency: false,
           paymentOptions: [],
           defaultWrapAmount: {
             multiplier: 3,
