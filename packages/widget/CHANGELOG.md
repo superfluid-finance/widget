@@ -1,5 +1,14 @@
 # @superfluid-finance/widget
 
+## 0.4.2
+
+### Patch Changes
+
+- 9924a30: Fix imports without .js suffix
+- eb2c577: Redesign transaction view
+- eb2c577: Add escape hatches to transactions (retry gas estimation, force transaction, skip transaction)
+- 34b0be9: Make it possible to specify default wrap amount PaymentDetails.defaultWrapAmount
+
 ## 0.4.1
 
 ### Patch Changes
