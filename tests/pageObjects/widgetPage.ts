@@ -574,7 +574,7 @@ export class WidgetPage extends BasePage {
     await expect(this.wrapAmountInput).toHaveValue(amount);
     await expect(this.wrapAmountMirrorAmount).toHaveValue(amount);
   }
-  
+
   async validateInlineWidgetIsVisible() {
     await test.step(`Make sure the inline widget is visible`, async () => {
       await expect(this.widgetContainer).toBeVisible();
