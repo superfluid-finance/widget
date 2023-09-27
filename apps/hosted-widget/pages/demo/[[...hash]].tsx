@@ -1,5 +1,5 @@
 import { Box, Container, Fade } from "@mui/material";
-import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { Theme } from "@mui/material/styles";
 import SuperfluidWidget from "@superfluid-finance/widget";
 import tokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
@@ -16,6 +16,8 @@ import useFontLoader from "../../src/hooks/useFontLoader";
 import useLoadFromIPFS from "../../src/hooks/useLoadFromIPFS";
 import useWalletAnalytics from "../../src/hooks/useWalletAnalytics";
 import { deleteFlow } from "../../src/utils/deleteDemoFlow";
+
+type TypographyOptions = Theme["typography"];
 
 function generateRandomReceiver() {
   return privateKeyToAccount(generatePrivateKey()).address;

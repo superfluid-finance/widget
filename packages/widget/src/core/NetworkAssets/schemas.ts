@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { chainIdSchema } from "../SupportedNetwork";
+import { chainIdSchema } from "../SupportedNetwork.js";
 
 export const networkAssetInfoSchema = z.object({
   color: z

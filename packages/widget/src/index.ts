@@ -2,7 +2,7 @@
 
 import { Widget } from "./Widget.js";
 
-export type { WidgetProps } from "./CheckoutConfig";
+export type { WidgetProps } from "./CheckoutConfig.js";
 export type {
   ChainId,
   FlowRate,
@@ -22,8 +22,8 @@ export {
   supportedNetworks,
   timePeriods,
 } from "./core/index.js";
-export type { EventListeners } from "./EventListeners";
-export type { WalletManager } from "./WalletManager";
+export type { EventListeners } from "./EventListeners.js";
+export type { WalletManager } from "./WalletManager.js";
 
 // TODO: Export Zod schemas from @superfluid-finance/widget/zod
 export {

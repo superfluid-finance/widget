@@ -1,8 +1,9 @@
-import { ThemeOptions } from "@mui/material/styles";
-import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { Theme, ThemeOptions } from "@mui/material/styles";
 import { deepmerge } from "@mui/utils";
 
 type ThemeMode = "light" | "dark";
+
+type DefaultTypography = Theme["typography"];
 
 interface TypographyCustomVariants {
   label: React.CSSProperties;
@@ -42,7 +43,7 @@ interface CoreThemeOptions
       "palette" | "shadows" | "transitions" | "breakpoints" | "shape"
     >
   > {
-  typography: TypographyOptions;
+  typography: DefaultTypography;
 }
 
 const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
@@ -161,7 +162,7 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
         lineHeight: 1.5,
         fontWeight: 400,
       },
-    },
+    } as DefaultTypography,
     // TODO: Only elevation 1 is used, find a way to overwrite only the first one.
     shadows: [
       "none", // elevation 0
@@ -298,7 +299,7 @@ export function getThemedComponents(
   // This is used to handle light and dark themes
   const getModeStyle = getModeStyleCB(mode);
 
-  const typography = coreThemeOptions.typography as TypographyOptions;
+  const typography = coreThemeOptions.typography as DefaultTypography;
 
   return {
     components: {
