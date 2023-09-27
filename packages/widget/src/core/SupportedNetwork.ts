@@ -18,23 +18,22 @@ import {
 } from "wagmi/chains";
 import { z } from "zod";
 
-export const supportedNetwork = {
-  mainnet, // Keep mainnet first.
-  arbitrum,
-  arbitrumGoerli,
-  avalanche,
-  avalancheFuji,
-  base,
-  baseGoerli,
-  bsc,
-  celo,
-  gnosis,
-  goerli,
-  optimism,
-  optimismGoerli,
-  polygon,
-  polygonMumbai,
-} as const satisfies Record<string, Chain>;
+type ChainKeys =
+  | "mainnet"
+  | "arbitrum"
+  | "arbitrumGoerli"
+  | "avalanche"
+  | "avalancheFuji"
+  | "base"
+  | "baseGoerli"
+  | "bsc"
+  | "celo"
+  | "gnosis"
+  | "goerli"
+  | "optimism"
+  | "optimismGoerli"
+  | "polygon"
+  | "polygonMumbai";
 
 export const chainIds = [
   mainnet.id,
@@ -55,6 +54,28 @@ export const chainIds = [
 ] as const;
 export type ChainId = (typeof chainIds)[number];
 
+export interface SupportedNetwork extends Chain {
+  id: ChainId;
+}
+
+export const supportedNetwork: Record<ChainKeys, SupportedNetwork> = {
+  mainnet, // Keep mainnet first.
+  arbitrum,
+  arbitrumGoerli,
+  avalanche,
+  avalancheFuji,
+  base,
+  baseGoerli,
+  bsc,
+  celo,
+  gnosis,
+  goerli,
+  optimism,
+  optimismGoerli,
+  polygon,
+  polygonMumbai,
+} as const satisfies Record<ChainKeys, SupportedNetwork>;
+
 const supportedNetworks_ = Object.values(supportedNetwork).sort((a, b) => {
   const testnetA = !!(a as { testnet?: boolean }).testnet;
   const testnetB = !!(b as { testnet?: boolean }).testnet;
@@ -74,9 +95,7 @@ export const supportedNetworkSchema = z
   .object({
     id: chainIdSchema,
   })
-  .transform((x) => x as Chain & (typeof supportedNetworks_)[number]);
-
-export type SupportedNetwork = z.infer<typeof supportedNetworkSchema>;
+  .transform((x) => x as SupportedNetwork);
 
 export const supportedNetworks =
   supportedNetworks_ as unknown as SupportedNetwork[];
