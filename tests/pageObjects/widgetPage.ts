@@ -132,7 +132,7 @@ export class WidgetPage extends BasePage {
     this.productName = page.getByTestId("product-name");
     this.productDescription = page.getByTestId("product-description");
     this.widgetErrorMessage = page.locator(
-      "[data-testid=widget-error] .MuiAlert-message",
+      "[data-testid=widget-error] .MuiAlert-message p",
     );
     this.widgetErrorTitle = page.locator(
       "[data-testid=widget-error] .MuiAlert-message div",
@@ -574,7 +574,7 @@ export class WidgetPage extends BasePage {
     await expect(this.wrapAmountInput).toHaveValue(amount);
     await expect(this.wrapAmountMirrorAmount).toHaveValue(amount);
   }
-  
+
   async validateInlineWidgetIsVisible() {
     await test.step(`Make sure the inline widget is visible`, async () => {
       await expect(this.widgetContainer).toBeVisible();
@@ -815,6 +815,14 @@ export class WidgetPage extends BasePage {
       await expect(this.networkSelectionButton).not.toBeVisible();
       await expect(this.tokenSelectionButton).not.toBeVisible();
       await expect(this.continueButton).not.toBeVisible();
+    });
+  }
+  async verifyDuplicateOptionError() {
+    await test.step(`Verifying duplicate option error`, async () => {
+      await expect(this.widgetErrorTitle).toHaveText("Input Error");
+      await expect(this.widgetErrorMessage).toHaveText(
+        `Validation error: Payment options must be unique. Please remove the duplicates. at "paymentDetails.paymentOptions"`,
+      );
     });
   }
 }

@@ -104,7 +104,11 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   }, [flowRate, token]);
 
   return (
-    <Card variant="elevation" elevation={1}>
+    <Card
+      data-testid="payment-option-container"
+      variant="elevation"
+      elevation={1}
+    >
       <CardContent>
         <Stack direction="column" gap={1}>
           <PaymentOptionRow

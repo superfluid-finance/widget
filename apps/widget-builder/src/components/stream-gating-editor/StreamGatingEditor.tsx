@@ -268,7 +268,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
           )}
         </InputWrapper>
         <InputWrapper
-          data-testid="contract-owner-title"
+          dataTestid="contract-owner-title"
           title="Contract owner"
           tooltip="The address with authority to add further PaymentOptions or deprecate the contract."
         >
