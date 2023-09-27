@@ -529,6 +529,182 @@ test("View types - Closing full screen widget view", async ({ page }) => {
   await widgetPage.validateWidgetIsNotShown();
 });
 
+test("Cloning a payment option - just flow rate", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  await builderPage.openPaymentTab();
+  await builderPage.clickOnNthCopyPaymentOptionButton(0);
+  await builderPage.verifyPaymentOptionShownInForm(
+    paymentOptions.defaultPaymentOption,
+  );
+  await builderPage.clickAddPaymentOptionButton();
+  await builderPage.verifyAddedPaymentOptions([
+    paymentOptions.defaultPaymentOption,
+    paymentOptions.defaultPaymentOption,
+  ]);
+  await widgetPage.verifyDuplicateOptionError();
+});
+
+test("Cloning a payment option - user defined rate", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  let finalOptions: PaymentOption[] = [demoOptions[1], ...demoOptions];
+  await builderPage.openPaymentTab();
+  await builderPage.clickOnWandButton();
+  await builderPage.verifyAddedPaymentOptions(demoOptions);
+  await builderPage.clickOnNthCopyPaymentOptionButton(1);
+  await builderPage.verifyPaymentOptionShownInForm(demoOptions[1]);
+  await builderPage.clickAddPaymentOptionButton();
+  await builderPage.verifyAddedPaymentOptions(finalOptions);
+  await widgetPage.verifyDuplicateOptionError();
+});
+
+test("Cloning a payment option - upfront payment", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  let widgetPage = new WidgetPage(page);
+  let finalOptions: PaymentOption[] = [demoOptions[2], ...demoOptions];
+  await builderPage.openPaymentTab();
+  await builderPage.clickOnWandButton();
+  await builderPage.clickOnNthCopyPaymentOptionButton(2);
+  await builderPage.verifyPaymentOptionShownInForm(demoOptions[2]);
+  await builderPage.clickAddPaymentOptionButton();
+  await builderPage.verifyAddedPaymentOptions(finalOptions);
+  await widgetPage.verifyDuplicateOptionError();
+});
+
+test("Editing a payment option - just flow rate", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  await builderPage.openPaymentTab();
+  await builderPage.clickOnNthEditPaymentOptionButton(0);
+  await builderPage.verifyPaymentOptionShownInForm(
+    paymentOptions.defaultPaymentOption,
+  );
+  await builderPage.editPaymentOptionFlowRateTo("10");
+  let expectedTestOption: PaymentOption[] = [
+    { ...paymentOptions.defaultPaymentOption, flowRate: "10" },
+  ];
+  await builderPage.verifyAddedPaymentOptions(expectedTestOption);
+});
+
+test("Editing a payment option - user defined rate", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  await builderPage.openPaymentTab();
+  await builderPage.clickOnWandButton();
+  await builderPage.clickOnNthEditPaymentOptionButton(1);
+  await builderPage.verifyPaymentOptionShownInForm(demoOptions[1]);
+  await builderPage.disableUserDefinedRate();
+  await builderPage.editPaymentOptionFlowRateTo("10");
+  let finalOptions: PaymentOption[] = [...demoOptions];
+  finalOptions[1].flowRate = "10";
+  finalOptions[1].userDefinedRate = false;
+  await builderPage.verifyAddedPaymentOptions(finalOptions);
+});
+
+test("Editing a payment option - upfront payment", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  await builderPage.openPaymentTab();
+  await builderPage.clickOnWandButton();
+  await builderPage.clickOnNthEditPaymentOptionButton(2);
+  await builderPage.verifyPaymentOptionShownInForm(demoOptions[2]);
+  await builderPage.editUpfrontPaymentAmountTo("10");
+  let finalOptions: PaymentOption[] = [...demoOptions];
+  finalOptions[2].upfrontPayment = "10";
+  await builderPage.verifyAddedPaymentOptions(finalOptions);
+});
+
+test("Book a demo button opening the form", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  await builderPage.openExportTab();
+  await builderPage.clickOnBookADemoAndVerifyPageWasOpen();
+});
+
+test("Tooltips shown in the gating tab", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  await builderPage.openGatingTab();
+  await builderPage.hoverAndVerifyAllGatingTabTooltips();
+});
+
+test("Inputing symbols and emojis in fields and uploading wrong format file does not crash the page", async ({
+  page,
+}) => {
+  let builderPage = new BuilderPage(page);
+  let nftDetails: NFTDetails = {
+    symbol: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
+    name: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
+    owner: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
+    image: "./data/export.json",
+    networks: ["Goerli"],
+  };
+  await builderPage.openGatingTab();
+  await builderPage.inputNFTDetails(nftDetails);
+});
+
+test("Networks shown in the NFT selection", async ({ page }) => {
+  let builderPage = new BuilderPage(page);
+  await builderPage.openPaymentTab();
+  await builderPage.clickOnWandButton();
+  await builderPage.openGatingTab();
+  //TODO Check all networks once I figure out an easy way to import the widget
+  await builderPage.verifyNetworksShownInNftSelection([
+    "Goerli",
+    "Polygon Mumbai",
+    "Celo",
+  ]);
+});
+
+// TODO Logic should look pretty much like this, do these cases once the NFT deployment part gets re-worked
+// test("Deploying an NFT with an image", async ({ page }) => {
+//   let nftDetails: NFTDetails = {
+//     symbol:"Test",
+//     name: "Test",
+//     owner: process.env.WIDGET_WALLET_PUBLIC_KEY!,
+//     image: "./data/Superfluid_logo.png",
+//     networks: ["Goerli"]
+//   }
+//   let builderPage = new BuilderPage(page);
+//   await builderPage.openGatingTab();
+//   await builderPage.inputNFTDetails(nftDetails);
+//   await builderPage.clickCreateNFTButton();
+//   await builderPage.verifyNftSuccessScreenIsDisplayed();
+//   await builderPage.openNftSuccessScreenDocumentation();
+//   await builderPage.exportAndValidateNFTAddresses()
+//   await ethHelper.verifyDeployedNFTDetails(nftDetails,paymentOptions.defaultPaymentOption)
+//   await builderPage.clickOnNftSuccessScreenCloseButton();
+//   await builderPage.verifyNftSuccessScreenIsNotDisplayed();
+// });
+
+// test("Deploying an NFT without an image", async ({ page }) => {
+//   let nftDetails: NFTDetails = {
+//     symbol:"Test",
+//     name: "Test",
+//     owner: process.env.WIDGET_WALLET_PUBLIC_KEY!,
+//     networks: ["Goerli"]
+//   }
+//   let builderPage = new BuilderPage(page);
+//   await builderPage.openGatingTab();
+//   await builderPage.inputNFTDetails(nftDetails)
+//   await builderPage.clickCreateNFTButton();
+//   await builderPage.verifyNftSuccessScreenIsDisplayed();
+//   await ethHelper.verifyDeployedNFTDetails(nftDetails,paymentOptions.defaultPaymentOption)
+// });
+
+// test("Mocked - deployment api call gets an error ( Deployment failed, reset? button )", async ({ page }) => {
+//   let builderPage = new BuilderPage(page);
+//   await builderPage.openGatingTab();
+//   let nftDetails: NFTDetails = {
+//     symbol:"Test",
+//     name: "Test",
+//     owner: process.env.WIDGET_WALLET_PUBLIC_KEY!,
+//     networks: ["Goerli"]
+//   }
+//   await builderPage.inputNFTDetails(nftDetails)
+//   await builderPage.mockDeploymentApiCallError();
+//   await builderPage.clickCreateNFTButton();
+//   await builderPage.verifyNftDeploymentFailedButtonIsDisplayed();
+//   await builderPage.clickRetryNFTDeployment()
+//   await builderPage.verifyNftSuccessScreenIsDisplayed();
+//   await ethHelper.verifyDeployedNFTDetails(nftDetails,paymentOptions.defaultPaymentOption)});
+//
 // TODO Look into other ways of getting the elements coordinates and fix up the tests
 // Playwright can't seem to find the correct bounding boxes for the slider and thumb,
 // It might be related to it scrolling during the test case and getting the bounding box relative to the main frame viewport
