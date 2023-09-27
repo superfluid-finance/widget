@@ -5,7 +5,6 @@ import SuperfluidWidget, {
   supportedNetworks,
   WalletManager,
 } from "@superfluid-finance/widget";
-import superTokenList from "@superfluid-finance/widget/tokenlist";
 import {
   EthereumClient,
   w3mConnectors,
@@ -63,7 +62,6 @@ function App() {
         <SuperfluidWidget
           productDetails={productDetails}
           paymentDetails={paymentDetails}
-          tokenList={superTokenList}
           type="drawer"
           walletManager={walletManager}
           eventListeners={eventListeners}
@@ -75,7 +73,6 @@ function App() {
         <SuperfluidWidget
           productDetails={productDetails}
           paymentDetails={paymentDetails}
-          tokenList={superTokenList}
           type="dialog"
           walletManager={walletManager}
           eventListeners={eventListeners}
@@ -87,7 +84,6 @@ function App() {
         <SuperfluidWidget
           productDetails={productDetails}
           paymentDetails={paymentDetails}
-          tokenList={superTokenList}
           type="full-screen"
           walletManager={walletManager}
           eventListeners={eventListeners}
