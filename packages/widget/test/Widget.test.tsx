@@ -3,8 +3,8 @@ import { createPublicClient, http } from "viem";
 import { afterEach, expect, test } from "vitest";
 import { createConfig, mainnet, WagmiConfig } from "wagmi";
 
-import { Widget } from "../src/Widget";
-import { oldWidgetConfig } from "./oldWidgetConfig";
+import { Widget } from "../src/Widget.js";
+import { oldWidgetConfig } from "./oldWidgetConfig.js";
 
 afterEach(() => {
   cleanup();
