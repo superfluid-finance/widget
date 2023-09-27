@@ -32,4 +32,4 @@ export const useSignificantFlowingDecimal = (
 
     // This will usually have the last 3 numbers flowing smoothly.
     return Math.min(lengthToFirstSignificatDecimal + 2, 18); // Don't go over 18.
-  }, [flowRate]);
+  }, [flowRate, animationStepTimeInMs]);

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { networkAssetInfoSchema, networkAssetsSchema } from "./schemas";
+import { networkAssetInfoSchema, networkAssetsSchema } from "./schemas.js";
 
 export interface NetworkAssetInfo
   extends z.infer<typeof networkAssetInfoSchema> {}

@@ -9,6 +9,7 @@ const useFlowingBalance = (
 ) => {
   const [flowingBalance, setFlowingBalance] = useState(startingBalance);
 
+  const startingBalanceTime = startingBalanceDate.getTime();
   useEffect(() => {
     // No need to show animation when flow rate is zero.
     if (flowRate === 0n) return;
@@ -22,7 +23,7 @@ const useFlowingBalance = (
         ANIMATION_MINIMUM_STEP_TIME
       ) {
         const elapsedTimeInMilliseconds = BigInt(
-          Date.now() - startingBalanceDate.getTime(),
+          Date.now() - startingBalanceTime,
         );
         const flowingBalance_ =
           startingBalance + (flowRate * elapsedTimeInMilliseconds) / 1000n;
@@ -36,7 +37,7 @@ const useFlowingBalance = (
     let animationFrameId = window.requestAnimationFrame(animationStep);
 
     return () => window.cancelAnimationFrame(animationFrameId);
-  }, [startingBalance, startingBalanceDate.getTime(), flowRate]);
+  }, [startingBalance, startingBalanceTime, flowRate]);
 
   return flowingBalance;
 };

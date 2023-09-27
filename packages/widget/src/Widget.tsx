@@ -260,6 +260,10 @@ export function Widget({
       viewProps.type,
       eventListeners?.onTransactionSent,
       eventListeners?.onSuccessButtonClick,
+      eventListeners?.onRouteChange,
+      eventListeners?.onTransactionSent,
+      eventListeners?.onSuccess,
+      eventListeners?.onPaymentOptionUpdate,
     ],
   );
 

@@ -17,5 +17,11 @@ module.exports = {
     "import/first": "error",
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        patterns: ["@mui/*/*/*"],
+      },
+    ],
   },
 };

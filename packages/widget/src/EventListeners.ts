@@ -1,7 +1,7 @@
 import { ExtractAbiFunctionNames } from "abitype";
 import { Hash } from "viem";
 
-import { cfAv1ForwarderABI, PaymentOption } from "./core";
+import { cfAv1ForwarderABI, PaymentOption } from "./core/index.js";
 
 export type TxFunctionName = ExtractAbiFunctionNames<
   typeof cfAv1ForwarderABI,
