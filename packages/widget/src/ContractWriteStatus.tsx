@@ -1,7 +1,7 @@
-import CheckIcon_ from "@mui/icons-material/Check";
+import CheckIcon_ from "@mui/icons-material/Check.js";
 import CircleIcon_ from "@mui/icons-material/Circle.js";
-import CircleOutlinedIcon_ from "@mui/icons-material/CircleOutlined";
-import OpenInNewIcon_ from "@mui/icons-material/OpenInNew";
+import CircleOutlinedIcon_ from "@mui/icons-material/CircleOutlined.js";
+import OpenInNewIcon_ from "@mui/icons-material/OpenInNew.js";
 import {
   IconButton,
   ListItem,

@@ -60,7 +60,7 @@ export function CommandHandlerProvider({ children }: Props) {
           contractWrites,
         },
       }),
-    [],
+    [dispatch],
   );
 
   const onContractWriteResult = useCallback<
@@ -83,7 +83,7 @@ export function CommandHandlerProvider({ children }: Props) {
         handleNextWrite(writeIndex);
       }
     },
-    [writeIndex, contractWrites, handleNextWrite],
+    [dispatch, writeIndex, contractWrites, handleNextWrite],
   );
 
   const contextValue = useMemo(

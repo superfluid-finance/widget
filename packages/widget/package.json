@@ -1,6 +1,6 @@
 {
   "name": "@superfluid-finance/widget",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -51,7 +51,7 @@
   "scripts": {
     "build": "cp ../../README.md . && tsc -p ./tsconfig.build.json",
     "dev": "tsc -w -p ./tsconfig.build.json",
-    "typedoc": "typedoc --out docs src/index.ts",
+    "typedoc": "typedoc --out docs src/index.ts --tsconfig ./tsconfig.build.json",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "wagmi": "wagmi generate",
     "test": "vitest",
@@ -91,12 +91,12 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.4",
-    "@wagmi/cli": "^1.5.0",
+    "@wagmi/cli": "^1.5.1",
     "jsdom": "^22.1.0",
     "tsconfig": "workspace:*",
     "typedoc": "^0.25.1",
     "typescript": "^5.2.2",
-    "viem": "^1.11.0",
+    "viem": "^1.12.2",
     "vitest": "^0.34.4",
     "wagmi": "^1.4.2"
   },
