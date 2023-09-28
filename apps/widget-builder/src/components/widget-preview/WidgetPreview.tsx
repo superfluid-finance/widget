@@ -5,7 +5,7 @@ import SuperfluidWidget, {
   WalletManager,
   WidgetProps as WidgetProps_,
 } from "@superfluid-finance/widget";
-import tokenList from "@superfluid-finance/widget/tokenlist";
+import { extendedSuperTokenList } from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import {
   createContext,
@@ -18,6 +18,8 @@ import {
 } from "react";
 
 import useFontLoader from "../../hooks/useFontLoader";
+
+export const widgetBuilderTokenList = extendedSuperTokenList;
 
 export interface FontSettings {
   family: string;
@@ -101,7 +103,7 @@ const switchLayout = (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
-      tokenList={tokenList}
+      tokenList={widgetBuilderTokenList}
       type={layout}
       theme={theme}
       walletManager={walletManager}
@@ -114,7 +116,7 @@ const switchLayout = (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
-      tokenList={tokenList}
+      tokenList={widgetBuilderTokenList}
       type={layout}
       theme={theme}
       walletManager={walletManager}

@@ -1,5 +1,12 @@
 # @superfluid-finance/widget
 
+## 0.4.3
+
+### Patch Changes
+
+- 8e6a98f: Switch to NodeNext in tsconfig for maximum compatibility without transpiling/bundling
+- 2990d79: Update dependencies
+
 ## 0.4.2
 
 ### Patch Changes

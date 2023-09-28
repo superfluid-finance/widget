@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { Theme } from "@mui/material/styles";
 import SuperfluidWidget from "@superfluid-finance/widget";
-import tokenList from "@superfluid-finance/widget/tokenlist";
+import { extendedSuperTokenList } from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -87,7 +87,7 @@ const IPFSWidgetPage: NextPage = () => {
             {data && (
               <SuperfluidWidget
                 {...data}
-                tokenList={tokenList}
+                tokenList={extendedSuperTokenList}
                 type="page"
                 walletManager={walletManager}
                 eventListeners={{

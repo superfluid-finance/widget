@@ -15,10 +15,10 @@
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.8",
-    "@mui/material": "^5.14.8",
-    "@segment/analytics-next": "^1.55.0",
-    "@sentry/nextjs": "^7.68.0",
+    "@mui/icons-material": "^5.14.11",
+    "@mui/material": "^5.14.11",
+    "@segment/analytics-next": "^1.56.0",
+    "@sentry/nextjs": "^7.72.0",
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
@@ -32,11 +32,11 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/node": "^20.6.0",
-    "@types/react": "^18.2.21",
-    "@types/react-blockies": "^1.4.1",
-    "eslint": "^8.49.0",
-    "eslint-config-next": "^13.4.13",
+    "@types/node": "^20.7.0",
+    "@types/react": "^18.2.23",
+    "@types/react-blockies": "^1.4.2",
+    "eslint": "^8.50.0",
+    "eslint-config-next": "^13.5.3",
     "typescript": "^5.2.2"
   }
 }
