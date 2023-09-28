@@ -237,6 +237,7 @@ export default function Builder() {
       <TermsAndPrivacy />
       <Box sx={{ position: "absolute", top: 5, right: 5 }}>
         <Button
+          data-testid="json-editor-button"
           variant="outlined"
           onClick={() => setConfigEditorOpen((isOpen) => !isOpen)}
           startIcon={<CodeIcon />}

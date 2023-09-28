@@ -95,8 +95,8 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
 
   const debouncedSideEffect = useCallback(
     debounce((isJsonValid: boolean, editorValue: string) => {
-      setErrorMessage(null);
       if (isJsonValid) {
+        setErrorMessage(null);
         try {
           const parseResult = schema.safeParse(JSON.parse(editorValue));
           if (parseResult.success) {
@@ -126,6 +126,10 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
       debouncedSideEffect.clear();
     };
   }, [editorValue, isJsonValid, debouncedSideEffect]);
+
+  window.setEditorValue = (value) => {
+    setEditorValue(value);
+  };
 
   return (
     <Stack height="100vh">
@@ -160,7 +164,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
           onClose={() => setErrorMessage(null)}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         >
-          <Alert variant="standard" severity="error">
+          <Alert data-testid="editor-error" variant="standard" severity="error">
             {errorMessage}
           </Alert>
         </Snackbar>

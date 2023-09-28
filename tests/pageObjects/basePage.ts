@@ -1,9 +1,24 @@
-import { Locator, Page } from "@playwright/test";
+import { expect,Locator, Page } from "@playwright/test";
 
 export let randomDetailsSet = {
   name: "",
   description: "",
 };
+
+export const supportedNetworks: string[] = [
+  "Arbitrum One",
+  "Avalanche",
+  "Base",
+  "BNB Smart Chain",
+  "Celo",
+  "Gnosis",
+  "OP Mainnet",
+  "Polygon",
+  "Avalanche Fuji",
+  "Base Goerli",
+  "Goerli",
+  "Polygon Mumbai",
+];
 
 export const rebounderAddresses = {
   goerli: "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
@@ -165,5 +180,21 @@ export class BasePage {
     await page.mouse.down();
     await page.mouse.move(endPoint.x, endPoint.y);
     await page.mouse.up();
+  }
+
+  static async clickLinkAndVaguelyVerifyOpenedLink(
+    page: Page,
+    buttonToClick: Locator,
+    buttonHref: string,
+    expectedFinalUrl: string,
+    expectedVisibleElementText: string,
+  ) {
+    const newTabPromise = page.waitForEvent("popup", { timeout: 5000 });
+    await expect(buttonToClick).toHaveAttribute("href", buttonHref);
+    await buttonToClick.click();
+    const newTab = await newTabPromise;
+    await newTab.waitForLoadState();
+    await expect(newTab).toHaveURL(expectedFinalUrl);
+    await expect(newTab.getByText(expectedVisibleElementText)).toBeVisible();
   }
 }

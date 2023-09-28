@@ -2,7 +2,7 @@ import { expect, Locator, Page, test } from "@playwright/test";
 import * as metamask from "@synthetixio/synpress/commands/metamask";
 
 import * as EthHelper from "../helpers/ethHelper";
-import { BasePage, randomDetailsSet } from "./basePage";
+import { BasePage, randomDetailsSet, supportedNetworks } from "./basePage";
 
 export class WidgetPage extends BasePage {
   readonly page: Page;
@@ -822,6 +822,42 @@ export class WidgetPage extends BasePage {
       await expect(this.widgetErrorTitle).toHaveText("Input Error");
       await expect(this.widgetErrorMessage).toHaveText(
         `Validation error: Payment options must be unique. Please remove the duplicates. at "paymentDetails.paymentOptions"`,
+      );
+    });
+  }
+
+  async validateAllNetworksAreVisibleInTheWidgetSelection() {
+    await test.step(`Validating all networks are visible in the widget selection`, async () => {
+      await this.networkSelectionButton.click();
+      for (const [index, network] of supportedNetworks.entries()) {
+        await expect(
+          this.page
+            .getByTestId("network-option")
+            .getByText(network, { exact: true }),
+        ).toBeVisible();
+      }
+    });
+  }
+
+  async clickAndVerifyTermsOfUsePageIsOpen() {
+    await test.step(`Clicking on the terms of use link and verifying the page is open`, async () => {
+      await BasePage.clickLinkAndVaguelyVerifyOpenedLink(
+        this.page,
+        this.termsLink,
+        "https://www.superfluid.finance/termsofuse/",
+        "https://www.superfluid.finance/terms",
+        "SUPERFLUID TERMS OF USE",
+      );
+    });
+  }
+  async clickAndVerifyPrivacyPolicyPageIsOpen() {
+    await test.step(`Clicking on the privacy policy link and verifying the page is open`, async () => {
+      await BasePage.clickLinkAndVaguelyVerifyOpenedLink(
+        this.page,
+        this.privacyPolicyLink,
+        "https://www.iubenda.com/privacy-policy/34415583/legal",
+        "https://www.iubenda.com/privacy-policy/34415583/legal",
+        "Privacy Policy of superfluid.finance",
       );
     });
   }
