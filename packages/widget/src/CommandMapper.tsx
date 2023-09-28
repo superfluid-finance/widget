@@ -233,7 +233,7 @@ export function SubscribeCommandMapper({
   onMapped,
 }: CommandMapperProps<SubscribeCommand>) {
   const {
-    paymentDetails: { attemptIdempotency },
+    paymentDetails: { modifyFlowRateBehaviour },
   } = useWidget();
 
   const {
@@ -348,27 +348,7 @@ export function SubscribeCommandMapper({
       }
 
       if (existingFlowRate > 0n) {
-        if (attemptIdempotency) {
-          if (existingFlowRate < flowRate) {
-            contractWrites_.push(
-              createContractWrite({
-                commandId: cmd.id,
-                displayTitle: "Modify Stream",
-                abi: cfAv1ForwarderABI,
-                address: cfAv1ForwarderAddress[cmd.chainId],
-                chainId: cmd.chainId,
-                functionName: "updateFlow",
-                args: [
-                  cmd.superTokenAddress,
-                  cmd.accountAddress,
-                  cmd.receiverAddress,
-                  flowRate,
-                  cmd.userData,
-                ],
-              }),
-            );
-          }
-        } else {
+        if (modifyFlowRateBehaviour === "ADD") {
           const updatedFlowRate = existingFlowRate + flowRate;
           contractWrites_.push(
             createContractWrite({
@@ -387,6 +367,29 @@ export function SubscribeCommandMapper({
               ],
             }),
           );
+        } else {
+          if (
+            existingFlowRate < flowRate ||
+            modifyFlowRateBehaviour === "SET"
+          ) {
+            contractWrites_.push(
+              createContractWrite({
+                commandId: cmd.id,
+                displayTitle: "Modify Stream",
+                abi: cfAv1ForwarderABI,
+                address: cfAv1ForwarderAddress[cmd.chainId],
+                chainId: cmd.chainId,
+                functionName: "updateFlow",
+                args: [
+                  cmd.superTokenAddress,
+                  cmd.accountAddress,
+                  cmd.receiverAddress,
+                  flowRate,
+                  cmd.userData,
+                ],
+              }),
+            );
+          }
         }
       } else {
         contractWrites_.push(
