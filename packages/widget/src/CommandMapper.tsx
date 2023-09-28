@@ -253,8 +253,7 @@ export function SubscribeCommandMapper({
     cmd.flowRate.amountWei /
     BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
 
-  const checkExistingUpfrontTransfer =
-    attemptIdempotency ?? cmd.transferAmountWei > 0n;
+  const checkExistingUpfrontTransfer = cmd.transferAmountWei > 0n;
   const {
     isSuccess: isSuccessForBlockNumber,
     isIdle: isIdleForBlockNumber,
@@ -297,10 +296,13 @@ export function SubscribeCommandMapper({
 
   const skipTransfer = useMemo(() => {
     if (checkExistingUpfrontTransfer && isSuccessForTransferEvents) {
+      // Check if there's already been a transfer with the upfront payment amount.
+      // Decided to approach it by looking for the exact transfer amount, instead of summing up the transfers.
+      // The main reason for this feature is to avoid accidental double-charging of brand new users and checking for the exact transfer amount seems sufficient.
+      // More complex scenarios will need manual intervention and customer support.
       return transferEvents!.filter(
         (e) => !e.removed && e.args.value === cmd.transferAmountWei,
       );
-      // TODO(KK): Figure out whether should try to match one log event or should sum together all the transfers?
     } else {
       return false;
     }
