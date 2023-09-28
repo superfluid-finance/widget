@@ -3,7 +3,6 @@ import SuperfluidWidget, {
   ProductDetails,
   WidgetProps,
 } from "@superfluid-finance/widget";
-import superTokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
@@ -150,7 +149,6 @@ const SubscribeButton = () => {
       <SuperfluidWidget
         productDetails={productDetails}
         paymentDetails={paymentDetails}
-        tokenList={superTokenList}
         theme={theme}
         type="drawer"
         walletManager={walletManager}

@@ -1,9 +1,9 @@
 import { Fade } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import { TypographyOptions } from "@mui/material/styles/createTypography";
+import { Theme } from "@mui/material/styles";
 import SuperfluidWidget from "@superfluid-finance/widget";
-import tokenList from "@superfluid-finance/widget/tokenlist";
+import { extendedSuperTokenList } from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -17,6 +17,8 @@ import useFontLoader from "../src/hooks/useFontLoader";
 import useLoadFromIPFS from "../src/hooks/useLoadFromIPFS";
 import useWalletAnalytics from "../src/hooks/useWalletAnalytics";
 import { WagmiProviders } from "../src/providers";
+
+type TypographyOptions = Theme["typography"];
 
 const IPFSWidgetPage: NextPage = () => {
   const { query } = useRouter();
@@ -85,7 +87,7 @@ const IPFSWidgetPage: NextPage = () => {
             {data && (
               <SuperfluidWidget
                 {...data}
-                tokenList={tokenList}
+                tokenList={extendedSuperTokenList}
                 type="page"
                 walletManager={walletManager}
                 eventListeners={{

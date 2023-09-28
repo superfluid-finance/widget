@@ -6,7 +6,7 @@ import {
   flowRateSchema,
   mapTimePeriodToSeconds,
   TimePeriod,
-} from "./core";
+} from "./core/index.js";
 
 export type ChildrenProp = PropsWithChildren["children"];
 

@@ -9,7 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 import { deepmerge } from "@mui/utils";
-import defaultTokenList, {
+import {
+  extendedSuperTokenList,
   SuperTokenInfo,
   TokenInfo,
 } from "@superfluid-finance/tokenlist";
@@ -49,7 +50,7 @@ export function Widget({
     name: "",
   },
   paymentDetails: paymentDetails_,
-  tokenList = defaultTokenList,
+  tokenList = extendedSuperTokenList,
   theme: theme_,
   walletManager: walletManager_,
   stepper: stepper_ = { orientation: "vertical" },
@@ -261,6 +262,10 @@ export function Widget({
       viewProps.type,
       eventListeners?.onTransactionSent,
       eventListeners?.onSuccessButtonClick,
+      eventListeners?.onRouteChange,
+      eventListeners?.onTransactionSent,
+      eventListeners?.onSuccess,
+      eventListeners?.onPaymentOptionUpdate,
     ],
   );
 

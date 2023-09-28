@@ -38,3 +38,11 @@ type PartialPaymentOption = {
   userDefinedRate?: boolean;
   snapshotPath?: string;
 };
+
+type NFTDetails = {
+  symbol?: string;
+  name?: string;
+  owner?: string;
+  image?: string;
+  networks?: string[] | string;
+};

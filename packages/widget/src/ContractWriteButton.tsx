@@ -1,6 +1,6 @@
-import ReplayIcon_ from "@mui/icons-material/Replay";
-import SkipNextIcon_ from "@mui/icons-material/SkipNext";
-import WarningAmberIcon_ from "@mui/icons-material/WarningAmber";
+import ReplayIcon_ from "@mui/icons-material/Replay.js";
+import SkipNextIcon_ from "@mui/icons-material/SkipNext.js";
+import WarningAmberIcon_ from "@mui/icons-material/WarningAmber.js";
 import { LoadingButton } from "@mui/lab";
 import { Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";

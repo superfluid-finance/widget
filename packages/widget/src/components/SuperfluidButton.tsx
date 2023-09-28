@@ -1,7 +1,7 @@
 import { Button, ButtonTypeMap, colors } from "@mui/material";
 import { FC } from "react";
 
-import SuperfluidLogo from "../SuperfluidLogo";
+import SuperfluidLogo from "../SuperfluidLogo.js";
 
 export type SuperfluidButtonProps = {
   widgetUrl: string;

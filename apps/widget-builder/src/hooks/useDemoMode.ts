@@ -78,6 +78,7 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
       superToken: {
         address: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // fDAIx
       },
+      transferAmountEther: "1",
       flowRate: {
         amountEther: "1",
         period: "month",

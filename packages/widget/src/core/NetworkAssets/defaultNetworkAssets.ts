@@ -1,5 +1,5 @@
-import { supportedNetwork } from "../SupportedNetwork";
-import { NetworkAssets } from "./types";
+import { supportedNetwork } from "../SupportedNetwork.js";
+import { NetworkAssets } from "./types.js";
 
 export const defaultNetworkAssets: NetworkAssets = {
   [supportedNetwork.arbitrum.id]: {

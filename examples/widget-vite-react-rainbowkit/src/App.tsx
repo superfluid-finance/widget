@@ -5,7 +5,6 @@ import SuperfluidWidget, {
   EventListeners,
   PaymentOption,
 } from "@superfluid-finance/widget";
-import superTokenList from "@superfluid-finance/widget/tokenlist";
 import { useCallback, useMemo, useState } from "react";
 import { WagmiConfig } from "wagmi";
 
@@ -42,7 +41,6 @@ export default function App() {
                   <SuperfluidWidget
                     productDetails={productDetails}
                     paymentDetails={paymentDetails}
-                    tokenList={superTokenList}
                     type="drawer"
                     walletManager={walletManager}
                     eventListeners={eventListeners}
@@ -54,7 +52,6 @@ export default function App() {
                   <SuperfluidWidget
                     productDetails={productDetails}
                     paymentDetails={paymentDetails}
-                    tokenList={superTokenList}
                     type="dialog"
                     walletManager={walletManager}
                     eventListeners={eventListeners}
@@ -66,7 +63,6 @@ export default function App() {
                   <SuperfluidWidget
                     productDetails={productDetails}
                     paymentDetails={paymentDetails}
-                    tokenList={superTokenList}
                     type="full-screen"
                     walletManager={walletManager}
                     eventListeners={eventListeners}

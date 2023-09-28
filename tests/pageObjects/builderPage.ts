@@ -14,7 +14,7 @@ export class BuilderPage extends BasePage {
   readonly productDescriptionField: Locator;
   readonly networkOptions: Locator;
   readonly superTokenOption: Locator;
-  readonly flowRateOption: Locator;
+  readonly streamRateOption: Locator;
   readonly timeUnitSelection: Locator;
   readonly receiverOption: Locator;
   readonly networkOptionsBorder: Locator;
@@ -101,6 +101,14 @@ export class BuilderPage extends BasePage {
   readonly colorPallete: Locator;
   readonly primaryColorPickerButton: Locator;
   readonly secondaryColorPickerButton: Locator;
+  readonly summaryUpfrontPayment: Locator;
+  readonly summaryCopyButtons: Locator;
+  readonly summaryEditButtons: Locator;
+  readonly paymentOptionContainers: Locator;
+  readonly gatingNFTSymbolTooltip: Locator;
+  readonly gatingNFTNameTooltip: Locator;
+  readonly gatingNFTContractOwnerTooltip: Locator;
+  readonly gatingNFTImageTooltip: Locator;
 
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
@@ -134,13 +142,13 @@ export class BuilderPage extends BasePage {
     this.superTokenSelectionXButton = page.locator(
       "#token-select + div [data-testid=CloseIcon]",
     );
-    this.flowRateOption = page
+    this.streamRateOption = page
       .getByTestId("flow-rate-input")
-      .getByRole("textbox");
+      .locator("input");
     this.timeUnitSelection = page.getByTestId("time-unit-selection");
     this.receiverOption = page
       .getByTestId("receiver-input-field")
-      .getByRole("textbox");
+      .locator("input");
     this.useAsDefaultPaymentSwitch = page.getByLabel(
       "Use as default payment option",
     );
@@ -150,9 +158,14 @@ export class BuilderPage extends BasePage {
     this.summaryTokens = page.getByTestId("added-token-option");
     this.summaryFlowRate = page.getByTestId("stream-rate-added-payment-option");
     this.summaryReceiver = page.getByTestId("added-payment-receiver");
+    this.summaryUpfrontPayment = page.getByTestId(
+      "upfront-payment-amount-added-payment-option",
+    );
     this.summaryDeleteButtons = page.getByTestId(
       "delete-payment-option-button",
     );
+    this.summaryEditButtons = page.getByTestId("edit-payment-option-button");
+    this.summaryCopyButtons = page.getByTestId("clone-payment-option-button");
     this.uploadImageField = page.getByTestId("file-upload-field");
     this.darkModeSwitch = page.getByLabel("Dark mode: off");
     this.containerBorderSlider = page.getByTestId("container-radius-slider");
@@ -287,12 +300,25 @@ export class BuilderPage extends BasePage {
       "#color-popover .MuiColorInput-HueSlider .MuiSlider-thumb",
     );
     this.colorPallete = page.locator(".MuiColorInput-ColorSpace");
+    this.paymentOptionContainers = page.getByTestId("payment-option-container");
+    this.gatingNFTSymbolTooltip = page
+      .getByTestId("nft-symbol-title")
+      .locator("+ [data-testid=tooltip-icon]");
+    this.gatingNFTNameTooltip = page
+      .getByTestId("nft-name-title")
+      .locator("+ [data-testid=tooltip-icon]");
+    this.gatingNFTContractOwnerTooltip = page
+      .getByTestId("contract-owner-title")
+      .locator("+ [data-testid=tooltip-icon]");
+    this.gatingNFTImageTooltip = page
+      .getByTestId("nft-image-title")
+      .locator("+ [data-testid=tooltip-icon]");
 
     this.paymentFormFieldWordMap = new Map<string, Locator>([
       ["network", this.networkOptions],
       ["receiver", this.receiverOption],
       ["token", this.superTokenOption],
-      ["flowRate", this.flowRateOption],
+      ["flowRate", this.streamRateOption],
       ["upfrontPaymentAmount", this.upfrontPaymentInputField],
     ]);
   }
@@ -452,14 +478,76 @@ export class BuilderPage extends BasePage {
           "The ERC-20 transfer amount the user should send as an upfront payment.",
         ],
       ]);
-      for (let testableTooltip of tooltipStringMap.keys()) {
-        await testableTooltip.hover();
-        await expect(this.shownTooltip.last()).toHaveText(
-          tooltipStringMap.get(testableTooltip) as string,
-        );
-        await testableTooltip.click();
-      }
+      await this.hoverOnTooltipIconAndValidateShownTooltip(tooltipStringMap);
     });
+  }
+
+  async hoverAndValidateAllGatingFormTooltipTexts() {
+    await test.step(`Hovering on all payment form tooltips and validating their text`, async () => {
+      let tooltipStringMap = new Map<Locator, string>([
+        [
+          this.paymentFormNetworkTooltip,
+          "Select the network you'd like to request payment on.",
+        ],
+        [
+          this.paymentFormReceiverAddressTooltip,
+          "Set your wallet or multisig address on the relevant network.",
+        ],
+        [
+          this.paymentFormSuperTokenTooltip,
+          "Select the SuperToken you'd like to request payment in.",
+        ],
+        [
+          this.paymentFormStreamRateTooltip,
+          "Set the amount of tokens per month for the payment.",
+        ],
+        [
+          this.paymentFormUpfrontPaymentSwitchTooltip,
+          "A one-time payment amount to be paid before the stream starts.",
+        ],
+        [
+          this.paymentFormUpfrontPaymentAmountTooltip,
+          "The ERC-20 transfer amount the user should send as an upfront payment.",
+        ],
+      ]);
+      await this.hoverOnTooltipIconAndValidateShownTooltip(tooltipStringMap);
+    });
+  }
+
+  async hoverAndVerifyAllGatingTabTooltips() {
+    await test.step(`Hovering on all payment form tooltips and validating their text`, async () => {
+      let tooltipStringMap = new Map<Locator, string>([
+        [
+          this.gatingNFTSymbolTooltip,
+          "The Symbol of your NFT. It will be displayed in your users' wallets.",
+        ],
+        [
+          this.gatingNFTNameTooltip,
+          "The Name of your NFT. It will be displayed in your users' wallets.",
+        ],
+        [
+          this.gatingNFTContractOwnerTooltip,
+          "The address with authority to add further PaymentOptions or deprecate the contract.",
+        ],
+        [
+          this.gatingNFTImageTooltip,
+          "The custom artwork for the NFT, which will be displayed in your users' wallets",
+        ],
+      ]);
+      await this.hoverOnTooltipIconAndValidateShownTooltip(tooltipStringMap);
+    });
+  }
+
+  async hoverOnTooltipIconAndValidateShownTooltip(
+    tooltipStringMap: Map<Locator, string>,
+  ) {
+    for (let testableTooltip of tooltipStringMap.keys()) {
+      await testableTooltip.hover();
+      await expect(this.shownTooltip.last()).toHaveText(
+        tooltipStringMap.get(testableTooltip) as string,
+      );
+      await testableTooltip.click();
+    }
   }
 
   async validateNoTokenIsSelectedInAddPaymentForm() {
@@ -495,7 +583,7 @@ export class BuilderPage extends BasePage {
       }
       if (partialOption.flowRate) {
         if (partialOption.userDefinedRate !== true) {
-          await this.flowRateOption.fill(partialOption.flowRate);
+          await this.streamRateOption.fill(partialOption.flowRate);
           if (partialOption.timeUnit != "month") {
             await this.timeUnitSelection.click();
             await this.page
@@ -505,7 +593,7 @@ export class BuilderPage extends BasePage {
         } else {
           await this.userDefinedRateButton.click();
         }
-        this.flowRateOption.fill(partialOption.flowRate);
+        this.streamRateOption.fill(partialOption.flowRate);
       }
       if (partialOption.network) {
         await this.networkOptions.click();
@@ -684,7 +772,7 @@ export class BuilderPage extends BasePage {
       await expect(this.superTokenOption).toBeVisible();
       await expect(this.fixedRateButton).toBeVisible();
       await expect(this.userDefinedRateButton).toBeVisible();
-      await expect(this.flowRateOption).toBeVisible();
+      await expect(this.streamRateOption).toBeVisible();
     });
   }
 
@@ -696,7 +784,7 @@ export class BuilderPage extends BasePage {
       await expect(this.superTokenOption).not.toBeVisible();
       await expect(this.fixedRateButton).not.toBeVisible();
       await expect(this.userDefinedRateButton).not.toBeVisible();
-      await expect(this.flowRateOption).not.toBeVisible();
+      await expect(this.streamRateOption).not.toBeVisible();
     });
   }
 
@@ -863,7 +951,7 @@ export class BuilderPage extends BasePage {
         .getByRole("option", { name: paymentOption.superToken })
         .click();
       if (paymentOption.userDefinedRate !== true && paymentOption.flowRate) {
-        await this.flowRateOption.fill(paymentOption.flowRate);
+        await this.streamRateOption.fill(paymentOption.flowRate);
         if (paymentOption.timeUnit != "month") {
           await this.timeUnitSelection.click();
           await this.page
@@ -915,6 +1003,15 @@ export class BuilderPage extends BasePage {
             `${BasePage.shortenHex(option.receiver)}`,
             { ignoreCase: true },
           );
+          if (option.upfrontPayment) {
+            await expect(
+              this.paymentOptionContainers
+                .nth(index)
+                .locator(this.summaryUpfrontPayment),
+            ).toHaveText(
+              `Upfront Payment Amount${option.upfrontPayment} ${option.superToken}`,
+            );
+          }
         });
       }
     });
@@ -1213,6 +1310,137 @@ export class BuilderPage extends BasePage {
   async openSecondaryColorPicker() {
     await test.step(`Opening secondary color picker`, async () => {
       await this.secondaryColorPickerButton.click();
+    });
+  }
+
+  async clickOnNthCopyPaymentOptionButton(index: number) {
+    await test.step(`Clicking on the ${index}th copy payment option button`, async () => {
+      await this.summaryCopyButtons.nth(index).click();
+    });
+  }
+  async clickOnNthEditPaymentOptionButton(index: number) {
+    await test.step(`Clicking on the ${index}th edit payment option button`, async () => {
+      await this.summaryEditButtons.nth(index).click();
+    });
+  }
+  async verifyPaymentOptionShownInForm(paymentOption: PaymentOption) {
+    await test.step(`Verifying the payment option shown in the form`, async () => {
+      await expect(this.networkOptions.locator("> div")).toContainText(
+        paymentOption.network,
+      );
+      await expect(this.receiverOption).toHaveValue(
+        paymentOption.receiver.toLowerCase(),
+      );
+      await expect(this.superTokenOption).toHaveValue(paymentOption.superToken);
+      if (paymentOption.userDefinedRate) {
+        await expect(this.streamRateOption).not.toBeVisible();
+        await expect(this.upfrontPaymentSwitch).not.toBeVisible();
+        await expect(this.upfrontPaymentInputField).not.toBeVisible();
+        await expect(this.fixedRateButton).toHaveAttribute(
+          "aria-pressed",
+          "false",
+        );
+        await expect(this.userDefinedRateButton).toHaveAttribute(
+          "aria-pressed",
+          "true",
+        );
+      } else {
+        await expect(this.fixedRateButton).toHaveAttribute(
+          "aria-pressed",
+          "true",
+        );
+        await expect(this.userDefinedRateButton).toHaveAttribute(
+          "aria-pressed",
+          "false",
+        );
+        await expect(this.streamRateOption).toHaveValue(paymentOption.flowRate);
+        await expect(this.timeUnitSelection.locator("div")).toHaveText(
+          `/${paymentOption.timeUnit}`,
+        );
+      }
+      if (paymentOption.upfrontPayment) {
+        await expect(this.upfrontPaymentInputField).toHaveValue(
+          paymentOption.upfrontPayment,
+        );
+        await expect(this.upfrontPaymentSwitch.locator("input")).toHaveValue(
+          "true",
+        );
+      } else {
+        await expect(this.upfrontPaymentInputField).not.toBeVisible();
+        await expect(this.upfrontPaymentSwitch.locator("input")).toHaveValue(
+          "false",
+        );
+      }
+    });
+  }
+
+  async editPaymentOptionFlowRateTo(flowRate: string) {
+    await test.step(`Editing the payment option flow rate to ${flowRate}`, async () => {
+      await this.streamRateOption.clear();
+      await this.streamRateOption.fill(flowRate);
+      await this.addPaymentOptionButton.click();
+    });
+  }
+  async editUpfrontPaymentAmountTo(ethersAmount: string) {
+    await test.step(`Editing the upfront payment amount to ${ethersAmount}`, async () => {
+      await this.upfrontPaymentInputField.clear();
+      await this.upfrontPaymentInputField.fill(ethersAmount);
+      await this.addPaymentOptionButton.click();
+    });
+  }
+  async disableUserDefinedRate() {
+    await test.step(`Disabling user defined rate`, async () => {
+      await this.fixedRateButton.click();
+    });
+  }
+  async inputNFTDetails(nftDetails: NFTDetails) {
+    await test.step(`Inputting NFT details`, async () => {
+      if (nftDetails.symbol) {
+        await this.nftSymbolInputField.fill(nftDetails.symbol);
+      }
+      if (nftDetails.name) {
+        await this.nftNameInputField.fill(nftDetails.name);
+      }
+      if (nftDetails.owner) {
+        await this.contractOwnerInputField.fill(nftDetails.owner);
+      }
+      if (nftDetails.image) {
+        await this.uploadImageField.setInputFiles(nftDetails.image);
+      }
+      if (nftDetails.networks) {
+        const networkNames = Array.isArray(nftDetails.networks)
+          ? nftDetails.networks
+          : [nftDetails.networks];
+        for (const network of networkNames) {
+          await this.page.getByTestId(`${network}-checkbox`).click();
+        }
+      }
+    });
+  }
+  async verifyNetworksShownInNftSelection(networkNames: string[]) {
+    await test.step(`Verifying networks shown in NFT selection`, async () => {
+      for (const network of networkNames) {
+        await expect(
+          this.page.getByTestId(`${network}-checkbox`),
+        ).toBeVisible();
+      }
+    });
+  }
+
+  async clickOnBookADemoAndVerifyPageWasOpen() {
+    await test.step(`Clicking on "Book a demo" and verifying page was open`, async () => {
+      const newTabPromise = this.page.waitForEvent("popup");
+      await expect(this.bookDemoButton).toHaveAttribute(
+        "href",
+        "https://use.superfluid.finance/subscriptions",
+      );
+      await this.bookDemoButton.click();
+      const newTab = await newTabPromise;
+      await newTab.waitForLoadState();
+      await expect(newTab).toHaveURL(
+        "https://airtable.com/appmq3TJDdQUrTQpx/shrJ9Og5dbweZfxB8",
+      );
+      await expect(newTab.getByText("Superfluid Subscriptions")).toBeVisible();
     });
   }
 }

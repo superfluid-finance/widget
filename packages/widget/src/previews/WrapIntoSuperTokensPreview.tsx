@@ -1,9 +1,12 @@
+import ArrowForwardRoundedIcon_ from "@mui/icons-material/ArrowForwardRounded.js";
 import { Box, Paper, Stack, Typography } from "@mui/material";
 
 import { WrapIntoSuperTokensCommand } from "../commands.js";
+import { normalizeIcon } from "../helpers/normalizeIcon.js";
 import { TokenAvatar } from "../TokenAvatar.js";
 import { useWidget } from "../WidgetContext.js";
-import { UpgradeIcon } from "./CommandPreview.js";
+
+export const UpgradeIcon = normalizeIcon(ArrowForwardRoundedIcon_);
 
 export function WrapIntoSuperTokensPreview({
   command: cmd,
