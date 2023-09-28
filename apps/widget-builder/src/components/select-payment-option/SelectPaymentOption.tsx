@@ -31,9 +31,7 @@ import {
   TimePeriod,
   timePeriods,
 } from "@superfluid-finance/widget";
-import tokenList, {
-  SuperTokenInfo,
-} from "@superfluid-finance/widget/tokenlist";
+import { SuperTokenInfo } from "@superfluid-finance/widget/tokenlist";
 import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend, UseFieldArrayUpdate } from "react-hook-form";
 import { Chain } from "wagmi";
@@ -41,7 +39,10 @@ import { ZodError } from "zod";
 
 import InputWrapper, { InputInfo } from "../form/InputWrapper";
 import NetworkAvatar from "../NetworkAvatar";
-import { WidgetProps } from "../widget-preview/WidgetPreview";
+import {
+  widgetBuilderTokenList,
+  WidgetProps,
+} from "../widget-preview/WidgetPreview";
 
 export type PaymentOptionWithSuperTokenAndNetwork = {
   network: NetworkAssetInfo;
@@ -85,7 +86,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
 
       if (value.superToken) {
         setSelectedToken(
-          tokenList.tokens.find(
+          widgetBuilderTokenList.tokens.find(
             ({ address }) =>
               address.toLowerCase() === value.superToken.address.toLowerCase(),
           ) ?? null,
@@ -109,7 +110,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
   const filteredNetworks = useMemo(
     () =>
       supportedNetworks.filter((network) =>
-        tokenList.tokens.find(
+        widgetBuilderTokenList.tokens.find(
           ({ chainId, tags }) =>
             /* #35 [SUBS] - Hide Ethereum Mainnet payment option in Widget.
              * As the UX is bad for streams on mainnet we don't want to encourage subscriptions there.
@@ -180,7 +181,7 @@ const SelectPaymentOption: FC<PaymentOptionSelectorProps> = ({
     const network = supportedNetworks.find(
       ({ name }) => name === selectedNetwork?.name,
     );
-    return tokenList.tokens.filter(
+    return widgetBuilderTokenList.tokens.filter(
       (token) =>
         token.chainId === network?.id && token.tags?.includes("supertoken"),
     );
