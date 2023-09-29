@@ -1,5 +1,5 @@
 import { Alert, Collapse, Divider, Stack } from "@mui/material";
-import { Fragment, useCallback, useEffect, useMemo } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import { useQuery } from "wagmi";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
@@ -42,20 +42,10 @@ export default function StepContentReview({ stepIndex }: StepProps) {
 
   const areContractWritesMapping = !commands.every((x) => x.contractWrites);
 
-  const isAlreadySubscribed = useMemo(() => {
-    const hasSubscribeContractWrites = commands.some(
-      (x) => x.type === "Subscribe" && (x.contractWrites ?? []).length > 0,
-    ); // Check if the subscription command has any writes for it. If there's no writes for it we consider already subscribed.
-    return !areContractWritesMapping && !hasSubscribeContractWrites;
-  }, [areContractWritesMapping, commands]);
-
   const isValidationError = validationResult?.success === false;
-  const isError = isAlreadySubscribed || isValidationError;
-  const isValid = !isError;
+  const isValid = !isValidationError;
 
-  const validationMessage = isAlreadySubscribed
-    ? "You are already subscribed."
-    : isValidationError
+  const validationMessage = isValidationError
     ? validationResult.error.issues[0].message
     : "";
 
@@ -70,7 +60,7 @@ export default function StepContentReview({ stepIndex }: StepProps) {
         ))}
       </Stack>
       <Stack direction="column" spacing={1}>
-        <Collapse in={isError} unmountOnExit>
+        <Collapse in={isValidationError} unmountOnExit>
           <Alert variant="standard" data-testid="review-error" severity="error">
             {validationMessage}
           </Alert>

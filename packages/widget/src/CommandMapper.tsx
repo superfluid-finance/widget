@@ -1,6 +1,11 @@
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
-import { Abi, ContractFunctionConfig, getAbiItem, GetValue } from "viem";
+import {
+  Abi,
+  ContractFunctionConfig,
+  getAbiItem,
+  GetValue,
+} from "viem";
 import {
   useBlockNumber,
   useContractRead,
@@ -24,8 +29,10 @@ import {
   cfAv1ForwarderAddress,
   erc20ABI,
   mapTimePeriodToSeconds,
+  ModifyFlowRateBehaviour,
   nativeAssetSuperTokenABI,
   superTokenABI,
+  TimePeriod,
 } from "./core/index.js";
 import { MaxUint256 } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
@@ -228,6 +235,38 @@ export function WrapIntoSuperTokensCommandMapper({
 
 const transferEventAbi = getAbiItem({ abi: superTokenABI, name: "Transfer" });
 
+export const calculateNewFlowRate = ({
+  existingFlowRateWei: existingFlowRate,
+  paymentFlowRate,
+  modifyBehaviour,
+}: {
+  existingFlowRateWei: bigint;
+  paymentFlowRate: {
+    amountWei: bigint;
+    period: TimePeriod;
+  };
+  modifyBehaviour: ModifyFlowRateBehaviour;
+}): bigint => {
+  const paymentFlowRateWei =
+    paymentFlowRate.amountWei /
+    BigInt(mapTimePeriodToSeconds(paymentFlowRate.period));
+
+  switch (modifyBehaviour) {
+    case "ADD":
+      return existingFlowRate + paymentFlowRateWei;
+    case "ENSURE":
+      if (existingFlowRate > paymentFlowRateWei) {
+        return existingFlowRate;
+      }
+      return existingFlowRate > paymentFlowRateWei
+        ? existingFlowRate
+        : paymentFlowRateWei;
+    case "SET":
+    default:
+      return paymentFlowRateWei;
+  }
+};
+
 export function SubscribeCommandMapper({
   command: cmd,
   onMapped,
@@ -244,10 +283,6 @@ export function SubscribeCommandMapper({
     args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
     cacheOnBlock: true,
   });
-
-  const flowRate =
-    cmd.flowRate.amountWei /
-    BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
 
   const checkExistingUpfrontTransfer = cmd.transferAmountWei > 0n;
   const {
@@ -329,9 +364,29 @@ export function SubscribeCommandMapper({
     if (existingFlowRate_ !== undefined) {
       const existingFlowRate = BigInt(existingFlowRate_);
 
+      const newFlowRate = calculateNewFlowRate({
+        existingFlowRateWei: existingFlowRate,
+        paymentFlowRate: cmd.flowRate,
+        modifyBehaviour: cmd.flowRate.modifyBehaviour,
+      });
+
+      if (!skipTransfer && cmd.transferAmountWei > 0n) {
+        contractWrites_.push(
+          createContractWrite({
+            commandId: cmd.id,
+            displayTitle: "Transfer",
+            abi: erc20ABI,
+            address: cmd.superTokenAddress,
+            chainId: cmd.chainId,
+            functionName: "transfer",
+            args: [cmd.receiverAddress, cmd.transferAmountWei],
+          }),
+        );
+      }
+
       if (existingFlowRate > 0n) {
-        if (cmd.flowRate.modifyBehaviour === "ADD") {
-          const updatedFlowRate = existingFlowRate + flowRate;
+        // Only set a contract write if the new flow rate is different.
+        if (existingFlowRate !== newFlowRate) {
           contractWrites_.push(
             createContractWrite({
               commandId: cmd.id,
@@ -344,35 +399,11 @@ export function SubscribeCommandMapper({
                 cmd.superTokenAddress,
                 cmd.accountAddress,
                 cmd.receiverAddress,
-                updatedFlowRate,
+                newFlowRate,
                 cmd.userData,
               ],
             }),
           );
-        } else {
-          if (
-            existingFlowRate < flowRate ||
-            (cmd.flowRate.modifyBehaviour === "SET" &&
-              existingFlowRate !== flowRate)
-          ) {
-            contractWrites_.push(
-              createContractWrite({
-                commandId: cmd.id,
-                displayTitle: "Modify Stream",
-                abi: cfAv1ForwarderABI,
-                address: cfAv1ForwarderAddress[cmd.chainId],
-                chainId: cmd.chainId,
-                functionName: "updateFlow",
-                args: [
-                  cmd.superTokenAddress,
-                  cmd.accountAddress,
-                  cmd.receiverAddress,
-                  flowRate,
-                  cmd.userData,
-                ],
-              }),
-            );
-          }
         }
       } else {
         contractWrites_.push(
@@ -387,27 +418,12 @@ export function SubscribeCommandMapper({
               cmd.superTokenAddress,
               cmd.accountAddress,
               cmd.receiverAddress,
-              flowRate,
+              newFlowRate,
               cmd.userData,
             ],
           }),
         );
       }
-    }
-
-    const hasStreamWrite = contractWrites_.length > 0; // We don't want to queue a transfer without any stream writes. Creates weird UX situation.
-    if (hasStreamWrite && !skipTransfer && cmd.transferAmountWei > 0n) {
-      contractWrites_.unshift(
-        createContractWrite({
-          commandId: cmd.id,
-          displayTitle: "Transfer",
-          abi: erc20ABI,
-          address: cmd.superTokenAddress,
-          chainId: cmd.chainId,
-          functionName: "transfer",
-          args: [cmd.receiverAddress, cmd.transferAmountWei],
-        }),
-      );
     }
 
     return contractWrites_;
