@@ -296,7 +296,7 @@ export function SubscribeCommandMapper({
       // Decided to approach it by looking for the exact transfer amount, instead of summing up the transfers.
       // The main reason for this feature is to avoid accidental double-charging of brand new users and checking for the exact transfer amount seems sufficient.
       // More complex scenarios will need manual intervention and customer support.
-      return transferEvents!.filter(
+      return transferEvents!.some(
         (e) => !e.removed && e.args.value === cmd.transferAmountWei,
       );
     } else {
@@ -320,12 +320,12 @@ export function SubscribeCommandMapper({
     ],
   );
 
-  const contractWrites = useMemo(() => {
-    const contractWrites_: ContractWrite[] = [];
+  const contractWrites = useMemo<ContractWrite[]>(() => {
     if (!didAllQueriesSucceed) {
-      return contractWrites_;
+      return [];
     }
 
+    const contractWrites_: ContractWrite[] = [];
     if (existingFlowRate_ !== undefined) {
       const existingFlowRate = BigInt(existingFlowRate_);
 
@@ -395,9 +395,9 @@ export function SubscribeCommandMapper({
       }
     }
 
-    const hasStreamWrite = contractWrites_.length < 0; // We don't want to queue a transfer without any stream writes. Creates weird UX situation.
+    const hasStreamWrite = contractWrites_.length > 0; // We don't want to queue a transfer without any stream writes. Creates weird UX situation.
     if (hasStreamWrite && !skipTransfer && cmd.transferAmountWei > 0n) {
-      contractWrites_.push(
+      contractWrites_.unshift(
         createContractWrite({
           commandId: cmd.id,
           displayTitle: "Transfer",
