@@ -127,9 +127,17 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
     };
   }, [editorValue, isJsonValid, debouncedSideEffect]);
 
-  window.setEditorValue = (value) => {
-    setEditorValue(value);
-  };
+  useEffect(() => {
+    if (window) {
+      // For E2E testing purposes.
+      window.setEditorValue = (value) => {
+        setEditorValue(value);
+      };
+      return () => {
+        window.setEditorValue = undefined!;
+      };
+    }
+  }, [setEditorValue]);
 
   return (
     <Stack height="100vh">
