@@ -233,10 +233,6 @@ export function SubscribeCommandMapper({
   onMapped,
 }: CommandMapperProps<SubscribeCommand>) {
   const {
-    paymentDetails: { modifyFlowRateBehaviour },
-  } = useWidget();
-
-  const {
     isSuccess: isSuccessForGetFlowRate,
     isLoading: isLoadingForGetFlowRate,
     data: existingFlowRate_,
@@ -333,22 +329,8 @@ export function SubscribeCommandMapper({
     if (existingFlowRate_ !== undefined) {
       const existingFlowRate = BigInt(existingFlowRate_);
 
-      if (cmd.transferAmountWei > 0n && !skipTransfer) {
-        contractWrites_.push(
-          createContractWrite({
-            commandId: cmd.id,
-            displayTitle: "Transfer",
-            abi: erc20ABI,
-            address: cmd.superTokenAddress,
-            chainId: cmd.chainId,
-            functionName: "transfer",
-            args: [cmd.receiverAddress, cmd.transferAmountWei],
-          }),
-        );
-      }
-
       if (existingFlowRate > 0n) {
-        if (modifyFlowRateBehaviour === "ADD") {
+        if (cmd.flowRate.modifyBehaviour === "ADD") {
           const updatedFlowRate = existingFlowRate + flowRate;
           contractWrites_.push(
             createContractWrite({
@@ -370,7 +352,8 @@ export function SubscribeCommandMapper({
         } else {
           if (
             existingFlowRate < flowRate ||
-            modifyFlowRateBehaviour === "SET"
+            (cmd.flowRate.modifyBehaviour === "SET" &&
+              existingFlowRate !== flowRate)
           ) {
             contractWrites_.push(
               createContractWrite({
@@ -410,6 +393,21 @@ export function SubscribeCommandMapper({
           }),
         );
       }
+    }
+
+    const hasStreamWrite = contractWrites_.length < 0; // We don't want to queue a transfer without any stream writes. Creates weird UX situation.
+    if (hasStreamWrite && !skipTransfer && cmd.transferAmountWei > 0n) {
+      contractWrites_.push(
+        createContractWrite({
+          commandId: cmd.id,
+          displayTitle: "Transfer",
+          abi: erc20ABI,
+          address: cmd.superTokenAddress,
+          chainId: cmd.chainId,
+          functionName: "transfer",
+          args: [cmd.receiverAddress, cmd.transferAmountWei],
+        }),
+      );
     }
 
     return contractWrites_;

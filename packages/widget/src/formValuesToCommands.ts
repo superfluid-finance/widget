@@ -91,6 +91,7 @@ export const formValuesToCommands = (
     flowRate: {
       amountWei: parseEther(flowRate.amountEther),
       period: flowRate.period,
+      modifyBehaviour: values.modifyFlowRateBehaviour,
     },
     userData: paymentOption.userData ?? "0x",
   });
