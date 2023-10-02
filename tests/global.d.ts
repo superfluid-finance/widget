@@ -1,4 +1,4 @@
-declare module "@synthetixio/synpress/commands/metamask" {
+declare module "@synthetixio/synpress/commands/metamask.js" {
   export const initialSetup: (
     browser: BrowserType,
     metamaskParameters: {},
@@ -9,7 +9,8 @@ declare module "@synthetixio/synpress/commands/metamask" {
   export const changeNetwork: (network: string) => void;
   export const allowToSwitchNetwork: () => void;
 }
-declare module "@synthetixio/synpress/helpers" {
+
+declare module "@synthetixio/synpress/helpers.js" {
   export const prepareMetamask: (version: string) => void;
 }
 

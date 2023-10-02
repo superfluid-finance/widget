@@ -1,8 +1,8 @@
 import { type BrowserContext, chromium, test as base } from "@playwright/test";
-import { initialSetup } from "@synthetixio/synpress/commands/metamask";
-import { prepareMetamask } from "@synthetixio/synpress/helpers";
+import * as metamask from "@synthetixio/synpress/commands/metamask.js";
+import * as helpers from "@synthetixio/synpress/helpers.js";
 
-import { EthHelper } from "./helpers/ethHelper";
+import { EthHelper } from "./helpers/ethHelper.js";
 
 export const test = base.extend<{
   context: BrowserContext;
@@ -12,7 +12,7 @@ export const test = base.extend<{
     //@ts-ignore
     global.expect = expect;
     // download metamask
-    const metamaskPath = await prepareMetamask(
+    const metamaskPath = await helpers.prepareMetamask(
       process.env.METAMASK_VERSION || "10.25.0",
     );
     // prepare browser args
@@ -52,7 +52,7 @@ export const test = base.extend<{
       "fDAIx",
     );
     // setup metamask
-    await initialSetup(chromium, {
+    await metamask.initialSetup(chromium, {
       secretWordsOrPrivateKey: process.env.WIDGET_WALLET_PRIVATE_KEY,
       network: "goerli",
       password: "Tester@1234",

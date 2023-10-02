@@ -5,7 +5,7 @@ import {
   cfAv1ForwarderABI,
   erc20ABI,
   superTokenABI,
-} from "./abis/wagmi-generated";
+} from "./abis/wagmi-generated.js";
 
 export class EthHelper {
   private wallet: ethers.Wallet;

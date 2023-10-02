@@ -1,7 +1,7 @@
 import { expect, Locator, Page, test } from "@playwright/test";
 import fs from "fs";
 
-import { BasePage, randomDetailsSet } from "./basePage";
+import { BasePage, randomDetailsSet } from "./basePage.js";
 
 export class BuilderPage extends BasePage {
   readonly page: Page;

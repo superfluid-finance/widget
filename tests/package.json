@@ -2,6 +2,7 @@
   "name": "tests",
   "version": "0.0.3",
   "private": true,
+  "type": "module",
   "devDependencies": {
     "@currents/playwright": "^0.8.1",
     "@playwright/test": "^1.38.1",
@@ -14,7 +15,8 @@
   },
   "scripts": {
     "lint:check-no-focused-tests": "grep -FR test.only specs || { echo '✅ No test is focused.';exit 0; } && { echo '❌ You have focused tests.'; exit 1; }",
-    "build": "tsc --noEmit --project ./tsconfig.json",
-    "tests": "npx playwright test --headed"
+    "build": "tsc --incremental -p ./tsconfig.json",
+    "tests": "npx playwright test --headed",
+    "tests:dist": "pnpm build && pnpm tests -c ./dist/playwright.config.js"
   }
 }

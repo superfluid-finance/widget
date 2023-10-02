@@ -1,8 +1,8 @@
 import { expect, Locator, Page, test } from "@playwright/test";
-import * as metamask from "@synthetixio/synpress/commands/metamask";
+import * as metamask from "@synthetixio/synpress/commands/metamask.js";
 
-import { EthHelper } from "../helpers/ethHelper";
-import { BasePage, randomDetailsSet } from "./basePage";
+import { EthHelper } from "../helpers/ethHelper.js";
+import { BasePage, randomDetailsSet } from "./basePage.js";
 
 export class WidgetPage extends BasePage {
   readonly page: Page;
