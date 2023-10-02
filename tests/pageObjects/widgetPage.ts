@@ -1,7 +1,7 @@
 import { expect, Locator, Page, test } from "@playwright/test";
 import * as metamask from "@synthetixio/synpress/commands/metamask";
 
-import * as EthHelper from "../helpers/ethHelper";
+import { EthHelper } from "../helpers/ethHelper";
 import { BasePage, randomDetailsSet } from "./basePage";
 
 export class WidgetPage extends BasePage {
@@ -63,6 +63,7 @@ export class WidgetPage extends BasePage {
   // readonly selectedNetworkBadge: Locator;
   readonly poweredBySuperfluidButton: Locator;
   readonly closeButton: Locator;
+  readonly chosenUpfrontFee: Locator;
   selectedTokenDuringTest?: string;
   senderAddressDuringTest?: string;
   receiverAddressDuringTest?: string;
@@ -163,6 +164,7 @@ export class WidgetPage extends BasePage {
     this.transactionStatusIcons = page.getByTestId("transaction-status-icon");
     this.circleIcons = page.getByTestId("CircleIcon");
     this.checkmarkIcons = page.getByTestId("CheckIcon");
+    this.chosenUpfrontFee = page.getByTestId("upfront-fee");
   }
 
   async changeCustomPaymentAmount(amount: string, timeunit = "month") {
@@ -332,9 +334,9 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async validateTransactionButtonTextAndClick(text: string) {
+  async validateTransactionButtonTextAndClick(text = "Send transaction") {
     await test.step(`Making sure the transaction text is ${text} and clicking it`, async () => {
-      await expect(this.transactionButton).toHaveText("Send transaction");
+      await expect(this.transactionButton).toHaveText(text);
       await this.transactionButton.click();
     });
   }
@@ -433,6 +435,11 @@ export class WidgetPage extends BasePage {
           .getByTestId(`selected-option-paper`)
           .getByTestId(`${option.chainId}-badge`),
       ).toBeVisible();
+      if (option.upfrontPayment) {
+        await expect(this.chosenUpfrontFee).toHaveText(
+          `+${option.upfrontPayment} ${option.superToken} upfront fee`,
+        );
+      }
     });
   }
 
@@ -510,26 +517,41 @@ export class WidgetPage extends BasePage {
   async validateTokenBalanceAfterWrap() {
     await test.step(`Checking if token got wrapped succesfully`, async () => {
       let wrappedAmount = BigInt(1e18) * BigInt(this.wrapAmountDuringTest!);
-      await EthHelper.getUnderlyingTokenBalance().then(
-        async (underlyingBalance) => {
+      const ethHelper = new EthHelper(
+        "Goerli",
+        process.env.WIDGET_WALLET_PRIVATE_KEY!,
+      );
+      await ethHelper
+        .getUnderlyingTokenBalance("fUSDC")
+        .then(async (underlyingBalance) => {
           await expect(
             this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
           ).toEqual(underlyingBalance);
-        },
-      );
+        });
 
-      await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
-        await expect(this.superTokenBalanceBeforeWrap! + wrappedAmount).toEqual(
-          superTokenBalance[0],
-        );
-      });
+      await ethHelper
+        .getSuperTokenBalance("fUSDCx")
+        .then(async (superTokenBalance) => {
+          await expect(
+            this.superTokenBalanceBeforeWrap! + wrappedAmount,
+          ).toEqual(superTokenBalance[0]);
+        });
     });
   }
 
-  async validateAndSaveWrapPageBalances() {
+  async validateAndSaveWrapPageBalances(
+    humanReadableNetworkName: string,
+    superToken: string,
+  ) {
     await test.step(`Checking if wrap page shows correct token balances`, async () => {
-      await EthHelper.getUnderlyingTokenBalance().then(
-        async (underlyingBalance) => {
+      const ethHelper = new EthHelper(
+        humanReadableNetworkName,
+        process.env.WIDGET_WALLET_PRIVATE_KEY!,
+      );
+      let underlyingTokenSymbol = ethHelper.getTokenBySymbolAndChainId;
+      await ethHelper
+        .getUnderlyingTokenBalance("fUSDC")
+        .then(async (underlyingBalance) => {
           this.underlyingTokenBalanceBeforeWrap = underlyingBalance;
           let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
             (underlyingBalance.toString() / 1e18).toString(),
@@ -540,18 +562,19 @@ export class WidgetPage extends BasePage {
           await expect(this.wrapUnderlyingBalance).toHaveText(
             `Balance: ${underlyingBalanceToAssert}`,
           );
-        },
-      );
+        });
 
-      await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
-        this.superTokenBalanceBeforeWrap = superTokenBalance[0];
-        let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
-          (superTokenBalance[0].toString() / 1e18).toString(),
-        );
-        await expect(this.wrapSuperTokenBalance).toHaveText(
-          `Balance: ${superTokenBalanceToAssert}`,
-        );
-      });
+      await ethHelper
+        .getSuperTokenBalance("fUSDCx")
+        .then(async (superTokenBalance) => {
+          this.superTokenBalanceBeforeWrap = superTokenBalance[0];
+          let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
+            (superTokenBalance[0].toString() / 1e18).toString(),
+          );
+          await expect(this.wrapSuperTokenBalance).toHaveText(
+            `Balance: ${superTokenBalanceToAssert}`,
+          );
+        });
     });
   }
 
@@ -824,5 +847,9 @@ export class WidgetPage extends BasePage {
         `Validation error: Payment options must be unique. Please remove the duplicates. at "paymentDetails.paymentOptions"`,
       );
     });
+  }
+
+  async validateTokenBalanceAfterTransfer() {
+    throw new Error("Method not implemented.");
   }
 }

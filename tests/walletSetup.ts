@@ -1,7 +1,8 @@
-import { test as base, chromium, type BrowserContext } from "@playwright/test";
+import { type BrowserContext,chromium, test as base } from "@playwright/test";
 import { initialSetup } from "@synthetixio/synpress/commands/metamask";
 import { prepareMetamask } from "@synthetixio/synpress/helpers";
-import * as ethHelper from "./helpers/ethHelper";
+
+import { EthHelper } from "./helpers/ethHelper";
 
 export const test = base.extend<{
   context: BrowserContext;
@@ -35,9 +36,22 @@ export const test = base.extend<{
     // wait for metamask
     await context.pages()[0].waitForTimeout(3000);
     //Revoke allowance before tests, otherwise the widget does not pick it up
-    await ethHelper.revokeAllowanceIfNeccesary();
+    const ethHelper = new EthHelper(
+      "Goerli",
+      process.env.WIDGET_WALLET_PRIVATE_KEY!,
+    );
+    await ethHelper.initialize();
+    await ethHelper.revokeAllowanceIfNeccesary(
+      "fUSDCx",
+      ethHelper.getUnderlyingTokenSymbolFromSuperTokenSymbol("fUSDCx", "Goerli")
+        .address,
+    );
     //Delete flow before tests, otherwise the widget might not pick it up
-    await ethHelper.deleteFlowIfNeccesary();
+    await ethHelper.deleteFlowIfNeccesary(
+      "Goerli",
+      process.env.WIDGET_WALLET_PUBLIC_KEY!,
+      "fDAIx",
+    );
     // setup metamask
     await initialSetup(chromium, {
       secretWordsOrPrivateKey: process.env.WIDGET_WALLET_PRIVATE_KEY,

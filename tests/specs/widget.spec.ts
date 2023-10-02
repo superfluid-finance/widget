@@ -24,7 +24,7 @@ test("Creating a flow", async ({ page }) => {
   );
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(["send"], ["Ready to send"]);
-  await widgetPage.validateTransactionButtonTextAndClick("send");
+  await widgetPage.validateTransactionButtonTextAndClick();
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskTransaction();
   await widgetPage.validateTransactionStatuses(["send"], ["Transaction sent"]);
@@ -44,7 +44,7 @@ test("Modifying a flow", async ({ page }) => {
   );
   await widgetPage.clickContinueButton();
   await widgetPage.validateTransactionStatuses(["modify"], ["Ready to send"]);
-  await widgetPage.validateTransactionButtonTextAndClick("modify");
+  await widgetPage.validateTransactionButtonTextAndClick();
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskTransaction();
   await widgetPage.validateTransactionStatuses(
@@ -59,7 +59,7 @@ test("Approving and wrapping tokens", async ({ page }) => {
   await widgetPage.selectPaymentNetwork("Goerli");
   await widgetPage.selectPaymentToken("fUSDCx");
   await widgetPage.connectWallet();
-  await widgetPage.validateAndSaveWrapPageBalances();
+  await widgetPage.validateAndSaveWrapPageBalances("Goerli", "fUSDCx");
   await widgetPage.setWrapAmount("1");
   await widgetPage.clickContinueButton();
   await widgetPage.validateAndSaveSenderAndReceiverAddresses(
@@ -72,7 +72,7 @@ test("Approving and wrapping tokens", async ({ page }) => {
     ["approve", "wrap", "modify"],
     ["Ready to send", "Queued", "Queued"],
   );
-  await widgetPage.validateTransactionButtonTextAndClick("approve");
+  await widgetPage.validateTransactionButtonTextAndClick();
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskAllowanceTransaction("1");
   // Checking the pending status makes the test case quite flaky
@@ -84,7 +84,7 @@ test("Approving and wrapping tokens", async ({ page }) => {
     ["approve", "wrap", "modify"],
     ["Completed", "Ready to send", "Queued"],
   );
-  await widgetPage.validateTransactionButtonTextAndClick("wrap");
+  await widgetPage.validateTransactionButtonTextAndClick();
   await widgetPage.validateTransactionButtonLoading();
   await widgetPage.acceptMetamaskTransaction();
   // Checking the pending status makes the test case quite flaky
@@ -172,7 +172,7 @@ test("Switch network button shown in the transaction view", async ({
     ["approve", "wrap", "modify"],
     ["Ready to send", "Queued", "Queued"],
   );
-  await widgetPage.validateTransactionButtonTextAndClick("approve");
+  await widgetPage.validateTransactionButtonTextAndClick();
 });
 
 test("Suggested token amount getting input for the user (3x)", async ({
@@ -183,4 +183,41 @@ test("Suggested token amount getting input for the user (3x)", async ({
   await widgetPage.selectPaymentToken("fUSDCx");
   await widgetPage.connectWallet();
   await widgetPage.validateThatWrapAmountInputIs("3");
+});
+
+test("Payment option with upfront payment", async ({ page }) => {
+  let widgetPage = new WidgetPage(page);
+  let builderPage = new BuilderPage(page);
+  await builderPage.openPaymentTab();
+  await builderPage.clickOnWandButton();
+  await builderPage.clickOnNthEditPaymentOptionButton(6);
+  await builderPage.editUpfrontPaymentAmountTo("1");
+  await widgetPage.selectPaymentNetwork("Goerli");
+  await widgetPage.selectPaymentToken("fDAIx");
+  await widgetPage.connectWallet();
+  await widgetPage.validateAndSaveWrapPageBalances("Goerli", "fDAIx");
+  await widgetPage.skipWrapStep();
+  await widgetPage.validateAndSaveSenderAndReceiverAddresses(
+    process.env.WIDGET_WALLET_PUBLIC_KEY!,
+    rebounderAddresses["goerli"],
+  );
+  await widgetPage.clickContinueButton();
+  await widgetPage.validateTransactionStatuses(
+    ["transfer", "send"],
+    ["Ready to send", "Queued"],
+  );
+  await widgetPage.validateTransactionButtonTextAndClick();
+  await widgetPage.validateTransactionButtonLoading();
+  await widgetPage.acceptMetamaskTransaction();
+  await widgetPage.validateTransactionStatuses(
+    ["transfer", "send"],
+    ["Completed", "Ready to send"],
+  );
+  await widgetPage.validateTokenBalanceAfterTransfer();
+  // TODO Once upfront payments are shown in the success screen enable these steps
+  // await widgetPage.validateTransactionButtonTextAndClick();
+  // await widgetPage.validateTransactionButtonLoading();
+  // await widgetPage.acceptMetamaskTransaction();
+  // await widgetPage.validateSuccessMessage("1")
+  // await widgetPage.validateSuccessMessageUpfrontPaymentAmount("1")
 });
