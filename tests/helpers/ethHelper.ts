@@ -22,19 +22,18 @@ export class EthHelper {
       this.getNetworkByHumanReadableName(networkName).name;
     this.provider = new ethers.JsonRpcProvider(rpcUrl);
     this.wallet = new ethers.Wallet(privateKey, this.provider);
-    this.extendedSuperTokenList = null;
-    this.sfMeta = null;
-  }
-
-  async initialize() {
-    this.extendedSuperTokenList = await this.importExtendedSuperTokenList();
-    this.sfMeta = await this.importMetadata();
+    this.importExtendedSuperTokenList().then((module) => {
+      this.extendedSuperTokenList = module.default;
+      console.log("TokenList", module);
+    });
+    this.importMetadata().then((module) => {
+      this.sfMeta = module.default;
+      // console.log("Metadata",module) This prints out metadata as expected
+    });
   }
 
   private async importExtendedSuperTokenList() {
-    await import("@superfluid-finance/tokenlist").then((module) => {
-      console.log(module);
-    });
+    return await import("@superfluid-finance/tokenlist");
   }
 
   private async importMetadata() {
@@ -46,7 +45,6 @@ export class EthHelper {
   }
 
   public getTokenBySymbolAndChainId(symbol: string, chainId: number) {
-    console.log(this.extendedSuperTokenList);
     return this.extendedSuperTokenList.tokens.filter(
       (token: any) => token.symbol === symbol && token.chainId === chainId,
     )[0];

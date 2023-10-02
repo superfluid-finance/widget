@@ -1,4 +1,4 @@
-import { type BrowserContext,chromium, test as base } from "@playwright/test";
+import { type BrowserContext, chromium, test as base } from "@playwright/test";
 import { initialSetup } from "@synthetixio/synpress/commands/metamask";
 import { prepareMetamask } from "@synthetixio/synpress/helpers";
 
@@ -40,7 +40,6 @@ export const test = base.extend<{
       "Goerli",
       process.env.WIDGET_WALLET_PRIVATE_KEY!,
     );
-    await ethHelper.initialize();
     await ethHelper.revokeAllowanceIfNeccesary(
       "fUSDCx",
       ethHelper.getUnderlyingTokenSymbolFromSuperTokenSymbol("fUSDCx", "Goerli")
