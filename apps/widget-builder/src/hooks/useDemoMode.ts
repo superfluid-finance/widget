@@ -152,7 +152,9 @@ const demoExistentialNFT: ExistentialNFT = {
   name: "Demo NFT",
   symbol: "DEMO",
   owner: "0xab1D164065aed9A3e42fca42c2c20997f369A2B0",
-  deployments: {},
+  deployments: {
+    80001: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f",
+  },
 };
 
 export const defaultWidgetProps: WidgetProps = {
