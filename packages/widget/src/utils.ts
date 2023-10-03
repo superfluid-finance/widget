@@ -66,6 +66,24 @@ export function toFixedUsingString(numStr: string, decimalPlaces: number) {
   );
 }
 
+// export const importNFTToMetamask = async (
+//   userAddress: Address,
+//   nftAddress: Address
+// ) => {
+//   if (typeof window !== "undefined") {
+//     await window.ethereum?.request({
+//       method: "wallet_watchAsset",
+//       params: {
+//         type: "ERC721",
+//         options: {
+//           address: nftAddress,
+//           tokenId: userAddress,
+//         },
+//       },
+//     });
+//   }
+// };
+
 export function mapFlowRateToDefaultWrapAmount(
   defaultWrapAmount: {
     multiplier: number;

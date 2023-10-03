@@ -4,7 +4,7 @@ import { createContext, useContext } from "react";
 import { Address } from "viem";
 
 import { CheckoutConfig } from "./CheckoutConfig.js";
-import { ChainId, SupportedNetwork } from "./core/index.js";
+import { ChainId, ExistentialNFT, SupportedNetwork } from "./core/index.js";
 import { EventListeners } from "./EventListeners.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { WalletManager } from "./WalletManager.js";
@@ -19,6 +19,7 @@ export type WidgetContextValue = {
   networks: ReadonlyArray<SupportedNetwork>;
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
   walletManager: WalletManager;
+  existentialNFT: ExistentialNFT;
   imageURI?: string;
   stepper: {
     orientation: Orientation;

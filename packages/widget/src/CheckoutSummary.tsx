@@ -1,11 +1,11 @@
 import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
 import { useCallback, useEffect, useMemo } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 
 import { AccountAddressCard } from "./AccountAddressCard.js";
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { SubscribeCommand } from "./commands.js";
-import { mapTimePeriodToSeconds } from "./core/index.js";
+import { ChainId, mapTimePeriodToSeconds } from "./core/index.js";
 import { runEventListener } from "./EventListeners.js";
 import FlowingBalance from "./FlowingBalance.js";
 import StreamIndicator from "./StreamIndicator.js";
@@ -18,10 +18,12 @@ export function CheckoutSummary() {
   const {
     getSuperToken,
     productDetails: { successURL, successText = "Continue to Merchant" },
+    existentialNFT,
     eventListeners,
   } = useWidget();
 
   const { address: accountAddress } = useAccount();
+  const { data: walletClient } = useWalletClient();
 
   const { commands } = useCommandHandler();
 
@@ -62,6 +64,9 @@ export function CheckoutSummary() {
   // A more proper place would be inside a central state machine.
   useEffect(() => {
     runEventListener(eventListeners.onSuccess);
+
+    const chainId = walletClient?.chain.id as ChainId;
+    const nftCloneAddress = existentialNFT.deployments[chainId];
   }, [eventListeners.onSuccess]);
 
   const onSuccessButtonClick = useCallback(() => {
