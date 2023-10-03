@@ -181,7 +181,9 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       setDeploying(false);
     }
   }, [
-    existentialNFT,
+    existentialNFT.name,
+    existentialNFT.symbol,
+    existentialNFT.owner,
     existentialNFT.image,
     selectedPaymentOptions,
     recaptchaToken,
