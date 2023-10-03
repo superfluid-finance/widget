@@ -74,7 +74,12 @@ export const WidgetContext = createContext<WidgetProps>({
   paymentDetails: {
     paymentOptions: [],
   },
-  existentialNFT: {},
+  existentialNFT: {
+    name: "",
+    symbol: "",
+    owner: "",
+    deployments: {},
+  },
   type: "dialog",
   displaySettings: {
     stepperOrientation: "vertical",
