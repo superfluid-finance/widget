@@ -1,5 +1,5 @@
-import { getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { supportedNetworks } from "@superfluid-finance/widget";
+import { getDefaultConfig } from "connectkit";
 import { configureChains, createConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 
@@ -10,10 +10,10 @@ export const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()],
 );
 
-const { connectors } = getDefaultWallets({
-  appName: "My Superfluid Checkout + Vite + RainbowKit",
+const { connectors } = getDefaultConfig({
+  appName: "My Superfluid Checkout + Next.js + ConnectKit",
   chains,
-  projectId: walletConnectProjectId,
+  walletConnectProjectId: walletConnectProjectId,
 });
 
 export const wagmiConfig = createConfig({
