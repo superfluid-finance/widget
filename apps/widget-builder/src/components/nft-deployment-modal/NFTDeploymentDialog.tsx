@@ -14,7 +14,7 @@ import { FC, useCallback, useMemo } from "react";
 import Link from "../../Link";
 
 type NFTDeploymentDialogProps = {
-  cloneAddresses: ExistentialNFT["deployments"];
+  cloneAddresses?: ExistentialNFT["deployments"];
   open: boolean;
   onClose?: () => void;
 };

@@ -236,7 +236,6 @@ export default function Builder() {
           {...{
             productDetails,
             paymentDetails,
-            existentialNFT,
             displaySettings,
             type,
           }}

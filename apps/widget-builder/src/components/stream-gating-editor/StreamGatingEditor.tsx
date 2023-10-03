@@ -63,7 +63,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
   const recaptchaRef = createRef<ReCAPTCHA>();
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
 
-  const { base64: nftImageBase64 } = useReadAsBase64(existentialNFT.image);
+  const { base64: nftImageBase64 } = useReadAsBase64(existentialNFT?.image);
   const [selectedPaymentOptions, setSelectedPaymentOptions] = useState<
     Partial<Record<ChainId, PaymentOption[]>>
   >({});
@@ -148,9 +148,9 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         body: JSON.stringify({
           productDetails,
           selectedPaymentOptions,
-          tokenName: existentialNFT.name,
-          tokenSymbol: existentialNFT.symbol,
-          contractOwner: existentialNFT.owner,
+          tokenName: existentialNFT?.name,
+          tokenSymbol: existentialNFT?.symbol,
+          contractOwner: existentialNFT?.owner,
           nftImage: nftImageBase64,
           recaptchaToken,
         }),
@@ -181,10 +181,10 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       setDeploying(false);
     }
   }, [
-    existentialNFT.name,
-    existentialNFT.symbol,
-    existentialNFT.owner,
-    existentialNFT.image,
+    existentialNFT?.name,
+    existentialNFT?.symbol,
+    existentialNFT?.owner,
+    existentialNFT?.image,
     selectedPaymentOptions,
     recaptchaToken,
     nftImageBase64,
@@ -198,18 +198,18 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
 
   const isDeployDisabled = useMemo(
     () =>
-      !existentialNFT.name ||
-      !existentialNFT.symbol ||
-      !existentialNFT.owner ||
+      !existentialNFT?.name ||
+      !existentialNFT?.symbol ||
+      !existentialNFT?.owner ||
       !recaptchaToken ||
       paymentOptions.length === 0 ||
       isEmpty(selectedPaymentOptions) ||
       !isEmpty(existentialNFT.deployments),
     [
-      existentialNFT.name,
-      existentialNFT.symbol,
-      existentialNFT.owner,
-      existentialNFT.deployments,
+      existentialNFT?.name,
+      existentialNFT?.symbol,
+      existentialNFT?.owner,
+      existentialNFT?.deployments,
       paymentOptions,
       selectedPaymentOptions,
       recaptchaToken,
@@ -241,7 +241,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             <TextField
               data-testid="nft-symbol-input-field"
               id={id}
-              value={existentialNFT.symbol}
+              value={existentialNFT?.symbol ?? ""}
               onChange={({ target }) =>
                 setValue("existentialNFT.symbol", target.value)
               }
@@ -257,7 +257,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             <TextField
               data-testid="nft-name-input-field"
               id={id}
-              value={existentialNFT.name}
+              value={existentialNFT?.name ?? ""}
               onChange={({ target }) =>
                 setValue("existentialNFT.name", target.value)
               }
@@ -273,7 +273,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             <TextField
               data-testid="contract-owner-input-field"
               id={id}
-              value={existentialNFT.owner}
+              value={existentialNFT?.owner ?? ""}
               onChange={({ target }) =>
                 setValue("existentialNFT.owner", target.value)
               }
@@ -291,7 +291,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             <ImageSelect
               data-testid="nft-image-upload-field"
               id={id}
-              imageSrc={existentialNFT.image}
+              imageSrc={existentialNFT?.image ?? ""}
               onClick={(file) =>
                 setValue("existentialNFT.image", URL.createObjectURL(file))
               }
@@ -350,7 +350,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       </Stack>
       <NFTDeploymentDialog
         open={isDialogOpen}
-        cloneAddresses={existentialNFT.deployments}
+        cloneAddresses={existentialNFT?.deployments}
         onClose={() => setDialogOpen(false)}
       />
       <ReCAPTCHA
