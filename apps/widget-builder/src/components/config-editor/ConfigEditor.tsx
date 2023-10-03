@@ -79,8 +79,6 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   const [editorValue, setEditorValue] = useState<string>(initialValue);
   const [isJsonValid, setIsJsonValid] = useState<boolean>(true);
 
-  console.log(value);
-
   const handleEditorValidate: OnValidate = useCallback((markers) => {
     // If there are no errors in markers, the JSON is valid.
     setIsJsonValid(
