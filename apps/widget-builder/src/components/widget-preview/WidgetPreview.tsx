@@ -55,6 +55,7 @@ export type WidgetProps = {
   paymentDetails: WidgetProps_["paymentDetails"] & {
     paymentOptions: PaymentOption[];
   };
+  existentialNFT: WidgetProps_["existentialNFT"];
   displaySettings: DisplaySettings;
   type: Layout;
 };
@@ -73,6 +74,7 @@ export const WidgetContext = createContext<WidgetProps>({
   paymentDetails: {
     paymentOptions: [],
   },
+  existentialNFT: {},
   type: "dialog",
   displaySettings: {
     stepperOrientation: "vertical",
@@ -95,6 +97,7 @@ const switchLayout = (
   layout: Layout,
   productDetails: ProductDetails,
   paymentDetails: WidgetProps_["paymentDetails"],
+  existentialNFT: WidgetProps_["existentialNFT"],
   theme: ThemeOptions,
   walletManager: WalletManager,
   stepperOrientation: "vertical" | "horizontal",
@@ -104,6 +107,7 @@ const switchLayout = (
       productDetails={productDetails}
       paymentDetails={paymentDetails}
       tokenList={widgetBuilderTokenList}
+      existentialNFT={existentialNFT}
       type={layout}
       theme={theme}
       walletManager={walletManager}
@@ -116,6 +120,7 @@ const switchLayout = (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
+      existentialNFT={existentialNFT}
       tokenList={widgetBuilderTokenList}
       type={layout}
       theme={theme}
@@ -178,7 +183,13 @@ export const mapDisplaySettingsToTheme = (
 });
 
 const WidgetPreview: FC<WidgetProps> = (props) => {
-  const { displaySettings, paymentDetails, productDetails, type } = props;
+  const {
+    displaySettings,
+    paymentDetails,
+    productDetails,
+    existentialNFT,
+    type,
+  } = props;
 
   const { open, isOpen, setDefaultChain } = useWeb3Modal();
   const walletManager = useMemo<WalletManager>(
@@ -208,6 +219,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
           type,
           productDetails,
           paymentDetails,
+          existentialNFT,
           theme,
           walletManager,
           displaySettings.stepperOrientation,

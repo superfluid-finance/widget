@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import {
   ChainId,
+  ExistentialNFT,
   PaymentOption,
   SupportedNetwork,
   supportedNetworks,
@@ -28,7 +29,6 @@ import {
 } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useFormContext } from "react-hook-form";
-import { Address } from "viem";
 import { Chain } from "wagmi";
 
 import useAnalyticsBrowser from "../../hooks/useAnalyticsBrowser";
@@ -52,26 +52,23 @@ polyfill();
 const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
   previewContainerRef,
 }) => {
-  const { watch } = useFormContext<WidgetProps>();
-  const [paymentOptions, productDetails] = watch([
+  const { watch, setValue } = useFormContext<WidgetProps>();
+
+  const [paymentOptions, productDetails, existentialNFT] = watch([
     "paymentDetails.paymentOptions",
     "productDetails",
+    "existentialNFT",
   ]);
+
   const recaptchaRef = createRef<ReCAPTCHA>();
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
-  const [tokenSymbol, setTokenSymbol] = useState("");
-  const [tokenName, setTokenName] = useState("");
-  const [contractOwner, setContractOwner] = useState("");
-  const [nftImage, setNftImage] = useState<File>();
-  const { base64: nftImageBase64 } = useReadAsBase64(nftImage);
+
+  const { base64: nftImageBase64 } = useReadAsBase64(existentialNFT.image);
   const [selectedPaymentOptions, setSelectedPaymentOptions] = useState<
     Partial<Record<ChainId, PaymentOption[]>>
   >({});
-  const [deployedCloneAddresses, setDeployedCloneAddresses] = useState<
-    Record<ChainId, Address | null>[]
-  >([]);
   const [isDeploying, setDeploying] = useState(false);
-  const [isDeploymentSuccessful, setDeploymentSuccessful] = useState(false);
+  const [isDialogOpen, setDialogOpen] = useState(false);
   const [errors, setErrors] = useState<{
     error: string;
     message?: string;
@@ -151,9 +148,9 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         body: JSON.stringify({
           productDetails,
           selectedPaymentOptions,
-          tokenName,
-          tokenSymbol,
-          contractOwner,
+          tokenName: existentialNFT.name,
+          tokenSymbol: existentialNFT.symbol,
+          contractOwner: existentialNFT.owner,
           nftImage: nftImageBase64,
           recaptchaToken,
         }),
@@ -170,15 +167,13 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         return;
       }
 
-      const {
-        deployments,
-      }: { deployments: Record<ChainId, Address | null>[] } =
+      const { deployments }: { deployments: ExistentialNFT["deployments"] } =
         await response.json();
 
       ajs.track("enft_deployment_succeeded", { deployments });
 
-      setDeployedCloneAddresses(deployments);
-      setDeploymentSuccessful(Object.values(deployments).every(Boolean));
+      setValue("existentialNFT.deployments", deployments);
+      setDialogOpen(true);
     } catch (error) {
       console.error("Deploying NFT failed. Reason:", error);
       ajs.track("enft_deployment_failed", { reason: error });
@@ -186,40 +181,36 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
       setDeploying(false);
     }
   }, [
-    tokenName,
-    tokenSymbol,
-    contractOwner,
-    nftImage,
+    existentialNFT,
+    existentialNFT.image,
     selectedPaymentOptions,
     recaptchaToken,
     nftImageBase64,
   ]);
 
   const resetDeployment = () => {
-    setDeployedCloneAddresses([]);
+    setValue("existentialNFT.deployments", {});
     setSelectedPaymentOptions({});
     setErrors(null);
   };
 
   const isDeployDisabled = useMemo(
     () =>
-      !tokenName ||
-      !tokenSymbol ||
-      !contractOwner ||
+      !existentialNFT.name ||
+      !existentialNFT.symbol ||
+      !existentialNFT.owner ||
       !recaptchaToken ||
       paymentOptions.length === 0 ||
       isEmpty(selectedPaymentOptions) ||
-      deployedCloneAddresses.length > 0 ||
-      isDeploymentSuccessful,
+      !isEmpty(existentialNFT.deployments),
     [
-      tokenName,
-      tokenSymbol,
-      contractOwner,
+      existentialNFT.name,
+      existentialNFT.symbol,
+      existentialNFT.owner,
+      existentialNFT.deployments,
       paymentOptions,
       selectedPaymentOptions,
-      deployedCloneAddresses,
       recaptchaToken,
-      isDeploymentSuccessful,
     ],
   );
 
@@ -248,8 +239,10 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             <TextField
               data-testid="nft-symbol-input-field"
               id={id}
-              value={tokenSymbol}
-              onChange={({ target }) => setTokenSymbol(target.value)}
+              value={existentialNFT.symbol}
+              onChange={({ target }) =>
+                setValue("existentialNFT.symbol", target.value)
+              }
             />
           )}
         </InputWrapper>
@@ -262,8 +255,10 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             <TextField
               data-testid="nft-name-input-field"
               id={id}
-              value={tokenName}
-              onChange={({ target }) => setTokenName(target.value)}
+              value={existentialNFT.name}
+              onChange={({ target }) =>
+                setValue("existentialNFT.name", target.value)
+              }
             />
           )}
         </InputWrapper>
@@ -276,8 +271,10 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             <TextField
               data-testid="contract-owner-input-field"
               id={id}
-              value={contractOwner}
-              onChange={({ target }) => setContractOwner(target.value)}
+              value={existentialNFT.owner}
+              onChange={({ target }) =>
+                setValue("existentialNFT.owner", target.value)
+              }
             />
           )}
         </InputWrapper>
@@ -292,9 +289,11 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             <ImageSelect
               data-testid="nft-image-upload-field"
               id={id}
-              imageSrc={nftImage ? URL.createObjectURL(nftImage) : undefined}
-              onClick={(file) => setNftImage(file)}
-              onRemove={() => setNftImage(undefined)}
+              imageSrc={existentialNFT.image}
+              onClick={(file) =>
+                setValue("existentialNFT.image", URL.createObjectURL(file))
+              }
+              onRemove={() => setValue("existentialNFT.image", undefined)}
               sizeLimit={256 * 1024} // 256 kB
             />
           )}
@@ -348,9 +347,9 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         </Stack>
       </Stack>
       <NFTDeploymentDialog
-        open={deployedCloneAddresses.length > 0}
-        cloneAddresses={deployedCloneAddresses}
-        onClose={() => setDeployedCloneAddresses([])}
+        open={isDialogOpen}
+        cloneAddresses={existentialNFT.deployments}
+        onClose={() => setDialogOpen(false)}
       />
       <ReCAPTCHA
         ref={recaptchaRef}

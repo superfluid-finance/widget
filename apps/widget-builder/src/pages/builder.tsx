@@ -74,9 +74,16 @@ export default function Builder() {
 
   const { watch, control, getValues, setValue } = formMethods;
 
-  const [productDetails, paymentDetails, displaySettings, type] = watch([
+  const [
+    productDetails,
+    paymentDetails,
+    existentialNFT,
+    displaySettings,
+    type,
+  ] = watch([
     "productDetails",
     "paymentDetails",
+    "existentialNFT",
     "displaySettings",
     "type",
   ]);
@@ -229,6 +236,7 @@ export default function Builder() {
           {...{
             productDetails,
             paymentDetails,
+            existentialNFT,
             displaySettings,
             type,
           }}

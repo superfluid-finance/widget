@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  existentialNFTSchema,
   paymentDetailsSchema,
   productDetailsSchema,
 } from "@superfluid-finance/widget";
@@ -34,6 +35,7 @@ type ConfigEditorProps = {
 const schema = z.object({
   productDetails: productDetailsSchema,
   paymentDetails: paymentDetailsSchema,
+  existentialNFT: existentialNFTSchema,
   type: z.enum(["dialog", "drawer", "full-screen", "page"]),
 });
 
@@ -77,6 +79,8 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
   const [editorValue, setEditorValue] = useState<string>(initialValue);
   const [isJsonValid, setIsJsonValid] = useState<boolean>(true);
 
+  console.log(value);
+
   const handleEditorValidate: OnValidate = useCallback((markers) => {
     // If there are no errors in markers, the JSON is valid.
     setIsJsonValid(
@@ -103,6 +107,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
             setValue("productDetails", parseResult.data.productDetails);
             setValue("type", parseResult.data.type);
             setValue("paymentDetails", parseResult.data.paymentDetails);
+            setValue("existentialNFT", parseResult.data.existentialNFT);
             setSaved(true);
             setTimeout(() => {
               setSaved(false);

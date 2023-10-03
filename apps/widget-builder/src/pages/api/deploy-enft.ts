@@ -25,7 +25,7 @@ import { createBaseURI } from "../../utils/baseURI";
 import { verifyCaptcha } from "../../utils/captcha";
 import { pinNFTImageToIPFS } from "../../utils/pinata";
 import rateLimit, { checkRateLimit } from "../../utils/rate-limit";
-import { calculatePerSecondFlowRate } from "../../utils/utils";
+import { calculatePerSecondFlowRate, isLocalNetwork } from "../../utils/utils";
 
 const limiter = rateLimit({
   interval: 60 * 1000,
@@ -61,8 +61,10 @@ const handler: NextApiHandler = async (req, res) => {
     nftImage?: string;
   } = JSON.parse(req.body);
 
+  const isLocal = isLocalNetwork(req.headers.host);
+
   try {
-    await checkRateLimit(req, res, limiter.check);
+    !isLocal && (await checkRateLimit(req, res, limiter.check));
   } catch {
     return res
       .status(429)
@@ -70,7 +72,7 @@ const handler: NextApiHandler = async (req, res) => {
   }
 
   try {
-    await verifyCaptcha(recaptchaToken);
+    !isLocal && (await verifyCaptcha(recaptchaToken));
   } catch {
     return res
       .status(400)
@@ -181,7 +183,12 @@ const handler: NextApiHandler = async (req, res) => {
       ),
     );
 
-    res.status(200).json({ deployments });
+    res.status(200).json({
+      deployments: deployments.reduce(
+        (acc, curr) => Object.assign(acc, curr),
+        {},
+      ),
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({

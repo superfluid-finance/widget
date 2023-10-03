@@ -1,5 +1,9 @@
 import { faker } from "@faker-js/faker";
-import { ProductDetails, supportedNetwork } from "@superfluid-finance/widget";
+import {
+  ExistentialNFT,
+  ProductDetails,
+  supportedNetwork,
+} from "@superfluid-finance/widget";
 import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -137,9 +141,24 @@ const defaultDisplaySettings: DisplaySettings = {
   stepperOrientation: "vertical",
 };
 
+const defaultExistentialNFT: ExistentialNFT = {
+  name: "",
+  symbol: "",
+  owner: "",
+  deployments: {},
+};
+
+const demoExistentialNFT: ExistentialNFT = {
+  name: "Demo NFT",
+  symbol: "DEMO",
+  owner: "0xab1D164065aed9A3e42fca42c2c20997f369A2B0",
+  deployments: {},
+};
+
 export const defaultWidgetProps: WidgetProps = {
   productDetails: defaultProductDetails,
   paymentDetails: defaultPaymentDetails,
+  existentialNFT: defaultExistentialNFT,
   type,
   displaySettings: defaultDisplaySettings,
 };
@@ -161,6 +180,11 @@ const useDemoMode = () => {
     setValue("productDetails", demoProductDetails);
   }, [setValue]);
 
+  const setDemoExistentialNFT = useCallback(
+    () => setValue("existentialNFT", demoExistentialNFT),
+    [setValue],
+  );
+
   const setDemoStyling = useCallback(() => {
     const demoStyling: DisplaySettings = {
       ...defaultDisplaySettings,
@@ -177,6 +201,7 @@ const useDemoMode = () => {
   return {
     setDemoPaymentDetails,
     setDemoProductDetails,
+    setDemoExistentialNFT,
     setDemoStyling,
   };
 };
