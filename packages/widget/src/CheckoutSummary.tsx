@@ -5,7 +5,7 @@ import { useAccount, useWalletClient } from "wagmi";
 import { AccountAddressCard } from "./AccountAddressCard.js";
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { SubscribeCommand } from "./commands.js";
-import { ChainId, mapTimePeriodToSeconds } from "./core/index.js";
+import { mapTimePeriodToSeconds } from "./core/index.js";
 import { runEventListener } from "./EventListeners.js";
 import FlowingBalance from "./FlowingBalance.js";
 import StreamIndicator from "./StreamIndicator.js";
@@ -65,8 +65,10 @@ export function CheckoutSummary() {
   useEffect(() => {
     runEventListener(eventListeners.onSuccess);
 
-    const chainId = walletClient?.chain.id as ChainId;
-    const nftCloneAddress = existentialNFT.deployments[chainId];
+    // const chainId = walletClient?.chain.id as ChainId;
+    // const nftCloneAddress = existentialNFT.deployments[chainId];
+
+    // TODO: Import NFT with eth_watchAsset
   }, [eventListeners.onSuccess]);
 
   const onSuccessButtonClick = useCallback(() => {
