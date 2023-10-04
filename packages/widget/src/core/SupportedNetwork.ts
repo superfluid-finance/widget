@@ -15,7 +15,6 @@ import {
   optimismGoerli,
   polygon,
   polygonMumbai,
-  sepolia,
 } from "wagmi/chains";
 import { z } from "zod";
 
@@ -31,7 +30,6 @@ type ChainKeys =
   | "celo"
   | "gnosis"
   | "goerli"
-  | "sepolia"
   | "optimism"
   | "optimismGoerli"
   | "polygon"
@@ -49,7 +47,6 @@ export const chainIds = [
   celo.id,
   gnosis.id,
   goerli.id,
-  sepolia.id,
   optimism.id,
   optimismGoerli.id,
   polygon.id,
@@ -73,7 +70,6 @@ export const supportedNetwork: Record<ChainKeys, SupportedNetwork> = {
   celo,
   gnosis,
   goerli,
-  sepolia,
   optimism,
   optimismGoerli,
   polygon,
