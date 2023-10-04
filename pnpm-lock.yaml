@@ -508,8 +508,8 @@ importers:
   examples/widget-webcomponent:
     dependencies:
       '@superfluid-finance/tokenlist':
-        specifier: ^3.0.1
-        version: 3.0.1
+        specifier: ^3.0.2
+        version: 3.0.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
@@ -562,8 +562,8 @@ importers:
         specifier: ^1.1.17
         version: 1.1.17
       '@superfluid-finance/tokenlist':
-        specifier: ^3.0.1
-        version: 3.0.1
+        specifier: ^3.0.2
+        version: 3.0.2
       abitype:
         specifier: ^0.9.8
         version: 0.9.8(typescript@5.2.2)(zod@3.22.2)
@@ -4514,8 +4514,8 @@ packages:
     resolution: {integrity: sha512-aSIbzrkwUzxPp97mWqPie4x6RDNhdaPvFXmJX5eT+bcjnBx1AH4jyQDnldFRYpwisBByWjT1VU+/wkTU1yiBow==}
     dev: false
 
-  /@superfluid-finance/tokenlist@3.0.1:
-    resolution: {integrity: sha512-C9fvGwF4W9rNd6UMNAOEXn1v8WPCQkmz/BHImsR4G0MfjHdLruyb+w3vZU5tVroh8ey4xcyViXr8yLTliEXfag==}
+  /@superfluid-finance/tokenlist@3.0.2:
+    resolution: {integrity: sha512-CWO8EMHRgc6Y213GtKKBLngVnTNuJs1QOTUFFvovDt3T/cxqIBEoS9TQb3VFcC8/2CJBSwFa/YamKNt3trSq/g==}
     dependencies:
       '@uniswap/token-lists': 1.0.0-beta.33
     dev: false
