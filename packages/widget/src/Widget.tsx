@@ -117,6 +117,7 @@ export function Widget({
           name: "",
         },
         paymentDetails: {
+          modifyFlowRateBehaviour: "ADD",
           paymentOptions: [],
           defaultWrapAmount: {
             multiplier: 3,

@@ -12,7 +12,7 @@ import { useCommandValidationSchema } from "./useCommandValidationSchema.js";
 import { useWidget } from "./WidgetContext.js";
 
 export default function StepContentReview({ stepIndex }: StepProps) {
-  const { commands, sessionId } = useCommandHandler();
+  const { commands, contractWrites, sessionId } = useCommandHandler();
 
   const { handleNext } = useStepper();
 
@@ -39,10 +39,15 @@ export default function StepContentReview({ stepIndex }: StepProps) {
         subscribeCommand: commands.find((x) => x.type === "Subscribe"),
       }),
   );
-  const isValid = Boolean(validationResult?.success);
-  const isValidationError = validationResult?.success === false;
 
   const areContractWritesMapping = !commands.every((x) => x.contractWrites);
+
+  const isValidationError = validationResult?.success === false;
+  const isValid = !isValidationError;
+
+  const validationMessage = isValidationError
+    ? validationResult.error.issues[0].message
+    : "";
 
   return (
     <Stack sx={{ pb: 3, px: 3.5 }} spacing={3}>
@@ -56,15 +61,9 @@ export default function StepContentReview({ stepIndex }: StepProps) {
       </Stack>
       <Stack direction="column" spacing={1}>
         <Collapse in={isValidationError} unmountOnExit>
-          {isValidationError && (
-            <Alert
-              variant="standard"
-              data-testid="review-error"
-              severity="error"
-            >
-              {validationResult.error.issues[0].message}
-            </Alert>
-          )}
+          <Alert variant="standard" data-testid="review-error" severity="error">
+            {validationMessage}
+          </Alert>
         </Collapse>
         <StepperCTAButton
           loadingPosition="end"
