@@ -1,7 +1,7 @@
 import superfluidMetadata from "@superfluid-finance/metadata";
 import { useMemo } from "react";
 import { Address } from "viem";
-import { fetchBalance, readContracts } from "wagmi/actions";
+import { fetchBalance, readContract, readContracts } from "wagmi/actions";
 import { z } from "zod";
 
 import { calculateNewFlowRate } from "./CommandMapper.js";
@@ -9,8 +9,9 @@ import { SubscribeCommand, WrapIntoSuperTokensCommand } from "./commands.js";
 import {
   cfAv1ForwarderABI,
   cfAv1ForwarderAddress,
+  hostABI,
+  hostAddress,
   superfluidGovernanceABI,
-  superfluidGovernanceAddress,
   superTokenABI,
 } from "./core/index.js";
 import { calculateDateWhenBalanceCritical } from "./helpers/calculateDateWhenBalanceCritical.js";
@@ -90,6 +91,13 @@ export const useCommandValidationSchema = () =>
               cmd.chainId,
             )!; // TODO(KK): optimize
 
+            const governanceAddress = await readContract({
+              chainId: cmd.chainId,
+              address: hostAddress[cmd.chainId],
+              abi: hostABI,
+              functionName: "getGovernance",
+            });
+
             const [
               [_lastUpdated, existingFlowRate, existingDeposit, _owedDeposit],
               minimumDeposit,
@@ -110,7 +118,7 @@ export const useCommandValidationSchema = () =>
                 },
                 {
                   chainId: cmd.chainId,
-                  address: superfluidGovernanceAddress[cmd.chainId],
+                  address: governanceAddress,
                   abi: superfluidGovernanceABI,
                   functionName: "getSuperTokenMinimumDeposit",
                   args: [
@@ -120,7 +128,7 @@ export const useCommandValidationSchema = () =>
                 },
                 {
                   chainId: cmd.chainId,
-                  address: superfluidGovernanceAddress[cmd.chainId],
+                  address: governanceAddress,
                   abi: superfluidGovernanceABI,
                   functionName: "getPPPConfig",
                   args: [

@@ -1341,6 +1341,859 @@ export const errorsABI = [
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Host
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x4E583d9390082B65Bef884b629DFA426114CED6d)
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9)
+ * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x567c4B141ED61923967cA25Ef4906C8781069a10)
+ * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xd1e2cFb6441680002Eb7A44223160aB9B67d7E6E)
+ * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x2dFe937cD98Ab92e59cF3139138f18c823a4efE7)
+ * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x3E14dC1b13c488a8d5D310918780c983bD5982E7)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xe64f81d5dDdA1c7172e5C6d964E8ef1BD82D8704)
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0x4C073B3baB6d8826b8C5b229f3cfdC1eC6E47E74)
+ * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xCf8Acb4eF033efF16E8080aed4c7D5B9285D2192)
+ * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0xA4Ff07cF81C02CFD356184879D953970cA957585)
+ * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x85Fe79b998509B77BF10A8BD4001D58475D29386)
+ * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x60377C7016E4cdB03C87EF474896C11cB560752C)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xEB796bdb90fFA0f28255275e16936D25d3418603)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x507c3a7C6Ccc253884A2e3a3ee2A211cC7E796a6)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x109412E3C84f0539b43d39dB691B08c90f58dC7c)
+ */
+export const hostABI = [
+  {
+    stateMutability: "nonpayable",
+    type: "constructor",
+    inputs: [
+      { name: "nonUpgradable", internalType: "bool", type: "bool" },
+      { name: "appWhiteListingEnabled", internalType: "bool", type: "bool" },
+    ],
+  },
+  {
+    type: "error",
+    inputs: [{ name: "_code", internalType: "uint256", type: "uint256" }],
+    name: "APP_RULE",
+  },
+  { type: "error", inputs: [], name: "HOST_AGREEMENT_ALREADY_REGISTERED" },
+  { type: "error", inputs: [], name: "HOST_AGREEMENT_CALLBACK_IS_NOT_ACTION" },
+  { type: "error", inputs: [], name: "HOST_AGREEMENT_IS_NOT_REGISTERED" },
+  {
+    type: "error",
+    inputs: [],
+    name: "HOST_CALL_AGREEMENT_WITH_CTX_FROM_WRONG_ADDRESS",
+  },
+  {
+    type: "error",
+    inputs: [],
+    name: "HOST_CALL_APP_ACTION_WITH_CTX_FROM_WRONG_ADDRESS",
+  },
+  {
+    type: "error",
+    inputs: [],
+    name: "HOST_CANNOT_DOWNGRADE_TO_NON_UPGRADEABLE",
+  },
+  { type: "error", inputs: [], name: "HOST_INVALID_CONFIG_WORD" },
+  {
+    type: "error",
+    inputs: [],
+    name: "HOST_INVALID_OR_EXPIRED_SUPER_APP_REGISTRATION_KEY",
+  },
+  { type: "error", inputs: [], name: "HOST_MAX_256_AGREEMENTS" },
+  { type: "error", inputs: [], name: "HOST_MUST_BE_CONTRACT" },
+  { type: "error", inputs: [], name: "HOST_NEED_MORE_GAS" },
+  { type: "error", inputs: [], name: "HOST_NON_UPGRADEABLE" },
+  { type: "error", inputs: [], name: "HOST_NON_ZERO_LENGTH_PLACEHOLDER_CTX" },
+  { type: "error", inputs: [], name: "HOST_NOT_A_SUPER_APP" },
+  { type: "error", inputs: [], name: "HOST_NO_APP_REGISTRATION_PERMISSIONS" },
+  { type: "error", inputs: [], name: "HOST_ONLY_GOVERNANCE" },
+  { type: "error", inputs: [], name: "HOST_ONLY_LISTED_AGREEMENT" },
+  { type: "error", inputs: [], name: "HOST_RECEIVER_IS_NOT_SUPER_APP" },
+  { type: "error", inputs: [], name: "HOST_SENDER_IS_NOT_SUPER_APP" },
+  { type: "error", inputs: [], name: "HOST_SOURCE_APP_NEEDS_HIGHER_APP_LEVEL" },
+  { type: "error", inputs: [], name: "HOST_SUPER_APP_ALREADY_REGISTERED" },
+  { type: "error", inputs: [], name: "HOST_SUPER_APP_IS_JAILED" },
+  { type: "error", inputs: [], name: "HOST_UNAUTHORIZED_SUPER_APP_FACTORY" },
+  { type: "error", inputs: [], name: "HOST_UNKNOWN_BATCH_CALL_OPERATION_TYPE" },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "agreementType",
+        internalType: "bytes32",
+        type: "bytes32",
+        indexed: false,
+      },
+      {
+        name: "code",
+        internalType: "address",
+        type: "address",
+        indexed: false,
+      },
+    ],
+    name: "AgreementClassRegistered",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "agreementType",
+        internalType: "bytes32",
+        type: "bytes32",
+        indexed: false,
+      },
+      {
+        name: "code",
+        internalType: "address",
+        type: "address",
+        indexed: false,
+      },
+    ],
+    name: "AgreementClassUpdated",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "app",
+        internalType: "contract ISuperApp",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "AppRegistered",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "uuid",
+        internalType: "bytes32",
+        type: "bytes32",
+        indexed: false,
+      },
+      {
+        name: "codeAddress",
+        internalType: "address",
+        type: "address",
+        indexed: false,
+      },
+    ],
+    name: "CodeUpdated",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "oldGov",
+        internalType: "contract ISuperfluidGovernance",
+        type: "address",
+        indexed: false,
+      },
+      {
+        name: "newGov",
+        internalType: "contract ISuperfluidGovernance",
+        type: "address",
+        indexed: false,
+      },
+    ],
+    name: "GovernanceReplaced",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      { name: "version", internalType: "uint8", type: "uint8", indexed: false },
+    ],
+    name: "Initialized",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "app",
+        internalType: "contract ISuperApp",
+        type: "address",
+        indexed: true,
+      },
+      {
+        name: "reason",
+        internalType: "uint256",
+        type: "uint256",
+        indexed: false,
+      },
+    ],
+    name: "Jail",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "newFactory",
+        internalType: "contract ISuperTokenFactory",
+        type: "address",
+        indexed: false,
+      },
+    ],
+    name: "SuperTokenFactoryUpdated",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "token",
+        internalType: "contract ISuperToken",
+        type: "address",
+        indexed: true,
+      },
+      {
+        name: "code",
+        internalType: "address",
+        type: "address",
+        indexed: false,
+      },
+    ],
+    name: "SuperTokenLogicUpdated",
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "APP_WHITE_LISTING_ENABLED",
+    outputs: [{ name: "", internalType: "bool", type: "bool" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "CALLBACK_GAS_LIMIT",
+    outputs: [{ name: "", internalType: "uint64", type: "uint64" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "MAX_APP_CALLBACK_LEVEL",
+    outputs: [{ name: "", internalType: "uint256", type: "uint256" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "MAX_NUM_AGREEMENTS",
+    outputs: [{ name: "", internalType: "uint32", type: "uint32" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "NON_UPGRADABLE_DEPLOYMENT",
+    outputs: [{ name: "", internalType: "bool", type: "bool" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [],
+    name: "castrate",
+    outputs: [],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "getCodeAddress",
+    outputs: [
+      { name: "codeAddress", internalType: "address", type: "address" },
+    ],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "gov",
+        internalType: "contract ISuperfluidGovernance",
+        type: "address",
+      },
+    ],
+    name: "initialize",
+    outputs: [],
+  },
+  {
+    stateMutability: "pure",
+    type: "function",
+    inputs: [],
+    name: "proxiableUUID",
+    outputs: [{ name: "", internalType: "bytes32", type: "bytes32" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [{ name: "newAddress", internalType: "address", type: "address" }],
+    name: "updateCode",
+    outputs: [],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "getNow",
+    outputs: [{ name: "", internalType: "uint256", type: "uint256" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "getGovernance",
+    outputs: [
+      {
+        name: "",
+        internalType: "contract ISuperfluidGovernance",
+        type: "address",
+      },
+    ],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "newGov",
+        internalType: "contract ISuperfluidGovernance",
+        type: "address",
+      },
+    ],
+    name: "replaceGovernance",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "agreementClassLogic",
+        internalType: "contract ISuperAgreement",
+        type: "address",
+      },
+    ],
+    name: "registerAgreementClass",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "agreementClassLogic",
+        internalType: "contract ISuperAgreement",
+        type: "address",
+      },
+    ],
+    name: "updateAgreementClass",
+    outputs: [],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      { name: "agreementType", internalType: "bytes32", type: "bytes32" },
+    ],
+    name: "isAgreementTypeListed",
+    outputs: [{ name: "yes", internalType: "bool", type: "bool" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      {
+        name: "agreementClass",
+        internalType: "contract ISuperAgreement",
+        type: "address",
+      },
+    ],
+    name: "isAgreementClassListed",
+    outputs: [{ name: "yes", internalType: "bool", type: "bool" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      { name: "agreementType", internalType: "bytes32", type: "bytes32" },
+    ],
+    name: "getAgreementClass",
+    outputs: [
+      {
+        name: "agreementClass",
+        internalType: "contract ISuperAgreement",
+        type: "address",
+      },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [{ name: "bitmap", internalType: "uint256", type: "uint256" }],
+    name: "mapAgreementClasses",
+    outputs: [
+      {
+        name: "agreementClasses",
+        internalType: "contract ISuperAgreement[]",
+        type: "address[]",
+      },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      { name: "bitmap", internalType: "uint256", type: "uint256" },
+      { name: "agreementType", internalType: "bytes32", type: "bytes32" },
+    ],
+    name: "addToAgreementClassesBitmap",
+    outputs: [{ name: "newBitmap", internalType: "uint256", type: "uint256" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      { name: "bitmap", internalType: "uint256", type: "uint256" },
+      { name: "agreementType", internalType: "bytes32", type: "bytes32" },
+    ],
+    name: "removeFromAgreementClassesBitmap",
+    outputs: [{ name: "newBitmap", internalType: "uint256", type: "uint256" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "getSuperTokenFactory",
+    outputs: [
+      {
+        name: "factory",
+        internalType: "contract ISuperTokenFactory",
+        type: "address",
+      },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "getSuperTokenFactoryLogic",
+    outputs: [{ name: "logic", internalType: "address", type: "address" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "newFactory",
+        internalType: "contract ISuperTokenFactory",
+        type: "address",
+      },
+    ],
+    name: "updateSuperTokenFactory",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "token", internalType: "contract ISuperToken", type: "address" },
+      { name: "newLogicOverride", internalType: "address", type: "address" },
+    ],
+    name: "updateSuperTokenLogic",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [{ name: "configWord", internalType: "uint256", type: "uint256" }],
+    name: "registerApp",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "configWord", internalType: "uint256", type: "uint256" },
+      { name: "registrationKey", internalType: "string", type: "string" },
+    ],
+    name: "registerAppWithKey",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+      { name: "configWord", internalType: "uint256", type: "uint256" },
+    ],
+    name: "registerAppByFactory",
+    outputs: [],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+    ],
+    name: "isApp",
+    outputs: [{ name: "", internalType: "bool", type: "bool" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      { name: "appAddr", internalType: "contract ISuperApp", type: "address" },
+    ],
+    name: "getAppCallbackLevel",
+    outputs: [{ name: "", internalType: "uint8", type: "uint8" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+    ],
+    name: "getAppManifest",
+    outputs: [
+      { name: "isSuperApp", internalType: "bool", type: "bool" },
+      { name: "isJailed", internalType: "bool", type: "bool" },
+      { name: "noopMask", internalType: "uint256", type: "uint256" },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+    ],
+    name: "isAppJailed",
+    outputs: [{ name: "", internalType: "bool", type: "bool" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "targetApp",
+        internalType: "contract ISuperApp",
+        type: "address",
+      },
+    ],
+    name: "allowCompositeApp",
+    outputs: [],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+      {
+        name: "targetApp",
+        internalType: "contract ISuperApp",
+        type: "address",
+      },
+    ],
+    name: "isCompositeAppAllowed",
+    outputs: [{ name: "", internalType: "bool", type: "bool" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+      { name: "callData", internalType: "bytes", type: "bytes" },
+      { name: "isTermination", internalType: "bool", type: "bool" },
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+    ],
+    name: "callAppBeforeCallback",
+    outputs: [{ name: "cbdata", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+      { name: "callData", internalType: "bytes", type: "bytes" },
+      { name: "isTermination", internalType: "bool", type: "bool" },
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+    ],
+    name: "callAppAfterCallback",
+    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+      { name: "appCreditGranted", internalType: "uint256", type: "uint256" },
+      { name: "appCreditUsed", internalType: "int256", type: "int256" },
+      {
+        name: "appCreditToken",
+        internalType: "contract ISuperfluidToken",
+        type: "address",
+      },
+    ],
+    name: "appCallbackPush",
+    outputs: [{ name: "appCtx", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+      { name: "appCreditUsedDelta", internalType: "int256", type: "int256" },
+    ],
+    name: "appCallbackPop",
+    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+      { name: "appCreditUsedMore", internalType: "int256", type: "int256" },
+    ],
+    name: "ctxUseCredit",
+    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+      { name: "reason", internalType: "uint256", type: "uint256" },
+    ],
+    name: "jailApp",
+    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "agreementClass",
+        internalType: "contract ISuperAgreement",
+        type: "address",
+      },
+      { name: "callData", internalType: "bytes", type: "bytes" },
+      { name: "userData", internalType: "bytes", type: "bytes" },
+    ],
+    name: "callAgreement",
+    outputs: [{ name: "returnedData", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+      { name: "callData", internalType: "bytes", type: "bytes" },
+    ],
+    name: "callAppAction",
+    outputs: [{ name: "returnedData", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "agreementClass",
+        internalType: "contract ISuperAgreement",
+        type: "address",
+      },
+      { name: "callData", internalType: "bytes", type: "bytes" },
+      { name: "userData", internalType: "bytes", type: "bytes" },
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+    ],
+    name: "callAgreementWithContext",
+    outputs: [
+      { name: "newCtx", internalType: "bytes", type: "bytes" },
+      { name: "returnedData", internalType: "bytes", type: "bytes" },
+    ],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+      { name: "callData", internalType: "bytes", type: "bytes" },
+      { name: "ctx", internalType: "bytes", type: "bytes" },
+    ],
+    name: "callAppActionWithContext",
+    outputs: [{ name: "newCtx", internalType: "bytes", type: "bytes" }],
+  },
+  {
+    stateMutability: "pure",
+    type: "function",
+    inputs: [{ name: "ctx", internalType: "bytes", type: "bytes" }],
+    name: "decodeCtx",
+    outputs: [
+      {
+        name: "context",
+        internalType: "struct ISuperfluid.Context",
+        type: "tuple",
+        components: [
+          { name: "appCallbackLevel", internalType: "uint8", type: "uint8" },
+          { name: "callType", internalType: "uint8", type: "uint8" },
+          { name: "timestamp", internalType: "uint256", type: "uint256" },
+          { name: "msgSender", internalType: "address", type: "address" },
+          { name: "agreementSelector", internalType: "bytes4", type: "bytes4" },
+          { name: "userData", internalType: "bytes", type: "bytes" },
+          {
+            name: "appCreditGranted",
+            internalType: "uint256",
+            type: "uint256",
+          },
+          {
+            name: "appCreditWantedDeprecated",
+            internalType: "uint256",
+            type: "uint256",
+          },
+          { name: "appCreditUsed", internalType: "int256", type: "int256" },
+          { name: "appAddress", internalType: "address", type: "address" },
+          {
+            name: "appCreditToken",
+            internalType: "contract ISuperfluidToken",
+            type: "address",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [{ name: "ctx", internalType: "bytes", type: "bytes" }],
+    name: "isCtxValid",
+    outputs: [{ name: "", internalType: "bool", type: "bool" }],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "operations",
+        internalType: "struct ISuperfluid.Operation[]",
+        type: "tuple[]",
+        components: [
+          { name: "operationType", internalType: "uint32", type: "uint32" },
+          { name: "target", internalType: "address", type: "address" },
+          { name: "data", internalType: "bytes", type: "bytes" },
+        ],
+      },
+    ],
+    name: "batchCall",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "operations",
+        internalType: "struct ISuperfluid.Operation[]",
+        type: "tuple[]",
+        components: [
+          { name: "operationType", internalType: "uint32", type: "uint32" },
+          { name: "target", internalType: "address", type: "address" },
+          { name: "data", internalType: "bytes", type: "bytes" },
+        ],
+      },
+    ],
+    name: "forwardBatchCall",
+    outputs: [],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [{ name: "forwarder", internalType: "address", type: "address" }],
+    name: "isTrustedForwarder",
+    outputs: [{ name: "", internalType: "bool", type: "bool" }],
+  },
+  {
+    stateMutability: "pure",
+    type: "function",
+    inputs: [],
+    name: "versionRecipient",
+    outputs: [{ name: "", internalType: "string", type: "string" }],
+  },
+] as const;
+
+/**
+ * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x4E583d9390082B65Bef884b629DFA426114CED6d)
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9)
+ * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x567c4B141ED61923967cA25Ef4906C8781069a10)
+ * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xd1e2cFb6441680002Eb7A44223160aB9B67d7E6E)
+ * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x2dFe937cD98Ab92e59cF3139138f18c823a4efE7)
+ * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x3E14dC1b13c488a8d5D310918780c983bD5982E7)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xe64f81d5dDdA1c7172e5C6d964E8ef1BD82D8704)
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0x4C073B3baB6d8826b8C5b229f3cfdC1eC6E47E74)
+ * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xCf8Acb4eF033efF16E8080aed4c7D5B9285D2192)
+ * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0xA4Ff07cF81C02CFD356184879D953970cA957585)
+ * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x85Fe79b998509B77BF10A8BD4001D58475D29386)
+ * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x60377C7016E4cdB03C87EF474896C11cB560752C)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xEB796bdb90fFA0f28255275e16936D25d3418603)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x507c3a7C6Ccc253884A2e3a3ee2A211cC7E796a6)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x109412E3C84f0539b43d39dB691B08c90f58dC7c)
+ */
+export const hostAddress = {
+  1: "0x4E583d9390082B65Bef884b629DFA426114CED6d",
+  5: "0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9",
+  10: "0x567c4B141ED61923967cA25Ef4906C8781069a10",
+  56: "0xd1e2cFb6441680002Eb7A44223160aB9B67d7E6E",
+  100: "0x2dFe937cD98Ab92e59cF3139138f18c823a4efE7",
+  137: "0x3E14dC1b13c488a8d5D310918780c983bD5982E7",
+  420: "0xE40983C2476032A0915600b9472B3141aA5B5Ba9",
+  1442: "0xe64f81d5dDdA1c7172e5C6d964E8ef1BD82D8704",
+  8453: "0x4C073B3baB6d8826b8C5b229f3cfdC1eC6E47E74",
+  42161: "0xCf8Acb4eF033efF16E8080aed4c7D5B9285D2192",
+  42220: "0xA4Ff07cF81C02CFD356184879D953970cA957585",
+  43113: "0x85Fe79b998509B77BF10A8BD4001D58475D29386",
+  43114: "0x60377C7016E4cdB03C87EF474896C11cB560752C",
+  80001: "0xEB796bdb90fFA0f28255275e16936D25d3418603",
+  84531: "0x507c3a7C6Ccc253884A2e3a3ee2A211cC7E796a6",
+  421613: "0xE40983C2476032A0915600b9472B3141aA5B5Ba9",
+  11155111: "0x109412E3C84f0539b43d39dB691B08c90f58dC7c",
+} as const;
+
+/**
+ * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x4E583d9390082B65Bef884b629DFA426114CED6d)
+ * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9)
+ * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x567c4B141ED61923967cA25Ef4906C8781069a10)
+ * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xd1e2cFb6441680002Eb7A44223160aB9B67d7E6E)
+ * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x2dFe937cD98Ab92e59cF3139138f18c823a4efE7)
+ * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x3E14dC1b13c488a8d5D310918780c983bD5982E7)
+ * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
+ * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xe64f81d5dDdA1c7172e5C6d964E8ef1BD82D8704)
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0x4C073B3baB6d8826b8C5b229f3cfdC1eC6E47E74)
+ * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xCf8Acb4eF033efF16E8080aed4c7D5B9285D2192)
+ * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0xA4Ff07cF81C02CFD356184879D953970cA957585)
+ * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x85Fe79b998509B77BF10A8BD4001D58475D29386)
+ * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x60377C7016E4cdB03C87EF474896C11cB560752C)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xEB796bdb90fFA0f28255275e16936D25d3418603)
+ * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x507c3a7C6Ccc253884A2e3a3ee2A211cC7E796a6)
+ * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x109412E3C84f0539b43d39dB691B08c90f58dC7c)
+ */
+export const hostConfig = { address: hostAddress, abi: hostABI } as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Native Asset Super Token
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -4615,25 +5468,6 @@ export const superTokenABI = [
 // SuperfluidGovernance
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0xe2E14e2C4518cB06c32Cd0818B4C01f53E1Ba653)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3a648764a6d66440ca096343937c711a7ac1b1e9)
- * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D)
- * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xee07D9fce4Cf2a891BC979E9d365929506C2982f)
- * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0xaCc7380323681fdb8a0B9F2FE7d69dDFf0664478)
- * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x3AD3f7A0965Ce6f9358AD5CCE86Bc2b05F1EE087)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x777Be25F9fdcA87e8a0E06Ad4be93d65429FCb9f)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xF21019b8688e7730Ca6D9002569eCBaF8d1A3083)
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x55F7758dd99d5e185f4CC08d4Ad95B71f598264D)
- * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D)
- * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D)
- * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0xA55632254Bc9F739bDe7191c8a4510aDdae3ef6D)
- * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0xF74390BabA510ec2fE196c2e02B037380d7a6F12)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x2637eA93EE5cd887ff9AC98185eA67Bd70C5f62e)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xbe20Bac0DCF6f01834F51CCDab2dD72707C6e9b6)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0x777Be25F9fdcA87e8a0E06Ad4be93d65429FCb9f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x21d4E9fbB9DB742E6ef4f29d189a7C18B0b59136)
- */
 export const superfluidGovernanceABI = [
   { type: "error", inputs: [], name: "SF_GOV_II_ONLY_OWNER" },
   {
@@ -5366,66 +6200,3 @@ export const superfluidGovernanceABI = [
     outputs: [],
   },
 ] as const;
-
-/**
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0xe2E14e2C4518cB06c32Cd0818B4C01f53E1Ba653)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3a648764a6d66440ca096343937c711a7ac1b1e9)
- * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D)
- * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xee07D9fce4Cf2a891BC979E9d365929506C2982f)
- * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0xaCc7380323681fdb8a0B9F2FE7d69dDFf0664478)
- * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x3AD3f7A0965Ce6f9358AD5CCE86Bc2b05F1EE087)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x777Be25F9fdcA87e8a0E06Ad4be93d65429FCb9f)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xF21019b8688e7730Ca6D9002569eCBaF8d1A3083)
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x55F7758dd99d5e185f4CC08d4Ad95B71f598264D)
- * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D)
- * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D)
- * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0xA55632254Bc9F739bDe7191c8a4510aDdae3ef6D)
- * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0xF74390BabA510ec2fE196c2e02B037380d7a6F12)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x2637eA93EE5cd887ff9AC98185eA67Bd70C5f62e)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xbe20Bac0DCF6f01834F51CCDab2dD72707C6e9b6)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0x777Be25F9fdcA87e8a0E06Ad4be93d65429FCb9f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x21d4E9fbB9DB742E6ef4f29d189a7C18B0b59136)
- */
-export const superfluidGovernanceAddress = {
-  1: "0xe2E14e2C4518cB06c32Cd0818B4C01f53E1Ba653",
-  5: "0x3A648764a6d66440Ca096343937c711A7ac1B1e9",
-  10: "0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D",
-  56: "0xee07D9fce4Cf2a891BC979E9d365929506C2982f",
-  100: "0xaCc7380323681fdb8a0B9F2FE7d69dDFf0664478",
-  137: "0x3AD3f7A0965Ce6f9358AD5CCE86Bc2b05F1EE087",
-  420: "0x777Be25F9fdcA87e8a0E06Ad4be93d65429FCb9f",
-  1442: "0xF21019b8688e7730Ca6D9002569eCBaF8d1A3083",
-  8453: "0x55F7758dd99d5e185f4CC08d4Ad95B71f598264D",
-  42161: "0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D",
-  42220: "0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D",
-  43113: "0xA55632254Bc9F739bDe7191c8a4510aDdae3ef6D",
-  43114: "0xF74390BabA510ec2fE196c2e02B037380d7a6F12",
-  80001: "0x2637eA93EE5cd887ff9AC98185eA67Bd70C5f62e",
-  84531: "0xbe20Bac0DCF6f01834F51CCDab2dD72707C6e9b6",
-  421613: "0x777Be25F9fdcA87e8a0E06Ad4be93d65429FCb9f",
-  11155111: "0x21d4E9fbB9DB742E6ef4f29d189a7C18B0b59136",
-} as const;
-
-/**
- * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0xe2E14e2C4518cB06c32Cd0818B4C01f53E1Ba653)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x3a648764a6d66440ca096343937c711a7ac1b1e9)
- * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D)
- * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xee07D9fce4Cf2a891BC979E9d365929506C2982f)
- * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0xaCc7380323681fdb8a0B9F2FE7d69dDFf0664478)
- * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x3AD3f7A0965Ce6f9358AD5CCE86Bc2b05F1EE087)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0x777Be25F9fdcA87e8a0E06Ad4be93d65429FCb9f)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xF21019b8688e7730Ca6D9002569eCBaF8d1A3083)
- * - [__View Contract on Base Basescan__](https://basescan.org/address/0x55F7758dd99d5e185f4CC08d4Ad95B71f598264D)
- * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D)
- * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0x0170FFCC75d178d426EBad5b1a31451d00Ddbd0D)
- * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0xA55632254Bc9F739bDe7191c8a4510aDdae3ef6D)
- * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0xF74390BabA510ec2fE196c2e02B037380d7a6F12)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x2637eA93EE5cd887ff9AC98185eA67Bd70C5f62e)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xbe20Bac0DCF6f01834F51CCDab2dD72707C6e9b6)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0x777Be25F9fdcA87e8a0E06Ad4be93d65429FCb9f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x21d4E9fbB9DB742E6ef4f29d189a7C18B0b59136)
- */
-export const superfluidGovernanceConfig = {
-  address: superfluidGovernanceAddress,
-  abi: superfluidGovernanceABI,
-} as const;
