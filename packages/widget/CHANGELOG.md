@@ -1,5 +1,13 @@
 # @superfluid-finance/widget
 
+## 0.4.4
+
+### Patch Changes
+
+- 77014d2: Added Sepolia testnet, updated tokenlist to latest
+- ac39628: Check for upfront payment's previous transfer to avoid double-charging
+- ac39628: Add configuration option to choose stream modification behaviour (PaymentDetails.modifyFlowRateBehaviour): ADD | SET | ENSURE
+
 ## 0.4.3
 
 ### Patch Changes
