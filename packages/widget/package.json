@@ -66,7 +66,7 @@
     "@mui/lab": "5.0.0-alpha.146",
     "@mui/utils": "^5.14.11",
     "@superfluid-finance/metadata": "^1.1.17",
-    "@superfluid-finance/tokenlist": "^3.0.4",
+    "@superfluid-finance/tokenlist": "^3.2.0",
     "abitype": "^0.9.8",
     "blockies-ts": "^1.0.0",
     "immer": "^10.0.2",
