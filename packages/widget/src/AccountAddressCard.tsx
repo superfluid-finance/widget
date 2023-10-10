@@ -66,6 +66,7 @@ export function AccountAddressCard({
           <Stack direction="row" alignItems="center" spacing={1}>
             {ensAvatarResult.data ? (
               <Avatar
+                data-testid="ens-avatar"
                 alt="ENS avatar"
                 variant="rounded"
                 src={ensAvatarResult.data}
@@ -73,6 +74,7 @@ export function AccountAddressCard({
               />
             ) : (
               <Avatar
+                data-testid="blockie-avatar"
                 alt="generated blockie avatar"
                 variant="rounded"
                 src={blockiesSrc}
