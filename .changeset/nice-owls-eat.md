@@ -1,5 +1,5 @@
 ---
-"@superfluid-finance/widget": minor
+"@superfluid-finance/widget": patch
 ---
 
-Bump the tokenlist version to ^3.2.0 to include FUNDx.
+Bump the tokenlist version to ^3.2.0 to include FUNDx by default
