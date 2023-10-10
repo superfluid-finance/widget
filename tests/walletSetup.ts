@@ -1,6 +1,6 @@
 import { type BrowserContext, chromium, test as base } from "@playwright/test";
-import * as metamask from "@synthetixio/synpress/commands/metamask.js";
-import * as helpers from "@synthetixio/synpress/helpers.js";
+import metamask from "@synthetixio/synpress/commands/metamask.js";
+import helpers from "@synthetixio/synpress/helpers.js";
 
 import { EthHelper } from "./helpers/ethHelper.js";
 
@@ -42,9 +42,9 @@ export const test = base.extend<{
     );
     await ethHelper.revokeAllowanceIfNeccesary(
       "fUSDCx",
-      ethHelper.getUnderlyingTokenSymbolFromSuperTokenSymbol("fUSDCx", "Goerli")
-        .address,
+      ethHelper.getTokenBySymbolAndChainId("fUSDC", 5).address,
     );
+
     //Delete flow before tests, otherwise the widget might not pick it up
     await ethHelper.deleteFlowIfNeccesary(
       "Goerli",

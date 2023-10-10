@@ -14,6 +14,10 @@ declare module "@synthetixio/synpress/helpers.js" {
   export const prepareMetamask: (version: string) => void;
 }
 
+interface Window {
+  setEditorValue: (value: string) => void;
+}
+
 type PaymentOption = {
   network: string;
   superToken: string;

@@ -2,7 +2,12 @@ import { expect, Locator, Page, test } from "@playwright/test";
 import * as metamask from "@synthetixio/synpress/commands/metamask.js";
 
 import { EthHelper } from "../helpers/ethHelper.js";
-import { BasePage, randomDetailsSet } from "./basePage.js";
+import {
+  BasePage,
+  randomDetailsSet,
+  randomReceiver,
+  supportedNetworks,
+} from "./basePage.js";
 
 export class WidgetPage extends BasePage {
   readonly page: Page;
@@ -849,7 +854,55 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async validateTokenBalanceAfterTransfer() {
-    throw new Error("Method not implemented.");
+  async validateAllNetworksAreVisibleInTheWidgetSelection() {
+    await test.step(`Validating all networks are visible in the widget selection`, async () => {
+      await this.networkSelectionButton.click();
+      for (const [index, network] of supportedNetworks.entries()) {
+        await expect(
+          this.page
+            .getByTestId("network-option")
+            .getByText(network, { exact: true }),
+        ).toBeVisible();
+      }
+    });
+  }
+
+  async clickAndVerifyTermsOfUsePageIsOpen() {
+    await test.step(`Clicking on the terms of use link and verifying the page is open`, async () => {
+      await BasePage.clickLinkAndVaguelyVerifyOpenedLink(
+        this.page,
+        this.termsLink,
+        "https://www.superfluid.finance/termsofuse/",
+        "https://www.superfluid.finance/terms",
+        "SUPERFLUID TERMS OF USE",
+      );
+    });
+  }
+  async clickAndVerifyPrivacyPolicyPageIsOpen() {
+    await test.step(`Clicking on the privacy policy link and verifying the page is open`, async () => {
+      await BasePage.clickLinkAndVaguelyVerifyOpenedLink(
+        this.page,
+        this.privacyPolicyLink,
+        "https://www.iubenda.com/privacy-policy/34415583/legal",
+        "https://www.iubenda.com/privacy-policy/34415583/legal",
+        "Privacy Policy of superfluid.finance",
+      );
+    });
+  }
+
+  async validateRandomReceiverTokenBalanceAfterTransfer(
+    network: string,
+    token: string,
+    expectedBalance: string,
+  ) {
+    const ethHelper = new EthHelper(
+      network,
+      process.env.WIDGET_WALLET_PRIVATE_KEY!,
+    );
+    ethHelper
+      .getSuperTokenBalance(token, randomReceiver.address)
+      .then((balance) => {
+        expect(balance / 1e18).toEqual(expectedBalance);
+      });
   }
 }

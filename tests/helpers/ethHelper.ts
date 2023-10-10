@@ -1,4 +1,5 @@
 import sfMeta from "@superfluid-finance/metadata";
+import extendedSuperTokenList from "@superfluid-finance/tokenlist";
 import { ethers } from "ethers";
 
 import {
@@ -10,34 +11,15 @@ import {
 export class EthHelper {
   private wallet: ethers.Wallet;
   private provider: ethers.Provider;
-  private extendedSuperTokenList: any;
-  private sfMeta: any;
+  private networkName: string;
 
-  constructor(
-    private networkName: string,
-    private privateKey: string,
-  ) {
+  constructor(networkName: string, privateKey: string) {
     const rpcUrl =
       "https://rpc-endpoints.superfluid.dev/" +
       this.getNetworkByHumanReadableName(networkName).name;
     this.provider = new ethers.JsonRpcProvider(rpcUrl);
     this.wallet = new ethers.Wallet(privateKey, this.provider);
-    this.importExtendedSuperTokenList().then((module) => {
-      this.extendedSuperTokenList = module.default;
-      console.log("TokenList", module);
-    });
-    this.importMetadata().then((module) => {
-      this.sfMeta = module.default;
-      // console.log("Metadata",module) This prints out metadata as expected
-    });
-  }
-
-  private async importExtendedSuperTokenList() {
-    return await import("@superfluid-finance/tokenlist");
-  }
-
-  private async importMetadata() {
-    return await import("@superfluid-finance/metadata");
+    this.networkName = networkName;
   }
 
   public getNetworkByHumanReadableName(name: string) {
@@ -45,36 +27,16 @@ export class EthHelper {
   }
 
   public getTokenBySymbolAndChainId(symbol: string, chainId: number) {
-    return this.extendedSuperTokenList.tokens.filter(
+    console.log(JSON.stringify(extendedSuperTokenList));
+    return extendedSuperTokenList.tokens.filter(
       (token: any) => token.symbol === symbol && token.chainId === chainId,
     )[0];
   }
 
   public getTokenByAddress(address: string) {
-    return this.extendedSuperTokenList.tokens.filter(
+    return extendedSuperTokenList.tokens.filter(
       (token: any) => token.address === address,
     )[0];
-  }
-
-  public getUnderlyingTokenSymbolFromSuperTokenSymbol(
-    superTokenSymbol: string,
-    networkHumanReadableName: string,
-  ) {
-    const token = this.getTokenBySymbolAndChainId(
-      superTokenSymbol,
-      this.getNetworkByHumanReadableName(networkHumanReadableName).chainId,
-    );
-    const tokenType = token.extensions.superTokenInfo.type;
-    if (tokenType === "Pure" || tokenType === "Native Asset") {
-      throw new Error(
-        "Native assets (Most) and pure tokens don't have underlying tokens amigo",
-      );
-    }
-    if ("underlyingTokenAddress" in token.extensions.superTokenInfo) {
-      return this.getTokenByAddress(
-        token.extensions.superTokenInfo.underlyingTokenAddress,
-      );
-    }
   }
 
   public async revokeAllowanceIfNeccesary(
