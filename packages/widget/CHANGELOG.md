@@ -1,5 +1,12 @@
 # @superfluid-finance/widget
 
+## 0.4.5
+
+### Patch Changes
+
+- f8e618b: Update dependencies
+- cba6def: Bump the tokenlist version to ^3.2.0 to include FUNDx by default
+
 ## 0.4.4
 
 ### Patch Changes
