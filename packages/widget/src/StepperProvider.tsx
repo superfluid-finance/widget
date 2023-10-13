@@ -30,6 +30,7 @@ export function StepperProvider({
     (currentStep: number) => {
       const isStepBeforeReview = currentStep === totalSteps - 4;
       const nextActiveStep = Math.min(currentStep + 1, totalSteps - 1);
+
       if (isStepBeforeReview) {
         handleSubmit((formValues) => {
           submitCommands(formValuesToCommands(formValues as ValidFormValues));

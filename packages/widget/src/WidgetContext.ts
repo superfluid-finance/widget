@@ -4,6 +4,7 @@ import { createContext, useContext } from "react";
 import { Address } from "viem";
 
 import { CheckoutConfig } from "./CheckoutConfig.js";
+import { CustomData } from "./core/CustomData.js";
 import { ChainId, SupportedNetwork } from "./core/index.js";
 import { EventListeners } from "./EventListeners.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
@@ -20,6 +21,7 @@ export type WidgetContextValue = {
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
   walletManager: WalletManager;
   imageURI?: string;
+  customData: CustomData;
   stepper: {
     orientation: Orientation;
   };

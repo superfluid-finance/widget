@@ -3,6 +3,7 @@ import { UseFormReturn } from "react-hook-form";
 import { parseEther } from "viem";
 import { z } from "zod";
 
+import { customDataSchema } from "./core/CustomData.js";
 import {
   addressSchema,
   etherAmountSchema,
@@ -26,6 +27,7 @@ export const checkoutFormSchema = z.object({
   accountAddress: addressSchema,
   network: supportedNetworkSchema.transform((x) => x as SupportedNetwork),
   paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
+  customData: customDataSchema,
   flowRate: flowRateSchema.refine((x) => parseEther(x.amountEther) > 0n, {
     message: "Flow rate must be greater than 0.",
   }),

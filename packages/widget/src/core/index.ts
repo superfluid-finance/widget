@@ -1,3 +1,4 @@
+export * from "./CustomData.js";
 export * from "./NetworkAssets/defaultNetworkAssets.js";
 export * from "./NetworkAssets/types.js";
 export * from "./PaymentDetails.js";

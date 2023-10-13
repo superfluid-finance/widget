@@ -5,6 +5,7 @@ import { Widget } from "./Widget.js";
 export type { WidgetProps } from "./CheckoutConfig.js";
 export type {
   ChainId,
+  CustomData,
   FlowRate,
   NetworkAssetInfo,
   NetworkAssets,
@@ -27,6 +28,7 @@ export type { WalletManager } from "./WalletManager.js";
 
 // TODO: Export Zod schemas from @superfluid-finance/widget/zod
 export {
+  customDataSchema,
   paymentDetailsSchema,
   paymentOptionSchema,
   productDetailsSchema,

@@ -19,7 +19,7 @@ type Props = {
 
 export default function FormProvider({ children }: Props) {
   const { chain } = useNetwork();
-  const { networks, paymentOptionWithTokenInfoList } = useWidget();
+  const { networks, customData, paymentOptionWithTokenInfoList } = useWidget();
 
   const defaultNetwork = useMemo(() => {
     if (networks.length === 1) {
@@ -59,6 +59,7 @@ export default function FormProvider({ children }: Props) {
         )}`
       : "0",
     enableAutoWrap: false,
+    customData,
     flowRate: defaultPaymentOption?.paymentOption?.flowRate ?? {
       amountEther: "0",
       period: "month",

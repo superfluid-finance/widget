@@ -45,16 +45,19 @@ export interface EventListeners {
       | "step_payment_option"
       | "step_wrap"
       | "step_review"
+      | "step_custom_data"
       | "transactions"
       | "success_summary";
   }) => void;
+  /** Called when customData updates */
+  onCustomDataUpdate?: (props?: { data?: Record<string, string> }) => void;
   /** Called when a transaction is executed. */
   onTransactionSent?: (props?: {
     hash?: Hash;
     functionName?: TxFunctionName;
   }) => void;
   /** Called when the checkout is successfully finished.
-   * @deprecated Use `onTransactionExecuted` instead (filter for `functionName === 'createFlow | 'updateFlow'`).
+   * @deprecated Use `onTransactionSent` instead (filter for `functionName === 'createFlow | 'updateFlow'`).
    */
   onSuccess?: () => void;
   /** Called when the merchant's success button is defined in the schema and it's clicked. */

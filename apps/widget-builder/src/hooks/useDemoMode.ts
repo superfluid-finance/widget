@@ -140,6 +140,21 @@ const defaultDisplaySettings: DisplaySettings = {
 export const defaultWidgetProps: WidgetProps = {
   productDetails: defaultProductDetails,
   paymentDetails: defaultPaymentDetails,
+  customData: [
+    {
+      label: "Email",
+      pattern:
+        "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$",
+    },
+    {
+      label: "Birthday",
+      size: "half",
+    },
+    {
+      label: "Other Stuff",
+      size: "half",
+    },
+  ],
   type,
   displaySettings: defaultDisplaySettings,
 };

@@ -15,6 +15,7 @@ import { useFormContext } from "react-hook-form";
 import { CheckoutSummary } from "./CheckoutSummary.js";
 import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
+import StepContentCustomData from "./StepContentCustomData.js";
 import StepContentPaymentOption from "./StepContentPaymentOption.js";
 import StepContentReview from "./StepContentReview.js";
 import { StepContentTransactions } from "./StepContentTransactions.js";
@@ -33,7 +34,10 @@ export default function Stepper() {
     formState: { isValid },
   } = useFormContext<DraftFormValues>();
 
-  const paymentOptionWithTokenInfo = watch("paymentOptionWithTokenInfo");
+  const [paymentOptionWithTokenInfo, customData] = watch([
+    "paymentOptionWithTokenInfo",
+    "customData",
+  ]);
 
   const visibleSteps = useMemo(
     () =>
@@ -43,6 +47,15 @@ export default function Stepper() {
           shortText: "Network & Token",
           Content: StepContentPaymentOption,
         },
+        ...(customData
+          ? [
+              {
+                buttonText: "Custom Data",
+                shortText: "Custom Data",
+                Content: StepContentCustomData,
+              },
+            ]
+          : []),
         // Add wrap step only when Super Token has an underlying token.
         ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
           .type === "Wrapper" // TODO(KK): Enable native asset wrapping here.
@@ -60,7 +73,7 @@ export default function Stepper() {
           Content: StepContentReview,
         },
       ] as const,
-    [paymentOptionWithTokenInfo],
+    [paymentOptionWithTokenInfo, customData],
   );
 
   const container = useRef(null);
