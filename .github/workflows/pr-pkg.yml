@@ -34,6 +34,6 @@ jobs:
       - name: Authenticate with NPM
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMJS_TOKEN }}" > .npmrc
       - name: Publish
-        run: pnpm publish --no-git-checks --access public --tag ref-${{ env.git_hash }}
+        run: pnpm publish --no-git-checks --access public --tag dev
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
