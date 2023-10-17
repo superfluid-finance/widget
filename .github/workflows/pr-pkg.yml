@@ -33,4 +33,4 @@ jobs:
       - name: Publish
         run: pnpm publish -r --no-git-checks --access public
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
