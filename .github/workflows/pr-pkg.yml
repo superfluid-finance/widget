@@ -30,6 +30,8 @@ jobs:
         run: pnpm build
       - name: Set Version
         run: pnpm version prerelease --preid=pr-${{ env.git_hash }}
+      - name: Authenticate with npm
+        run: echo "//registry.npmjs.org/:_authToken=\${{ secrets.NPMJS_TOKEN }}" > ~/.npmrc
       - name: Publish
         run: pnpm publish -r --no-git-checks --access public
         env:
