@@ -31,7 +31,7 @@ jobs:
       - name: Set Version
         run: pnpm version prerelease --preid=pr-${{ env.git_hash }}
       - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=\${{ secrets.NPMJS_TOKEN }}" > ~/.npmrc
+        run: pnpm login --registry=https://registry.npmjs.org/ --scope=@superfluid-finance --always-auth --auth-token ${{ secrets.NPMJS_TOKEN }}
       - name: Publish
         run: pnpm publish -r --no-git-checks --access public
         env:
