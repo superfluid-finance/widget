@@ -50,8 +50,8 @@ export default function Stepper() {
         ...(personalData && personalData.length > 0
           ? [
               {
-                buttonText: "Custom Data",
-                shortText: "Custom Data",
+                buttonText: "Personal Data",
+                shortText: "Personal Data",
                 Content: StepContentPersonalData,
               },
             ]
