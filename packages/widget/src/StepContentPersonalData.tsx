@@ -81,8 +81,11 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
   );
 
   useEffect(() => {
-    if (Object.values(validationResult).every((result) => result.success)) {
-      setErrors(undefined);
+    const result = Object.entries(validationResult).find(
+      ([_, { success }]) => success,
+    );
+    if (result) {
+      setErrors({ ...errors, [result[0]]: result[1] });
     }
   }, [validationResult]);
 
