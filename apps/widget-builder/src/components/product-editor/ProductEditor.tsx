@@ -1,23 +1,46 @@
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import { Box, Fab, Stack, TextField, Tooltip, Typography } from "@mui/material";
-import { FC } from "react";
+import {
+  Box,
+  Checkbox,
+  Fab,
+  FormControlLabel,
+  FormGroup,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import { FC, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
 import useDemoMode from "../../hooks/useDemoMode";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
+import customFields, { CustomField, CustomFieldType } from "./customFields";
 
 const ProductEditor: FC = () => {
   const { control, watch } = useFormContext<WidgetProps>();
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "paymentDetails.paymentOptions", // unique name for your Field Array
-  });
+  const [selectedCustomFields, setSelectedCustomFields] = useState<
+    Partial<Record<CustomFieldType, boolean>>
+  >({});
 
-  const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
+  watch(["paymentDetails.paymentOptions"]);
+  const { append, remove } = useFieldArray({ control, name: "customData" });
   const { setDemoProductDetails } = useDemoMode();
+
+  const onCustomDataSelectionChange = (field: CustomField, index: number) => {
+    const isFieldSelected =
+      selectedCustomFields[field.label.toLowerCase() as CustomFieldType];
+
+    isFieldSelected ? remove(index) : append(field);
+
+    setSelectedCustomFields((prev) => ({
+      ...prev,
+      [field.label.toLowerCase()]: !isFieldSelected,
+    }));
+  };
 
   return (
     <>
@@ -84,6 +107,35 @@ const ProductEditor: FC = () => {
             </InputWrapper>
           )}
         />
+      </Stack>
+      <Stack mt={4}>
+        <Box mb={1}>
+          <Typography variant="subtitle2" component="h2">
+            Custom Data Fields
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Add custom data fields to collect additional information from your
+            users.
+          </Typography>
+        </Box>
+        <FormGroup>
+          {customFields.map((field, i) => (
+            <FormControlLabel
+              key={`${field.label}-${i}`}
+              control={
+                <Checkbox
+                  value={
+                    selectedCustomFields[
+                      field.label.toLowerCase() as CustomFieldType
+                    ]
+                  }
+                  onChange={() => onCustomDataSelectionChange(field, i)}
+                />
+              }
+              label={field.label}
+            />
+          ))}
+        </FormGroup>
       </Stack>
       <Tooltip
         title="Replace with demo product details"

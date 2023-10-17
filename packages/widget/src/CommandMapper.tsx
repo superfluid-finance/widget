@@ -1,11 +1,6 @@
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
-import {
-  Abi,
-  ContractFunctionConfig,
-  getAbiItem,
-  GetValue,
-} from "viem";
+import { Abi, ContractFunctionConfig, getAbiItem, GetValue } from "viem";
 import {
   useBlockNumber,
   useContractRead,

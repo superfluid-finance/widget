@@ -16,7 +16,7 @@ export function FormEffects() {
     // formState: { isValid, errors }, Creates form state subscription.
   } = useFormContext<DraftFormValues>();
 
-  const { paymentDetails } = useWidget();
+  const { paymentDetails, customData } = useWidget();
 
   const [network, paymentOptionWithTokenInfo, flowRate] = watch([
     "network",
@@ -65,6 +65,10 @@ export function FormEffects() {
       keepError: false,
     });
   }, [paymentOptionWithTokenInfo]);
+
+  useEffect(() => {
+    setValue("customData", customData);
+  }, [customData]);
 
   // # Change initial wrap amount when flow rate changes.
   useEffect(() => {
