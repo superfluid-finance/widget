@@ -1,39 +1,36 @@
-name: PR Package Release
-
+name: Snapshot Release
 on:
   workflow_dispatch:
-  # pull_request:
-  #   types: [synchronize, opened, reopened]
-defaults:
-  run:
-    working-directory: ./packages/widget
-env:
-  git_hash: $(git rev-parse --short "$GITHUB_SHA")
-  git_branch: $(git rev-parse --abbrev-ref HEAD)
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  pr-release:
+  changesets:
+    name: Changesets
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create and publish a snapshot release
+        id: changeset_snapshot
+        uses: changesets/action@v1
         with:
-          node-version: 18
-          cache: pnpm
-      - name: Install Dependencies
-        run: pnpm install
-      - name: Build
-        run: pnpm build
-      - name: Set Version
-        run: pnpm version prerelease --preid=${{ env.git_hash }}
-      - name: Authenticate with NPM
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMJS_TOKEN }}" > .npmrc
-      - name: Publish
-        run: pnpm publish --no-git-checks --access public --tag dev
+          publish: pnpm changeset release --tag dev
+          version: pnpm changeset version --snapshot
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
