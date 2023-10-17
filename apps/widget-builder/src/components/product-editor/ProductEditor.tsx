@@ -10,6 +10,11 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import {
+  PersonalDataField,
+  personalDataFields,
+  PersonalDataFieldType,
+} from "@superfluid-finance/widget";
 import { FC, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
@@ -17,16 +22,12 @@ import useDemoMode from "../../hooks/useDemoMode";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
-import customFields, {
-  CustomField,
-  CustomFieldType,
-} from "./personalDataFields";
 
 const ProductEditor: FC = () => {
   const { control, watch } = useFormContext<WidgetProps>();
 
   const [selectedCustomFields, setSelectedCustomFields] = useState<
-    Partial<Record<CustomFieldType, boolean>>
+    Partial<Record<PersonalDataFieldType, boolean>>
   >({});
 
   watch(["paymentDetails.paymentOptions"]);
@@ -36,9 +37,9 @@ const ProductEditor: FC = () => {
   });
   const { setDemoProductDetails } = useDemoMode();
 
-  const onCustomDataSelectionChange = (field: CustomField) => {
+  const onCustomDataSelectionChange = (field: PersonalDataField) => {
     const isFieldSelected =
-      selectedCustomFields[field.label.toLowerCase() as CustomFieldType];
+      selectedCustomFields[field.label.toLowerCase() as PersonalDataFieldType];
 
     const index = fields.findIndex(({ label }) => label === field.label);
 
@@ -127,14 +128,14 @@ const ProductEditor: FC = () => {
           </Typography>
         </Box>
         <FormGroup>
-          {customFields.map((field, i) => (
+          {personalDataFields.map((field, i) => (
             <FormControlLabel
               key={`${field.label}-${i}`}
               control={
                 <Checkbox
                   value={
                     selectedCustomFields[
-                      field.label.toLowerCase() as CustomFieldType
+                      field.label.toLowerCase() as PersonalDataFieldType
                     ]
                   }
                   onChange={() => onCustomDataSelectionChange(field)}

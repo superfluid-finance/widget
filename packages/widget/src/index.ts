@@ -24,6 +24,15 @@ export {
   timePeriods,
 } from "./core/index.js";
 export type { EventListeners } from "./EventListeners.js";
+export type {
+  PersonalDataField,
+  PersonalDataFieldType,
+} from "./PersonalDataFields.js";
+export {
+  EmailField,
+  default as personalDataFields,
+  PhoneNumberField,
+} from "./PersonalDataFields.js";
 export type { WalletManager } from "./WalletManager.js";
 
 // TODO: Export Zod schemas from @superfluid-finance/widget/zod
