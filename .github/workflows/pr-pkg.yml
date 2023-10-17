@@ -25,12 +25,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Create and publish a snapshot release
-        id: changeset_snapshot
-        uses: changesets/action@v1
-        with:
-          version: pnpm changeset version --snapshot
-          publish: pnpm changeset publish --tag dev
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+      - name: Authenticate with NPM
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMJS_TOKEN }}" > .npmrc
+
+      - name: Changeset version
+        run: pnpm changeset version --snapshot
+
+      - name: Changeset publish
+        run: pnpm changeset publish --tag dev
