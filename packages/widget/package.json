@@ -24,6 +24,10 @@
     "./metadata": {
       "types": "./dist/index.metadata.d.ts",
       "default": "./dist/index.metadata.js"
+    },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "default": "./dist/utils.js"
     }
   },
   "main": "dist/index.js",
@@ -41,6 +45,9 @@
       ],
       "metadata": [
         "./dist/index.metadata.d.ts"
+      ],
+      "utils": [
+        "./dist/utils.d.ts"
       ]
     }
   },

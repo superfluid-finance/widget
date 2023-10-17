@@ -7,7 +7,7 @@ import { DraftFormValues } from "./formValues.js";
 import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
-import { mapPersonalDataToObject } from "./utils.js";
+import { deserializeRegExp, mapPersonalDataToObject } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 export default function StepContentCustomData({ stepIndex }: StepProps) {
@@ -56,7 +56,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
         (acc, { label, required, value }) => {
           if (
             required?.pattern &&
-            !new RegExp(required.pattern).test(value ?? "")
+            !deserializeRegExp(required.pattern).test(value ?? "")
           ) {
             return {
               ...acc,

@@ -38,6 +38,20 @@ export function shortenHex(address: string, length = 4) {
   )}`;
 }
 
+export function serializeRegExp(regex: RegExp): string {
+  return regex.toString();
+}
+
+export function deserializeRegExp(serialized: string): RegExp {
+  const match = serialized.match(/^\/(.*?)\/([gimsuy]*)$/);
+  if (!match) {
+    throw new Error("Invalid serialized RegExp");
+  }
+  const [_, pattern, flags] = match;
+
+  return new RegExp(pattern, flags);
+}
+
 export async function copyToClipboard(text: string) {
   if ("clipboard" in navigator) {
     return await navigator.clipboard.writeText(text);
