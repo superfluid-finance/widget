@@ -29,8 +29,8 @@ jobs:
         id: changeset_snapshot
         uses: changesets/action@v1
         with:
-          publish: pnpm changeset publish --tag dev
           version: pnpm changeset version --snapshot
+          publish: pnpm changeset publish --tag dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
