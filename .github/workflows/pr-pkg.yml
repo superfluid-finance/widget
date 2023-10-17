@@ -2,6 +2,9 @@ name: PR Package Release
 
 on:
   workflow_dispatch:
+defaults:
+  run:
+    working-directory: ./packages/widget
 
 jobs:
   pr-release:
@@ -21,7 +24,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Build
-        run: pnpm build 
+        run: pnpm build
       - name: Publish
         uses: kotarella1110/pr-voyager@v0
         with:
