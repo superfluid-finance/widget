@@ -9,6 +9,7 @@ defaults:
     working-directory: ./packages/widget
 env:
   git_hash: $(git rev-parse --short "$GITHUB_SHA")
+  git_branch: $(git rev-parse --abbrev-ref HEAD)
 jobs:
   pr-release:
     runs-on: ubuntu-latest
@@ -29,10 +30,10 @@ jobs:
       - name: Build
         run: pnpm build
       - name: Set Version
-        run: pnpm version prerelease --preid=pr-${{ env.git_hash }}
+        run: pnpm version prerelease --preid=${{ env.git_hash }}
       - name: Authenticate with NPM
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPMJS_TOKEN }}" > .npmrc
       - name: Publish
-        run: pnpm publish --no-git-checks --access public
+        run: pnpm publish --no-git-checks --access public --tag ref-${{ env.git_hash }}
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
