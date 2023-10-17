@@ -1,12 +1,14 @@
 name: PR Package Release
 
 on:
-  pull_request:
-    types: [synchronize, opened, reopened]
+  workflow_dispatch:
+  # pull_request:
+  #   types: [synchronize, opened, reopened]
 defaults:
   run:
     working-directory: ./packages/widget
-
+env:
+  git_hash: $(git rev-parse --short "$GITHUB_SHA")
 jobs:
   pr-release:
     runs-on: ubuntu-latest
@@ -26,10 +28,10 @@ jobs:
         run: pnpm install
       - name: Build
         run: pnpm build
+      - name: Set Version
+        run: pnpm version prerelease --preid=pr-${{ env.git_hash }}
       - name: Publish
-        uses: kotarella1110/pr-voyager@v0
-        with:
-          publish: pnpm publish -r
+        run: pnpm publish -r
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
