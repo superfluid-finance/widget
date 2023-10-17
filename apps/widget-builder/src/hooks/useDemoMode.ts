@@ -140,7 +140,7 @@ const defaultDisplaySettings: DisplaySettings = {
 export const defaultWidgetProps: WidgetProps = {
   productDetails: defaultProductDetails,
   paymentDetails: defaultPaymentDetails,
-  customData: [],
+  personalData: [],
   type,
   displaySettings: defaultDisplaySettings,
 };

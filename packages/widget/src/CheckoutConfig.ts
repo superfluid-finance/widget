@@ -2,7 +2,6 @@ import { ThemeOptions } from "@mui/material";
 import { SuperTokenList } from "@superfluid-finance/tokenlist";
 import { z } from "zod";
 
-import { customDataSchema } from "./core/CustomData.js";
 import {
   NetworkAssets,
   PaymentDetails,
@@ -10,6 +9,7 @@ import {
   ProductDetails,
   productDetailsSchema,
 } from "./core/index.js";
+import { personalDataSchema } from "./core/PersonalData.js";
 import { EventListeners } from "./EventListeners.js";
 import { WalletManager } from "./WalletManager.js";
 
@@ -49,7 +49,7 @@ const widgetPropsSchema = z.object({
   theme: z
     .custom<Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">>()
     .optional(),
-  customData: customDataSchema.default([]),
+  personalData: personalDataSchema.optional(),
   /**
    * Whether the stepper UI component inside the widget is vertical or horizontal. Vertical is better supported.
    */

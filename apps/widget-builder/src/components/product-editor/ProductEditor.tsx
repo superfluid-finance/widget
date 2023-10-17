@@ -17,7 +17,10 @@ import useDemoMode from "../../hooks/useDemoMode";
 import InputWrapper from "../form/InputWrapper";
 import ImageSelect from "../image-select/ImageSelect";
 import { WidgetProps } from "../widget-preview/WidgetPreview";
-import customFields, { CustomField, CustomFieldType } from "./customFields";
+import customFields, {
+  CustomField,
+  CustomFieldType,
+} from "./personalDataFields";
 
 const ProductEditor: FC = () => {
   const { control, watch } = useFormContext<WidgetProps>();
@@ -27,12 +30,17 @@ const ProductEditor: FC = () => {
   >({});
 
   watch(["paymentDetails.paymentOptions"]);
-  const { append, remove } = useFieldArray({ control, name: "customData" });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "personalData",
+  });
   const { setDemoProductDetails } = useDemoMode();
 
-  const onCustomDataSelectionChange = (field: CustomField, index: number) => {
+  const onCustomDataSelectionChange = (field: CustomField) => {
     const isFieldSelected =
       selectedCustomFields[field.label.toLowerCase() as CustomFieldType];
+
+    const index = fields.findIndex(({ label }) => label === field.label);
 
     isFieldSelected ? remove(index) : append(field);
 
@@ -111,7 +119,7 @@ const ProductEditor: FC = () => {
       <Stack mt={4}>
         <Box mb={1}>
           <Typography variant="subtitle2" component="h2">
-            Custom Data Fields
+            Personal Data
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Add custom data fields to collect additional information from your
@@ -129,7 +137,7 @@ const ProductEditor: FC = () => {
                       field.label.toLowerCase() as CustomFieldType
                     ]
                   }
-                  onChange={() => onCustomDataSelectionChange(field, i)}
+                  onChange={() => onCustomDataSelectionChange(field)}
                 />
               }
               label={field.label}

@@ -15,8 +15,8 @@ import { useFormContext } from "react-hook-form";
 import { CheckoutSummary } from "./CheckoutSummary.js";
 import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
-import StepContentCustomData from "./StepContentCustomData.js";
 import StepContentPaymentOption from "./StepContentPaymentOption.js";
+import StepContentPersonalData from "./StepContentPersonalData.js";
 import StepContentReview from "./StepContentReview.js";
 import { StepContentTransactions } from "./StepContentTransactions.js";
 import StepContentWrap from "./StepContentWrap.js";
@@ -34,9 +34,9 @@ export default function Stepper() {
     formState: { isValid },
   } = useFormContext<DraftFormValues>();
 
-  const [paymentOptionWithTokenInfo, customData] = watch([
+  const [paymentOptionWithTokenInfo, personalData] = watch([
     "paymentOptionWithTokenInfo",
-    "customData",
+    "personalData",
   ]);
 
   const visibleSteps = useMemo(
@@ -47,12 +47,12 @@ export default function Stepper() {
           shortText: "Network & Token",
           Content: StepContentPaymentOption,
         },
-        ...(customData
+        ...(personalData && personalData.length > 0
           ? [
               {
                 buttonText: "Custom Data",
                 shortText: "Custom Data",
-                Content: StepContentCustomData,
+                Content: StepContentPersonalData,
               },
             ]
           : []),
@@ -73,7 +73,7 @@ export default function Stepper() {
           Content: StepContentReview,
         },
       ] as const,
-    [paymentOptionWithTokenInfo, customData],
+    [paymentOptionWithTokenInfo, personalData],
   );
 
   const container = useRef(null);

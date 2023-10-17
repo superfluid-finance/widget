@@ -14,8 +14,10 @@ import {
   Typography,
 } from "@mui/material";
 import {
- customDataSchema,  paymentDetailsSchema,
-  productDetailsSchema } from "@superfluid-finance/widget";
+  paymentDetailsSchema,
+  personalDataSchema,
+  productDetailsSchema,
+} from "@superfluid-finance/widget";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
 import { z } from "zod";
@@ -33,7 +35,7 @@ type ConfigEditorProps = {
 const schema = z.object({
   productDetails: productDetailsSchema,
   paymentDetails: paymentDetailsSchema,
-  customData: customDataSchema,
+  personalData: personalDataSchema,
   type: z.enum(["dialog", "drawer", "full-screen", "page"]),
 });
 
@@ -103,7 +105,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
             setValue("productDetails", parseResult.data.productDetails);
             setValue("type", parseResult.data.type);
             setValue("paymentDetails", parseResult.data.paymentDetails);
-            setValue("customData", parseResult.data.customData);
+            setValue("personalData", parseResult.data.personalData);
             setSaved(true);
             setTimeout(() => {
               setSaved(false);

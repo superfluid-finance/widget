@@ -1,7 +1,7 @@
 import { colors, Fab, SelectChangeEvent, ThemeOptions } from "@mui/material";
 import SuperfluidWidget, {
-  CustomData,
   PaymentOption,
+  PersonalData,
   ProductDetails,
   WalletManager,
   WidgetProps as WidgetProps_,
@@ -56,7 +56,7 @@ export type WidgetProps = {
   paymentDetails: WidgetProps_["paymentDetails"] & {
     paymentOptions: PaymentOption[];
   };
-  customData: CustomData;
+  personalData: PersonalData;
   displaySettings: DisplaySettings;
   type: Layout;
 };
@@ -76,7 +76,7 @@ export const WidgetContext = createContext<WidgetProps>({
     paymentOptions: [],
   },
   type: "dialog",
-  customData: [],
+  personalData: [],
   displaySettings: {
     stepperOrientation: "vertical",
     darkMode: false,
@@ -98,7 +98,7 @@ const switchLayout = (
   layout: Layout,
   productDetails: ProductDetails,
   paymentDetails: WidgetProps_["paymentDetails"],
-  customData: WidgetProps_["customData"],
+  personalData: WidgetProps_["personalData"],
   theme: ThemeOptions,
   walletManager: WalletManager,
   stepperOrientation: "vertical" | "horizontal",
@@ -107,7 +107,7 @@ const switchLayout = (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
-      customData={customData}
+      personalData={personalData}
       tokenList={widgetBuilderTokenList}
       type={layout}
       theme={theme}
@@ -121,6 +121,7 @@ const switchLayout = (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
+      personalData={personalData}
       tokenList={widgetBuilderTokenList}
       type={layout}
       theme={theme}
@@ -186,8 +187,13 @@ export const mapDisplaySettingsToTheme = (
 });
 
 const WidgetPreview: FC<WidgetProps> = (props) => {
-  const { displaySettings, paymentDetails, productDetails, customData, type } =
-    props;
+  const {
+    displaySettings,
+    paymentDetails,
+    productDetails,
+    personalData,
+    type,
+  } = props;
 
   const { open, isOpen, setDefaultChain } = useWeb3Modal();
   const walletManager = useMemo<WalletManager>(
@@ -217,7 +223,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
           type,
           productDetails,
           paymentDetails,
-          customData,
+          personalData,
           theme,
           walletManager,
           displaySettings.stepperOrientation,

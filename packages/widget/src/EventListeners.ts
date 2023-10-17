@@ -48,6 +48,7 @@ export interface EventListeners {
       | "step_custom_data"
       | "transactions"
       | "success_summary";
+    data?: Record<string, string>;
   }) => void;
   /** Called when customData updates */
   onCustomDataUpdate?: (props?: { data?: Record<string, string> }) => void;

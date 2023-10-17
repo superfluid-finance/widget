@@ -1,5 +1,6 @@
 import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
 import { useCallback, useEffect, useMemo } from "react";
+import { useFormContext } from "react-hook-form";
 import { useAccount } from "wagmi";
 
 import { AccountAddressCard } from "./AccountAddressCard.js";
@@ -8,8 +9,10 @@ import { SubscribeCommand } from "./commands.js";
 import { mapTimePeriodToSeconds } from "./core/index.js";
 import { runEventListener } from "./EventListeners.js";
 import FlowingBalance from "./FlowingBalance.js";
+import { DraftFormValues } from "./formValues.js";
 import StreamIndicator from "./StreamIndicator.js";
 import SuccessImage from "./SuccessImage.js";
+import { mapPersonalDataToObject } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 export function CheckoutSummary() {
@@ -20,6 +23,9 @@ export function CheckoutSummary() {
     productDetails: { successURL, successText = "Continue to Merchant" },
     eventListeners,
   } = useWidget();
+
+  const { watch } = useFormContext<DraftFormValues>();
+  const [personalData] = watch(["personalData"]);
 
   const { address: accountAddress } = useAccount();
 
@@ -54,6 +60,7 @@ export function CheckoutSummary() {
   useEffect(() => {
     runEventListener(eventListeners.onRouteChange, {
       route: "success_summary",
+      ...mapPersonalDataToObject(personalData),
     });
   }, [eventListeners.onRouteChange]);
 

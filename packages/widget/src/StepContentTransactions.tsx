@@ -10,19 +10,25 @@ import {
   Typography,
 } from "@mui/material";
 import { useCallback, useEffect } from "react";
+import { useFormContext } from "react-hook-form";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import ContractWriteButton from "./ContractWriteButton.js";
 import { ContractWriteStatus } from "./ContractWriteStatus.js";
 import { runEventListener } from "./EventListeners.js";
+import { DraftFormValues } from "./formValues.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
+import { mapPersonalDataToObject } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 const CloseIcon = normalizeIcon(CloseIcon_);
 
 export function StepContentTransactions({ stepIndex }: StepProps) {
+  const { watch } = useFormContext<DraftFormValues>();
+  const [personalData] = watch(["personalData"]);
+
   const { handleBack, handleNext, setActiveStep, totalSteps } = useStepper();
 
   const {
@@ -35,7 +41,10 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
   const { eventListeners } = useWidget();
 
   useEffect(() => {
-    runEventListener(eventListeners.onRouteChange, { route: "transactions" });
+    runEventListener(eventListeners.onRouteChange, {
+      route: "transactions",
+      ...mapPersonalDataToObject(personalData),
+    });
   }, [eventListeners.onRouteChange]);
 
   useEffect(() => {

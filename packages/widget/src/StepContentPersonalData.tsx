@@ -1,10 +1,5 @@
 import { Stack, TextField } from "@mui/material";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldArray, useFieldArray, useFormContext } from "react-hook-form";
 
 import { runEventListener } from "./EventListeners.js";
@@ -12,6 +7,7 @@ import { DraftFormValues } from "./formValues.js";
 import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
+import { mapPersonalDataToObject } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
 export default function StepContentCustomData({ stepIndex }: StepProps) {
@@ -19,7 +15,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
 
   const { fields, update } = useFieldArray({
     control: c,
-    name: "customData",
+    name: "personalData",
   });
 
   const [errors, setErrors] =
@@ -27,7 +23,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
 
   const onChange = useCallback(
     (
-      field: FieldArray<DraftFormValues, "customData">,
+      field: FieldArray<DraftFormValues, "personalData">,
       value: string,
       index: number,
     ) => {
@@ -50,23 +46,23 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
 
   useEffect(() => {
     runEventListener(eventListeners.onCustomDataUpdate, {
-      data: fields.reduce(
-        (acc, field) => ({ ...acc, [field.label.toLowerCase()]: field.value }),
-        {},
-      ),
+      ...mapPersonalDataToObject(fields),
     });
   }, [eventListeners.onCustomDataUpdate, fields]);
 
   const validationResult = useMemo(
     () =>
       fields.reduce(
-        (acc, { label, pattern, value }) => {
-          if (pattern && !new RegExp(pattern).test(value ?? "")) {
+        (acc, { label, required, value }) => {
+          if (
+            required?.pattern &&
+            !new RegExp(required.pattern).test(value ?? "")
+          ) {
             return {
               ...acc,
               [label.toLowerCase()]: {
                 success: false,
-                error: `Value must match pattern.`,
+                error: required.message,
               },
             };
           }
@@ -121,7 +117,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
                 key={`custom-input-${i}`}
                 data-testid={`input-${field.label}`}
                 fullWidth
-                required={field.pattern !== undefined}
+                required={Boolean(field.required)}
                 label={field.label}
                 type="text"
                 error={

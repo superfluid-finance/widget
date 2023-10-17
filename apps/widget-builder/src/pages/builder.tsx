@@ -74,11 +74,11 @@ export default function Builder() {
 
   const { watch, control, getValues, setValue } = formMethods;
 
-  const [productDetails, paymentDetails, customData, displaySettings, type] =
+  const [productDetails, paymentDetails, personalData, displaySettings, type] =
     watch([
       "productDetails",
       "paymentDetails",
-      "customData",
+      "personalData",
       "displaySettings",
       "type",
     ]);
@@ -231,7 +231,7 @@ export default function Builder() {
           {...{
             productDetails,
             paymentDetails,
-            customData,
+            personalData,
             displaySettings,
             type,
           }}

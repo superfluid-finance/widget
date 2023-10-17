@@ -5,6 +5,7 @@ import {
   FlowRate,
   flowRateSchema,
   mapTimePeriodToSeconds,
+  PersonalData,
   TimePeriod,
 } from "./core/index.js";
 
@@ -64,6 +65,17 @@ export function toFixedUsingString(numStr: string, decimalPlaces: number) {
   return (
     wholePart + "." + roundedDecimal.toString().padStart(decimalPlaces, "0")
   );
+}
+
+export function mapPersonalDataToObject(personalData: PersonalData) {
+  return personalData?.length > 0
+    ? {
+        data: personalData.reduce(
+          (acc, { label, value }) => ({ ...acc, [label.toLowerCase()]: value }),
+          {},
+        ),
+      }
+    : ({} as Record<string, string>);
 }
 
 export function mapFlowRateToDefaultWrapAmount(
