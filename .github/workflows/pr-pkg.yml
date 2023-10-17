@@ -31,7 +31,6 @@ jobs:
       - name: Set Version
         run: pnpm version prerelease --preid=pr-${{ env.git_hash }}
       - name: Publish
-        run: pnpm publish -r --no-git-checks
+        run: pnpm publish -r --no-git-checks --access public
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
