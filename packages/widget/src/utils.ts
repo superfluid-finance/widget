@@ -161,3 +161,9 @@ function roundWeiToPrettyAmount(value: bigint) {
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};
+
+export type {
+  PersonalDataField,
+  PersonalDataFieldType,
+} from "./PersonalDataFields.js";
+export { EmailField, PhoneNumberField } from "./PersonalDataFields.js";

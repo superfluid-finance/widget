@@ -23,5 +23,3 @@ export const PhoneNumberField = {
 
 export type PersonalDataField = typeof EmailField | typeof PhoneNumberField;
 export type PersonalDataFieldType = Lowercase<PersonalDataField["label"]>;
-
-export default [EmailField, PhoneNumberField];
