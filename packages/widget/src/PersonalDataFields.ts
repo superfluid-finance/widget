@@ -1,4 +1,4 @@
-import { PersonalData } from "./index.js";
+import { PersonalData } from "./core/PersonalData.js";
 import { serializeRegExp } from "./utils.js";
 
 export const EmailField = {
