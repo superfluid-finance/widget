@@ -89,6 +89,7 @@ export function AccountAddressCard({
             </Typography>
 
             <IconButton
+              data-testid="copy-button"
               size="small"
               title="Copy address to clipboard"
               onClick={() => onCopyAddressButtonClick(checksumAddress)}

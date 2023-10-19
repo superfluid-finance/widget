@@ -7,7 +7,7 @@ export default defineConfig({
   testDir: "specs",
   fullyParallel: false,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 4 : 2,
   outputDir: "results",
   reporter: process.env.CI
     ? [["@currents/playwright"], ["line"]]

@@ -18,6 +18,10 @@ jobs:
       run:
         working-directory: tests
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/2, 2/2] # Test execution times will not improve with more shards, if using 3 or 4 it just instantly passes one of the "shards" and runs the tests as if 2 shards were used
 
     steps:
       - uses: actions/checkout@v3
@@ -53,7 +57,7 @@ jobs:
 
         # https://playwright.dev/docs/next/ci#running-headed  
       - name: Run Playwright tests
-        run: xvfb-run pnpm playwright test
+        run: xvfb-run pnpm playwright test --shard ${{ matrix.shard }}
         env:
           BASE_URL: ${{ env.BASE_URL }}
           WIDGET_WALLET_PUBLIC_KEY: "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD"
