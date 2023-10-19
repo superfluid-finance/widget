@@ -51,9 +51,10 @@ export function StepperProvider({
 
   const { isConnected } = useAccount();
 
-  const isActiveStepOverWalletConnect = activeStep > walletConnectStep;
+  const isActiveStepGreaterThanWalletConnectStep =
+    activeStep > walletConnectStep;
   useEffect(() => {
-    if (!isConnected && isActiveStepOverWalletConnect) {
+    if (!isConnected && isActiveStepGreaterThanWalletConnectStep) {
       setActiveStep(walletConnectStep);
     }
   }, [walletConnectStep, isConnected]);
@@ -64,7 +65,7 @@ export function StepperProvider({
 
   const contextValue = {
     activeStep:
-      isConnected || !isActiveStepOverWalletConnect
+      isConnected || !isActiveStepGreaterThanWalletConnectStep
         ? activeStep
         : walletConnectStep,
     setActiveStep,
