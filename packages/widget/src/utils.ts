@@ -43,6 +43,7 @@ export function serializeRegExp(regex: RegExp): string {
 }
 
 export function deserializeRegExp(serialized: string): RegExp {
+  // The pattern and the flags need to be separated and passed to the RegExp constructor separately.
   const match = serialized.match(/^\/(.*?)\/([gimsuy]*)$/);
   if (!match) {
     throw new Error("Invalid serialized RegExp");
