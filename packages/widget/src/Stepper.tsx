@@ -90,7 +90,7 @@ export default function Stepper() {
         const isTransacting = activeStep === transactionStep;
         const isFinished = activeStep === summaryStep;
         const isForm = !isTransacting && !isFinished;
-        const visualActiveStep = Math.min(2, activeStep);
+        const visualActiveStep = Math.min(visibleSteps.length - 1, activeStep);
 
         return (
           <>
