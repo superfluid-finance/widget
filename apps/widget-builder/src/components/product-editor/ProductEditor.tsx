@@ -11,10 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  EmailField,
   PersonalDataField,
-  personalDataFields,
   PersonalDataFieldType,
-} from "@superfluid-finance/widget";
+  PhoneNumberField,
+} from "@superfluid-finance/widget/utils";
 import { FC, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
@@ -128,7 +129,7 @@ const ProductEditor: FC = () => {
           </Typography>
         </Box>
         <FormGroup>
-          {personalDataFields.map((field, i) => (
+          {[EmailField, PhoneNumberField].map((field, i) => (
             <FormControlLabel
               key={`${field.label}-${i}`}
               control={
