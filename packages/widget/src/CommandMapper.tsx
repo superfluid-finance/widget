@@ -1,11 +1,6 @@
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
-import {
-  Abi,
-  ContractFunctionConfig,
-  getAbiItem,
-  GetValue,
-} from "viem";
+import { Abi, ContractFunctionConfig, getAbiItem, GetValue } from "viem";
 import {
   useBlockNumber,
   useContractRead,
@@ -299,6 +294,7 @@ export function SubscribeCommandMapper({
   });
   const {
     isSuccess: isSuccessForTransferEvents,
+    isLoading: isLoadingForTransferEvents,
     isIdle: isIdleForTransferEvents,
     data: transferEvents,
   } = useQuery(
@@ -316,12 +312,13 @@ export function SubscribeCommandMapper({
         },
         strict: true,
         toBlock: blockNumber,
-        fromBlock: blockNumber - 10_000n, // 10k is Alchemy limit, some places have 50k. Move into environment variable?
+        fromBlock: blockNumber - 5_000n, // 10k is Alchemy limit, some places have 50k. Ankr has 5k. Move into environment variable?
       });
       return logs;
     },
     {
       enabled: checkExistingUpfrontTransfer && isSuccessForBlockNumber,
+      retry: 10,
     },
   );
 
@@ -339,12 +336,12 @@ export function SubscribeCommandMapper({
     }
   }, [checkExistingUpfrontTransfer, isSuccessForTransferEvents]);
 
-  const didAllQueriesSucceed = useMemo(
+  const didAllQueriesFinish = useMemo(
     () =>
       !isLoadingForGetFlowRate &&
       isSuccessForGetFlowRate &&
       (isIdleForBlockNumber || isSuccessForBlockNumber) &&
-      (isIdleForTransferEvents || isSuccessForTransferEvents),
+      (isIdleForTransferEvents || !isLoadingForTransferEvents), // Keep the check for transfer events non-blocking.
     [
       isLoadingForGetFlowRate,
       isSuccessForGetFlowRate,
@@ -356,7 +353,7 @@ export function SubscribeCommandMapper({
   );
 
   const contractWrites = useMemo<ContractWrite[]>(() => {
-    if (!didAllQueriesSucceed) {
+    if (!didAllQueriesFinish) {
       return [];
     }
 
@@ -427,14 +424,14 @@ export function SubscribeCommandMapper({
     }
 
     return contractWrites_;
-  }, [cmd.id, didAllQueriesSucceed]);
+  }, [cmd.id, didAllQueriesFinish]);
 
   useEffect(
     () =>
-      didAllQueriesSucceed
+      didAllQueriesFinish
         ? onMapped?.({ commandId: cmd.id, contractWrites })
         : void 0,
-    [cmd.id, contractWrites, didAllQueriesSucceed],
+    [cmd.id, contractWrites, didAllQueriesFinish],
   );
 
   return null;
