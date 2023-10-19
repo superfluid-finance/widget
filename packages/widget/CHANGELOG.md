@@ -1,5 +1,11 @@
 # @superfluid-finance/widget
 
+## 0.4.6
+
+### Patch Changes
+
+- 16f7c64: Make the check for existing upfront transfers lighter and non-blocking
+
 ## 0.4.5
 
 ### Patch Changes
