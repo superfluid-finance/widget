@@ -969,85 +969,115 @@ export class WidgetPage extends BasePage {
   }
 
   async validateAvailablePaymentOptions(options: PaymentOption[]) {
-    const uniqueNetworks = new Set(options.map((option) => option.network));
-    for (const network of uniqueNetworks) {
-      await this.networkSelectionButton.click();
-      await expect(this.networkOptions.getByText(network)).toBeVisible();
-      await this.networkOptions.getByText(network).click();
-      const networkSpecificOptions = options.filter(
-        (option) => option.network === network,
-      );
-      await this.tokenSelectionButton.click();
-      for (const option of networkSpecificOptions) {
-        let expectedString;
-        if (option.upfrontPayment) {
-          expectedString = `${option.upfrontPayment} + ${option.flowRate} ${option.superToken}/${option.timeUnit}`;
-        } else if (option.userDefinedRate === true) {
-          expectedString = `${option.superToken} - Custom amount`;
-        } else {
-          expectedString = `${option.flowRate} ${option.superToken}/${option.timeUnit}`;
+    await test.step(`Validating the available payment options in the widget`, async () => {
+      const uniqueNetworks = new Set(options.map((option) => option.network));
+      for (const network of uniqueNetworks) {
+        await this.networkSelectionButton.click();
+        await expect(this.networkOptions.getByText(network)).toBeVisible();
+        await this.networkOptions.getByText(network).click();
+        const networkSpecificOptions = options.filter(
+          (option) => option.network === network,
+        );
+        await this.tokenSelectionButton.click();
+        for (const option of networkSpecificOptions) {
+          let expectedString;
+          if (option.upfrontPayment) {
+            expectedString = `${option.upfrontPayment} + ${option.flowRate} ${option.superToken}/${option.timeUnit}`;
+          } else if (option.userDefinedRate === true) {
+            expectedString = `${option.superToken} - Custom amount`;
+          } else {
+            expectedString = `${option.flowRate} ${option.superToken}/${option.timeUnit}`;
+          }
+          await expect(
+            this.tokenOptions.getByText(expectedString),
+          ).toBeVisible();
         }
-        await expect(this.tokenOptions.getByText(expectedString)).toBeVisible();
       }
-    }
+    });
   }
 
   async validateWeb3ModalDeclinedConnectionError() {
-    await expect(this.web3ModalConnectionErrorMessage).toHaveText(
-      "Connection declined",
-    );
+    await test.step(`Checking that web3 modal shows "Connection declined"`, async () => {
+      await expect(this.web3ModalConnectionErrorMessage).toHaveText(
+        "Connection declined",
+      );
+    });
   }
   async clickWeb3ModalMetamaskButton() {
-    await this.metamaskWalletButton.click();
+    await test.step(`Clicking on the web3 modal MetaMask button`, async () => {
+      await this.metamaskWalletButton.click();
+    });
   }
   async verifySelectPaymentOptionStepIsVisible() {
-    await expect(this.networkSelectionButton).toBeVisible();
-    await expect(this.tokenSelectionButton).toBeVisible();
-    await expect(this.continueButton).toBeVisible();
-    await expect(this.wrapAmountInput).not.toBeVisible();
+    await test.step(`Making sure the first widget step is open`, async () => {
+      await expect(this.networkSelectionButton).toBeVisible();
+      await expect(this.tokenSelectionButton).toBeVisible();
+      await expect(this.continueButton).toBeVisible();
+      await expect(this.wrapAmountInput).not.toBeVisible();
+    });
   }
 
   async clickOnStepNumber(step: string) {
-    await this.page.getByTestId(`step-${step}`).click();
+    await test.step(`Clicking on step number ${step}`, async () => {
+      await this.page.getByTestId(`step-${step}`).click();
+    });
   }
   async clickTransactionScreenXButton() {
-    await this.closeButton.click();
+    await test.step(`Clicking on the X button in the transaction screen`, async () => {
+      await this.closeButton.click();
+    });
   }
 
   async validateNoWrapStepIsPresent() {
-    await expect(this.page.getByTestId("step-3")).not.toBeVisible();
-    await expect(
-      this.page.getByTestId("step-2").locator("button span span span"),
-    ).toHaveText("Review the transaction(s)");
+    await test.step(`Making sure only 2 steps exist`, async () => {
+      await expect(this.page.getByTestId("step-3")).not.toBeVisible();
+      await expect(
+        this.page.getByTestId("step-2").locator("button span span span"),
+      ).toHaveText("Review the transaction(s)");
+    });
   }
 
   async clickNetworkSelectionButton() {
-    await this.networkSelectionButton.click();
+    await test.step(`Clicking on the network selection button in the first widget step`, async () => {
+      await this.networkSelectionButton.click();
+    });
   }
   async searchForPaymentOptionNetwork(network: string) {
-    await this.networkSelectionButton.locator("input").fill(network);
+    await test.step(`Searching for ${network} in the first widget step`, async () => {
+      await this.networkSelectionButton.locator("input").fill(network);
+    });
   }
   async validateOnlyNetworksContainingTextAreVisible(network: string) {
-    await this.networkOptions.all().then((options) => {
-      options.forEach(async (option) => {
-        await expect(option).toContainText(network);
+    await test.step(`Making sure only options containing "${network}" are visible`, async () => {
+      await this.networkOptions.all().then((options) => {
+        options.forEach(async (option) => {
+          await expect(option).toContainText(network);
+        });
       });
     });
   }
   async validateNoOptionsAreShown() {
-    await expect(this.networkOptions).not.toBeVisible();
-    await expect(this.page.getByText("No options")).toBeVisible();
+    await test.step(`Checking if "No options" element is shown`, async () => {
+      await expect(this.networkOptions).not.toBeVisible();
+      await expect(this.page.getByText("No options")).toBeVisible();
+    });
   }
   async clickTokenSelectionButton() {
-    await this.tokenSelectionButton.click();
+    await test.step(`Clicking on the token selection button in the first widget step`, async () => {
+      await this.tokenSelectionButton.click();
+    });
   }
   async searchForPaymentOptionToken(token: string) {
-    await this.tokenSelectionButton.locator("input").fill(token);
+    await test.step(`Searching for ${token} from the dropdown`, async () => {
+      await this.tokenSelectionButton.locator("input").fill(token);
+    });
   }
   async validateOnlyTokensContainingTextAreVisible(token: string) {
-    await this.tokenOptions.all().then((options) => {
-      options.forEach(async (option) => {
-        await expect(option).toContainText(token);
+    await test.step(`Making sure only options containing ${token} are visible`, async () => {
+      await this.tokenOptions.all().then((options) => {
+        options.forEach(async (option) => {
+          await expect(option).toContainText(token);
+        });
       });
     });
   }
@@ -1059,35 +1089,49 @@ export class WidgetPage extends BasePage {
   }
 
   async validateTokenIconInPaymentOptionStep(testTokenSymbol: string) {
-    await this.validateTokenIcon(
-      testTokenSymbol,
-      this.tokenSelectionButton.locator("img"),
-    );
+    await test.step(`Checking token icons in the payment option step`, async () => {
+      await this.validateTokenIcon(
+        testTokenSymbol,
+        this.tokenSelectionButton.locator("img"),
+      );
+    });
   }
 
   async validateTokenIconsInWrapStep(testTokenSymbol: string) {
-    await this.validateTokenIcon(testTokenSymbol, this.wrapStepUnderlyingIcon);
-    await this.validateTokenIcon(testTokenSymbol, this.wrapStepSuperTokenIcon);
+    await test.step(`Checking token icons in the wrap step`, async () => {
+      await this.validateTokenIcon(
+        testTokenSymbol,
+        this.wrapStepUnderlyingIcon,
+      );
+      await this.validateTokenIcon(
+        testTokenSymbol,
+        this.wrapStepSuperTokenIcon,
+      );
+    });
   }
 
   async validateTokenIconsInReviewStep(testTokenSymbol: string) {
-    await this.validateTokenIcon(
-      `review-${testTokenSymbol}`,
-      this.reviewWrapSuperTokenComponent,
-    );
-    await this.validateTokenIcon(
-      `review-${testTokenSymbol}`,
-      this.reviewWrapUnderlyingTokenComponent,
-    );
+    await test.step(`Checking token icons in the review step`, async () => {
+      await this.validateTokenIcon(
+        `review-${testTokenSymbol}`,
+        this.reviewWrapSuperTokenComponent,
+      );
+      await this.validateTokenIcon(
+        `review-${testTokenSymbol}`,
+        this.reviewWrapUnderlyingTokenComponent,
+      );
+    });
   }
 
   async clickWhyDoINeedToWrapTokensAndValidatePageOpen() {
-    await BasePage.clickLinkAndVaguelyVerifyOpenedLink(
-      this.page,
-      this.whyWrapTokensButton,
-      "https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens",
-      "https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens",
-      "Why do I need to wrap tokens?",
-    );
+    await test.step(`Clicking on the "Why Do I need To Wrap Tokens" button and making sure the help link opens`, async () => {
+      await BasePage.clickLinkAndVaguelyVerifyOpenedLink(
+        this.page,
+        this.whyWrapTokensButton,
+        "https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens",
+        "https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens",
+        "Why do I need to wrap tokens?",
+      );
+    });
   }
 }
