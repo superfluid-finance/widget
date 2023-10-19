@@ -107,7 +107,7 @@ test.describe("Transactional test cases", () => {
     await widgetPage.validateTokenBalanceAfterWrap();
   });
 
-  test.only("Payment option with upfront payment", async ({ page }) => {
+  test("Transfering tokens", async ({ page }) => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
@@ -123,6 +123,7 @@ test.describe("Transactional test cases", () => {
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
       randomReceiver.address,
     );
+    await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
     await widgetPage.validateTransactionStatuses(
       ["transfer", "send"],
@@ -137,8 +138,8 @@ test.describe("Transactional test cases", () => {
     );
     await widgetPage.validateRandomReceiverTokenBalanceAfterTransfer(
       "Goerli",
-      "fTUSD",
-      "1",
+      "fTUSDx",
+      1,
     );
     // TODO Once upfront payments are shown in the success screen enable these steps
     // await widgetPage.validateTransactionButtonTextAndClick();
@@ -227,6 +228,13 @@ test.describe("Error state test cases", () => {
       "You need to have Super Token balance for at least 24 hours of streaming.",
     );
   });
+  test("User rejecting the wallet connection", async ({ page }) => {
+    let widgetPage = new WidgetPage(page);
+    await widgetPage.clickContinueButton();
+    await widgetPage.clickWeb3ModalMetamaskButton();
+    await metamask.rejectAccess();
+    await widgetPage.validateWeb3ModalDeclinedConnectionError();
+  });
 });
 
 test.describe("Widget configuration test cases", () => {
@@ -238,5 +246,57 @@ test.describe("Widget configuration test cases", () => {
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet();
     await widgetPage.validateThatWrapAmountInputIs("3");
+  });
+});
+
+test.describe("Widget UI specific tests", () => {
+  test("Clicking on the stepper buttons to move around the widget steps and using X button to return from the transaction screen (Vertical)", async ({
+    page,
+  }) => {
+    let widgetPage = new WidgetPage(page);
+    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentToken("fUSDCx");
+    await widgetPage.connectWallet();
+    await widgetPage.validateAndSaveWrapPageBalances("Goerli", "fUSDCx");
+    await widgetPage.setWrapAmount("1");
+    await widgetPage.clickContinueButton();
+    await widgetPage.validateAndSaveSenderAndReceiverAddresses(
+      process.env.WIDGET_WALLET_PUBLIC_KEY!,
+      rebounderAddresses["goerli"],
+    );
+    await widgetPage.waitForTransactionsToGetValidated();
+    await widgetPage.clickContinueButton();
+    await widgetPage.clickTransactionScreenXButton();
+    await widgetPage.validateAndSaveSenderAndReceiverAddresses(
+      process.env.WIDGET_WALLET_PUBLIC_KEY!,
+      rebounderAddresses["goerli"],
+    );
+    await widgetPage.clickOnStepNumber("2");
+    await widgetPage.validateThatWrapAmountInputIs("1");
+    await widgetPage.clickOnStepNumber("1");
+    await widgetPage.verifySelectPaymentOptionStepIsVisible();
+  });
+
+  test("Token icons shown in the widget for the selected token", async ({
+    page,
+  }) => {
+    let widgetPage = new WidgetPage(page);
+    let testTokenSymbol = "fUSDCx";
+    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentToken(testTokenSymbol);
+    await widgetPage.validateTokenIconInPaymentOptionStep(testTokenSymbol);
+    await widgetPage.connectWallet();
+    await widgetPage.validateTokenIconsInWrapStep(testTokenSymbol);
+    await widgetPage.setWrapAmount("1");
+    await widgetPage.clickContinueButton();
+    await widgetPage.validateTokenIconsInReviewStep(testTokenSymbol);
+  });
+
+  test("Why do I need tokens button", async ({ page }) => {
+    let widgetPage = new WidgetPage(page);
+    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentToken("fUSDCx");
+    await widgetPage.connectWallet();
+    await widgetPage.clickWhyDoINeedToWrapTokensAndValidatePageOpen();
   });
 });

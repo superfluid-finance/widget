@@ -3,6 +3,7 @@ import metamask from "@synthetixio/synpress/commands/metamask.js";
 import helpers from "@synthetixio/synpress/helpers.js";
 
 import { EthHelper } from "./helpers/ethHelper.js";
+import { rebounderAddresses } from "./pageObjects/basePage.js";
 
 export const test = base.extend<{
   context: BrowserContext;
@@ -47,9 +48,9 @@ export const test = base.extend<{
 
     //Delete flow before tests, otherwise the widget might not pick it up
     await ethHelper.deleteFlowIfNeccesary(
-      "Goerli",
-      process.env.WIDGET_WALLET_PUBLIC_KEY!,
       "fDAIx",
+      process.env.WIDGET_WALLET_PUBLIC_KEY!,
+      rebounderAddresses["goerli"],
     );
     // setup metamask
     await metamask.initialSetup(chromium, {

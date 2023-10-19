@@ -42,6 +42,7 @@ export function WrapIntoSuperTokensPreview({
         </Typography>
 
         <Stack
+          data-testid="review-underlying-wrap-component"
           component={Paper}
           direction="column"
           alignItems="center"
@@ -49,7 +50,10 @@ export function WrapIntoSuperTokensPreview({
           flex={1}
           sx={{ p: 1.5, borderRadius: 0.75 }}
         >
-          <TokenAvatar tokenInfo={underlyingToken} />
+          <TokenAvatar
+            data-testid="review-underlying-icon"
+            tokenInfo={underlyingToken}
+          />
           <Typography
             data-testid="review-underlying-wrap-amount"
             variant="body1"
@@ -70,13 +74,14 @@ export function WrapIntoSuperTokensPreview({
         </Stack>
 
         <Stack
+          data-testid="review-super-wrap-component"
           component={Paper}
           direction="column"
           alignItems="center"
           justifyContent="center"
           sx={{ p: 1.5, borderRadius: 0.75 }}
         >
-          <TokenAvatar tokenInfo={superToken} />
+          <TokenAvatar data-testid="review-super-icon" tokenInfo={superToken} />
           <Typography
             data-testid="review-super-wrap-amount"
             variant="body1"

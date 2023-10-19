@@ -4,6 +4,7 @@ declare module "@synthetixio/synpress/commands/metamask.js" {
     metamaskParameters: {},
   ) => void;
   export const acceptAccess: (options?: {}) => void;
+  export const rejectAccess: (options?: {}) => void;
   export const confirmTransaction: (gasConfig: string | {}) => void;
   export const confirmPermissionToSpend: (allowance: string) => void;
   export const changeNetwork: (network: string) => void;

@@ -56,6 +56,7 @@ const WrapCard: FC<WrapCardProps> = ({
 
       {token && (
         <Stack
+          data-testid={`${dataTest}-wrap-card`}
           component={Paper}
           variant="outlined"
           direction="row"
@@ -64,7 +65,11 @@ const WrapCard: FC<WrapCardProps> = ({
           title={token.address}
           sx={{ pl: 1.25, pr: 2, py: 1, borderRadius: 0.5 }}
         >
-          <TokenAvatar tokenInfo={token} sx={{ width: 24, height: 24 }} />
+          <TokenAvatar
+            data-testid={`${dataTest}-icon`}
+            tokenInfo={token}
+            sx={{ width: 24, height: 24 }}
+          />
           <Typography data-testid={`${dataTest}-symbol`} variant="body1">
             {token.symbol}
           </Typography>

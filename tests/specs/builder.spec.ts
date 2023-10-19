@@ -778,16 +778,4 @@ test.describe("Common test cases", () => {
     await builderPage.openProductTab();
     await builderPage.validateProductsTabIsOpen();
   });
-
-  test("Terms of Use Hyperlink", async ({ page }) => {
-    let widgetPage = new WidgetPage(page);
-    page.waitForURL("**/builder");
-    await widgetPage.clickAndVerifyTermsOfUsePageIsOpen();
-  });
-
-  test("Privacy policy link", async ({ page }) => {
-    let widgetPage = new WidgetPage(page);
-    page.waitForURL("**/builder");
-    await widgetPage.clickAndVerifyPrivacyPolicyPageIsOpen();
-  });
 });

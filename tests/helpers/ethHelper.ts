@@ -1,5 +1,5 @@
 import sfMeta from "@superfluid-finance/metadata";
-import extendedSuperTokenList from "@superfluid-finance/tokenlist";
+import { extendedSuperTokenList } from "@superfluid-finance/tokenlist";
 import { ethers } from "ethers";
 
 import {
@@ -27,7 +27,6 @@ export class EthHelper {
   }
 
   public getTokenBySymbolAndChainId(symbol: string, chainId: number) {
-    console.log(JSON.stringify(extendedSuperTokenList));
     return extendedSuperTokenList.tokens.filter(
       (token: any) => token.symbol === symbol && token.chainId === chainId,
     )[0];
@@ -82,7 +81,10 @@ export class EthHelper {
     const chainId = this.getNetworkByHumanReadableName(
       this.networkName,
     ).chainId;
-    const tokenAddress = this.getTokenBySymbolAndChainId(tokenSymbol, chainId);
+    const tokenAddress = this.getTokenBySymbolAndChainId(
+      tokenSymbol,
+      chainId,
+    ).address;
     let cfaV1ForwarderAddress = this.getNetworkByHumanReadableName(
       this.networkName,
     ).contractsV1.cfaV1Forwarder;
