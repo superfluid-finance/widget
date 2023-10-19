@@ -53,14 +53,14 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
   const validationResult = useMemo(
     () =>
       fields.reduce(
-        (acc, { label, required, value }) => {
+        (acc, { name, required, value }) => {
           if (
             required?.pattern &&
             !deserializeRegExp(required.pattern).test(value ?? "")
           ) {
             return {
               ...acc,
-              [label.toLowerCase()]: {
+              [name]: {
                 success: false,
                 error: required.message,
               },
@@ -69,7 +69,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
 
           return {
             ...acc,
-            [label.toLowerCase()]: {
+            [name]: {
               success: true,
               error: "",
             },
@@ -117,10 +117,12 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
           <Stack direction="row" flexWrap="wrap" gap={2} sx={{ pb: 2 }}>
             {fields.map((field, i) => (
               <TextField
-                key={`custom-input-${i}`}
-                data-testid={`input-${field.label}`}
+                name={field.name}
+                key={`input-${field.name}-${i}`}
+                data-testid={`input-${field.name}`}
                 fullWidth
                 required={Boolean(field.required)}
+                disabled={field.disabled}
                 label={field.label}
                 type="text"
                 error={

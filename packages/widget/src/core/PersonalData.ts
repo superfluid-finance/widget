@@ -15,6 +15,7 @@ const RegexSchema = z.string().refine(
 );
 
 export const personalDataInputSchema = z.object({
+  name: z.string(),
   label: z.string(),
   required: z
     .object({
@@ -22,10 +23,12 @@ export const personalDataInputSchema = z.object({
       message: z.string(),
     })
     .optional(),
+  disabled: z.boolean().optional(),
   size: z.enum(["half", "full"]).default("full").optional(),
   value: z.string().default("").optional(),
 });
 
 export const personalDataSchema = z.array(personalDataInputSchema);
 
+export type PersonalDataInput = z.infer<typeof personalDataInputSchema>;
 export interface PersonalData extends z.infer<typeof personalDataSchema> {}

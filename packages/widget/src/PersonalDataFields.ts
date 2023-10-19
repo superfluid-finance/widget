@@ -1,7 +1,8 @@
-import { PersonalData } from "./core/PersonalData.js";
+import { PersonalDataInput } from "./core/PersonalData.js";
 import { serializeRegExp } from "./utils.js";
 
 export const EmailField = {
+  name: "email",
   label: "Email",
   required: {
     pattern: serializeRegExp(
@@ -9,9 +10,10 @@ export const EmailField = {
     ),
     message: "Invalid email address",
   },
-} as const satisfies PersonalData[number];
+} as const satisfies PersonalDataInput;
 
 export const PhoneNumberField = {
+  name: "phone",
   label: "Phone Number",
   required: {
     pattern: serializeRegExp(
@@ -19,7 +21,7 @@ export const PhoneNumberField = {
     ),
     message: "Invalid phone number",
   },
-} as const satisfies PersonalData[number];
+} as const satisfies PersonalDataInput;
 
 export type PersonalDataField = typeof EmailField | typeof PhoneNumberField;
 export type PersonalDataFieldType = Lowercase<PersonalDataField["label"]>;
