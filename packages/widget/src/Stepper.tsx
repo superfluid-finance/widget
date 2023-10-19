@@ -85,6 +85,7 @@ export default function Stepper() {
     <StepperProvider
       totalSteps={totalSteps}
       initialStep={isValid ? visibleSteps.length - 1 : 0}
+      walletConnectStep={0}
     >
       {({ activeStep, setActiveStep, orientation }) => {
         const isTransacting = activeStep === transactionStep;
