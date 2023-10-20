@@ -13,6 +13,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });
 
+test.describe.configure({ mode: "parallel" }); // This makes tests inside the describe run in sequence, on a single shard.
 test.describe("Transactional test cases", () => {
   test("Creating a flow", async ({ page }) => {
     let widgetPage = new WidgetPage(page);

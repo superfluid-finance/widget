@@ -7,6 +7,7 @@ import { WidgetPage } from "../pageObjects/widgetPage.js";
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });
+test.describe.configure({ mode: "parallel" }); // This will allow describe to run in parallel and be sharded.
 
 test.describe("Products tab test cases", () => {
   test("Changing the products name", async ({ page }) => {
@@ -706,6 +707,8 @@ test.describe("Gating tab test cases", () => {
 });
 
 test.describe("JSON Editor test cases", () => {
+  test.describe.configure({ mode: "default" }); // This makes tests inside the describe run in sequence, on a single shard.
+
   test("JSON editor - Edit the JSON ( Change name,description,image all payment detail types on all chains )", async ({
     page,
   }) => {
@@ -741,6 +744,8 @@ test.describe("JSON Editor test cases", () => {
 });
 
 test.describe("Common test cases", () => {
+  test.describe.configure({ mode: "default" }); // This makes tests inside the describe run in sequence, on a single shard.
+
   test("Next/back button at the footer of builder switching tabs", async ({
     page,
   }) => {
