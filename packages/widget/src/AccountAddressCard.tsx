@@ -98,9 +98,13 @@ export function AccountAddressCard({
               }}
             >
               {copied ? (
-                <CheckIcon fontSize="inherit" color="primary" />
+                <CheckIcon
+                  data-testid="check-icon"
+                  fontSize="inherit"
+                  color="primary"
+                />
               ) : (
-                <ContentCopyIcon fontSize="inherit" />
+                <ContentCopyIcon data-testid="copy-icon" fontSize="inherit" />
               )}
             </IconButton>
           </Stack>

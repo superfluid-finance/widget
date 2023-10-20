@@ -28,9 +28,10 @@ test.describe("Transactional test cases", () => {
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
       rebounderAddresses["goerli"],
     );
+    await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
     await widgetPage.validateTransactionStatuses(["send"], ["Ready to send"]);
-    await widgetPage.validateTransactionButtonTextAndClick("send");
+    await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
     await widgetPage.acceptMetamaskTransaction();
     await widgetPage.validateTransactionStatuses(
@@ -51,9 +52,10 @@ test.describe("Transactional test cases", () => {
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
       rebounderAddresses["goerli"],
     );
+    await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
     await widgetPage.validateTransactionStatuses(["modify"], ["Ready to send"]);
-    await widgetPage.validateTransactionButtonTextAndClick("modify");
+    await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
     await widgetPage.acceptMetamaskTransaction();
     await widgetPage.validateTransactionStatuses(
@@ -76,12 +78,13 @@ test.describe("Transactional test cases", () => {
       rebounderAddresses["goerli"],
     );
     await widgetPage.validateWrapReviewAmount("1");
+    await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
     await widgetPage.validateTransactionStatuses(
       ["approve", "wrap", "modify"],
       ["Ready to send", "Queued", "Queued"],
     );
-    await widgetPage.validateTransactionButtonTextAndClick("approve");
+    await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
     await widgetPage.acceptMetamaskAllowanceTransaction("1");
     // Checking the pending status makes the test case quite flaky
@@ -93,7 +96,7 @@ test.describe("Transactional test cases", () => {
       ["approve", "wrap", "modify"],
       ["Completed", "Ready to send", "Queued"],
     );
-    await widgetPage.validateTransactionButtonTextAndClick("wrap");
+    await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
     await widgetPage.acceptMetamaskTransaction();
     // Checking the pending status makes the test case quite flaky
