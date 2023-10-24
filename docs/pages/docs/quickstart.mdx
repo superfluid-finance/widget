@@ -3,8 +3,8 @@ title: Quickstart Guide - Web3 Subscription Widget
 description: Set up and integrate the Web3 Subscription Widget with your website.
 ---
 
-import { Callout, Tabs } from 'nextra/components'
-import Image from 'next/image'
+import { Callout, Tabs } from "nextra/components";
+import Image from "next/image";
 
 # Quickstart: Web3 Subscription Widget by Superfluid
 
@@ -25,37 +25,29 @@ Before you begin with the Superfluid Web3 Subscription Widget, ensure you meet t
 
 ### Knowledge
 
-- **JavaScript**: A foundational understanding of JavaScript is necessary for successful integration and troubleshooting.
-  
+- **JavaScript/TypeScript**: A foundational understanding of JavaScript/TypeScript is necessary for successful integration and troubleshooting.
 - **Blockchain Development**: Familiarity with the basics of blockchain development will be beneficial, given the widget's blockchain nature.
 
 ### Setup
 
-1. **Initialize a Next.js Project**: 
+1. **Initialize a Next.js Project**:
    If you haven't already, create a new Next.js application using the command below:
-   
+
    ```bash
    npx create-next-app your-app-name
    ```
 
-2. **Install Wagmi**: 
+2. **Install Wagmi**:
    Wagmi is a pivotal component for this integration. You can install it using one of the following package managers:
 
-   <Tabs items={['npm', 'Yarn']}>
-      <Tabs.Tab>
-      ```bash
-      npm install wagmi --save
-      ```
-      </Tabs.Tab>
-      <Tabs.Tab>
-      ```bash
-      yarn add wagmi
-      ```
-      </Tabs.Tab>
+   <Tabs items={["npm", "Yarn"]}>
+     <Tabs.Tab>```bash npm install wagmi --save ```</Tabs.Tab>
+     <Tabs.Tab>```bash yarn add wagmi ```</Tabs.Tab>
    </Tabs>
 
 <Callout type="warning">
-Ensure you have both Node.js and a package manager (npm or Yarn) installed on your system before proceeding.
+  Ensure you have both Node.js and a package manager (npm or Yarn) installed on
+  your system before proceeding.
 </Callout>
 
 With these prerequisites in place, you're set to proceed with building and integrating your widget.
@@ -68,17 +60,15 @@ To integrate the Superfluid checkout widget into your platform, follow these con
 
 <Image src="/RecordingBuilder.gif" alt="Hello" width={1000} height={1000} />
 
-
 1. **Access** the [Checkout Builder dashboard](https://checkout-builder.superfluid.finance/).
 2. In the 'Product' tab: **Input** Product Name, Description, and upload an Image logo for your product.
 3. In the 'Payment' tab: **Add Payment Options**, select Network, Token, set Stream Rate, and define the Receiver address.
 4. **View** the live 'Widget Preview' on the right to see user interaction flow.
 5. **Navigate** to the 'Export' tab, retrieve the code, and **integrate** into your platform.
-    
 
 <Callout type="info">
 
-_For advanced styling and gating options, explore the 'Styling' and 'Gating' tabs in the Checkout Builder._
+_For advanced styling options, explore the 'Styling' tab in the Checkout Builder._
 
 </Callout>
 
@@ -86,24 +76,70 @@ By following these steps, you'll have a functioning Superfluid checkout widget r
 
 ## Step 2: Integrating Widget into Your Website
 
+Superfluid provides an easy-to-use widget that can be swiftly integrated into your website or application. Let's explore the two primary methods for this integration.
+
+### Option 1 (Easy): Embedding the Widget Using a Link
+
+This is the quickest way to get started. You can redirect users to the widget via a simple link. Add this to your application's codebase and you are good to go:
+
+```jsx
+import React from 'react';
+
+function MyApp() {
+  return (
+    <div>
+      {/* Other components */}
+      <a href="https://superfluid.link/path_to_widget">
+        Subscribe
+      </a>
+    </div>
+  );
+}
+```
+
+<Callout> 🚀 Using the link method ensures you can get started with Superfluid without diving deep into your app's structure. It's fast, efficient, and user-friendly. </Callout>
+
+### Option 2 (Complex): In-App Integration using NPM Package
+
+If you want a more integrated experience where the Superfluid widget resides within your application's ecosystem rather than redirecting users externally, Superfluid offers a dedicated npm package for this purpose.
+
+1. **Installation**: Install the npm package to your project.
+    
+    ```bash
+    npm install @superfluid-finance/widget
+    ```
+    
+2. **Integrate in Your App**: Now, you can import the widget into your application. We won't dive deep into the details here, but you can refer to the detailed [Superfluid Widget Integration Guide](www.superfluid.finance).
+    
+
 ## Step 3: Verifying Active Streams
+(***This Step is still WIP***)
 
-To ensure that your content is gated appropriately:
 
-1. 
-## Troubleshooting
+To ensure that users have an active stream and are contributing the necessary amount to access your blog content, you can leverage `wagmi` to make a call to the `getFlow` function on the Superfluid smart contract. This function will provide you with the flow rate of a specific user. Based on this rate, you can then decide to grant or deny access to your content.
 
-* **Issue 1**: Description and solution.
-* **Issue 2**: Description and solution.
 
-:::warning If you continue facing issues, please reach out to our [support team](#support-url-here). :::
+1. **Invoke the `getFlow` Function**: Use `wagmi` to call the `getFlow` function.
+    
+    ```javascript
+    const userFlowRate = wagmi.getFlow(addressOfUser);
+    ```
+    
+2. **Check the Flow Rate**: Compare the user's flow rate against the required rate to access the content.
+    
+    ```javascript
+    const requiredFlowRate = 1000; // Example value
+    
+    if (userFlowRate >= requiredFlowRate) {
+      // Grant access to the blog content
+    } else {
+      // Deny access or prompt the user to increase their flow rate
+    }
+    ```
+    
 
-## Further Reading
+<Callout> 🛡️ Always ensure that you're verifying streams in a secure manner to prevent unauthorized access to premium content. `wagmi` and Superfluid provide the tools, but always employ best practices in your implementation. </Callout>
 
-* [Advanced Widget Customizations](#advanced-widget-customization-url)
-* [Understanding Superfluid Streams](#understanding-web3-streams-url)
-* [Superfluid Documentation](#superfluid-docs-url)
-
-* * *
+---
 
 We hope this guide helps you set up your SuperFluid Subscription Widget effortlessly. For any feedback or questions, don't hesitate to contact us.
