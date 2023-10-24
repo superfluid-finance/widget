@@ -1,0 +1,17 @@
+{
+  "*": {
+    "type": "page"
+  },
+  "docs": {
+    "title": "Documentation",
+    "type": "page"
+  },
+  "api-docs": {
+    "title": "API Reference",
+    "type": "page"
+  },
+  "index": {
+    "title": "Introduction",
+    "children": []
+  }
+}

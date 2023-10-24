@@ -1,0 +1,24 @@
+{
+  "name": "@superfluid-finance/widget-docs",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Superfluid Checkout Widget Documentation",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "next": "^13.0.6",
+    "nextra": "latest",
+    "nextra-theme-docs": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typedoc-nextra": "^0.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.8",
+    "typescript": "^5.2.2"
+  }
+}
