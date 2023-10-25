@@ -30,19 +30,21 @@ Before you begin with the Superfluid Web3 Subscription Widget, ensure you meet t
 
 ### Setup
 
-1. **Initialize a Next.js Project**:
-   If you haven't already, create a new Next.js application using the command below:
+1. **Initialize a Node/React/Next Project**:
+   If you haven't already, create a new Node/React/Next project using one of the commands below:
 
-   ```bash
-   npx create-next-app your-app-name
-   ```
+   <Tabs items={["NodeJS", "ReactJs", "NextJs"]}>
+     <Tabs.Tab>```$ npx init ```</Tabs.Tab>
+     <Tabs.Tab>```$ npx create-react-app your-app-name ```</Tabs.Tab>
+     <Tabs.Tab>```$ npx create-next-app your-app-name ```</Tabs.Tab>
+   </Tabs>
 
-2. **Install Wagmi**:
-   Wagmi is a pivotal component for this integration. You can install it using one of the following package managers:
+2. **Install Superfluid SDK**:
+   The Superfluid SDK is a pivotal component for this integration. You can install it using one of the following package managers:
 
-   <Tabs items={["npm", "Yarn"]}>
-     <Tabs.Tab>```bash npm install wagmi --save ```</Tabs.Tab>
-     <Tabs.Tab>```bash yarn add wagmi ```</Tabs.Tab>
+   <Tabs items={["npm", "yarn"]}>
+     <Tabs.Tab>```$ npm install @superfluid-finance/sdk-core ```</Tabs.Tab>
+     <Tabs.Tab>```$ yarn add @superfluid-finance/sdk-core ```</Tabs.Tab>
    </Tabs>
 
 <Callout type="warning">
@@ -74,7 +76,7 @@ _For advanced styling options, explore the 'Styling' tab in the Checkout Builder
 
 By following these steps, you'll have a functioning Superfluid checkout widget ready to facilitate real-time payments on your platform. Happy streamlining!
 
-## Step 2: Integrating Widget into Your Website
+## Step 2: Integrating Widget into Your App
 
 Superfluid provides an easy-to-use widget that can be swiftly integrated into your website or application. Let's explore the two primary methods for this integration.
 
@@ -83,63 +85,105 @@ Superfluid provides an easy-to-use widget that can be swiftly integrated into yo
 This is the quickest way to get started. You can redirect users to the widget via a simple link. Add this to your application's codebase and you are good to go:
 
 ```jsx
-import React from 'react';
+//Example for a React app
+
+import React from "react";
 
 function MyApp() {
   return (
     <div>
       {/* Other components */}
-      <a href="https://superfluid.link/path_to_widget">
-        Subscribe
-      </a>
+      <a href="https://superfluid.link/path_to_widget">Subscribe</a>
     </div>
   );
 }
 ```
 
-<Callout> 🚀 Using the link method ensures you can get started with Superfluid without diving deep into your app's structure. It's fast, efficient, and user-friendly. </Callout>
+<Callout emoji="🚀">
+  Using the link method ensures you can get started with Superfluid without diving
+  deep into your app's structure. It's fast, efficient, and user-friendly.{" "}
+</Callout>
 
 ### Option 2 (Complex): In-App Integration using NPM Package
 
 If you want a more integrated experience where the Superfluid widget resides within your application's ecosystem rather than redirecting users externally, Superfluid offers a dedicated npm package for this purpose.
 
 1. **Installation**: Install the npm package to your project.
-    
-    ```bash
-    npm install @superfluid-finance/widget
-    ```
-    
+
+   ```bash
+   npm install @superfluid-finance/widget
+   ```
+
 2. **Integrate in Your App**: Now, you can import the widget into your application. We won't dive deep into the details here, but you can refer to the detailed [Superfluid Widget Integration Guide](www.superfluid.finance).
-    
 
 ## Step 3: Verifying Active Streams
-(***This Step is still WIP***)
 
+To ensure that users have an active stream and are contributing the necessary amount to access your blog content, you can leverage our SDK. This function will provide you with the flow rate of a specific user. Based on this rate, you can then decide to grant or deny access to your content.
 
-To ensure that users have an active stream and are contributing the necessary amount to access your blog content, you can leverage `wagmi` to make a call to the `getFlow` function on the Superfluid smart contract. This function will provide you with the flow rate of a specific user. Based on this rate, you can then decide to grant or deny access to your content.
+1.  **Get The Flow Rate**: Here is an example of a function `getFlowInfo` allowing you to get the current flow rate of the user to your receiver address.
 
+```javascript
+// This code defines a function that retrieves the flow rate of a user's stream to a specific receiver address using Superfluid's SDK.
 
-1. **Invoke the `getFlow` Function**: Use `wagmi` to call the `getFlow` function.
-    
-    ```javascript
-    const userFlowRate = wagmi.getFlow(addressOfUser);
-    ```
-    
-2. **Check the Flow Rate**: Compare the user's flow rate against the required rate to access the content.
-    
-    ```javascript
-    const requiredFlowRate = 1000; // Example value
-    
-    if (userFlowRate >= requiredFlowRate) {
-      // Grant access to the blog content
-    } else {
-      // Deny access or prompt the user to increase their flow rate
-    }
-    ```
-    
+// Define the user's Ethereum address
+const userAddress = "USER_ADDRESS_HERE";
 
-<Callout> 🛡️ Always ensure that you're verifying streams in a secure manner to prevent unauthorized access to premium content. `wagmi` and Superfluid provide the tools, but always employ best practices in your implementation. </Callout>
+// Define the receiver's Ethereum address
+const receiverAddress = "RECEIVER_ADDRESS_HERE";
+
+// Define your provider (wagmi, Ethers, web3Js, etc.)
+const myProvider = {DEFINE_YOUR_PROVIDER_HERE};
+
+// Define an asynchronous function that retrieves the flow rate of a user's stream to a specific receiver address
+async function getFlowRate(userAddress) {
+  // Create a new Superfluid Framework instance
+  const sf = await Framework.create({
+    chainId: INSERT_CHAIN_ID_HERE, // Replace with the chain ID of your Ethereum network
+    provider: myProvider,
+  });
+
+  // Load the Super Token associated with the stream
+  const token = await sf.loadSuperToken(
+    "SUPER_TOKEN_ADDRESS_HERE" // Replace with the address of the Super Token associated with the stream
+  );
+
+  // Retrieve the flow information for the user's stream to the receiver address
+  const flowInfo = token.getFlow({
+    sender: userAddress,
+    receiver: receiverAddress,
+    providerOrSigner: myProvider,
+  });
+
+  // Return the flow rate of the user's stream to the receiver address
+  return flowInfo.flowRate;
+}
+```
+<Callout type="info">
+Use EVM libraries (eg. [wagmi](https://wagmi.sh/) or [ethers](https://docs.ethers.org/)) to create the provider and retrieve the user's address. You can also use the [Superfluid console](https://console.superfluid.finance/ethereum/supertokens) to retrieve the Super Token address.
+</Callout>
+
+2.  **Check the Flow Rate**: Compare the user's flow rate against the required rate to access the content.
+
+```javascript
+const requiredFlowRate = 1000; // Example value
+
+if (userFlowRate >= requiredFlowRate) {
+  // Grant access to the blog content
+} else {
+  // Deny access or prompt the user to increase their flow rate
+}
+```
+
+<Callout emoji="🛡️">
+  Always ensure that you're verifying streams in a secure manner to prevent unauthorized
+  access to premium content. `wagmi` and Superfluid provide the tools, but always
+  employ best practices in your implementation.{" "}
+</Callout>
 
 ---
 
 We hope this guide helps you set up your SuperFluid Subscription Widget effortlessly. For any feedback or questions, don't hesitate to contact us.
+
+```
+
+```
