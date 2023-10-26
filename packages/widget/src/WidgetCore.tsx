@@ -38,7 +38,6 @@ type Props = WidgetProps &
 export function WidgetCore({
   productDetails: productDetails_,
   paymentDetails: paymentDetails_,
-  personalData,
   theme: theme_,
   tokenList,
   walletManager: walletManager_,
@@ -46,6 +45,7 @@ export function WidgetCore({
   eventListeners,
   type,
   networkAssets,
+  personalData,
   ..._viewProps
 }: Props) {
   const viewProps: ViewProps =
@@ -229,13 +229,13 @@ export function WidgetCore({
       eventListeners: {
         onButtonClick: eventListeners?.onButtonClick ?? NOOP_FUNCTION,
         onRouteChange: eventListeners?.onRouteChange ?? NOOP_FUNCTION,
-        onCustomDataUpdate: eventListeners?.onCustomDataUpdate ?? NOOP_FUNCTION,
         onTransactionSent: eventListeners?.onTransactionSent ?? NOOP_FUNCTION,
         onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
         onSuccessButtonClick:
           eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,
         onPaymentOptionUpdate:
           eventListeners?.onPaymentOptionUpdate ?? NOOP_FUNCTION,
+        onCustomDataUpdate: eventListeners?.onCustomDataUpdate ?? NOOP_FUNCTION,
       },
     }),
     [
@@ -252,6 +252,7 @@ export function WidgetCore({
       walletManager,
       stepper,
       viewProps.type,
+      personalData,
       eventListeners?.onTransactionSent,
       eventListeners?.onSuccessButtonClick,
       eventListeners?.onRouteChange,
