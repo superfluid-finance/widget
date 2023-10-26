@@ -17,6 +17,7 @@ export function Widget({
   productDetails = {
     name: "",
   },
+  personalData = [],
   tokenList = extendedSuperTokenList,
   stepper = { orientation: "vertical" },
   type = "page",
@@ -25,6 +26,7 @@ export function Widget({
 }: WidgetProps & Partial<ViewProps>) {
   const props = {
     productDetails,
+    personalData,
     tokenList,
     stepper,
     type,
