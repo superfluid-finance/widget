@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });
 
-test.describe("Misc test cases", () => {
+test.describe("Misc test cases without wallet connected", () => {
   test("All available networks and tokens showing up in the widget", async ({
     page,
   }) => {
