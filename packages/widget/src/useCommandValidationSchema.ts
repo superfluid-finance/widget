@@ -1,16 +1,17 @@
 import superfluidMetadata from "@superfluid-finance/metadata";
 import { useMemo } from "react";
 import { Address } from "viem";
-import { fetchBalance, readContracts } from "wagmi/actions";
+import { fetchBalance, readContract, readContracts } from "wagmi/actions";
 import { z } from "zod";
 
+import { calculateNewFlowRate } from "./CommandMapper.js";
 import { SubscribeCommand, WrapIntoSuperTokensCommand } from "./commands.js";
 import {
   cfAv1ForwarderABI,
   cfAv1ForwarderAddress,
-  mapTimePeriodToSeconds,
+  hostABI,
+  hostAddress,
   superfluidGovernanceABI,
-  superfluidGovernanceAddress,
   superTokenABI,
 } from "./core/index.js";
 import { calculateDateWhenBalanceCritical } from "./helpers/calculateDateWhenBalanceCritical.js";
@@ -52,10 +53,50 @@ export const useCommandValidationSchema = () =>
             ),
         })
         .refine(
+          async ({ subscribeCommand: cmd }) => {
+            const [
+              [_lastUpdated, existingFlowRate, _existingDeposit, _owedDeposit],
+            ] = await readContracts({
+              allowFailure: false,
+              contracts: [
+                {
+                  chainId: cmd.chainId,
+                  address: cfAv1ForwarderAddress[cmd.chainId],
+                  abi: cfAv1ForwarderABI,
+                  functionName: "getFlowInfo",
+                  args: [
+                    cmd.superTokenAddress,
+                    cmd.accountAddress,
+                    cmd.receiverAddress,
+                  ],
+                },
+              ],
+            });
+
+            const newFlowRateWei = calculateNewFlowRate({
+              existingFlowRateWei: existingFlowRate,
+              paymentFlowRate: cmd.flowRate,
+              modifyBehaviour: cmd.flowRate.modifyBehaviour,
+            });
+
+            return newFlowRateWei != existingFlowRate;
+          },
+          {
+            message: "You are already subscribed.",
+          },
+        )
+        .refine(
           async ({ subscribeCommand: cmd, wrapIntoSuperTokensCommand }) => {
             const metadata = superfluidMetadata.getNetworkByChainId(
               cmd.chainId,
             )!; // TODO(KK): optimize
+
+            const governanceAddress = await readContract({
+              chainId: cmd.chainId,
+              address: hostAddress[cmd.chainId],
+              abi: hostABI,
+              functionName: "getGovernance",
+            });
 
             const [
               [_lastUpdated, existingFlowRate, existingDeposit, _owedDeposit],
@@ -77,7 +118,7 @@ export const useCommandValidationSchema = () =>
                 },
                 {
                   chainId: cmd.chainId,
-                  address: superfluidGovernanceAddress[cmd.chainId],
+                  address: governanceAddress,
                   abi: superfluidGovernanceABI,
                   functionName: "getSuperTokenMinimumDeposit",
                   args: [
@@ -87,7 +128,7 @@ export const useCommandValidationSchema = () =>
                 },
                 {
                   chainId: cmd.chainId,
-                  address: superfluidGovernanceAddress[cmd.chainId],
+                  address: governanceAddress,
                   abi: superfluidGovernanceABI,
                   functionName: "getPPPConfig",
                   args: [
@@ -105,15 +146,15 @@ export const useCommandValidationSchema = () =>
               token: cmd.superTokenAddress,
             });
 
-            // TODO(KK): refactor into helper function
-            const newFlowRate =
-              existingFlowRate +
-              cmd.flowRate.amountWei /
-                mapTimePeriodToSeconds(cmd.flowRate.period);
+            const newFlowRateWei = calculateNewFlowRate({
+              existingFlowRateWei: existingFlowRate,
+              paymentFlowRate: cmd.flowRate,
+              modifyBehaviour: cmd.flowRate.modifyBehaviour,
+            });
 
             const newDeposit = calculateDepositAmount({
               liquidationPeriod,
-              flowRate: newFlowRate,
+              flowRate: newFlowRateWei,
               minimumDeposit,
             });
 
@@ -136,6 +177,7 @@ export const useCommandValidationSchema = () =>
             const [
               accountFlowRate,
               [availableBalance, _deposit, _owedDeposit, timestamp],
+              [_lastUpdated, existingFlowRate, existingDeposit, _owedDeposit2],
             ] = await readContracts({
               allowFailure: false,
               contracts: [
@@ -153,20 +195,34 @@ export const useCommandValidationSchema = () =>
                   address: cmd.superTokenAddress,
                   args: [cmd.accountAddress],
                 },
+                {
+                  chainId: cmd.chainId,
+                  address: cfAv1ForwarderAddress[cmd.chainId],
+                  abi: cfAv1ForwarderABI,
+                  functionName: "getFlowInfo",
+                  args: [
+                    cmd.superTokenAddress,
+                    cmd.accountAddress,
+                    cmd.receiverAddress,
+                  ],
+                },
               ],
             });
 
-            const flowRateWeiPerSecond =
-              cmd.flowRate.amountWei /
-              mapTimePeriodToSeconds(cmd.flowRate.period);
+            const newFlowRateWei = calculateNewFlowRate({
+              existingFlowRateWei: existingFlowRate,
+              paymentFlowRate: cmd.flowRate,
+              modifyBehaviour: cmd.flowRate.modifyBehaviour,
+            });
 
             const adjustedAvailableBalance =
               availableBalance -
               cmd.transferAmountWei +
               (wrapIntoSuperTokensCommand?.amountWeiFromSuperTokenDecimals ??
                 0n);
+
             const accountFlowRateWithNewFlowRate =
-              accountFlowRate - flowRateWeiPerSecond;
+              accountFlowRate - newFlowRateWei + existingFlowRate;
 
             const criticalDate = calculateDateWhenBalanceCritical({
               availableBalance: adjustedAvailableBalance,

@@ -1,6 +1,11 @@
 import { Address } from "viem";
 
-import { autoWrapStrategyAddress, ChainId, TimePeriod } from "./core/index.js";
+import {
+  autoWrapStrategyAddress,
+  ChainId,
+  ModifyFlowRateBehaviour,
+  TimePeriod,
+} from "./core/index.js";
 
 export type WrapIntoSuperTokensCommand = {
   id: string;
@@ -44,6 +49,7 @@ export type SubscribeCommand = {
   flowRate: {
     amountWei: bigint;
     period: TimePeriod;
+    modifyBehaviour: ModifyFlowRateBehaviour;
   };
   userData: `0x${string}`;
 };

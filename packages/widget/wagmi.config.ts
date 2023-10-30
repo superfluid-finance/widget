@@ -36,10 +36,13 @@ export default defineConfig({
     {
       name: "SuperfluidGovernance",
       abi: bundledAbi.SuperfluidGovernanceII as Abi,
+    },
+    {
+      name: "Host",
+      abi: bundledAbi.Superfluid as Abi,
       address: superfluidMetadata.networks.reduce(
         (acc, network) => {
-          acc[network.chainId] = network.contractsV1
-            .governance as `0x${string}`;
+          acc[network.chainId] = network.contractsV1.host as `0x${string}`;
           return acc;
         },
         {} as Record<number, Address>,

@@ -137,9 +137,7 @@ export class BuilderPage extends BasePage {
     this.productDescriptionField = page
       .getByTestId("product-description-field")
       .getByRole("textbox");
-    this.networkOptions = page
-      .getByTestId("network-selection")
-      .getByRole("button");
+    this.networkOptions = page.getByTestId("network-selection");
     this.superTokenOption = page.locator("#token-select");
     this.superTokenOptionsInDropdown = page.locator(
       "[id*=token-select-option]",

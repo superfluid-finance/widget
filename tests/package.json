@@ -5,13 +5,13 @@
   "type": "module",
   "devDependencies": {
     "@currents/playwright": "^0.8.1",
-    "@playwright/test": "^1.38.1",
+    "@playwright/test": "^1.39.0",
     "@synthetixio/synpress": "^3.7.1",
     "dotenv": "16.3.1",
-    "ethers": "6.7.1",
+    "ethers": "6.8.0",
     "typescript": "5.2.2",
     "@superfluid-finance/metadata": "^1.1.17",
-    "@superfluid-finance/tokenlist": "^3.0.0"
+    "@superfluid-finance/tokenlist": "^3.3.2"
   },
   "scripts": {
     "lint:check-no-focused-tests": "grep -FR test.only specs || { echo '✅ No test is focused.';exit 0; } && { echo '❌ You have focused tests.'; exit 1; }",

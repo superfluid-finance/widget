@@ -7,6 +7,7 @@ import {
   addressSchema,
   etherAmountSchema,
   flowRateSchema,
+  modifyFlowRateBehaviourSchema,
   paymentOptionSchema,
   SupportedNetwork,
   supportedNetworkSchema,
@@ -32,6 +33,7 @@ export const checkoutFormSchema = z.object({
     message: "Wrap amount can't be negative.",
   }),
   enableAutoWrap: z.boolean().optional(),
+  modifyFlowRateBehaviour: modifyFlowRateBehaviourSchema,
 });
 
 export type ValidFormValues = z.infer<typeof checkoutFormSchema>;
