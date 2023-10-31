@@ -33,7 +33,7 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: "https://github.com/superfluid-finance/widget/",
   footer: {
-    text: "Superfluid Checkout Widget",
+    text: "Superfluid Checkout Widget Docs",
   },
   nextThemes: {
     forcedTheme: 'dark'
