@@ -96,8 +96,7 @@ export function CheckoutSummary() {
         </Typography>
       </Stack>
 
-      <SuccessImage sx={{ mx: "auto", my: 3 }} />
-
+      <SuccessImage data-testid="success-image" sx={{ mx: "auto", my: 3 }} />
       <Stack direction="column" alignItems="center">
         <Typography variant="body2" color="text.secondary">
           {`You've streamed`}

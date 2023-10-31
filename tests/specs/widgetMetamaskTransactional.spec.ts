@@ -165,6 +165,6 @@ test.describe("Transactional test cases", () => {
       ["approve", "wrap", "modify"],
       ["Ready to send", "Queued", "Queued"],
     );
-    await widgetPage.validateTransactionButtonTextAndClick("approve");
+    await widgetPage.validateTransactionButtonTextAndClick();
   });
 });

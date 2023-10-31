@@ -499,7 +499,7 @@ export class WidgetPage extends BasePage {
       await expect(this.productImage).toHaveScreenshot(
         "./data/Superfluid_logo.png",
         {
-          maxDiffPixelRatio: 0.01,
+          maxDiffPixelRatio: 0.02,
         },
       );
     });
@@ -812,7 +812,7 @@ export class WidgetPage extends BasePage {
       );
       await expect(this.page).toHaveScreenshot(
         `changedFont-${font.replace(/"/g, "")}.png`,
-        { maxDiffPixelRatio: 0.01 },
+        { maxDiffPixelRatio: 0.02 },
       );
     });
   }

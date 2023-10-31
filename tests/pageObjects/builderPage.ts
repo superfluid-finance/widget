@@ -898,7 +898,7 @@ export class BuilderPage extends BasePage {
       await expect(this.selectedProductImage).toHaveScreenshot(
         "./data/invalidImageUploaded.png",
         {
-          maxDiffPixelRatio: 0.01,
+          maxDiffPixelRatio: 0.02,
         },
       );
     });

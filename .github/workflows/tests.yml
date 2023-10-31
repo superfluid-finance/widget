@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        file: [builderCommon, builderExportTab, builderGatingTab, builderJSONEditor, builderProductsTab, builderStylingTab, widgetConfigurationTests, widgetMetamaskTransactional, widgetMetamaskUITests, widgetMetamaskValidationErrors , widgetNoWallet]
+        file: [builderCommon, builderExportTab, builderGatingTab, builderJSONEditor, builderProductsTab, builderStylingTab,builderPaymentTab, widgetConfigurationTests, widgetMetamaskTransactional, widgetMetamaskUITests, widgetMetamaskValidationErrors , widgetNoWallet]
 
     steps:
       - uses: actions/checkout@v3
