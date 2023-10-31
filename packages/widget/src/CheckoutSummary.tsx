@@ -80,10 +80,18 @@ export function CheckoutSummary() {
   return (
     <Box>
       <Stack direction="column" alignItems="center">
-        <Typography variant="h5" component="span">
+        <Typography
+          data-testid="success-msg-title"
+          variant="h5"
+          component="span"
+        >
           Success!
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          data-testid="success-msg-text"
+          variant="body2"
+          color="text.secondary"
+        >
           Your purchase was confirmed.
         </Typography>
       </Stack>
