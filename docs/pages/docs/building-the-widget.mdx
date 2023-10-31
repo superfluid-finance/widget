@@ -1,6 +1,9 @@
 # Building Superfluid Checkout Widget: JSON vs. UI
 
 import Image from "next/image";
+import { Callout, Tabs } from "nextra/components";
+
+{/* prettier-ignore-start */}
 
 In order to build your widget and integrate it within your app, you need to have a JSON file containing the parameters you wish to have. You can generate that JSON file through direct configuration or by using a provided user interface (UI). Both methods have their advantages, and your choice will depend on your preference or project requirements.
 
@@ -35,7 +38,7 @@ The `productDetails` object houses specifics about the product:
 
 ### Payment Details
 
-The `paymentDetails` object captures all payment-related data: 
+The `paymentDetails` object captures all payment-related data:
 
 ```json
 {
@@ -103,8 +106,12 @@ For those who prefer a more visual approach or might not be as comfortable with 
 3. **Specify Payment Options:** Add one or more payment options by providing the receiver's Ethereum address, network, super token details, and the desired flow rate. If you have predefined super tokens, you can select them from a dropdown list.
 4. **Set Default Wrap Amount & Behavior:** Define the default wrap amount for transactions and specify the behavior for modifying the flow rate using the provided UI elements.
 5. **Choose Widget Style:** Use the visual selectors to pick the widget's style. For instance, selecting "Page" will make the widget appear as a standalone page within your app.
-6. **Preview & Generate Code:** Once you've configured all the settings, you can preview the widget in real-time. If satisfied, click on "Generate Code" to receive the necessary code snippets to embed the widget into your app.
+6. **Preview & Generate Code:** Once you have configured all the settings, you can preview the widget in real-time. If satisfied, click on "Publish to IPFS" to deploy your widget or copy the JSON file from the JSON Editor on the top right of the builder.
 
+<Callout emoji="🚀">
+  **NEW!** Power your subscription widget with an NFT token deployed to each
+  subscriber. Head to the [NFT Gating Section](./nft-gating) to learn more.
+</Callout>
 ---
 
 With these two methods, you have the flexibility to choose the most suitable approach for integrating the Superfluid Checkout Widget into your application. Whether you prefer the hands-on JSON approach or the visual UI method, both ensure a seamless and efficient user experience.
