@@ -1,15 +1,10 @@
-
-import {
-  rebounderAddresses,
-} from "../pageObjects/basePage.js";
+import { rebounderAddresses } from "../pageObjects/basePage.js";
 import { WidgetPage } from "../pageObjects/widgetPage.js";
 import { test } from "../walletSetup.js";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });
-
-test.describe.configure({ mode: "parallel" }); // This makes tests inside the describe run in sequence, on a single shard.
 
 test.describe("Widget UI specific tests", () => {
   test("Clicking on the stepper buttons to move around the widget steps and using X button to return from the transaction screen (Vertical)", async ({

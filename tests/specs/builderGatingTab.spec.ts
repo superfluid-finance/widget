@@ -5,7 +5,6 @@ import { BuilderPage } from "../pageObjects/builderPage.js";
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });
-test.describe.configure({ mode: "parallel" }); // This will allow describe to run in parallel and be sharded.
 
 test.describe("Gating tab test cases", () => {
   test("Tooltips shown in the gating tab", async ({ page }) => {

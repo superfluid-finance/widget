@@ -5,7 +5,6 @@ import { BuilderPage } from "../pageObjects/builderPage.js";
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });
-test.describe.configure({ mode: "parallel" }); // This will allow describe to run in parallel and be sharded.
 
 test.describe("Common test cases", () => {
   test("Next/back button at the footer of builder switching tabs", async ({

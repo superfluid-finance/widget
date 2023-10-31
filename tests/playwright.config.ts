@@ -8,7 +8,7 @@ export default defineConfig({
   //Disabled due to currents not supporting this at the moment https://github.com/superfluid-finance/widget/issues/227
   fullyParallel: false,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 3 : undefined,
+  workers: 1,
   outputDir: "results",
   reporter: process.env.CI
     ? [["@currents/playwright"], ["line"]]

@@ -5,8 +5,6 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });
 
-test.describe.configure({ mode: "parallel" }); // This makes tests inside the describe run in sequence, on a single shard.
-
 test.describe("Widget configuration test cases", () => {
   test("Suggested token amount getting input for the user (3x)", async ({
     page,
