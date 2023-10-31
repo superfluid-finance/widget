@@ -1,0 +1,35 @@
+import { Callout, Steps, Cards } from "nextra/components"
+
+# Getting Stream Data
+
+Depending on your use case, there are two main ways to get stream data from Superfluid: via our SDK and our Subgraph.
+
+## Fetching Stream Data Using SDK
+
+The SDK provides a direct way to interface with Superfluid's smart contracts. It's best suited for real-time operations and when you want to interact programmatically with a single address or a few specific addresses.
+
+```jsx
+const daix = await sf.loadSuperToken("DAIx");
+let flowInfo = await daix.getFlow({ sender: string, receiver: string, providerOrSigner: ethers.providers.Provider | ethers.Signer });
+```
+
+The above code snippet demonstrates how to load a SuperToken (in this case, `DAIx`) and then fetch flow information between a sender and a receiver. `providerOrSigner` allows you to specify whether you're interacting as an Ethereum provider or a specific signer.
+
+## Fetching Stream Data Using Subgraph
+
+Subgraphs are a way to index and serve blockchain data in a GraphQL format. Superfluid's Subgraph is useful when you want to fetch aggregated or filtered data across multiple addresses or when you want to leverage more complex querying capabilities provided by GraphQL.
+
+```graphql
+query MyQuery { 
+  streams(where: {receiver: "YOUR_ADDRESS_HERE", currentFlowRate_gt: "0"}) {
+    currentFlowRate 
+    token { symbol } 
+    sender { id } 
+    receiver { id }
+  } 
+}
+```
+
+In this example, we're querying streams with a positive flow rate (`currentFlowRate_gt: "0"`) for a specific receiver address. The result will provide details about the current flow rate, the associated token, and both the sender's and receiver's ID.
+
+<Callout> **Note**: Tokens can be loaded by symbol or address. While using the SDK is ideal for real-time interactions and single address checks, the Subgraph method is superior for querying data on multiple addresses based on specific criteria. </Callout>

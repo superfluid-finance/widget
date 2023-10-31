@@ -1,0 +1,41 @@
+import { Callout, Tabs, Steps, Cards, Tab } from "nextra/components";
+
+# Integrating Superfluid Subscriptions in your App
+
+## A Simple Integration Guide
+
+This is a simple comprehensive guide on integrating Superfluid subscriptions in your app using different methods.
+
+<Steps>
+### Step 1: Install the Necessary Packages
+
+```bash
+npm install --save @superfluid-finance/widget wagmi @superfluid-finance/tokenlist
+```
+
+### Step 2: Import the Widget and Dependencies
+
+```jsx
+import { WagmiConfig } from "wagmi";
+import SuperfluidWidget from '@superfluid-finance/widget';
+```
+
+### Step 3: Generate a Widget JSON
+
+Craft your Widget JSON using our no-code widget builder. This JSON dictates most of your widget's properties.
+
+### Step 4: Implement the Widget in Your Component
+
+```jsx
+export function MyComponent() {
+  return (
+    <WagmiConfig config={wagmiConfig}>
+      <SuperfluidWidget {...data} tokenList={superTokenList} type="dialog" walletManager={walletManager}>
+        {({ openModal }) => (<button onClick={() => openModal()}>Open Superfluid Widget</button>)}
+      </SuperfluidWidget>
+    </WagmiConfig>
+  );
+}
+```
+
+</Steps> 
