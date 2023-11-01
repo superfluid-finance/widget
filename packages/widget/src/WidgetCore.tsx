@@ -43,6 +43,7 @@ export function WidgetCore({
   walletManager: walletManager_,
   stepper: stepper_,
   eventListeners,
+  callbacks,
   type,
   networkAssets,
   personalData,
@@ -207,6 +208,8 @@ export function WidgetCore({
     [stepper_.orientation],
   );
 
+  console.log(callbacks);
+
   const checkoutState = useMemo<WidgetContextValue>(
     () => ({
       getNetwork,
@@ -235,7 +238,11 @@ export function WidgetCore({
           eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,
         onPaymentOptionUpdate:
           eventListeners?.onPaymentOptionUpdate ?? NOOP_FUNCTION,
-        onCustomDataUpdate: eventListeners?.onCustomDataUpdate ?? NOOP_FUNCTION,
+        onPersonalDataUpdate:
+          eventListeners?.onPersonalDataUpdate ?? NOOP_FUNCTION,
+      },
+      callbacks: {
+        validatePersonalData: callbacks?.validatePersonalData ?? NOOP_FUNCTION,
       },
     }),
     [
@@ -259,6 +266,8 @@ export function WidgetCore({
       eventListeners?.onTransactionSent,
       eventListeners?.onSuccess,
       eventListeners?.onPaymentOptionUpdate,
+      eventListeners?.onPersonalDataUpdate,
+      callbacks?.validatePersonalData,
     ],
   );
 

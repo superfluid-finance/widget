@@ -168,3 +168,5 @@ export type {
   PersonalDataFieldType,
 } from "./PersonalDataFields.js";
 export { EmailField, PhoneNumberField } from "./PersonalDataFields.js";
+
+export type Errors = Record<string, { success: boolean; message?: string }>;

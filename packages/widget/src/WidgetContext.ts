@@ -3,6 +3,7 @@ import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import { createContext, useContext } from "react";
 import { Address } from "viem";
 
+import { Callbacks } from "./Callbacks.js";
 import { CheckoutConfig } from "./CheckoutConfig.js";
 import { ChainId, SupportedNetwork } from "./core/index.js";
 import { PersonalData } from "./core/PersonalData.js";
@@ -30,6 +31,7 @@ export type WidgetContextValue = {
   };
   type: ViewProps["type"];
   eventListeners: Required<EventListeners>;
+  callbacks: Required<Callbacks>;
 } & Required<CheckoutConfig>;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(

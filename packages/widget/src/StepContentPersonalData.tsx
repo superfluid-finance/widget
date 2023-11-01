@@ -2,24 +2,52 @@ import { Stack, TextField } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldArray, useFieldArray, useFormContext } from "react-hook-form";
 
+import { PersonalData } from "./core/PersonalData.js";
 import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
 import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
 import { StepperCTAButton } from "./StepperCTAButton.js";
-import { deserializeRegExp, mapPersonalDataToObject } from "./utils.js";
+import { deserializeRegExp, Errors, mapPersonalDataToObject } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
 
+const validatePersonalData = (inputs: PersonalData) =>
+  inputs.reduce(
+    (acc, { name, required, value }) => {
+      if (
+        required?.pattern &&
+        !deserializeRegExp(required.pattern).test(value ?? "")
+      ) {
+        return {
+          ...acc,
+          [name]: {
+            success: false,
+            message: required.message,
+          },
+        };
+      }
+
+      return {
+        ...acc,
+        [name]: {
+          success: true,
+        },
+      };
+    },
+    {} as Record<string, { success: boolean; message?: string }>,
+  );
+
 export default function StepContentCustomData({ stepIndex }: StepProps) {
-  const { control: c } = useFormContext<DraftFormValues>();
+  const { control: c, setValue } = useFormContext<DraftFormValues>();
 
   const { fields, update } = useFieldArray({
     control: c,
     name: "personalData",
   });
 
-  const [errors, setErrors] =
-    useState<Record<string, { success: boolean; error: string }>>();
+  const [errors, setErrors] = useState<Errors>();
+
+  const [externallyValidating, setExternallyValidating] = useState(false);
 
   const onChange = useCallback(
     (
@@ -35,7 +63,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
     [fields],
   );
 
-  const { eventListeners } = useWidget();
+  const { eventListeners, callbacks } = useWidget();
   const { handleNext } = useStepper();
 
   useEffect(() => {
@@ -45,38 +73,13 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
   }, [eventListeners.onRouteChange]);
 
   useEffect(() => {
-    runEventListener(eventListeners.onCustomDataUpdate, {
+    runEventListener(eventListeners.onPersonalDataUpdate, {
       ...mapPersonalDataToObject(fields),
     });
-  }, [eventListeners.onCustomDataUpdate, fields]);
+  }, [eventListeners.onPersonalDataUpdate, setErrors, fields]);
 
   const validationResult = useMemo(
-    () =>
-      fields.reduce(
-        (acc, { name, required, value }) => {
-          if (
-            required?.pattern &&
-            !deserializeRegExp(required.pattern).test(value ?? "")
-          ) {
-            return {
-              ...acc,
-              [name]: {
-                success: false,
-                error: required.message,
-              },
-            };
-          }
-
-          return {
-            ...acc,
-            [name]: {
-              success: true,
-              error: "",
-            },
-          };
-        },
-        {} as Record<string, { success: boolean; error: string }>,
-      ),
+    () => validatePersonalData(fields),
     [fields],
   );
 
@@ -89,13 +92,29 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
     }
   }, [validationResult]);
 
-  const onContinue = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+  const onContinue = useCallback(async () => {
+    setExternallyValidating(true);
+    const externalValidationResult =
+      await callbacks.validatePersonalData(fields);
 
-    if (Object.values(validationResult).every((result) => result.success)) {
+    const isValid = Object.values(validationResult).every(
+      (result) => result.success,
+    );
+
+    const isExternallyValid = Object.values(
+      externalValidationResult ?? {},
+    ).every((result) => result?.success);
+
+    setExternallyValidating(false);
+
+    if (isValid && isExternallyValid) {
       handleNext(stepIndex);
     } else {
-      setErrors(validationResult);
+      if (!isValid) {
+        setErrors(validationResult);
+      } else if (!isExternallyValid) {
+        setErrors(externalValidationResult as Errors);
+      }
     }
   }, [handleNext, eventListeners.onButtonClick, stepIndex, validationResult]);
 
@@ -129,7 +148,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
                   errors && !Boolean(errors[field.label.toLowerCase()]?.success)
                 }
                 helperText={
-                  errors && (errors[field.label.toLowerCase()]?.error ?? "")
+                  errors && (errors[field.label.toLowerCase()]?.message ?? "")
                 }
                 value={field.value ?? ""}
                 onChange={({ target }) => onChange(field, target.value, i)}
@@ -144,7 +163,9 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
             ))}
           </Stack>
 
-          <StepperCTAButton onClick={onContinue}>Continue</StepperCTAButton>
+          <StepperCTAButton loading={externallyValidating} onClick={onContinue}>
+            Continue
+          </StepperCTAButton>
         </Stack>
       </Stack>
     </Stack>

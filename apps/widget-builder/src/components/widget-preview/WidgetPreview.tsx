@@ -113,9 +113,6 @@ const switchLayout = (
       theme={theme}
       walletManager={walletManager}
       stepper={{ orientation: stepperOrientation }}
-      eventListeners={{
-        onCustomDataUpdate: console.log,
-      }}
     />
   ) : (
     <SuperfluidWidget
@@ -127,9 +124,6 @@ const switchLayout = (
       theme={theme}
       walletManager={walletManager}
       stepper={{ orientation: stepperOrientation }}
-      eventListeners={{
-        onCustomDataUpdate: console.log,
-      }}
     >
       {({ openModal }) => (
         <Fab

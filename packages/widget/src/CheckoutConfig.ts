@@ -2,6 +2,7 @@ import { ThemeOptions } from "@mui/material";
 import { SuperTokenList } from "@superfluid-finance/tokenlist";
 import { z } from "zod";
 
+import { Callbacks } from "./Callbacks.js";
 import {
   NetworkAssets,
   PaymentDetails,
@@ -66,6 +67,7 @@ const widgetPropsSchema = z.object({
    * @inheritdoc EventListeners
    */
   eventListeners: z.custom<EventListeners>().optional(),
+  callbacks: z.custom<Callbacks>().optional(),
   networkAssets: z.custom<NetworkAssets>().optional(),
 });
 
