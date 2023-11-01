@@ -143,6 +143,7 @@ export function CheckoutSummary() {
           PaperProps={{ sx: { zIndex: 2 } }}
         />
         <StreamIndicator
+          data-testid="stream-indicator"
           sx={{
             mx: -1,
             zIndex: 0,
