@@ -163,6 +163,7 @@ export function CheckoutSummary() {
       </Stack>
 
       <Stack
+        data-testid="continue-buttons"
         direction="column"
         justifyContent="center"
         alignItems="stretch"
