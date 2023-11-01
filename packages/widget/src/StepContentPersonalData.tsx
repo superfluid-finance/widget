@@ -68,7 +68,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
 
   useEffect(() => {
     runEventListener(eventListeners.onRouteChange, {
-      route: "step_custom_data",
+      route: "step_personal_data",
     });
   }, [eventListeners.onRouteChange]);
 

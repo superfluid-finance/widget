@@ -2,7 +2,6 @@ import { ExtractAbiFunctionNames } from "abitype";
 import { Hash } from "viem";
 
 import { cfAv1ForwarderABI, PaymentOption } from "./core/index.js";
-import { Errors } from "./utils.js";
 
 export type TxFunctionName = ExtractAbiFunctionNames<
   typeof cfAv1ForwarderABI,
@@ -26,7 +25,6 @@ export interface EventListeners {
   onButtonClick?: (props?: {
     type:
       | "next_step"
-      | "next_step_personal_data"
       | "skip_step"
       | "step_label"
       | "connect_wallet"
@@ -40,19 +38,19 @@ export interface EventListeners {
       | "skip_to_next"
       | "copy_account_address"
       | "view_transaction_on_block_explorer";
-  }) => Errors | void;
+  }) => void;
   /** Called when the widget route changes. "Route" is a term to define the _view_ the user sees. */
   onRouteChange?: (props?: {
     route:
       | "step_payment_option"
       | "step_wrap"
       | "step_review"
-      | "step_custom_data"
+      | "step_personal_data"
       | "transactions"
       | "success_summary";
     data?: Record<string, string>;
   }) => void;
-  /** Called when customData updates */
+  /** Called when any personalData fields update. */
   onPersonalDataUpdate?: (props?: { data?: Record<string, string> }) => void;
   /** Called when a transaction is executed. */
   onTransactionSent?: (props?: {
@@ -77,7 +75,6 @@ export interface EventListeners {
 export const runEventListener = <T, R = void>(
   func: (args?: T) => R,
   args?: T,
-): Promise<R> =>
-  new Promise((resolve) => {
-    setTimeout(() => resolve(func(args)), 0);
-  });
+): void => {
+  setTimeout(() => func(args), 0);
+};

@@ -27,7 +27,7 @@ import { WidgetProps } from "../widget-preview/WidgetPreview";
 const ProductEditor: FC = () => {
   const { control, watch } = useFormContext<WidgetProps>();
 
-  const [selectedCustomFields, setSelectedCustomFields] = useState<
+  const [selectedPersonalDataFields, setSelectedPersonalDataFields] = useState<
     Partial<Record<PersonalDataFieldType, boolean>>
   >({});
 
@@ -38,15 +38,17 @@ const ProductEditor: FC = () => {
   });
   const { setDemoProductDetails } = useDemoMode();
 
-  const onCustomDataSelectionChange = (field: PersonalDataField) => {
+  const onPersonalDataSelectionChange = (field: PersonalDataField) => {
     const isFieldSelected =
-      selectedCustomFields[field.label.toLowerCase() as PersonalDataFieldType];
+      selectedPersonalDataFields[
+        field.label.toLowerCase() as PersonalDataFieldType
+      ];
 
     const index = fields.findIndex(({ label }) => label === field.label);
 
     isFieldSelected ? remove(index) : append(field);
 
-    setSelectedCustomFields((prev) => ({
+    setSelectedPersonalDataFields((prev) => ({
       ...prev,
       [field.label.toLowerCase()]: !isFieldSelected,
     }));
@@ -124,7 +126,7 @@ const ProductEditor: FC = () => {
             Personal Data
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Add custom data fields to collect additional information from your
+            Add personal data fields to collect additional information from your
             users.
           </Typography>
         </Box>
@@ -135,11 +137,11 @@ const ProductEditor: FC = () => {
               control={
                 <Checkbox
                   value={
-                    selectedCustomFields[
+                    selectedPersonalDataFields[
                       field.label.toLowerCase() as PersonalDataFieldType
                     ]
                   }
-                  onChange={() => onCustomDataSelectionChange(field)}
+                  onChange={() => onPersonalDataSelectionChange(field)}
                 />
               }
               label={field.label}
