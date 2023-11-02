@@ -12,6 +12,17 @@ export const EmailField = {
   },
 } as const satisfies PersonalDataInput;
 
+export const EmailWithAliasField = {
+  name: "email",
+  label: "Email",
+  required: {
+    pattern: serializeRegExp(
+      /^([a-zA-Z0-9_\-\.+\]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g,
+    ),
+    message: "Invalid email address",
+  },
+} as const satisfies PersonalDataInput;
+
 export const PhoneNumberField = {
   name: "phone",
   label: "Phone Number",
