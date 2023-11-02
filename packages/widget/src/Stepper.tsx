@@ -39,42 +39,55 @@ export default function Stepper() {
     "personalData",
   ]);
 
-  const visibleSteps = useMemo(
-    () =>
-      [
-        {
-          buttonText: "Select network and token",
-          shortText: "Network & Token",
-          Content: StepContentPaymentOption,
-        },
-        ...(personalData && personalData.length > 0
-          ? [
-              {
-                buttonText: "Personal Data",
-                shortText: "Personal Data",
-                Content: StepContentPersonalData,
-              },
-            ]
-          : []),
-        // Add wrap step only when Super Token has an underlying token.
-        ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
-          .type === "Wrapper" // TODO(KK): Enable native asset wrapping here.
-          ? [
-              {
-                buttonText: "Wrap to Super Tokens",
-                shortText: "Wrap",
-                Content: StepContentWrap,
-              },
-            ]
-          : []),
-        {
-          buttonText: "Review the transaction(s)",
-          shortText: "Review",
-          Content: StepContentReview,
-        },
-      ] as const,
-    [paymentOptionWithTokenInfo, personalData],
-  );
+  const [visibleSteps, walletConnectStep] = useMemo(() => {
+    const steps = [
+      {
+        optional: false,
+        buttonText: "Select network and token",
+        shortText: "Network & Token",
+        Content: StepContentPaymentOption,
+      },
+      // Add wrap step only when Super Token has an underlying token.
+      ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
+        .type === "Wrapper" // TODO(KK): Enable native asset wrapping here.
+        ? [
+            {
+              optional: true,
+              buttonText: "Wrap to Super Tokens",
+              shortText: "Wrap",
+              Content: StepContentWrap,
+            },
+          ]
+        : []),
+      {
+        optional: false,
+        buttonText: "Review the transaction(s)",
+        shortText: "Review",
+        Content: StepContentReview,
+      },
+    ];
+
+    const hasPersonalData = personalData.length > 0;
+    if (hasPersonalData) {
+      const isPersonalDataRequired = personalData.some((x) => !x.optional);
+      const personalDataStep = {
+        optional: !isPersonalDataRequired,
+        buttonText: "Personal info",
+        shortText: "Personal info",
+        Content: StepContentPersonalData,
+      };
+
+      const summaryStep = steps.length - 1;
+      const personalDataStepIndex = isPersonalDataRequired ? 0 : summaryStep;
+
+      steps.splice(personalDataStepIndex, 0, personalDataStep);
+      const walletConnectStep = isPersonalDataRequired ? 1 : 0;
+
+      return [steps, walletConnectStep];
+    } else {
+      return [steps, 0];
+    }
+  }, [paymentOptionWithTokenInfo, personalData]);
 
   const container = useRef(null);
   const totalSteps = visibleSteps.length + 2; // Add confirm and success. TODO(KK): not clean...
@@ -85,7 +98,7 @@ export default function Stepper() {
     <StepperProvider
       totalSteps={totalSteps}
       initialStep={isValid ? visibleSteps.length - 1 : 0}
-      walletConnectStep={0}
+      walletConnectStep={walletConnectStep}
     >
       {({ activeStep, setActiveStep, orientation }) => {
         const isTransacting = activeStep === transactionStep;
@@ -136,6 +149,7 @@ export default function Stepper() {
                       return (
                         <Step data-testid={`step-${index + 1}`} key={index}>
                           <StepButton
+                            optional={step.optional}
                             disabled={visualActiveStep <= index}
                             data-testid={`step-${index + 1}-button`}
                             onClick={() => {

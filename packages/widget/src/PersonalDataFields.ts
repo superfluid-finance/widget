@@ -3,7 +3,8 @@ import { serializeRegExp } from "./utils.js";
 
 export const EmailField = {
   name: "email",
-  label: "Email",
+  label: "E-mail",
+  optional: false,
   required: {
     pattern: serializeRegExp(
       /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g,
@@ -14,7 +15,8 @@ export const EmailField = {
 
 export const EmailWithAliasField = {
   name: "email",
-  label: "Email",
+  label: "E-mail",
+  optional: false,
   required: {
     pattern: serializeRegExp(
       /^([a-zA-Z0-9_\-\.+\]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g,
@@ -25,7 +27,8 @@ export const EmailWithAliasField = {
 
 export const PhoneNumberField = {
   name: "phone",
-  label: "Phone Number",
+  label: "Phone number",
+  optional: false,
   required: {
     pattern: serializeRegExp(
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,

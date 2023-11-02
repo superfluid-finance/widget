@@ -140,7 +140,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
                 key={`input-${field.name}-${i}`}
                 data-testid={`input-${field.name}`}
                 fullWidth
-                required={Boolean(field.required)}
+                required={!field.optional}
                 disabled={field.disabled}
                 label={field.label}
                 type="text"

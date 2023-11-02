@@ -23,6 +23,7 @@ export const personalDataInputSchema = z.object({
       message: z.string(),
     })
     .optional(),
+  optional: z.boolean().default(false).optional(),
   disabled: z.boolean().optional(),
   size: z.enum(["half", "full"]).default("full").optional(),
   value: z.string().default("").optional(),

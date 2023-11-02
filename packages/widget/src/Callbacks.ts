@@ -10,7 +10,7 @@ import { Errors } from "./utils.js";
  */
 
 export interface Callbacks {
-  /** Called when the user clicks the "Continue" button on the "Personal Data" step. */
+  /** Called when the user clicks the "Continue" button in the personal data step. */
   validatePersonalData: (
     data: PersonalData,
   ) => Errors | void | Promise<Errors | void>;
