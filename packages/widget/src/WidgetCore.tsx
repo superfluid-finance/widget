@@ -208,8 +208,6 @@ export function WidgetCore({
     [stepper_.orientation],
   );
 
-  console.log(callbacks);
-
   const checkoutState = useMemo<WidgetContextValue>(
     () => ({
       getNetwork,
