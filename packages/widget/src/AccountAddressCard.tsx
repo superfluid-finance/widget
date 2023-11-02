@@ -91,6 +91,7 @@ export function AccountAddressCard({
             </Typography>
 
             <IconButton
+              data-testid={`${dataTest}-copy-button`}
               size="small"
               title="Copy address to clipboard"
               onClick={() => onCopyAddressButtonClick(checksumAddress)}
@@ -99,9 +100,13 @@ export function AccountAddressCard({
               }}
             >
               {copied ? (
-                <CheckIcon fontSize="inherit" color="primary" />
+                <CheckIcon
+                  data-testid="check-icon"
+                  fontSize="inherit"
+                  color="primary"
+                />
               ) : (
-                <ContentCopyIcon fontSize="inherit" />
+                <ContentCopyIcon data-testid="copy-icon" fontSize="inherit" />
               )}
             </IconButton>
           </Stack>

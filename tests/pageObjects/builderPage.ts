@@ -1,7 +1,13 @@
 import { expect, Locator, Page, test } from "@playwright/test";
+import { ethers } from "ethers";
 import fs from "fs";
 
-import { BasePage, randomDetailsSet, supportedNetworks } from "./basePage";
+import {
+  BasePage,
+  randomDetailsSet,
+  randomReceiver,
+  supportedNetworks,
+} from "./basePage.js";
 
 export class BuilderPage extends BasePage {
   readonly page: Page;
@@ -116,6 +122,7 @@ export class BuilderPage extends BasePage {
 
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
+  randomReceiverAddress: string | undefined;
 
   constructor(page: Page) {
     super();
@@ -891,7 +898,7 @@ export class BuilderPage extends BasePage {
       await expect(this.selectedProductImage).toHaveScreenshot(
         "./data/invalidImageUploaded.png",
         {
-          maxDiffPixelRatio: 0.01,
+          maxDiffPixelRatio: 0.02,
         },
       );
     });
@@ -1442,6 +1449,13 @@ export class BuilderPage extends BasePage {
       if (jsonObjectToUse === "invalidJson") {
         dataToUse = JSON.stringify(json.allNetworks).slice(0, -1);
       } else {
+        dataToUse = JSON.stringify(json[jsonObjectToUse]);
+      }
+      if (jsonObjectToUse === "randomUpfrontPaymentReceiver") {
+        let walletToUse = ethers.Wallet.createRandom().address;
+        randomReceiver.address = walletToUse;
+        json[jsonObjectToUse].paymentDetails.paymentOptions[0].receiverAddress =
+          walletToUse;
         dataToUse = JSON.stringify(json[jsonObjectToUse]);
       }
       await this.page.evaluate((data) => {

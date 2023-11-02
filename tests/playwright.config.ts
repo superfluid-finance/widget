@@ -5,9 +5,10 @@ dotenv.config();
 
 export default defineConfig({
   testDir: "specs",
+  //Disabled due to currents not supporting this at the moment https://github.com/superfluid-finance/widget/issues/227
   fullyParallel: false,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,
   outputDir: "results",
   reporter: process.env.CI
     ? [["@currents/playwright"], ["line"]]
@@ -19,11 +20,11 @@ export default defineConfig({
   use: {
     actionTimeout: 10000,
     baseURL: process.env.BASE_URL,
-    trace: process.env.CI ? "on-first-retry" : "on",
+    trace: "on",
     timezoneId: "Europe/Riga",
     viewport: { width: 1280, height: 720 },
     screenshot: "only-on-failure",
-    video: "on-first-retry",
+    video: "on",
     testIdAttribute: "data-testid",
     headless: false,
   },
