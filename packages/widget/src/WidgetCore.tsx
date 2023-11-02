@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Alert,
-  AlertTitle,
-  createTheme,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
-import { deepmerge } from "@mui/utils";
+import { Alert, AlertTitle, ThemeProvider, Typography } from "@mui/material";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
 import { nanoid } from "nanoid";
@@ -27,7 +20,7 @@ import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList.js";
 import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions.js";
-import { buildThemeOptions } from "./theme.js";
+import { createWidgetTheme } from "./theme.js";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext.js";
 import { ViewProps, WidgetView } from "./WidgetView.js";
 
@@ -269,13 +262,7 @@ export function WidgetCore({
     ],
   );
 
-  const theme = useMemo(() => {
-    const defaultThemeOptions = buildThemeOptions(
-      theme_?.palette?.mode || "light",
-    );
-    const themeOptions = deepmerge(defaultThemeOptions, theme_);
-    return createTheme(themeOptions);
-  }, [theme_]);
+  const theme = useMemo(() => createWidgetTheme(theme_), [theme_]);
 
   // TODO(KK): debug message about what token list is used?
 

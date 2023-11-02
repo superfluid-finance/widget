@@ -1,4 +1,4 @@
-import { Theme, ThemeOptions } from "@mui/material/styles";
+import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
 import { deepmerge } from "@mui/utils";
 
 type ThemeMode = "light" | "dark";
@@ -31,6 +31,24 @@ export const buildThemeOptions = (mode: ThemeMode): ThemeOptions => {
   );
 };
 
+/**
+ * The theme options are derived from MUI's theme options.
+ */
+export type WidgetThemeOptions = Omit<
+  ThemeOptions,
+  "unstable_strictMode" | "unstable_sxConfig"
+>;
+
+/**
+ * Creates the theme that will ultimately be used inside the widget.
+ */
+export const createWidgetTheme = (themeOptions?: WidgetThemeOptions) => {
+  const defaultThemeOptions = buildThemeOptions(
+    themeOptions?.palette?.mode || "light",
+  );
+  return createTheme(deepmerge(defaultThemeOptions, themeOptions));
+};
+
 const getModeStyleCB =
   (mode: ThemeMode) =>
   <T>(lightStyle: T, darkStyle: T): T =>
@@ -39,7 +57,7 @@ const getModeStyleCB =
 interface CoreThemeOptions
   extends Required<
     Pick<
-      ThemeOptions,
+      WidgetThemeOptions,
       "palette" | "shadows" | "transitions" | "breakpoints" | "shape"
     >
   > {

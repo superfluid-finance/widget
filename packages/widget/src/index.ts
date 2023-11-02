@@ -33,5 +33,7 @@ export {
   personalDataSchema,
   productDetailsSchema,
 } from "./core/index.js";
+export type { WidgetThemeOptions } from "./theme.js";
+export { createWidgetTheme } from "./theme.js";
 
 export default Widget;
