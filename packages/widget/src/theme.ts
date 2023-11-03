@@ -1,4 +1,4 @@
-import { createTheme, ThemeOptions } from "@mui/material/styles";
+import { createTheme, ThemeOptions } from "@mui/material";
 import { deepmerge } from "@mui/utils";
 
 type ThemeMode = "light" | "dark";
