@@ -29,29 +29,29 @@ const data = {
     paymentOptions: [
       {
         receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22",
-        chainId: 80001,
+        chainId: 80001 as 80001 | 1 | 5 | 10 | 56 | 42161 | 421613 | 43114 | 43113 | 8453 | 84531 | 42220 | 100 | 11155111 | 420 | 137,
         superToken: {
           address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a",
         },
         flowRate: {
           amountEther: "1",
-          period: "month",
+          period: "month" as "month" | "day" | "week" | "year",
         },
       },
       {
         receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22",
-        chainId: 5,
+        chainId: 5 as 80001 | 1 | 5 | 10 | 56 | 42161 | 421613 | 43114 | 43113 | 8453 | 84531 | 42220 | 100 | 11155111 | 420 | 137,
         superToken: {
           address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a",
         },
         flowRate: {
           amountEther: "1",
-          period: "month",
+          period: "month" as "month" | "day" | "week" | "year",
         },
       }
     ],
   },
-  type: "drawer",
+  type: "page",
 };
 
 createWeb3Modal({ wagmiConfig, projectId, chains })
