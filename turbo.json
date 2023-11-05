@@ -54,6 +54,10 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
+    "@superfluid-finance/docs#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
     "test": {
       "dependsOn": ["build"],
       "env": [
