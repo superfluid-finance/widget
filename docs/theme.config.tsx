@@ -20,7 +20,7 @@ const config: DocsThemeConfig = {
 
 </svg>
 <span style={{ marginLeft: '.4em', fontWeight: 800 }}>
-        Superfluid Checkout Docs
+        Superfluid Subscriptions Docs
       </span>
 </>
 

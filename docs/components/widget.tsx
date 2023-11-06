@@ -51,7 +51,7 @@ const data = {
       }
     ],
   },
-  type: "page",
+  type: "drawer" as "drawer" | "dialog" | "full-screen",
 };
 
 createWeb3Modal({ wagmiConfig, projectId, chains })
@@ -62,7 +62,6 @@ export function Widget() {
       <SuperfluidWidget
         {...data}
         tokenList={widgetBuilderTokenList}
-        type="dialog"
       >
         {({ openModal }) => (
           <button className={styles.Button} onClick={() => openModal()}>Preview Checkout Widget</button>

@@ -7,8 +7,16 @@
     "type": "page"
   },
   "api-docs": {
-    "title": "API Reference",
-    "type": "page"
+    "title": "API Reference ↗",
+    "href": "https://superfluid-widget-reference-docs.vercel.app/",
+    "type": "page",
+    "newWindow": true
+  },
+  "about": {
+    "title": "About ↗",
+    "type": "page",
+    "href": "https://www.superfluid.finance/subscriptions",
+    "newWindow": true
   },
   "index": {
     "title": "Home",

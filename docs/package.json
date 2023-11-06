@@ -2,7 +2,7 @@
   "name": "@superfluid-finance/widget-docs",
   "version": "0.0.1",
   "private": true,
-  "description": "Superfluid Checkout Widget Documentation",
+  "description": "Superfluid Subscriptions Documentation",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
