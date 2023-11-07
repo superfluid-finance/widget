@@ -55,7 +55,7 @@ export type WidgetProps = {
   paymentDetails: WidgetProps_["paymentDetails"] & {
     paymentOptions: PaymentOption[];
   };
-  existentialNFT?: WidgetProps_["existentialNFT"];
+  existentialNFT: WidgetProps_["existentialNFT"];
   displaySettings: DisplaySettings;
   type: Layout;
 };
