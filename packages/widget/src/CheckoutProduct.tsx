@@ -122,7 +122,11 @@ export default function CheckoutProduct({ CardProps }: CheckoutProductProps) {
                 </Stack>
                 {paymentOptionWithTokenInfo.paymentOption
                   .transferAmountEther && (
-                  <Typography variant="body1" color="text.secondary">
+                  <Typography
+                    data-testid="upfront-fee"
+                    variant="body1"
+                    color="text.secondary"
+                  >
                     +
                     {
                       paymentOptionWithTokenInfo.paymentOption

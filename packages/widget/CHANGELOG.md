@@ -1,5 +1,12 @@
 # @superfluid-finance/widget
 
+## 0.4.7
+
+### Patch Changes
+
+- 5a167d0: Render widget after mount (no SSR)
+- 5a167d0: Update deps
+
 ## 0.4.6
 
 ### Patch Changes

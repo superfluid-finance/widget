@@ -5,6 +5,10 @@ export let randomDetailsSet = {
   description: "",
 };
 
+export let randomReceiver = {
+  address: "",
+};
+
 export const supportedNetworks: string[] = [
   "Arbitrum One",
   "Avalanche",
