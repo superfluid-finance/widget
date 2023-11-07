@@ -19,7 +19,7 @@ export type WidgetContextValue = {
   networks: ReadonlyArray<SupportedNetwork>;
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
   walletManager: WalletManager;
-  existentialNFT: ExistentialNFT;
+  existentialNFT?: ExistentialNFT;
   imageURI?: string;
   stepper: {
     orientation: Orientation;
