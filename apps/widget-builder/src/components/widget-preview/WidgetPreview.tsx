@@ -113,6 +113,20 @@ const switchLayout = (
       theme={theme}
       walletManager={walletManager}
       stepper={{ orientation: stepperOrientation }}
+      callbacks={{
+        validatePersonalData: async () => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                email: {
+                  success: false,
+                  message: "Async validation failed!",
+                },
+              });
+            }, 1000);
+          });
+        },
+      }}
     />
   ) : (
     <SuperfluidWidget

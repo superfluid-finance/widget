@@ -93,28 +93,28 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
   }, [validationResult]);
 
   const onContinue = useCallback(async () => {
-    setExternallyValidating(true);
-    const externalValidationResult =
-      await callbacks.validatePersonalData(fields);
-
-    const isValid = Object.values(validationResult).every(
+    const isInternallyValid = Object.values(validationResult).every(
       (result) => result.success,
     );
 
-    const isExternallyValid = Object.values(
-      externalValidationResult ?? {},
-    ).every((result) => result?.success);
+    if (isInternallyValid) {
+      setExternallyValidating(true);
+      const externalValidationResult =
+        await callbacks.validatePersonalData(fields);
 
-    setExternallyValidating(false);
+      const isExternallyValid = Object.values(
+        externalValidationResult ?? {},
+      ).every((result) => result?.success);
 
-    if (isValid && isExternallyValid) {
-      handleNext(stepIndex);
-    } else {
-      if (!isValid) {
-        setErrors(validationResult);
-      } else if (!isExternallyValid) {
+      setExternallyValidating(false);
+
+      if (isExternallyValid) {
+        handleNext(stepIndex);
+      } else {
         setErrors(externalValidationResult as Errors);
       }
+    } else {
+      setErrors(validationResult);
     }
   }, [handleNext, eventListeners.onButtonClick, stepIndex, validationResult]);
 
