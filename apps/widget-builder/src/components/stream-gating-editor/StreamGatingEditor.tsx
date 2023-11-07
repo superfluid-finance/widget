@@ -1,6 +1,7 @@
-import WarningIcon from "@mui/icons-material/Warning";
 import { LoadingButton } from "@mui/lab";
 import {
+  Alert,
+  AlertTitle,
   Box,
   Checkbox,
   Collapse,
@@ -252,19 +253,15 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             Create NFT your users will hold while they are paying for your
             product or service.
           </Typography>
-          <Stack direction="row" mt={2} gap={1}>
-            <WarningIcon
-              sx={{ color: theme.palette.warning.main, fontSize: 24 }}
-            />
-            <Typography
-              sx={{ fontSize: 10, fontWeight: "bold" }}
-              color="warning.main"
-            >
-              Before you deploy an NFT contract, make sure you’ve added all the
-              networks in the payment options you want to support. After the
-              deployment, you will no longer be able to add new networks
-            </Typography>
-          </Stack>
+          <Alert
+            severity="warning"
+            sx={{ backgroundColor: "warning.light", mt: 2 }}
+          >
+            <AlertTitle>Warning</AlertTitle>
+            Before you deploy an NFT contract, make sure you’ve added all the
+            networks in the payment options you want to support. After the
+            deployment, you will no longer be able to add new networks
+          </Alert>
         </Stack>
         <Collapse in={showSettings} easing="ease-in-out">
           <Stack gap={2}>

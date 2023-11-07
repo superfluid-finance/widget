@@ -1,8 +1,9 @@
 import AddIcon from "@mui/icons-material/Add";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import CloseIcon from "@mui/icons-material/Close";
-import WarningIcon from "@mui/icons-material/Warning";
 import {
+  Alert,
+  AlertTitle,
   AppBar,
   Box,
   Button,
@@ -83,18 +84,14 @@ const ProductEditor: FC = () => {
           </Typography>
 
           {isENFTDeployed && (
-            <Stack direction="row" mt={2} gap={1}>
-              <WarningIcon
-                sx={{ color: theme.palette.warning.main, fontSize: 24 }}
-              />
-              <Typography
-                sx={{ fontSize: 10, fontWeight: "bold" }}
-                color="warning.main"
-              >
-                You deployed a Gating NFT contract so you can no longer add new
-                networks in the payment options
-              </Typography>
-            </Stack>
+            <Alert
+              severity="warning"
+              sx={{ backgroundColor: "warning.light", mt: 2 }}
+            >
+              <AlertTitle>Warning</AlertTitle>
+              You deployed a Gating NFT contract so you can no longer add new
+              networks in the payment options
+            </Alert>
           )}
         </Box>
         <Stack direction="column">
