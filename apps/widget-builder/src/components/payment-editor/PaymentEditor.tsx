@@ -91,7 +91,7 @@ const ProductEditor: FC = () => {
                 sx={{ fontSize: 10, fontWeight: "bold" }}
                 color="warning.main"
               >
-                You deployed an NFT contract so you can no longer add new
+                You deployed a Gating NFT contract so you can no longer add new
                 networks in the payment options
               </Typography>
             </Stack>
