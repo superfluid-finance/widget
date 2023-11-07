@@ -40,17 +40,15 @@ const ProductEditor: FC = () => {
 
   const onPersonalDataSelectionChange = (field: PersonalDataField) => {
     const isFieldSelected =
-      selectedPersonalDataFields[
-        field.label.toLowerCase() as PersonalDataFieldType
-      ];
+      selectedPersonalDataFields[field.name as PersonalDataFieldType];
 
-    const index = fields.findIndex(({ label }) => label === field.label);
+    const index = fields.findIndex(({ name }) => name === field.name);
 
     isFieldSelected ? remove(index) : append(field);
 
     setSelectedPersonalDataFields((prev) => ({
       ...prev,
-      [field.label.toLowerCase()]: !isFieldSelected,
+      [field.name]: !isFieldSelected,
     }));
   };
 
@@ -133,12 +131,12 @@ const ProductEditor: FC = () => {
         <FormGroup>
           {[EmailField, PhoneNumberField].map((field, i) => (
             <FormControlLabel
-              key={`${field.label}-${i}`}
+              key={`${field.name}-${i}`}
               control={
                 <Checkbox
                   value={
                     selectedPersonalDataFields[
-                      field.label.toLowerCase() as PersonalDataFieldType
+                      field.name as PersonalDataFieldType
                     ]
                   }
                   onChange={() => onPersonalDataSelectionChange(field)}
