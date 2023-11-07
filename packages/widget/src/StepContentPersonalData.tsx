@@ -107,13 +107,6 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
 
     setExternallyValidating(false);
 
-    console.log({
-      isValid,
-      isExternallyValid,
-      validationResult,
-      externalValidationResult,
-    });
-
     if (isValid && isExternallyValid) {
       handleNext(stepIndex);
     } else {
@@ -127,7 +120,6 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
 
   const validateField = useCallback(
     (key: string) => {
-      console.log(errors);
       if (errors && errors[key]?.success === false) {
         return {
           hasError: true,
@@ -161,7 +153,6 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
             {fields.map((field, i) => {
               const { hasError, message } = validateField(field.name);
 
-              console.log({ hasError, message });
               return (
                 <TextField
                   name={field.name}
