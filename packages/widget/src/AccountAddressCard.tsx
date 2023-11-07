@@ -66,6 +66,7 @@ export function AccountAddressCard({
           <Stack direction="row" alignItems="center" spacing={1}>
             {ensAvatarResult.data ? (
               <Avatar
+                data-testid="ens-avatar"
                 alt="ENS avatar"
                 variant="rounded"
                 src={ensAvatarResult.data}
@@ -73,6 +74,7 @@ export function AccountAddressCard({
               />
             ) : (
               <Avatar
+                data-testid="blockie-avatar"
                 alt="generated blockie avatar"
                 variant="rounded"
                 src={blockiesSrc}
@@ -89,6 +91,7 @@ export function AccountAddressCard({
             </Typography>
 
             <IconButton
+              data-testid={`${dataTest}-copy-button`}
               size="small"
               title="Copy address to clipboard"
               onClick={() => onCopyAddressButtonClick(checksumAddress)}
@@ -97,9 +100,13 @@ export function AccountAddressCard({
               }}
             >
               {copied ? (
-                <CheckIcon fontSize="inherit" color="primary" />
+                <CheckIcon
+                  data-testid="check-icon"
+                  fontSize="inherit"
+                  color="primary"
+                />
               ) : (
-                <ContentCopyIcon fontSize="inherit" />
+                <ContentCopyIcon data-testid="copy-icon" fontSize="inherit" />
               )}
             </IconButton>
           </Stack>

@@ -1,7 +1,13 @@
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
-import { Abi, ContractFunctionConfig, GetValue } from "viem";
-import { useContractRead, useContractReads } from "wagmi";
+import { Abi, ContractFunctionConfig, getAbiItem, GetValue } from "viem";
+import {
+  useBlockNumber,
+  useContractRead,
+  useContractReads,
+  usePublicClient,
+  useQuery,
+} from "wagmi";
 
 import {
   Command,
@@ -18,8 +24,10 @@ import {
   cfAv1ForwarderAddress,
   erc20ABI,
   mapTimePeriodToSeconds,
+  ModifyFlowRateBehaviour,
   nativeAssetSuperTokenABI,
   superTokenABI,
+  TimePeriod,
 } from "./core/index.js";
 import { MaxUint256 } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
@@ -220,31 +228,146 @@ export function WrapIntoSuperTokensCommandMapper({
   return null;
 }
 
+const transferEventAbi = getAbiItem({ abi: superTokenABI, name: "Transfer" });
+
+export const calculateNewFlowRate = ({
+  existingFlowRateWei: existingFlowRate,
+  paymentFlowRate,
+  modifyBehaviour,
+}: {
+  existingFlowRateWei: bigint;
+  paymentFlowRate: {
+    amountWei: bigint;
+    period: TimePeriod;
+  };
+  modifyBehaviour: ModifyFlowRateBehaviour;
+}): bigint => {
+  const paymentFlowRateWei =
+    paymentFlowRate.amountWei /
+    BigInt(mapTimePeriodToSeconds(paymentFlowRate.period));
+
+  switch (modifyBehaviour) {
+    case "ADD":
+      return existingFlowRate + paymentFlowRateWei;
+    case "ENSURE":
+      if (existingFlowRate > paymentFlowRateWei) {
+        return existingFlowRate;
+      }
+      return existingFlowRate > paymentFlowRateWei
+        ? existingFlowRate
+        : paymentFlowRateWei;
+    case "SET":
+    default:
+      return paymentFlowRateWei;
+  }
+};
+
 export function SubscribeCommandMapper({
   command: cmd,
   onMapped,
 }: CommandMapperProps<SubscribeCommand>) {
-  const { isSuccess: isSuccessForGetFlowRate, data: existingFlowRate_ } =
-    useContractRead({
-      chainId: cmd.chainId,
-      address: cfAv1ForwarderAddress[cmd.chainId],
-      abi: cfAv1ForwarderABI,
-      functionName: "getFlowrate",
-      args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
-      cacheOnBlock: true,
-    });
+  const {
+    isSuccess: isSuccessForGetFlowRate,
+    isLoading: isLoadingForGetFlowRate,
+    data: existingFlowRate_,
+  } = useContractRead({
+    chainId: cmd.chainId,
+    address: cfAv1ForwarderAddress[cmd.chainId],
+    abi: cfAv1ForwarderABI,
+    functionName: "getFlowrate",
+    args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
+    cacheOnBlock: true,
+  });
 
-  const flowRate =
-    cmd.flowRate.amountWei /
-    BigInt(mapTimePeriodToSeconds(cmd.flowRate.period));
+  const checkExistingUpfrontTransfer = cmd.transferAmountWei > 0n;
+  const {
+    isSuccess: isSuccessForBlockNumber,
+    isIdle: isIdleForBlockNumber,
+    data: blockNumber,
+  } = useBlockNumber({
+    chainId: cmd.chainId,
+    enabled: checkExistingUpfrontTransfer,
+  });
 
-  const contractWrites = useMemo(() => {
+  const publicClient = usePublicClient({
+    chainId: cmd.chainId,
+  });
+  const {
+    isSuccess: isSuccessForTransferEvents,
+    isLoading: isLoadingForTransferEvents,
+    isIdle: isIdleForTransferEvents,
+    data: transferEvents,
+  } = useQuery(
+    [cmd.id, blockNumber],
+    async () => {
+      if (blockNumber === undefined)
+        throw new Error("The query should not run without the block number.");
+
+      const logs = await publicClient.getLogs({
+        event: transferEventAbi,
+        address: cmd.superTokenAddress,
+        args: {
+          from: cmd.accountAddress,
+          to: cmd.receiverAddress,
+        },
+        strict: true,
+        toBlock: blockNumber,
+        fromBlock: blockNumber - 5_000n, // 10k is Alchemy limit, some places have 50k. Ankr has 5k. Move into environment variable?
+      });
+      return logs;
+    },
+    {
+      enabled: checkExistingUpfrontTransfer && isSuccessForBlockNumber,
+      retry: 10,
+    },
+  );
+
+  const skipTransfer = useMemo(() => {
+    if (checkExistingUpfrontTransfer && isSuccessForTransferEvents) {
+      // Check if there's already been a transfer with the upfront payment amount.
+      // Decided to approach it by looking for the exact transfer amount, instead of summing up the transfers.
+      // The main reason for this feature is to avoid accidental double-charging of brand new users and checking for the exact transfer amount seems sufficient.
+      // More complex scenarios will need manual intervention and customer support.
+      return transferEvents!.some(
+        (e) => !e.removed && e.args.value === cmd.transferAmountWei,
+      );
+    } else {
+      return false;
+    }
+  }, [checkExistingUpfrontTransfer, isSuccessForTransferEvents]);
+
+  const didAllQueriesFinish = useMemo(
+    () =>
+      !isLoadingForGetFlowRate &&
+      isSuccessForGetFlowRate &&
+      (isIdleForBlockNumber || isSuccessForBlockNumber) &&
+      (isIdleForTransferEvents || !isLoadingForTransferEvents), // Keep the check for transfer events non-blocking.
+    [
+      isLoadingForGetFlowRate,
+      isSuccessForGetFlowRate,
+      isIdleForBlockNumber,
+      isSuccessForBlockNumber,
+      isIdleForTransferEvents,
+      isSuccessForTransferEvents,
+    ],
+  );
+
+  const contractWrites = useMemo<ContractWrite[]>(() => {
+    if (!didAllQueriesFinish) {
+      return [];
+    }
+
     const contractWrites_: ContractWrite[] = [];
-
     if (existingFlowRate_ !== undefined) {
       const existingFlowRate = BigInt(existingFlowRate_);
 
-      if (cmd.transferAmountWei > 0n) {
+      const newFlowRate = calculateNewFlowRate({
+        existingFlowRateWei: existingFlowRate,
+        paymentFlowRate: cmd.flowRate,
+        modifyBehaviour: cmd.flowRate.modifyBehaviour,
+      });
+
+      if (!skipTransfer && cmd.transferAmountWei > 0n) {
         contractWrites_.push(
           createContractWrite({
             commandId: cmd.id,
@@ -259,26 +382,26 @@ export function SubscribeCommandMapper({
       }
 
       if (existingFlowRate > 0n) {
-        const updatedFlowRate = existingFlowRate + flowRate;
-
-        // TODO(KK): Is this the right behaviour, to update the flow rate?
-        contractWrites_.push(
-          createContractWrite({
-            commandId: cmd.id,
-            displayTitle: "Modify Stream",
-            abi: cfAv1ForwarderABI,
-            address: cfAv1ForwarderAddress[cmd.chainId],
-            chainId: cmd.chainId,
-            functionName: "updateFlow",
-            args: [
-              cmd.superTokenAddress,
-              cmd.accountAddress,
-              cmd.receiverAddress,
-              updatedFlowRate,
-              cmd.userData,
-            ],
-          }),
-        );
+        // Only set a contract write if the new flow rate is different.
+        if (existingFlowRate !== newFlowRate) {
+          contractWrites_.push(
+            createContractWrite({
+              commandId: cmd.id,
+              displayTitle: "Modify Stream",
+              abi: cfAv1ForwarderABI,
+              address: cfAv1ForwarderAddress[cmd.chainId],
+              chainId: cmd.chainId,
+              functionName: "updateFlow",
+              args: [
+                cmd.superTokenAddress,
+                cmd.accountAddress,
+                cmd.receiverAddress,
+                newFlowRate,
+                cmd.userData,
+              ],
+            }),
+          );
+        }
       } else {
         contractWrites_.push(
           createContractWrite({
@@ -292,7 +415,7 @@ export function SubscribeCommandMapper({
               cmd.superTokenAddress,
               cmd.accountAddress,
               cmd.receiverAddress,
-              flowRate,
+              newFlowRate,
               cmd.userData,
             ],
           }),
@@ -301,14 +424,14 @@ export function SubscribeCommandMapper({
     }
 
     return contractWrites_;
-  }, [cmd.id, isSuccessForGetFlowRate]);
+  }, [cmd.id, didAllQueriesFinish]);
 
   useEffect(
     () =>
-      isSuccessForGetFlowRate
+      didAllQueriesFinish
         ? onMapped?.({ commandId: cmd.id, contractWrites })
         : void 0,
-    [cmd.id, contractWrites, isSuccessForGetFlowRate],
+    [cmd.id, contractWrites, didAllQueriesFinish],
   );
 
   return null;

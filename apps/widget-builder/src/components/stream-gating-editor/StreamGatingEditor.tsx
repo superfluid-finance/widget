@@ -2,9 +2,11 @@ import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Checkbox,
+  Collapse,
   FormControlLabel,
   FormGroup,
   Stack,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
@@ -49,6 +51,13 @@ type StreamGatingEditorProps = {
 
 polyfill();
 
+const enftHasValues = (enftSettings: WidgetProps["existentialNFT"]): boolean =>
+  Object.entries(enftSettings ?? {}).some(([key, value]) =>
+    key === "deployments"
+      ? !isEmpty(enftSettings?.deployments)
+      : Boolean(value),
+  );
+
 const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
   previewContainerRef,
 }) => {
@@ -59,6 +68,10 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     "productDetails",
     "existentialNFT",
   ]);
+
+  console.log(existentialNFT);
+  console.log(enftHasValues(existentialNFT));
+  const [showSettings, setSettings] = useState(enftHasValues(existentialNFT));
 
   const recaptchaRef = createRef<ReCAPTCHA>();
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
@@ -217,12 +230,19 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
   );
 
   return (
-    <>
+    <Box>
       <Stack gap={2} height="100%">
-        <Box mb={1}>
-          <Typography data-testid="gating-title" variant="h6" component="h2">
-            Gate your content with NFTs
-          </Typography>
+        <Stack mb={1}>
+          <Stack direction="row" sx={{ alignItems: "center" }}>
+            <Typography data-testid="gating-title" variant="h6" component="h2">
+              Gate your content with NFTs
+            </Typography>
+            <Switch
+              defaultChecked={showSettings}
+              value={showSettings}
+              onChange={({ target }) => setSettings(target.checked)}
+            />
+          </Stack>
           <Typography
             data-testid="nft-gating-message"
             variant="body2"
@@ -231,122 +251,130 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             Create NFT your users will hold while they are paying for your
             product or service.
           </Typography>
-        </Box>
-        <InputWrapper
-          dataTestid="nft-symbol-title"
-          title="NFT Symbol"
-          tooltip="The Symbol of your NFT. It will be displayed in your users' wallets."
-        >
-          {(id) => (
-            <TextField
-              data-testid="nft-symbol-input-field"
-              id={id}
-              value={existentialNFT?.symbol ?? ""}
-              onChange={({ target }) =>
-                setValue("existentialNFT.symbol", target.value)
-              }
-            />
-          )}
-        </InputWrapper>
-        <InputWrapper
-          dataTestid="nft-name-title"
-          title="NFT Name"
-          tooltip="The Name of your NFT. It will be displayed in your users' wallets."
-        >
-          {(id) => (
-            <TextField
-              data-testid="nft-name-input-field"
-              id={id}
-              value={existentialNFT?.name ?? ""}
-              onChange={({ target }) =>
-                setValue("existentialNFT.name", target.value)
-              }
-            />
-          )}
-        </InputWrapper>
-        <InputWrapper
-          dataTestid="contract-owner-title"
-          title="Contract owner"
-          tooltip="The address with authority to add further PaymentOptions or deprecate the contract."
-        >
-          {(id) => (
-            <TextField
-              data-testid="contract-owner-input-field"
-              id={id}
-              value={existentialNFT?.owner ?? ""}
-              onChange={({ target }) =>
-                setValue("existentialNFT.owner", target.value)
-              }
-            />
-          )}
-        </InputWrapper>
-        <InputWrapper
-          dataTestid="nft-image-title"
-          id="nft-image"
-          title="NFT Image"
-          optional
-          tooltip="The custom artwork for the NFT, which will be displayed in your users' wallets"
-        >
-          {(id) => (
-            <ImageSelect
-              data-testid="nft-image-upload-field"
-              id={id}
-              imageSrc={existentialNFT?.image ?? ""}
-              onClick={(file) =>
-                setValue("existentialNFT.image", URL.createObjectURL(file))
-              }
-              onRemove={() => setValue("existentialNFT.image", undefined)}
-              sizeLimit={256 * 1024} // 256 kB
-            />
-          )}
-        </InputWrapper>
-        <Stack direction="column" sx={{ mt: 2 }}>
-          <Typography variant="subtitle1" sx={{ fontSize: "1.1rem" }}>
-            Select networks you want to deploy your NFT to.
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            The following networks are used in your checkout widget:
-          </Typography>
         </Stack>
-        <Stack justifyContent="space-between" height="100%">
-          <FormGroup sx={{ px: 1 }}>
-            {paymentOptionNetworks.map((network) => (
-              <FormControlLabel
-                key={network.id}
-                sx={{ fontWeight: "bold" }}
-                control={
-                  <Checkbox
-                    data-testid={`${network.name}-checkbox`}
-                    color="primary"
-                    value={network.name}
-                    checked={Boolean(selectedPaymentOptions[network.id])}
-                    onChange={({ target }) =>
-                      selectPaymentOptions(target.checked, network)
+        <Collapse in={showSettings} easing="ease-in-out">
+          <Stack gap={2}>
+            <InputWrapper
+              dataTestid="nft-symbol-title"
+              title="NFT Symbol"
+              tooltip="The Symbol of your NFT. It will be displayed in your users' wallets."
+            >
+              {(id) => (
+                <TextField
+                  data-testid="nft-symbol-input-field"
+                  id={id}
+                  value={existentialNFT?.symbol ?? ""}
+                  onChange={({ target }) =>
+                    setValue("existentialNFT.symbol", target.value)
+                  }
+                />
+              )}
+            </InputWrapper>
+            <InputWrapper
+              dataTestid="nft-name-title"
+              title="NFT Name"
+              tooltip="The Name of your NFT. It will be displayed in your users' wallets."
+            >
+              {(id) => (
+                <TextField
+                  data-testid="nft-name-input-field"
+                  id={id}
+                  value={existentialNFT?.name ?? ""}
+                  onChange={({ target }) =>
+                    setValue("existentialNFT.name", target.value)
+                  }
+                />
+              )}
+            </InputWrapper>
+            <InputWrapper
+              dataTestid="contract-owner-title"
+              title="Contract owner"
+              tooltip="The address with authority to add further PaymentOptions or deprecate the contract."
+            >
+              {(id) => (
+                <TextField
+                  data-testid="contract-owner-input-field"
+                  id={id}
+                  value={existentialNFT?.owner ?? ""}
+                  onChange={({ target }) =>
+                    setValue("existentialNFT.owner", target.value)
+                  }
+                />
+              )}
+            </InputWrapper>
+            <InputWrapper
+              dataTestid="nft-image-title"
+              id="nft-image"
+              title="NFT Image"
+              optional
+              tooltip="The custom artwork for the NFT, which will be displayed in your users' wallets"
+            >
+              {(id) => (
+                <ImageSelect
+                  data-testid="nft-image-upload-field"
+                  id={id}
+                  imageSrc={existentialNFT?.image ?? ""}
+                  onClick={(file) =>
+                    setValue("existentialNFT.image", URL.createObjectURL(file))
+                  }
+                  onRemove={() => setValue("existentialNFT.image", undefined)}
+                  sizeLimit={256 * 1024} // 256 kB
+                />
+              )}
+            </InputWrapper>
+            <Stack direction="column" sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" sx={{ fontSize: "1.1rem" }}>
+                Select networks you want to deploy your NFT to.
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                The following networks are used in your checkout widget:
+              </Typography>
+            </Stack>
+            <Stack justifyContent="space-between" height="100%">
+              <FormGroup sx={{ px: 1 }}>
+                {paymentOptionNetworks.map((network) => (
+                  <FormControlLabel
+                    key={network.id}
+                    sx={{ fontWeight: "bold" }}
+                    control={
+                      <Checkbox
+                        data-testid={`${network.name}-checkbox`}
+                        color="primary"
+                        value={network.name}
+                        checked={Boolean(selectedPaymentOptions[network.id])}
+                        onChange={({ target }) =>
+                          selectPaymentOptions(target.checked, network)
+                        }
+                      />
+                    }
+                    label={
+                      <Stack
+                        direction="row"
+                        gap={1}
+                        sx={{ alignItems: "center" }}
+                      >
+                        <NetworkAvatar network={network} />
+                        {network.name}
+                      </Stack>
                     }
                   />
-                }
-                label={
-                  <Stack direction="row" gap={1} sx={{ alignItems: "center" }}>
-                    <NetworkAvatar network={network} />
-                    {network.name}
-                  </Stack>
-                }
-              />
-            ))}
-          </FormGroup>
-          <LoadingButton
-            data-testid="create-nft-button"
-            color="primary"
-            variant="contained"
-            size="large"
-            onClick={errors ? () => resetDeployment() : deployNFT}
-            loading={isDeploying}
-            disabled={isDeployDisabled}
-            sx={{ mt: 1 }}
-          >
-            {errors ? "Deployment Failed, Reset?" : "Create NFT"}
-          </LoadingButton>
-        </Stack>
+                ))}
+              </FormGroup>
+              <LoadingButton
+                data-testid="create-nft-button"
+                color="primary"
+                variant="contained"
+                size="large"
+                onClick={errors ? () => resetDeployment() : deployNFT}
+                loading={isDeploying}
+                disabled={isDeployDisabled}
+                sx={{ mt: 1 }}
+              >
+                {errors ? "Deployment Failed, Reset?" : "Create NFT"}
+              </LoadingButton>
+            </Stack>
+          </Stack>
+        </Collapse>
       </Stack>
       <NFTDeploymentDialog
         open={isDialogOpen}
@@ -365,7 +393,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
           // <img src="" width={400} height={400} alt="NFT Preview" />,
           previewContainerRef.current!,
         )} */}
-    </>
+    </Box>
   );
 };
 

@@ -63,6 +63,7 @@ export default function FormProvider({ children }: Props) {
       amountEther: "0",
       period: "month",
     },
+    modifyFlowRateBehaviour: paymentDetails.modifyFlowRateBehaviour,
   };
 
   const formMethods: FormMethods = useForm<

@@ -1,5 +1,33 @@
 # @superfluid-finance/widget
 
+## 0.4.7
+
+### Patch Changes
+
+- 5a167d0: Render widget after mount (no SSR)
+- 5a167d0: Update deps
+
+## 0.4.6
+
+### Patch Changes
+
+- 16f7c64: Make the check for existing upfront transfers lighter and non-blocking
+
+## 0.4.5
+
+### Patch Changes
+
+- f8e618b: Update dependencies
+- cba6def: Bump the tokenlist version to ^3.2.0 to include FUNDx by default
+
+## 0.4.4
+
+### Patch Changes
+
+- 77014d2: Added Sepolia testnet, updated tokenlist to latest
+- ac39628: Check for upfront payment's previous transfer to avoid double-charging
+- ac39628: Add configuration option to choose stream modification behaviour (PaymentDetails.modifyFlowRateBehaviour): ADD | SET | ENSURE
+
 ## 0.4.3
 
 ### Patch Changes

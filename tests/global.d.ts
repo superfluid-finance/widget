@@ -1,16 +1,22 @@
-declare module "@synthetixio/synpress/commands/metamask" {
+declare module "@synthetixio/synpress/commands/metamask.js" {
   export const initialSetup: (
     browser: BrowserType,
     metamaskParameters: {},
   ) => void;
   export const acceptAccess: (options?: {}) => void;
+  export const rejectAccess: (options?: {}) => void;
   export const confirmTransaction: (gasConfig: string | {}) => void;
   export const confirmPermissionToSpend: (allowance: string) => void;
   export const changeNetwork: (network: string) => void;
   export const allowToSwitchNetwork: () => void;
 }
-declare module "@synthetixio/synpress/helpers" {
+
+declare module "@synthetixio/synpress/helpers.js" {
   export const prepareMetamask: (version: string) => void;
+}
+
+interface Window {
+  setEditorValue: (value: string) => void;
 }
 
 type PaymentOption = {

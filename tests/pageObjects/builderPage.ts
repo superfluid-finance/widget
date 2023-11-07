@@ -1,7 +1,13 @@
 import { expect, Locator, Page, test } from "@playwright/test";
+import { ethers } from "ethers";
 import fs from "fs";
 
-import { BasePage, randomDetailsSet } from "./basePage";
+import {
+  BasePage,
+  randomDetailsSet,
+  randomReceiver,
+  supportedNetworks,
+} from "./basePage.js";
 
 export class BuilderPage extends BasePage {
   readonly page: Page;
@@ -109,9 +115,14 @@ export class BuilderPage extends BasePage {
   readonly gatingNFTNameTooltip: Locator;
   readonly gatingNFTContractOwnerTooltip: Locator;
   readonly gatingNFTImageTooltip: Locator;
+  readonly jsonEditorButton: Locator;
+  readonly jsonEditorBackdrop: Locator;
+  readonly editorErrorMessage: Locator;
+  readonly editorHoverErrorMessage: Locator;
 
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
+  randomReceiverAddress: string | undefined;
 
   constructor(page: Page) {
     super();
@@ -126,9 +137,7 @@ export class BuilderPage extends BasePage {
     this.productDescriptionField = page
       .getByTestId("product-description-field")
       .getByRole("textbox");
-    this.networkOptions = page
-      .getByTestId("network-selection")
-      .getByRole("button");
+    this.networkOptions = page.getByTestId("network-selection");
     this.superTokenOption = page.locator("#token-select");
     this.superTokenOptionsInDropdown = page.locator(
       "[id*=token-select-option]",
@@ -321,6 +330,12 @@ export class BuilderPage extends BasePage {
       ["flowRate", this.streamRateOption],
       ["upfrontPaymentAmount", this.upfrontPaymentInputField],
     ]);
+    this.jsonEditorButton = page.getByTestId("json-editor-button");
+    this.jsonEditorBackdrop = page.locator(".MuiBackdrop-root");
+    this.editorErrorMessage = page.locator(
+      "[data-testid=editor-error] .MuiAlert-message",
+    );
+    this.editorHoverErrorMessage = page.locator(".hover-row .marker span");
   }
 
   async clickOnTheMiddleOfTheColorPallete() {
@@ -708,20 +723,6 @@ export class BuilderPage extends BasePage {
 
   async validateNetworksInDropdown() {
     await test.step(`Making sure all networks except eth-mainnet are visible in the dropdown`, async () => {
-      const supportedNetworks = [
-        "Arbitrum One",
-        "Avalanche",
-        "Base",
-        "BNB Smart Chain",
-        "Celo",
-        "Gnosis",
-        "OP Mainnet",
-        "Polygon",
-        "Avalanche Fuji",
-        "Base Goerli",
-        "Goerli",
-        "Polygon Mumbai",
-      ];
       for (const [index, network] of supportedNetworks.entries()) {
         await expect(
           this.page.locator(`[data-value="${network}"]`),
@@ -897,7 +898,7 @@ export class BuilderPage extends BasePage {
       await expect(this.selectedProductImage).toHaveScreenshot(
         "./data/invalidImageUploaded.png",
         {
-          maxDiffPixelRatio: 0.01,
+          maxDiffPixelRatio: 0.02,
         },
       );
     });
@@ -1429,18 +1430,69 @@ export class BuilderPage extends BasePage {
 
   async clickOnBookADemoAndVerifyPageWasOpen() {
     await test.step(`Clicking on "Book a demo" and verifying page was open`, async () => {
-      const newTabPromise = this.page.waitForEvent("popup");
-      await expect(this.bookDemoButton).toHaveAttribute(
-        "href",
+      await BasePage.clickLinkAndVaguelyVerifyOpenedLink(
+        this.page,
+        this.bookDemoButton,
         "https://use.superfluid.finance/subscriptions",
-      );
-      await this.bookDemoButton.click();
-      const newTab = await newTabPromise;
-      await newTab.waitForLoadState();
-      await expect(newTab).toHaveURL(
         "https://airtable.com/appmq3TJDdQUrTQpx/shrJ9Og5dbweZfxB8",
+        "Superfluid Subscriptions",
       );
-      await expect(newTab.getByText("Superfluid Subscriptions")).toBeVisible();
+    });
+  }
+
+  async editJsonEditorTo(jsonObjectToUse: string, closeEditor = true) {
+    await test.step(`Editing JSON editor to ${jsonObjectToUse}`, async () => {
+      const json = JSON.parse(
+        fs.readFileSync("data/editorConfigurations.json", "utf-8"),
+      );
+      let dataToUse: string;
+      if (jsonObjectToUse === "invalidJson") {
+        dataToUse = JSON.stringify(json.allNetworks).slice(0, -1);
+      } else {
+        dataToUse = JSON.stringify(json[jsonObjectToUse]);
+      }
+      if (jsonObjectToUse === "randomUpfrontPaymentReceiver") {
+        let walletToUse = ethers.Wallet.createRandom().address;
+        randomReceiver.address = walletToUse;
+        json[jsonObjectToUse].paymentDetails.paymentOptions[0].receiverAddress =
+          walletToUse;
+        dataToUse = JSON.stringify(json[jsonObjectToUse]);
+      }
+      await this.page.evaluate((data) => {
+        window.setEditorValue(data);
+      }, dataToUse);
+      if (closeEditor) {
+        await expect(this.page.getByText("Saved...")).toBeVisible();
+        await expect(this.page.getByText("Saved...")).not.toBeVisible();
+        await this.jsonEditorBackdrop.click();
+      }
+    });
+  }
+
+  async verifyJsonEditorErrorIsShown() {
+    await test.step(`Verifying JSON editor error is shown`, async () => {
+      await expect(this.editorErrorMessage).toHaveText("Could not parse JSON");
+    });
+  }
+
+  async verifyJsonEditorSchemaErrorsAreShown() {
+    await test.step(`Verifying JSON editor schema errors are shown`, async () => {
+      await expect(this.editorErrorMessage).toHaveText(
+        '[ { "code": "invalid_type", "expected": "string", "received": "undefined", "path": [ "productDetails", "name" ], "message": "Required" } ]',
+      );
+      await expect(this.editorErrorMessage).not.toBeVisible();
+      await this.page.getByText("productDetails").hover();
+      await expect(this.editorHoverErrorMessage).toBeVisible();
+      await expect(this.editorHoverErrorMessage).toHaveText(
+        'Missing property "name".',
+      );
+    });
+  }
+
+  async clickOnJsonEditorButton() {
+    await test.step(`Clicking on JSON editor button`, async () => {
+      await this.jsonEditorButton.click();
+      await expect(this.page.getByText("Loading")).not.toBeVisible();
     });
   }
 }

@@ -1,91 +1,144 @@
+import sfMeta from "@superfluid-finance/metadata";
+import { extendedSuperTokenList } from "@superfluid-finance/tokenlist";
 import { ethers } from "ethers";
+
 import {
+  cfAv1ForwarderABI,
   erc20ABI,
   superTokenABI,
-  cfAv1ForwarderABI,
-  CFA,
-} from "./abis/wagmi-generated";
-import { rebounderAddresses } from "../pageObjects/basePage";
+} from "./abis/wagmi-generated.js";
 
-const CFAAddress = "0xEd6BcbF6907D4feEEe8a8875543249bEa9D308E8";
-const CFAV1ForwarderAddress = "0xcfA132E353cB4E398080B9700609bb008eceB125";
-const fUSDCxAddress = "0x8aE68021f6170E5a766bE613cEA0d75236ECCa9a";
-const fUSDCAddress = "0xc94dd466416A7dFE166aB2cF916D3875C049EBB7";
-const fDAIxAddress = "0xF2d68898557cCb2Cf4C10c3Ef2B034b2a69DAD00";
-const provider = new ethers.InfuraProvider(5);
-const wallet = new ethers.Wallet(
-  process.env.WIDGET_WALLET_PRIVATE_KEY!,
-  provider,
-);
-const fUSDCx = new ethers.Contract(
-  fUSDCxAddress,
-  superTokenABI,
-  wallet.provider,
-);
-const fUSDC = new ethers.Contract(fUSDCAddress, erc20ABI, wallet.provider);
-const CFAv1 = new ethers.Contract(CFAAddress, CFA, wallet.provider);
-const CFAv1Forwarder = new ethers.Contract(
-  CFAV1ForwarderAddress,
-  cfAv1ForwarderABI,
-  wallet.provider,
-);
+export class EthHelper {
+  private wallet: ethers.Wallet;
+  private provider: ethers.Provider;
+  private networkName: string;
 
-export async function revokeAllowanceIfNeccesary() {
-  await fUSDC
-    .allowance(process.env.WIDGET_WALLET_PUBLIC_KEY, fUSDCxAddress)
-    .then(async (allowance: bigint) => {
-      if (Number(allowance) > 0) {
-        console.log("Allowance over 0 , revoking...");
-        const data = fUSDC.interface.encodeFunctionData("approve", [
-          fUSDCxAddress,
-          0,
-        ]);
-        const tx = await wallet.sendTransaction({
-          to: fUSDCAddress,
-          from: wallet.address,
-          data: data,
-        });
-        await tx.wait().then((receipt) => {
-          console.log(`Allowance revoked: ${receipt?.hash}`);
-        });
-      }
-    });
-}
+  constructor(networkName: string, privateKey: string) {
+    const rpcUrl =
+      "https://rpc-endpoints.superfluid.dev/" +
+      this.getNetworkByHumanReadableName(networkName).name;
+    this.provider = new ethers.JsonRpcProvider(rpcUrl);
+    this.wallet = new ethers.Wallet(privateKey, this.provider);
+    this.networkName = networkName;
+  }
 
-export async function deleteFlowIfNeccesary() {
-  await CFAv1Forwarder.getFlowInfo(
-    fDAIxAddress,
-    process.env.WIDGET_WALLET_PUBLIC_KEY,
-    rebounderAddresses["goerli"],
-  ).then(async (flow: bigint[]) => {
-    //returns lastUpdated uint256, flowRate int96, deposit uint256, owedDeposit uint256
-    if (flow[1] > 0) {
-      console.log("Flow still ongoing, deleting...");
-      const data = CFAv1Forwarder.interface.encodeFunctionData("deleteFlow", [
-        fDAIxAddress,
+  public getNetworkByHumanReadableName(name: string) {
+    return sfMeta.networks.filter((n) => n.humanReadableName === name)[0];
+  }
+
+  public getTokenBySymbolAndChainId(symbol: string, chainId: number) {
+    return extendedSuperTokenList.tokens.filter(
+      (token: any) => token.symbol === symbol && token.chainId === chainId,
+    )[0];
+  }
+
+  public getTokenByAddress(address: string) {
+    return extendedSuperTokenList.tokens.filter(
+      (token: any) => token.address === address,
+    )[0];
+  }
+
+  public async revokeAllowanceIfNeccesary(
+    tokenSymbol: string,
+    contractToRevokeAllowanceTo: string,
+  ) {
+    let chainId = this.getNetworkByHumanReadableName(this.networkName).chainId;
+    const token = new ethers.Contract(
+      this.getTokenBySymbolAndChainId(tokenSymbol, chainId).address,
+      erc20ABI,
+      this.wallet.provider,
+    );
+
+    await token
+      .allowance(
         process.env.WIDGET_WALLET_PUBLIC_KEY,
-        rebounderAddresses["goerli"],
-        "0x",
-      ]);
-      const tx = await wallet.sendTransaction({
-        to: CFAV1ForwarderAddress,
-        from: wallet.address,
-        data: data,
+        contractToRevokeAllowanceTo,
+      )
+      .then(async (allowance: bigint) => {
+        if (Number(allowance) > 0) {
+          console.log("Allowance over 0 , revoking...");
+          const data = token.interface.encodeFunctionData("approve", [
+            contractToRevokeAllowanceTo,
+            0,
+          ]);
+          const tx = await this.wallet.sendTransaction({
+            to: contractToRevokeAllowanceTo,
+            from: this.wallet.address,
+            data: data,
+          });
+          await tx.wait().then((receipt) => {
+            console.log(`Allowance revoked: ${receipt?.hash}`);
+          });
+        }
       });
-      await tx.wait().then((receipt) => {
-        console.log(`Flow deleted: ${receipt?.hash}`);
-      });
-    }
-  });
-}
+  }
 
-export async function getUnderlyingTokenBalance() {
-  return await fUSDC.balanceOf(process.env.WIDGET_WALLET_PUBLIC_KEY);
-}
+  public async deleteFlowIfNeccesary(
+    tokenSymbol: string,
+    sender: string,
+    receiver: string,
+  ) {
+    const chainId = this.getNetworkByHumanReadableName(
+      this.networkName,
+    ).chainId;
+    const tokenAddress = this.getTokenBySymbolAndChainId(
+      tokenSymbol,
+      chainId,
+    ).address;
+    let cfaV1ForwarderAddress = this.getNetworkByHumanReadableName(
+      this.networkName,
+    ).contractsV1.cfaV1Forwarder;
 
-// Returns availableBalance int256, deposit uint256, owedDeposit uint256, timestamp uint256
-export async function getSuperTokenBalance() {
-  return await fUSDCx.realtimeBalanceOfNow(
-    process.env.WIDGET_WALLET_PUBLIC_KEY,
-  );
+    const CFAv1Forwarder = new ethers.Contract(
+      cfaV1ForwarderAddress,
+      cfAv1ForwarderABI,
+      this.wallet.provider,
+    );
+    await CFAv1Forwarder.getFlowInfo(tokenAddress, sender, receiver).then(
+      async (flow: bigint[]) => {
+        //returns lastUpdated uint256, flowRate int96, deposit uint256, owedDeposit uint256
+        if (flow[1] > 0) {
+          console.log("Flow still ongoing, deleting...");
+          const data = CFAv1Forwarder.interface.encodeFunctionData(
+            "deleteFlow",
+            [tokenAddress, sender, receiver, "0x"],
+          );
+          const tx = await this.wallet.sendTransaction({
+            to: cfaV1ForwarderAddress,
+            from: this.wallet.address,
+            data: data,
+          });
+          await tx.wait().then((receipt) => {
+            console.log(`Flow deleted: ${receipt?.hash}`);
+          });
+        }
+      },
+    );
+  }
+
+  public async getUnderlyingTokenBalance(
+    tokenSymbol: string,
+    addressToCheckBalanceOf = process.env.WIDGET_WALLET_PUBLIC_KEY,
+  ) {
+    let chainId = this.getNetworkByHumanReadableName(this.networkName).chainId;
+    const token = new ethers.Contract(
+      this.getTokenBySymbolAndChainId(tokenSymbol, chainId).address,
+      erc20ABI,
+      this.wallet.provider,
+    );
+    return await token.balanceOf(addressToCheckBalanceOf);
+  }
+
+  public async getSuperTokenBalance(
+    tokenSymbol: string,
+    addressToCheckBalanceOf = process.env.WIDGET_WALLET_PUBLIC_KEY,
+  ) {
+    let chainId = this.getNetworkByHumanReadableName(this.networkName).chainId;
+    const token = new ethers.Contract(
+      this.getTokenBySymbolAndChainId(tokenSymbol, chainId).address,
+      superTokenABI,
+      this.wallet.provider,
+    );
+    return await token.realtimeBalanceOfNow(addressToCheckBalanceOf);
+  }
 }

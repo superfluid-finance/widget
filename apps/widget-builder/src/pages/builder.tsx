@@ -37,8 +37,8 @@ const tabLabels: Record<number, string> = {
   0: "Product",
   1: "Payment",
   2: "Styling",
-  3: "Export",
-  4: "Gating",
+  3: "Gating",
+  4: "Export",
 };
 
 export default function Builder() {
@@ -151,10 +151,10 @@ export default function Builder() {
                 <UiEditor />
               </TabPanel>
               <TabPanel value="3">
-                <ExportEditor />
+                <StreamGatingEditor previewContainerRef={previewContainerRef} />
               </TabPanel>
               <TabPanel value="4">
-                <StreamGatingEditor previewContainerRef={previewContainerRef} />
+                <ExportEditor />
               </TabPanel>
             </FormProvider>
           </Box>
@@ -244,6 +244,7 @@ export default function Builder() {
       <TermsAndPrivacy />
       <Box sx={{ position: "absolute", top: 5, right: 5 }}>
         <Button
+          data-testid="json-editor-button"
           variant="outlined"
           onClick={() => setConfigEditorOpen((isOpen) => !isOpen)}
           startIcon={<CodeIcon />}
