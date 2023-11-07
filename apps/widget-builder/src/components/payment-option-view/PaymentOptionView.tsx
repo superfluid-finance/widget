@@ -62,6 +62,7 @@ type PaymentOptionViewProps = {
   flowRate: FlowRate | undefined;
   receiverAddress: `0x${string}`;
   chainId: ChainId;
+  actionsDisabled?: boolean;
   index: number;
   clone: (index: number) => void;
   edit: (index: number) => void;
@@ -74,6 +75,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
   flowRate,
   receiverAddress: receiverAddress_,
   chainId,
+  actionsDisabled,
   index,
   clone,
   edit,
@@ -191,6 +193,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
       >
         <Tooltip title="Edit payment option" arrow>
           <IconButton
+            disabled={actionsDisabled}
             data-testid="edit-payment-option-button"
             onClick={() => edit(index)}
             sx={{
@@ -205,6 +208,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
 
         <Tooltip title="Copy payment option" arrow>
           <IconButton
+            disabled={actionsDisabled}
             data-testid="clone-payment-option-button"
             onClick={() => clone(index)}
             sx={{
@@ -219,6 +223,7 @@ const PaymentOptionView: FC<PaymentOptionViewProps> = ({
 
         <Tooltip title="Delete payment option" arrow>
           <IconButton
+            disabled={actionsDisabled}
             data-testid="delete-payment-option-button"
             onClick={() => remove(index)}
             sx={{

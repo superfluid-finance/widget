@@ -1,3 +1,4 @@
+import WarningIcon from "@mui/icons-material/Warning";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -9,6 +10,7 @@ import {
   Switch,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import {
   ChainId,
@@ -69,9 +71,8 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     "existentialNFT",
   ]);
 
-  console.log(existentialNFT);
-  console.log(enftHasValues(existentialNFT));
   const [showSettings, setSettings] = useState(enftHasValues(existentialNFT));
+  const theme = useTheme();
 
   const recaptchaRef = createRef<ReCAPTCHA>();
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>("");
@@ -251,6 +252,19 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
             Create NFT your users will hold while they are paying for your
             product or service.
           </Typography>
+          <Stack direction="row" mt={2} gap={1}>
+            <WarningIcon
+              sx={{ color: theme.palette.warning.main, fontSize: 24 }}
+            />
+            <Typography
+              sx={{ fontSize: 10, fontWeight: "bold" }}
+              color="warning.main"
+            >
+              Before you deploy an NFT contract, make sure you’ve added all the
+              networks in the payment options you want to support. After the
+              deployment, you will no longer be able to add new networks
+            </Typography>
+          </Stack>
         </Stack>
         <Collapse in={showSettings} easing="ease-in-out">
           <Stack gap={2}>

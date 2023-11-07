@@ -1,6 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import CloseIcon from "@mui/icons-material/Close";
+import WarningIcon from "@mui/icons-material/Warning";
 import {
   AppBar,
   Box,
@@ -19,7 +20,8 @@ import {
   Zoom,
 } from "@mui/material";
 import { PaymentOption } from "@superfluid-finance/widget";
-import { FC, useCallback, useEffect, useState } from "react";
+import isEmpty from "lodash/isEmpty";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
 import useDemoMode from "../../hooks/useDemoMode";
@@ -36,7 +38,10 @@ const ProductEditor: FC = () => {
     name: "paymentDetails.paymentOptions", // unique name for your Field Array
   });
 
-  const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
+  const [paymentOptions, existentialNFT] = watch([
+    "paymentDetails.paymentOptions",
+    "existentialNFT",
+  ]);
 
   const [dialogMode, setDialogMode] = useState<"add" | "clone" | "edit">();
   const [targetedPaymentOption, setTargetedPaymentOption] = useState<{
@@ -60,6 +65,11 @@ const ProductEditor: FC = () => {
     setDemoPaymentDetails();
   }, []);
 
+  const isENFTDeployed = useMemo(
+    () => !isEmpty(existentialNFT?.deployments),
+    [existentialNFT],
+  );
+
   return (
     <>
       <Stack direction="column" gap={2}>
@@ -71,6 +81,21 @@ const ProductEditor: FC = () => {
             Enter your preferred payment options to start receiving ongoing
             real-time payments powered by the Superfluid Protocol.
           </Typography>
+
+          {isENFTDeployed && (
+            <Stack direction="row" mt={2} gap={1}>
+              <WarningIcon
+                sx={{ color: theme.palette.warning.main, fontSize: 24 }}
+              />
+              <Typography
+                sx={{ fontSize: 10, fontWeight: "bold" }}
+                color="warning.main"
+              >
+                You deployed an NFT contract so you can no longer add new
+                networks in the payment options
+              </Typography>
+            </Stack>
+          )}
         </Box>
         <Stack direction="column">
           <Stack
@@ -99,6 +124,7 @@ const ProductEditor: FC = () => {
                 variant="contained"
                 size="medium"
                 color="primary"
+                disabled={isENFTDeployed}
                 onClick={() => {
                   setDialogMode("add");
                 }}
@@ -135,6 +161,7 @@ const ProductEditor: FC = () => {
                           receiverAddress={receiverAddress}
                           superToken={superToken}
                           chainId={chainId}
+                          actionsDisabled={isENFTDeployed}
                           index={i}
                           clone={(index) => {
                             setTargetedPaymentOption({
