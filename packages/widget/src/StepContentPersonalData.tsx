@@ -107,6 +107,13 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
 
     setExternallyValidating(false);
 
+    console.log({
+      isValid,
+      isExternallyValid,
+      validationResult,
+      externalValidationResult,
+    });
+
     if (isValid && isExternallyValid) {
       handleNext(stepIndex);
     } else {
@@ -117,6 +124,23 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
       }
     }
   }, [handleNext, eventListeners.onButtonClick, stepIndex, validationResult]);
+
+  const validateField = useCallback(
+    (key: string) => {
+      console.log(errors);
+      if (errors && errors[key]?.success === false) {
+        return {
+          hasError: true,
+          message: errors[key]?.message ?? "",
+        };
+      }
+
+      return {
+        hasError: false,
+      };
+    },
+    [errors],
+  );
 
   return (
     <Stack
@@ -134,33 +158,34 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
           spacing={1}
         >
           <Stack direction="row" flexWrap="wrap" gap={2} sx={{ pb: 2 }}>
-            {fields.map((field, i) => (
-              <TextField
-                name={field.name}
-                key={`input-${field.name}-${i}`}
-                data-testid={`input-${field.name}`}
-                fullWidth
-                required={!field.optional}
-                disabled={field.disabled}
-                label={field.label}
-                type="text"
-                error={
-                  errors && !Boolean(errors[field.label.toLowerCase()]?.success)
-                }
-                helperText={
-                  errors && (errors[field.label.toLowerCase()]?.message ?? "")
-                }
-                value={field.value ?? ""}
-                onChange={({ target }) => onChange(field, target.value, i)}
-                sx={{
-                  ...(field.size === "half"
-                    ? {
-                        width: "calc(50% - 8px)",
-                      }
-                    : {}),
-                }}
-              />
-            ))}
+            {fields.map((field, i) => {
+              const { hasError, message } = validateField(field.name);
+
+              console.log({ hasError, message });
+              return (
+                <TextField
+                  name={field.name}
+                  key={`input-${field.name}-${i}`}
+                  data-testid={`input-${field.name}`}
+                  fullWidth
+                  required={!field.optional}
+                  disabled={field.disabled}
+                  label={field.label}
+                  type="text"
+                  error={hasError}
+                  helperText={message}
+                  value={field.value ?? ""}
+                  onChange={({ target }) => onChange(field, target.value, i)}
+                  sx={{
+                    ...(field.size === "half"
+                      ? {
+                          width: "calc(50% - 8px)",
+                        }
+                      : {}),
+                  }}
+                />
+              );
+            })}
           </Stack>
 
           <StepperCTAButton loading={externallyValidating} onClick={onContinue}>

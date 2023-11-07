@@ -2,6 +2,7 @@
 
 import { Widget } from "./Widget.js";
 
+export type { Callbacks } from "./Callbacks.js";
 export type { WidgetProps } from "./CheckoutConfig.js";
 export type {
   ChainId,
