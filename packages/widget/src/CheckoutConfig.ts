@@ -52,7 +52,7 @@ const widgetPropsSchema = z.object({
   /**
    * The symbol, name, owner and addresses of the deployed ExistentialNFT clones.
    */
-  existentialNFT: existentialNFTSchema.optional(),
+  existentialNFT: existentialNFTSchema,
   /**
    * Whether the stepper UI component inside the widget is vertical or horizontal. Vertical is better supported.
    */

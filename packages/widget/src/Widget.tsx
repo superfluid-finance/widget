@@ -31,6 +31,7 @@ export function Widget({
 }: WidgetProps & Partial<ViewProps>) {
   const props = {
     productDetails,
+    existentialNFT,
     tokenList,
     stepper,
     type,
