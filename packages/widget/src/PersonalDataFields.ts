@@ -7,7 +7,7 @@ export const EmailField = {
   optional: false,
   required: {
     pattern: serializeRegExp(
-      /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g,
+      /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,24})$/g,
     ),
     message: "Invalid email address",
   },
@@ -19,7 +19,7 @@ export const EmailWithAliasField = {
   optional: false,
   required: {
     pattern: serializeRegExp(
-      /^([a-zA-Z0-9_\-\.+\]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g,
+      /^([a-zA-Z0-9_\-\.+\]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,24})$/g,
     ),
     message: "Invalid email address",
   },
