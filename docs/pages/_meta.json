@@ -6,7 +6,7 @@
     "title": "Documentation",
     "type": "page"
   },
-  "api-docs": {
+  "api-reference": {
     "title": "API Reference ↗",
     "href": "https://superfluid-widget-reference-docs.vercel.app/",
     "type": "page",
