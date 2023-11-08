@@ -113,7 +113,13 @@ const switchLayout = (
       theme={theme}
       walletManager={walletManager}
       stepper={{ orientation: stepperOrientation }}
+      eventListeners={
+        {
+          // onButtonClick: () => { console.log("onButtonClick eventListener") },
+        }
+      }
       callbacks={{
+        // onButtonClick: () => { console.log("onButtonClick callback") },
         validatePersonalData: async () => {
           return new Promise((resolve) => {
             setTimeout(() => {

@@ -7,7 +7,6 @@ import { AccountAddressCard } from "./AccountAddressCard.js";
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { SubscribeCommand } from "./commands.js";
 import { mapTimePeriodToSeconds } from "./core/index.js";
-import { runEventListener } from "./EventListeners.js";
 import FlowingBalance from "./FlowingBalance.js";
 import { DraftFormValues } from "./formValues.js";
 import StreamIndicator from "./StreamIndicator.js";
@@ -21,7 +20,7 @@ export function CheckoutSummary() {
   const {
     getSuperToken,
     productDetails: { successURL, successText = "Continue to Merchant" },
-    eventListeners,
+    eventHandlers,
   } = useWidget();
 
   const { watch } = useFormContext<DraftFormValues>();
@@ -58,30 +57,30 @@ export function CheckoutSummary() {
   );
 
   useEffect(() => {
-    runEventListener(eventListeners.onRouteChange, {
+    eventHandlers.onRouteChange({
       route: "success_summary",
       ...mapPersonalDataToObject(personalData),
     });
-  }, [eventListeners.onRouteChange]);
+  }, [eventHandlers.onRouteChange]);
 
   // Note: calling "onSuccess" through the "useEffect" hook is not optimal.
   // We make the assumption that "CheckoutSummary" is only rendered when the checkout is successful.
   // A more proper place would be inside a central state machine.
   useEffect(() => {
-    runEventListener(eventListeners.onSuccess);
-  }, [eventListeners.onSuccess]);
+    eventHandlers.onSuccess();
+  }, [eventHandlers.onSuccess]);
 
   const onSuccessButtonClick = useCallback(() => {
-    runEventListener(eventListeners.onSuccessButtonClick);
-    runEventListener(eventListeners.onButtonClick, { type: "success_button" });
-  }, [eventListeners.onSuccessButtonClick, eventListeners.onButtonClick]);
+    eventHandlers.onSuccessButtonClick();
+    eventHandlers.onButtonClick({ type: "success_button" });
+  }, [eventHandlers.onSuccessButtonClick, eventHandlers.onButtonClick]);
 
   const onOpenSuperfluidDashboardButtonClick = useCallback(
     () =>
-      runEventListener(eventListeners.onButtonClick, {
+      eventHandlers.onButtonClick({
         type: "superfluid_dashboard",
       }),
-    [eventListeners.onButtonClick],
+    [eventHandlers.onButtonClick],
   );
 
   return (

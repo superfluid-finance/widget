@@ -22,7 +22,6 @@ import { useNetwork } from "wagmi";
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { ContractWriteResult } from "./ContractWriteManager.js";
 import { errorsABI } from "./core/wagmi-generated.js";
-import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { useWidget } from "./WidgetContext.js";
 
@@ -39,13 +38,13 @@ export function ContractWriteStatus({
   index: number;
 }) {
   const { writeIndex } = useCommandHandler();
-  const { eventListeners } = useWidget();
+  const { eventHandlers } = useWidget();
 
   const onViewOnBlockExplorerButtonClick = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, {
+    eventHandlers.onButtonClick({
       type: "view_transaction_on_block_explorer",
     });
-  }, [eventListeners.onButtonClick]);
+  }, [eventHandlers.onButtonClick]);
 
   const {
     contractWrite: { displayTitle },

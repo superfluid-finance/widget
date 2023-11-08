@@ -16,6 +16,7 @@ import {
   WidgetProps,
 } from "./CheckoutConfig.js";
 import { ChainId, SupportedNetwork, supportedNetworks } from "./core/index.js";
+import { EventHandlers, runEventHandlers } from "./EventListeners.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList.js";
@@ -201,6 +202,40 @@ export function WidgetCore({
     [stepper_.orientation],
   );
 
+  const eventHandlers = useMemo<EventHandlers>(
+    () => ({
+      onButtonClick: runEventHandlers(
+        eventListeners?.onButtonClick,
+        callbacks?.onButtonClick,
+      ),
+      onRouteChange: runEventHandlers(
+        eventListeners?.onRouteChange,
+        callbacks?.onRouteChange,
+      ),
+      onTransactionSent: runEventHandlers(
+        eventListeners?.onTransactionSent,
+        callbacks?.onTransactionSent,
+      ),
+      onSuccess: runEventHandlers(
+        eventListeners?.onSuccess,
+        callbacks?.onSuccess,
+      ),
+      onSuccessButtonClick: runEventHandlers(
+        eventListeners?.onSuccessButtonClick,
+        callbacks?.onSuccessButtonClick,
+      ),
+      onPaymentOptionUpdate: runEventHandlers(
+        eventListeners?.onPaymentOptionUpdate,
+        callbacks?.onPaymentOptionUpdate,
+      ),
+      onPersonalDataUpdate: runEventHandlers(
+        eventListeners?.onPersonalDataUpdate,
+        callbacks?.onPersonalDataUpdate,
+      ),
+    }),
+    [eventListeners, callbacks],
+  );
+
   const checkoutState = useMemo<WidgetContextValue>(
     () => ({
       getNetwork,
@@ -220,18 +255,7 @@ export function WidgetCore({
         elevated: !["drawer", "dialog"].includes(viewProps.type),
       },
       type: viewProps.type,
-      eventListeners: {
-        onButtonClick: eventListeners?.onButtonClick ?? NOOP_FUNCTION,
-        onRouteChange: eventListeners?.onRouteChange ?? NOOP_FUNCTION,
-        onTransactionSent: eventListeners?.onTransactionSent ?? NOOP_FUNCTION,
-        onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
-        onSuccessButtonClick:
-          eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,
-        onPaymentOptionUpdate:
-          eventListeners?.onPaymentOptionUpdate ?? NOOP_FUNCTION,
-        onPersonalDataUpdate:
-          eventListeners?.onPersonalDataUpdate ?? NOOP_FUNCTION,
-      },
+      eventHandlers,
       callbacks: {
         validatePersonalData: callbacks?.validatePersonalData ?? NOOP_FUNCTION,
       },
@@ -251,14 +275,8 @@ export function WidgetCore({
       stepper,
       viewProps.type,
       personalData,
-      eventListeners?.onTransactionSent,
-      eventListeners?.onSuccessButtonClick,
-      eventListeners?.onRouteChange,
-      eventListeners?.onTransactionSent,
-      eventListeners?.onSuccess,
-      eventListeners?.onPaymentOptionUpdate,
-      eventListeners?.onPersonalDataUpdate,
-      callbacks?.validatePersonalData,
+      eventHandlers,
+      callbacks,
     ],
   );
 
@@ -298,4 +316,4 @@ export function WidgetCore({
   );
 }
 
-const NOOP_FUNCTION = () => {};
+export function NOOP_FUNCTION() {}

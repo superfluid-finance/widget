@@ -51,7 +51,7 @@ export function ContractWriteManager({
   const prepare =
     accountAddress && _prepare && contractWrite.chainId === chain?.id;
 
-  const { eventListeners } = useWidget();
+  const { eventHandlers } = useWidget();
 
   const prepareResult = usePrepareContractWrite({
     ...(prepare
@@ -87,7 +87,7 @@ export function ContractWriteManager({
       : {}),
     onError: console.error,
     onSuccess: ({ hash }) =>
-      eventListeners.onTransactionSent?.({
+      eventHandlers.onTransactionSent?.({
         hash,
         functionName: contractWrite.functionName as TxFunctionName,
       }),

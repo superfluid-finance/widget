@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldArray, useFieldArray, useFormContext } from "react-hook-form";
 
 import { PersonalData } from "./core/PersonalData.js";
-import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
 import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
@@ -63,20 +62,20 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
     [fields],
   );
 
-  const { eventListeners, callbacks } = useWidget();
+  const { eventHandlers, callbacks } = useWidget();
   const { handleNext } = useStepper();
 
   useEffect(() => {
-    runEventListener(eventListeners.onRouteChange, {
+    eventHandlers.onRouteChange({
       route: "step_personal_data",
     });
-  }, [eventListeners.onRouteChange]);
+  }, [eventHandlers.onRouteChange]);
 
   useEffect(() => {
-    runEventListener(eventListeners.onPersonalDataUpdate, {
+    eventHandlers.onPersonalDataUpdate({
       ...mapPersonalDataToObject(fields),
     });
-  }, [eventListeners.onPersonalDataUpdate, setErrors, fields]);
+  }, [eventHandlers.onPersonalDataUpdate, setErrors, fields]);
 
   const validationResult = useMemo(
     () => validatePersonalData(fields),
@@ -116,7 +115,7 @@ export default function StepContentCustomData({ stepIndex }: StepProps) {
     } else {
       setErrors(validationResult);
     }
-  }, [handleNext, eventListeners.onButtonClick, stepIndex, validationResult]);
+  }, [handleNext, stepIndex, validationResult]);
 
   const validateField = useCallback(
     (key: string) => {

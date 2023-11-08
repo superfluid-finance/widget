@@ -20,7 +20,6 @@ import {
 import { Controller, useFormContext } from "react-hook-form";
 import { Address, useBalance } from "wagmi";
 
-import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
 import { UpgradeIcon } from "./previews/CommandPreview.js";
 import { StepProps } from "./Stepper.js";
@@ -114,7 +113,7 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
     ]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
-  const { getUnderlyingToken, eventListeners } = useWidget();
+  const { getUnderlyingToken, eventHandlers } = useWidget();
 
   // Find the underlying token of the Super Token.
   const underlyingToken = useMemo(() => {
@@ -170,22 +169,22 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
   const { handleNext } = useStepper();
 
   useEffect(() => {
-    runEventListener(eventListeners.onRouteChange, {
+    eventHandlers.onRouteChange({
       route: "step_wrap",
       ...mapPersonalDataToObject(personalData),
     });
-  }, [eventListeners.onRouteChange]);
+  }, [eventHandlers.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+    eventHandlers.onButtonClick({ type: "next_step" });
     handleNext(stepIndex);
-  }, [handleNext, eventListeners.onButtonClick, stepIndex]);
+  }, [handleNext, eventHandlers.onButtonClick, stepIndex]);
 
   const onSkipWrapping = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, { type: "skip_step" });
+    eventHandlers.onButtonClick({ type: "skip_step" });
     setValue("wrapAmountInUnits", "" as `${number}`);
     handleNext(stepIndex);
-  }, [handleNext, setValue, eventListeners.onButtonClick, stepIndex]);
+  }, [handleNext, setValue, eventHandlers.onButtonClick, stepIndex]);
 
   const onInputFocus = () => setFocusedOnce(true);
 
