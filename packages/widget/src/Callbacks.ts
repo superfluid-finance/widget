@@ -11,7 +11,7 @@ import { Errors } from "./utils.js";
 
 export interface Callbacks extends EventListeners {
   /** Called when the user clicks the "Continue" button in the personal data step. */
-  validatePersonalData: (
+  validatePersonalData?: (
     data: PersonalData,
   ) => Errors | void | Promise<Errors | void>;
 }

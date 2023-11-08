@@ -118,21 +118,23 @@ const switchLayout = (
           // onButtonClick: () => { console.log("onButtonClick eventListener") },
         }
       }
-      callbacks={{
-        // onButtonClick: () => { console.log("onButtonClick callback") },
-        validatePersonalData: async () => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({
-                email: {
-                  success: false,
-                  message: "Async validation failed!",
-                },
-              });
-            }, 1000);
-          });
-        },
-      }}
+      callbacks={
+        {
+          // onButtonClick: () => { console.log("onButtonClick callback") },
+          // validatePersonalData: async () => {
+          //   return new Promise((resolve) => {
+          //     setTimeout(() => {
+          //       resolve({
+          //         email: {
+          //           success: false,
+          //           message: "Async validation failed!",
+          //         },
+          //       });
+          //     }, 1000);
+          //   });
+          // },
+        }
+      }
     />
   ) : (
     <SuperfluidWidget
