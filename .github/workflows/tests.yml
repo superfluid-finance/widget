@@ -2,13 +2,12 @@ name: Playwright Tests
 
 on:
   deployment_status:
-  workflow_dispatch:  
-    inputs: 
+  workflow_dispatch:
+    inputs:
       environment:
-        description: 'Url to run tests against'
+        description: "Url to run tests against"
         type: string
         required: true
-
 
 jobs:
   test:
@@ -18,6 +17,10 @@ jobs:
       run:
         working-directory: tests
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        file: [builderCommon, builderExportTab, builderGatingTab, builderJSONEditor, builderProductsTab, builderStylingTab,builderPaymentTab, widgetConfigurationTests, widgetMetamaskStreamTransactions,widgetMetamaskTokenTransactions, widgetMetamaskUITests, widgetMetamaskValidationErrors , widgetNoWallet]
 
     steps:
       - uses: actions/checkout@v3
@@ -41,19 +44,19 @@ jobs:
         run: |
           sudo apt-get install --no-install-recommends -y \
           fluxbox \
-          xvfb          
-          
+          xvfb
+
       - name: Set url the tests should run on
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "BASE_URL=${{ github.event.inputs.environment }}" >> $GITHUB_ENV
           elif [[ "${{ github.event_name }}" == "deployment_status" ]]; then
             echo "BASE_URL=${{ github.event.deployment_status.environment_url }}" >> $GITHUB_ENV
-          fi        
+          fi
 
-        # https://playwright.dev/docs/next/ci#running-headed  
+        # https://playwright.dev/docs/next/ci#running-headed
       - name: Run Playwright tests
-        run: xvfb-run pnpm playwright test
+        run: xvfb-run pnpm playwright test ${{ matrix.file }}.spec.ts
         env:
           BASE_URL: ${{ env.BASE_URL }}
           WIDGET_WALLET_PUBLIC_KEY: "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD"
