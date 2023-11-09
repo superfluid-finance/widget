@@ -16,7 +16,6 @@ const ProductEditor: FC = () => {
     name: "paymentDetails.paymentOptions", // unique name for your Field Array
   });
 
-  const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
   const { setDemoProductDetails } = useDemoMode();
 
   return (
