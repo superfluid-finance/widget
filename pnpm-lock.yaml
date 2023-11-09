@@ -667,6 +667,12 @@ importers:
       '@playwright/test':
         specifier: ^1.39.0
         version: 1.39.0
+      '@superfluid-finance/metadata':
+        specifier: ^1.1.17
+        version: 1.1.18
+      '@superfluid-finance/tokenlist':
+        specifier: ^3.3.2
+        version: 3.3.2
       '@synthetixio/synpress':
         specifier: ^3.7.1
         version: 3.7.1(typescript@5.2.2)
@@ -4520,13 +4526,11 @@ packages:
 
   /@superfluid-finance/metadata@1.1.18:
     resolution: {integrity: sha512-9AyKSLjOmdhfg90TjEi+dv4FkMW1tEibMqlE1xLgHabuhHYARivBHgvZAX9psERQuld/8iYnSCMscSE+Vhn3KA==}
-    dev: false
 
   /@superfluid-finance/tokenlist@3.3.2:
     resolution: {integrity: sha512-Hvs1leo0rhJ1JANUKpsPUyM0pb1Vf+mneBxE8Qf4Wbl+nAApThI3vQFezdQ4aLeUXw99gCisepIyoUcLpXkZ5g==}
     dependencies:
       '@uniswap/token-lists': 1.0.0-beta.33
-    dev: false
 
   /@swc/helpers@0.5.1:
     resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
@@ -5383,7 +5387,6 @@ packages:
   /@uniswap/token-lists@1.0.0-beta.33:
     resolution: {integrity: sha512-JQkXcpRI3jFG8y3/CGC4TS8NkDgcxXaOQuYW8Qdvd6DcDiIyg2vVYCG9igFEzF0G6UvxgHkBKC7cWCgzZNYvQg==}
     engines: {node: '>=10'}
-    dev: false
 
   /@vanilla-extract/css@1.9.1:
     resolution: {integrity: sha512-pu2SFiff5jRhPwvGoj8cM5l/qIyLvigOmy22ss5DGjwV5pJYezRjDLxWumi2luIwioMWvh9EozCjyfH8nq+7fQ==}

@@ -7,7 +7,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
-import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { useWidget } from "./WidgetContext.js";
 
@@ -29,7 +28,7 @@ export default function ContractWriteButton({
   transactionResult,
   currentError,
 }: ContractWriteButtonProps) {
-  const { eventListeners } = useWidget();
+  const { eventHandlers } = useWidget();
   const write = writeResult.write;
 
   const isLoading =
@@ -44,30 +43,30 @@ export default function ContractWriteButton({
   const needsToSwitchNetwork = expectedChainId !== chain?.id;
 
   const onSwitchNetworkButtonClick = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, { type: "switch_network" });
+    eventHandlers.onButtonClick({ type: "switch_network" });
     switchNetwork?.(expectedChainId);
-  }, [switchNetwork, expectedChainId, eventListeners.onButtonClick]);
+  }, [switchNetwork, expectedChainId, eventHandlers.onButtonClick]);
 
   const onContractWriteButtonClick = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, {
+    eventHandlers.onButtonClick({
       type: "invoke_transaction",
     });
     write?.();
-  }, [write, eventListeners.onButtonClick]);
+  }, [write, eventHandlers.onButtonClick]);
 
   const onRetryTransactionButtonClick = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, {
+    eventHandlers.onButtonClick({
       type: "retry_gas_estimation",
     });
     prepareResult.refetch();
-  }, [prepareResult.refetch, eventListeners.onButtonClick]);
+  }, [prepareResult.refetch, eventHandlers.onButtonClick]);
 
   const onForceTransactionButtonClick = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, {
+    eventHandlers.onButtonClick({
       type: "force_invoke_transaction",
     });
     write!();
-  }, [write, eventListeners.onButtonClick]);
+  }, [write, eventHandlers.onButtonClick]);
 
   const isPrepareError = Boolean(
     currentError &&
@@ -81,12 +80,12 @@ export default function ContractWriteButton({
     (!isLastWrite || connector?.id === "safe"); // Don't show the button for the last contract write, unless Gnosis Safe. It would be confusing to show the success screen when possibly the last TX fails.
 
   const onSkipButtonClick = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, {
+    eventHandlers.onButtonClick({
       type: "skip_to_next",
     });
     handleNextWrite_();
     setAllowNextWriteButton(false);
-  }, [handleNextWrite_, eventListeners.onButtonClick]);
+  }, [handleNextWrite_, eventHandlers.onButtonClick]);
 
   useEffect(() => {
     if (transactionResult.isLoading) {

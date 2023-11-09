@@ -70,11 +70,34 @@ export interface EventListeners {
 }
 
 /**
+ * Combines both non-blocking event listeners and blocking event callbacks.
+ */
+export interface EventHandlers extends Required<EventListeners> {}
+
+/**
+ * Runs both the non-blocking event listener and the blocking callback.
+ */
+export const runEventHandlers = <T, R = void>(
+  listener?: (args?: T) => R,
+  callback?: (args?: T) => R,
+) => {
+  return (arg?: T) => {
+    if (listener) {
+      runEventListener(listener, arg);
+    }
+
+    if (callback) {
+      callback(arg);
+    }
+  };
+};
+
+/**
  * Run the event callback in non-blocking manner.
  */
-export const runEventListener = <T, R = void>(
+const runEventListener = <T, R = void>(
   func: (args?: T) => R,
-  args?: T,
+  arg?: T,
 ): void => {
-  setTimeout(() => func(args), 0);
+  setTimeout(() => func(arg), 0);
 };

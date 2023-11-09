@@ -13,7 +13,6 @@ import { useCallback, useState } from "react";
 import { Address } from "viem";
 
 import { AccountAddress } from "./AccountAddress.js";
-import { runEventListener } from "./EventListeners.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { copyToClipboard } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
@@ -37,10 +36,10 @@ export function AccountAddressCard({
   }).toDataURL();
   const [copied, setCopied] = useState(false);
 
-  const { eventListeners } = useWidget();
+  const { eventHandlers } = useWidget();
   const onCopyAddressButtonClick = useCallback(
     async (checksumAddress: string) => {
-      runEventListener(eventListeners.onButtonClick, {
+      eventHandlers.onButtonClick({
         type: "switch_network",
       });
       await copyToClipboard(checksumAddress);
@@ -48,7 +47,7 @@ export function AccountAddressCard({
       const timeoutId = setTimeout(() => setCopied(false), 1000);
       return () => clearTimeout(timeoutId);
     },
-    [eventListeners.onButtonClick],
+    [eventHandlers.onButtonClick],
   );
 
   return (
@@ -91,6 +90,7 @@ export function AccountAddressCard({
             </Typography>
 
             <IconButton
+              data-testid={`${dataTest}-copy-button`}
               size="small"
               title="Copy address to clipboard"
               onClick={() => onCopyAddressButtonClick(checksumAddress)}
@@ -99,9 +99,13 @@ export function AccountAddressCard({
               }}
             >
               {copied ? (
-                <CheckIcon fontSize="inherit" color="primary" />
+                <CheckIcon
+                  data-testid="check-icon"
+                  fontSize="inherit"
+                  color="primary"
+                />
               ) : (
-                <ContentCopyIcon fontSize="inherit" />
+                <ContentCopyIcon data-testid="copy-icon" fontSize="inherit" />
               )}
             </IconButton>
           </Stack>

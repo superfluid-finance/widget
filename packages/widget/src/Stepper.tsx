@@ -13,7 +13,6 @@ import { useMemo, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { CheckoutSummary } from "./CheckoutSummary.js";
-import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
 import StepContentPaymentOption from "./StepContentPaymentOption.js";
 import StepContentPersonalData from "./StepContentPersonalData.js";
@@ -28,7 +27,7 @@ export type StepProps = {
 };
 
 export default function Stepper() {
-  const { eventListeners } = useWidget();
+  const { eventHandlers } = useWidget();
   const {
     watch,
     formState: { isValid },
@@ -153,7 +152,7 @@ export default function Stepper() {
                             disabled={visualActiveStep <= index}
                             data-testid={`step-${index + 1}-button`}
                             onClick={() => {
-                              runEventListener(eventListeners.onButtonClick, {
+                              eventHandlers.onButtonClick({
                                 type: "step_label",
                               });
                               setActiveStep(index);

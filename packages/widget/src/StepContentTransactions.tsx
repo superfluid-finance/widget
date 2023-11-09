@@ -15,7 +15,6 @@ import { useFormContext } from "react-hook-form";
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import ContractWriteButton from "./ContractWriteButton.js";
 import { ContractWriteStatus } from "./ContractWriteStatus.js";
-import { runEventListener } from "./EventListeners.js";
 import { DraftFormValues } from "./formValues.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
 import { StepProps } from "./Stepper.js";
@@ -38,14 +37,14 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
     handleNextWrite: handleNextWrite_,
   } = useCommandHandler(); // Cleaner to pass with props.
 
-  const { eventListeners } = useWidget();
+  const { eventHandlers } = useWidget();
 
   useEffect(() => {
-    runEventListener(eventListeners.onRouteChange, {
+    eventHandlers.onRouteChange({
       route: "transactions",
       ...mapPersonalDataToObject(personalData),
     });
-  }, [eventListeners.onRouteChange]);
+  }, [eventHandlers.onRouteChange]);
 
   useEffect(() => {
     if (writeIndex > 0 && writeIndex === contractWriteResults.length) {
@@ -55,11 +54,11 @@ export function StepContentTransactions({ stepIndex }: StepProps) {
   }, [writeIndex, contractWriteResults, handleNext, totalSteps]);
 
   const onBack = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, {
+    eventHandlers.onButtonClick({
       type: "back_transactions",
     });
     handleBack(stepIndex);
-  }, [handleBack, eventListeners.onButtonClick, stepIndex]);
+  }, [handleBack, eventHandlers.onButtonClick, stepIndex]);
 
   const total = contractWrites.length;
   const lastWriteIndex = Math.max(total - 1, 0);

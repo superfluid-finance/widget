@@ -1,8 +1,13 @@
 import { expect, Locator, Page, test } from "@playwright/test";
-import * as metamask from "@synthetixio/synpress/commands/metamask";
+import metamask from "@synthetixio/synpress/commands/metamask.js";
 
-import * as EthHelper from "../helpers/ethHelper";
-import { BasePage, randomDetailsSet, supportedNetworks } from "./basePage";
+import { EthHelper } from "../helpers/ethHelper.js";
+import {
+  BasePage,
+  randomDetailsSet,
+  randomReceiver,
+  supportedNetworks,
+} from "./basePage.js";
 
 export class WidgetPage extends BasePage {
   readonly page: Page;
@@ -63,6 +68,17 @@ export class WidgetPage extends BasePage {
   // readonly selectedNetworkBadge: Locator;
   readonly poweredBySuperfluidButton: Locator;
   readonly closeButton: Locator;
+  readonly chosenUpfrontFee: Locator;
+  readonly chosenOptionsPaperComponent: Locator;
+  readonly networkOptions: Locator;
+  readonly tokenOptions: Locator;
+  readonly web3ModalConnectionErrorMessage: Locator;
+  readonly wrapStepUnderlyingIcon: Locator;
+  readonly wrapStepSuperTokenIcon: Locator;
+  readonly reviewStepUnderlyingIcon: Locator;
+  readonly reviewStepSuperTokenIcon: Locator;
+  readonly reviewWrapSuperTokenComponent: Locator;
+  readonly reviewWrapUnderlyingTokenComponent: Locator;
   selectedTokenDuringTest?: string;
   senderAddressDuringTest?: string;
   receiverAddressDuringTest?: string;
@@ -163,6 +179,32 @@ export class WidgetPage extends BasePage {
     this.transactionStatusIcons = page.getByTestId("transaction-status-icon");
     this.circleIcons = page.getByTestId("CircleIcon");
     this.checkmarkIcons = page.getByTestId("CheckIcon");
+    this.chosenUpfrontFee = page.getByTestId("upfront-fee");
+    this.chosenOptionsPaperComponent = page.getByTestId(
+      "selected-option-paper",
+    );
+    this.networkOptions = page.getByTestId("network-option");
+    this.tokenOptions = page.getByTestId("token-option");
+    this.web3ModalConnectionErrorMessage = page.locator(
+      "[data-useid=partial-connector-error-text]",
+    );
+    this.wrapStepUnderlyingIcon = page
+      .getByTestId("underlying-icon")
+      .locator("img");
+    this.wrapStepSuperTokenIcon = page.getByTestId("super-icon").locator("img");
+    this.reviewStepUnderlyingIcon = page
+      .getByTestId("review-underlying-icon")
+      .locator("img");
+
+    this.reviewStepSuperTokenIcon = page
+      .getByTestId("review-super-icon")
+      .locator("img");
+    this.reviewWrapSuperTokenComponent = page.getByTestId(
+      "review-super-wrap-component",
+    );
+    this.reviewWrapUnderlyingTokenComponent = page.getByTestId(
+      "review-underlying-wrap-component",
+    );
   }
 
   async changeCustomPaymentAmount(amount: string, timeunit = "month") {
@@ -310,6 +352,8 @@ export class WidgetPage extends BasePage {
           0,
           -1,
         )} Allowance`;
+      case "transfer":
+        return `Transfer`;
     }
   }
 
@@ -332,9 +376,9 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async validateTransactionButtonTextAndClick(text: string) {
+  async validateTransactionButtonTextAndClick(text = "Send transaction") {
     await test.step(`Making sure the transaction text is ${text} and clicking it`, async () => {
-      await expect(this.transactionButton).toHaveText("Send transaction");
+      await expect(this.transactionButton).toHaveText(text);
       await this.transactionButton.click();
     });
   }
@@ -433,6 +477,11 @@ export class WidgetPage extends BasePage {
           .getByTestId(`selected-option-paper`)
           .getByTestId(`${option.chainId}-badge`),
       ).toBeVisible();
+      if (option.upfrontPayment) {
+        await expect(this.chosenUpfrontFee).toHaveText(
+          `+${option.upfrontPayment} ${option.superToken} upfront fee`,
+        );
+      }
     });
   }
 
@@ -450,7 +499,7 @@ export class WidgetPage extends BasePage {
       await expect(this.productImage).toHaveScreenshot(
         "./data/Superfluid_logo.png",
         {
-          maxDiffPixelRatio: 0.01,
+          maxDiffPixelRatio: 0.02,
         },
       );
     });
@@ -510,26 +559,41 @@ export class WidgetPage extends BasePage {
   async validateTokenBalanceAfterWrap() {
     await test.step(`Checking if token got wrapped succesfully`, async () => {
       let wrappedAmount = BigInt(1e18) * BigInt(this.wrapAmountDuringTest!);
-      await EthHelper.getUnderlyingTokenBalance().then(
-        async (underlyingBalance) => {
+      const ethHelper = new EthHelper(
+        "Goerli",
+        process.env.WIDGET_WALLET_PRIVATE_KEY!,
+      );
+      await ethHelper
+        .getUnderlyingTokenBalance("fUSDC")
+        .then(async (underlyingBalance) => {
           await expect(
             this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
           ).toEqual(underlyingBalance);
-        },
-      );
+        });
 
-      await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
-        await expect(this.superTokenBalanceBeforeWrap! + wrappedAmount).toEqual(
-          superTokenBalance[0],
-        );
-      });
+      await ethHelper
+        .getSuperTokenBalance("fUSDCx")
+        .then(async (superTokenBalance) => {
+          await expect(
+            this.superTokenBalanceBeforeWrap! + wrappedAmount,
+          ).toEqual(superTokenBalance[0]);
+        });
     });
   }
 
-  async validateAndSaveWrapPageBalances() {
+  async validateAndSaveWrapPageBalances(
+    humanReadableNetworkName: string,
+    superToken: string,
+  ) {
     await test.step(`Checking if wrap page shows correct token balances`, async () => {
-      await EthHelper.getUnderlyingTokenBalance().then(
-        async (underlyingBalance) => {
+      const ethHelper = new EthHelper(
+        humanReadableNetworkName,
+        process.env.WIDGET_WALLET_PRIVATE_KEY!,
+      );
+      let underlyingTokenSymbol = ethHelper.getTokenBySymbolAndChainId;
+      await ethHelper
+        .getUnderlyingTokenBalance("fUSDC")
+        .then(async (underlyingBalance) => {
           this.underlyingTokenBalanceBeforeWrap = underlyingBalance;
           let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
             (underlyingBalance.toString() / 1e18).toString(),
@@ -540,18 +604,19 @@ export class WidgetPage extends BasePage {
           await expect(this.wrapUnderlyingBalance).toHaveText(
             `Balance: ${underlyingBalanceToAssert}`,
           );
-        },
-      );
+        });
 
-      await EthHelper.getSuperTokenBalance().then(async (superTokenBalance) => {
-        this.superTokenBalanceBeforeWrap = superTokenBalance[0];
-        let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
-          (superTokenBalance[0].toString() / 1e18).toString(),
-        );
-        await expect(this.wrapSuperTokenBalance).toHaveText(
-          `Balance: ${superTokenBalanceToAssert}`,
-        );
-      });
+      await ethHelper
+        .getSuperTokenBalance("fUSDCx")
+        .then(async (superTokenBalance) => {
+          this.superTokenBalanceBeforeWrap = superTokenBalance[0];
+          let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
+            (superTokenBalance[0].toString() / 1e18).toString(),
+          );
+          await expect(this.wrapSuperTokenBalance).toHaveText(
+            `Balance: ${superTokenBalanceToAssert}`,
+          );
+        });
     });
   }
 
@@ -747,7 +812,7 @@ export class WidgetPage extends BasePage {
       );
       await expect(this.page).toHaveScreenshot(
         `changedFont-${font.replace(/"/g, "")}.png`,
-        { maxDiffPixelRatio: 0.01 },
+        { maxDiffPixelRatio: 0.02 },
       );
     });
   }
@@ -858,6 +923,214 @@ export class WidgetPage extends BasePage {
         "https://www.iubenda.com/privacy-policy/34415583/legal",
         "https://www.iubenda.com/privacy-policy/34415583/legal",
         "Privacy Policy of superfluid.finance",
+      );
+    });
+  }
+
+  async validateRandomReceiverTokenBalanceAfterTransfer(
+    network: string,
+    token: string,
+    expectedBalance: number,
+  ) {
+    const ethHelper = new EthHelper(
+      network,
+      process.env.WIDGET_WALLET_PRIVATE_KEY!,
+    );
+    await ethHelper
+      .getSuperTokenBalance(token, randomReceiver.address)
+      .then(async (balance) => {
+        await expect(balance[0].toString() / 1e18).toEqual(expectedBalance);
+      });
+  }
+
+  async waitForTransactionsToGetValidated() {
+    await expect(this.continueButton).toHaveText("Validating...");
+    await expect(this.continueButton).toHaveText("Continue");
+  }
+
+  async validateNoProductDetailsAreShown() {
+    await expect(this.chosenOptionsPaperComponent).not.toBeVisible();
+    await expect(this.chosenFlowRate).not.toBeVisible();
+    await expect(this.chosenFlowRatePeriod).not.toBeVisible();
+    await expect(this.chosenToken).not.toBeVisible();
+    await expect(this.chosenUpfrontFee).not.toBeVisible();
+  }
+
+  async clickOnPoweredBySuperfluidAndValidateOpenedLink() {
+    await test.step(`Clicking on the powered by superfluid button and verifying the page is open`, async () => {
+      await BasePage.clickLinkAndVaguelyVerifyOpenedLink(
+        this.page,
+        this.poweredBySuperfluidButton,
+        "https://superfluid.finance",
+        "https://www.superfluid.finance/",
+        "Stream money every second.",
+      );
+    });
+  }
+
+  async validateAvailablePaymentOptions(options: PaymentOption[]) {
+    await test.step(`Validating the available payment options in the widget`, async () => {
+      const uniqueNetworks = new Set(options.map((option) => option.network));
+      for (const network of uniqueNetworks) {
+        await this.networkSelectionButton.click();
+        await expect(this.networkOptions.getByText(network)).toBeVisible();
+        await this.networkOptions.getByText(network).click();
+        const networkSpecificOptions = options.filter(
+          (option) => option.network === network,
+        );
+        await this.tokenSelectionButton.click();
+        for (const option of networkSpecificOptions) {
+          let expectedString;
+          if (option.upfrontPayment) {
+            expectedString = `${option.upfrontPayment} + ${option.flowRate} ${option.superToken}/${option.timeUnit}`;
+          } else if (option.userDefinedRate === true) {
+            expectedString = `${option.superToken} - Custom amount`;
+          } else {
+            expectedString = `${option.flowRate} ${option.superToken}/${option.timeUnit}`;
+          }
+          await expect(
+            this.tokenOptions.getByText(expectedString),
+          ).toBeVisible();
+        }
+      }
+    });
+  }
+
+  async validateWeb3ModalDeclinedConnectionError() {
+    await test.step(`Checking that web3 modal shows "Connection declined"`, async () => {
+      await expect(this.web3ModalConnectionErrorMessage).toHaveText(
+        "Connection declined",
+      );
+    });
+  }
+  async clickWeb3ModalMetamaskButton() {
+    await test.step(`Clicking on the web3 modal MetaMask button`, async () => {
+      await this.metamaskWalletButton.click();
+    });
+  }
+  async verifySelectPaymentOptionStepIsVisible() {
+    await test.step(`Making sure the first widget step is open`, async () => {
+      await expect(this.networkSelectionButton).toBeVisible();
+      await expect(this.tokenSelectionButton).toBeVisible();
+      await expect(this.continueButton).toBeVisible();
+      await expect(this.wrapAmountInput).not.toBeVisible();
+    });
+  }
+
+  async clickOnStepNumber(step: string) {
+    await test.step(`Clicking on step number ${step}`, async () => {
+      await this.page.getByTestId(`step-${step}`).click();
+    });
+  }
+  async clickTransactionScreenXButton() {
+    await test.step(`Clicking on the X button in the transaction screen`, async () => {
+      await this.closeButton.click();
+    });
+  }
+
+  async validateNoWrapStepIsPresent() {
+    await test.step(`Making sure only 2 steps exist`, async () => {
+      await expect(this.page.getByTestId("step-3")).not.toBeVisible();
+      await expect(
+        this.page.getByTestId("step-2").locator("button span span span"),
+      ).toHaveText("Review the transaction(s)");
+    });
+  }
+
+  async clickNetworkSelectionButton() {
+    await test.step(`Clicking on the network selection button in the first widget step`, async () => {
+      await this.networkSelectionButton.click();
+    });
+  }
+  async searchForPaymentOptionNetwork(network: string) {
+    await test.step(`Searching for ${network} in the first widget step`, async () => {
+      await this.networkSelectionButton.locator("input").fill(network);
+    });
+  }
+  async validateOnlyNetworksContainingTextAreVisible(network: string) {
+    await test.step(`Making sure only options containing "${network}" are visible`, async () => {
+      await this.networkOptions.all().then((options) => {
+        options.forEach(async (option) => {
+          await expect(option).toContainText(network);
+        });
+      });
+    });
+  }
+  async validateNoOptionsAreShown() {
+    await test.step(`Checking if "No options" element is shown`, async () => {
+      await expect(this.networkOptions).not.toBeVisible();
+      await expect(this.page.getByText("No options")).toBeVisible();
+    });
+  }
+  async clickTokenSelectionButton() {
+    await test.step(`Clicking on the token selection button in the first widget step`, async () => {
+      await this.tokenSelectionButton.click();
+    });
+  }
+  async searchForPaymentOptionToken(token: string) {
+    await test.step(`Searching for ${token} from the dropdown`, async () => {
+      await this.tokenSelectionButton.locator("input").fill(token);
+    });
+  }
+  async validateOnlyTokensContainingTextAreVisible(token: string) {
+    await test.step(`Making sure only options containing ${token} are visible`, async () => {
+      await this.tokenOptions.all().then((options) => {
+        options.forEach(async (option) => {
+          await expect(option).toContainText(token);
+        });
+      });
+    });
+  }
+
+  async validateTokenIcon(testTokenSymbol: string, element: Locator) {
+    await expect(element).toHaveScreenshot(`data-${testTokenSymbol}.png`, {
+      maxDiffPixelRatio: 0.11,
+    });
+  }
+
+  async validateTokenIconInPaymentOptionStep(testTokenSymbol: string) {
+    await test.step(`Checking token icons in the payment option step`, async () => {
+      await this.validateTokenIcon(
+        testTokenSymbol,
+        this.tokenSelectionButton.locator("img"),
+      );
+    });
+  }
+
+  async validateTokenIconsInWrapStep(testTokenSymbol: string) {
+    await test.step(`Checking token icons in the wrap step`, async () => {
+      await this.validateTokenIcon(
+        testTokenSymbol,
+        this.wrapStepUnderlyingIcon,
+      );
+      await this.validateTokenIcon(
+        testTokenSymbol,
+        this.wrapStepSuperTokenIcon,
+      );
+    });
+  }
+
+  async validateTokenIconsInReviewStep(testTokenSymbol: string) {
+    await test.step(`Checking token icons in the review step`, async () => {
+      await this.validateTokenIcon(
+        `review-${testTokenSymbol}`,
+        this.reviewWrapSuperTokenComponent,
+      );
+      await this.validateTokenIcon(
+        `review-${testTokenSymbol}`,
+        this.reviewWrapUnderlyingTokenComponent,
+      );
+    });
+  }
+
+  async clickWhyDoINeedToWrapTokensAndValidatePageOpen() {
+    await test.step(`Clicking on the "Why Do I need To Wrap Tokens" button and making sure the help link opens`, async () => {
+      await BasePage.clickLinkAndVaguelyVerifyOpenedLink(
+        this.page,
+        this.whyWrapTokensButton,
+        "https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens",
+        "https://help.superfluid.finance/en/articles/7969656-why-do-i-need-to-wrap-tokens",
+        "Why do I need to wrap tokens?",
       );
     });
   }

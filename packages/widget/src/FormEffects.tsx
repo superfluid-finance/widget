@@ -119,12 +119,12 @@ export function FormEffects() {
     }
   }, [address]);
 
-  const { eventListeners } = useWidget();
+  const { eventHandlers } = useWidget();
   useEffect(() => {
-    eventListeners.onPaymentOptionUpdate(
+    eventHandlers.onPaymentOptionUpdate(
       paymentOptionWithTokenInfo?.paymentOption,
     );
-  }, [eventListeners.onPaymentOptionUpdate, paymentOptionWithTokenInfo]);
+  }, [eventHandlers.onPaymentOptionUpdate, paymentOptionWithTokenInfo]);
 
   return null;
 }

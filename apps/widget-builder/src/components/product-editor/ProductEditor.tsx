@@ -1,20 +1,15 @@
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import {
   Box,
-  Checkbox,
   Fab,
-  FormControlLabel,
-  FormGroup,
   Stack,
   TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
 import {
-  EmailField,
   PersonalDataField,
   PersonalDataFieldType,
-  PhoneNumberField,
 } from "@superfluid-finance/widget/utils";
 import { FC, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
@@ -117,35 +112,6 @@ const ProductEditor: FC = () => {
             </InputWrapper>
           )}
         />
-      </Stack>
-      <Stack mt={4}>
-        <Box mb={1}>
-          <Typography variant="subtitle2" component="h2">
-            Personal Data
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Add personal data fields to collect additional information from your
-            users.
-          </Typography>
-        </Box>
-        <FormGroup>
-          {[EmailField, PhoneNumberField].map((field, i) => (
-            <FormControlLabel
-              key={`${field.name}-${i}`}
-              control={
-                <Checkbox
-                  value={
-                    selectedPersonalDataFields[
-                      field.name as PersonalDataFieldType
-                    ]
-                  }
-                  onChange={() => onPersonalDataSelectionChange(field)}
-                />
-              }
-              label={field.label}
-            />
-          ))}
-        </FormGroup>
       </Stack>
       <Tooltip
         title="Replace with demo product details"

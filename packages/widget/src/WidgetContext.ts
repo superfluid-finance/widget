@@ -7,7 +7,7 @@ import { Callbacks } from "./Callbacks.js";
 import { CheckoutConfig } from "./CheckoutConfig.js";
 import { ChainId, SupportedNetwork } from "./core/index.js";
 import { PersonalData } from "./core/PersonalData.js";
-import { EventListeners } from "./EventListeners.js";
+import { EventHandlers } from "./EventListeners.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { WalletManager } from "./WalletManager.js";
 import { ViewProps } from "./WidgetView.js";
@@ -30,8 +30,8 @@ export type WidgetContextValue = {
     elevated: boolean;
   };
   type: ViewProps["type"];
-  eventListeners: Required<EventListeners>;
-  callbacks: Required<Callbacks>;
+  eventHandlers: EventHandlers;
+  callbacks: Required<Pick<Callbacks, "validatePersonalData">>;
 } & Required<CheckoutConfig>;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(
