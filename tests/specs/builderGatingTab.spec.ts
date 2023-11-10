@@ -10,6 +10,7 @@ test.describe("Gating tab test cases", () => {
   test("Tooltips shown in the gating tab", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     await builderPage.openGatingTab();
+    await builderPage.clickGatingTabSwitch();
     await builderPage.hoverAndVerifyAllGatingTabTooltips();
   });
 
@@ -25,19 +26,30 @@ test.describe("Gating tab test cases", () => {
       networks: ["Goerli"],
     };
     await builderPage.openGatingTab();
+    await builderPage.clickGatingTabSwitch();
     await builderPage.inputNFTDetails(nftDetails);
   });
 
   test("Networks shown in the NFT selection", async ({ page }) => {
     let builderPage = new BuilderPage(page);
-    await builderPage.openPaymentTab();
-    await builderPage.clickOnWandButton();
     await builderPage.openGatingTab();
-    //TODO Check all networks once I figure out an easy way to import the widget
+    await builderPage.clickOnJsonEditorButton();
+    await builderPage.editJsonEditorTo("allNetworks");
+    await builderPage.clickGatingTabSwitch();
+
     await builderPage.verifyNetworksShownInNftSelection([
+      "Arbitrum One",
+      "Avalanche",
+      "Base",
+      "BNB Smart Chain",
+      "Celo",
+      "Gnosis",
+      "OP Mainnet",
+      "Polygon",
+      "Avalanche Fuji",
+      "Base Goerli",
       "Goerli",
       "Polygon Mumbai",
-      "Celo",
     ]);
   });
 

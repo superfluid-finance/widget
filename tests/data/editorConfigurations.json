@@ -141,6 +141,12 @@
                 }
             ]
         },
+        "existentialNFT": {
+          "name": "",
+          "symbol": "",
+          "owner": "",
+          "deployments": {}
+        },
         "type": "page"
     },
     "schemaError": {
@@ -167,6 +173,12 @@
                 }
             ]
         },
+        "existentialNFT": {
+          "name": "",
+          "symbol": "",
+          "owner": "",
+          "deployments": {}
+        },
         "type": "page"
     },
     "randomUpfrontPaymentReceiver": {
@@ -190,6 +202,12 @@
               }
             }
           ]
+        },
+        "existentialNFT": {
+          "name": "",
+          "symbol": "",
+          "owner": "",
+          "deployments": {}
         },
         "type": "page"
       },
@@ -312,6 +330,12 @@
               }
             }
           ]
+        },
+        "existentialNFT": {
+          "name": "",
+          "symbol": "",
+          "owner": "",
+          "deployments": {}
         },
         "type": "page"
       }

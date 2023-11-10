@@ -240,6 +240,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
               Gate your content with NFTs
             </Typography>
             <Switch
+              data-testid="gating-switch"
               defaultChecked={showSettings}
               value={showSettings}
               onChange={({ target }) => setSettings(target.checked)}

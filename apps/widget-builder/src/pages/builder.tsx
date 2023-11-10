@@ -128,8 +128,8 @@ export default function Builder() {
                 <Tab label={tabLabels[0]} value="0" data-testid="product-tab" />
                 <Tab label={tabLabels[1]} value="1" data-testid="payment-tab" />
                 <Tab label={tabLabels[2]} value="2" data-testid="ui-tab" />
-                <Tab label={tabLabels[3]} value="3" data-testid="export-tab" />
-                <Tab label={tabLabels[4]} value="4" data-testid="gating-tab" />
+                <Tab label={tabLabels[3]} value="3" data-testid="gating-tab" />
+                <Tab label={tabLabels[4]} value="4" data-testid="export-tab" />
               </TabList>
             </Box>
           </AppBar>
