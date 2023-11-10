@@ -54,6 +54,12 @@ type StreamGatingEditorProps = {
 
 polyfill();
 
+const executeRecaptcha = (recaptcha: ReCAPTCHA | null) => {
+  if (recaptcha) {
+    recaptcha.execute();
+  }
+};
+
 const enftHasValues = (enftSettings: WidgetProps["existentialNFT"]): boolean =>
   Object.entries(enftSettings ?? {}).some(([key, value]) =>
     key === "deployments"
@@ -89,11 +95,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
     message?: string;
   } | null>(null);
 
-  useLayoutEffect(() => {
-    if (recaptchaRef.current) {
-      recaptchaRef.current.execute();
-    }
-  }, []);
+  useLayoutEffect(() => executeRecaptcha(recaptchaRef.current), []);
 
   useEffect(() => {
     if (!errors) return;
@@ -104,6 +106,11 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
   const onRecaptchaChange = useCallback((token: string | null) => {
     setRecaptchaToken(token);
   }, []);
+
+  const onRecaptchaExpired = useCallback(
+    () => executeRecaptcha(recaptchaRef.current),
+    [],
+  );
 
   const ajs = useAnalyticsBrowser();
 
@@ -398,6 +405,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
         sitekey={recaptchaKey}
         size="invisible"
         onChange={onRecaptchaChange}
+        onExpired={onRecaptchaExpired}
       />
       {/* {previewContainerRef &&
         createPortal(
