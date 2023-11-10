@@ -141,6 +141,7 @@
                 }
             ]
         },
+        "personalData": [],
         "type": "page"
     },
     "schemaError": {
@@ -167,6 +168,7 @@
                 }
             ]
         },
+        "personalData": [],
         "type": "page"
     },
     "randomUpfrontPaymentReceiver": {
@@ -191,6 +193,7 @@
             }
           ]
         },
+        "personalData": [],
         "type": "page"
       },
       "tonsOfOptions": {
@@ -313,6 +316,7 @@
             }
           ]
         },
+        "personalData": [],
         "type": "page"
       }
     }
