@@ -1,0 +1,41 @@
+import { Callout, Tabs, Steps, Cards, Tab } from "nextra/components";
+
+# Integrating Superfluid Checkout Widget in your App
+
+## A Simple Integration Guide for React
+
+This is a simple guide on integrating Superfluid Checkout Widget in your app using a React component and [wagmi](https://wagmi.sh).
+
+<Steps>
+### Step 1: Install the Necessary Packages
+
+```bash
+npm install --save @superfluid-finance/widget wagmi @superfluid-finance/tokenlist
+```
+
+### Step 2: Import the Widget and Dependencies
+
+```jsx
+import { WagmiConfig } from "wagmi";
+import SuperfluidWidget from '@superfluid-finance/widget';
+```
+
+### Step 3: Generate a Widget JSON
+
+Craft your Widget JSON following our step-by-step guide [here](../building-the-widget). This JSON dictates most of your widget's properties.
+
+### Step 4: Implement the Widget in Your Component
+
+```jsx
+export function MyComponent() {
+  return (
+    <WagmiConfig config={wagmiConfig}>
+      <SuperfluidWidget {...data} tokenList={superTokenList} type="dialog" walletManager={walletManager}>
+        {({ openModal }) => (<button onClick={() => openModal()}>Open Superfluid Widget</button>)}
+      </SuperfluidWidget>
+    </WagmiConfig>
+  );
+}
+```
+
+</Steps> 
