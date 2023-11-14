@@ -247,6 +247,66 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
+ docs:
+    dependencies:
+      '@emotion/react':
+        specifier: ^11.11.1
+        version: 11.11.1(@types/react@18.2.33)(react@18.2.0)
+      '@emotion/styled':
+        specifier: ^11.11.0
+        version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.33)(react@18.2.0)
+      '@mui/material':
+        specifier: ^5.14.16
+        version: 5.14.16(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
+      '@superfluid-finance/tokenlist':
+        specifier: ^3.3.2
+        version: 3.3.2
+      '@superfluid-finance/widget':
+        specifier: ^0.4.7
+        version: link:../packages/widget
+      '@web3modal/react':
+        specifier: ^2.7.1
+        version: 2.7.1(react-dom@18.2.0)(react@18.2.0)
+      '@web3modal/wagmi':
+        specifier: ^3.2.0
+        version: 3.2.0(typescript@5.2.2)(viem@1.18.3)
+      next:
+        specifier: ^13.5.6
+        version: 13.5.6(react-dom@18.2.0)(react@18.2.0)
+      nextra:
+        specifier: latest
+        version: 2.13.2(next@13.5.6)(react-dom@18.2.0)(react@18.2.0)
+      nextra-theme-docs:
+        specifier: latest
+        version: 2.13.2(next@13.5.6)(nextra@2.13.2)(react-dom@18.2.0)(react@18.2.0)
+      prettier:
+        specifier: ^3.0.3
+        version: 3.0.3
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      remark-admonitions:
+        specifier: ^1.2.1
+        version: 1.2.1
+      typedoc-nextra:
+        specifier: ^0.1.6
+        version: 0.1.6
+      viem:
+        specifier: ^1.18.3
+        version: 1.18.3(typescript@5.2.2)(zod@3.22.4)
+      wagmi:
+        specifier: ^1.4.5
+        version: 1.4.5(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)(viem@1.18.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^20.8.8
+        version: 20.8.9
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
 
   examples/b2b-service-demo:
     dependencies:
