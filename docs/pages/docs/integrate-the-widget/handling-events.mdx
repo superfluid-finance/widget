@@ -1,0 +1,18 @@
+import { Callout, Tabs, Steps, Cards, Tab } from "nextra/components";
+
+## Events Handling
+
+Blockchain Events play a crucial role in understanding the real-time behavior of streams. The primary event to watch for is the `flowUpdated` event. You can retrieve these events from our subgraph or query them directly on-chain.
+
+```graphql
+query MyQuery {
+  flowUpdatedEvents(where: {receiver: "MY_ADDRESS"}) {
+    sender
+    token
+    flowRate
+    timestamp
+  }
+}
+```
+
+<Callout> Use our [console playground](https://console.superfluid.finance/subgraph) to find the right queries for you. Check out our [protocol docs](https://docs.superfluid.finance/superfluid/developers/subgraph) for links to all of our Subgraph APIs  </Callout>
