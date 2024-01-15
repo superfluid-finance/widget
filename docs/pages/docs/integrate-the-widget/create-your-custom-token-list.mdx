@@ -1,3 +1,5 @@
+import { Callout} from "nextra/components";
+
 # Create your Custom Token list
 As you saw in the [Integration Section](/docs/integrate-the-widget/how-to-integrate.mdx), you can use Superfluid's Token List package to get the list of tokens supported by Superfluid.
 However, you can also create your own token list and inject it into the widget.
@@ -42,4 +44,9 @@ Your token list should be a JSON file following a structure like so:
 }
 ```
 
-The `tokens` array should contain all the tokens you want to support in your application.
+<Callout type="info">
+
+The `tokens` array should contain all the tokens you want to support in your application. Once your token list is ready, you can inject it into the widget by passing it as a prop `tokenList` to the `SuperfluidWidget` component.
+For further instructions, check [Integration Section](/docs/integrate-the-widget/how-to-integrate.mdx).
+
+</Callout>
