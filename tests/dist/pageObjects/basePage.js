@@ -1,5 +1,4 @@
 import { expect } from "@playwright/test";
-
 export let randomDetailsSet = {
   name: "",
   description: "",
@@ -131,10 +130,7 @@ export const demoOptions = [
 ];
 export class BasePage {
   static shortenHex(address, length = 4) {
-    return `${address.substring(0, 2 + length)}...${address.substring(
-      address.length - length,
-      address.length,
-    )}`;
+    return `${address.substring(0, 2 + length)}...${address.substring(address.length - length, address.length)}`;
   }
   static approximateIfDecimal(numStr) {
     const hasDecimal = numStr.includes(".");

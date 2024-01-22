@@ -1,13 +1,11 @@
 import sfMeta from "@superfluid-finance/metadata";
 import { extendedSuperTokenList } from "@superfluid-finance/tokenlist";
 import { ethers } from "ethers";
-
 import {
   cfAv1ForwarderABI,
   erc20ABI,
   superTokenABI,
 } from "./abis/wagmi-generated.js";
-
 export class EthHelper {
   wallet;
   provider;

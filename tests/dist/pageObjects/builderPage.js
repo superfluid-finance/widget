@@ -1,14 +1,12 @@
 import { expect, test } from "@playwright/test";
 import { ethers } from "ethers";
 import fs from "fs";
-
 import {
   BasePage,
   randomDetailsSet,
   randomReceiver,
   supportedNetworks,
 } from "./basePage.js";
-
 export class BuilderPage extends BasePage {
   page;
   stylingTab;

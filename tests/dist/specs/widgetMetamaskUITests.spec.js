@@ -1,7 +1,6 @@
 import { rebounderAddresses } from "../pageObjects/basePage.js";
 import { WidgetPage } from "../pageObjects/widgetPage.js";
 import { test } from "../walletSetup.js";
-
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });

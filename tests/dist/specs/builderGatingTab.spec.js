@@ -1,7 +1,5 @@
 import { test } from "@playwright/test";
-
 import { BuilderPage } from "../pageObjects/builderPage.js";
-
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });

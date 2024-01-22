@@ -1,6 +1,5 @@
 import { expect, test } from "@playwright/test";
 import metamask from "@synthetixio/synpress/commands/metamask.js";
-
 import { EthHelper } from "../helpers/ethHelper.js";
 import {
   BasePage,
@@ -8,7 +7,6 @@ import {
   randomReceiver,
   supportedNetworks,
 } from "./basePage.js";
-
 export class WidgetPage extends BasePage {
   page;
   chosenFlowRate;
@@ -327,9 +325,7 @@ export class WidgetPage extends BasePage {
   getTransactionTypeString(type) {
     switch (type) {
       case "wrap":
-        return `Wrap ${this.selectedTokenDuringTest.slice(0, -1)} into ${
-          this.selectedTokenDuringTest
-        }`;
+        return `Wrap ${this.selectedTokenDuringTest.slice(0, -1)} into ${this.selectedTokenDuringTest}`;
       case "modify":
         return "Modify Stream";
       case "send":

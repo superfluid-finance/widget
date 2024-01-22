@@ -1,10 +1,8 @@
 import metamask from "@synthetixio/synpress/commands/metamask.js";
-
 import { paymentOptions } from "../pageObjects/basePage.js";
 import { BuilderPage } from "../pageObjects/builderPage.js";
 import { WidgetPage } from "../pageObjects/widgetPage.js";
 import { test } from "../walletSetup.js";
-
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
 });

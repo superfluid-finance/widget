@@ -82,8 +82,8 @@ export function ContractWriteManager({
             },
           }
         : prepareResult.isSuccess
-        ? prepareResult.config
-        : {}
+          ? prepareResult.config
+          : {}
       : {}),
     onError: console.error,
     onSuccess: ({ hash }) =>

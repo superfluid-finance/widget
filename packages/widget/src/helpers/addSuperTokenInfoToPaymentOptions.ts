@@ -19,8 +19,8 @@ export function addSuperTokenInfoToPaymentOptions(
               superToken.extensions.superTokenInfo.underlyingTokenAddress,
             )
           : superToken.extensions.superTokenInfo.type === "Native Asset"
-          ? getNativeAsset(paymentOption.chainId)
-          : null;
+            ? getNativeAsset(paymentOption.chainId)
+            : null;
 
       return {
         paymentOption,

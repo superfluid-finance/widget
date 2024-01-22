@@ -1,10 +1,8 @@
 import { chromium, test as base } from "@playwright/test";
 import metamask from "@synthetixio/synpress/commands/metamask.js";
 import helpers from "@synthetixio/synpress/helpers.js";
-
 import { EthHelper } from "./helpers/ethHelper.js";
 import { rebounderAddresses } from "./pageObjects/basePage.js";
-
 export const test = base.extend({
   context: async ({}, use) => {
     // required for synpress

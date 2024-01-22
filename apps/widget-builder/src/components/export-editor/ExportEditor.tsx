@@ -107,8 +107,8 @@ const ExportEditor: FC = () => {
             {selectedExportOption === "ipfs"
               ? "You’ll create a hosted link to your checkout which you can embed in your CTAs."
               : selectedExportOption === "json"
-              ? "Use this JSON configuration when embedding react or web component directly to your code."
-              : ""}
+                ? "Use this JSON configuration when embedding react or web component directly to your code."
+                : ""}
           </Typography>
         </Box>
         {switchExportOption(selectedExportOption, json)}
