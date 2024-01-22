@@ -1,0 +1,24 @@
+{
+  "*": {
+    "type": "page"
+  },
+  "docs": {
+    "title": "Documentation",
+    "type": "page"
+  },
+  "api-reference": {
+    "title": "API Reference ↗",
+    "href": "https://superfluid-widget-reference-docs.vercel.app/",
+    "type": "page",
+    "newWindow": true
+  },
+  "about": {
+    "title": "About ↗",
+    "type": "page",
+    "href": "https://www.superfluid.finance/subscriptions",
+    "newWindow": true
+  },
+  "index": {
+    "title": "Home"
+  }
+}
