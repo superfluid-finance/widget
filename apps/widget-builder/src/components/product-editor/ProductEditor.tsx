@@ -1,12 +1,5 @@
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import {
-  Box,
-  Fab,
-  Stack,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Fab, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import {
   PersonalDataField,
   PersonalDataFieldType,
