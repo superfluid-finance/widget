@@ -1,23 +1,37 @@
-import SuperfluidWidget from "@superfluid-finance/widget";
+import SuperfluidWidget, {
+  supportedNetwork,
+  supportedNetworks,
+  WalletManager,
+} from "@superfluid-finance/widget";
 import { extendedSuperTokenList } from "@superfluid-finance/widget/tokenlist";
-import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
-import { WagmiConfig } from "wagmi";
-import { polygonMumbai } from "wagmi/chains";
+import {
+  EthereumClient,
+  w3mConnectors,
+  w3mProvider,
+} from "@web3modal/ethereum";
+import { useWeb3Modal } from "@web3modal/react";
+import { useMemo } from "react";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
 
 import styles from "./widget.module.css";
 
 const projectId = "e55d3cff2ce4a0f8068d58b4c6648246";
 
-const metadata = {
-  name: "Web3Modal",
-  description: "Web3Modal Example",
-  url: "https://web3modal.com",
-  icons: ["https://avatars.githubusercontent.com/u/37784886"],
-};
+const { publicClient } = configureChains(
+  [supportedNetwork.polygonMumbai],
+  [w3mProvider({ projectId })],
+);
 
-const chains = [polygonMumbai];
+const wagmiConfig = createConfig({
+  autoConnect: false,
+  connectors: w3mConnectors({
+    projectId,
+    chains: supportedNetworks,
+  }),
+  publicClient,
+});
+const ethereumClient = new EthereumClient(wagmiConfig, supportedNetworks);
 
-const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 const widgetBuilderTokenList = extendedSuperTokenList;
 const data = {
   productDetails: {
@@ -87,12 +101,28 @@ const data = {
   type: "drawer" as "drawer" | "dialog" | "full-screen",
 };
 
-createWeb3Modal({ wagmiConfig, projectId, chains });
-
 export function Widget() {
+  const { open, isOpen, setDefaultChain } = useWeb3Modal();
+  const walletManager = useMemo<WalletManager>(
+    () => ({
+      open: ({ chain }) => {
+        if (chain) {
+          setDefaultChain(chain);
+        }
+        open();
+      },
+      isOpen,
+    }),
+    [open, isOpen, setDefaultChain],
+  );
+
   return (
     <WagmiConfig config={wagmiConfig}>
-      <SuperfluidWidget {...data} tokenList={widgetBuilderTokenList}>
+      <SuperfluidWidget
+        {...data}
+        tokenList={widgetBuilderTokenList}
+        walletManager={walletManager}
+      >
         {({ openModal }) => (
           <button className={styles.Button} onClick={() => openModal()}>
             Preview Checkout Widget
