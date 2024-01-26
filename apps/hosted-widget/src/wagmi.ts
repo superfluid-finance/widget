@@ -1,5 +1,6 @@
 import { supportedNetworks } from "@superfluid-finance/widget";
-import { w3mConnectors, w3mProvider } from "@web3modal/ethereum";
+import { walletConnectProvider } from "@web3modal/wagmi";
+import { defaultWagmiConfig } from "@web3modal/wagmi/react";
 import { configureChains, createConfig } from "wagmi";
 import { SafeConnector } from "wagmi/connectors/safe";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
@@ -26,7 +27,9 @@ const { chains, publicClient } = configureChains(supportedNetworks, [
       };
     },
   }),
-  w3mProvider({ projectId: walletConnectProjectId }),
+  walletConnectProvider({
+    projectId: walletConnectProjectId,
+  }),
   publicProvider(),
 ]);
 
@@ -40,13 +43,16 @@ const safeConnector = new SafeConnector({
   },
 });
 
+const w3mConnectors = () =>
+  defaultWagmiConfig({
+    projectId: walletConnectProjectId,
+    chains: wagmiChains,
+  }).connectors;
+
 export const wagmiConfig = createConfig({
   autoConnect: false,
   connectors: [
-    ...w3mConnectors({
-      projectId: walletConnectProjectId,
-      chains: wagmiChains,
-    }),
+    ...w3mConnectors(),
     ...(safeConnector.ready ? [safeConnector] : []),
   ],
   publicClient,

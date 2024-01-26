@@ -5,12 +5,8 @@ import SuperfluidWidget, {
   supportedNetworks,
   WalletManager,
 } from "@superfluid-finance/widget";
-import {
-  EthereumClient,
-  w3mConnectors,
-  w3mProvider,
-} from "@web3modal/ethereum";
-import { useWeb3Modal, Web3Modal } from "@web3modal/react";
+import { defaultWagmiConfig, walletConnectProvider } from "@web3modal/wagmi";
+import { useWeb3Modal, useWeb3ModalState } from "@web3modal/wagmi/react";
 import { useMemo } from "react";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 
@@ -19,22 +15,30 @@ import productDetails from "./productDetails";
 
 const projectId = "952483bf7a0f5ace4c40eb53967f1368";
 
-const { publicClient } = configureChains(supportedNetworks, [
-  w3mProvider({ projectId }),
-]);
+const { publicClient, chains: wagmiChains } = configureChains(
+  supportedNetworks,
+  [
+    walletConnectProvider({
+      projectId,
+    }),
+  ],
+);
+
+const w3mConnectors = () =>
+  defaultWagmiConfig({
+    projectId,
+    chains: wagmiChains,
+  }).connectors;
 
 const wagmiConfig = createConfig({
   autoConnect: false,
-  connectors: w3mConnectors({
-    projectId,
-    chains: supportedNetworks,
-  }),
+  connectors: w3mConnectors(),
   publicClient,
 });
-const ethereumClient = new EthereumClient(wagmiConfig, supportedNetworks);
 
 function App() {
-  const { open, isOpen, setDefaultChain } = useWeb3Modal();
+  const { open, setDefaultChain } = useWeb3Modal();
+  const { open: isOpen } = useWeb3ModalState();
   const walletManager = useMemo<WalletManager>(
     () => ({
       open: ({ chain }) => {
@@ -93,7 +97,6 @@ function App() {
           )}
         </SuperfluidWidget>
       </WagmiConfig>
-      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </>
   );
 }

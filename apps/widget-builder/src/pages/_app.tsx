@@ -2,12 +2,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { supportedNetworks } from "@superfluid-finance/widget";
-import {
-  EthereumClient,
-  w3mConnectors,
-  w3mProvider,
-} from "@web3modal/ethereum";
-import { Web3Modal } from "@web3modal/react";
+import { defaultWagmiConfig, walletConnectProvider } from "@web3modal/wagmi";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
@@ -39,20 +34,24 @@ const { chains, publicClient } = configureChains(supportedNetworks, [
       };
     },
   }),
-  w3mProvider({ projectId }),
+  walletConnectProvider({
+    projectId,
+  }),
   publicProvider(),
 ]);
 export const wagmiChains = chains;
 
-const wagmiConfig = createConfig({
-  autoConnect: false,
-  connectors: w3mConnectors({
+const w3mConnectors = () =>
+  defaultWagmiConfig({
     projectId,
     chains: wagmiChains,
-  }),
+  }).connectors;
+
+const wagmiConfig = createConfig({
+  autoConnect: false,
+  connectors: w3mConnectors(),
   publicClient,
 });
-const ethereumClient = new EthereumClient(wagmiConfig, supportedNetworks);
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -76,11 +75,6 @@ export default function MyApp(props: MyAppProps) {
           <Component {...pageProps} />
           <Analytics />
         </WagmiConfig>
-        <Web3Modal
-          projectId={projectId}
-          ethereumClient={ethereumClient}
-          themeVariables={{ "--w3m-z-index": "1210" }}
-        />
       </ThemeProvider>
     </CacheProvider>
   );

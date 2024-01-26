@@ -1,22 +1,17 @@
-import { EthereumClient } from "@web3modal/ethereum";
-import { Web3Modal } from "@web3modal/react";
+import { createWeb3Modal } from "@web3modal/wagmi/react";
 import * as React from "react";
 import { WagmiConfig } from "wagmi";
 
 import { wagmiChains, wagmiConfig, walletConnectProjectId } from "./wagmi";
 
-const ethereumClient = new EthereumClient(wagmiConfig, wagmiChains);
+const web3modal = createWeb3Modal({
+  wagmiConfig,
+  projectId: walletConnectProjectId,
+  chains: wagmiChains,
+});
 
 export function WagmiProviders({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
-  return (
-    <WagmiConfig config={wagmiConfig}>
-      {mounted && children}
-      <Web3Modal
-        projectId={walletConnectProjectId}
-        ethereumClient={ethereumClient}
-      />
-    </WagmiConfig>
-  );
+  return <WagmiConfig config={wagmiConfig}>{mounted && children}</WagmiConfig>;
 }

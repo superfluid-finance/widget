@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import { Theme } from "@mui/material/styles";
 import SuperfluidWidget from "@superfluid-finance/widget";
 import { extendedSuperTokenList } from "@superfluid-finance/widget/tokenlist";
-import { useWeb3Modal } from "@web3modal/react";
+import { useWeb3Modal, useWeb3ModalState } from "@web3modal/wagmi/react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -23,7 +23,9 @@ type TypographyOptions = Theme["typography"];
 const IPFSWidgetPage: NextPage = () => {
   const { query } = useRouter();
 
-  const { open, isOpen } = useWeb3Modal();
+  const { open } = useWeb3Modal();
+  const { open: isOpen } = useWeb3ModalState();
+
   const walletManager = useMemo(
     () => ({
       open,

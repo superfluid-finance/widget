@@ -7,7 +7,7 @@ import SuperfluidWidget, {
   WidgetProps as WidgetProps_,
 } from "@superfluid-finance/widget";
 import { extendedSuperTokenList } from "@superfluid-finance/widget/tokenlist";
-import { useWeb3Modal } from "@web3modal/react";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 import {
   createContext,
   CSSProperties,
@@ -211,7 +211,9 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     type,
   } = props;
 
-  const { open, isOpen, setDefaultChain } = useWeb3Modal();
+  const { open, setDefaultChain } = useWeb3Modal();
+  const { open: isOpen } = useWeb3ModalState();
+
   const walletManager = useMemo<WalletManager>(
     () => ({
       open: ({ chain }) => {

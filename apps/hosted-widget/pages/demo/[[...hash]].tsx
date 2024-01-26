@@ -3,6 +3,7 @@ import { Theme } from "@mui/material/styles";
 import SuperfluidWidget from "@superfluid-finance/widget";
 import tokenList from "@superfluid-finance/widget/tokenlist";
 import { useWeb3Modal } from "@web3modal/react";
+import { useWeb3ModalState } from "@web3modal/wagmi/react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -32,7 +33,9 @@ const IPFSWidgetPage: NextPage = () => {
 
   const [randomReceiver] = useState<`0x${string}`>(generateRandomReceiver());
 
-  const { open, isOpen } = useWeb3Modal();
+  const { open } = useWeb3Modal();
+  const { open: isOpen } = useWeb3ModalState();
+
   const walletManager = useMemo(
     () => ({
       open,
