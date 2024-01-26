@@ -1,29 +1,12 @@
-import { Theme, ThemeOptions } from "@mui/material/styles";
+import { createTheme, ThemeOptions } from "@mui/material";
 import { deepmerge } from "@mui/utils";
 
 type ThemeMode = "light" | "dark";
 
-type DefaultTypography = Theme["typography"];
-
-interface TypographyCustomVariants {
-  label: React.CSSProperties;
-}
-
-declare module "@mui/material/styles" {
-  interface TypographyVariants extends TypographyCustomVariants {}
-  interface TypographyVariantsOptions extends TypographyCustomVariants {}
-}
-
-declare module "@mui/material/Typography" {
-  interface TypographyPropsVariantOverrides {
-    label: true;
-  }
-}
-
 export const ELEVATION1_BG = `linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.03) 100%)`;
 
-export const buildThemeOptions = (mode: ThemeMode): ThemeOptions => {
-  const themeWithDesignTokens = getCoreTheme(mode);
+export const buildThemeOptions = (mode: ThemeMode): WidgetThemeOptions => {
+  const themeWithDesignTokens = getCoreThemeOptions(mode);
 
   return deepmerge(
     themeWithDesignTokens,
@@ -31,22 +14,34 @@ export const buildThemeOptions = (mode: ThemeMode): ThemeOptions => {
   );
 };
 
+/**
+ * The theme options are derived from MUI's theme options.
+ */
+export type WidgetThemeOptions = Omit<
+  ThemeOptions,
+  "unstable_strictMode" | "unstable_sxConfig"
+>;
+
+/**
+ * Creates the theme that will ultimately be used inside the widget.
+ */
+export const createWidgetTheme = (themeOptions?: WidgetThemeOptions) => {
+  const defaultThemeOptions = buildThemeOptions(
+    themeOptions?.palette?.mode || "light",
+  );
+  return createTheme(deepmerge(defaultThemeOptions, themeOptions));
+};
+
 const getModeStyleCB =
   (mode: ThemeMode) =>
   <T>(lightStyle: T, darkStyle: T): T =>
     mode === "dark" ? darkStyle : lightStyle;
 
-interface CoreThemeOptions
-  extends Required<
-    Pick<
-      ThemeOptions,
-      "palette" | "shadows" | "transitions" | "breakpoints" | "shape"
-    >
-  > {
-  typography: DefaultTypography;
-}
+type CoreThemeOptions = WidgetThemeOptions & {
+  typography: typeof coreTypography;
+};
 
-const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
+const getCoreThemeOptions = (mode: ThemeMode): CoreThemeOptions => {
   const getModeStyle = getModeStyleCB(mode);
   return {
     palette: {
@@ -89,80 +84,7 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
       },
       divider: getModeStyle("#E9EBEF", "#FFFFFF1F"),
     },
-    typography: {
-      fontSize: 16,
-      htmlFontSize: 16,
-
-      button: {
-        textTransform: "none",
-      },
-
-      h1: {
-        fontSize: "3.875rem",
-        fontWeight: 500,
-        lineHeight: 1,
-      },
-
-      h2: {
-        fontSize: "2.625rem",
-        fontWeight: 500,
-        lineHeight: 1,
-      },
-
-      h3: {
-        fontSize: "2rem",
-        fontWeight: 500,
-        lineHeight: 1.25,
-      },
-
-      h4: {
-        fontSize: "1.75rem",
-        fontWeight: 500,
-        lineHeight: 1.25,
-      },
-
-      h5: {
-        fontSize: "1.5rem",
-        fontWeight: 500,
-        lineHeight: 1.25,
-      },
-
-      subtitle1: {
-        fontSize: "1.25rem",
-        fontWeight: 500,
-        lineHeight: 1.5,
-      },
-
-      subtitle2: {
-        fontSize: "1.125rem",
-        fontWeight: 400,
-        lineHeight: 1.5,
-      },
-
-      body1: {
-        fontSize: "1rem",
-        fontWeight: 500,
-        lineHeight: 1.5,
-      },
-
-      body2: {
-        fontSize: "1rem",
-        fontWeight: 400,
-        lineHeight: 1.5,
-      },
-
-      caption: {
-        fontSize: "0.875rem",
-        lineHeight: 1.25,
-        fontWeight: 400,
-      },
-
-      label: {
-        fontSize: "0.75rem",
-        lineHeight: 1.5,
-        fontWeight: 400,
-      },
-    } as DefaultTypography,
+    typography: coreTypography,
     // TODO: Only elevation 1 is used, find a way to overwrite only the first one.
     shadows: [
       "none", // elevation 0
@@ -292,14 +214,81 @@ const getCoreTheme = (mode: ThemeMode): CoreThemeOptions => {
   };
 };
 
+const coreTypography = {
+  fontSize: 16,
+  htmlFontSize: 16,
+
+  button: {
+    textTransform: "none",
+  },
+
+  h1: {
+    fontSize: "3.875rem",
+    fontWeight: 500,
+    lineHeight: 1,
+  },
+
+  h2: {
+    fontSize: "2.625rem",
+    fontWeight: 500,
+    lineHeight: 1,
+  },
+
+  h3: {
+    fontSize: "2rem",
+    fontWeight: 500,
+    lineHeight: 1.25,
+  },
+
+  h4: {
+    fontSize: "1.75rem",
+    fontWeight: 500,
+    lineHeight: 1.25,
+  },
+
+  h5: {
+    fontSize: "1.5rem",
+    fontWeight: 500,
+    lineHeight: 1.25,
+  },
+
+  subtitle1: {
+    fontSize: "1.25rem",
+    fontWeight: 500,
+    lineHeight: 1.5,
+  },
+
+  subtitle2: {
+    fontSize: "1.125rem",
+    fontWeight: 400,
+    lineHeight: 1.5,
+  },
+
+  body1: {
+    fontSize: "1rem",
+    fontWeight: 500,
+    lineHeight: 1.5,
+  },
+
+  body2: {
+    fontSize: "1rem",
+    fontWeight: 400,
+    lineHeight: 1.5,
+  },
+
+  caption: {
+    fontSize: "0.875rem",
+    lineHeight: 1.25,
+    fontWeight: 400,
+  },
+} as const satisfies ThemeOptions["typography"];
+
 export function getThemedComponents(
   mode: ThemeMode,
   coreThemeOptions: CoreThemeOptions, // Core config can be used in components
-): ThemeOptions {
+): WidgetThemeOptions {
   // This is used to handle light and dark themes
   const getModeStyle = getModeStyleCB(mode);
-
-  const typography = coreThemeOptions.typography as DefaultTypography;
 
   return {
     components: {
@@ -358,7 +347,7 @@ export function getThemedComponents(
       MuiPaper: {
         styleOverrides: {
           root: {
-            border: `1px solid ${coreThemeOptions.palette.divider}`,
+            border: `1px solid ${coreThemeOptions.palette!.divider}`,
           },
         },
       },
@@ -374,7 +363,7 @@ export function getThemedComponents(
         styleOverrides: {
           vertical: {
             borderBottom: "1px solid",
-            borderColor: coreThemeOptions.palette.divider,
+            borderColor: coreThemeOptions.palette!.divider,
             ":last-child": {
               border: "none",
             },
@@ -427,7 +416,7 @@ export function getThemedComponents(
             paddingRight: 28,
           },
           label: {
-            ...typography.subtitle2,
+            ...coreThemeOptions.typography.subtitle2,
             fontWeight: 500,
           },
         },

@@ -12,12 +12,14 @@ import { useWidget } from "./WidgetContext.js";
 type Props = {
   children: (contextValue: StepperContextValue) => ChildrenProp;
   totalSteps: number;
+  walletConnectStep: number;
   initialStep?: number;
 };
 
 export function StepperProvider({
   children,
   totalSteps,
+  walletConnectStep = 0,
   initialStep = 0,
 }: Props) {
   const [activeStep, setActiveStep] = useState(initialStep);
@@ -30,6 +32,7 @@ export function StepperProvider({
     (currentStep: number) => {
       const isStepBeforeReview = currentStep === totalSteps - 4;
       const nextActiveStep = Math.min(currentStep + 1, totalSteps - 1);
+
       if (isStepBeforeReview) {
         handleSubmit((formValues) => {
           submitCommands(formValuesToCommands(formValues as ValidFormValues));
@@ -48,18 +51,23 @@ export function StepperProvider({
 
   const { isConnected } = useAccount();
 
+  const isActiveStepGreaterThanWalletConnectStep =
+    activeStep > walletConnectStep;
   useEffect(() => {
-    if (!isConnected) {
-      setActiveStep(0);
+    if (!isConnected && isActiveStepGreaterThanWalletConnectStep) {
+      setActiveStep(walletConnectStep);
     }
-  }, [isConnected]);
+  }, [walletConnectStep, isConnected]);
 
   const {
     stepper: { orientation },
   } = useWidget();
 
   const contextValue = {
-    activeStep: isConnected ? activeStep : 0,
+    activeStep:
+      isConnected || !isActiveStepGreaterThanWalletConnectStep
+        ? activeStep
+        : walletConnectStep,
     setActiveStep,
     handleNext,
     handleBack,

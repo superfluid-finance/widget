@@ -1,6 +1,17 @@
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import { Box, Fab, Stack, TextField, Tooltip, Typography } from "@mui/material";
-import { FC } from "react";
+import {
+  Box,
+  Fab,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import {
+  PersonalDataField,
+  PersonalDataFieldType,
+} from "@superfluid-finance/widget/utils";
+import { FC, useState } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 
 import useDemoMode from "../../hooks/useDemoMode";
@@ -11,13 +22,30 @@ import { WidgetProps } from "../widget-preview/WidgetPreview";
 const ProductEditor: FC = () => {
   const { control, watch } = useFormContext<WidgetProps>();
 
+  const [selectedPersonalDataFields, setSelectedPersonalDataFields] = useState<
+    Partial<Record<PersonalDataFieldType, boolean>>
+  >({});
+
+  watch(["paymentDetails.paymentOptions"]);
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "paymentDetails.paymentOptions", // unique name for your Field Array
+    name: "personalData",
   });
-
-  const [paymentOptions] = watch(["paymentDetails.paymentOptions"]);
   const { setDemoProductDetails } = useDemoMode();
+
+  const onPersonalDataSelectionChange = (field: PersonalDataField) => {
+    const isFieldSelected =
+      selectedPersonalDataFields[field.name as PersonalDataFieldType];
+
+    const index = fields.findIndex(({ name }) => name === field.name);
+
+    isFieldSelected ? remove(index) : append(field);
+
+    setSelectedPersonalDataFields((prev) => ({
+      ...prev,
+      [field.name]: !isFieldSelected,
+    }));
+  };
 
   return (
     <>

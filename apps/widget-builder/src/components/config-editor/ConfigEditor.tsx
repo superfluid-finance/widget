@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import {
   paymentDetailsSchema,
+  personalDataSchema,
   productDetailsSchema,
 } from "@superfluid-finance/widget";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -34,6 +35,7 @@ type ConfigEditorProps = {
 const schema = z.object({
   productDetails: productDetailsSchema,
   paymentDetails: paymentDetailsSchema,
+  personalData: personalDataSchema,
   type: z.enum(["dialog", "drawer", "full-screen", "page"]),
 });
 
@@ -103,6 +105,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
             setValue("productDetails", parseResult.data.productDetails);
             setValue("type", parseResult.data.type);
             setValue("paymentDetails", parseResult.data.paymentDetails);
+            setValue("personalData", parseResult.data.personalData);
             setSaved(true);
             setTimeout(() => {
               setSaved(false);

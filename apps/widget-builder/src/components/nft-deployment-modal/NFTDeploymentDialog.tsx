@@ -78,6 +78,7 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
           />
           <Stack sx={{ mb: 2 }}>
             <Typography
+              data-testid="nft-success-message"
               variant="h6"
               textAlign="center"
             >{`You deployed an NFT contract for ${successfulDeployments} networks.${

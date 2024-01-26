@@ -1,6 +1,7 @@
 import { colors, Fab, SelectChangeEvent, ThemeOptions } from "@mui/material";
 import SuperfluidWidget, {
   PaymentOption,
+  PersonalData,
   ProductDetails,
   WalletManager,
   WidgetProps as WidgetProps_,
@@ -55,6 +56,7 @@ export type WidgetProps = {
   paymentDetails: WidgetProps_["paymentDetails"] & {
     paymentOptions: PaymentOption[];
   };
+  personalData: PersonalData;
   displaySettings: DisplaySettings;
   type: Layout;
 };
@@ -74,6 +76,7 @@ export const WidgetContext = createContext<WidgetProps>({
     paymentOptions: [],
   },
   type: "dialog",
+  personalData: [],
   displaySettings: {
     stepperOrientation: "vertical",
     darkMode: false,
@@ -95,6 +98,7 @@ const switchLayout = (
   layout: Layout,
   productDetails: ProductDetails,
   paymentDetails: WidgetProps_["paymentDetails"],
+  personalData: WidgetProps_["personalData"],
   theme: ThemeOptions,
   walletManager: WalletManager,
   stepperOrientation: "vertical" | "horizontal",
@@ -103,19 +107,40 @@ const switchLayout = (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
+      personalData={personalData}
       tokenList={widgetBuilderTokenList}
       type={layout}
       theme={theme}
       walletManager={walletManager}
       stepper={{ orientation: stepperOrientation }}
-      eventListeners={{
-        onTransactionSent: console.log,
-      }}
+      eventListeners={
+        {
+          // onButtonClick: () => { console.log("onButtonClick eventListener") },
+        }
+      }
+      callbacks={
+        {
+          // onButtonClick: () => { console.log("onButtonClick callback") },
+          // validatePersonalData: async () => {
+          //   return new Promise((resolve) => {
+          //     setTimeout(() => {
+          //       resolve({
+          //         email: {
+          //           success: false,
+          //           message: "Async validation failed!",
+          //         },
+          //       });
+          //     }, 1000);
+          //   });
+          // },
+        }
+      }
     />
   ) : (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
+      personalData={personalData}
       tokenList={widgetBuilderTokenList}
       type={layout}
       theme={theme}
@@ -178,7 +203,13 @@ export const mapDisplaySettingsToTheme = (
 });
 
 const WidgetPreview: FC<WidgetProps> = (props) => {
-  const { displaySettings, paymentDetails, productDetails, type } = props;
+  const {
+    displaySettings,
+    paymentDetails,
+    productDetails,
+    personalData,
+    type,
+  } = props;
 
   const { open, isOpen, setDefaultChain } = useWeb3Modal();
   const walletManager = useMemo<WalletManager>(
@@ -208,6 +239,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
           type,
           productDetails,
           paymentDetails,
+          personalData,
           theme,
           walletManager,
           displaySettings.stepperOrientation,

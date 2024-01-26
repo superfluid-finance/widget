@@ -14,13 +14,12 @@ import { ViewProps } from "./WidgetView.js";
  * The entrypoint to the Superfluid widget.
  */
 export function Widget({
-  productDetails = {
-    name: "",
-  },
+  productDetails = defaultProductDetails,
   tokenList = extendedSuperTokenList,
-  stepper = { orientation: "vertical" },
+  stepper = defaultStepper,
   type = "page",
   networkAssets = defaultNetworkAssets,
+  personalData = defaultPersonalData,
   ...rest
 }: WidgetProps & Partial<ViewProps>) {
   const props = {
@@ -29,6 +28,7 @@ export function Widget({
     stepper,
     type,
     networkAssets,
+    personalData,
     ...rest,
   };
 
@@ -58,3 +58,11 @@ export function Widget({
     </ErrorBoundary>
   );
 }
+
+const defaultProductDetails = {
+  name: "",
+} as const;
+
+const defaultStepper = { orientation: "vertical" } as const;
+
+const defaultPersonalData = [] as any[];

@@ -12,6 +12,7 @@ import {
   SupportedNetwork,
   supportedNetworkSchema,
 } from "./core/index.js";
+import { personalDataSchema } from "./core/PersonalData.js";
 
 const paymentOptionWithTokenInfoSchema = z.object({
   paymentOption: paymentOptionSchema,
@@ -26,6 +27,7 @@ export const checkoutFormSchema = z.object({
   accountAddress: addressSchema,
   network: supportedNetworkSchema.transform((x) => x as SupportedNetwork),
   paymentOptionWithTokenInfo: paymentOptionWithTokenInfoSchema,
+  personalData: personalDataSchema,
   flowRate: flowRateSchema.refine((x) => parseEther(x.amountEther) > 0n, {
     message: "Flow rate must be greater than 0.",
   }),

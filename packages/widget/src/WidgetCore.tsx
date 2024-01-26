@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Alert,
-  AlertTitle,
-  createTheme,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
-import { deepmerge } from "@mui/utils";
+import { Alert, AlertTitle, ThemeProvider, Typography } from "@mui/material";
 import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import memoize from "lodash.memoize";
 import { nanoid } from "nanoid";
@@ -23,16 +16,17 @@ import {
   WidgetProps,
 } from "./CheckoutConfig.js";
 import { ChainId, SupportedNetwork, supportedNetworks } from "./core/index.js";
+import { EventHandlers, runEventHandlers } from "./EventListeners.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { addSuperTokenInfoToPaymentOptions } from "./helpers/addSuperTokenInfoToPaymentOptions.js";
 import { filterSuperTokensFromTokenList } from "./helpers/filterSuperTokensFromTokenList.js";
 import { mapSupportedNetworksFromPaymentOptions } from "./helpers/mapSupportedNetworksFromPaymentOptions.js";
-import { buildThemeOptions } from "./theme.js";
+import { createWidgetTheme } from "./theme.js";
 import { WidgetContext, WidgetContextValue } from "./WidgetContext.js";
 import { ViewProps, WidgetView } from "./WidgetView.js";
 
 type Props = WidgetProps &
-  Required<Pick<WidgetProps, "tokenList" | "stepper">> &
+  Required<Pick<WidgetProps, "tokenList" | "stepper" | "personalData">> &
   Partial<ViewProps>;
 
 export function WidgetCore({
@@ -43,8 +37,10 @@ export function WidgetCore({
   walletManager: walletManager_,
   stepper: stepper_,
   eventListeners,
+  callbacks,
   type,
   networkAssets,
+  personalData,
   ..._viewProps
 }: Props) {
   const viewProps: ViewProps =
@@ -206,6 +202,40 @@ export function WidgetCore({
     [stepper_.orientation],
   );
 
+  const eventHandlers = useMemo<EventHandlers>(
+    () => ({
+      onButtonClick: runEventHandlers(
+        eventListeners?.onButtonClick,
+        callbacks?.onButtonClick,
+      ),
+      onRouteChange: runEventHandlers(
+        eventListeners?.onRouteChange,
+        callbacks?.onRouteChange,
+      ),
+      onTransactionSent: runEventHandlers(
+        eventListeners?.onTransactionSent,
+        callbacks?.onTransactionSent,
+      ),
+      onSuccess: runEventHandlers(
+        eventListeners?.onSuccess,
+        callbacks?.onSuccess,
+      ),
+      onSuccessButtonClick: runEventHandlers(
+        eventListeners?.onSuccessButtonClick,
+        callbacks?.onSuccessButtonClick,
+      ),
+      onPaymentOptionUpdate: runEventHandlers(
+        eventListeners?.onPaymentOptionUpdate,
+        callbacks?.onPaymentOptionUpdate,
+      ),
+      onPersonalDataUpdate: runEventHandlers(
+        eventListeners?.onPersonalDataUpdate,
+        callbacks?.onPersonalDataUpdate,
+      ),
+    }),
+    [eventListeners, callbacks],
+  );
+
   const checkoutState = useMemo<WidgetContextValue>(
     () => ({
       getNetwork,
@@ -215,6 +245,7 @@ export function WidgetCore({
       superTokens,
       productDetails,
       paymentDetails,
+      personalData,
       tokenList,
       networks,
       paymentOptionWithTokenInfoList,
@@ -224,15 +255,9 @@ export function WidgetCore({
         elevated: !["drawer", "dialog"].includes(viewProps.type),
       },
       type: viewProps.type,
-      eventListeners: {
-        onButtonClick: eventListeners?.onButtonClick ?? NOOP_FUNCTION,
-        onRouteChange: eventListeners?.onRouteChange ?? NOOP_FUNCTION,
-        onTransactionSent: eventListeners?.onTransactionSent ?? NOOP_FUNCTION,
-        onSuccess: eventListeners?.onSuccess ?? NOOP_FUNCTION,
-        onSuccessButtonClick:
-          eventListeners?.onSuccessButtonClick ?? NOOP_FUNCTION,
-        onPaymentOptionUpdate:
-          eventListeners?.onPaymentOptionUpdate ?? NOOP_FUNCTION,
+      eventHandlers,
+      callbacks: {
+        validatePersonalData: callbacks?.validatePersonalData ?? NOOP_FUNCTION,
       },
     }),
     [
@@ -243,27 +268,19 @@ export function WidgetCore({
       superTokens,
       productDetails,
       paymentDetails,
+      personalData,
       tokenList,
       networks,
       walletManager,
       stepper,
       viewProps.type,
-      eventListeners?.onTransactionSent,
-      eventListeners?.onSuccessButtonClick,
-      eventListeners?.onRouteChange,
-      eventListeners?.onTransactionSent,
-      eventListeners?.onSuccess,
-      eventListeners?.onPaymentOptionUpdate,
+      personalData,
+      eventHandlers,
+      callbacks,
     ],
   );
 
-  const theme = useMemo(() => {
-    const defaultThemeOptions = buildThemeOptions(
-      theme_?.palette?.mode || "light",
-    );
-    const themeOptions = deepmerge(defaultThemeOptions, theme_);
-    return createTheme(themeOptions);
-  }, [theme_]);
+  const theme = useMemo(() => createWidgetTheme(theme_), [theme_]);
 
   // TODO(KK): debug message about what token list is used?
 
@@ -299,4 +316,4 @@ export function WidgetCore({
   );
 }
 
-const NOOP_FUNCTION = () => {};
+export function NOOP_FUNCTION() {}

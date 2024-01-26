@@ -74,12 +74,14 @@ export default function Builder() {
 
   const { watch, control, getValues, setValue } = formMethods;
 
-  const [productDetails, paymentDetails, displaySettings, type] = watch([
-    "productDetails",
-    "paymentDetails",
-    "displaySettings",
-    "type",
-  ]);
+  const [productDetails, paymentDetails, personalData, displaySettings, type] =
+    watch([
+      "productDetails",
+      "paymentDetails",
+      "personalData",
+      "displaySettings",
+      "type",
+    ]);
 
   const [isConfigEditorOpen, setConfigEditorOpen] = useState(false);
 
@@ -229,6 +231,7 @@ export default function Builder() {
           {...{
             productDetails,
             paymentDetails,
+            personalData,
             displaySettings,
             type,
           }}

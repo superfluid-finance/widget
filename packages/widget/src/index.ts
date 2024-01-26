@@ -2,6 +2,7 @@
 
 import { Widget } from "./Widget.js";
 
+export type { Callbacks } from "./Callbacks.js";
 export type { WidgetProps } from "./CheckoutConfig.js";
 export type {
   ChainId,
@@ -10,6 +11,7 @@ export type {
   NetworkAssets,
   PaymentDetails,
   PaymentOption,
+  PersonalData,
   ProductDetails,
   SupportedNetwork,
   TimePeriod,
@@ -29,7 +31,10 @@ export type { WalletManager } from "./WalletManager.js";
 export {
   paymentDetailsSchema,
   paymentOptionSchema,
+  personalDataSchema,
   productDetailsSchema,
 } from "./core/index.js";
+export type { WidgetThemeOptions } from "./theme.js";
+export { createWidgetTheme } from "./theme.js";
 
 export default Widget;
