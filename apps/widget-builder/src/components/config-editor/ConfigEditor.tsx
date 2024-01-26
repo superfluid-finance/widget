@@ -16,6 +16,7 @@ import {
 import {
   existentialNFTSchema,
   paymentDetailsSchema,
+  personalDataSchema,
   productDetailsSchema,
 } from "@superfluid-finance/widget";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -35,6 +36,7 @@ type ConfigEditorProps = {
 const schema = z.object({
   productDetails: productDetailsSchema,
   paymentDetails: paymentDetailsSchema,
+  personalData: personalDataSchema,
   existentialNFT: existentialNFTSchema,
   type: z.enum(["dialog", "drawer", "full-screen", "page"]),
 });
@@ -105,6 +107,7 @@ const ConfigEditor: FC<ConfigEditorProps> = ({ value, setValue }) => {
             setValue("productDetails", parseResult.data.productDetails);
             setValue("type", parseResult.data.type);
             setValue("paymentDetails", parseResult.data.paymentDetails);
+            setValue("personalData", parseResult.data.personalData);
             setValue("existentialNFT", parseResult.data.existentialNFT);
             setSaved(true);
             setTimeout(() => {

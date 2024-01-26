@@ -77,12 +77,14 @@ export default function Builder() {
   const [
     productDetails,
     paymentDetails,
+    personalData,
     existentialNFT,
     displaySettings,
     type,
   ] = watch([
     "productDetails",
     "paymentDetails",
+    "personalData",
     "existentialNFT",
     "displaySettings",
     "type",
@@ -236,6 +238,7 @@ export default function Builder() {
           {...{
             productDetails,
             paymentDetails,
+            personalData,
             displaySettings,
             type,
           }}

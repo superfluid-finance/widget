@@ -3,7 +3,6 @@ import { Fragment, useCallback, useEffect } from "react";
 import { useQuery } from "wagmi";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
-import { runEventListener } from "./EventListeners.js";
 import { CommandPreview } from "./previews/CommandPreview.js";
 import { StepProps } from "./Stepper.js";
 import { useStepper } from "./StepperContext.js";
@@ -16,16 +15,16 @@ export default function StepContentReview({ stepIndex }: StepProps) {
 
   const { handleNext } = useStepper();
 
-  const { eventListeners } = useWidget();
+  const { eventHandlers } = useWidget();
 
   useEffect(() => {
-    runEventListener(eventListeners.onRouteChange, { route: "step_review" });
-  }, [eventListeners.onRouteChange]);
+    eventHandlers.onRouteChange({ route: "step_review" });
+  }, [eventHandlers.onRouteChange]);
 
   const onContinue = useCallback(() => {
-    runEventListener(eventListeners.onButtonClick, { type: "next_step" });
+    eventHandlers.onButtonClick({ type: "next_step" });
     handleNext(stepIndex);
-  }, [handleNext, eventListeners.onButtonClick, stepIndex]);
+  }, [handleNext, eventHandlers.onButtonClick, stepIndex]);
 
   const commandValidationSchema = useCommandValidationSchema();
 

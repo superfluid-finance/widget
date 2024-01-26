@@ -1,6 +1,9 @@
-import { ThemeOptions } from "@mui/material";
 import * as Sentry from "@sentry/nextjs";
-import { PaymentDetails, ProductDetails } from "@superfluid-finance/widget";
+import {
+  PaymentDetails,
+  ProductDetails,
+  WidgetThemeOptions,
+} from "@superfluid-finance/widget";
 import { useEffect, useState } from "react";
 
 const gateway = "https://cloudflare-ipfs.com";
@@ -11,7 +14,7 @@ type ExportJSON = {
   productDetails: ProductDetails;
   paymentDetails: PaymentDetails;
   layout: (typeof layoutTypes)[number];
-  theme: Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">;
+  theme: WidgetThemeOptions;
 };
 
 type Result = {

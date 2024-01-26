@@ -1,0 +1,33 @@
+import { Callout, Tabs } from "nextra/components"
+import Image from "next/image";
+
+# NFT Gating
+
+Gate your content using our special NFTs ! Use the widget builder to deploy your unique NFT, allowing you to effectively gate your products. Here's how it works:
+
+1. A user subscribes to your product.
+2. Upon subscription, an NFT token is assigned to them, serving as a proof of subscription.
+3. If a user's subscription ends or is terminated, their ERC721 balance drops to zero, meaning they no longer possess the NFT indicating their subscription.
+
+<Callout>
+The NFT acts as a dynamic pass, only valid during the user's subscription period. Once the subscription ceases, so does the NFT's validity.
+</Callout>
+
+## Deploying Your NFT for Gating Content
+
+In order to deploy your NFT collection along with your widget, follow these steps when creating your widget at the [Widget Builder](https://checkout-builder.superfluid.finance/builder):
+
+&nbsp;
+
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+<Image src="/nftGating.png" alt="NftGating" width={400} height={1000} />
+</div>
+
+- **NFT Symbol**: Provide a unique symbol for your NFT.
+- **NFT Name**: Give a name to your NFT.
+- **Contract owner**: The Ethereum address that will own the contract.
+- **NFT Image (optional)**: You can upload an image that represents your NFT.
+- **Network Selection**: Select the networks where you would like the NFT contracts to exist.
+
+---
+This feature uses Superfluid's Stream Gating. Learn More about it [here](https://github.com/superfluid-finance/stream-gating/).

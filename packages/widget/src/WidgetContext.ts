@@ -3,9 +3,11 @@ import { SuperTokenInfo, TokenInfo } from "@superfluid-finance/tokenlist";
 import { createContext, useContext } from "react";
 import { Address } from "viem";
 
+import { Callbacks } from "./Callbacks.js";
 import { CheckoutConfig } from "./CheckoutConfig.js";
 import { ChainId, ExistentialNFT, SupportedNetwork } from "./core/index.js";
-import { EventListeners } from "./EventListeners.js";
+import { PersonalData } from "./core/PersonalData.js";
+import { EventHandlers } from "./EventListeners.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
 import { WalletManager } from "./WalletManager.js";
 import { ViewProps } from "./WidgetView.js";
@@ -21,6 +23,7 @@ export type WidgetContextValue = {
   walletManager: WalletManager;
   existentialNFT?: ExistentialNFT;
   imageURI?: string;
+  personalData: PersonalData;
   stepper: {
     orientation: Orientation;
   };
@@ -28,7 +31,8 @@ export type WidgetContextValue = {
     elevated: boolean;
   };
   type: ViewProps["type"];
-  eventListeners: Required<EventListeners>;
+  eventHandlers: EventHandlers;
+  callbacks: Required<Pick<Callbacks, "validatePersonalData">>;
 } & Required<CheckoutConfig>;
 
 export const WidgetContext = createContext<WidgetContextValue | undefined>(

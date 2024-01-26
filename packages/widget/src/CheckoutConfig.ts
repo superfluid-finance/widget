@@ -1,7 +1,7 @@
-import { ThemeOptions } from "@mui/material";
 import { SuperTokenList } from "@superfluid-finance/tokenlist";
 import { z } from "zod";
 
+import { Callbacks } from "./Callbacks.js";
 import { existentialNFTSchema } from "./core/ExistentialNFT.js";
 import {
   NetworkAssets,
@@ -10,7 +10,9 @@ import {
   ProductDetails,
   productDetailsSchema,
 } from "./core/index.js";
+import { personalDataSchema } from "./core/PersonalData.js";
 import { EventListeners } from "./EventListeners.js";
+import { WidgetThemeOptions } from "./theme.js";
 import { WalletManager } from "./WalletManager.js";
 
 export const checkoutConfigSchema = z.object({
@@ -46,9 +48,8 @@ const widgetPropsSchema = z.object({
   /**
    * The MUI theme object to style the widget. Learn more about it from the MUI documentation: https://mui.com/material-ui/customization/default-theme/
    */
-  theme: z
-    .custom<Omit<ThemeOptions, "unstable_strictMode" | "unstable_sxConfig">>()
-    .optional(),
+  theme: z.custom<WidgetThemeOptions>().optional(),
+  personalData: personalDataSchema.optional(),
   /**
    * The symbol, name, owner and addresses of the deployed ExistentialNFT clones.
    */
@@ -69,6 +70,7 @@ const widgetPropsSchema = z.object({
    * @inheritdoc EventListeners
    */
   eventListeners: z.custom<EventListeners>().optional(),
+  callbacks: z.custom<Callbacks>().optional(),
   networkAssets: z.custom<NetworkAssets>().optional(),
 });
 

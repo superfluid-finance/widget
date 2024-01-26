@@ -160,6 +160,7 @@ const demoExistentialNFT: ExistentialNFT = {
 export const defaultWidgetProps: WidgetProps = {
   productDetails: defaultProductDetails,
   paymentDetails: defaultPaymentDetails,
+  personalData: [],
   existentialNFT: defaultExistentialNFT,
   type,
   displaySettings: defaultDisplaySettings,

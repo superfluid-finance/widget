@@ -1,6 +1,7 @@
 import { colors, Fab, SelectChangeEvent, ThemeOptions } from "@mui/material";
 import SuperfluidWidget, {
   PaymentOption,
+  PersonalData,
   ProductDetails,
   WalletManager,
   WidgetProps as WidgetProps_,
@@ -55,6 +56,7 @@ export type WidgetProps = {
   paymentDetails: WidgetProps_["paymentDetails"] & {
     paymentOptions: PaymentOption[];
   };
+  personalData: PersonalData;
   existentialNFT?: WidgetProps_["existentialNFT"];
   displaySettings: DisplaySettings;
   type: Layout;
@@ -81,6 +83,7 @@ export const WidgetContext = createContext<WidgetProps>({
     deployments: {},
   },
   type: "dialog",
+  personalData: [],
   displaySettings: {
     stepperOrientation: "vertical",
     darkMode: false,
@@ -102,6 +105,7 @@ const switchLayout = (
   layout: Layout,
   productDetails: ProductDetails,
   paymentDetails: WidgetProps_["paymentDetails"],
+  personalData: WidgetProps_["personalData"],
   existentialNFT: WidgetProps_["existentialNFT"],
   theme: ThemeOptions,
   walletManager: WalletManager,
@@ -111,20 +115,41 @@ const switchLayout = (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
+      personalData={personalData}
       tokenList={widgetBuilderTokenList}
       existentialNFT={existentialNFT}
       type={layout}
       theme={theme}
       walletManager={walletManager}
       stepper={{ orientation: stepperOrientation }}
-      eventListeners={{
-        onTransactionSent: console.log,
-      }}
+      eventListeners={
+        {
+          // onButtonClick: () => { console.log("onButtonClick eventListener") },
+        }
+      }
+      callbacks={
+        {
+          // onButtonClick: () => { console.log("onButtonClick callback") },
+          // validatePersonalData: async () => {
+          //   return new Promise((resolve) => {
+          //     setTimeout(() => {
+          //       resolve({
+          //         email: {
+          //           success: false,
+          //           message: "Async validation failed!",
+          //         },
+          //       });
+          //     }, 1000);
+          //   });
+          // },
+        }
+      }
     />
   ) : (
     <SuperfluidWidget
       productDetails={productDetails}
       paymentDetails={paymentDetails}
+      personalData={personalData}
       existentialNFT={existentialNFT}
       tokenList={widgetBuilderTokenList}
       type={layout}
@@ -190,8 +215,12 @@ export const mapDisplaySettingsToTheme = (
 const WidgetPreview: FC<WidgetProps> = (props) => {
   const {
     displaySettings,
+
     paymentDetails,
+
     productDetails,
+    personalData,
+
     existentialNFT,
     type,
   } = props;
@@ -224,6 +253,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
           type,
           productDetails,
           paymentDetails,
+          personalData,
           existentialNFT,
           theme,
           walletManager,

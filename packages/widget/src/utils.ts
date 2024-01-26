@@ -5,6 +5,7 @@ import {
   FlowRate,
   flowRateSchema,
   mapTimePeriodToSeconds,
+  PersonalData,
   TimePeriod,
 } from "./core/index.js";
 
@@ -37,6 +38,21 @@ export function shortenHex(address: string, length = 4) {
   )}`;
 }
 
+export function serializeRegExp(regex: RegExp): string {
+  return regex.toString();
+}
+
+export function deserializeRegExp(serialized: string): RegExp {
+  // The pattern and the flags need to be separated and passed to the RegExp constructor separately.
+  const match = serialized.match(/^\/(.*?)\/([gimsuy]*)$/);
+  if (!match) {
+    throw new Error("Invalid serialized RegExp");
+  }
+  const [_, pattern, flags] = match;
+
+  return new RegExp(pattern, flags);
+}
+
 export async function copyToClipboard(text: string) {
   if ("clipboard" in navigator) {
     return await navigator.clipboard.writeText(text);
@@ -64,6 +80,17 @@ export function toFixedUsingString(numStr: string, decimalPlaces: number) {
   return (
     wholePart + "." + roundedDecimal.toString().padStart(decimalPlaces, "0")
   );
+}
+
+export function mapPersonalDataToObject(personalData: PersonalData) {
+  return personalData?.length > 0
+    ? {
+        data: personalData.reduce(
+          (acc, { label, value }) => ({ ...acc, [label.toLowerCase()]: value }),
+          {},
+        ),
+      }
+    : ({} as Record<string, string>);
 }
 
 // export const importNFTToMetamask = async (
@@ -153,3 +180,15 @@ function roundWeiToPrettyAmount(value: bigint) {
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};
+
+export type {
+  PersonalDataField,
+  PersonalDataFieldType,
+} from "./PersonalDataFields.js";
+export {
+  EmailField,
+  EmailWithAliasField,
+  PhoneNumberField,
+} from "./PersonalDataFields.js";
+
+export type Errors = Record<string, { success: boolean; message?: string }>;

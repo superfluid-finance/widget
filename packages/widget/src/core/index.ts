@@ -3,6 +3,7 @@ export * from "./NetworkAssets/defaultNetworkAssets.js";
 export * from "./NetworkAssets/types.js";
 export * from "./PaymentDetails.js";
 export * from "./PaymentOption.js";
+export * from "./PersonalData.js";
 export * from "./ProductDetails.js";
 export * from "./SupportedNetwork.js";
 export * from "./TimePeriod.js";
