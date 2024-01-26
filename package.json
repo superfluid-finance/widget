@@ -27,7 +27,7 @@
     ]
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.2",
+    "@changesets/cli": "^2.27.1",
     "eslint": "^8.52.0",
     "eslint-config-custom": "workspace:*",
     "eslint-plugin-simple-import-sort": "^10.0.0",

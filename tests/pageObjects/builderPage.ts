@@ -119,6 +119,7 @@ export class BuilderPage extends BasePage {
   readonly jsonEditorBackdrop: Locator;
   readonly editorErrorMessage: Locator;
   readonly editorHoverErrorMessage: Locator;
+  readonly gatingTabSwitch: Locator;
 
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
@@ -336,12 +337,16 @@ export class BuilderPage extends BasePage {
       "[data-testid=editor-error] .MuiAlert-message",
     );
     this.editorHoverErrorMessage = page.locator(".hover-row .marker span");
+    this.gatingTabSwitch = page.getByTestId("gating-switch").locator("input");
   }
 
   async clickOnTheMiddleOfTheColorPallete() {
     await this.colorPallete.click();
   }
 
+  async clickGatingTabSwitch() {
+    this.gatingTabSwitch.click();
+  }
   async validateFixedRateHelperMessage() {
     await test.step(`Validating fixed rate message`, async () => {
       await expect(this.rateHelperText).toHaveText(
@@ -748,11 +753,12 @@ export class BuilderPage extends BasePage {
 
   async validateGatingTabIsOpen() {
     await test.step(`Validating that gating tab elements are visible`, async () => {
+      await this.clickGatingTabSwitch();
       await expect(this.nftNameInputField).toBeVisible();
       await expect(this.nftSymbolInputField).toBeVisible();
       await expect(this.contractOwnerInputField).toBeVisible();
       await expect(this.backButton).toBeVisible();
-      await expect(this.nextButton).not.toBeVisible();
+      await expect(this.nextButton).toBeVisible();
     });
   }
 
@@ -879,7 +885,8 @@ export class BuilderPage extends BasePage {
       await expect(this.publishButton).toBeVisible();
       await expect(this.bookDemoButton).toBeVisible();
       await expect(this.wandButton).not.toBeVisible();
-      await expect(this.nextButton).toBeVisible();
+      await expect(this.nextButton).not.toBeVisible();
+      await expect(this.backButton).toBeVisible();
     });
   }
 
@@ -1421,9 +1428,9 @@ export class BuilderPage extends BasePage {
   async verifyNetworksShownInNftSelection(networkNames: string[]) {
     await test.step(`Verifying networks shown in NFT selection`, async () => {
       for (const network of networkNames) {
-        await expect(
-          this.page.getByTestId(`${network}-checkbox`),
-        ).toBeVisible();
+        const checkboxToVerify = this.page.getByTestId(`${network}-checkbox`);
+        await checkboxToVerify.scrollIntoViewIfNeeded();
+        await expect(checkboxToVerify).toBeVisible();
       }
     });
   }

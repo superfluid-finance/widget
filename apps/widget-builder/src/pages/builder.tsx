@@ -37,8 +37,8 @@ const tabLabels: Record<number, string> = {
   0: "Product",
   1: "Payment",
   2: "Styling",
-  3: "Export",
-  4: "Gating",
+  3: "Gating",
+  4: "Export",
 };
 
 export default function Builder() {
@@ -74,14 +74,21 @@ export default function Builder() {
 
   const { watch, control, getValues, setValue } = formMethods;
 
-  const [productDetails, paymentDetails, personalData, displaySettings, type] =
-    watch([
-      "productDetails",
-      "paymentDetails",
-      "personalData",
-      "displaySettings",
-      "type",
-    ]);
+  const [
+    productDetails,
+    paymentDetails,
+    personalData,
+    existentialNFT,
+    displaySettings,
+    type,
+  ] = watch([
+    "productDetails",
+    "paymentDetails",
+    "personalData",
+    "existentialNFT",
+    "displaySettings",
+    "type",
+  ]);
 
   const [isConfigEditorOpen, setConfigEditorOpen] = useState(false);
 
@@ -123,8 +130,8 @@ export default function Builder() {
                 <Tab label={tabLabels[0]} value="0" data-testid="product-tab" />
                 <Tab label={tabLabels[1]} value="1" data-testid="payment-tab" />
                 <Tab label={tabLabels[2]} value="2" data-testid="ui-tab" />
-                <Tab label={tabLabels[3]} value="3" data-testid="export-tab" />
-                <Tab label={tabLabels[4]} value="4" data-testid="gating-tab" />
+                <Tab label={tabLabels[3]} value="3" data-testid="gating-tab" />
+                <Tab label={tabLabels[4]} value="4" data-testid="export-tab" />
               </TabList>
             </Box>
           </AppBar>
@@ -146,10 +153,10 @@ export default function Builder() {
                 <UiEditor />
               </TabPanel>
               <TabPanel value="3">
-                <ExportEditor />
+                <StreamGatingEditor previewContainerRef={previewContainerRef} />
               </TabPanel>
               <TabPanel value="4">
-                <StreamGatingEditor previewContainerRef={previewContainerRef} />
+                <ExportEditor />
               </TabPanel>
             </FormProvider>
           </Box>

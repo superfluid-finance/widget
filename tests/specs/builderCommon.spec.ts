@@ -17,11 +17,11 @@ test.describe("Common test cases", () => {
     await builderPage.clickFooterNextButton();
     await builderPage.validateUITabIsOpen();
     await builderPage.clickFooterNextButton();
-    await builderPage.validateExportTabIsOpen();
-    await builderPage.clickFooterNextButton();
     await builderPage.validateGatingTabIsOpen();
-    await builderPage.clickFooterBackButton();
+    await builderPage.clickFooterNextButton();
     await builderPage.validateExportTabIsOpen();
+    await builderPage.clickFooterBackButton();
+    await builderPage.validateGatingTabIsOpen();
     await builderPage.clickFooterBackButton();
     await builderPage.validateUITabIsOpen();
     await builderPage.clickFooterBackButton();

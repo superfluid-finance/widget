@@ -5,7 +5,7 @@ import { Address } from "viem";
 
 import { Callbacks } from "./Callbacks.js";
 import { CheckoutConfig } from "./CheckoutConfig.js";
-import { ChainId, SupportedNetwork } from "./core/index.js";
+import { ChainId, ExistentialNFT, SupportedNetwork } from "./core/index.js";
 import { PersonalData } from "./core/PersonalData.js";
 import { EventHandlers } from "./EventListeners.js";
 import { PaymentOptionWithTokenInfo } from "./formValues.js";
@@ -21,6 +21,7 @@ export type WidgetContextValue = {
   networks: ReadonlyArray<SupportedNetwork>;
   paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo>;
   walletManager: WalletManager;
+  existentialNFT?: ExistentialNFT;
   imageURI?: string;
   personalData: PersonalData;
   stepper: {

@@ -142,6 +142,12 @@
             ]
         },
         "personalData": [],
+        "existentialNFT": {
+          "name": "",
+          "symbol": "",
+          "owner": "",
+          "deployments": {}
+        },
         "type": "page"
     },
     "schemaError": {
@@ -169,6 +175,12 @@
             ]
         },
         "personalData": [],
+        "existentialNFT": {
+          "name": "",
+          "symbol": "",
+          "owner": "",
+          "deployments": {}
+        },
         "type": "page"
     },
     "randomUpfrontPaymentReceiver": {
@@ -194,6 +206,12 @@
           ]
         },
         "personalData": [],
+        "existentialNFT": {
+          "name": "",
+          "symbol": "",
+          "owner": "",
+          "deployments": {}
+        },
         "type": "page"
       },
       "tonsOfOptions": {
@@ -317,6 +335,12 @@
           ]
         },
         "personalData": [],
+        "existentialNFT": {
+          "name": "",
+          "symbol": "",
+          "owner": "",
+          "deployments": {}
+        },
         "type": "page"
       }
     }

@@ -2,6 +2,7 @@ import { SuperTokenList } from "@superfluid-finance/tokenlist";
 import { z } from "zod";
 
 import { Callbacks } from "./Callbacks.js";
+import { existentialNFTSchema } from "./core/ExistentialNFT.js";
 import {
   NetworkAssets,
   PaymentDetails,
@@ -49,6 +50,10 @@ const widgetPropsSchema = z.object({
    */
   theme: z.custom<WidgetThemeOptions>().optional(),
   personalData: personalDataSchema.optional(),
+  /**
+   * The symbol, name, owner and addresses of the deployed ExistentialNFT clones.
+   */
+  existentialNFT: existentialNFTSchema.optional(),
   /**
    * Whether the stepper UI component inside the widget is vertical or horizontal. Vertical is better supported.
    */

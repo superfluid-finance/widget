@@ -17,6 +17,12 @@ export function Widget({
   productDetails = defaultProductDetails,
   tokenList = extendedSuperTokenList,
   stepper = defaultStepper,
+  existentialNFT = {
+    name: "",
+    symbol: "",
+    owner: "",
+    deployments: {},
+  },
   type = "page",
   networkAssets = defaultNetworkAssets,
   personalData = defaultPersonalData,
@@ -24,6 +30,7 @@ export function Widget({
 }: WidgetProps & Partial<ViewProps>) {
   const props = {
     productDetails,
+    existentialNFT,
     tokenList,
     stepper,
     type,

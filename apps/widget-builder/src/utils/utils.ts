@@ -24,3 +24,12 @@ export function calculatePerSecondFlowRate(
     ? parseEther(flowRate.amountEther) / mapTimePeriodToSeconds(flowRate.period)
     : defaultFlowRate;
 }
+
+export function isLocalNetwork(host = window.location.host) {
+  return (
+    ["localhost", "127.0.0.1", "", "::1"].includes(host.split(":")[0]) ||
+    host.startsWith("192.168.") ||
+    host.startsWith("10.") ||
+    host.endsWith(".local")
+  );
+}

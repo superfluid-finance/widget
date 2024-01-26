@@ -57,6 +57,7 @@ export type WidgetProps = {
     paymentOptions: PaymentOption[];
   };
   personalData: PersonalData;
+  existentialNFT?: WidgetProps_["existentialNFT"];
   displaySettings: DisplaySettings;
   type: Layout;
 };
@@ -74,6 +75,12 @@ export const WidgetContext = createContext<WidgetProps>({
   },
   paymentDetails: {
     paymentOptions: [],
+  },
+  existentialNFT: {
+    name: "",
+    symbol: "",
+    owner: "",
+    deployments: {},
   },
   type: "dialog",
   personalData: [],
@@ -99,6 +106,7 @@ const switchLayout = (
   productDetails: ProductDetails,
   paymentDetails: WidgetProps_["paymentDetails"],
   personalData: WidgetProps_["personalData"],
+  existentialNFT: WidgetProps_["existentialNFT"],
   theme: ThemeOptions,
   walletManager: WalletManager,
   stepperOrientation: "vertical" | "horizontal",
@@ -109,6 +117,7 @@ const switchLayout = (
       paymentDetails={paymentDetails}
       personalData={personalData}
       tokenList={widgetBuilderTokenList}
+      existentialNFT={existentialNFT}
       type={layout}
       theme={theme}
       walletManager={walletManager}
@@ -141,6 +150,7 @@ const switchLayout = (
       productDetails={productDetails}
       paymentDetails={paymentDetails}
       personalData={personalData}
+      existentialNFT={existentialNFT}
       tokenList={widgetBuilderTokenList}
       type={layout}
       theme={theme}
@@ -205,9 +215,13 @@ export const mapDisplaySettingsToTheme = (
 const WidgetPreview: FC<WidgetProps> = (props) => {
   const {
     displaySettings,
+
     paymentDetails,
+
     productDetails,
     personalData,
+
+    existentialNFT,
     type,
   } = props;
 
@@ -240,6 +254,7 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
           productDetails,
           paymentDetails,
           personalData,
+          existentialNFT,
           theme,
           walletManager,
           displaySettings.stepperOrientation,

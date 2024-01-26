@@ -6,6 +6,7 @@ export type { Callbacks } from "./Callbacks.js";
 export type { WidgetProps } from "./CheckoutConfig.js";
 export type {
   ChainId,
+  ExistentialNFT,
   FlowRate,
   NetworkAssetInfo,
   NetworkAssets,
@@ -29,6 +30,7 @@ export type { WalletManager } from "./WalletManager.js";
 
 // TODO: Export Zod schemas from @superfluid-finance/widget/zod
 export {
+  existentialNFTSchema,
   paymentDetailsSchema,
   paymentOptionSchema,
   personalDataSchema,

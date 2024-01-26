@@ -1,7 +1,7 @@
 import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
 import { useCallback, useEffect, useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import { useAccount } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 
 import { AccountAddressCard } from "./AccountAddressCard.js";
 import { useCommandHandler } from "./CommandHandlerContext.js";
@@ -20,6 +20,7 @@ export function CheckoutSummary() {
   const {
     getSuperToken,
     productDetails: { successURL, successText = "Continue to Merchant" },
+    existentialNFT,
     eventHandlers,
   } = useWidget();
 
@@ -27,6 +28,7 @@ export function CheckoutSummary() {
   const [personalData] = watch(["personalData"]);
 
   const { address: accountAddress } = useAccount();
+  const { data: walletClient } = useWalletClient();
 
   const { commands } = useCommandHandler();
 
@@ -68,6 +70,11 @@ export function CheckoutSummary() {
   // A more proper place would be inside a central state machine.
   useEffect(() => {
     eventHandlers.onSuccess();
+
+    // const chainId = walletClient?.chain.id as ChainId;
+    // const nftCloneAddress = existentialNFT.deployments[chainId];
+
+    // TODO: Import NFT with eth_watchAsset
   }, [eventHandlers.onSuccess]);
 
   const onSuccessButtonClick = useCallback(() => {

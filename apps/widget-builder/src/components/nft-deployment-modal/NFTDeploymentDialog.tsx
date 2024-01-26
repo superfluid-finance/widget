@@ -7,32 +7,29 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { ChainId } from "@superfluid-finance/widget";
+import { ExistentialNFT } from "@superfluid-finance/widget";
 import Image from "next/image";
 import { FC, useCallback, useMemo } from "react";
-import { Address } from "viem";
 
 import Link from "../../Link";
 
 type NFTDeploymentDialogProps = {
-  cloneAddresses: Record<ChainId, Address | null>[];
+  cloneAddresses?: ExistentialNFT["deployments"];
   open: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
-  cloneAddresses,
+  cloneAddresses = {},
   open,
   onClose,
 }) => {
   const exportAddresses = useCallback(() => {
     const csv = "data:text/csv;charset=utf-8,";
     const headers = "chainId,address\n";
-    const rows = cloneAddresses
+    const rows = Object.entries(cloneAddresses)
       .map((row) => {
-        const result = Object.entries(row);
-
-        return result.join(",");
+        return row.join(",");
       })
       .join("\n");
 
@@ -50,7 +47,8 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
   const [successfulDeployments, failedDeployments] = useMemo(() => {
     const succesfulDeployments =
       Object.values(cloneAddresses).filter(Boolean).length;
-    const failedDeployments = cloneAddresses.length - succesfulDeployments;
+    const failedDeployments =
+      Object.values(cloneAddresses).length - succesfulDeployments;
 
     return [succesfulDeployments, failedDeployments];
   }, [cloneAddresses]);
