@@ -14,7 +14,7 @@
     "@superfluid-finance/widget": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.2.2",
-    "vite": "^4.5.0"
+    "typescript": "^5.3.3",
+    "vite": "^4.5.2"
   }
 }
