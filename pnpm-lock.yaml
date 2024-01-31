@@ -508,8 +508,8 @@ importers:
   examples/widget-webcomponent:
     dependencies:
       '@superfluid-finance/tokenlist':
-        specifier: ^3.3.2
-        version: 3.3.2
+        specifier: ^3.4.0
+        version: 3.4.0
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
@@ -559,11 +559,11 @@ importers:
         specifier: ^5.14.15
         version: 5.14.15(@types/react@18.2.33)(react@18.2.0)
       '@superfluid-finance/metadata':
-        specifier: ^1.1.18
-        version: 1.1.18
+        specifier: ^1.1.26
+        version: 1.1.26
       '@superfluid-finance/tokenlist':
-        specifier: ^3.3.2
-        version: 3.3.2
+        specifier: ^3.4.0
+        version: 3.4.0
       abitype:
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.2.2)(zod@3.22.4)
@@ -668,11 +668,11 @@ importers:
         specifier: ^1.39.0
         version: 1.39.0
       '@superfluid-finance/metadata':
-        specifier: ^1.1.17
-        version: 1.1.18
+        specifier: ^1.1.26
+        version: 1.1.26
       '@superfluid-finance/tokenlist':
-        specifier: ^3.3.2
-        version: 3.3.2
+        specifier: ^3.4.0
+        version: 3.4.0
       '@synthetixio/synpress':
         specifier: ^3.7.1
         version: 3.7.1(typescript@5.2.2)
@@ -2385,7 +2385,7 @@ packages:
     dependencies:
       '@jridgewell/set-array': 1.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
-      '@jridgewell/trace-mapping': 0.3.20
+      '@jridgewell/trace-mapping': 0.3.22
     dev: true
 
   /@jridgewell/resolve-uri@3.1.1:
@@ -4686,11 +4686,11 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@superfluid-finance/metadata@1.1.18:
-    resolution: {integrity: sha512-9AyKSLjOmdhfg90TjEi+dv4FkMW1tEibMqlE1xLgHabuhHYARivBHgvZAX9psERQuld/8iYnSCMscSE+Vhn3KA==}
+  /@superfluid-finance/metadata@1.1.26:
+    resolution: {integrity: sha512-xbkSV1O5kTc0dkKrCr9KJUEmlTh3nETXftzgHQZwT8YZWaYV+bfJamfA40ppJR5b4oC3PT3KDOmyqta8BJU5UA==}
 
-  /@superfluid-finance/tokenlist@3.3.2:
-    resolution: {integrity: sha512-Hvs1leo0rhJ1JANUKpsPUyM0pb1Vf+mneBxE8Qf4Wbl+nAApThI3vQFezdQ4aLeUXw99gCisepIyoUcLpXkZ5g==}
+  /@superfluid-finance/tokenlist@3.4.0:
+    resolution: {integrity: sha512-JffB+SakpztO17PkO0tQdq/wacWQflaav+aUfpB6RVva2a4Ip0ROqfYQDX1x2s2xjgChPlU6T6QmEa317muGWQ==}
     dependencies:
       '@uniswap/token-lists': 1.0.0-beta.33
 
