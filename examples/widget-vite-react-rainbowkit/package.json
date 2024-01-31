@@ -15,7 +15,7 @@
     "@superfluid-finance/widget": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "^1.17.1",
+    "viem": "^1.21.4",
     "wagmi": "^1.4.13",
     "zod": "^3.22.4"
   },
