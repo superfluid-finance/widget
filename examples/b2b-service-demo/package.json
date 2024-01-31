@@ -19,7 +19,7 @@
     "react-dom": "18.2.0",
     "react-use-intercom": "^5.1.4",
     "viem": "^1.17.1",
-    "wagmi": "^1.4.5",
+    "wagmi": "^1.4.13",
     "zod": "^3.22.4"
   },
   "devDependencies": {
