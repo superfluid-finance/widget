@@ -40,7 +40,7 @@
     "viem": "^1.21.4",
     "wagmi": "^1.4.13",
     "zod": "^3.22.4",
-    "zod-to-json-schema": "^3.21.4"
+    "zod-to-json-schema": "^3.22.4"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
