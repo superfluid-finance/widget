@@ -10,7 +10,7 @@
     "@superfluid-finance/tokenlist": "^3.4.0",
     "@synthetixio/synpress": "^3.7.1",
     "dotenv": "^16.4.1",
-    "ethers": "^6.8.0",
+    "ethers": "^6.10.0",
     "typescript": "^5.3.3"
   },
   "scripts": {
