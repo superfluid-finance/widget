@@ -102,7 +102,7 @@
     "@wagmi/cli": "^1.5.2",
     "jsdom": "^22.1.0",
     "tsconfig": "workspace:*",
-    "typedoc": "^0.25.2",
+    "typedoc": "^0.25.7",
     "typescript": "^5.3.3",
     "viem": "^1.21.4",
     "vitest": "^0.34.6",

@@ -26,7 +26,7 @@
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
-    "clsx": "^2.0.0",
+    "clsx": "^2.1.0",
     "lodash": "^4.17.21",
     "lru-cache": "^10.0.1",
     "monaco-editor": "^0.44.0",
@@ -50,7 +50,7 @@
     "@types/react-dom": "^18.2.14",
     "@types/react-google-recaptcha": "^2.1.7",
     "@types/request-ip": "^0.0.40",
-    "eslint": "^8.52.0",
+    "eslint": "^8.56.0",
     "eslint-config-next": "^13.5.6",
     "typescript": "^5.3.3"
   }

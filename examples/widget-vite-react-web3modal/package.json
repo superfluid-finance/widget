@@ -26,10 +26,10 @@
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "@vitejs/plugin-react": "^4.1.0",
-    "eslint": "^8.52.0",
+    "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "5.0.0-canary-41f0e9dae-20230907",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.3.3",
-    "vite": "^4.5.0"
+    "vite": "^4.5.2"
   }
 }
