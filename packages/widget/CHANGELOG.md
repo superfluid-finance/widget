@@ -1,5 +1,13 @@
 # @superfluid-finance/widget
 
+## 0.4.8
+
+### Patch Changes
+
+- 50a1ae1: eNFT improvements
+- 0565290: Add personal data handling to widget
+- 0565290: Expose createWidgetTheme & WidgetThemeOptions
+
 ## 0.4.7
 
 ### Patch Changes
