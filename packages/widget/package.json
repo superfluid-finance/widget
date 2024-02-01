@@ -66,10 +66,10 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@emotion/react": "^11.11.1",
+    "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.2",
-    "@mui/icons-material": "^5.14.15",
+    "@mui/icons-material": "^5.15.7",
     "@mui/lab": "5.0.0-alpha.147",
     "@mui/utils": "^5.14.15",
     "@superfluid-finance/metadata": "^1.1.26",
@@ -90,7 +90,7 @@
     "zod-validation-error": "^1.4.0"
   },
   "devDependencies": {
-    "@mui/material": "^5.14.15",
+    "@mui/material": "^5.15.7",
     "@superfluid-finance/ethereum-contracts": "^1.8.1",
     "@testing-library/react": "^14.0.0",
     "@types/lodash.isequal": "^4.5.8",
