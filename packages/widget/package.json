@@ -103,7 +103,7 @@
     "jsdom": "^22.1.0",
     "tsconfig": "workspace:*",
     "typedoc": "^0.25.2",
-    "typescript": "^5.2.2",
+    "typescript": "^5.3.3",
     "viem": "^1.21.4",
     "vitest": "^0.34.6",
     "wagmi": "^1.4.13"
