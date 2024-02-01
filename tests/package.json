@@ -5,7 +5,7 @@
   "type": "module",
   "devDependencies": {
     "@currents/playwright": "^0.8.1",
-    "@playwright/test": "^1.39.0",
+    "@playwright/test": "^1.41.1",
     "@superfluid-finance/metadata": "^1.1.26",
     "@superfluid-finance/tokenlist": "^3.4.0",
     "@synthetixio/synpress": "^3.7.1",
