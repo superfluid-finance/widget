@@ -94,9 +94,11 @@ const customTheme = createMuiTheme({
 We welcome all sorts of contributions, be it bug fixes, new features or documentation improvements. If you'd like to contribute, please follow these basic guidelines:
 
 1. Fork this repository and clone it to your local machine
-2. Create a new branch for your changes
-3. Make your changes and push them to your fork
-4. Create a pull request from your fork's branch to the original repository's master branch
+2. [Install `pnpm`](https://pnpm.io/installation) if not already installed on your local machine
+3. Run `pnpm i` in the root folder of the repository to install dependencies
+4. Create a new branch for your changes
+5. Make your changes and push them to your fork
+6. Create a pull request from your fork's branch to the original repository's master branch
 
 ## License
 
