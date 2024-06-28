@@ -111,8 +111,8 @@ export default function ContractWriteButton({
   const writeButtonText = transactionResult.isLoading
     ? "Waiting for transaction..."
     : writeResult.isLoading
-    ? "Waiting for wallet..."
-    : "Send transaction";
+      ? "Waiting for wallet..."
+      : "Send transaction";
 
   const showRetryButton = Boolean(isPrepareError && !writeResult.isLoading);
 

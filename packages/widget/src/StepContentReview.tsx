@@ -73,8 +73,8 @@ export default function StepContentReview({ stepIndex }: StepProps) {
           {isValidating
             ? "Validating..."
             : areContractWritesMapping
-            ? "Preparing transactions..."
-            : "Continue"}
+              ? "Preparing transactions..."
+              : "Continue"}
         </StepperCTAButton>
       </Stack>
     </Stack>
