@@ -6,8 +6,8 @@
   "devDependencies": {
     "@currents/playwright": "^0.8.1",
     "@playwright/test": "^1.41.1",
-    "@superfluid-finance/metadata": "^1.1.26",
-    "@superfluid-finance/tokenlist": "^3.4.0",
+    "@superfluid-finance/metadata": "^1.2.6",
+    "@superfluid-finance/tokenlist": "^5.0.0",
     "@synthetixio/synpress": "^3.7.1",
     "dotenv": "^16.4.1",
     "ethers": "^6.10.0",

@@ -23,9 +23,9 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
   paymentOptions: [
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
-      chainId: supportedNetwork.goerli.id,
+      chainId: supportedNetwork.optimismSepolia.id,
       superToken: {
-        address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a", // fUSDCx
+        address: "0x00d05Eed85Bad962bA5237DD4aFFF12004455a8a", // fUSDCx
       },
       flowRate: {
         amountEther: "1",
@@ -34,9 +34,9 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
     } as const,
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
-      chainId: supportedNetwork.goerli.id,
+      chainId: supportedNetwork.optimismSepolia.id,
       superToken: {
-        address: "0xf2d68898557ccb2cf4c10c3ef2b034b2a69dad00", // fDAIx
+        address: "0xD6FAF98BeFA647403cc56bDB598690660D5257d2", // fDAIx
       },
       flowRate: {
         amountEther: "1",
@@ -45,7 +45,7 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
     } as const,
     {
       receiverAddress: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa", // vitalik.eth
-      chainId: supportedNetwork.goerli.id,
+      chainId: supportedNetwork.optimismSepolia.id,
       superToken: {
         address: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa", // ZYA
       },
@@ -56,43 +56,13 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
     } as const,
     {
       receiverAddress: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa", // vitalik.eth
-      chainId: supportedNetwork.goerli.id,
+      chainId: supportedNetwork.optimismSepolia.id,
       superToken: {
         address: "0xcc48a0349077b91ab540d2e46addffb4a4a26251", // NTDL
       },
       flowRate: {
         amountEther: "1",
         period: "month",
-      },
-    } as const,
-    {
-      receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
-      chainId: supportedNetwork.polygonMumbai.id,
-      superToken: {
-        address: "0x42bb40bf79730451b11f6de1cba222f17b87afd7", // fUSDCx
-      },
-      flowRate: {
-        amountEther: "1",
-        period: "month",
-      },
-    } as const,
-    {
-      receiverAddress: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // rebounder
-      chainId: supportedNetwork.polygonMumbai.id,
-      superToken: {
-        address: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // fDAIx
-      },
-      transferAmountEther: "1",
-      flowRate: {
-        amountEther: "1",
-        period: "month",
-      },
-    } as const,
-    {
-      receiverAddress: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // rebounder
-      chainId: supportedNetwork.polygonMumbai.id,
-      superToken: {
-        address: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // fDAIx
       },
     } as const,
     {
@@ -113,9 +83,9 @@ const defaultPaymentDetails: WidgetProps["paymentDetails"] = {
   paymentOptions: [
     {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
-      chainId: supportedNetwork.goerli.id,
+      chainId: supportedNetwork.optimismSepolia.id,
       superToken: {
-        address: "0x8ae68021f6170e5a766be613cea0d75236ecca9a", // fUSDCx
+        address: "0x131780640EDf9830099AAc2203229073d6D2FE69", // fUSDCx
       },
       flowRate: {
         amountEther: "1",
@@ -153,7 +123,7 @@ const demoExistentialNFT: ExistentialNFT = {
   symbol: "DEMO",
   owner: "0xab1D164065aed9A3e42fca42c2c20997f369A2B0",
   deployments: {
-    80001: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f",
+    11155420: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // TODO: doesn't exist
   },
 };
 

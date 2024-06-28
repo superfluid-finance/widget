@@ -1,59 +1,53 @@
 import {
   arbitrum,
-  arbitrumGoerli,
   avalanche,
   avalancheFuji,
   base,
-  baseGoerli,
   bsc,
   celo,
   Chain,
   gnosis,
-  goerli,
   mainnet,
   optimism,
-  optimismGoerli,
+  optimismSepolia,
   polygon,
-  polygonMumbai,
+  scroll,
+  scrollSepolia,
   sepolia,
 } from "wagmi/chains";
 import { z } from "zod";
 
 type ChainKeys =
-  | "mainnet"
   | "arbitrum"
-  | "arbitrumGoerli"
   | "avalanche"
   | "avalancheFuji"
   | "base"
-  | "baseGoerli"
   | "bsc"
   | "celo"
   | "gnosis"
-  | "goerli"
-  | "sepolia"
+  | "mainnet"
   | "optimism"
-  | "optimismGoerli"
+  | "optimismSepolia"
   | "polygon"
-  | "polygonMumbai";
+  | "scroll"
+  | "scrollSepolia"
+  | "sepolia";
 
 export const chainIds = [
   mainnet.id,
   arbitrum.id,
-  arbitrumGoerli.id,
   avalanche.id,
   avalancheFuji.id,
   base.id,
-  baseGoerli.id,
   bsc.id,
   celo.id,
   gnosis.id,
-  goerli.id,
-  sepolia.id,
   optimism.id,
-  optimismGoerli.id,
+  optimismSepolia.id,
   polygon.id,
-  polygonMumbai.id,
+  scroll.id,
+  scrollSepolia.id,
+  sepolia.id,
 ] as const;
 export type ChainId = (typeof chainIds)[number];
 
@@ -62,22 +56,20 @@ export interface SupportedNetwork extends Chain {
 }
 
 export const supportedNetwork: Record<ChainKeys, SupportedNetwork> = {
-  mainnet, // Keep mainnet first.
+  mainnet, // Keep mainnet first
   arbitrum,
-  arbitrumGoerli,
   avalanche,
   avalancheFuji,
   base,
-  baseGoerli,
   bsc,
   celo,
   gnosis,
-  goerli,
-  sepolia,
   optimism,
-  optimismGoerli,
+  optimismSepolia,
   polygon,
-  polygonMumbai,
+  scroll,
+  scrollSepolia,
+  sepolia,
 } as const satisfies Record<ChainKeys, SupportedNetwork>;
 
 const supportedNetworks_ = Object.values(supportedNetwork).sort((a, b) => {
