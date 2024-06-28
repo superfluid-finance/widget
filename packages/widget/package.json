@@ -109,7 +109,7 @@
     "wagmi": "^1.4.13"
   },
   "peerDependencies": {
-    "viem": ">=1",
-    "wagmi": ">=1"
+    "viem": "^1",
+    "wagmi": "^1"
   }
 }
