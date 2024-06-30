@@ -1,5 +1,15 @@
 # @superfluid-finance/widget
 
+## 0.5.0
+
+### Minor Changes
+
+- 2e6e8c1: Update supported network list and token list
+
+### Patch Changes
+
+- 2e6e8c1: Specify viem and wagmi peer dependencies correctly
+
 ## 0.4.8
 
 ### Patch Changes
