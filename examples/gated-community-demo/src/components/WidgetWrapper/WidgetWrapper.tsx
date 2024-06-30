@@ -75,7 +75,7 @@ const WidgetWrapper: FC<WidgetWrapperProps> = ({ children }) => {
       paymentOptions: [
         {
           receiverAddress: randomReceiver,
-          chainId: 80001,
+          chainId: 11155420,
           superToken: {
             address: Token,
           },

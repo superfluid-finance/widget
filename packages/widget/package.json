@@ -72,8 +72,8 @@
     "@mui/icons-material": "^5.15.7",
     "@mui/lab": "5.0.0-alpha.147",
     "@mui/utils": "^5.15.7",
-    "@superfluid-finance/metadata": "^1.1.26",
-    "@superfluid-finance/tokenlist": "^3.4.0",
+    "@superfluid-finance/metadata": "^1.2.6",
+    "@superfluid-finance/tokenlist": "^5.0.0",
     "abitype": "^0.10.3",
     "blockies-ts": "^1.0.0",
     "immer": "^10.0.3",
@@ -91,7 +91,7 @@
   },
   "devDependencies": {
     "@mui/material": "^5.15.7",
-    "@superfluid-finance/ethereum-contracts": "^1.8.1",
+    "@superfluid-finance/ethereum-contracts": "^1.9.1",
     "@testing-library/react": "^14.2.0",
     "@types/lodash.isequal": "^4.5.8",
     "@types/lodash.memoize": "^4.1.9",
@@ -109,7 +109,7 @@
     "wagmi": "^1.4.13"
   },
   "peerDependencies": {
-    "viem": ">=1",
-    "wagmi": ">=1"
+    "viem": "^1",
+    "wagmi": "^1"
   }
 }

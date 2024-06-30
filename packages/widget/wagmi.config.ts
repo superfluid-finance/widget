@@ -54,8 +54,8 @@ export default defineConfig({
       20: true,
     }),
     etherscan({
-      apiKey: "WW2B6KB1FAXNTWP8EJQJYFTK1CMG1W4DWZ",
-      chainId: 5,
+      apiKey: "FJ7NH9UIZZS3VTEI8T8IP9CVFM7NWIXN2D",
+      chainId: 10,
       contracts: [
         {
           name: "CFAv1Forwarder",

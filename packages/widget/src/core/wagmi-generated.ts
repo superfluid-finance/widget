@@ -4,15 +4,15 @@
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x30aE282CF477E2eF28B14d0125aCEAd57Fe1d7a1)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0B82D14E9616ca4d260E77454834AdCf5887595F)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x1fA76f2Cd0C3fe6c399A80111408d9C42C0CAC23)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0x2AcdD61ac1EFFe1535109449c31889bdE8d7f325)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x8082e58681350876aFe8f52d3Bf8672034A03Db0)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x2581c27E7f6D6AF452E63fCe884EDE3EDd716b32)
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0x5D0acD0864Ad07ba4E1E0474AE69Da87482e14A9)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xf01825eAFAe5CD1Dab5593EFAF218efC8968D272)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x30aE282CF477E2eF28B14d0125aCEAd57Fe1d7a1)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x8082e58681350876aFe8f52d3Bf8672034A03Db0)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3eAB3c6207F488E475b7955B631B564F0E6317B9)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xe567b32C10B0dB72d9490eB1B9A409C5ADed192C)
  */
 export const autoWrapManagerABI = [
   {
@@ -448,40 +448,40 @@ export const autoWrapManagerABI = [
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x30aE282CF477E2eF28B14d0125aCEAd57Fe1d7a1)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0B82D14E9616ca4d260E77454834AdCf5887595F)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x1fA76f2Cd0C3fe6c399A80111408d9C42C0CAC23)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0x2AcdD61ac1EFFe1535109449c31889bdE8d7f325)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x8082e58681350876aFe8f52d3Bf8672034A03Db0)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x2581c27E7f6D6AF452E63fCe884EDE3EDd716b32)
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0x5D0acD0864Ad07ba4E1E0474AE69Da87482e14A9)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xf01825eAFAe5CD1Dab5593EFAF218efC8968D272)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x30aE282CF477E2eF28B14d0125aCEAd57Fe1d7a1)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x8082e58681350876aFe8f52d3Bf8672034A03Db0)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3eAB3c6207F488E475b7955B631B564F0E6317B9)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xe567b32C10B0dB72d9490eB1B9A409C5ADed192C)
  */
 export const autoWrapManagerAddress = {
   1: "0x30aE282CF477E2eF28B14d0125aCEAd57Fe1d7a1",
-  5: "0x0B82D14E9616ca4d260E77454834AdCf5887595F",
   10: "0x1fA76f2Cd0C3fe6c399A80111408d9C42C0CAC23",
   56: "0x2AcdD61ac1EFFe1535109449c31889bdE8d7f325",
   100: "0x8082e58681350876aFe8f52d3Bf8672034A03Db0",
   137: "0x2581c27E7f6D6AF452E63fCe884EDE3EDd716b32",
+  8453: "0x5D0acD0864Ad07ba4E1E0474AE69Da87482e14A9",
   42161: "0xf01825eAFAe5CD1Dab5593EFAF218efC8968D272",
   43113: "0x30aE282CF477E2eF28B14d0125aCEAd57Fe1d7a1",
   43114: "0x8082e58681350876aFe8f52d3Bf8672034A03Db0",
-  80001: "0x3eAB3c6207F488E475b7955B631B564F0E6317B9",
+  11155420: "0xe567b32C10B0dB72d9490eB1B9A409C5ADed192C",
 } as const;
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x30aE282CF477E2eF28B14d0125aCEAd57Fe1d7a1)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0B82D14E9616ca4d260E77454834AdCf5887595F)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x1fA76f2Cd0C3fe6c399A80111408d9C42C0CAC23)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0x2AcdD61ac1EFFe1535109449c31889bdE8d7f325)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x8082e58681350876aFe8f52d3Bf8672034A03Db0)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x2581c27E7f6D6AF452E63fCe884EDE3EDd716b32)
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0x5D0acD0864Ad07ba4E1E0474AE69Da87482e14A9)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xf01825eAFAe5CD1Dab5593EFAF218efC8968D272)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x30aE282CF477E2eF28B14d0125aCEAd57Fe1d7a1)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x8082e58681350876aFe8f52d3Bf8672034A03Db0)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x3eAB3c6207F488E475b7955B631B564F0E6317B9)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xe567b32C10B0dB72d9490eB1B9A409C5ADed192C)
  */
 export const autoWrapManagerConfig = {
   address: autoWrapManagerAddress,
@@ -494,15 +494,15 @@ export const autoWrapManagerConfig = {
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1D65c6d3AD39d454Ea8F682c49aE7744706eA96d)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xea49af829d3e28d3ec49e0e0a0ba1e7860a56f60)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x0Cf060a501c0040e9CCC708eFE94079F501c6Bb4)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0x9e308cb079ae130790F604b1030cDf386670f199)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x51FBAbD31A615E14b1bC12E9d887f60997264a4E)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0xb4afa36BAd8c76976Dc77a21c9Ad711EF720eE4b)
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0xB29005319B0caB24cF6D4d24e8420E54BB29Cb0d)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0x342076aA957B0ec8bC1d3893af719b288eA31e61)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x1D65c6d3AD39d454Ea8F682c49aE7744706eA96d)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x51FBAbD31A615E14b1bC12E9d887f60997264a4E)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x544728AFDBeEafBeC9e1329031788edb53017bC4)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xf232f1fd34CE12e24F4391865c2D6E374D2C34d9)
  */
 export const autoWrapStrategyABI = [
   {
@@ -681,40 +681,40 @@ export const autoWrapStrategyABI = [
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1D65c6d3AD39d454Ea8F682c49aE7744706eA96d)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xea49af829d3e28d3ec49e0e0a0ba1e7860a56f60)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x0Cf060a501c0040e9CCC708eFE94079F501c6Bb4)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0x9e308cb079ae130790F604b1030cDf386670f199)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x51FBAbD31A615E14b1bC12E9d887f60997264a4E)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0xb4afa36BAd8c76976Dc77a21c9Ad711EF720eE4b)
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0xB29005319B0caB24cF6D4d24e8420E54BB29Cb0d)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0x342076aA957B0ec8bC1d3893af719b288eA31e61)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x1D65c6d3AD39d454Ea8F682c49aE7744706eA96d)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x51FBAbD31A615E14b1bC12E9d887f60997264a4E)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x544728AFDBeEafBeC9e1329031788edb53017bC4)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xf232f1fd34CE12e24F4391865c2D6E374D2C34d9)
  */
 export const autoWrapStrategyAddress = {
   1: "0x1D65c6d3AD39d454Ea8F682c49aE7744706eA96d",
-  5: "0xea49AF829D3E28d3eC49E0e0a0Ba1E7860A56F60",
   10: "0x0Cf060a501c0040e9CCC708eFE94079F501c6Bb4",
   56: "0x9e308cb079ae130790F604b1030cDf386670f199",
   100: "0x51FBAbD31A615E14b1bC12E9d887f60997264a4E",
   137: "0xb4afa36BAd8c76976Dc77a21c9Ad711EF720eE4b",
+  8453: "0xB29005319B0caB24cF6D4d24e8420E54BB29Cb0d",
   42161: "0x342076aA957B0ec8bC1d3893af719b288eA31e61",
   43113: "0x1D65c6d3AD39d454Ea8F682c49aE7744706eA96d",
   43114: "0x51FBAbD31A615E14b1bC12E9d887f60997264a4E",
-  80001: "0x544728AFDBeEafBeC9e1329031788edb53017bC4",
+  11155420: "0xf232f1fd34CE12e24F4391865c2D6E374D2C34d9",
 } as const;
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x1D65c6d3AD39d454Ea8F682c49aE7744706eA96d)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xea49af829d3e28d3ec49e0e0a0ba1e7860a56f60)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x0Cf060a501c0040e9CCC708eFE94079F501c6Bb4)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0x9e308cb079ae130790F604b1030cDf386670f199)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x51FBAbD31A615E14b1bC12E9d887f60997264a4E)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0xb4afa36BAd8c76976Dc77a21c9Ad711EF720eE4b)
+ * - [__View Contract on Base Basescan__](https://basescan.org/address/0xB29005319B0caB24cF6D4d24e8420E54BB29Cb0d)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0x342076aA957B0ec8bC1d3893af719b288eA31e61)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x1D65c6d3AD39d454Ea8F682c49aE7744706eA96d)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x51FBAbD31A615E14b1bC12E9d887f60997264a4E)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x544728AFDBeEafBeC9e1329031788edb53017bC4)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xf232f1fd34CE12e24F4391865c2D6E374D2C34d9)
  */
 export const autoWrapStrategyConfig = {
   address: autoWrapStrategyAddress,
@@ -727,22 +727,20 @@ export const autoWrapStrategyConfig = {
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x2CDd45c5182602a36d391F7F16DD9f8386C3bD8D)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Base Sepolia Blockscout__](https://base-sepolia.blockscout.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Scroll Scrollscan__](https://scrollscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  */
 export const cfAv1ForwarderABI = [
   {
@@ -928,61 +926,56 @@ export const cfAv1ForwarderABI = [
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x2CDd45c5182602a36d391F7F16DD9f8386C3bD8D)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Base Sepolia Blockscout__](https://base-sepolia.blockscout.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Scroll Scrollscan__](https://scrollscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  */
 export const cfAv1ForwarderAddress = {
   1: "0xcfA132E353cB4E398080B9700609bb008eceB125",
-  5: "0xcfA132E353cB4E398080B9700609bb008eceB125",
   10: "0xcfA132E353cB4E398080B9700609bb008eceB125",
   56: "0xcfA132E353cB4E398080B9700609bb008eceB125",
   100: "0xcfA132E353cB4E398080B9700609bb008eceB125",
   137: "0xcfA132E353cB4E398080B9700609bb008eceB125",
-  420: "0xcfA132E353cB4E398080B9700609bb008eceB125",
-  1442: "0xcfA132E353cB4E398080B9700609bb008eceB125",
   8453: "0xcfA132E353cB4E398080B9700609bb008eceB125",
   42161: "0xcfA132E353cB4E398080B9700609bb008eceB125",
   42220: "0xcfA132E353cB4E398080B9700609bb008eceB125",
   43113: "0x2CDd45c5182602a36d391F7F16DD9f8386C3bD8D",
   43114: "0xcfA132E353cB4E398080B9700609bb008eceB125",
-  80001: "0xcfA132E353cB4E398080B9700609bb008eceB125",
-  84531: "0xcfA132E353cB4E398080B9700609bb008eceB125",
-  421613: "0xcfA132E353cB4E398080B9700609bb008eceB125",
+  84532: "0xcfA132E353cB4E398080B9700609bb008eceB125",
+  534351: "0xcfA132E353cB4E398080B9700609bb008eceB125",
+  534352: "0xcfA132E353cB4E398080B9700609bb008eceB125",
   11155111: "0xcfA132E353cB4E398080B9700609bb008eceB125",
+  11155420: "0xcfA132E353cB4E398080B9700609bb008eceB125",
+  666666666: "0xcfA132E353cB4E398080B9700609bb008eceB125",
 } as const;
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x2CDd45c5182602a36d391F7F16DD9f8386C3bD8D)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Base Sepolia Blockscout__](https://base-sepolia.blockscout.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Scroll Scrollscan__](https://scrollscan.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xcfA132E353cB4E398080B9700609bb008eceB125)
  */
 export const cfAv1ForwarderConfig = {
   address: cfAv1ForwarderAddress,
@@ -1305,7 +1298,6 @@ export const errorsABI = [
   { type: "error", inputs: [], name: "CFA_NO_SELF_FLOW" },
   { type: "error", inputs: [], name: "CFA_ZERO_ADDRESS_RECEIVER" },
   { type: "error", inputs: [], name: "CFA_ZERO_ADDRESS_SENDER" },
-  { type: "error", inputs: [], name: "OUT_OF_GAS" },
   { type: "error", inputs: [], name: "SF_TOKEN_AGREEMENT_ALREADY_EXISTS" },
   { type: "error", inputs: [], name: "SF_TOKEN_AGREEMENT_DOES_NOT_EXIST" },
   { type: "error", inputs: [], name: "SF_TOKEN_BURN_INSUFFICIENT_BALANCE" },
@@ -1333,8 +1325,8 @@ export const errorsABI = [
     name: "SUPER_TOKEN_NOT_ERC777_TOKENS_RECIPIENT",
   },
   { type: "error", inputs: [], name: "SUPER_TOKEN_NO_UNDERLYING_TOKEN" },
+  { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_ADMIN" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_GOV_OWNER" },
-  { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_HOST" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_SELF" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_TRANSFER_FROM_ZERO_ADDRESS" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_TRANSFER_TO_ZERO_ADDRESS" },
@@ -1346,22 +1338,20 @@ export const errorsABI = [
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x4E583d9390082B65Bef884b629DFA426114CED6d)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x567c4B141ED61923967cA25Ef4906C8781069a10)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xd1e2cFb6441680002Eb7A44223160aB9B67d7E6E)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x2dFe937cD98Ab92e59cF3139138f18c823a4efE7)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x3E14dC1b13c488a8d5D310918780c983bD5982E7)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xe64f81d5dDdA1c7172e5C6d964E8ef1BD82D8704)
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x4C073B3baB6d8826b8C5b229f3cfdC1eC6E47E74)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xCf8Acb4eF033efF16E8080aed4c7D5B9285D2192)
  * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0xA4Ff07cF81C02CFD356184879D953970cA957585)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x85Fe79b998509B77BF10A8BD4001D58475D29386)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x60377C7016E4cdB03C87EF474896C11cB560752C)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xEB796bdb90fFA0f28255275e16936D25d3418603)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x507c3a7C6Ccc253884A2e3a3ee2A211cC7E796a6)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
+ * - [__View Contract on Base Sepolia Blockscout__](https://base-sepolia.blockscout.com/address/0x109412E3C84f0539b43d39dB691B08c90f58dC7c)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x42b05a6016B9eED232E13fd56a8F0725693DBF8e)
+ * - [__View Contract on Scroll Scrollscan__](https://scrollscan.com/address/0x0F86a21F6216c061B222c224e315d9FC34520bb7)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x109412E3C84f0539b43d39dB691B08c90f58dC7c)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xd399e2Fb5f4cf3722a11F65b88FAB6B2B8621005)
  */
 export const hostABI = [
   {
@@ -1396,18 +1386,13 @@ export const hostABI = [
     name: "HOST_CANNOT_DOWNGRADE_TO_NON_UPGRADEABLE",
   },
   { type: "error", inputs: [], name: "HOST_INVALID_CONFIG_WORD" },
-  {
-    type: "error",
-    inputs: [],
-    name: "HOST_INVALID_OR_EXPIRED_SUPER_APP_REGISTRATION_KEY",
-  },
   { type: "error", inputs: [], name: "HOST_MAX_256_AGREEMENTS" },
   { type: "error", inputs: [], name: "HOST_MUST_BE_CONTRACT" },
   { type: "error", inputs: [], name: "HOST_NEED_MORE_GAS" },
   { type: "error", inputs: [], name: "HOST_NON_UPGRADEABLE" },
   { type: "error", inputs: [], name: "HOST_NON_ZERO_LENGTH_PLACEHOLDER_CTX" },
   { type: "error", inputs: [], name: "HOST_NOT_A_SUPER_APP" },
-  { type: "error", inputs: [], name: "HOST_NO_APP_REGISTRATION_PERMISSIONS" },
+  { type: "error", inputs: [], name: "HOST_NO_APP_REGISTRATION_PERMISSION" },
   { type: "error", inputs: [], name: "HOST_ONLY_GOVERNANCE" },
   { type: "error", inputs: [], name: "HOST_ONLY_LISTED_AGREEMENT" },
   { type: "error", inputs: [], name: "HOST_RECEIVER_IS_NOT_SUPER_APP" },
@@ -1415,7 +1400,6 @@ export const hostABI = [
   { type: "error", inputs: [], name: "HOST_SOURCE_APP_NEEDS_HIGHER_APP_LEVEL" },
   { type: "error", inputs: [], name: "HOST_SUPER_APP_ALREADY_REGISTERED" },
   { type: "error", inputs: [], name: "HOST_SUPER_APP_IS_JAILED" },
-  { type: "error", inputs: [], name: "HOST_UNAUTHORIZED_SUPER_APP_FACTORY" },
   { type: "error", inputs: [], name: "HOST_UNKNOWN_BATCH_CALL_OPERATION_TYPE" },
   {
     type: "event",
@@ -1532,6 +1516,25 @@ export const hostABI = [
       },
     ],
     name: "Jail",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "beaconProxy",
+        internalType: "address",
+        type: "address",
+        indexed: true,
+      },
+      {
+        name: "newBeaconLogic",
+        internalType: "address",
+        type: "address",
+        indexed: false,
+      },
+    ],
+    name: "PoolBeaconLogicUpdated",
   },
   {
     type: "event",
@@ -1818,7 +1821,34 @@ export const hostABI = [
   {
     stateMutability: "nonpayable",
     type: "function",
+    inputs: [
+      { name: "token", internalType: "contract ISuperToken", type: "address" },
+      { name: "newAdmin", internalType: "address", type: "address" },
+    ],
+    name: "changeSuperTokenAdmin",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [{ name: "newLogic", internalType: "address", type: "address" }],
+    name: "updatePoolBeaconLogic",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
     inputs: [{ name: "configWord", internalType: "uint256", type: "uint256" }],
+    name: "registerApp",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "app", internalType: "contract ISuperApp", type: "address" },
+      { name: "configWord", internalType: "uint256", type: "uint256" },
+    ],
     name: "registerApp",
     outputs: [],
   },
@@ -2082,7 +2112,7 @@ export const hostABI = [
     outputs: [{ name: "", internalType: "bool", type: "bool" }],
   },
   {
-    stateMutability: "nonpayable",
+    stateMutability: "payable",
     type: "function",
     inputs: [
       {
@@ -2135,61 +2165,56 @@ export const hostABI = [
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x4E583d9390082B65Bef884b629DFA426114CED6d)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x567c4B141ED61923967cA25Ef4906C8781069a10)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xd1e2cFb6441680002Eb7A44223160aB9B67d7E6E)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x2dFe937cD98Ab92e59cF3139138f18c823a4efE7)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x3E14dC1b13c488a8d5D310918780c983bD5982E7)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xe64f81d5dDdA1c7172e5C6d964E8ef1BD82D8704)
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x4C073B3baB6d8826b8C5b229f3cfdC1eC6E47E74)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xCf8Acb4eF033efF16E8080aed4c7D5B9285D2192)
  * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0xA4Ff07cF81C02CFD356184879D953970cA957585)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x85Fe79b998509B77BF10A8BD4001D58475D29386)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x60377C7016E4cdB03C87EF474896C11cB560752C)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xEB796bdb90fFA0f28255275e16936D25d3418603)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x507c3a7C6Ccc253884A2e3a3ee2A211cC7E796a6)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
+ * - [__View Contract on Base Sepolia Blockscout__](https://base-sepolia.blockscout.com/address/0x109412E3C84f0539b43d39dB691B08c90f58dC7c)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x42b05a6016B9eED232E13fd56a8F0725693DBF8e)
+ * - [__View Contract on Scroll Scrollscan__](https://scrollscan.com/address/0x0F86a21F6216c061B222c224e315d9FC34520bb7)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x109412E3C84f0539b43d39dB691B08c90f58dC7c)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xd399e2Fb5f4cf3722a11F65b88FAB6B2B8621005)
  */
 export const hostAddress = {
   1: "0x4E583d9390082B65Bef884b629DFA426114CED6d",
-  5: "0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9",
   10: "0x567c4B141ED61923967cA25Ef4906C8781069a10",
   56: "0xd1e2cFb6441680002Eb7A44223160aB9B67d7E6E",
   100: "0x2dFe937cD98Ab92e59cF3139138f18c823a4efE7",
   137: "0x3E14dC1b13c488a8d5D310918780c983bD5982E7",
-  420: "0xE40983C2476032A0915600b9472B3141aA5B5Ba9",
-  1442: "0xe64f81d5dDdA1c7172e5C6d964E8ef1BD82D8704",
   8453: "0x4C073B3baB6d8826b8C5b229f3cfdC1eC6E47E74",
   42161: "0xCf8Acb4eF033efF16E8080aed4c7D5B9285D2192",
   42220: "0xA4Ff07cF81C02CFD356184879D953970cA957585",
   43113: "0x85Fe79b998509B77BF10A8BD4001D58475D29386",
   43114: "0x60377C7016E4cdB03C87EF474896C11cB560752C",
-  80001: "0xEB796bdb90fFA0f28255275e16936D25d3418603",
-  84531: "0x507c3a7C6Ccc253884A2e3a3ee2A211cC7E796a6",
-  421613: "0xE40983C2476032A0915600b9472B3141aA5B5Ba9",
+  84532: "0x109412E3C84f0539b43d39dB691B08c90f58dC7c",
+  534351: "0x42b05a6016B9eED232E13fd56a8F0725693DBF8e",
+  534352: "0x0F86a21F6216c061B222c224e315d9FC34520bb7",
   11155111: "0x109412E3C84f0539b43d39dB691B08c90f58dC7c",
+  11155420: "0xd399e2Fb5f4cf3722a11F65b88FAB6B2B8621005",
+  666666666: "0xc1314EdcD7e478C831a7a24169F7dEADB2646eD2",
 } as const;
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x4E583d9390082B65Bef884b629DFA426114CED6d)
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9)
  * - [__View Contract on Op Mainnet Optimism Explorer__](https://explorer.optimism.io/address/0x567c4B141ED61923967cA25Ef4906C8781069a10)
  * - [__View Contract on Bnb Smart Chain Bsc Scan__](https://bscscan.com/address/0xd1e2cFb6441680002Eb7A44223160aB9B67d7E6E)
  * - [__View Contract on Gnosis Gnosis Chain Explorer__](https://blockscout.com/xdai/mainnet/address/0x2dFe937cD98Ab92e59cF3139138f18c823a4efE7)
  * - [__View Contract on Polygon Polygon Scan__](https://polygonscan.com/address/0x3E14dC1b13c488a8d5D310918780c983bD5982E7)
- * - [__View Contract on Optimism Goerli Etherscan__](https://goerli-optimism.etherscan.io/address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
- * - [__View Contract on Polygon Zk Evm Testnet Polygon Scan__](https://testnet-zkevm.polygonscan.com/address/0xe64f81d5dDdA1c7172e5C6d964E8ef1BD82D8704)
  * - [__View Contract on Base Basescan__](https://basescan.org/address/0x4C073B3baB6d8826b8C5b229f3cfdC1eC6E47E74)
  * - [__View Contract on Arbitrum One Arbiscan__](https://arbiscan.io/address/0xCf8Acb4eF033efF16E8080aed4c7D5B9285D2192)
  * - [__View Contract on Celo Celo Explorer__](https://explorer.celo.org/mainnet/address/0xA4Ff07cF81C02CFD356184879D953970cA957585)
  * - [__View Contract on Avalanche Fuji Snow Trace__](https://testnet.snowtrace.io/address/0x85Fe79b998509B77BF10A8BD4001D58475D29386)
  * - [__View Contract on Avalanche Snow Trace__](https://snowtrace.io/address/0x60377C7016E4cdB03C87EF474896C11cB560752C)
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xEB796bdb90fFA0f28255275e16936D25d3418603)
- * - [__View Contract on Base Goerli Basescan__](https://goerli.basescan.org/address/0x507c3a7C6Ccc253884A2e3a3ee2A211cC7E796a6)
- * - [__View Contract on Arbitrum Goerli Arbiscan__](https://goerli.arbiscan.io//address/0xE40983C2476032A0915600b9472B3141aA5B5Ba9)
+ * - [__View Contract on Base Sepolia Blockscout__](https://base-sepolia.blockscout.com/address/0x109412E3C84f0539b43d39dB691B08c90f58dC7c)
+ * - [__View Contract on Scroll Sepolia Blockscout__](https://sepolia-blockscout.scroll.io/address/0x42b05a6016B9eED232E13fd56a8F0725693DBF8e)
+ * - [__View Contract on Scroll Scrollscan__](https://scrollscan.com/address/0x0F86a21F6216c061B222c224e315d9FC34520bb7)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x109412E3C84f0539b43d39dB691B08c90f58dC7c)
+ * - [__View Contract on Optimism Sepolia Blockscout__](https://optimism-sepolia.blockscout.com/address/0xd399e2Fb5f4cf3722a11F65b88FAB6B2B8621005)
  */
 export const hostConfig = { address: hostAddress, abi: hostABI } as const;
 
@@ -2225,11 +2250,30 @@ export const nativeAssetSuperTokenABI = [
     name: "SUPER_TOKEN_NOT_ERC777_TOKENS_RECIPIENT",
   },
   { type: "error", inputs: [], name: "SUPER_TOKEN_NO_UNDERLYING_TOKEN" },
+  { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_ADMIN" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_GOV_OWNER" },
-  { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_HOST" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_SELF" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_TRANSFER_FROM_ZERO_ADDRESS" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_TRANSFER_TO_ZERO_ADDRESS" },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "oldAdmin",
+        internalType: "address",
+        type: "address",
+        indexed: true,
+      },
+      {
+        name: "newAdmin",
+        internalType: "address",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "AdminChanged",
+  },
   {
     type: "event",
     anonymous: false,
@@ -2583,6 +2627,32 @@ export const nativeAssetSuperTokenABI = [
     anonymous: false,
     inputs: [
       {
+        name: "poolAdminNFT",
+        internalType: "contract IPoolAdminNFT",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "PoolAdminNFTCreated",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "poolMemberNFT",
+        internalType: "contract IPoolMemberNFT",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "PoolMemberNFTCreated",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
         name: "operator",
         internalType: "address",
         type: "address",
@@ -2707,6 +2777,24 @@ export const nativeAssetSuperTokenABI = [
   {
     stateMutability: "view",
     type: "function",
+    inputs: [],
+    name: "POOL_ADMIN_NFT",
+    outputs: [
+      { name: "", internalType: "contract IPoolAdminNFT", type: "address" },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "POOL_MEMBER_NFT",
+    outputs: [
+      { name: "", internalType: "contract IPoolMemberNFT", type: "address" },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
     inputs: [
       { name: "owner", internalType: "address", type: "address" },
       { name: "spender", internalType: "address", type: "address" },
@@ -2746,6 +2834,13 @@ export const nativeAssetSuperTokenABI = [
       { name: "userData", internalType: "bytes", type: "bytes" },
     ],
     name: "burn",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [{ name: "newAdmin", internalType: "address", type: "address" }],
+    name: "changeAdmin",
     outputs: [],
   },
   {
@@ -2822,6 +2917,13 @@ export const nativeAssetSuperTokenABI = [
   {
     stateMutability: "view",
     type: "function",
+    inputs: [],
+    name: "getAdmin",
+    outputs: [{ name: "admin", internalType: "address", type: "address" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
     inputs: [
       { name: "agreementClass", internalType: "address", type: "address" },
       { name: "id", internalType: "bytes32", type: "bytes32" },
@@ -2850,6 +2952,15 @@ export const nativeAssetSuperTokenABI = [
     inputs: [],
     name: "getHost",
     outputs: [{ name: "host", internalType: "address", type: "address" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "getUnderlyingDecimals",
+    outputs: [
+      { name: "underlyingDecimals", internalType: "uint8", type: "uint8" },
+    ],
   },
   {
     stateMutability: "view",
@@ -2889,6 +3000,23 @@ export const nativeAssetSuperTokenABI = [
       { name: "s", internalType: "string", type: "string" },
     ],
     name: "initialize",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "underlyingToken",
+        internalType: "contract IERC20",
+        type: "address",
+      },
+      { name: "underlyingDecimals", internalType: "uint8", type: "uint8" },
+      { name: "n", internalType: "string", type: "string" },
+      { name: "s", internalType: "string", type: "string" },
+      { name: "admin", internalType: "address", type: "address" },
+    ],
+    name: "initializeWithAdmin",
     outputs: [],
   },
   {
@@ -3178,6 +3306,16 @@ export const nativeAssetSuperTokenABI = [
     ],
     name: "terminateAgreement",
     outputs: [],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [{ name: "amount", internalType: "uint256", type: "uint256" }],
+    name: "toUnderlyingAmount",
+    outputs: [
+      { name: "underlyingAmount", internalType: "uint256", type: "uint256" },
+      { name: "adjustedAmount", internalType: "uint256", type: "uint256" },
+    ],
   },
   {
     stateMutability: "view",
@@ -3301,11 +3439,30 @@ export const pureSuperTokenABI = [
     name: "SUPER_TOKEN_NOT_ERC777_TOKENS_RECIPIENT",
   },
   { type: "error", inputs: [], name: "SUPER_TOKEN_NO_UNDERLYING_TOKEN" },
+  { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_ADMIN" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_GOV_OWNER" },
-  { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_HOST" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_SELF" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_TRANSFER_FROM_ZERO_ADDRESS" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_TRANSFER_TO_ZERO_ADDRESS" },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "oldAdmin",
+        internalType: "address",
+        type: "address",
+        indexed: true,
+      },
+      {
+        name: "newAdmin",
+        internalType: "address",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "AdminChanged",
+  },
   {
     type: "event",
     anonymous: false,
@@ -3659,6 +3816,32 @@ export const pureSuperTokenABI = [
     anonymous: false,
     inputs: [
       {
+        name: "poolAdminNFT",
+        internalType: "contract IPoolAdminNFT",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "PoolAdminNFTCreated",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "poolMemberNFT",
+        internalType: "contract IPoolMemberNFT",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "PoolMemberNFTCreated",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
         name: "operator",
         internalType: "address",
         type: "address",
@@ -3783,6 +3966,24 @@ export const pureSuperTokenABI = [
   {
     stateMutability: "view",
     type: "function",
+    inputs: [],
+    name: "POOL_ADMIN_NFT",
+    outputs: [
+      { name: "", internalType: "contract IPoolAdminNFT", type: "address" },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "POOL_MEMBER_NFT",
+    outputs: [
+      { name: "", internalType: "contract IPoolMemberNFT", type: "address" },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
     inputs: [
       { name: "owner", internalType: "address", type: "address" },
       { name: "spender", internalType: "address", type: "address" },
@@ -3822,6 +4023,13 @@ export const pureSuperTokenABI = [
       { name: "userData", internalType: "bytes", type: "bytes" },
     ],
     name: "burn",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [{ name: "newAdmin", internalType: "address", type: "address" }],
+    name: "changeAdmin",
     outputs: [],
   },
   {
@@ -3891,6 +4099,13 @@ export const pureSuperTokenABI = [
   {
     stateMutability: "view",
     type: "function",
+    inputs: [],
+    name: "getAdmin",
+    outputs: [{ name: "admin", internalType: "address", type: "address" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
     inputs: [
       { name: "agreementClass", internalType: "address", type: "address" },
       { name: "id", internalType: "bytes32", type: "bytes32" },
@@ -3919,6 +4134,15 @@ export const pureSuperTokenABI = [
     inputs: [],
     name: "getHost",
     outputs: [{ name: "host", internalType: "address", type: "address" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "getUnderlyingDecimals",
+    outputs: [
+      { name: "underlyingDecimals", internalType: "uint8", type: "uint8" },
+    ],
   },
   {
     stateMutability: "view",
@@ -3969,6 +4193,23 @@ export const pureSuperTokenABI = [
       { name: "initialSupply", internalType: "uint256", type: "uint256" },
     ],
     name: "initialize",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "underlyingToken",
+        internalType: "contract IERC20",
+        type: "address",
+      },
+      { name: "underlyingDecimals", internalType: "uint8", type: "uint8" },
+      { name: "n", internalType: "string", type: "string" },
+      { name: "s", internalType: "string", type: "string" },
+      { name: "admin", internalType: "address", type: "address" },
+    ],
+    name: "initializeWithAdmin",
     outputs: [],
   },
   {
@@ -4262,6 +4503,16 @@ export const pureSuperTokenABI = [
   {
     stateMutability: "view",
     type: "function",
+    inputs: [{ name: "amount", internalType: "uint256", type: "uint256" }],
+    name: "toUnderlyingAmount",
+    outputs: [
+      { name: "underlyingAmount", internalType: "uint256", type: "uint256" },
+      { name: "adjustedAmount", internalType: "uint256", type: "uint256" },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
     inputs: [],
     name: "totalSupply",
     outputs: [{ name: "", internalType: "uint256", type: "uint256" }],
@@ -4355,6 +4606,16 @@ export const superTokenABI = [
         internalType: "contract IConstantInflowNFT",
         type: "address",
       },
+      {
+        name: "poolAdminNFT",
+        internalType: "contract IPoolAdminNFT",
+        type: "address",
+      },
+      {
+        name: "poolMemberNFT",
+        internalType: "contract IPoolMemberNFT",
+        type: "address",
+      },
     ],
   },
   { type: "error", inputs: [], name: "SF_TOKEN_AGREEMENT_ALREADY_EXISTS" },
@@ -4384,11 +4645,30 @@ export const superTokenABI = [
     name: "SUPER_TOKEN_NOT_ERC777_TOKENS_RECIPIENT",
   },
   { type: "error", inputs: [], name: "SUPER_TOKEN_NO_UNDERLYING_TOKEN" },
+  { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_ADMIN" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_GOV_OWNER" },
-  { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_HOST" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_ONLY_SELF" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_TRANSFER_FROM_ZERO_ADDRESS" },
   { type: "error", inputs: [], name: "SUPER_TOKEN_TRANSFER_TO_ZERO_ADDRESS" },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "oldAdmin",
+        internalType: "address",
+        type: "address",
+        indexed: true,
+      },
+      {
+        name: "newAdmin",
+        internalType: "address",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "AdminChanged",
+  },
   {
     type: "event",
     anonymous: false,
@@ -4769,6 +5049,32 @@ export const superTokenABI = [
     anonymous: false,
     inputs: [
       {
+        name: "poolAdminNFT",
+        internalType: "contract IPoolAdminNFT",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "PoolAdminNFTCreated",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
+        name: "poolMemberNFT",
+        internalType: "contract IPoolMemberNFT",
+        type: "address",
+        indexed: true,
+      },
+    ],
+    name: "PoolMemberNFTCreated",
+  },
+  {
+    type: "event",
+    anonymous: false,
+    inputs: [
+      {
         name: "operator",
         internalType: "address",
         type: "address",
@@ -4888,6 +5194,24 @@ export const superTokenABI = [
         internalType: "contract IConstantOutflowNFT",
         type: "address",
       },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "POOL_ADMIN_NFT",
+    outputs: [
+      { name: "", internalType: "contract IPoolAdminNFT", type: "address" },
+    ],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "POOL_MEMBER_NFT",
+    outputs: [
+      { name: "", internalType: "contract IPoolMemberNFT", type: "address" },
     ],
   },
   {
@@ -5098,6 +5422,23 @@ export const superTokenABI = [
     outputs: [],
   },
   {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      {
+        name: "underlyingToken",
+        internalType: "contract IERC20",
+        type: "address",
+      },
+      { name: "underlyingDecimals", internalType: "uint8", type: "uint8" },
+      { name: "n", internalType: "string", type: "string" },
+      { name: "s", internalType: "string", type: "string" },
+      { name: "admin", internalType: "address", type: "address" },
+    ],
+    name: "initializeWithAdmin",
+    outputs: [],
+  },
+  {
     stateMutability: "pure",
     type: "function",
     inputs: [],
@@ -5110,6 +5451,20 @@ export const superTokenABI = [
     inputs: [{ name: "newAddress", internalType: "address", type: "address" }],
     name: "updateCode",
     outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [{ name: "newAdmin", internalType: "address", type: "address" }],
+    name: "changeAdmin",
+    outputs: [],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "getAdmin",
+    outputs: [{ name: "", internalType: "address", type: "address" }],
   },
   {
     stateMutability: "view",
@@ -5349,6 +5704,23 @@ export const superTokenABI = [
     inputs: [],
     name: "getUnderlyingToken",
     outputs: [{ name: "", internalType: "address", type: "address" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [],
+    name: "getUnderlyingDecimals",
+    outputs: [{ name: "", internalType: "uint8", type: "uint8" }],
+  },
+  {
+    stateMutability: "view",
+    type: "function",
+    inputs: [{ name: "amount", internalType: "uint256", type: "uint256" }],
+    name: "toUnderlyingAmount",
+    outputs: [
+      { name: "underlyingAmount", internalType: "uint256", type: "uint256" },
+      { name: "adjustedAmount", internalType: "uint256", type: "uint256" },
+    ],
   },
   {
     stateMutability: "nonpayable",
@@ -5758,6 +6130,21 @@ export const superfluidGovernanceABI = [
     inputs: [
       { name: "host", internalType: "contract ISuperfluid", type: "address" },
       {
+        name: "token",
+        internalType: "contract ISuperToken[]",
+        type: "address[]",
+      },
+      { name: "newAdmins", internalType: "address[]", type: "address[]" },
+    ],
+    name: "batchChangeSuperTokenAdmin",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "host", internalType: "contract ISuperfluid", type: "address" },
+      {
         name: "tokens",
         internalType: "contract ISuperToken[]",
         type: "address[]",
@@ -5801,6 +6188,17 @@ export const superfluidGovernanceABI = [
     type: "function",
     inputs: [],
     name: "castrate",
+    outputs: [],
+  },
+  {
+    stateMutability: "nonpayable",
+    type: "function",
+    inputs: [
+      { name: "host", internalType: "contract ISuperfluid", type: "address" },
+      { name: "token", internalType: "contract ISuperToken", type: "address" },
+      { name: "newAdmin", internalType: "address", type: "address" },
+    ],
+    name: "changeSuperTokenAdmin",
     outputs: [],
   },
   {
@@ -6167,6 +6565,7 @@ export const superfluidGovernanceABI = [
         internalType: "address",
         type: "address",
       },
+      { name: "poolBeaconNewLogic", internalType: "address", type: "address" },
     ],
     name: "updateContracts",
     outputs: [],

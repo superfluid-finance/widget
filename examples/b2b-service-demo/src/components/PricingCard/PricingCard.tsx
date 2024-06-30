@@ -145,7 +145,7 @@ const PricingCard: FC<PricingCardProps> = ({
       paymentOptions: [
         {
           receiverAddress: randomReceiver,
-          chainId: 80001,
+          chainId: 11155420,
           superToken: {
             address: Token,
           },
