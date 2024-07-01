@@ -6,7 +6,7 @@ import {
 } from "@superfluid-finance/widget";
 import { useEffect, useState } from "react";
 
-const gateway = "https://cloudflare-ipfs.com";
+const gateway = "https://ipfs.io";
 
 const layoutTypes = ["dialog", "page", "drawer", "full-screen"] as const;
 
