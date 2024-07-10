@@ -944,7 +944,7 @@ export class BuilderPage extends BasePage {
   async selectNetworkForPaymentOption(network: string | undefined) {
     await test.step(`Selecting ${network} as the network for the payment option`, async () => {
       await this.networkOptions.click();
-      await this.page.locator(`[data-value=${network}]`).click();
+      await this.page.locator(`[data-value="${network}]"`).click();
     });
   }
 

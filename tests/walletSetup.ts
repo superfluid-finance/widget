@@ -43,7 +43,7 @@ export const test = base.extend<{
     );
     await ethHelper.revokeAllowanceIfNeccesary(
       "fUSDCx",
-      ethHelper.getTokenBySymbolAndChainId("fUSDC", 5).address,
+      ethHelper.getTokenBySymbolAndChainId("fUSDC", 11155420).address,
     );
 
     //Delete flow before tests, otherwise the widget might not pick it up

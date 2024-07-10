@@ -71,9 +71,7 @@ test.describe("Misc test cases without wallet connected", () => {
     await widgetPage.selectPaymentToken("fDAI");
     await widgetPage.clickTokenSelectionButton();
     await widgetPage.searchForPaymentOptionToken("fUSDCx");
-    await widgetPage.validateOnlyTokensContainingTextAreVisible(
-      "Optimism Sepolia",
-    );
+    await widgetPage.validateOnlyTokensContainingTextAreVisible("fUSDCx");
     await widgetPage.searchForPaymentOptionToken("Testing");
     await widgetPage.validateNoOptionsAreShown();
   });

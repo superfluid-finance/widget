@@ -64,7 +64,6 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
     } as const,
   ],
 };
-//
 
 const defaultPaymentDetails: WidgetProps["paymentDetails"] = {
   paymentOptions: [
