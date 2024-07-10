@@ -38,7 +38,7 @@ export const test = base.extend<{
     await context.pages()[0].waitForTimeout(3000);
     //Revoke allowance before tests, otherwise the widget does not pick it up
     const ethHelper = new EthHelper(
-      "Goerli",
+      "Optimism Sepolia",
       process.env.WIDGET_WALLET_PRIVATE_KEY!,
     );
     await ethHelper.revokeAllowanceIfNeccesary(
@@ -50,12 +50,12 @@ export const test = base.extend<{
     await ethHelper.deleteFlowIfNeccesary(
       "fDAIx",
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
-      rebounderAddresses["goerli"],
+      rebounderAddresses["optimism-sepolia"],
     );
     // setup metamask
     await metamask.initialSetup(chromium, {
       secretWordsOrPrivateKey: process.env.WIDGET_WALLET_PRIVATE_KEY,
-      network: "goerli",
+      network: "optimism sepolia",
       password: "Tester@1234",
       enableAdvancedSettings: false,
       enableExperimentalSettings: false,

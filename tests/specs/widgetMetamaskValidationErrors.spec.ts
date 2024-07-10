@@ -14,7 +14,7 @@ test.describe("Error state test cases", () => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
     await builderPage.addPaymentOption(paymentOptions.streamToSelfOption);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("TDLx");
     await widgetPage.connectWallet();
     await widgetPage.clickContinueButton();
@@ -25,10 +25,10 @@ test.describe("Error state test cases", () => {
     page,
   }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet();
-    await widgetPage.setWrapAmount("99999");
+    await widgetPage.setWrapAmount("999999");
     await widgetPage.clickContinueButton();
     await widgetPage.validateReviewStepError(
       "You don’t have enough underlying token balance to wrap.",
@@ -42,8 +42,8 @@ test.describe("Error state test cases", () => {
     let builderPage = new BuilderPage(page);
     paymentOptions.testOption.flowRate = "99999999";
     await builderPage.addPaymentOption(paymentOptions.testOption);
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("TDLx");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
+    await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet();
     await widgetPage.setWrapAmount("0");
     await widgetPage.clickContinueButton();
@@ -58,8 +58,8 @@ test.describe("Error state test cases", () => {
     paymentOptions.testOption.flowRate = "1";
     paymentOptions.testOption.timeUnit = "day";
     await builderPage.addPaymentOption(paymentOptions.testOption);
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("TDLx");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
+    await widgetPage.selectPaymentToken("fTUSDx");
     await widgetPage.connectWallet();
     await widgetPage.setWrapAmount("0");
     await widgetPage.clickContinueButton();

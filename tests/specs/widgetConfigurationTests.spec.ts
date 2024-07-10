@@ -10,7 +10,7 @@ test.describe("Widget configuration test cases", () => {
     page,
   }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("11155420");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet();
     await widgetPage.validateThatWrapAmountInputIs("3");

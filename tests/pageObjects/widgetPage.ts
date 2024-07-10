@@ -560,7 +560,7 @@ export class WidgetPage extends BasePage {
     await test.step(`Checking if token got wrapped succesfully`, async () => {
       let wrappedAmount = BigInt(1e18) * BigInt(this.wrapAmountDuringTest!);
       const ethHelper = new EthHelper(
-        "Goerli",
+        "Optimism Sepolia",
         process.env.WIDGET_WALLET_PRIVATE_KEY!,
       );
       await ethHelper

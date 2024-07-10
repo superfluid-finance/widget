@@ -11,22 +11,25 @@ test.describe("Widget UI specific tests", () => {
     page,
   }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet();
-    await widgetPage.validateAndSaveWrapPageBalances("Goerli", "fUSDCx");
+    await widgetPage.validateAndSaveWrapPageBalances(
+      "Optimism Sepolia",
+      "fUSDCx",
+    );
     await widgetPage.setWrapAmount("1");
     await widgetPage.clickContinueButton();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
-      rebounderAddresses["goerli"],
+      rebounderAddresses["optimism-sepolia"],
     );
     await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
     await widgetPage.clickTransactionScreenXButton();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
-      rebounderAddresses["goerli"],
+      rebounderAddresses["optimism-sepolia"],
     );
     await widgetPage.clickOnStepNumber("2");
     await widgetPage.validateThatWrapAmountInputIs("1");
@@ -39,7 +42,7 @@ test.describe("Widget UI specific tests", () => {
   }) => {
     let widgetPage = new WidgetPage(page);
     let testTokenSymbol = "fUSDCx";
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken(testTokenSymbol);
     await widgetPage.validateTokenIconInPaymentOptionStep(testTokenSymbol);
     await widgetPage.connectWallet();
@@ -51,7 +54,7 @@ test.describe("Widget UI specific tests", () => {
 
   test("Why do I need tokens button", async ({ page }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet();
     await widgetPage.clickWhyDoINeedToWrapTokensAndValidatePageOpen();

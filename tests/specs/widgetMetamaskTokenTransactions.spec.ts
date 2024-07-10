@@ -12,15 +12,18 @@ test.beforeEach(async ({ page }) => {
 test.describe("Token transfer and approval test cases", () => {
   test("Approving and wrapping tokens", async ({ page }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet();
-    await widgetPage.validateAndSaveWrapPageBalances("Goerli", "fUSDCx");
+    await widgetPage.validateAndSaveWrapPageBalances(
+      "Optimism Sepolia",
+      "fUSDCx",
+    );
     await widgetPage.setWrapAmount("1");
     await widgetPage.clickContinueButton();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
-      rebounderAddresses["goerli"],
+      rebounderAddresses["optimism-sepolia"],
     );
     await widgetPage.validateWrapReviewAmount("1");
     await widgetPage.waitForTransactionsToGetValidated();
@@ -63,7 +66,7 @@ test.describe("Token transfer and approval test cases", () => {
     await builderPage.openExportTab();
     await builderPage.clickOnJsonEditorButton();
     await builderPage.editJsonEditorTo("randomUpfrontPaymentReceiver");
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fTUSD");
     await widgetPage.connectWallet();
     await widgetPage.validateThatWrapAmountInputIs("4"); //1 upfront payment + 1 x 3 flow rate
@@ -86,7 +89,7 @@ test.describe("Token transfer and approval test cases", () => {
       ["Completed", "Ready to send"],
     );
     await widgetPage.validateRandomReceiverTokenBalanceAfterTransfer(
-      "Goerli",
+      "Optimism Sepolia",
       "fTUSDx",
       1,
     );
@@ -102,7 +105,7 @@ test.describe("Token transfer and approval test cases", () => {
     page,
   }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet();
     await widgetPage.clickContinueButton();

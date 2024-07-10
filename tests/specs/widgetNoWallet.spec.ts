@@ -54,8 +54,10 @@ test.describe("Misc test cases without wallet connected", () => {
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
     await widgetPage.clickNetworkSelectionButton();
-    await widgetPage.searchForPaymentOptionNetwork("Goerli");
-    await widgetPage.validateOnlyNetworksContainingTextAreVisible("Goerli");
+    await widgetPage.searchForPaymentOptionNetwork("Optimism Sepolia");
+    await widgetPage.validateOnlyNetworksContainingTextAreVisible(
+      "Optimism Sepolia",
+    );
     await widgetPage.searchForPaymentOptionNetwork("Testing");
     await widgetPage.validateNoOptionsAreShown();
   });
@@ -65,11 +67,13 @@ test.describe("Misc test cases without wallet connected", () => {
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("NTDL");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
+    await widgetPage.selectPaymentToken("fDAI");
     await widgetPage.clickTokenSelectionButton();
     await widgetPage.searchForPaymentOptionToken("fUSDCx");
-    await widgetPage.validateOnlyTokensContainingTextAreVisible("fUSDCx");
+    await widgetPage.validateOnlyTokensContainingTextAreVisible(
+      "Optimism Sepolia",
+    );
     await widgetPage.searchForPaymentOptionToken("Testing");
     await widgetPage.validateNoOptionsAreShown();
   });
@@ -79,8 +83,8 @@ test.describe("Misc test cases without wallet connected", () => {
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("NTDL");
+    await widgetPage.selectPaymentNetwork("Celo");
+    await widgetPage.selectPaymentToken("G$");
     await widgetPage.validateNoWrapStepIsPresent();
   });
 
@@ -92,7 +96,7 @@ test.describe("Misc test cases without wallet connected", () => {
     testOption.superTokenName = "Super ETH";
     await builderPage.openPaymentTab();
     await builderPage.addPaymentOption(testOption);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("ETHx");
     await widgetPage.validateNoWrapStepIsPresent();
   });
@@ -104,7 +108,7 @@ test.describe("Misc test cases without wallet connected", () => {
   //   let builderPage = new BuilderPage(page);
   //   await builderPage.clickOnJsonEditorButton()
   //   await builderPage.editJsonEditorTo("tonsOfOptions")
-  //   await widgetPage.selectPaymentNetwork("Goerli")
+  //   await widgetPage.selectPaymentNetwork("Optimism Sepolia")
   //   await widgetPage.selectPaymentToken("fUSDCx")
   // })
 });

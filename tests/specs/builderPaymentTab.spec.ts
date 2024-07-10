@@ -19,8 +19,8 @@ test.describe("Payment tab test cases", () => {
       paymentOptions.defaultPaymentOption,
     ]);
     await builderPage.validateAddedPaymentOptionCount("2");
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("TDLx");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
+    await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.validateSelectedPaymentOption(paymentOptions.testOption);
   });
 
@@ -220,19 +220,19 @@ test.describe("Payment tab test cases", () => {
     page,
   }) => {
     let testOption = {
-      network: "Goerli",
+      network: "Optimism Sepolia",
     };
     let builderPage = new BuilderPage(page);
     await builderPage.addPartialPaymentOption(testOption);
-    await builderPage.validateTokensInDropdown("Goerli");
+    await builderPage.validateTokensInDropdown("Optimism Sepolia");
   });
 
   test("Add payment option form - searching for a token", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickAddPaymentOptionFormButton();
-    await builderPage.selectNetworkForPaymentOption("Goerli");
-    await builderPage.searchAndValidateTokenInDropdown("TDLx");
+    await builderPage.selectNetworkForPaymentOption("Optimism Sepolia");
+    await builderPage.searchAndValidateTokenInDropdown("fUSDCx");
   });
 
   test("Add payment option form - invalid receiver field values", async ({
@@ -319,9 +319,9 @@ test.describe("Payment tab test cases", () => {
   }) => {
     let builderPage = new BuilderPage(page);
     await builderPage.addPartialPaymentOption({
-      network: "Goerli",
-      superToken: "TDLx",
-      chainId: "5",
+      network: "Optimism Sepolia",
+      superToken: "fDAIx",
+      chainId: "11155420",
     });
     await builderPage.clearSelectedTokenWithXButton();
     await builderPage.validateNoTokenIsSelectedInAddPaymentForm();

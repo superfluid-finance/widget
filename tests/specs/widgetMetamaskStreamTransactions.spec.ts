@@ -13,13 +13,13 @@ test.describe("Transactional test cases", () => {
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fDAIx");
     await widgetPage.connectWallet();
     await widgetPage.skipWrapStep();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
-      rebounderAddresses["goerli"],
+      rebounderAddresses["optimism-sepolia"],
     );
     await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
@@ -36,14 +36,14 @@ test.describe("Transactional test cases", () => {
 
   test("Modifying a flow", async ({ page }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet();
     await widgetPage.setWrapAmount("0");
     await widgetPage.clickContinueButton();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
-      rebounderAddresses["goerli"],
+      rebounderAddresses["optimism-sepolia"],
     );
     await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
