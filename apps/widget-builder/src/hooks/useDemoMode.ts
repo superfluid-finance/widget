@@ -44,28 +44,6 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
       },
     } as const,
     {
-      receiverAddress: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa", // vitalik.eth
-      chainId: supportedNetwork.optimismSepolia.id,
-      superToken: {
-        address: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa", // ZYA
-      },
-      flowRate: {
-        amountEther: "1",
-        period: "month",
-      },
-    } as const,
-    {
-      receiverAddress: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa", // vitalik.eth
-      chainId: supportedNetwork.optimismSepolia.id,
-      superToken: {
-        address: "0xcc48a0349077b91ab540d2e46addffb4a4a26251", // NTDL
-      },
-      flowRate: {
-        amountEther: "1",
-        period: "month",
-      },
-    } as const,
-    {
       receiverAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
       chainId: supportedNetwork.celo.id,
       superToken: {
