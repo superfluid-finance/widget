@@ -80,7 +80,7 @@ const defaultPaymentDetails: WidgetProps["paymentDetails"] = {
     } as const,
   ],
 };
-//
+
 const type: Layout = "page";
 
 const defaultDisplaySettings: DisplaySettings = {
