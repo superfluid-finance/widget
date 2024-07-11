@@ -25,6 +25,17 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
       chainId: supportedNetwork.optimismSepolia.id,
       superToken: {
+        address: "0x0043d7c85c8b96a49a72a92c0b48cdc4720437d7", // ETHx
+      },
+      flowRate: {
+        amountEther: "1",
+        period: "month",
+      },
+    } as const,
+    {
+      receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
+      chainId: supportedNetwork.optimismSepolia.id,
+      superToken: {
         address: "0xfd0957cbf7c1638581a3cdeb16256e5f08e7ce75", // fTUSDx
       },
     } as const,

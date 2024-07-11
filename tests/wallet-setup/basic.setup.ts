@@ -26,7 +26,7 @@ await ethHelper.revokeAllowanceIfNeccesary(
 
 //Delete flow before tests, otherwise the widget might not pick it up
 await ethHelper.deleteFlowIfNeccesary(
-  "fDAIx",
+  "ETHx",
   process.env.WIDGET_WALLET_PUBLIC_KEY!,
   rebounderAddresses["optimism-sepolia"],
 );

@@ -97,6 +97,15 @@ export const demoOptions: PaymentOption[] = [
     timeUnit: "month",
     userDefinedRate: true,
   },
+  {
+    network: "Optimism Sepolia",
+    superToken: "ETHx",
+    superTokenName: "ETHx",
+    chainId: "11155420",
+    flowRate: "1",
+    receiver: "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
+    timeUnit: "month",
+  },
 ];
 
 export class BasePage {

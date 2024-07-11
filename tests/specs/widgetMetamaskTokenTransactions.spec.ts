@@ -25,11 +25,11 @@ test.describe("Token transfer and approval test cases", () => {
   }) => {
     let widgetPage = new WidgetPage(page);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
-    await widgetPage.selectPaymentToken("fUSDCx");
+    await widgetPage.selectPaymentToken("fDAIx");
     await widgetPage.connectWallet(metamask);
     await widgetPage.validateAndSaveWrapPageBalances(
       "Optimism Sepolia",
-      "fUSDCx",
+      "fDAIx",
     );
     await widgetPage.setWrapAmount("1");
     await widgetPage.clickContinueButton();
@@ -85,7 +85,7 @@ test.describe("Token transfer and approval test cases", () => {
     await builderPage.clickOnJsonEditorButton();
     await builderPage.editJsonEditorTo("randomUpfrontPaymentReceiver");
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
-    await widgetPage.selectPaymentToken("fTUSD");
+    await widgetPage.selectPaymentToken("fTUSDx");
     await widgetPage.connectWallet(metamask);
     await widgetPage.validateThatWrapAmountInputIs("4"); //1 upfront payment + 1 x 3 flow rate
     await widgetPage.skipWrapStep();

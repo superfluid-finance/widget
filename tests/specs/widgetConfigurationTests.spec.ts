@@ -23,7 +23,7 @@ test.describe("Widget configuration test cases", () => {
     metamask: MetaMask;
   }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("11155420");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet(metamask);
     await widgetPage.validateThatWrapAmountInputIs("3");

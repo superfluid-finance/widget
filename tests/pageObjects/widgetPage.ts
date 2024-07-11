@@ -279,7 +279,8 @@ export class WidgetPage extends BasePage {
 
   async clickContinueButton() {
     await test.step(`Clicking on the continue button`, async () => {
-      await this.continueButton.click();
+      await this.continueButton.scrollIntoViewIfNeeded();
+      await this.continueButton.click({ timeout: 30000 });
     });
   }
 

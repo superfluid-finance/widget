@@ -28,7 +28,7 @@ test.describe("Transactional test cases", () => {
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
-    await widgetPage.selectPaymentToken("fDAIx");
+    await widgetPage.selectPaymentToken("ETHx");
     await widgetPage.connectWallet(metamask);
     await widgetPage.skipWrapStep();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
@@ -57,7 +57,7 @@ test.describe("Transactional test cases", () => {
   }) => {
     let widgetPage = new WidgetPage(page);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
-    await widgetPage.selectPaymentToken("fUSDCx");
+    await widgetPage.selectPaymentToken("fDAIx");
     await widgetPage.connectWallet(metamask);
     await widgetPage.setWrapAmount("0");
     await widgetPage.clickContinueButton();

@@ -120,6 +120,7 @@ export class BuilderPage extends BasePage {
   readonly editorErrorMessage: Locator;
   readonly editorHoverErrorMessage: Locator;
   readonly gatingTabSwitch: Locator;
+  readonly uploadImageButton: Locator;
 
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
@@ -177,6 +178,7 @@ export class BuilderPage extends BasePage {
     this.summaryEditButtons = page.getByTestId("edit-payment-option-button");
     this.summaryCopyButtons = page.getByTestId("clone-payment-option-button");
     this.uploadImageField = page.getByTestId("file-upload-field");
+    this.uploadImageButton = page.getByTestId("file-upload-button");
     this.darkModeSwitch = page.getByLabel("Dark mode: off");
     this.containerBorderSlider = page.getByTestId("container-radius-slider");
     this.containerBorderSliderValue = page.getByTestId(
@@ -1396,7 +1398,7 @@ export class BuilderPage extends BasePage {
         await this.contractOwnerInputField.fill(nftDetails.owner);
       }
       if (nftDetails.image) {
-        await this.uploadImageField.scrollIntoViewIfNeeded();
+        await this.uploadImageButton.scrollIntoViewIfNeeded();
         await this.uploadImageField.setInputFiles(nftDetails.image);
       }
       if (nftDetails.networks) {

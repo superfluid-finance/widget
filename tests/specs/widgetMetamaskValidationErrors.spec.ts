@@ -63,8 +63,8 @@ test.describe("Error state test cases", () => {
     let builderPage = new BuilderPage(page);
     paymentOptions.testOption.flowRate = "99999999";
     await builderPage.addPaymentOption(paymentOptions.testOption);
-    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
-    await widgetPage.selectPaymentToken("fUSDCx");
+    await widgetPage.selectPaymentNetwork(paymentOptions.testOption.network);
+    await widgetPage.selectPaymentToken(paymentOptions.testOption.superToken);
     await widgetPage.connectWallet(metamask);
     await widgetPage.setWrapAmount("0");
     await widgetPage.clickContinueButton();
@@ -82,7 +82,7 @@ test.describe("Error state test cases", () => {
   }) => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
-    paymentOptions.testOption.flowRate = "1";
+    paymentOptions.testOption.flowRate = "3000";
     paymentOptions.testOption.timeUnit = "day";
     await builderPage.addPaymentOption(paymentOptions.testOption);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
