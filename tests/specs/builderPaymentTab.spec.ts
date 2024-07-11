@@ -141,13 +141,13 @@ test.describe("Payment tab test cases", () => {
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
-    await builderPage.clickOnNthEditPaymentOptionButton(1);
-    await builderPage.verifyPaymentOptionShownInForm(demoOptions[1]);
+    await builderPage.clickOnNthEditPaymentOptionButton(3);
+    await builderPage.verifyPaymentOptionShownInForm(demoOptions[3]);
     await builderPage.disableUserDefinedRate();
     await builderPage.editPaymentOptionFlowRateTo("10");
     let finalOptions: PaymentOption[] = [...demoOptions];
-    finalOptions[1].flowRate = "10";
-    finalOptions[1].userDefinedRate = false;
+    finalOptions[3].flowRate = "10";
+    finalOptions[3].userDefinedRate = false;
     await builderPage.verifyAddedPaymentOptions(finalOptions);
   });
 
@@ -155,11 +155,11 @@ test.describe("Payment tab test cases", () => {
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
-    await builderPage.clickOnNthEditPaymentOptionButton(2);
-    await builderPage.verifyPaymentOptionShownInForm(demoOptions[2]);
+    await builderPage.clickOnNthEditPaymentOptionButton(1);
+    await builderPage.verifyPaymentOptionShownInForm(demoOptions[1]);
     await builderPage.editUpfrontPaymentAmountTo("10");
     let finalOptions: PaymentOption[] = [...demoOptions];
-    finalOptions[2].upfrontPayment = "10";
+    finalOptions[1].upfrontPayment = "10";
     await builderPage.verifyAddedPaymentOptions(finalOptions);
   });
 
@@ -288,7 +288,9 @@ test.describe("Payment tab test cases", () => {
     );
     await builderPage.clickOnWandButton();
     await builderPage.verifyAddedPaymentOptions(demoOptions);
-    await builderPage.validateAddedPaymentOptionCount("8");
+    await builderPage.validateAddedPaymentOptionCount(
+      demoOptions.length.toString(),
+    );
     await widgetPage.validateNoOptionIsSelected();
   });
 

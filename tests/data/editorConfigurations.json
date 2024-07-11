@@ -1,8 +1,8 @@
 {
     "allNetworks": {
       "productDetails": {
-        "name": "",
-        "description": "",
+        "name": "All networks test",
+        "description": "This description was added by setting the config in json editor",
         "imageURI": ""
       },
       "paymentDetails": {
