@@ -396,9 +396,12 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async acceptMetamaskAllowanceTransaction(allowance: string) {
+  async acceptMetamaskAllowanceTransaction(
+    allowance: string,
+    metamask: MetaMask,
+  ) {
     await test.step(`Giving permission to spend ${allowance} tokens`, async () => {
-      metamask.confirmPermissionToSpend(allowance);
+      await metamask.confirmTransaction("aggressive");
     });
   }
 

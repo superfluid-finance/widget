@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-import { defineWalletSetup,MetaMask } from "@synthetixio/synpress";
+import { defineWalletSetup, MetaMask } from "@synthetixio/synpress";
 
 import { EthHelper } from "../helpers/ethHelper.js";
 import { rebounderAddresses } from "../pageObjects/basePage.js";

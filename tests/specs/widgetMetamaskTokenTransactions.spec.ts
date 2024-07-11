@@ -46,7 +46,7 @@ test.describe("Token transfer and approval test cases", () => {
     );
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
-    await widgetPage.acceptMetamaskAllowanceTransaction("1");
+    await widgetPage.acceptMetamaskAllowanceTransaction("1", metamask);
     // Checking the pending status makes the test case quite flaky
     // await widgetPage.validateTransactionStatuses(
     //   ["approve", "wrap", "modify"],
