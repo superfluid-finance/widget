@@ -55,7 +55,16 @@ export const test = base.extend<{
     // setup metamask
     await metamask.initialSetup(chromium, {
       secretWordsOrPrivateKey: process.env.WIDGET_WALLET_PRIVATE_KEY,
-      network: "optimismSepolia",
+      network: {
+        id: 11155420,
+        name: "Optimism Sepolia",
+        testnet: true,
+        rpcUrls: {
+          default: {
+            http: "https://rpc-endpoints.superfluid.dev/optimism-sepolia",
+          },
+        },
+      },
       password: "Tester@1234",
       enableAdvancedSettings: false,
       enableExperimentalSettings: false,
