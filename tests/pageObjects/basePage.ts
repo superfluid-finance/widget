@@ -100,7 +100,7 @@ export const demoOptions: PaymentOption[] = [
   {
     network: "Optimism Sepolia",
     superToken: "ETHx",
-    superTokenName: "ETHx",
+    superTokenName: "Super ETH",
     chainId: "11155420",
     flowRate: "1",
     receiver: "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
