@@ -72,6 +72,12 @@ jobs:
             echo "BASE_URL=${{ github.event.deployment_status.environment_url }}" >> $GITHUB_ENV
           fi
 
+      - name: Setup metamask cache
+        run: xvfb-run pnpm synpress wallet-setup --force
+        env:
+          WIDGET_WALLET_PRIVATE_KEY: ${{ secrets.WIDGET_WALLET_PRIVATE_KEY}}
+          WIDGET_WALLET_PUBLIC_KEY: "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD"
+
         # https://playwright.dev/docs/next/ci#running-headed
       - name: Run Playwright tests
         run: xvfb-run pnpm playwright test ${{ matrix.file }}

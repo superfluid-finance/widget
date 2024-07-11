@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { BuilderPage } from "../pageObjects/builderPage.js";
+import { BuilderPage } from "../pageObjects/builderPage.ts";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
@@ -22,7 +22,7 @@ test.describe("Gating tab test cases", () => {
       symbol: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
       name: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
       owner: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
-      image: "./data/export.json",
+      image: "./data/export.tson",
       networks: ["Optimism Sepolia"],
     };
     await builderPage.openGatingTab();

@@ -1,5 +1,5 @@
 import { expect, Locator, Page, test } from "@playwright/test";
-import metamask from "@synthetixio/synpress/commands/metamask.js";
+import { MetaMask } from "@synthetixio/synpress";
 
 import { EthHelper } from "../helpers/ethHelper.js";
 import {
@@ -283,11 +283,11 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async connectWallet() {
+  async connectWallet(metamask: MetaMask) {
     await test.step(`Clicking continue button and accepting Metamask access`, async () => {
       await this.clickContinueButton();
       await this.metamaskWalletButton.click();
-      await metamask.acceptAccess();
+      await metamask.connectToDapp();
     });
   }
 
@@ -390,9 +390,9 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async acceptMetamaskTransaction() {
+  async acceptMetamaskTransaction(metamask: MetaMask) {
     await test.step(`Accepting Metamask transaction (aggressive)`, async () => {
-      metamask.confirmTransaction("aggressive");
+      await metamask.confirmTransaction("aggressive");
     });
   }
 

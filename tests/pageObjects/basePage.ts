@@ -50,7 +50,7 @@ export const paymentOptions: { [key: string]: PaymentOption } = {
   streamToSelfOption: {
     network: "Optimism Sepolia",
     superToken: "fDAIx",
-    superTokenName: "Super fDAIFake Token",
+    superTokenName: "Super fDAI Fake Token",
     chainId: "11155420",
     flowRate: "2",
     receiver: process.env.WIDGET_WALLET_PUBLIC_KEY!,

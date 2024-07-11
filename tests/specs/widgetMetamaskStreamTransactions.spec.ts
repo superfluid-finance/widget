@@ -1,21 +1,35 @@
-import { rebounderAddresses } from "../pageObjects/basePage.js";
-import { BuilderPage } from "../pageObjects/builderPage.js";
-import { WidgetPage } from "../pageObjects/widgetPage.js";
-import { test } from "../walletSetup.js";
+import { Page } from "@playwright/test";
+import {
+  MetaMask,
+  metaMaskFixtures,
+  testWithSynpress,
+} from "@synthetixio/synpress";
 
-test.beforeEach(async ({ page }) => {
+import { rebounderAddresses } from "../pageObjects/basePage.ts";
+import { BuilderPage } from "../pageObjects/builderPage.ts";
+import { WidgetPage } from "../pageObjects/widgetPage.ts";
+import basicSetup from "../wallet-setup/basic.setup.ts";
+
+const test = testWithSynpress(metaMaskFixtures(basicSetup));
+test.beforeEach(async ({ page }: { page: Page }) => {
   await page.goto("/builder");
 });
 
 test.describe("Transactional test cases", () => {
-  test("Creating a flow", async ({ page }) => {
+  test("Creating a flow", async ({
+    page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
+  }) => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fDAIx");
-    await widgetPage.connectWallet();
+    await widgetPage.connectWallet(metamask);
     await widgetPage.skipWrapStep();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
@@ -26,7 +40,7 @@ test.describe("Transactional test cases", () => {
     await widgetPage.validateTransactionStatuses(["send"], ["Ready to send"]);
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
-    await widgetPage.acceptMetamaskTransaction();
+    await widgetPage.acceptMetamaskTransaction(metamask);
     await widgetPage.validateTransactionStatuses(
       ["send"],
       ["Transaction sent"],
@@ -34,11 +48,17 @@ test.describe("Transactional test cases", () => {
     await widgetPage.validateSuccessMessage("1");
   });
 
-  test("Modifying a flow", async ({ page }) => {
+  test("Modifying a flow", async ({
+    page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
+  }) => {
     let widgetPage = new WidgetPage(page);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
-    await widgetPage.connectWallet();
+    await widgetPage.connectWallet(metamask);
     await widgetPage.setWrapAmount("0");
     await widgetPage.clickContinueButton();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
@@ -50,7 +70,7 @@ test.describe("Transactional test cases", () => {
     await widgetPage.validateTransactionStatuses(["modify"], ["Ready to send"]);
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
-    await widgetPage.acceptMetamaskTransaction();
+    await widgetPage.acceptMetamaskTransaction(metamask);
     await widgetPage.validateTransactionStatuses(
       ["modify"],
       ["Transaction sent"],
