@@ -1396,6 +1396,7 @@ export class BuilderPage extends BasePage {
         await this.contractOwnerInputField.fill(nftDetails.owner);
       }
       if (nftDetails.image) {
+        await this.uploadImageField.scrollIntoViewIfNeeded();
         await this.uploadImageField.setInputFiles(nftDetails.image);
       }
       if (nftDetails.networks) {

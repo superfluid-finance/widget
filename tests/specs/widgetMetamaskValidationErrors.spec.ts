@@ -86,7 +86,7 @@ test.describe("Error state test cases", () => {
     paymentOptions.testOption.timeUnit = "day";
     await builderPage.addPaymentOption(paymentOptions.testOption);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
-    await widgetPage.selectPaymentToken("fTUSDx");
+    await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet(metamask);
     await widgetPage.setWrapAmount("0");
     await widgetPage.clickContinueButton();

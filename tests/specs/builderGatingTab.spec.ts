@@ -22,7 +22,7 @@ test.describe("Gating tab test cases", () => {
       symbol: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
       name: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
       owner: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
-      image: "./data/export.tson",
+      image: "./data/export.json",
       networks: ["Optimism Sepolia"],
     };
     await builderPage.openGatingTab();
