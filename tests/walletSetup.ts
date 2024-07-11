@@ -59,6 +59,9 @@ export const test = base.extend<{
         id: 11155420,
         name: "Optimism Sepolia",
         testnet: true,
+        nativeCurrency: {
+          symbol: "ETH",
+        },
         rpcUrls: {
           default: {
             http: "https://rpc-endpoints.superfluid.dev/optimism-sepolia",
