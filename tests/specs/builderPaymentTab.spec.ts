@@ -20,7 +20,7 @@ test.describe("Payment tab test cases", () => {
     ]);
     await builderPage.validateAddedPaymentOptionCount("2");
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
-    await widgetPage.selectPaymentToken("fUSDCx");
+    await widgetPage.selectPaymentToken("fDAIx");
     await widgetPage.validateSelectedPaymentOption(paymentOptions.testOption);
   });
 
@@ -113,11 +113,11 @@ test.describe("Payment tab test cases", () => {
   test("Cloning a payment option - upfront payment", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     let widgetPage = new WidgetPage(page);
-    let finalOptions: PaymentOption[] = [demoOptions[2], ...demoOptions];
+    let finalOptions: PaymentOption[] = [demoOptions[1], ...demoOptions];
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
-    await builderPage.clickOnNthCopyPaymentOptionButton(2);
-    await builderPage.verifyPaymentOptionShownInForm(demoOptions[2]);
+    await builderPage.clickOnNthCopyPaymentOptionButton(1);
+    await builderPage.verifyPaymentOptionShownInForm(demoOptions[1]);
     await builderPage.clickAddPaymentOptionButton();
     await builderPage.verifyAddedPaymentOptions(finalOptions);
     await widgetPage.verifyDuplicateOptionError();

@@ -413,46 +413,29 @@ export class BuilderPage extends BasePage {
         symbol: string;
       };
 
-      const currentlyListedGoerliTokens: Token[] = [
-        {
-          name: "TDLx",
-          symbol: "Super TDL Fake Token",
-        },
-        {
-          name: "SMILE",
-          symbol: "Smile Super Token",
-        },
+      const currentlyListedOptimismSepoliaTokens: Token[] = [
         {
           name: "ETHx",
           symbol: "Super ETH",
-        },
-        {
-          name: "ZYA",
-          symbol: "Zaya Token",
         },
         {
           name: "fUSDCx",
           symbol: "Super fUSDC Fake Token",
         },
         {
-          name: "fTUSDx",
-          symbol: "Super fTUSD Fake Token",
-        },
-        {
-          name: "NTDL",
-          symbol: "NTDL",
-        },
-        {
-          name: "FUNDx",
-          symbol: "Super FUND (Goerli)",
-        },
-        {
           name: "fDAIx",
           symbol: "Super fDAI Fake Token",
         },
+        {
+          name: "fTUSDx",
+          symbol: "Super fTUSD Fake Token",
+        },
       ];
       await this.superTokenOption.click();
-      for (let [index, token] of currentlyListedGoerliTokens.entries()) {
+      for (let [
+        index,
+        token,
+      ] of currentlyListedOptimismSepoliaTokens.entries()) {
         await expect(this.superTokenOptionNames.nth(index)).toHaveText(
           token.symbol,
         );
@@ -598,7 +581,7 @@ export class BuilderPage extends BasePage {
       if (partialOption.chainId && partialOption.network) {
         this.networkOptions.click();
         await this.page
-          .locator(`[data-value=${partialOption.network}]`)
+          .locator(`[data-value="${partialOption.network}"]`)
           .click();
       }
       if (partialOption.flowRate) {
@@ -618,7 +601,7 @@ export class BuilderPage extends BasePage {
       if (partialOption.network) {
         await this.networkOptions.click();
         await this.page
-          .locator(`[data-value=${partialOption.network}]`)
+          .locator(`[data-value="${partialOption.network}"]`)
           .click();
       }
       if (partialOption.receiver) {
