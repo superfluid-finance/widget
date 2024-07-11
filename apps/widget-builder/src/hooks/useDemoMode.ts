@@ -112,7 +112,7 @@ const demoExistentialNFT: ExistentialNFT = {
     11155420: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // TODO: doesn't exist
   },
 };
-
+//
 export const defaultWidgetProps: WidgetProps = {
   productDetails: defaultProductDetails,
   paymentDetails: defaultPaymentDetails,
