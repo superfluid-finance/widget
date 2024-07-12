@@ -78,7 +78,7 @@ test.describe("Token transfer and approval test cases", () => {
     await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
   });
 
-  test.only("Transfering tokens", async ({
+  test("Transfering tokens", async ({
     page,
     metamask,
   }: {
@@ -115,7 +115,7 @@ test.describe("Token transfer and approval test cases", () => {
     );
     await widgetPage.validateRandomReceiverTokenBalanceAfterTransfer(
       "Optimism Sepolia",
-      "fTUSDx",
+      "fDAIx",
       1,
     );
     // TODO Once upfront payments are shown in the success screen enable these steps

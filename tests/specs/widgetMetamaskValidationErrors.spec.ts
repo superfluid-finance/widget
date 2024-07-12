@@ -86,7 +86,7 @@ test.describe("Error state test cases", () => {
     paymentOptions.testOption.timeUnit = "day";
     paymentOptions.testOption.superToken = "fUSDCx";
     await builderPage.addPaymentOption(paymentOptions.testOption);
-    await builderPage.deleteFirstAddedPaymentOption();
+    await builderPage.deleteLastAddedPaymentOption();
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet(metamask);
