@@ -5,7 +5,7 @@ import {
   testWithSynpress,
 } from "@synthetixio/synpress";
 
-import { rebounderAddresses } from "../pageObjects/basePage.ts";
+import { paymentOptions, rebounderAddresses } from "../pageObjects/basePage.ts";
 import { BuilderPage } from "../pageObjects/builderPage.ts";
 import { WidgetPage } from "../pageObjects/widgetPage.ts";
 import basicSetup from "../wallet-setup/basic.setup.ts";
@@ -56,6 +56,9 @@ test.describe("Transactional test cases", () => {
     metamask: MetaMask;
   }) => {
     let widgetPage = new WidgetPage(page);
+    let builderPage = new BuilderPage(page);
+    await builderPage.openPaymentTab();
+    await builderPage.addPaymentOption(paymentOptions.testOption);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fDAIx");
     await widgetPage.connectWallet(metamask);

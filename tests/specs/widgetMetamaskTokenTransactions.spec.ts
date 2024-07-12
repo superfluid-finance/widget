@@ -5,7 +5,11 @@ import {
   testWithSynpress,
 } from "@synthetixio/synpress";
 
-import { randomReceiver, rebounderAddresses } from "../pageObjects/basePage.ts";
+import {
+  paymentOptions,
+  randomReceiver,
+  rebounderAddresses,
+} from "../pageObjects/basePage.ts";
 import { BuilderPage } from "../pageObjects/builderPage.ts";
 import { WidgetPage } from "../pageObjects/widgetPage.ts";
 import basicSetup from "../wallet-setup/basic.setup.ts";
@@ -24,6 +28,9 @@ test.describe("Token transfer and approval test cases", () => {
     metamask: MetaMask;
   }) => {
     let widgetPage = new WidgetPage(page);
+    let builderPage = new BuilderPage(page);
+    await builderPage.openPaymentTab();
+    await builderPage.addPaymentOption(paymentOptions.testOption);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fDAIx");
     await widgetPage.connectWallet(metamask);
@@ -85,7 +92,7 @@ test.describe("Token transfer and approval test cases", () => {
     await builderPage.clickOnJsonEditorButton();
     await builderPage.editJsonEditorTo("randomUpfrontPaymentReceiver");
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
-    await widgetPage.selectPaymentToken("fTUSDx");
+    await widgetPage.selectPaymentToken("fDAIx");
     await widgetPage.connectWallet(metamask);
     await widgetPage.validateThatWrapAmountInputIs("4"); //1 upfront payment + 1 x 3 flow rate
     await widgetPage.skipWrapStep();

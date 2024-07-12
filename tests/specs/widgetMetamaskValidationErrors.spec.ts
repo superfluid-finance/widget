@@ -82,8 +82,9 @@ test.describe("Error state test cases", () => {
   }) => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
-    paymentOptions.testOption.flowRate = "3000";
+    paymentOptions.testOption.flowRate = "2999";
     paymentOptions.testOption.timeUnit = "day";
+    paymentOptions.testOption.superToken = "fUSDCx";
     await builderPage.addPaymentOption(paymentOptions.testOption);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");

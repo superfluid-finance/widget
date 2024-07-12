@@ -1447,7 +1447,7 @@ export class BuilderPage extends BasePage {
       if (jsonObjectToUse === "randomUpfrontPaymentReceiver") {
         let walletToUse = ethers.Wallet.createRandom().address;
         randomReceiver.address = walletToUse;
-        json[jsonObjectToUse].paymentDetails.paymentOptions[0].receiverAddress =
+        json[jsonObjectToUse].paymentDetails.paymentOptions[1].receiverAddress =
           walletToUse;
         dataToUse = JSON.stringify(json[jsonObjectToUse]);
       }
