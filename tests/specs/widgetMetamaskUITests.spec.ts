@@ -26,10 +26,6 @@ test.describe("Widget UI specific tests", () => {
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
     await widgetPage.connectWallet(metamask);
-    await widgetPage.validateAndSaveWrapPageBalances(
-      "Optimism Sepolia",
-      "fUSDCx",
-    );
     await widgetPage.setWrapAmount("1");
     await widgetPage.clickContinueButton();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(

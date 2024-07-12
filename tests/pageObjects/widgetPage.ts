@@ -560,15 +560,16 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async validateTokenBalanceAfterWrap() {
+  async validateTokenBalanceAfterWrap(token: string) {
     await test.step(`Checking if token got wrapped succesfully`, async () => {
       let wrappedAmount = BigInt(1e18) * BigInt(this.wrapAmountDuringTest!);
+      const underlyingToken = token.slice(0, -1);
       const ethHelper = new EthHelper(
         "Optimism Sepolia",
         process.env.WIDGET_WALLET_PRIVATE_KEY!,
       );
       await ethHelper
-        .getUnderlyingTokenBalance("fUSDC")
+        .getUnderlyingTokenBalance(underlyingToken)
         .then(async (underlyingBalance) => {
           await expect(
             this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
@@ -576,7 +577,7 @@ export class WidgetPage extends BasePage {
         });
 
       await ethHelper
-        .getSuperTokenBalance("fUSDCx")
+        .getSuperTokenBalance(token)
         .then(async (superTokenBalance) => {
           await expect(
             this.superTokenBalanceBeforeWrap! + wrappedAmount,
@@ -594,7 +595,6 @@ export class WidgetPage extends BasePage {
         humanReadableNetworkName,
         process.env.WIDGET_WALLET_PRIVATE_KEY!,
       );
-      let underlyingTokenSymbol = ethHelper.getTokenBySymbolAndChainId;
       await ethHelper
         .getUnderlyingTokenBalance("fUSDC")
         .then(async (underlyingBalance) => {

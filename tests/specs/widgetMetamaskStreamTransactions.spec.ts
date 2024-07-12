@@ -30,7 +30,6 @@ test.describe("Transactional test cases", () => {
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("ETHx");
     await widgetPage.connectWallet(metamask);
-    await widgetPage.skipWrapStep();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
       rebounderAddresses["optimism-sepolia"],

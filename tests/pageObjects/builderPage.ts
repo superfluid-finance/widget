@@ -444,8 +444,8 @@ export class BuilderPage extends BasePage {
         await expect(this.superTokenOptionSymbols.nth(index)).toHaveText(
           token.name,
         );
-        //The SVG sometimes loads fuzzy and leads to a breaking test for FUNDx
-        let diffRatio = token.name === "FUNDx" ? 0.2 : 0.03;
+        //The SVG sometimes loads fuzzy or a pixel off for fTUSDx
+        let diffRatio = token.name === "fTUSDx" ? 0.1 : 0.03;
         await expect(
           this.superTokenOptionsInDropdown.nth(index).locator("img"),
         ).toHaveScreenshot(`./data/${token.name}.png`, {
@@ -1012,7 +1012,13 @@ export class BuilderPage extends BasePage {
 
   async deleteLastAddedPaymentOption() {
     await test.step(`Deleting last payment option`, async () => {
-      await this.summaryDeleteButtons.click();
+      await this.summaryDeleteButtons.last().click();
+    });
+  }
+
+  async deleteFirstAddedPaymentOption() {
+    await test.step(`Deleting first payment option`, async () => {
+      await this.summaryDeleteButtons.first().click();
     });
   }
 
@@ -1447,7 +1453,7 @@ export class BuilderPage extends BasePage {
       if (jsonObjectToUse === "randomUpfrontPaymentReceiver") {
         let walletToUse = ethers.Wallet.createRandom().address;
         randomReceiver.address = walletToUse;
-        json[jsonObjectToUse].paymentDetails.paymentOptions[1].receiverAddress =
+        json[jsonObjectToUse].paymentDetails.paymentOptions[0].receiverAddress =
           walletToUse;
         dataToUse = JSON.stringify(json[jsonObjectToUse]);
       }

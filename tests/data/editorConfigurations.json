@@ -1,357 +1,357 @@
 {
-    "allNetworks": {
-      "productDetails": {
-        "name": "All networks test",
-        "description": "This description was added by setting the config in json editor",
-        "imageURI": ""
-      },
-      "paymentDetails": {
-        "paymentOptions": [
-          {
-            "receiverAddress": "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22",
-            "chainId": 11155420,
-            "superToken": {
-              "address": "0x131780640EDf9830099AAc2203229073d6D2FE69"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
+  "allNetworks": {
+    "productDetails": {
+      "name": "All networks test",
+      "description": "This description was added by setting the config in json editor",
+      "imageURI": ""
+    },
+    "paymentDetails": {
+      "paymentOptions": [
+        {
+          "receiverAddress": "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22",
+          "chainId": 11155420,
+          "superToken": {
+            "address": "0x131780640EDf9830099AAc2203229073d6D2FE69"
           },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 42161,
-            "superToken": {
-              "address": "0x521677A61D101A80cE0fB903b13cb485232774ee"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 43114,
-            "superToken": {
-              "address": "0x7cd00C2b9A78f270B897457ab070274e4a17dE83"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 8453,
-            "superToken": {
-              "address": "0x708169c8C87563Ce904E0a7F3BFC1F3b0b767f41"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 56,
-            "superToken": {
-              "address": "0x529A4116F160c833c61311569D6B33dFF41fD657"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 42220,
-            "superToken": {
-              "address": "0x671425Ae1f272Bc6F79beC3ed5C4b00e9c628240"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 100,
-            "superToken": {
-              "address": "0x59988e47A3503AaFaA0368b9deF095c818Fdca01"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 10,
-            "superToken": {
-              "address": "0x7d342726B69C28D942ad8BfE6Ac81b972349d524"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 137,
-            "superToken": {
-              "address": "0x1305F6B6Df9Dc47159D12Eb7aC2804d4A33173c2"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 534352,
-            "superToken": {
-              "address": "0x483C1716b6133cdA01237ebBF19c5a92898204B7"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 43113,
-            "superToken": {
-              "address": "0x24f3631dbbf6880C684c5e59578C21194e285Baf"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 534351,
-            "superToken": {
-              "address": "0xe66762580C4F2F6cf72ff79258c3C3f443c3d062"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
-          },
-          {
-            "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-            "chainId": 11155111,
-            "superToken": {
-              "address": "0x9Ce2062b085A2268E8d769fFC040f6692315fd2c"
-            },
-            "flowRate": {
-              "amountEther": "1",
-              "period": "month"
-            }
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
           }
-        ]
-      },
-      "personalData": [],
-      "existentialNFT": {
-        "name": "",
-        "symbol": "",
-        "owner": "",
-        "deployments": {}
-      },
-      "type": "page"
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 42161,
+          "superToken": {
+            "address": "0x521677A61D101A80cE0fB903b13cb485232774ee"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 43114,
+          "superToken": {
+            "address": "0x7cd00C2b9A78f270B897457ab070274e4a17dE83"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 8453,
+          "superToken": {
+            "address": "0x708169c8C87563Ce904E0a7F3BFC1F3b0b767f41"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 56,
+          "superToken": {
+            "address": "0x529A4116F160c833c61311569D6B33dFF41fD657"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 42220,
+          "superToken": {
+            "address": "0x671425Ae1f272Bc6F79beC3ed5C4b00e9c628240"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 100,
+          "superToken": {
+            "address": "0x59988e47A3503AaFaA0368b9deF095c818Fdca01"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 10,
+          "superToken": {
+            "address": "0x7d342726B69C28D942ad8BfE6Ac81b972349d524"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 137,
+          "superToken": {
+            "address": "0x1305F6B6Df9Dc47159D12Eb7aC2804d4A33173c2"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 534352,
+          "superToken": {
+            "address": "0x483C1716b6133cdA01237ebBF19c5a92898204B7"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 43113,
+          "superToken": {
+            "address": "0x24f3631dbbf6880C684c5e59578C21194e285Baf"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 534351,
+          "superToken": {
+            "address": "0xe66762580C4F2F6cf72ff79258c3C3f443c3d062"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 11155111,
+          "superToken": {
+            "address": "0x9Ce2062b085A2268E8d769fFC040f6692315fd2c"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        }
+      ]
     },
-    "schemaError": {
-        "productDetails": {
-            "description": "",
-            "imageURI": ""
-        },
-        "paymentDetails": {
-            "defaultWrapAmount": {
-                "multiplier": 5,
-                "period": "month"
-            },
-            "paymentOptions": [
-                {
-                    "receiverAddress": "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
-                    "chainId": 5,
-                    "superToken": {
-                        "address": "0x8aE68021f6170E5a766bE613cEA0d75236ECCa9a"
-                    },
-                    "flowRate": {
-                        "amountEther": "1",
-                        "period": "month"
-                    }
-                }
-            ]
-        },
-        "personalData": [],
-        "existentialNFT": {
-          "name": "",
-          "symbol": "",
-          "owner": "",
-          "deployments": {}
-        },
-        "type": "page"
+    "personalData": [],
+    "existentialNFT": {
+      "name": "",
+      "symbol": "",
+      "owner": "",
+      "deployments": {}
     },
-    "randomUpfrontPaymentReceiver": {
-        "productDetails": {
-          "name": "",
-          "description": "",
-          "imageURI": ""
-        },
-        "paymentDetails": {
-          "paymentOptions": [
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x95697ec24439E3Eb7ba588c7B279b9B369236941"
-              },
-              "transferAmountEther": "1",
-              "flowRate": {
-                "amountEther": "1",
-                "period": "month"
-              }
-            }
-          ]
-        },
-        "personalData": [],
-        "existentialNFT": {
-          "name": "",
-          "symbol": "",
-          "owner": "",
-          "deployments": {}
-        },
-        "type": "page"
+    "type": "page"
+  },
+  "schemaError": {
+    "productDetails": {
+      "description": "",
+      "imageURI": ""
+    },
+    "paymentDetails": {
+      "defaultWrapAmount": {
+        "multiplier": 5,
+        "period": "month"
       },
-      "tonsOfOptions": {
-        "productDetails": {
-          "name": "te",
-          "description": "",
-          "imageURI": ""
+      "paymentOptions": [
+        {
+          "receiverAddress": "0xF26Ce9749f29E61c25d0333bCE2301CB2DFd3a22",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x8aE68021f6170E5a766bE613cEA0d75236ECCa9a"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        }
+      ]
+    },
+    "personalData": [],
+    "existentialNFT": {
+      "name": "",
+      "symbol": "",
+      "owner": "",
+      "deployments": {}
+    },
+    "type": "page"
+  },
+  "randomUpfrontPaymentReceiver": {
+    "productDetails": {
+      "name": "",
+      "description": "",
+      "imageURI": ""
+    },
+    "paymentDetails": {
+      "paymentOptions": [
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 11155420,
+          "superToken": {
+            "address": "0xD6FAF98BeFA647403cc56bDB598690660D5257d2"
+          },
+          "transferAmountEther": "1",
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        }
+      ]
+    },
+    "personalData": [],
+    "existentialNFT": {
+      "name": "",
+      "symbol": "",
+      "owner": "",
+      "deployments": {}
+    },
+    "type": "page"
+  },
+  "tonsOfOptions": {
+    "productDetails": {
+      "name": "te",
+      "description": "",
+      "imageURI": ""
+    },
+    "paymentDetails": {
+      "paymentOptions": [
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
         },
-        "paymentDetails": {
-          "paymentOptions": [
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
-              },
-              "flowRate": {
-                "amountEther": "1",
-                "period": "month"
-              }
-            },
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
-              },
-              "flowRate": {
-                "amountEther": "2",
-                "period": "month"
-              }
-            },
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
-              },
-              "flowRate": {
-                "amountEther": "3",
-                "period": "month"
-              }
-            },
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
-              },
-              "flowRate": {
-                "amountEther": "4",
-                "period": "month"
-              }
-            },
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
-              },
-              "flowRate": {
-                "amountEther": "5",
-                "period": "month"
-              }
-            },
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
-              },
-              "flowRate": {
-                "amountEther": "6",
-                "period": "month"
-              }
-            },
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
-              },
-              "flowRate": {
-                "amountEther": "7",
-                "period": "month"
-              }
-            },
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
-              },
-              "flowRate": {
-                "amountEther": "8",
-                "period": "month"
-              }
-            },
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
-              },
-              "flowRate": {
-                "amountEther": "9",
-                "period": "month"
-              }
-            },
-            {
-              "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
-              "chainId": 5,
-              "superToken": {
-                "address": "0x8aE68021f6170E5a766bE613cEA0d75236ECCa9a"
-              },
-              "flowRate": {
-                "amountEther": "10",
-                "period": "month"
-              }
-            }
-          ]
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
+          },
+          "flowRate": {
+            "amountEther": "2",
+            "period": "month"
+          }
         },
-        "personalData": [],
-        "existentialNFT": {
-          "name": "",
-          "symbol": "",
-          "owner": "",
-          "deployments": {}
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
+          },
+          "flowRate": {
+            "amountEther": "3",
+            "period": "month"
+          }
         },
-        "type": "page"
-      }
-    }
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
+          },
+          "flowRate": {
+            "amountEther": "4",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
+          },
+          "flowRate": {
+            "amountEther": "5",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
+          },
+          "flowRate": {
+            "amountEther": "6",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
+          },
+          "flowRate": {
+            "amountEther": "7",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
+          },
+          "flowRate": {
+            "amountEther": "8",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x0be89e17787C0aE021B5E4F84ae8444f900DD92C"
+          },
+          "flowRate": {
+            "amountEther": "9",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xF9Ce34dFCD3cc92804772F3022AF27bCd5E43Ff2",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x8aE68021f6170E5a766bE613cEA0d75236ECCa9a"
+          },
+          "flowRate": {
+            "amountEther": "10",
+            "period": "month"
+          }
+        }
+      ]
+    },
+    "personalData": [],
+    "existentialNFT": {
+      "name": "",
+      "symbol": "",
+      "owner": "",
+      "deployments": {}
+    },
+    "type": "page"
+  }
+}
