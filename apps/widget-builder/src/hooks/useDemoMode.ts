@@ -25,6 +25,24 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
       chainId: supportedNetwork.optimismSepolia.id,
       superToken: {
+        address: "0x0043d7c85c8b96a49a72a92c0b48cdc4720437d7", // ETHx
+      },
+      flowRate: {
+        amountEther: "1",
+        period: "month",
+      },
+    } as const,
+    {
+      receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
+      chainId: supportedNetwork.optimismSepolia.id,
+      superToken: {
+        address: "0xfd0957cbf7c1638581a3cdeb16256e5f08e7ce75", // fTUSDx
+      },
+    } as const,
+    {
+      receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
+      chainId: supportedNetwork.optimismSepolia.id,
+      superToken: {
         address: "0x00d05Eed85Bad962bA5237DD4aFFF12004455a8a", // fUSDCx
       },
       flowRate: {
@@ -38,28 +56,7 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
       superToken: {
         address: "0xD6FAF98BeFA647403cc56bDB598690660D5257d2", // fDAIx
       },
-      flowRate: {
-        amountEther: "1",
-        period: "month",
-      },
-    } as const,
-    {
-      receiverAddress: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa", // vitalik.eth
-      chainId: supportedNetwork.optimismSepolia.id,
-      superToken: {
-        address: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa", // ZYA
-      },
-      flowRate: {
-        amountEther: "1",
-        period: "month",
-      },
-    } as const,
-    {
-      receiverAddress: "0x7d3e32ae08f50387a83cf222e08d8ec26317d7aa", // vitalik.eth
-      chainId: supportedNetwork.optimismSepolia.id,
-      superToken: {
-        address: "0xcc48a0349077b91ab540d2e46addffb4a4a26251", // NTDL
-      },
+      transferAmountEther: "1",
       flowRate: {
         amountEther: "1",
         period: "month",
@@ -78,7 +75,7 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
     } as const,
   ],
 };
-
+//
 const defaultPaymentDetails: WidgetProps["paymentDetails"] = {
   paymentOptions: [
     {
@@ -126,7 +123,7 @@ const demoExistentialNFT: ExistentialNFT = {
     11155420: "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f", // TODO: doesn't exist
   },
 };
-
+//
 export const defaultWidgetProps: WidgetProps = {
   productDetails: defaultProductDetails,
   paymentDetails: defaultPaymentDetails,

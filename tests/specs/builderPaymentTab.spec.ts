@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
 
-import { demoOptions, paymentOptions } from "../pageObjects/basePage.js";
-import { BuilderPage } from "../pageObjects/builderPage.js";
-import { WidgetPage } from "../pageObjects/widgetPage.js";
+import { demoOptions, paymentOptions } from "../pageObjects/basePage.ts";
+import { BuilderPage } from "../pageObjects/builderPage.ts";
+import { WidgetPage } from "../pageObjects/widgetPage.ts";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
@@ -19,8 +19,8 @@ test.describe("Payment tab test cases", () => {
       paymentOptions.defaultPaymentOption,
     ]);
     await builderPage.validateAddedPaymentOptionCount("2");
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("TDLx");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
+    await widgetPage.selectPaymentToken("fDAIx");
     await widgetPage.validateSelectedPaymentOption(paymentOptions.testOption);
   });
 
@@ -113,11 +113,11 @@ test.describe("Payment tab test cases", () => {
   test("Cloning a payment option - upfront payment", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     let widgetPage = new WidgetPage(page);
-    let finalOptions: PaymentOption[] = [demoOptions[2], ...demoOptions];
+    let finalOptions: PaymentOption[] = [demoOptions[1], ...demoOptions];
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
-    await builderPage.clickOnNthCopyPaymentOptionButton(2);
-    await builderPage.verifyPaymentOptionShownInForm(demoOptions[2]);
+    await builderPage.clickOnNthCopyPaymentOptionButton(1);
+    await builderPage.verifyPaymentOptionShownInForm(demoOptions[1]);
     await builderPage.clickAddPaymentOptionButton();
     await builderPage.verifyAddedPaymentOptions(finalOptions);
     await widgetPage.verifyDuplicateOptionError();
@@ -141,13 +141,13 @@ test.describe("Payment tab test cases", () => {
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
-    await builderPage.clickOnNthEditPaymentOptionButton(1);
-    await builderPage.verifyPaymentOptionShownInForm(demoOptions[1]);
+    await builderPage.clickOnNthEditPaymentOptionButton(3);
+    await builderPage.verifyPaymentOptionShownInForm(demoOptions[3]);
     await builderPage.disableUserDefinedRate();
     await builderPage.editPaymentOptionFlowRateTo("10");
     let finalOptions: PaymentOption[] = [...demoOptions];
-    finalOptions[1].flowRate = "10";
-    finalOptions[1].userDefinedRate = false;
+    finalOptions[3].flowRate = "10";
+    finalOptions[3].userDefinedRate = false;
     await builderPage.verifyAddedPaymentOptions(finalOptions);
   });
 
@@ -155,11 +155,11 @@ test.describe("Payment tab test cases", () => {
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickOnWandButton();
-    await builderPage.clickOnNthEditPaymentOptionButton(2);
-    await builderPage.verifyPaymentOptionShownInForm(demoOptions[2]);
+    await builderPage.clickOnNthEditPaymentOptionButton(1);
+    await builderPage.verifyPaymentOptionShownInForm(demoOptions[1]);
     await builderPage.editUpfrontPaymentAmountTo("10");
     let finalOptions: PaymentOption[] = [...demoOptions];
-    finalOptions[2].upfrontPayment = "10";
+    finalOptions[1].upfrontPayment = "10";
     await builderPage.verifyAddedPaymentOptions(finalOptions);
   });
 
@@ -220,19 +220,19 @@ test.describe("Payment tab test cases", () => {
     page,
   }) => {
     let testOption = {
-      network: "Goerli",
+      network: "Optimism Sepolia",
     };
     let builderPage = new BuilderPage(page);
     await builderPage.addPartialPaymentOption(testOption);
-    await builderPage.validateTokensInDropdown("Goerli");
+    await builderPage.validateTokensInDropdown("Optimism Sepolia");
   });
 
   test("Add payment option form - searching for a token", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.clickAddPaymentOptionFormButton();
-    await builderPage.selectNetworkForPaymentOption("Goerli");
-    await builderPage.searchAndValidateTokenInDropdown("TDLx");
+    await builderPage.selectNetworkForPaymentOption("Optimism Sepolia");
+    await builderPage.searchAndValidateTokenInDropdown("fUSDCx");
   });
 
   test("Add payment option form - invalid receiver field values", async ({
@@ -288,7 +288,9 @@ test.describe("Payment tab test cases", () => {
     );
     await builderPage.clickOnWandButton();
     await builderPage.verifyAddedPaymentOptions(demoOptions);
-    await builderPage.validateAddedPaymentOptionCount("8");
+    await builderPage.validateAddedPaymentOptionCount(
+      demoOptions.length.toString(),
+    );
     await widgetPage.validateNoOptionIsSelected();
   });
 
@@ -319,9 +321,9 @@ test.describe("Payment tab test cases", () => {
   }) => {
     let builderPage = new BuilderPage(page);
     await builderPage.addPartialPaymentOption({
-      network: "Goerli",
-      superToken: "TDLx",
-      chainId: "5",
+      network: "Optimism Sepolia",
+      superToken: "fDAIx",
+      chainId: "11155420",
     });
     await builderPage.clearSelectedTokenWithXButton();
     await builderPage.validateNoTokenIsSelectedInAddPaymentForm();

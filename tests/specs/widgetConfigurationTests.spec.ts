@@ -1,18 +1,31 @@
-import { WidgetPage } from "../pageObjects/widgetPage.js";
-import { test } from "../walletSetup.js";
+import { Page } from "@playwright/test";
+import {
+  MetaMask,
+  metaMaskFixtures,
+  testWithSynpress,
+} from "@synthetixio/synpress";
 
-test.beforeEach(async ({ page }) => {
-  await page.goto("/builder");
-});
+import { WidgetPage } from "../pageObjects/widgetPage.ts";
+import basicSetup from "../wallet-setup/basic.setup.ts";
+
+const test = testWithSynpress(metaMaskFixtures(basicSetup));
 
 test.describe("Widget configuration test cases", () => {
+  test.beforeEach(async ({ page }: { page: Page }) => {
+    await page.goto("/builder");
+  });
+
   test("Suggested token amount getting input for the user (3x)", async ({
     page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
   }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
-    await widgetPage.connectWallet();
+    await widgetPage.connectWallet(metamask);
     await widgetPage.validateThatWrapAmountInputIs("3");
   });
 });

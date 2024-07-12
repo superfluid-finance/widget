@@ -10,9 +10,27 @@ on:
         required: true
 
 jobs:
+  test-setup:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Generate matrix
+        id: set-matrix
+        run: |
+          MATRIX=$(bash helpers/listSpecFiles.sh)
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT 
+
   test:
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview – widget-builder' || github.event_name == 'workflow_dispatch '
     timeout-minutes: 60
+    needs: test-setup
     defaults:
       run:
         working-directory: tests
@@ -20,7 +38,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        file: [builderCommon, builderExportTab, builderGatingTab, builderJSONEditor, builderProductsTab, builderStylingTab,builderPaymentTab, widgetConfigurationTests, widgetMetamaskStreamTransactions,widgetMetamaskTokenTransactions, widgetMetamaskUITests, widgetMetamaskValidationErrors , widgetNoWallet]
+        file: ${{ fromJson(needs.test-setup.outputs.matrix) }}
 
     steps:
       - uses: actions/checkout@v3
@@ -54,9 +72,15 @@ jobs:
             echo "BASE_URL=${{ github.event.deployment_status.environment_url }}" >> $GITHUB_ENV
           fi
 
+      - name: Setup metamask cache
+        run: xvfb-run pnpm synpress wallet-setup --force
+        env:
+          WIDGET_WALLET_PRIVATE_KEY: ${{ secrets.WIDGET_WALLET_PRIVATE_KEY}}
+          WIDGET_WALLET_PUBLIC_KEY: "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD"
+
         # https://playwright.dev/docs/next/ci#running-headed
       - name: Run Playwright tests
-        run: xvfb-run pnpm playwright test ${{ matrix.file }}.spec.ts
+        run: xvfb-run pnpm playwright test ${{ matrix.file }}
         env:
           BASE_URL: ${{ env.BASE_URL }}
           WIDGET_WALLET_PUBLIC_KEY: "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD"

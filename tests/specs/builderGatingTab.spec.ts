@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { BuilderPage } from "../pageObjects/builderPage.js";
+import { BuilderPage } from "../pageObjects/builderPage.ts";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
@@ -23,7 +23,7 @@ test.describe("Gating tab test cases", () => {
       name: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
       owner: "Yolo420!@£$%^&*()😀😁😂🤣😃😄😅😆😉😊😋😎😍😘😗😙😚🙂🤗",
       image: "./data/export.json",
-      networks: ["Goerli"],
+      networks: ["Optimism Sepolia"],
     };
     await builderPage.openGatingTab();
     await builderPage.clickGatingTabSwitch();
@@ -47,9 +47,9 @@ test.describe("Gating tab test cases", () => {
       "OP Mainnet",
       "Polygon",
       "Avalanche Fuji",
-      "Base Goerli",
-      "Goerli",
-      "Polygon Mumbai",
+      "Optimism Sepolia",
+      "Sepolia",
+      "Scroll Sepolia",
     ]);
   });
 
@@ -60,7 +60,7 @@ test.describe("Gating tab test cases", () => {
   //     name: "Test",
   //     owner: process.env.WIDGET_WALLET_PUBLIC_KEY!,
   //     image: "./data/Superfluid_logo.png",
-  //     networks: ["Goerli"]
+  //     networks: ["Optimism Sepolia"]
   //   }
   //   let builderPage = new BuilderPage(page);
   //   await builderPage.openGatingTab();
@@ -79,7 +79,7 @@ test.describe("Gating tab test cases", () => {
   //     symbol:"Test",
   //     name: "Test",
   //     owner: process.env.WIDGET_WALLET_PUBLIC_KEY!,
-  //     networks: ["Goerli"]
+  //     networks: ["Optimism Sepolia"]
   //   }
   //   let builderPage = new BuilderPage(page);
   //   await builderPage.openGatingTab();
@@ -96,7 +96,7 @@ test.describe("Gating tab test cases", () => {
   //     symbol:"Test",
   //     name: "Test",
   //     owner: process.env.WIDGET_WALLET_PUBLIC_KEY!,
-  //     networks: ["Goerli"]
+  //     networks: ["Optimism Sepolia"]
   //   }
   //   await builderPage.inputNFTDetails(nftDetails)
   //   await builderPage.mockDeploymentApiCallError();

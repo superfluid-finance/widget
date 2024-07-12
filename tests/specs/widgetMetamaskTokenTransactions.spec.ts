@@ -1,26 +1,48 @@
-import metamask from "@synthetixio/synpress/commands/metamask.js";
+import { Page } from "@playwright/test";
+import {
+  MetaMask,
+  metaMaskFixtures,
+  testWithSynpress,
+} from "@synthetixio/synpress";
 
-import { randomReceiver, rebounderAddresses } from "../pageObjects/basePage.js";
-import { BuilderPage } from "../pageObjects/builderPage.js";
-import { WidgetPage } from "../pageObjects/widgetPage.js";
-import { test } from "../walletSetup.js";
+import {
+  paymentOptions,
+  randomReceiver,
+  rebounderAddresses,
+} from "../pageObjects/basePage.ts";
+import { BuilderPage } from "../pageObjects/builderPage.ts";
+import { WidgetPage } from "../pageObjects/widgetPage.ts";
+import basicSetup from "../wallet-setup/basic.setup.ts";
 
-test.beforeEach(async ({ page }) => {
+const test = testWithSynpress(metaMaskFixtures(basicSetup));
+test.beforeEach(async ({ page }: { page: Page }) => {
   await page.goto("/builder");
 });
 
 test.describe("Token transfer and approval test cases", () => {
-  test("Approving and wrapping tokens", async ({ page }) => {
+  test("Approving and wrapping tokens", async ({
+    page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
+  }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("fUSDCx");
-    await widgetPage.connectWallet();
-    await widgetPage.validateAndSaveWrapPageBalances("Goerli", "fUSDCx");
+    let builderPage = new BuilderPage(page);
+    await builderPage.openPaymentTab();
+    await builderPage.addPaymentOption(paymentOptions.testOption);
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
+    await widgetPage.selectPaymentToken("fDAIx");
+    await widgetPage.connectWallet(metamask);
+    await widgetPage.validateAndSaveWrapPageBalances(
+      "Optimism Sepolia",
+      "fDAIx",
+    );
     await widgetPage.setWrapAmount("1");
     await widgetPage.clickContinueButton();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
-      rebounderAddresses["goerli"],
+      rebounderAddresses["optimism-sepolia"],
     );
     await widgetPage.validateWrapReviewAmount("1");
     await widgetPage.waitForTransactionsToGetValidated();
@@ -31,7 +53,7 @@ test.describe("Token transfer and approval test cases", () => {
     );
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
-    await widgetPage.acceptMetamaskAllowanceTransaction("1");
+    await widgetPage.acceptMetamaskAllowanceTransaction("1", metamask);
     // Checking the pending status makes the test case quite flaky
     // await widgetPage.validateTransactionStatuses(
     //   ["approve", "wrap", "modify"],
@@ -43,7 +65,7 @@ test.describe("Token transfer and approval test cases", () => {
     );
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
-    await widgetPage.acceptMetamaskTransaction();
+    await widgetPage.acceptMetamaskTransaction(metamask);
     // Checking the pending status makes the test case quite flaky
     // await widgetPage.validateTransactionStatuses(
     //   ["approve", "wrap", "modify"],
@@ -53,19 +75,25 @@ test.describe("Token transfer and approval test cases", () => {
       ["approve", "wrap", "modify"],
       ["Completed", "Completed", "Ready to send"],
     );
-    await widgetPage.validateTokenBalanceAfterWrap();
+    await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
   });
 
-  test("Transfering tokens", async ({ page }) => {
+  test("Transfering tokens", async ({
+    page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
+  }) => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
     await builderPage.openPaymentTab();
     await builderPage.openExportTab();
     await builderPage.clickOnJsonEditorButton();
     await builderPage.editJsonEditorTo("randomUpfrontPaymentReceiver");
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("fTUSD");
-    await widgetPage.connectWallet();
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
+    await widgetPage.selectPaymentToken("fDAIx");
+    await widgetPage.connectWallet(metamask);
     await widgetPage.validateThatWrapAmountInputIs("4"); //1 upfront payment + 1 x 3 flow rate
     await widgetPage.skipWrapStep();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
@@ -80,14 +108,14 @@ test.describe("Token transfer and approval test cases", () => {
     );
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
-    await widgetPage.acceptMetamaskTransaction();
+    await widgetPage.acceptMetamaskTransaction(metamask);
     await widgetPage.validateTransactionStatuses(
       ["transfer", "send"],
       ["Completed", "Ready to send"],
     );
     await widgetPage.validateRandomReceiverTokenBalanceAfterTransfer(
-      "Goerli",
-      "fTUSDx",
+      "Optimism Sepolia",
+      "fDAIx",
       1,
     );
     // TODO Once upfront payments are shown in the success screen enable these steps
@@ -100,17 +128,21 @@ test.describe("Token transfer and approval test cases", () => {
 
   test("Switch network button shown in the transaction view", async ({
     page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
   }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
-    await widgetPage.connectWallet();
+    await widgetPage.connectWallet(metamask);
     await widgetPage.clickContinueButton();
     await widgetPage.validateReviewStepIsOpen();
     await widgetPage.clickContinueButton();
-    await metamask.changeNetwork("Sepolia");
+    await metamask.switchNetwork("Sepolia", true);
     await widgetPage.clickSwitchNetworkButton();
-    await metamask.allowToSwitchNetwork();
+    await metamask.approveSwitchNetwork();
     await widgetPage.validateTransactionStatuses(
       ["approve", "wrap", "modify"],
       ["Ready to send", "Queued", "Queued"],

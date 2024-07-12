@@ -66,7 +66,12 @@ const ImageSelect: FC<ImageSelectProps> = ({
           />
         </Box>
       ) : (
-        <Button fullWidth sx={{ p: 0, m: 0 }} onClick={triggerFileUpload}>
+        <Button
+          data-testid="file-upload-button"
+          fullWidth
+          sx={{ p: 0, m: 0 }}
+          onClick={triggerFileUpload}
+        >
           <input
             data-testid="file-upload-field"
             hidden

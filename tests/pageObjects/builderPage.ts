@@ -120,6 +120,7 @@ export class BuilderPage extends BasePage {
   readonly editorErrorMessage: Locator;
   readonly editorHoverErrorMessage: Locator;
   readonly gatingTabSwitch: Locator;
+  readonly uploadImageButton: Locator;
 
   paymentOptionDuringTest: PaymentOption | PartialPaymentOption | undefined;
   paymentFormFieldWordMap: Map<string, Locator>;
@@ -177,6 +178,7 @@ export class BuilderPage extends BasePage {
     this.summaryEditButtons = page.getByTestId("edit-payment-option-button");
     this.summaryCopyButtons = page.getByTestId("clone-payment-option-button");
     this.uploadImageField = page.getByTestId("file-upload-field");
+    this.uploadImageButton = page.getByTestId("file-upload-button");
     this.darkModeSwitch = page.getByLabel("Dark mode: off");
     this.containerBorderSlider = page.getByTestId("container-radius-slider");
     this.containerBorderSliderValue = page.getByTestId(
@@ -413,54 +415,37 @@ export class BuilderPage extends BasePage {
         symbol: string;
       };
 
-      const currentlyListedGoerliTokens: Token[] = [
-        {
-          name: "TDLx",
-          symbol: "Super TDL Fake Token",
-        },
-        {
-          name: "SMILE",
-          symbol: "Smile Super Token",
-        },
+      const currentlyListedOptimismSepoliaTokens: Token[] = [
         {
           name: "ETHx",
           symbol: "Super ETH",
-        },
-        {
-          name: "ZYA",
-          symbol: "Zaya Token",
         },
         {
           name: "fUSDCx",
           symbol: "Super fUSDC Fake Token",
         },
         {
-          name: "fTUSDx",
-          symbol: "Super fTUSD Fake Token",
-        },
-        {
-          name: "NTDL",
-          symbol: "NTDL",
-        },
-        {
-          name: "FUNDx",
-          symbol: "Super FUND (Goerli)",
-        },
-        {
           name: "fDAIx",
           symbol: "Super fDAI Fake Token",
         },
+        {
+          name: "fTUSDx",
+          symbol: "Super fTUSD Fake Token",
+        },
       ];
       await this.superTokenOption.click();
-      for (let [index, token] of currentlyListedGoerliTokens.entries()) {
+      for (let [
+        index,
+        token,
+      ] of currentlyListedOptimismSepoliaTokens.entries()) {
         await expect(this.superTokenOptionNames.nth(index)).toHaveText(
           token.symbol,
         );
         await expect(this.superTokenOptionSymbols.nth(index)).toHaveText(
           token.name,
         );
-        //The SVG sometimes loads fuzzy and leads to a breaking test for FUNDx
-        let diffRatio = token.name === "FUNDx" ? 0.2 : 0.03;
+        //The SVG sometimes loads fuzzy or a pixel off for fTUSDx
+        let diffRatio = token.name === "fTUSDx" ? 0.1 : 0.03;
         await expect(
           this.superTokenOptionsInDropdown.nth(index).locator("img"),
         ).toHaveScreenshot(`./data/${token.name}.png`, {
@@ -598,7 +583,7 @@ export class BuilderPage extends BasePage {
       if (partialOption.chainId && partialOption.network) {
         this.networkOptions.click();
         await this.page
-          .locator(`[data-value=${partialOption.network}]`)
+          .locator(`[data-value="${partialOption.network}"]`)
           .click();
       }
       if (partialOption.flowRate) {
@@ -618,7 +603,7 @@ export class BuilderPage extends BasePage {
       if (partialOption.network) {
         await this.networkOptions.click();
         await this.page
-          .locator(`[data-value=${partialOption.network}]`)
+          .locator(`[data-value="${partialOption.network}"]`)
           .click();
       }
       if (partialOption.receiver) {
@@ -944,7 +929,7 @@ export class BuilderPage extends BasePage {
   async selectNetworkForPaymentOption(network: string | undefined) {
     await test.step(`Selecting ${network} as the network for the payment option`, async () => {
       await this.networkOptions.click();
-      await this.page.locator(`[data-value=${network}]`).click();
+      await this.page.locator(`[data-value="${network}"]`).click();
     });
   }
 
@@ -1027,7 +1012,13 @@ export class BuilderPage extends BasePage {
 
   async deleteLastAddedPaymentOption() {
     await test.step(`Deleting last payment option`, async () => {
-      await this.summaryDeleteButtons.click();
+      await this.summaryDeleteButtons.last().click();
+    });
+  }
+
+  async deleteFirstAddedPaymentOption() {
+    await test.step(`Deleting first payment option`, async () => {
+      await this.summaryDeleteButtons.first().click();
     });
   }
 
@@ -1413,6 +1404,7 @@ export class BuilderPage extends BasePage {
         await this.contractOwnerInputField.fill(nftDetails.owner);
       }
       if (nftDetails.image) {
+        await this.uploadImageButton.scrollIntoViewIfNeeded();
         await this.uploadImageField.setInputFiles(nftDetails.image);
       }
       if (nftDetails.networks) {

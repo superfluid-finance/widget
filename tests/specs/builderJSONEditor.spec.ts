@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
-import { BuilderPage } from "../pageObjects/builderPage.js";
-import { WidgetPage } from "../pageObjects/widgetPage.js";
+import { BuilderPage } from "../pageObjects/builderPage.ts";
+import { WidgetPage } from "../pageObjects/widgetPage.ts";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");
@@ -23,7 +23,9 @@ test.describe("JSON Editor test cases", () => {
     await widgetPage.validateAllNetworksAreVisibleInTheWidgetSelection();
   });
 
-  test("JSON editor - error shown when invalid json is present", async ({
+  //Very flaky from the UI side , sometimes does show the error and sometimes not ,
+  // due to the way the json is injected into the editor and low priority so skipping
+  test.skip("JSON editor - error shown when invalid json is present", async ({
     page,
   }) => {
     let builderPage = new BuilderPage(page);

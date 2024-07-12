@@ -1,34 +1,51 @@
-import metamask from "@synthetixio/synpress/commands/metamask.js";
+import { Page } from "@playwright/test";
+import {
+  MetaMask,
+  metaMaskFixtures,
+  testWithSynpress,
+} from "@synthetixio/synpress";
 
-import { paymentOptions } from "../pageObjects/basePage.js";
-import { BuilderPage } from "../pageObjects/builderPage.js";
-import { WidgetPage } from "../pageObjects/widgetPage.js";
-import { test } from "../walletSetup.js";
+import { paymentOptions } from "../pageObjects/basePage.ts";
+import { BuilderPage } from "../pageObjects/builderPage.ts";
+import { WidgetPage } from "../pageObjects/widgetPage.ts";
+import basicSetup from "../wallet-setup/basic.setup.ts";
 
-test.beforeEach(async ({ page }) => {
+const test = testWithSynpress(metaMaskFixtures(basicSetup));
+
+test.beforeEach(async ({ page }: { page: Page }) => {
   await page.goto("/builder");
 });
 
 test.describe("Error state test cases", () => {
-  test("Can't stream to self error during review", async ({ page }) => {
+  test("Can't stream to self error during review", async ({
+    page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
+  }) => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
     await builderPage.addPaymentOption(paymentOptions.streamToSelfOption);
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("TDLx");
-    await widgetPage.connectWallet();
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
+    await widgetPage.selectPaymentToken("fDAIx");
+    await widgetPage.connectWallet(metamask);
     await widgetPage.clickContinueButton();
     await widgetPage.validateReviewStepError("You can't stream to yourself.");
   });
 
   test("Not enough underlying token balance during review", async ({
     page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
   }) => {
     let widgetPage = new WidgetPage(page);
-    await widgetPage.selectPaymentNetwork("Goerli");
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fUSDCx");
-    await widgetPage.connectWallet();
-    await widgetPage.setWrapAmount("99999");
+    await widgetPage.connectWallet(metamask);
+    await widgetPage.setWrapAmount("999999");
     await widgetPage.clickContinueButton();
     await widgetPage.validateReviewStepError(
       "You don’t have enough underlying token balance to wrap.",
@@ -37,14 +54,18 @@ test.describe("Error state test cases", () => {
 
   test("Not enough super token balance to cover buffer error", async ({
     page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
   }) => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
     paymentOptions.testOption.flowRate = "99999999";
     await builderPage.addPaymentOption(paymentOptions.testOption);
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("TDLx");
-    await widgetPage.connectWallet();
+    await widgetPage.selectPaymentNetwork(paymentOptions.testOption.network);
+    await widgetPage.selectPaymentToken(paymentOptions.testOption.superToken);
+    await widgetPage.connectWallet(metamask);
     await widgetPage.setWrapAmount("0");
     await widgetPage.clickContinueButton();
     await widgetPage.validateReviewStepError(
@@ -52,26 +73,41 @@ test.describe("Error state test cases", () => {
     );
   });
 
-  test("Need atleast 24 hours worth of stream error", async ({ page }) => {
+  test("Need atleast 24 hours worth of stream error", async ({
+    page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
+  }) => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
-    paymentOptions.testOption.flowRate = "1";
+    paymentOptions.testOption.flowRate = "2999";
     paymentOptions.testOption.timeUnit = "day";
+    paymentOptions.testOption.superToken = "fUSDCx";
     await builderPage.addPaymentOption(paymentOptions.testOption);
-    await widgetPage.selectPaymentNetwork("Goerli");
-    await widgetPage.selectPaymentToken("TDLx");
-    await widgetPage.connectWallet();
+    await builderPage.deleteLastAddedPaymentOption();
+    await widgetPage.selectPaymentNetwork("Optimism Sepolia");
+    await widgetPage.selectPaymentToken("fUSDCx");
+    await widgetPage.connectWallet(metamask);
     await widgetPage.setWrapAmount("0");
     await widgetPage.clickContinueButton();
     await widgetPage.validateReviewStepError(
       "You need to have Super Token balance for at least 24 hours of streaming.",
     );
   });
-  test("User rejecting the wallet connection", async ({ page }) => {
+
+  test("User rejecting the wallet connection", async ({
+    page,
+    metamask,
+  }: {
+    page: Page;
+    metamask: MetaMask;
+  }) => {
     let widgetPage = new WidgetPage(page);
     await widgetPage.clickContinueButton();
     await widgetPage.clickWeb3ModalMetamaskButton();
-    await metamask.rejectAccess();
+    await metamask.rejectSignature();
     await widgetPage.validateWeb3ModalDeclinedConnectionError();
   });
 });

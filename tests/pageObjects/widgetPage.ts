@@ -1,5 +1,5 @@
 import { expect, Locator, Page, test } from "@playwright/test";
-import metamask from "@synthetixio/synpress/commands/metamask.js";
+import { MetaMask } from "@synthetixio/synpress";
 
 import { EthHelper } from "../helpers/ethHelper.js";
 import {
@@ -279,15 +279,16 @@ export class WidgetPage extends BasePage {
 
   async clickContinueButton() {
     await test.step(`Clicking on the continue button`, async () => {
-      await this.continueButton.click();
+      await this.continueButton.scrollIntoViewIfNeeded();
+      await this.continueButton.click({ timeout: 30000 });
     });
   }
 
-  async connectWallet() {
+  async connectWallet(metamask: MetaMask) {
     await test.step(`Clicking continue button and accepting Metamask access`, async () => {
       await this.clickContinueButton();
       await this.metamaskWalletButton.click();
-      await metamask.acceptAccess();
+      await metamask.connectToDapp();
     });
   }
 
@@ -390,15 +391,18 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async acceptMetamaskTransaction() {
+  async acceptMetamaskTransaction(metamask: MetaMask) {
     await test.step(`Accepting Metamask transaction (aggressive)`, async () => {
-      metamask.confirmTransaction("aggressive");
+      await metamask.confirmTransaction("aggressive");
     });
   }
 
-  async acceptMetamaskAllowanceTransaction(allowance: string) {
+  async acceptMetamaskAllowanceTransaction(
+    allowance: string,
+    metamask: MetaMask,
+  ) {
     await test.step(`Giving permission to spend ${allowance} tokens`, async () => {
-      metamask.confirmPermissionToSpend(allowance);
+      await metamask.confirmTransaction("aggressive");
     });
   }
 
@@ -556,15 +560,16 @@ export class WidgetPage extends BasePage {
     });
   }
 
-  async validateTokenBalanceAfterWrap() {
+  async validateTokenBalanceAfterWrap(token: string) {
     await test.step(`Checking if token got wrapped succesfully`, async () => {
       let wrappedAmount = BigInt(1e18) * BigInt(this.wrapAmountDuringTest!);
+      const underlyingToken = token.slice(0, -1);
       const ethHelper = new EthHelper(
-        "Goerli",
+        "Optimism Sepolia",
         process.env.WIDGET_WALLET_PRIVATE_KEY!,
       );
       await ethHelper
-        .getUnderlyingTokenBalance("fUSDC")
+        .getUnderlyingTokenBalance(underlyingToken)
         .then(async (underlyingBalance) => {
           await expect(
             this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
@@ -572,7 +577,7 @@ export class WidgetPage extends BasePage {
         });
 
       await ethHelper
-        .getSuperTokenBalance("fUSDCx")
+        .getSuperTokenBalance(token)
         .then(async (superTokenBalance) => {
           await expect(
             this.superTokenBalanceBeforeWrap! + wrappedAmount,
@@ -590,7 +595,6 @@ export class WidgetPage extends BasePage {
         humanReadableNetworkName,
         process.env.WIDGET_WALLET_PRIVATE_KEY!,
       );
-      let underlyingTokenSymbol = ethHelper.getTokenBySymbolAndChainId;
       await ethHelper
         .getUnderlyingTokenBalance("fUSDC")
         .then(async (underlyingBalance) => {
