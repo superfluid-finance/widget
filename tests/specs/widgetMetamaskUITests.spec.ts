@@ -5,9 +5,9 @@ import {
   testWithSynpress,
 } from "@synthetixio/synpress";
 
-import { rebounderAddresses } from "../pageObjects/basePage.ts";
-import { WidgetPage } from "../pageObjects/widgetPage.ts";
-import basicSetup from "../wallet-setup/basic.setup.ts";
+import { rebounderAddresses } from "../pageObjects/basePage.js";
+import { WidgetPage } from "../pageObjects/widgetPage.js";
+import basicSetup from "../wallet-setup/basic.setup.js";
 
 const test = testWithSynpress(metaMaskFixtures(basicSetup));
 test.beforeEach(async ({ page }: { page: Page }) => {

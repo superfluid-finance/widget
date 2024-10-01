@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
 
-import { demoOptions, paymentOptions } from "../pageObjects/basePage.ts";
-import { BuilderPage } from "../pageObjects/builderPage.ts";
-import { WidgetPage } from "../pageObjects/widgetPage.ts";
+import { demoOptions, paymentOptions } from "../pageObjects/basePage.js";
+import { BuilderPage } from "../pageObjects/builderPage.js";
+import { WidgetPage } from "../pageObjects/widgetPage.js";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/builder");

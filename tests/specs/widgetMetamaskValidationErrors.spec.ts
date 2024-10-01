@@ -5,10 +5,10 @@ import {
   testWithSynpress,
 } from "@synthetixio/synpress";
 
-import { paymentOptions } from "../pageObjects/basePage.ts";
-import { BuilderPage } from "../pageObjects/builderPage.ts";
-import { WidgetPage } from "../pageObjects/widgetPage.ts";
-import basicSetup from "../wallet-setup/basic.setup.ts";
+import { paymentOptions } from "../pageObjects/basePage.js";
+import { BuilderPage } from "../pageObjects/builderPage.js";
+import { WidgetPage } from "../pageObjects/widgetPage.js";
+import basicSetup from "../wallet-setup/basic.setup.js";
 
 const test = testWithSynpress(metaMaskFixtures(basicSetup));
 
