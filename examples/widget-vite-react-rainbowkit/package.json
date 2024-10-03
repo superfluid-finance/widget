@@ -11,24 +11,24 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@rainbow-me/rainbowkit": "^1.3.4",
+    "@rainbow-me/rainbowkit": "^1.3.7",
     "@superfluid-finance/widget": "workspace:*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "viem": "^1.21.4",
     "wagmi": "^1.4.13",
-    "zod": "^3.22.4"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/react": "^18.2.33",
-    "@types/react-dom": "^18.2.14",
-    "@typescript-eslint/eslint-plugin": "^6.20.0",
-    "@typescript-eslint/parser": "^6.20.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.56.0",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-react": "^4.3.2",
+    "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "5.0.0-canary-41f0e9dae-20230907",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "typescript": "^5.3.3",
-    "vite": "^4.5.2"
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "typescript": "^5.6.2",
+    "vite": "^4.5.5"
   }
 }

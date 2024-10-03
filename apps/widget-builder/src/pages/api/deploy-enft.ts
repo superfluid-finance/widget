@@ -93,7 +93,7 @@ const handler: NextApiHandler = async (req, res) => {
       }
 
       const chain = Object.values(chains).find(
-        (chain) => chain.id === Number(chainId) ?? chains.polygonMumbai,
+        (chain) => chain.id === Number(chainId),
       ) as Chain;
 
       const contractAddress: Address = metadata.getNetworkByChainId(chain.id)
