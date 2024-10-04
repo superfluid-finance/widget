@@ -266,7 +266,7 @@ export class WidgetPage extends BasePage {
   }
   async validateInvalidTestImage() {
     await test.step(`Making sure the widget shows a blank picture if the image format is invalid`, async () => {
-      //Snapshot is saved in specs/specFileName.ts-snapshots
+      //Snapshot is saved in specs/specFileName.js-snapshots
       //Sometimes the rounded edges can show up abit different than the screenshot in different viewports, so the 1% threshold
       await expect(this.productImage).toHaveScreenshot(
         "./data/emptyImage.png",
@@ -498,7 +498,7 @@ export class WidgetPage extends BasePage {
   }
   async validateUsedTestImage() {
     await test.step(`Making sure the Superfluid logo is shown in the widget`, async () => {
-      //Snapshot is saved in specs/specFileName.ts-snapshots
+      //Snapshot is saved in specs/specFileName.js-snapshots
       //Sometimes the rounded edges can show up abit different than the screenshot in different viewports, so the 1% threshold
       await expect(this.productImage).toHaveScreenshot(
         "./data/Superfluid_logo.png",

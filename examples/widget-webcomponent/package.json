@@ -10,11 +10,11 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@superfluid-finance/tokenlist": "^5.0.0",
+    "@superfluid-finance/tokenlist": "^5.8.2",
     "@superfluid-finance/widget": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.3.3",
-    "vite": "^4.5.2"
+    "typescript": "^5.6.2",
+    "vite": "^4.5.5"
   }
 }

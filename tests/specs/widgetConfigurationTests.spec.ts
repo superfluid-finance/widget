@@ -5,8 +5,8 @@ import {
   testWithSynpress,
 } from "@synthetixio/synpress";
 
-import { WidgetPage } from "../pageObjects/widgetPage.ts";
-import basicSetup from "../wallet-setup/basic.setup.ts";
+import { WidgetPage } from "../pageObjects/widgetPage.js";
+import basicSetup from "../wallet-setup/basic.setup.js";
 
 const test = testWithSynpress(metaMaskFixtures(basicSetup));
 
