@@ -509,8 +509,8 @@ importers:
   examples/widget-webcomponent:
     dependencies:
       '@superfluid-finance/tokenlist':
-        specifier: ^5.8.1
-        version: 5.8.1
+        specifier: ^5.8.2
+        version: 5.8.2
       '@superfluid-finance/widget':
         specifier: workspace:*
         version: link:../../packages/widget
@@ -563,8 +563,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       '@superfluid-finance/tokenlist':
-        specifier: ^5.8.1
-        version: 5.8.1
+        specifier: ^5.8.2
+        version: 5.8.2
       abitype:
         specifier: ^0.10.3
         version: 0.10.3(typescript@5.6.2)(zod@3.23.8)
@@ -672,8 +672,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       '@superfluid-finance/tokenlist':
-        specifier: ^5.8.1
-        version: 5.8.1
+        specifier: ^5.8.2
+        version: 5.8.2
       '@synthetixio/synpress':
         specifier: 4.0.0-alpha.7
         version: 4.0.0-alpha.7(@playwright/test@1.44.1)(bufferutil@4.0.8)(playwright-core@1.44.1)(postcss@8.4.47)(typescript@5.6.2)(utf-8-validate@5.0.10)(zod@3.23.8)
@@ -2525,8 +2525,8 @@ packages:
   '@superfluid-finance/metadata@1.5.0':
     resolution: {integrity: sha512-4nVasf3ftYne52ObgdJ/JQEez14jmlQgTlmhlBg5ehDsObu1OtdGoyE3Aw9iqyhsnNOhO7Gm1MQPTfrtfFMPNA==}
 
-  '@superfluid-finance/tokenlist@5.8.1':
-    resolution: {integrity: sha512-nVI4jiA7LiU/xQwVWwvST4nm9E6Sv/4ielvDxTNTz84OoviOuLQvctZaPFYeQT4IVo472N8eDce/ngtMEFUI+Q==}
+  '@superfluid-finance/tokenlist@5.8.2':
+    resolution: {integrity: sha512-l3nXjSND8zi3Phh3BEpTSYWeK0cfrKXf2iXjKUolsMxXXlcluS2rQHckYjm6Ni39jsvRarEt7/c1IWw6qHdItA==}
 
   '@swc/helpers@0.5.1':
     resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
@@ -10556,7 +10556,7 @@ snapshots:
 
   '@superfluid-finance/metadata@1.5.0': {}
 
-  '@superfluid-finance/tokenlist@5.8.1':
+  '@superfluid-finance/tokenlist@5.8.2':
     dependencies:
       '@uniswap/token-lists': 1.0.0-beta.34
 
