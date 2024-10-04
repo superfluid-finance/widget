@@ -40,7 +40,7 @@ const tabLabels: Record<number, string> = {
   3: "Gating",
   4: "Export",
 };
-//
+
 export default function Builder() {
   const [activeStep, setActiveStep] = useState(0);
   const lastStep = stepCount - 1;
