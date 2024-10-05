@@ -93,5 +93,7 @@ export const supportedNetworkSchema = z
   })
   .transform((x) => x as SupportedNetwork);
 
-export const supportedNetworks =
-  supportedNetworks_ as unknown as SupportedNetwork[];
+export const supportedNetworks = supportedNetworks_ as unknown as readonly [
+  SupportedNetwork,
+  ...SupportedNetwork[],
+];

@@ -43,7 +43,7 @@
   "pnpm": {
     "overrides": {
       "eslint-plugin-react-hooks": "5.0.0-canary-41f0e9dae-20230907",
-      "@wagmi/core": "1"
+      "@wagmi/core": "2"
     }
   }
 }

@@ -66,7 +66,7 @@ export const useCommandHandlerReducer = () =>
         case "set contract write result": {
           const contractWrite = draft.commands
             .find((x) => x.id === action.payload.commandId)
-            ?.contractWrites?.find((x) => x.id === action.payload.writeId);
+            ?.contractWrites?.find((x: any) => x.id === action.payload.writeId);
 
           if (!contractWrite)
             throw new Error(

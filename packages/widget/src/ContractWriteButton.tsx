@@ -4,7 +4,7 @@ import WarningAmberIcon_ from "@mui/icons-material/WarningAmber.js";
 import { LoadingButton } from "@mui/lab";
 import { Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
+import { useAccount, useSwitchChain } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
@@ -37,8 +37,8 @@ export default function ContractWriteButton({
     transactionResult.isLoading;
 
   const expectedChainId = contractWrite.chainId;
-  const { chain } = useNetwork();
-  const { switchNetwork } = useSwitchNetwork();
+  const { chain } = useAccount();
+  const { switchNetwork } = useSwitchChain();
   const { connector } = useAccount();
   const needsToSwitchNetwork = expectedChainId !== chain?.id;
 

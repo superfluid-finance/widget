@@ -6,10 +6,9 @@ import {
 } from "viem";
 import {
   useAccount,
-  useContractWrite,
-  useNetwork,
-  usePrepareContractWrite,
-  useWaitForTransaction,
+  useSimulateContract,
+  useWriteContract,
+  useWaitForTransactionReceipt,
 } from "wagmi";
 
 import { ContractWrite } from "./ContractWrite.js";
@@ -19,9 +18,9 @@ import { useWidget } from "./WidgetContext.js";
 
 export type ContractWriteResult = {
   contractWrite: ContractWrite;
-  prepareResult: ReturnType<typeof usePrepareContractWrite>;
-  writeResult: ReturnType<typeof useContractWrite>;
-  transactionResult: ReturnType<typeof useWaitForTransaction>;
+  prepareResult: ReturnType<typeof useSimulateContract>;
+  writeResult: ReturnType<typeof useWriteContract>;
+  transactionResult: ReturnType<typeof useWaitForTransactionReceipt>;
   currentError: BaseError | null;
 };
 
@@ -36,7 +35,7 @@ export function ContractWriteManager({
   contractWrite: contractWrite_,
   onChange,
 }: ContractWriteManagerProps) {
-  const { chain } = useNetwork();
+  const { chain } = useAccount();
   const { isConnected, address: accountAddress } = useAccount();
 
   // Add all known errors to the ABI so viem/wagmi could decode them.
@@ -53,7 +52,7 @@ export function ContractWriteManager({
 
   const { eventHandlers } = useWidget();
 
-  const prepareResult = usePrepareContractWrite({
+  const prepareResult = useSimulateContract({
     ...(prepare
       ? {
           ...contractWrite,
@@ -65,7 +64,7 @@ export function ContractWriteManager({
   });
 
   // Always have a write ready.
-  const writeResult = useContractWrite({
+  const writeResult = useWriteContract({
     ...(prepare
       ? prepareResult.isError
         ? {
@@ -86,14 +85,14 @@ export function ContractWriteManager({
           : {}
       : {}),
     onError: console.error,
-    onSuccess: ({ hash }) =>
+    onSuccess: ({ hash }: { hash: any }) =>
       eventHandlers.onTransactionSent?.({
         hash,
         functionName: contractWrite.functionName as TxFunctionName,
       }),
   });
 
-  const transactionResult = useWaitForTransaction({
+  const transactionResult = useWaitForTransactionReceipt({
     hash: writeResult.data?.hash,
     onError: console.error,
   });
@@ -113,9 +112,7 @@ export function ContractWriteManager({
 
     return {
       contractWrite,
-      prepareResult: prepareResult as ReturnType<
-        typeof usePrepareContractWrite
-      >,
+      prepareResult: prepareResult as ReturnType<typeof useSimulateContract>,
       writeResult,
       transactionResult,
       currentError: (transactionResult.error ||

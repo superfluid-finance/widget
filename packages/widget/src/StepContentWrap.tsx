@@ -18,7 +18,7 @@ import {
   useState,
 } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Address, useBalance } from "wagmi";
+import { useReadContract } from "wagmi";
 
 import { DraftFormValues } from "./formValues.js";
 import { UpgradeIcon } from "./previews/CommandPreview.js";
@@ -31,6 +31,7 @@ import {
   mapPersonalDataToObject,
 } from "./utils.js";
 import { useWidget } from "./WidgetContext.js";
+import { Address, erc20Abi } from "viem";
 
 interface WrapCardProps extends PropsWithChildren {
   token?: TokenInfo;
@@ -136,27 +137,27 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
 
   // TODO(KK): Probably don't need to do so much null-checking.
 
-  const { data: underlyingTokenBalance } = useBalance(
+  const underlyingTokenBalance =
     paymentOptionWithTokenInfo && underlyingToken && accountAddress
-      ? {
-          token: underlyingToken.address as Address,
-          address: accountAddress,
+      ? useReadContract({
+          address: underlyingToken.address,
           chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
-          formatUnits: underlyingToken.decimals,
-        }
-      : undefined,
-  );
+          abi: erc20Abi,
+          functionName: "balanceOf",
+          args: [accountAddress],
+        })
+      : undefined;
 
-  const { data: superTokenBalance } = useBalance(
+  const superTokenBalance =
     paymentOptionWithTokenInfo && superToken && accountAddress
-      ? {
-          token: superToken.address as Address,
-          address: accountAddress,
+      ? useReadContract({
+          address: superToken.address,
           chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
-          formatUnits: "ether", // Super Tokens are always 18 decimals.
-        }
-      : undefined,
-  );
+          abi: erc20Abi,
+          functionName: "balanceOf",
+          args: [accountAddress],
+        })
+      : undefined;
 
   const showSkip = useMemo(() => {
     if (!paymentOptionWithTokenInfo || !superTokenBalance) return false;

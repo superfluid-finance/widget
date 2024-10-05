@@ -1,11 +1,7 @@
 import { useMemo } from "react";
 import { Address, getAddress } from "viem";
-import {
-  mainnet as mainnet_,
-  useEnsAvatar,
-  useEnsName,
-  useNetwork,
-} from "wagmi";
+import { useEnsAvatar, useEnsName, useConfig } from "wagmi";
+import { mainnet as mainnet_ } from "wagmi/chains";
 
 import { ChildrenProp, shortenHex } from "./utils.js";
 
@@ -28,10 +24,10 @@ export function AccountAddress({ children, address }: Props) {
     [checksumAddress],
   );
 
-  const { chains } = useNetwork();
+  const { chains } = useConfig();
 
   const mainnet = useMemo(
-    () => chains.find((x) => x.id === mainnet_.id),
+    () => chains.find((x: any) => x.id === mainnet_.id),
     [chains],
   );
   const ensChainId = mainnet?.contracts?.ensUniversalResolver
