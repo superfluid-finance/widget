@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";
 import { FormProvider as RHFFormProvider, useForm } from "react-hook-form";
-import { useNetwork } from "wagmi";
+import { useAccount } from "wagmi";
 
 import { FormEffects } from "./FormEffects.js";
 import {
@@ -18,7 +18,7 @@ type Props = {
 };
 
 export default function FormProvider({ children }: Props) {
-  const { chain } = useNetwork();
+  const { chain } = useAccount();
   const { networks, personalData, paymentOptionWithTokenInfoList } =
     useWidget();
 
@@ -26,7 +26,7 @@ export default function FormProvider({ children }: Props) {
     if (networks.length === 1) {
       return networks[0];
     }
-    return networks.find((network) => network.id === chain?.id) ?? null;
+    return networks.find((network) => network.id === chain?.id) ?? networks[0];
   }, [chain, networks]);
 
   const { paymentDetails } = useWidget();
@@ -73,7 +73,7 @@ export default function FormProvider({ children }: Props) {
     undefined,
     ValidFormValues
   >({
-    defaultValues,
+    defaultValues: defaultValues as any,
     resolver: zodResolver(checkoutFormSchema),
   });
 

@@ -2,7 +2,6 @@ import { Box, Container, Fade } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 import SuperfluidWidget from "@superfluid-finance/widget";
 import tokenList from "@superfluid-finance/widget/tokenlist";
-import { useWeb3Modal } from "@web3modal/react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -16,6 +15,7 @@ import useFontLoader from "../../src/hooks/useFontLoader";
 import useLoadFromIPFS from "../../src/hooks/useLoadFromIPFS";
 import useWalletAnalytics from "../../src/hooks/useWalletAnalytics";
 import { deleteFlow } from "../../src/utils/deleteDemoFlow";
+import { useAppKit, useAppKitState } from "@reown/appkit/react";
 
 type TypographyOptions = Theme["typography"];
 
@@ -32,10 +32,11 @@ const IPFSWidgetPage: NextPage = () => {
 
   const [randomReceiver] = useState<`0x${string}`>(generateRandomReceiver());
 
-  const { open, isOpen } = useWeb3Modal();
+  const { open } = useAppKit();
+  const { open: isOpen } = useAppKitState();
   const walletManager = useMemo(
     () => ({
-      open,
+      open: () => open(),
       isOpen,
     }),
     [open, isOpen],

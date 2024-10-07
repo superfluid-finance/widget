@@ -17,7 +17,7 @@ import {
   ContractFunctionRevertedError,
   decodeErrorResult,
 } from "viem";
-import { useNetwork } from "wagmi";
+import { useConfig } from "wagmi";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { ContractWriteResult } from "./ContractWriteManager.js";
@@ -72,10 +72,10 @@ export function ContractWriteStatus({
                 ? { text: "Ready to send", iconColor: palette.success.main }
                 : { text: "Queued", iconColor: palette.action.disabled };
 
-  const { chains } = useNetwork();
+  const { chains } = useConfig();
 
   const chain = useMemo(
-    () => chains.find((x) => x.id === result.contractWrite.chainId)!,
+    () => chains.find((x: any) => x.id === result.contractWrite.chainId)!,
     [chains, result.contractWrite.chainId],
   );
 
@@ -92,12 +92,10 @@ export function ContractWriteStatus({
         },
       }}
       secondaryAction={
-        writeResult?.data?.hash &&
+        writeResult?.data &&
         chain.blockExplorers?.default && (
           <IconButton
-            href={
-              chain.blockExplorers.default.url + "/tx/" + writeResult.data.hash
-            }
+            href={chain.blockExplorers.default.url + "/tx/" + writeResult.data}
             target="_blank"
             size="small"
             title="View on blockchain explorer"

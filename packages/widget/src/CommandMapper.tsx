@@ -1,12 +1,18 @@
+import { useQuery } from "@tanstack/react-query";
 import { nanoid } from "nanoid";
 import { useEffect, useMemo } from "react";
-import { Abi, ContractFunctionConfig, getAbiItem, GetValue } from "viem";
+import {
+  Abi,
+  ContractFunctionName,
+  ContractFunctionParameters,
+  getAbiItem,
+  GetValue,
+} from "viem";
 import {
   useBlockNumber,
-  useContractRead,
-  useContractReads,
   usePublicClient,
-  useQuery,
+  useReadContract,
+  useReadContracts,
 } from "wagmi";
 
 import {
@@ -57,7 +63,7 @@ export function EnableAutoWrapCommandMapper({
 }: CommandMapperProps<EnableAutoWrapCommand>) {
   const { getUnderlyingToken } = useWidget();
 
-  const { data, isSuccess } = useContractReads({
+  const { data, isSuccess } = useReadContracts({
     contracts: [
       {
         chainId: cmd.chainId,
@@ -78,7 +84,7 @@ export function EnableAutoWrapCommandMapper({
         args: [cmd.accountAddress, autoWrapStrategyAddress[cmd.chainId]],
       },
     ],
-    cacheOnBlock: true,
+    // cacheOnBlock: true, TODO
   });
 
   const [wrapScheduleData, allowanceData] = data ?? [];
@@ -148,7 +154,7 @@ export function WrapIntoSuperTokensCommandMapper({
 
   const isNativeAssetUnderlyingToken = cmd.underlyingToken.isNativeAsset;
 
-  const { data: allowance_, isSuccess } = useContractRead(
+  const { data: allowance_, isSuccess } = useReadContract(
     !isNativeAssetUnderlyingToken
       ? {
           chainId: cmd.chainId,
@@ -156,7 +162,7 @@ export function WrapIntoSuperTokensCommandMapper({
           abi: erc20ABI,
           functionName: "allowance",
           args: [cmd.accountAddress, cmd.superTokenAddress],
-          cacheOnBlock: true,
+          // cacheOnBlock: true, TODO
         }
       : undefined,
   );
@@ -175,7 +181,7 @@ export function WrapIntoSuperTokensCommandMapper({
           abi: nativeAssetSuperTokenABI,
           functionName: "upgradeByETH",
           address: cmd.superTokenAddress,
-          value: cmd.amountWeiFromUnderlyingTokenDecimals,
+          // value: cmd.amountWeiFromUnderlyingTokenDecimals, // TODO
         }),
       );
     } else {
@@ -270,40 +276,42 @@ export function SubscribeCommandMapper({
     isSuccess: isSuccessForGetFlowRate,
     isLoading: isLoadingForGetFlowRate,
     data: existingFlowRate_,
-  } = useContractRead({
+  } = useReadContract({
     chainId: cmd.chainId,
     address: cfAv1ForwarderAddress[cmd.chainId],
     abi: cfAv1ForwarderABI,
     functionName: "getFlowrate",
     args: [cmd.superTokenAddress, cmd.accountAddress, cmd.receiverAddress],
-    cacheOnBlock: true,
+    // cacheOnBlock: true, TODO
   });
 
   const checkExistingUpfrontTransfer = cmd.transferAmountWei > 0n;
   const {
     isSuccess: isSuccessForBlockNumber,
-    isIdle: isIdleForBlockNumber,
+    isPaused: isIdleForBlockNumber, // TODO
     data: blockNumber,
   } = useBlockNumber({
     chainId: cmd.chainId,
-    enabled: checkExistingUpfrontTransfer,
+    query: {
+      enabled: checkExistingUpfrontTransfer,
+    },
   });
 
   const publicClient = usePublicClient({
     chainId: cmd.chainId,
   });
+
   const {
     isSuccess: isSuccessForTransferEvents,
     isLoading: isLoadingForTransferEvents,
-    isIdle: isIdleForTransferEvents,
     data: transferEvents,
-  } = useQuery(
-    [cmd.id, blockNumber],
-    async () => {
+  } = useQuery({
+    queryKey: [cmd.id, blockNumber],
+    queryFn: async () => {
       if (blockNumber === undefined)
         throw new Error("The query should not run without the block number.");
 
-      const logs = await publicClient.getLogs({
+      const logs = await publicClient!.getLogs({
         event: transferEventAbi,
         address: cmd.superTokenAddress,
         args: {
@@ -316,11 +324,11 @@ export function SubscribeCommandMapper({
       });
       return logs;
     },
-    {
-      enabled: checkExistingUpfrontTransfer && isSuccessForBlockNumber,
-      retry: 10,
-    },
-  );
+    retry: 10,
+    enabled: Boolean(
+      checkExistingUpfrontTransfer && isSuccessForBlockNumber && publicClient,
+    ),
+  });
 
   const skipTransfer = useMemo(() => {
     if (checkExistingUpfrontTransfer && isSuccessForTransferEvents) {
@@ -329,7 +337,7 @@ export function SubscribeCommandMapper({
       // The main reason for this feature is to avoid accidental double-charging of brand new users and checking for the exact transfer amount seems sufficient.
       // More complex scenarios will need manual intervention and customer support.
       return transferEvents!.some(
-        (e) => !e.removed && e.args.value === cmd.transferAmountWei,
+        (e: any) => !e.removed && e.args.value === cmd.transferAmountWei,
       );
     } else {
       return false;
@@ -341,13 +349,12 @@ export function SubscribeCommandMapper({
       !isLoadingForGetFlowRate &&
       isSuccessForGetFlowRate &&
       (isIdleForBlockNumber || isSuccessForBlockNumber) &&
-      (isIdleForTransferEvents || !isLoadingForTransferEvents), // Keep the check for transfer events non-blocking.
+      !isLoadingForTransferEvents, // Keep the check for transfer events non-blocking.
     [
       isLoadingForGetFlowRate,
       isSuccessForGetFlowRate,
       isIdleForBlockNumber,
       isSuccessForBlockNumber,
-      isIdleForTransferEvents,
       isSuccessForTransferEvents,
     ],
   );
@@ -437,13 +444,22 @@ export function SubscribeCommandMapper({
   return null;
 }
 
+type ExpectedMutability = "payable" | "nonpayable";
+
 const createContractWrite = <
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
 >(
-  arg: ContractFunctionConfig<TAbi, TFunctionName, "payable" | "nonpayable"> &
-    GetValue<TAbi, TFunctionName> &
-    Pick<ContractWrite, "commandId" | "displayTitle" | "chainId">,
+  // TODO: FunctionName
+  arg: ContractFunctionParameters<
+    TAbi,
+    ExpectedMutability,
+    ContractFunctionName<TAbi, ExpectedMutability>
+  > &
+    Pick<ContractWrite, "commandId" | "displayTitle" | "chainId"> &
+    GetValue<TAbi, TFunctionName> & {
+      value?: bigint;
+    },
 ): ContractWrite =>
   ({
     id: nanoid(),
