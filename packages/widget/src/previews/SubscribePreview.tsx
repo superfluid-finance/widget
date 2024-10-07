@@ -1,11 +1,11 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { erc20Abi, formatEther } from "viem";
 import { useReadContract } from "wagmi";
 
 import { AccountAddressCard } from "../AccountAddressCard.js";
 import { SubscribeCommand } from "../commands.js";
 import StreamIndicator from "../StreamIndicator.js";
 import { useWidget } from "../WidgetContext.js";
-import { erc20Abi } from "viem";
 
 export function SubscribePreview({
   command: cmd,
@@ -18,12 +18,18 @@ export function SubscribePreview({
   const { getSuperToken } = useWidget();
   const superToken = getSuperToken(cmd.superTokenAddress);
 
-  const tokenBalance = useReadContract({
+  const { data: tokenBalance } = useReadContract({
     address: cmd.superTokenAddress,
     chainId: cmd.chainId,
     abi: erc20Abi,
     functionName: "balanceOf",
     args: [cmd.accountAddress],
+    query: {
+      select: (wei) => ({
+        value: wei,
+        formatted: formatEther(wei),
+      }),
+    },
   });
 
   return (

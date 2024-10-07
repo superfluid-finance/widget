@@ -7,8 +7,8 @@ import {
 import {
   useAccount,
   useSimulateContract,
-  useWriteContract,
   useWaitForTransactionReceipt,
+  useWriteContract,
 } from "wagmi";
 
 import { ContractWrite } from "./ContractWrite.js";
@@ -19,7 +19,10 @@ import { useWidget } from "./WidgetContext.js";
 export type ContractWriteResult = {
   contractWrite: ContractWrite;
   prepareResult: ReturnType<typeof useSimulateContract>;
-  writeResult: ReturnType<typeof useWriteContract>;
+  writeResult: Omit<
+    ReturnType<typeof useWriteContract>,
+    "write" | "writeAsync"
+  > & { write: () => void };
   transactionResult: ReturnType<typeof useWaitForTransactionReceipt>;
   currentError: BaseError | null;
 };
@@ -58,43 +61,52 @@ export function ContractWriteManager({
           ...contractWrite,
           scopeKey: contractWrite.commandId,
           staleTime: 120_000,
+          value: undefined, // TODO
         }
       : undefined),
-    onError: console.error,
+    // onError: console.error, TODO
   });
+
+  const writeArgs = useMemo(
+    () => ({
+      ...(prepare
+        ? prepareResult.isError
+          ? {
+              mode: "prepared",
+              request: {
+                account: accountAddress,
+                chain: chain,
+                abi: contractWrite.abi,
+                address: contractWrite.address,
+                functionName: contractWrite.functionName,
+                args: contractWrite.args,
+                value: contractWrite.value,
+                gas: 2_500_000n, // Set _some_ kind of a limit more reasonable than the default 28_500_000.
+              },
+            }
+          : prepareResult.isSuccess
+            ? prepareResult.data
+            : {}
+        : {}),
+    }),
+    [prepareResult],
+  );
 
   // Always have a write ready.
   const writeResult = useWriteContract({
-    ...(prepare
-      ? prepareResult.isError
-        ? {
-            mode: "prepared",
-            request: {
-              account: accountAddress,
-              chain: chain,
-              abi: contractWrite.abi,
-              address: contractWrite.address,
-              functionName: contractWrite.functionName,
-              args: contractWrite.args,
-              value: contractWrite.value,
-              gas: 2_500_000n, // Set _some_ kind of a limit more reasonable than the default 28_500_000.
-            },
-          }
-        : prepareResult.isSuccess
-          ? prepareResult.config
-          : {}
-      : {}),
-    onError: console.error,
-    onSuccess: ({ hash }: { hash: any }) =>
-      eventHandlers.onTransactionSent?.({
-        hash,
-        functionName: contractWrite.functionName as TxFunctionName,
-      }),
+    mutation: {
+      onError: console.error,
+      onSuccess: (hash) =>
+        eventHandlers.onTransactionSent?.({
+          hash,
+          functionName: contractWrite.functionName as TxFunctionName,
+        }),
+    },
   });
 
   const transactionResult = useWaitForTransactionReceipt({
-    hash: writeResult.data?.hash,
-    onError: console.error,
+    hash: writeResult.data,
+    // onError: console.error, TODO
   });
 
   const result: ContractWriteResult = useMemo(() => {
@@ -113,7 +125,10 @@ export function ContractWriteManager({
     return {
       contractWrite,
       prepareResult: prepareResult as ReturnType<typeof useSimulateContract>,
-      writeResult,
+      writeResult: {
+        ...writeResult,
+        write: () => writeResult.writeContract(writeArgs as any), // TODO
+      },
       transactionResult,
       currentError: (transactionResult.error ||
         (transactionResult.isSuccess ? null : writeResult.error) ||
@@ -128,6 +143,7 @@ export function ContractWriteManager({
     writeResult.status,
     transactionResult.status,
     transactionResult.fetchStatus,
+    writeArgs,
   ]);
 
   useEffect(() => void onChange?.(result), [result]);

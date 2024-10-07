@@ -92,12 +92,10 @@ export function ContractWriteStatus({
         },
       }}
       secondaryAction={
-        writeResult?.data?.hash &&
+        writeResult?.data &&
         chain.blockExplorers?.default && (
           <IconButton
-            href={
-              chain.blockExplorers.default.url + "/tx/" + writeResult.data.hash
-            }
+            href={chain.blockExplorers.default.url + "/tx/" + writeResult.data}
             target="_blank"
             size="small"
             title="View on blockchain explorer"
