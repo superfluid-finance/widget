@@ -148,7 +148,7 @@ export function WrapIntoSuperTokensCommandMapper({
 
   const isNativeAssetUnderlyingToken = cmd.underlyingToken.isNativeAsset;
 
-  const { data: allowance_, isSuccess } = useContractRead(
+  const { data: allowance_, isSuccess: isSuccess_ } = useContractRead(
     !isNativeAssetUnderlyingToken // ERC-20 allowance doesn't apply to native asset tokens
       ? {
           chainId: cmd.chainId,
@@ -160,6 +160,7 @@ export function WrapIntoSuperTokensCommandMapper({
         }
       : undefined,
   );
+  const isSuccess = isSuccess_ || isNativeAssetUnderlyingToken;
 
   const contractWrites = useMemo(() => {
     const contractWrites_: ContractWrite[] = [];
