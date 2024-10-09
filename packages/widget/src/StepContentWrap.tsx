@@ -18,8 +18,10 @@ import {
   useState,
 } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { zeroAddress } from "viem";
 import { Address, useBalance } from "wagmi";
 
+import { ChainId } from "./core/SupportedNetwork.js";
 import { DraftFormValues } from "./formValues.js";
 import { UpgradeIcon } from "./previews/CommandPreview.js";
 import { StepProps } from "./Stepper.js";
@@ -88,9 +90,7 @@ const WrapCard: FC<WrapCardProps> = ({
           gridColumn: "1/3",
         }}
       >
-        {`Balance: ${
-          formattedTokenBalance && approximateIfDecimal(formattedTokenBalance)
-        }`}
+        {`Balance: ${formattedTokenBalance}`}
       </Typography>
     </Paper>
   );
@@ -118,7 +118,7 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
     ]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
-  const { getUnderlyingToken, eventHandlers } = useWidget();
+  const { getUnderlyingToken, getNativeAsset, eventHandlers } = useWidget();
 
   // Find the underlying token of the Super Token.
   const underlyingToken = useMemo(() => {
@@ -127,19 +127,29 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
     }
 
     const superTokenInfo = superToken.extensions.superTokenInfo;
-    if (superTokenInfo.type !== "Wrapper") {
-      return undefined;
+    if (superTokenInfo.type === "Wrapper") {
+      return getUnderlyingToken(
+        superToken.chainId,
+        superTokenInfo.underlyingTokenAddress,
+      );
     }
 
-    return getUnderlyingToken(superTokenInfo.underlyingTokenAddress);
-  }, [superToken, getUnderlyingToken]);
+    if (superTokenInfo.type === "Native Asset") {
+      return getNativeAsset(superToken.chainId as ChainId);
+    }
+
+    return undefined;
+  }, [superToken, getUnderlyingToken, getNativeAsset]);
 
   // TODO(KK): Probably don't need to do so much null-checking.
 
   const { data: underlyingTokenBalance } = useBalance(
     paymentOptionWithTokenInfo && underlyingToken && accountAddress
       ? {
-          token: underlyingToken.address as Address,
+          token:
+            underlyingToken.address === zeroAddress
+              ? undefined
+              : (underlyingToken.address as Address),
           address: accountAddress,
           chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
           formatUnits: underlyingToken.decimals,
@@ -332,13 +342,4 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
       </Stack>
     </Stack>
   );
-}
-
-function approximateIfDecimal(numStr: string): string {
-  const hasDecimal = numStr.includes(".");
-  if (hasDecimal) {
-    const integerPart = numStr.split(".")[0];
-    return `≈${integerPart}`;
-  }
-  return numStr;
 }

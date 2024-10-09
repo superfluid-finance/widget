@@ -10,13 +10,13 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@sentry/nextjs": "^7.119.0",
+    "@sentry/nextjs": "^7.119.1",
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
     "next": "13.4.19",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "viem": "^1.21.4",
     "wagmi": "^1.4.13",
     "zod": "^3.23.8"

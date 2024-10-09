@@ -1,5 +1,11 @@
 import { nanoid } from "nanoid";
-import { Address, formatUnits, parseEther, parseUnits } from "viem";
+import {
+  Address,
+  formatUnits,
+  parseEther,
+  parseUnits,
+  zeroAddress,
+} from "viem";
 
 import { Command } from "./commands.js";
 import { autoWrapStrategyAddress } from "./core/index.js";
@@ -33,23 +39,17 @@ export const formValuesToCommands = (
   // TODO(KK): Clean-up the bangs.
 
   if (isWrapperSuperToken) {
-    const underlyingToken = isWrapperSuperToken
-      ? ({
-          isNativeAsset: false,
-          address: superToken.extensions.superTokenInfo.underlyingTokenAddress,
-          decimals: underlyingTokenInfo!.decimals,
-        } as const)
-      : ({
-          isNativeAsset: true,
-          address: undefined,
-          decimals: underlyingTokenInfo!.decimals,
-        } as const);
+    const underlyingToken = {
+      isNativeAsset: false,
+      address: superToken.extensions.superTokenInfo.underlyingTokenAddress,
+      decimals: underlyingTokenInfo!.decimals,
+    } as const;
 
     const amountWeiFromUnderlyingTokenDecimals = parseUnits(
       wrapAmountInUnits,
       underlyingToken.decimals,
     );
-    const amountWeiFromSuperTokenDecimals = parseUnits(wrapAmountInUnits, 18); // Super Tokens always have 18 decimals.
+    const amountWeiFromSuperTokenDecimals = parseEther(wrapAmountInUnits); // Super Tokens always have 18 decimals.
 
     if (amountWeiFromUnderlyingTokenDecimals !== 0n) {
       commands.push({
@@ -78,6 +78,27 @@ export const formValuesToCommands = (
         underlyingTokenAddress: underlyingToken.address,
       });
     }
+  }
+
+  if (_isNativeAssetSuperToken) {
+    const amountWeiFromSuperTokenDecimals = parseEther(wrapAmountInUnits); // Super Tokens always have 18 decimals.
+    const amountWeiFromUnderlyingTokenDecimals = parseEther(wrapAmountInUnits); // We assume native assets also always have 18 decimals.
+
+    commands.push({
+      id: nanoid(),
+      type: "Wrap into Super Tokens",
+      chainId: chainId,
+      superTokenAddress,
+      accountAddress,
+      underlyingToken: {
+        isNativeAsset: true,
+        address: zeroAddress,
+        decimals: 18,
+      },
+      amountInUnits: wrapAmountInUnits,
+      amountWeiFromUnderlyingTokenDecimals,
+      amountWeiFromSuperTokenDecimals,
+    });
   }
 
   commands.push({

@@ -117,7 +117,7 @@ export function EnableAutoWrapCommandMapper({
           createContractWrite({
             commandId: cmd.id,
             displayTitle: `Approve ${
-              getUnderlyingToken(cmd.underlyingTokenAddress).symbol
+              getUnderlyingToken(cmd.chainId, cmd.underlyingTokenAddress).symbol
             } Allowance`,
             chainId: cmd.chainId,
             abi: erc20ABI,
@@ -149,7 +149,7 @@ export function WrapIntoSuperTokensCommandMapper({
   const isNativeAssetUnderlyingToken = cmd.underlyingToken.isNativeAsset;
 
   const { data: allowance_, isSuccess } = useContractRead(
-    !isNativeAssetUnderlyingToken
+    !isNativeAssetUnderlyingToken // ERC-20 allowance doesn't apply to native asset tokens
       ? {
           chainId: cmd.chainId,
           address: cmd.underlyingToken.address,
@@ -169,7 +169,7 @@ export function WrapIntoSuperTokensCommandMapper({
         createContractWrite({
           commandId: cmd.id,
           displayTitle: `Wrap to ${
-            getSuperToken(cmd.superTokenAddress).symbol
+            getSuperToken(cmd.chainId, cmd.superTokenAddress).symbol
           }`,
           chainId: cmd.chainId,
           abi: nativeAssetSuperTokenABI,
@@ -186,7 +186,8 @@ export function WrapIntoSuperTokensCommandMapper({
             createContractWrite({
               commandId: cmd.id,
               displayTitle: `Approve ${
-                getUnderlyingToken(cmd.underlyingToken.address).symbol
+                getUnderlyingToken(cmd.chainId, cmd.underlyingToken.address)
+                  .symbol
               } Allowance`,
               chainId: cmd.chainId,
               abi: erc20ABI,
@@ -204,8 +205,9 @@ export function WrapIntoSuperTokensCommandMapper({
           createContractWrite({
             commandId: cmd.id,
             displayTitle: `Wrap ${
-              getUnderlyingToken(cmd.underlyingToken.address).symbol
-            } into ${getSuperToken(cmd.superTokenAddress).symbol}`,
+              getUnderlyingToken(cmd.chainId, cmd.underlyingToken.address)
+                .symbol
+            } into ${getSuperToken(cmd.chainId, cmd.superTokenAddress).symbol}`,
             chainId: cmd.chainId,
             abi: superTokenABI,
             address: cmd.superTokenAddress,

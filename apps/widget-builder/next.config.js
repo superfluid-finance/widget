@@ -13,6 +13,12 @@ module.exports = {
         port: "",
         pathname: "/superfluid-finance/**/*",
       },
+      {
+        protocol: "https",
+        hostname: "superfluid-finance.github.io",
+        port: "",
+        pathname: "/**/*",
+      },
     ],
   },
   env: {
