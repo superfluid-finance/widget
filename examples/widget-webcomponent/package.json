@@ -10,7 +10,7 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@superfluid-finance/tokenlist": "^5.8.2",
+    "@superfluid-finance/tokenlist": "^5.9.0",
     "@superfluid-finance/widget": "workspace:*"
   },
   "devDependencies": {

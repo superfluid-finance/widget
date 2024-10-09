@@ -39,6 +39,9 @@ export default function Stepper() {
   ]);
 
   const [visibleSteps, walletConnectStep] = useMemo(() => {
+    const superTokenType =
+      paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo.type;
+
     const steps = [
       {
         optional: false,
@@ -47,8 +50,7 @@ export default function Stepper() {
         Content: StepContentPaymentOption,
       },
       // Add wrap step only when Super Token has an underlying token.
-      ...(paymentOptionWithTokenInfo?.superToken.extensions.superTokenInfo
-        .type === "Wrapper" // TODO(KK): Enable native asset wrapping here.
+      ...(superTokenType === "Wrapper" || superTokenType === "Native Asset"
         ? [
             {
               optional: true,

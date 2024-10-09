@@ -43,7 +43,7 @@ const demoPaymentDetails: WidgetProps["paymentDetails"] = {
       receiverAddress: "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22", // rebounder
       chainId: supportedNetwork.optimismSepolia.id,
       superToken: {
-        address: "0x00d05Eed85Bad962bA5237DD4aFFF12004455a8a", // fUSDCx
+        address: "0x131780640edf9830099aac2203229073d6d2fe69", // fUSDCx
       },
       flowRate: {
         amountEther: "1",

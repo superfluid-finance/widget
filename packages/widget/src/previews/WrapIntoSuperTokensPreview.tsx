@@ -15,10 +15,10 @@ export function WrapIntoSuperTokensPreview({
 }) {
   const { getSuperToken, getUnderlyingToken, getNativeAsset } = useWidget();
 
-  const superToken = getSuperToken(cmd.superTokenAddress);
+  const superToken = getSuperToken(cmd.chainId, cmd.superTokenAddress);
   const underlyingToken = cmd.underlyingToken.isNativeAsset
     ? getNativeAsset(cmd.chainId)
-    : getUnderlyingToken(cmd.underlyingToken.address);
+    : getUnderlyingToken(cmd.chainId, cmd.underlyingToken.address);
 
   return (
     <Stack direction="column" alignItems="center" spacing={2.25}>
