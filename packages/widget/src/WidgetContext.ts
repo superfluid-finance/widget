@@ -13,8 +13,8 @@ import { WalletManager } from "./WalletManager.js";
 import { ViewProps } from "./WidgetView.js";
 
 export type WidgetContextValue = {
-  getSuperToken: (address: Address) => SuperTokenInfo;
-  getUnderlyingToken: (address: Address) => TokenInfo;
+  getSuperToken: (chainId: number, address: Address) => SuperTokenInfo;
+  getUnderlyingToken: (chainId: number, address: Address) => TokenInfo;
   getNetwork: (chainId: ChainId) => SupportedNetwork;
   getNativeAsset: (chainId: ChainId) => TokenInfo;
   superTokens: ReadonlyArray<SuperTokenInfo>;

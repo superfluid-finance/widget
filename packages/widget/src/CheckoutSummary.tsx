@@ -46,7 +46,11 @@ export function CheckoutSummary() {
   const startingBalanceDate = useMemo(() => new Date(), []);
 
   const superToken = useMemo(
-    () => getSuperToken(subscribeCommand.superTokenAddress),
+    () =>
+      getSuperToken(
+        subscribeCommand.chainId,
+        subscribeCommand.superTokenAddress,
+      ),
     [subscribeCommand.superTokenAddress, getSuperToken],
   );
 

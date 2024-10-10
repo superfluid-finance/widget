@@ -16,7 +16,7 @@ export function SubscribePreview({
   const isBelowMd = useMediaQuery(theme.breakpoints.down("md"));
 
   const { getSuperToken } = useWidget();
-  const superToken = getSuperToken(cmd.superTokenAddress);
+  const superToken = getSuperToken(cmd.chainId, cmd.superTokenAddress);
 
   const { data: tokenBalance } = useReadContract({
     address: cmd.superTokenAddress,

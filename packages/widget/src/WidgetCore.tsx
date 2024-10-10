@@ -6,7 +6,7 @@ import memoize from "lodash.memoize";
 import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
 import { Address, zeroAddress } from "viem";
-import { useConnect, useConfig } from "wagmi";
+import { useConfig,useConnect } from "wagmi";
 import { injected } from "wagmi/connectors";
 import { fromZodError } from "zod-validation-error";
 
@@ -123,33 +123,47 @@ export function WidgetCore({
     [validationResult],
   );
 
-  const getSuperToken = useCallback<(address: Address) => SuperTokenInfo>(
-    memoize((address: Address) => {
-      const superToken = superTokens.find(
-        (x) => x.address.toLowerCase() === address.toLowerCase(),
-      );
-      if (!superToken) {
-        throw new Error(
-          `Super Token [${address}] not found from token list (which contains ${superTokens.length} Super Tokens).`,
+  const getSuperToken = useCallback<
+    (chainId: number, address: Address) => SuperTokenInfo
+  >(
+    memoize(
+      (chainId: number, address: Address) => {
+        const superToken = superTokens.find(
+          (x) =>
+            x.chainId === chainId &&
+            x.address.toLowerCase() === address.toLowerCase(),
         );
-      }
-      return superToken;
-    }),
+        if (!superToken) {
+          throw new Error(
+            `Super Token [${address}] on chain [${chainId}] not found from token list (which contains ${superTokens.length} Super Tokens).`,
+          );
+        }
+        return superToken;
+      },
+      (chainId, address) => `${chainId}-${address.toLowerCase()}`,
+    ),
     [superTokens],
   );
 
-  const getUnderlyingToken = useCallback<(address: Address) => TokenInfo>(
-    memoize((address: Address) => {
-      const underlyingToken = underlyingTokens.find(
-        (x) => x.address.toLowerCase() === address.toLowerCase(),
-      );
-      if (!underlyingToken) {
-        throw new Error(
-          `Underlying token [${address}] not found from token list (which contains ${underlyingTokens.length} underlying tokens).`,
+  const getUnderlyingToken = useCallback<
+    (chainId: number, address: Address) => TokenInfo
+  >(
+    memoize(
+      (chainId: number, address: Address) => {
+        const underlyingToken = underlyingTokens.find(
+          (x) =>
+            x.chainId === chainId &&
+            x.address.toLowerCase() === address.toLowerCase(),
         );
-      }
-      return underlyingToken;
-    }),
+        if (!underlyingToken) {
+          throw new Error(
+            `Underlying token [${address}] on chain [${chainId}] not found from token list (which contains ${underlyingTokens.length} underlying tokens).`,
+          );
+        }
+        return underlyingToken;
+      },
+      (chainId, address) => `${chainId}-${address.toLowerCase()}`,
+    ),
     [underlyingTokens],
   );
 
@@ -167,15 +181,21 @@ export function WidgetCore({
   const getNativeAsset = useCallback<(chainId: ChainId) => TokenInfo>(
     memoize((chainId: ChainId) => {
       const nativeAsset = getNetwork(chainId).nativeCurrency;
+      const nativeAssetSuperToken = superTokens.find(
+        (x) =>
+          x.chainId === chainId &&
+          x.extensions.superTokenInfo.type === "Native Asset",
+      );
       return {
         chainId: chainId,
         address: zeroAddress,
         name: nativeAsset.name,
         decimals: nativeAsset.decimals,
         symbol: nativeAsset.symbol,
-      };
+        logoURI: nativeAssetSuperToken?.logoURI,
+      } as TokenInfo;
     }),
-    [getNetwork],
+    [getNetwork, superTokens],
   );
 
   const paymentOptionWithTokenInfoList: ReadonlyArray<PaymentOptionWithTokenInfo> =

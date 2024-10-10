@@ -14,12 +14,22 @@ export function TokenAvatar({ tokenInfo, ...AvatarProps }: Props) {
       src={tokenInfo.logoURI}
       {...AvatarProps}
       sx={{ width: 24, height: 24, objectFit: "contain", ...AvatarSx }}
+      slotProps={{
+        img: {
+          style: { objectFit: "contain" },
+        },
+      }}
     />
   ) : (
     <Avatar
       alt={`${tokenInfo.symbol} logo`}
       {...AvatarProps}
       sx={{ width: 24, height: 24, ...AvatarSx }}
+      slotProps={{
+        img: {
+          style: { objectFit: "contain" },
+        },
+      }}
     >
       {" "}
     </Avatar>

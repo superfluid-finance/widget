@@ -15,7 +15,7 @@
     "@superfluid-finance/widget": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "viem": "^2.21.18",
+    "viem": "^2.21.21",
     "wagmi": "^2.12.17",
     "zod": "^3.23.8"
   },
@@ -28,7 +28,7 @@
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "5.0.0-canary-41f0e9dae-20230907",
     "eslint-plugin-react-refresh": "^0.4.12",
-    "typescript": "^5.6.2",
+    "typescript": "^5.6.3",
     "vite": "^4.5.5"
   }
 }

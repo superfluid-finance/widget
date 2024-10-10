@@ -18,9 +18,10 @@ import {
   useState,
 } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { erc20Abi, formatEther, formatUnits } from "viem";
-import { useReadContract } from "wagmi";
+import { Address, erc20Abi, formatEther, formatUnits,zeroAddress  } from "viem";
+import { useBalance, useReadContract } from "wagmi";
 
+import { ChainId } from "./core/SupportedNetwork.js";
 import { DraftFormValues } from "./formValues.js";
 import { UpgradeIcon } from "./previews/CommandPreview.js";
 import { StepProps } from "./Stepper.js";
@@ -89,9 +90,7 @@ const WrapCard: FC<WrapCardProps> = ({
           gridColumn: "1/3",
         }}
       >
-        {`Balance: ${
-          formattedTokenBalance && approximateIfDecimal(formattedTokenBalance)
-        }`}
+        {`Balance: ${formattedTokenBalance}`}
       </Typography>
     </Paper>
   );
@@ -119,7 +118,7 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
     ]);
 
   const superToken = paymentOptionWithTokenInfo?.superToken;
-  const { getUnderlyingToken, eventHandlers } = useWidget();
+  const { getUnderlyingToken, getNativeAsset, eventHandlers } = useWidget();
 
   // Find the underlying token of the Super Token.
   const underlyingToken = useMemo(() => {
@@ -128,28 +127,36 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
     }
 
     const superTokenInfo = superToken.extensions.superTokenInfo;
-    if (superTokenInfo.type !== "Wrapper") {
-      return undefined;
+    if (superTokenInfo.type === "Wrapper") {
+      return getUnderlyingToken(
+        superToken.chainId,
+        superTokenInfo.underlyingTokenAddress,
+      );
     }
 
-    return getUnderlyingToken(superTokenInfo.underlyingTokenAddress);
-  }, [superToken, getUnderlyingToken]);
+    if (superTokenInfo.type === "Native Asset") {
+      return getNativeAsset(superToken.chainId as ChainId);
+    }
+
+    return undefined;
+  }, [superToken, getUnderlyingToken, getNativeAsset]);
 
   // TODO(KK): Probably don't need to do so much null-checking.
 
-  const underlyingTokenBalance = useReadContract({
-    address: underlyingToken?.address,
+  const { data: underlyingTokenBalance } = useBalance({
+    token:
+      underlyingToken?.address === zeroAddress
+        ? undefined
+        : (underlyingToken?.address as Address),
+    address: accountAddress!,
     chainId: paymentOptionWithTokenInfo?.paymentOption?.chainId,
-    abi: erc20Abi,
-    functionName: "balanceOf",
-    args: [accountAddress!],
     query: {
       enabled: Boolean(
         paymentOptionWithTokenInfo && underlyingToken && accountAddress,
       ),
-      select: (wei) => ({
+      select: ({ value: wei }) => ({
         value: wei,
-        formatted: formatUnits(wei, underlyingToken!.decimals),
+        formatted: formatUnits(wei, underlyingToken?.decimals!),
       }),
     },
   });
@@ -225,7 +232,7 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
             <WrapCard
               dataTest="underlying"
               token={underlyingToken}
-              formattedTokenBalance={underlyingTokenBalance?.data?.formatted}
+              formattedTokenBalance={underlyingTokenBalance?.formatted}
             >
               <Input
                 data-testid="wrap-amount-input"
@@ -345,13 +352,4 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
       </Stack>
     </Stack>
   );
-}
-
-function approximateIfDecimal(numStr: string): string {
-  const hasDecimal = numStr.includes(".");
-  if (hasDecimal) {
-    const integerPart = numStr.split(".")[0];
-    return `≈${integerPart}`;
-  }
-  return numStr;
 }

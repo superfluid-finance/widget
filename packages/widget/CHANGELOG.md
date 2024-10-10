@@ -1,5 +1,13 @@
 # @superfluid-finance/widget
 
+## 0.5.1
+
+### Patch Changes
+
+- d0248c8: Update deps
+- d0248c8: Make Native Asset Super Tokens wrappable
+- d0248c8: Update token list
+
 ## 0.5.0
 
 ### Minor Changes

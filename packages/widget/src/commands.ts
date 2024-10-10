@@ -1,4 +1,4 @@
-import { Address } from "viem";
+import { Address, zeroAddress } from "viem";
 
 import {
   autoWrapStrategyAddress,
@@ -21,8 +21,8 @@ export type WrapIntoSuperTokensCommand = {
       }
     | {
         isNativeAsset: true;
-        address: undefined;
-        decimals: number;
+        address: typeof zeroAddress;
+        decimals: 18;
       };
   amountInUnits: `${number}`;
   amountWeiFromSuperTokenDecimals: bigint;
