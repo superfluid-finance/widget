@@ -1,6 +1,6 @@
 import { Alert, Collapse, Divider, Stack } from "@mui/material";
 import { Fragment, useCallback, useEffect } from "react";
-import { useQuery } from "wagmi";
+import { useQuery } from "@tanstack/react-query";
 
 import { useCommandHandler } from "./CommandHandlerContext.js";
 import { CommandPreview } from "./previews/CommandPreview.js";
@@ -28,16 +28,16 @@ export default function StepContentReview({ stepIndex }: StepProps) {
 
   const commandValidationSchema = useCommandValidationSchema();
 
-  const { isFetching: isValidating, data: validationResult } = useQuery(
-    [sessionId],
-    async () =>
+  const { isFetching: isValidating, data: validationResult } = useQuery({
+    queryKey: [sessionId],
+    queryFn: async () =>
       await commandValidationSchema.safeParseAsync({
         wrapIntoSuperTokensCommand: commands.find(
           (x) => x.type === "Wrap into Super Tokens",
         ),
         subscribeCommand: commands.find((x) => x.type === "Subscribe"),
       }),
-  );
+  });
 
   const areContractWritesMapping = !commands.every((x) => x.contractWrites);
 

@@ -1,4 +1,4 @@
-import { Chain } from "wagmi";
+import { Chain } from "wagmi/chains";
 
 /**
  * An interface for interacting with a wallet management library (e.g. Web3Modal, RainbowKit, ConnectKit etc).

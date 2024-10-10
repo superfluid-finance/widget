@@ -68,7 +68,7 @@ export function AccountAddressCard({
                 data-testid="ens-avatar"
                 alt="ENS avatar"
                 variant="rounded"
-                src={ensAvatarResult.data}
+                src={ensAvatarResult.data as string} // TODO?
                 sx={{ width: 24, height: 24 }}
               />
             ) : (
@@ -86,7 +86,8 @@ export function AccountAddressCard({
               title={checksumAddress}
               flex={1}
             >
-              {ensNameResult.data ?? shortenedAddress}
+              {/* TODO? */}
+              {(ensNameResult.data as string | undefined) ?? shortenedAddress}
             </Typography>
 
             <IconButton

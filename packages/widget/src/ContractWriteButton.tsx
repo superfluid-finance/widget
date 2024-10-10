@@ -4,7 +4,7 @@ import WarningAmberIcon_ from "@mui/icons-material/WarningAmber.js";
 import { LoadingButton } from "@mui/lab";
 import { Button, Collapse, Stack } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
+import { useAccount, useSwitchChain } from "wagmi";
 
 import { ContractWriteResult } from "./ContractWriteManager.js";
 import { normalizeIcon } from "./helpers/normalizeIcon.js";
@@ -33,25 +33,26 @@ export default function ContractWriteButton({
 
   const isLoading =
     prepareResult.isLoading ||
-    writeResult.isLoading ||
+    writeResult.isPending || // TODO?
     transactionResult.isLoading;
 
   const expectedChainId = contractWrite.chainId;
-  const { chain } = useNetwork();
-  const { switchNetwork } = useSwitchNetwork();
+  const { chain } = useAccount();
+  const { switchChain: switchNetwork } = useSwitchChain();
   const { connector } = useAccount();
   const needsToSwitchNetwork = expectedChainId !== chain?.id;
 
   const onSwitchNetworkButtonClick = useCallback(() => {
     eventHandlers.onButtonClick({ type: "switch_network" });
-    switchNetwork?.(expectedChainId);
+    switchNetwork?.({ chainId: expectedChainId });
   }, [switchNetwork, expectedChainId, eventHandlers.onButtonClick]);
 
   const onContractWriteButtonClick = useCallback(() => {
     eventHandlers.onButtonClick({
       type: "invoke_transaction",
     });
-    write?.();
+    // write?.();
+    write(); // TODO
   }, [write, eventHandlers.onButtonClick]);
 
   const onRetryTransactionButtonClick = useCallback(() => {
@@ -101,8 +102,8 @@ export default function ContractWriteButton({
   const showForceSendButton = Boolean(
     isPrepareError &&
       !prepareResult.isLoading &&
-      write &&
-      !writeResult.isLoading,
+      // write && TODO
+      !writeResult.isPending, // TODO
   );
 
   const isWriteButtonDisabled = Boolean(
@@ -110,11 +111,11 @@ export default function ContractWriteButton({
   );
   const writeButtonText = transactionResult.isLoading
     ? "Waiting for transaction..."
-    : writeResult.isLoading
+    : writeResult.isPending // TODO
       ? "Waiting for wallet..."
       : "Send transaction";
 
-  const showRetryButton = Boolean(isPrepareError && !writeResult.isLoading);
+  const showRetryButton = Boolean(isPrepareError && !writeResult.isPending); // TODO
 
   return (
     <Stack direction="column" spacing={1}>

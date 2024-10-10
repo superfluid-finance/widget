@@ -9,7 +9,7 @@ function useAutoConnect() {
   useEffect(() => {
     AUTOCONNECTED_CONNECTOR_IDS.forEach((connector) => {
       const connectorInstance = connectors.find(
-        (c) => c.id === connector && c.ready,
+        (c: any) => c.id === connector && c.ready,
       );
 
       if (connectorInstance) {

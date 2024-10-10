@@ -19,8 +19,7 @@ export async function deleteFlow() {
   const cfaV1Forwarder = getContract({
     address: CFAV1ForwarderAddress,
     abi: cfAv1ForwarderABI,
-    publicClient,
-    walletClient,
+    client: walletClient,
   });
 
   const executeDelete = async () => {

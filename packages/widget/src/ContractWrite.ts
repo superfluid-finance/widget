@@ -1,11 +1,18 @@
-import { Abi, ContractFunctionConfig, GetValue } from "viem";
+import {
+  Abi,
+  ContractFunctionName,
+  ContractFunctionParameters,
+  GetValue,
+} from "viem";
 
 import { ChainId } from "./core/index.js";
 
-export type ContractWrite = ContractFunctionConfig<
+type ExpectedMutability = "payable" | "nonpayable";
+
+export type ContractWrite = ContractFunctionParameters<
   Abi,
-  string,
-  "payable" | "nonpayable"
+  ExpectedMutability,
+  ContractFunctionName<Abi, ExpectedMutability>
 > &
   GetValue<Abi, string> & {
     id: string;
