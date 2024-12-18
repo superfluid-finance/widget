@@ -34,7 +34,7 @@ import {
 import { SuperTokenInfo } from "@superfluid-finance/widget/tokenlist";
 import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import { UseFieldArrayAppend, UseFieldArrayUpdate } from "react-hook-form";
-import { Chain } from "wagmi";
+import { Chain } from "wagmi/chains";
 import { ZodError } from "zod";
 
 import InputWrapper, { InputInfo } from "../form/InputWrapper";

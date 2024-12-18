@@ -2,9 +2,9 @@ import { Fade } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { Theme } from "@mui/material/styles";
+import { useAppKit, useAppKitState } from "@reown/appkit/react";
 import SuperfluidWidget from "@superfluid-finance/widget";
 import { extendedSuperTokenList } from "@superfluid-finance/widget/tokenlist";
-import { useWeb3Modal } from "@web3modal/react";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -23,10 +23,11 @@ type TypographyOptions = Theme["typography"];
 const IPFSWidgetPage: NextPage = () => {
   const { query } = useRouter();
 
-  const { open, isOpen } = useWeb3Modal();
+  const { open } = useAppKit();
+  const { open: isOpen } = useAppKitState();
   const walletManager = useMemo(
     () => ({
-      open,
+      open: () => open(),
       isOpen,
     }),
     [open, isOpen],
@@ -49,9 +50,8 @@ const IPFSWidgetPage: NextPage = () => {
   useFontLoader(fontFamily);
 
   const showLoader = loading && data === null;
-
   return (
-    <WagmiProviders>
+    <WagmiProviders cookies={null}>
       <DemoWalletDisconnect />
       <AutoConnect />
       {showLoader ? (

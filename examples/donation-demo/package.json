@@ -10,7 +10,7 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@sentry/nextjs": "^7.119.1",
+    "@sentry/nextjs": "^7.120.1",
     "@superfluid-finance/widget": "workspace:*",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
@@ -18,9 +18,9 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-use-intercom": "^5.4.1",
-    "viem": "^1.21.4",
-    "wagmi": "^1.4.13",
-    "zod": "^3.23.8"
+    "viem": "^2.21.55",
+    "wagmi": "^2.14.3",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/node": "22.7.4",

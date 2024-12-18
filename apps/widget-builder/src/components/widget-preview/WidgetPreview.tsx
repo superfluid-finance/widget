@@ -1,4 +1,9 @@
 import { colors, Fab, SelectChangeEvent, ThemeOptions } from "@mui/material";
+import {
+  useAppKit,
+  useAppKitNetwork,
+  useAppKitState,
+} from "@reown/appkit/react";
 import SuperfluidWidget, {
   PaymentOption,
   PersonalData,
@@ -7,7 +12,6 @@ import SuperfluidWidget, {
   WidgetProps as WidgetProps_,
 } from "@superfluid-finance/widget";
 import { extendedSuperTokenList } from "@superfluid-finance/widget/tokenlist";
-import { useWeb3Modal } from "@web3modal/react";
 import {
   createContext,
   CSSProperties,
@@ -225,18 +229,21 @@ const WidgetPreview: FC<WidgetProps> = (props) => {
     type,
   } = props;
 
-  const { open, isOpen, setDefaultChain } = useWeb3Modal();
+  const { open } = useAppKit();
+  const { open: isOpen } = useAppKitState();
+  const { switchNetwork } = useAppKitNetwork(); // Not sure if "switchNetwork" is right here?
+
   const walletManager = useMemo<WalletManager>(
     () => ({
       open: ({ chain }) => {
         if (chain) {
-          setDefaultChain(chain);
+          switchNetwork(chain);
         }
         open();
       },
       isOpen,
     }),
-    [open, isOpen, setDefaultChain],
+    [open, isOpen, switchNetwork],
   );
 
   const [mounted, setMounted] = useState(false);

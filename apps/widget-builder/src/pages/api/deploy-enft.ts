@@ -129,8 +129,7 @@ const handler: NextApiHandler = async (req, res) => {
           const cloneFactory = getContract({
             abi: ExistentialNFTCloneFactoryABI,
             address: contractAddress,
-            publicClient,
-            walletClient,
+            client: walletClient,
           });
 
           const sortedPaymentOptions = sortBy(paymentOptions, ({ flowRate }) =>

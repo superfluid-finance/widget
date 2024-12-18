@@ -1,7 +1,8 @@
 import superfluidMetadata from "@superfluid-finance/metadata";
 import { useMemo } from "react";
-import { Address } from "viem";
-import { fetchBalance, readContract, readContracts } from "wagmi/actions";
+import { Address, erc20Abi } from "viem";
+import { useConfig } from "wagmi";
+import { fetchBalance, readContract, readContracts } from "@wagmi/core";
 import { z } from "zod";
 
 import { calculateNewFlowRate } from "./CommandMapper.js";
@@ -17,8 +18,9 @@ import {
 import { calculateDateWhenBalanceCritical } from "./helpers/calculateDateWhenBalanceCritical.js";
 import { calculateDepositAmount } from "./helpers/calculateDepositAmount.js";
 
-export const useCommandValidationSchema = () =>
-  useMemo(
+export const useCommandValidationSchema = () => {
+  const config = useConfig();
+  return useMemo(
     () =>
       z
         .object({
@@ -26,13 +28,15 @@ export const useCommandValidationSchema = () =>
             .custom<WrapIntoSuperTokensCommand>()
             .refine(
               async (cmd) => {
-                const { value: balance } = await fetchBalance({
-                  chainId: cmd.chainId,
-                  address: cmd.accountAddress,
-                  token: cmd.underlyingToken.isNativeAsset
-                    ? undefined
-                    : cmd.underlyingToken.address,
-                });
+                const balance = cmd.underlyingToken.isNativeAsset
+                  ? 0n
+                  : await readContract(config, {
+                      chainId: cmd.chainId,
+                      abi: erc20Abi,
+                      functionName: "balanceOf",
+                      args: [cmd.accountAddress],
+                      address: cmd.underlyingToken.address,
+                    });
                 return cmd.amountWeiFromUnderlyingTokenDecimals <= balance;
               },
               {
@@ -55,21 +59,19 @@ export const useCommandValidationSchema = () =>
         .refine(
           async ({ subscribeCommand: cmd }) => {
             const [
-              [_lastUpdated, existingFlowRate, _existingDeposit, _owedDeposit],
-            ] = await readContracts({
-              allowFailure: false,
-              contracts: [
-                {
-                  chainId: cmd.chainId,
-                  address: cfAv1ForwarderAddress[cmd.chainId],
-                  abi: cfAv1ForwarderABI,
-                  functionName: "getFlowInfo",
-                  args: [
-                    cmd.superTokenAddress,
-                    cmd.accountAddress,
-                    cmd.receiverAddress,
-                  ],
-                },
+              _lastUpdated,
+              existingFlowRate,
+              _existingDeposit,
+              _owedDeposit,
+            ] = await readContract(config, {
+              chainId: cmd.chainId,
+              address: cfAv1ForwarderAddress[cmd.chainId],
+              abi: cfAv1ForwarderABI,
+              functionName: "getFlowInfo",
+              args: [
+                cmd.superTokenAddress,
+                cmd.accountAddress,
+                cmd.receiverAddress,
               ],
             });
 
@@ -91,7 +93,7 @@ export const useCommandValidationSchema = () =>
               cmd.chainId,
             )!; // TODO(KK): optimize
 
-            const governanceAddress = await readContract({
+            const governanceAddress = await readContract(config, {
               chainId: cmd.chainId,
               address: hostAddress[cmd.chainId],
               abi: hostABI,
@@ -102,7 +104,7 @@ export const useCommandValidationSchema = () =>
               [_lastUpdated, existingFlowRate, existingDeposit, _owedDeposit],
               minimumDeposit,
               [liquidationPeriod, _patricianPeriod],
-            ] = await readContracts({
+            ] = await readContracts(config, {
               allowFailure: false,
               contracts: [
                 {
@@ -140,10 +142,12 @@ export const useCommandValidationSchema = () =>
             });
 
             // TODO(KK): Probably no need to force into multi-call because this is very likely cached already.
-            const { value: availableBalance } = await fetchBalance({
+            const availableBalance = await readContract(config, {
               chainId: cmd.chainId,
-              address: cmd.accountAddress,
-              token: cmd.superTokenAddress,
+              address: cmd.superTokenAddress,
+              abi: erc20Abi,
+              functionName: "balanceOf",
+              args: [cmd.accountAddress],
             });
 
             const newFlowRateWei = calculateNewFlowRate({
@@ -178,7 +182,7 @@ export const useCommandValidationSchema = () =>
               accountFlowRate,
               [availableBalance, _deposit, _owedDeposit, timestamp],
               [_lastUpdated, existingFlowRate, existingDeposit, _owedDeposit2],
-            ] = await readContracts({
+            ] = await readContracts(config, {
               allowFailure: false,
               contracts: [
                 {
@@ -248,3 +252,4 @@ export const useCommandValidationSchema = () =>
         ),
     [],
   );
+};

@@ -18,8 +18,8 @@ import {
   useState,
 } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { zeroAddress } from "viem";
-import { Address, useBalance } from "wagmi";
+import { Address, erc20Abi, formatEther, formatUnits, zeroAddress } from "viem";
+import { useBalance, useReadContract } from "wagmi";
 
 import { ChainId } from "./core/SupportedNetwork.js";
 import { DraftFormValues } from "./formValues.js";
@@ -143,33 +143,43 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
 
   // TODO(KK): Probably don't need to do so much null-checking.
 
-  const { data: underlyingTokenBalance } = useBalance(
-    paymentOptionWithTokenInfo && underlyingToken && accountAddress
-      ? {
-          token:
-            underlyingToken.address === zeroAddress
-              ? undefined
-              : (underlyingToken.address as Address),
-          address: accountAddress,
-          chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
-          formatUnits: underlyingToken.decimals,
-        }
-      : undefined,
-  );
+  const { data: underlyingTokenBalance } = useBalance({
+    token:
+      underlyingToken?.address === zeroAddress
+        ? undefined
+        : (underlyingToken?.address as Address),
+    address: accountAddress!,
+    chainId: paymentOptionWithTokenInfo?.paymentOption?.chainId,
+    query: {
+      enabled: Boolean(
+        paymentOptionWithTokenInfo && underlyingToken && accountAddress,
+      ),
+      select: ({ value: wei }) => ({
+        value: wei,
+        formatted: formatUnits(wei, underlyingToken?.decimals!),
+      }),
+    },
+  });
 
-  const { data: superTokenBalance } = useBalance(
-    paymentOptionWithTokenInfo && superToken && accountAddress
-      ? {
-          token: superToken.address as Address,
-          address: accountAddress,
-          chainId: paymentOptionWithTokenInfo.paymentOption.chainId,
-          formatUnits: "ether", // Super Tokens are always 18 decimals.
-        }
-      : undefined,
-  );
+  const superTokenBalance = useReadContract({
+    address: superToken?.address,
+    chainId: paymentOptionWithTokenInfo?.paymentOption?.chainId,
+    abi: erc20Abi,
+    functionName: "balanceOf",
+    args: [accountAddress!],
+    query: {
+      enabled: Boolean(
+        paymentOptionWithTokenInfo && superToken && accountAddress,
+      ),
+      select: (wei) => ({
+        value: wei,
+        formatted: formatEther(wei),
+      }),
+    },
+  });
 
   const showSkip = useMemo(() => {
-    if (!paymentOptionWithTokenInfo || !superTokenBalance) return false;
+    if (!paymentOptionWithTokenInfo || !superTokenBalance?.data) return false;
 
     if (!flowRate?.amountEther) return false;
 
@@ -178,7 +188,7 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
       flowRate,
     );
 
-    return BigInt(superTokenBalance.value) >= minWrapAmount;
+    return BigInt(superTokenBalance.data.value) >= minWrapAmount;
   }, [superTokenBalance, paymentOptionWithTokenInfo, flowRate]);
 
   const { handleNext } = useStepper();
@@ -251,7 +261,7 @@ export default function StepContentWrap({ stepIndex }: StepProps) {
             <WrapCard
               dataTest="super"
               token={superToken}
-              formattedTokenBalance={superTokenBalance?.formatted}
+              formattedTokenBalance={superTokenBalance?.data?.formatted}
             >
               <Input
                 data-testid="wrap-amount-mirror-amount"

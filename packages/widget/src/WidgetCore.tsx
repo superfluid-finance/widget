@@ -6,8 +6,8 @@ import memoize from "lodash.memoize";
 import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
 import { Address, zeroAddress } from "viem";
-import { useConnect, useNetwork } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
+import { useConfig, useConnect } from "wagmi";
+import { injected } from "wagmi/connectors";
 import { fromZodError } from "zod-validation-error";
 
 import {
@@ -48,7 +48,7 @@ export function WidgetCore({
     type === "page" ? { type } : ({ type, ..._viewProps } as ViewProps);
 
   const { connect, connectors } = useConnect();
-  const { chains } = useNetwork();
+  const { chains } = useConfig();
   const walletManager = useMemo(() => {
     if (walletManager_) {
       return walletManager_;
@@ -60,10 +60,9 @@ export function WidgetCore({
       open: () =>
         connect({
           connector:
-            connectors.find((x) => x.id === "injected") ??
-            new InjectedConnector({
-              chains,
-              options: { shimDisconnect: true },
+            connectors.find((x: any) => x.id === "injected") ??
+            injected({
+              shimDisconnect: true,
             }),
         }),
     };

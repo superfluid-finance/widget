@@ -1,6 +1,7 @@
 import { AnalyticsBrowser } from "@segment/analytics-next";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Address, useAccount, useNetwork } from "wagmi";
+import { Address } from "viem";
+import { useAccount } from "wagmi";
 
 const NOT_CONNECTED = {
   isConnected: false,
@@ -16,7 +17,7 @@ const useWalletAnalytics = ({
     isConnected,
     address: activeAccountAddress,
   } = useAccount();
-  const { chain: activeChain } = useNetwork();
+  const { chain: activeChain } = useAccount();
   const { track, reset } = analyticsBrowser;
 
   const identify = useCallback(

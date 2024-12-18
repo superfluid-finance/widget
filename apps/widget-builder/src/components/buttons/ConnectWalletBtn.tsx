@@ -1,14 +1,14 @@
 import WalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { Button } from "@mui/material";
-import { useWeb3Modal } from "@web3modal/react";
+import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
 import { FC } from "react";
-import { useAccount, useDisconnect } from "wagmi";
+import { useDisconnect } from "wagmi";
 
 import { shortenHex } from "../../utils/utils";
 
 const ConnectWallet: FC = () => {
-  const { address } = useAccount();
-  const { open } = useWeb3Modal();
+  const { address } = useAppKitAccount();
+  const { open } = useAppKit();
   const { disconnect } = useDisconnect();
 
   return address ? (
@@ -19,7 +19,7 @@ const ConnectWallet: FC = () => {
     <Button
       variant="contained"
       size="large"
-      onClick={open}
+      onClick={() => open({ view: "Connect" })}
       startIcon={<WalletIcon />}
     >
       Connect Wallet

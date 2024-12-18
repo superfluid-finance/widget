@@ -16,20 +16,20 @@
     "@web3modal/react": "^2.7.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "viem": "^1.21.4",
-    "wagmi": "^1.4.13",
-    "zod": "^3.23.8"
+    "viem": "^2.21.55",
+    "wagmi": "^2.14.3",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^18.3.16",
+    "@types/react-dom": "^18.3.5",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "@vitejs/plugin-react": "^4.3.2",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "5.0.0-canary-41f0e9dae-20230907",
-    "eslint-plugin-react-refresh": "^0.4.12",
-    "typescript": "^5.6.2",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "typescript": "^5.7.2",
     "vite": "^4.5.5"
   }
 }
