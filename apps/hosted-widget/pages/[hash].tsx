@@ -2,11 +2,10 @@ import { Fade } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { Theme } from "@mui/material/styles";
+import { useAppKit, useAppKitState } from "@reown/appkit/react";
 import SuperfluidWidget from "@superfluid-finance/widget";
 import { extendedSuperTokenList } from "@superfluid-finance/widget/tokenlist";
-import { useAppKit, useAppKitState } from "@reown/appkit/react";
 import { NextPage } from "next";
-import { headers } from "next/headers";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
@@ -51,9 +50,8 @@ const IPFSWidgetPage: NextPage = () => {
   useFontLoader(fontFamily);
 
   const showLoader = loading && data === null;
-  const cookies = headers().get("cookie");
   return (
-    <WagmiProviders cookies={cookies}>
+    <WagmiProviders cookies={null}>
       <DemoWalletDisconnect />
       <AutoConnect />
       {showLoader ? (

@@ -1,6 +1,7 @@
 import { AnalyticsBrowser } from "@segment/analytics-next";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Address, useAccount, useAccount } from "wagmi";
+import { Address } from "viem";
+import { useAccount } from "wagmi";
 
 const NOT_CONNECTED = {
   isConnected: false,

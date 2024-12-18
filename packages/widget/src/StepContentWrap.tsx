@@ -18,7 +18,7 @@ import {
   useState,
 } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Address, erc20Abi, formatEther, formatUnits,zeroAddress  } from "viem";
+import { Address, erc20Abi, formatEther, formatUnits, zeroAddress } from "viem";
 import { useBalance, useReadContract } from "wagmi";
 
 import { ChainId } from "./core/SupportedNetwork.js";

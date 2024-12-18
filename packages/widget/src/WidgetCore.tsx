@@ -6,7 +6,7 @@ import memoize from "lodash.memoize";
 import { nanoid } from "nanoid";
 import { useCallback, useMemo } from "react";
 import { Address, zeroAddress } from "viem";
-import { useConfig,useConnect } from "wagmi";
+import { useConfig, useConnect } from "wagmi";
 import { injected } from "wagmi/connectors";
 import { fromZodError } from "zod-validation-error";
 

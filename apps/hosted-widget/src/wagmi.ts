@@ -1,4 +1,4 @@
-import { cookieStorage, createStorage, http } from "@wagmi/core";
+import { AppKitNetwork } from "@reown/appkit/networks";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
 import { supportedNetworks } from "@superfluid-finance/widget";
 
@@ -8,20 +8,9 @@ export const projectId =
 
 // Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
-  ssr: true,
+  ssr: false,
   projectId,
-  networks: supportedNetworks.map((c) => ({
-    id: `eip155:${c.id}` as `eip155:${number}`,
-    chainId: c.id,
-    chainNamespace: "eip155",
-    name: c.name,
-    currency: c.nativeCurrency.name,
-    explorerUrl: c.blockExplorers!.default.url,
-    rpcUrl: c.rpcUrls.default.http[0],
-  })),
+  networks: [...supportedNetworks] as [AppKitNetwork, ...AppKitNetwork[]],
 });
 
 export const wagmiConfig = wagmiAdapter.wagmiConfig;

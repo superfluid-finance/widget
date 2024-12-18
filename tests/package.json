@@ -6,12 +6,12 @@
   "devDependencies": {
     "@currents/playwright": "1.4.5",
     "@playwright/test": "1.44.1",
-    "@superfluid-finance/metadata": "^1.5.1",
-    "@superfluid-finance/tokenlist": "^5.9.0",
+    "@superfluid-finance/metadata": "^1.5.2",
+    "@superfluid-finance/tokenlist": "^5.16.0",
     "@synthetixio/synpress": "4.0.0-alpha.7",
-    "dotenv": "^16.4.5",
-    "ethers": "^6.13.3",
-    "typescript": "^5.6.3"
+    "dotenv": "^16.4.7",
+    "ethers": "^6.13.4",
+    "typescript": "^5.7.2"
   },
   "scripts": {
     "lint:check-no-focused-tests": "grep -FR test.only specs || { echo '✅ No test is focused.';exit 0; } && { echo '❌ You have focused tests.'; exit 1; }",

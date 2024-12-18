@@ -34,7 +34,7 @@ import {
 } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useFormContext } from "react-hook-form";
-import { Chain } from "wagmi";
+import { Chain } from "wagmi/chains";
 
 import useAnalyticsBrowser from "../../hooks/useAnalyticsBrowser";
 import { useReadAsBase64 } from "../../hooks/useReadFileAsBase64";
