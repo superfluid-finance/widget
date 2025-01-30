@@ -43,7 +43,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - name: Install bun
+        uses: oven-sh/setup-bun@v1
 
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v4
@@ -51,10 +52,10 @@ jobs:
           node-version: 20.x
 
       - name: Install dependencies
-        run: pnpm i
+        run: bun i
           
       - name: Install Playwright browsers
-        run: pnpm playwright install chromium --with-deps
+        run: bun playwright install chromium --with-deps
 
       - name: Install virtual display
         run: |
@@ -71,14 +72,14 @@ jobs:
           fi
 
       - name: Setup metamask cache
-        run: xvfb-run pnpm synpress wallet-setup --force
+        run: xvfb-run bun synpress wallet-setup --force
         env:
           WIDGET_WALLET_PRIVATE_KEY: ${{ secrets.WIDGET_WALLET_PRIVATE_KEY}}
           WIDGET_WALLET_PUBLIC_KEY: "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD"
 
         # https://playwright.dev/docs/next/ci#running-headed
       - name: Run Playwright tests
-        run: xvfb-run pnpm playwright test ${{ matrix.file }}
+        run: xvfb-run bun playwright test ${{ matrix.file }}
         env:
           BASE_URL: ${{ env.BASE_URL }}
           WIDGET_WALLET_PUBLIC_KEY: "0x7c5de59A1b31e3D00279A825Cb95fAEDb09eA9FD"
