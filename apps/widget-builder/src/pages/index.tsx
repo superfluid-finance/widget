@@ -140,7 +140,7 @@ export default function Home() {
                   },
                 }}
               >
-                Enter Builder Text
+                Enter Builder
               </Button>
               <BookDemoBtn
                 sx={{
