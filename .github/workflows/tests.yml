@@ -41,11 +41,9 @@ jobs:
         file: ${{ fromJson(needs.test-setup.outputs.matrix) }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
+      - uses: pnpm/action-setup@v4
 
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v4
