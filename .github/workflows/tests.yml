@@ -53,8 +53,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright browsers
-        run: pnpm playwright install --with-deps
+      # - name: Install Playwright browsers
+      #   run: pnpm playwright install --with-deps
 
       - name: Install virtual display
         run: |
