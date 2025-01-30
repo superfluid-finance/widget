@@ -149,7 +149,7 @@ export default function Home() {
                   },
                 }}
               >
-                Book a Demo Test
+                Book a Demo
               </BookDemoBtn>
             </Stack>
           </Box>
