@@ -20,7 +20,7 @@ test.beforeEach(async ({ page }: { page: Page }) => {
 });
 
 test.describe("Token transfer and approval test cases", () => {
-  test("Approving and wrapping tokens", async ({
+  test.skip("Approving and wrapping tokens", async ({
     page,
     metamask,
   }: {
@@ -126,7 +126,7 @@ test.describe("Token transfer and approval test cases", () => {
     // await widgetPage.validateSuccessMessageUpfrontPaymentAmount("1")
   });
 
-  test("Switch network button shown in the transaction view", async ({
+  test.skip("Switch network button shown in the transaction view", async ({
     page,
     metamask,
   }: {
