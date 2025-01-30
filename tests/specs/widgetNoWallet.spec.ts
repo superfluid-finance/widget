@@ -96,6 +96,7 @@ test.describe("Misc test cases without wallet connected", () => {
     await builderPage.addPaymentOption(testOption);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("ETHx");
+    await page.waitForTimeout(5000);
     await widgetPage.validateNoWrapStepIsPresent();
   });
 

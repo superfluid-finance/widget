@@ -1034,9 +1034,13 @@ export class WidgetPage extends BasePage {
 
   async validateNoWrapStepIsPresent() {
     await test.step(`Making sure only 2 steps exist`, async () => {
-      await expect(this.page.getByTestId("step-3")).not.toBeVisible();
+      await expect(this.page.getByTestId("step-2-button")).toBeDisabled();
+      await expect(this.page.getByTestId("step-3-button")).toBeDisabled();
       await expect(
         this.page.getByTestId("step-2").locator("button span span span"),
+      ).toHaveText("Wrap to Super Tokens");
+      await expect(
+        this.page.getByTestId("step-3").locator("button span span span"),
       ).toHaveText("Review the transaction(s)");
     });
   }
