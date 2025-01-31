@@ -20,7 +20,7 @@ test.beforeEach(async ({ page }: { page: Page }) => {
 });
 
 test.describe("Token transfer and approval test cases", () => {
-  test.skip("Approving and wrapping tokens", async ({
+  test("Approving and wrapping tokens", async ({
     page,
     metamask,
   }: {
