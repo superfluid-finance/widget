@@ -38,7 +38,7 @@ test.describe("Transactional test cases", () => {
     await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
     await widgetPage.validateTransactionStatuses(
-      ["wrap", "send"],
+      ["modifiedWrap", "send"],
       ["Ready to send", "Queued"],
     );
     await widgetPage.validateTransactionButtonTextAndClick();

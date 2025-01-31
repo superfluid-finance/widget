@@ -344,6 +344,8 @@ export class WidgetPage extends BasePage {
         return `Wrap ${this.selectedTokenDuringTest!.slice(0, -1)} into ${
           this.selectedTokenDuringTest
         }`;
+      case "modifiedWrap":
+        return `Wrap to ${this.selectedTokenDuringTest}`;
       case "modify":
         return "Modify Stream";
       case "send":
