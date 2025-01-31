@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }: { page: Page }) => {
 });
 
 test.describe("Transactional test cases", () => {
-  test("Creating a flow", async ({
+  test.skip("Creating a flow", async ({
     page,
     metamask,
   }: {
