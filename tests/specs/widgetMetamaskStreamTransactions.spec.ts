@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }: { page: Page }) => {
 });
 
 test.describe("Transactional test cases", () => {
-  test.skip("Creating a flow", async ({
+  test("Creating a flow", async ({
     page,
     metamask,
   }: {
@@ -37,14 +37,16 @@ test.describe("Transactional test cases", () => {
     );
     await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
-    await widgetPage.validateTransactionStatuses(["send"], ["Ready to send"]);
+    await widgetPage.validateTransactionStatuses(
+      ["wrap", "send"],
+      ["Ready to send", "Queued"],
+    );
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
     await widgetPage.acceptMetamaskTransaction(metamask);
-    await widgetPage.validateTransactionStatuses(
-      ["send"],
-      ["Transaction sent"],
-    );
+    await widgetPage.validateTransactionButtonTextAndClick();
+    await widgetPage.validateTransactionButtonLoading();
+    await widgetPage.acceptMetamaskTransaction(metamask);
     await widgetPage.validateSuccessMessage("1");
   });
 
