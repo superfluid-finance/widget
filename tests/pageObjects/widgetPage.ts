@@ -341,7 +341,9 @@ export class WidgetPage extends BasePage {
   getTransactionTypeString(type: string) {
     switch (type) {
       case "wrap":
-        return `Wrap to ${this.selectedTokenDuringTest}`;
+        return `Wrap ${this.selectedTokenDuringTest!.slice(0, -1)} into ${
+          this.selectedTokenDuringTest
+        }`;
       case "modify":
         return "Modify Stream";
       case "send":

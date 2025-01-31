@@ -126,7 +126,7 @@ test.describe("Token transfer and approval test cases", () => {
     // await widgetPage.validateSuccessMessageUpfrontPaymentAmount("1")
   });
 
-  test.skip("Switch network button shown in the transaction view", async ({
+  test("Switch network button shown in the transaction view", async ({
     page,
     metamask,
   }: {
@@ -144,7 +144,7 @@ test.describe("Token transfer and approval test cases", () => {
     await widgetPage.clickSwitchNetworkButton();
     await metamask.approveSwitchNetwork();
     await widgetPage.validateTransactionStatuses(
-      ["approve", "wrap", "modify"],
+      ["approve", "wrap", "send"],
       ["Ready to send", "Queued", "Queued"],
     );
     await widgetPage.validateTransactionButtonTextAndClick();
