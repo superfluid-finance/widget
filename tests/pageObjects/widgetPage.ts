@@ -1,5 +1,5 @@
 import { expect, Locator, Page, test } from "@playwright/test";
-import { MetaMask } from "@synthetixio/synpress";
+import { MetaMask } from "@synthetixio/synpress/playwright";
 
 import { EthHelper } from "../helpers/ethHelper.js";
 import {
