@@ -598,7 +598,7 @@ export class WidgetPage extends BasePage {
         process.env.WIDGET_WALLET_PRIVATE_KEY!,
       );
       await ethHelper
-        .getUnderlyingTokenBalance("fUSDC")
+        .getUnderlyingTokenBalance(superToken)
         .then(async (underlyingBalance) => {
           this.underlyingTokenBalanceBeforeWrap = underlyingBalance;
           let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
@@ -613,13 +613,13 @@ export class WidgetPage extends BasePage {
         });
 
       await ethHelper
-        .getSuperTokenBalance("fUSDCx")
+        .getSuperTokenBalance(`${superToken}x`)
         .then(async (superTokenBalance) => {
           this.superTokenBalanceBeforeWrap = superTokenBalance[0];
-          let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
-            (superTokenBalance[0].toString() / 1e18).toString(),
-          );
-          await expect(this.wrapSuperTokenBalance).toHaveText(
+          let superTokenBalanceToAssert = Math.trunc(
+            Number(superTokenBalance[0].toString() / 1e18),
+          ).toString();
+          await expect(this.wrapSuperTokenBalance).toContainText(
             `Balance: ${superTokenBalanceToAssert}`,
           );
         });

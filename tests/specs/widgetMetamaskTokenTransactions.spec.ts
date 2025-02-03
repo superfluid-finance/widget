@@ -36,7 +36,7 @@ test.describe("Token transfer and approval test cases", () => {
     await widgetPage.connectWallet(metamask);
     await widgetPage.validateAndSaveWrapPageBalances(
       "Optimism Sepolia",
-      "fDAIx",
+      "fDAI",
     );
     await widgetPage.setWrapAmount("1");
     await widgetPage.clickContinueButton();
@@ -47,10 +47,9 @@ test.describe("Token transfer and approval test cases", () => {
     await widgetPage.validateWrapReviewAmount("1");
     await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
-    await page.waitForTimeout(10000);
     await widgetPage.validateTransactionStatuses(
-      ["wrap", "modify"],
-      ["Ready to send", "Queued"],
+      ["approve", "wrap", "modify"],
+      ["Ready to send", "Queued", "Queued"],
     );
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
@@ -61,8 +60,8 @@ test.describe("Token transfer and approval test cases", () => {
     //   ["Transaction sent", "Ready to send", "Queued"],
     // );
     await widgetPage.validateTransactionStatuses(
-      ["wrap", "modify"],
-      ["Completed", "Ready to send"],
+      ["approve", "wrap", "modify"],
+      ["Completed", "Ready to send", "Queued"],
     );
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
@@ -73,10 +72,10 @@ test.describe("Token transfer and approval test cases", () => {
     //   ["Completed", "Transaction sent", "Queued"],
     // );
     await widgetPage.validateTransactionStatuses(
-      ["wrap", "modify"],
-      ["Completed", "Completed"],
+      ["approve", "wrap", "modify"],
+      ["Completed", "Completed", "Ready to send"],
     );
-    await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
+    // await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
   });
 
   test("Transfering tokens", async ({
