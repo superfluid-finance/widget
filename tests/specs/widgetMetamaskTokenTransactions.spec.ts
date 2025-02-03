@@ -34,10 +34,10 @@ test.describe("Token transfer and approval test cases", () => {
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("fDAIx");
     await widgetPage.connectWallet(metamask);
-    // await widgetPage.validateAndSaveWrapPageBalances(
-    //   "Optimism Sepolia",
-    //   "fDAIx",
-    // );
+    await widgetPage.validateAndSaveWrapPageBalances(
+      "Optimism Sepolia",
+      "fDAIx",
+    );
     await widgetPage.setWrapAmount("1");
     await widgetPage.clickContinueButton();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
@@ -76,7 +76,7 @@ test.describe("Token transfer and approval test cases", () => {
       ["wrap", "modify"],
       ["Completed", "Completed"],
     );
-    // await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
+    await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
   });
 
   test("Transfering tokens", async ({
