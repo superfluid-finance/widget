@@ -1,9 +1,6 @@
 import { Page } from "@playwright/test";
-import {
-  MetaMask,
-  metaMaskFixtures,
-  testWithSynpress,
-} from "@synthetixio/synpress";
+import { testWithSynpress } from "@synthetixio/synpress";
+import { MetaMask, metaMaskFixtures } from "@synthetixio/synpress/playwright";
 
 import { rebounderAddresses } from "../pageObjects/basePage.js";
 import { WidgetPage } from "../pageObjects/widgetPage.js";
