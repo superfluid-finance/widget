@@ -404,7 +404,7 @@ export class WidgetPage extends BasePage {
     metamask: MetaMask,
   ) {
     await test.step(`Giving permission to spend ${allowance} tokens`, async () => {
-      await metamask.confirmTransaction("aggressive");
+      await metamask.approveTokenPermission();
     });
   }
 
