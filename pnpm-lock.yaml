@@ -677,7 +677,7 @@ importers:
         specifier: ^5.9.0
         version: 5.18.0
       '@synthetixio/synpress':
-        specifier: ^4.0.4
+        specifier: ^4.0.3
         version: 4.0.4(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(@playwright/test@1.44.1)(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       dotenv:
         specifier: ^16.4.5
