@@ -30,7 +30,7 @@ const BookModal: FC<ModalProps> = ({ show, onClose }) => {
             href="https://use.superfluid.finance/subscriptions"
             target="_blank"
           >
-            Book a Demo Teodora
+            Book a Demo
           </a>
         </div>
       </div>
