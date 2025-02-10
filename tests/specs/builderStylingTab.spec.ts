@@ -131,10 +131,9 @@ test.describe("Styling tab test cases", () => {
     let builderPage = new BuilderPage(page);
     let widgetPage = new WidgetPage(page);
     let defaultFont = '"Noto Sans", "sans-serif"';
-    let defaultFont1 = '"Roboto, Helvetica, Arial, sans-serif"';
     let testFont = '"Azeret Mono", "monospace"';
     await builderPage.openStylingTab();
-    await widgetPage.validateWidgetFontIs(defaultFont1);
+    await widgetPage.validateWidgetFontIs(defaultFont);
     await builderPage.changeWidgetFontTo(testFont);
     await widgetPage.validateWidgetFontIs(testFont);
   });
