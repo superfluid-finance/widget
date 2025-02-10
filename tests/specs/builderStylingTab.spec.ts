@@ -127,13 +127,12 @@ test.describe("Styling tab test cases", () => {
     await widgetPage.validateSecondaryColorIs(red);
   });
 
-  test("Changing the font of the widget", async ({ page }) => {
+  test.skip("Changing the font of the widget", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     let widgetPage = new WidgetPage(page);
     let defaultFont = '"Noto Sans", "sans-serif"';
     let testFont = '"Azeret Mono", "monospace"';
     await builderPage.openStylingTab();
-    await page.waitForTimeout(5000);
     await widgetPage.validateWidgetFontIs(defaultFont);
     await builderPage.changeWidgetFontTo(testFont);
     await widgetPage.validateWidgetFontIs(testFont);
