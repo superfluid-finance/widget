@@ -677,8 +677,8 @@ importers:
         specifier: ^5.9.0
         version: 5.18.0
       '@synthetixio/synpress':
-        specifier: 4.0.0
-        version: 4.0.0(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(@playwright/test@1.44.1)(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+        specifier: 4.0.3
+        version: 4.0.3(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(@playwright/test@1.44.1)(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.7
@@ -2525,32 +2525,32 @@ packages:
   '@swc/helpers@0.5.1':
     resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
 
-  '@synthetixio/ethereum-wallet-mock@0.0.1':
-    resolution: {integrity: sha512-0enMf+IyZP/az7HFJRq2ub3Zn6w9FMHuL8giYrXEFza1Aqxo6ynLakTW6h6lqhxrOWufgN//aGadKrZNGk4b5g==}
+  '@synthetixio/ethereum-wallet-mock@0.0.4':
+    resolution: {integrity: sha512-kiKcQKbMsdEbRCAAi8JM+eg8Ihbnxq8sSx3HWQZcoVOzS9zHxjn9PX6ks33py+K1ec49ecCvNqyBUw7ciqhiOg==}
     peerDependencies:
-      '@playwright/test': 1.44.0
+      '@playwright/test': 1.48.2
 
-  '@synthetixio/synpress-cache@0.0.1':
-    resolution: {integrity: sha512-W6xPH7g+RBrkJ3HO0ynsqkreM7t9rIsFL0wL0QKFqQaAVGiBwJLOHJQsrpTk3U4YypVvx0Qfm4F1S+FYo3mgJA==}
+  '@synthetixio/synpress-cache@0.0.4':
+    resolution: {integrity: sha512-G1qF0XgMyRDjQjTYFniuFvPaY6+AuSvcEi2bkdcMmKCD0NK+Zw/PLEk0wRy1r1LN1F4HLdXrjittiKU6mh5PLA==}
     hasBin: true
     peerDependencies:
-      playwright-core: 1.44.0
+      playwright-core: 1.48.2
 
-  '@synthetixio/synpress-core@0.0.1':
-    resolution: {integrity: sha512-dC/pCEqGKEZl9hD80logFEoOwrWOxFFL9XDlbXxfIPNfKDT0dPszRJpKRDZQuegpLqlqZP0VoA7lAYmLhm4M3g==}
+  '@synthetixio/synpress-core@0.0.4':
+    resolution: {integrity: sha512-3zO8PGigi9sjdG359pZ0EB3BiBPweZVOyiobCopNDykKI/EoWNYY05bOttOG+/Wg0HynMzGTPTRwpJ0+a+k2Sg==}
     peerDependencies:
-      '@playwright/test': 1.44.0
+      '@playwright/test': 1.48.2
 
-  '@synthetixio/synpress-metamask@0.0.1':
-    resolution: {integrity: sha512-Y6nVDG/BrYKRShqHvfIo28LdAgRPFBPzGzamDTWLkP/3wccbqfWrSq8OptTH9eBgzd+YldhbONMQE5PmhnVpDw==}
+  '@synthetixio/synpress-metamask@0.0.4':
+    resolution: {integrity: sha512-G2bsSWxn8d2YVfZp2Aqo0Kjg0LF/kYC5qDByLyd70Dl21KIGho4amXcOYqCIOGY1Dz3dMLPkpHzVRlSqIC6PIQ==}
     peerDependencies:
-      '@playwright/test': 1.44.0
+      '@playwright/test': 1.48.2
 
-  '@synthetixio/synpress@4.0.0':
-    resolution: {integrity: sha512-Yukr7KCVjGyfTkEaoodi7DyBGictsBiIEckQEyuP5NZjfOWQHAnhOKjZeq/YhaOY3ojlOsTq04olOjgq6Nmhcw==}
+  '@synthetixio/synpress@4.0.3':
+    resolution: {integrity: sha512-x5ly4GXKkvA77EAoZBW4oktXh8IyO6YMEdulI5WiR6zse3qAOEN0Av4KQY/HYJNPcnb82G53BzeCoVAMpYTavA==}
     hasBin: true
     peerDependencies:
-      '@playwright/test': 1.44.0
+      '@playwright/test': 1.48.2
 
   '@szmarczak/http-timer@4.0.6':
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
@@ -10504,13 +10504,13 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@synthetixio/ethereum-wallet-mock@0.0.1(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(@playwright/test@1.44.1)(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
+  '@synthetixio/ethereum-wallet-mock@0.0.4(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(@playwright/test@1.44.1)(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
     dependencies:
       '@depay/web3-client': 10.18.6(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@depay/web3-mock': 14.17.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@depay/web3-mock-evm': 14.19.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@playwright/test': 1.44.1
-      '@synthetixio/synpress-core': 0.0.1(@playwright/test@1.44.1)
+      '@synthetixio/synpress-core': 0.0.4(@playwright/test@1.44.1)
       viem: 2.9.9(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
     transitivePeerDependencies:
       - '@depay/solana-web3.js'
@@ -10521,7 +10521,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@synthetixio/synpress-cache@0.0.1(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)':
+  '@synthetixio/synpress-cache@0.0.4(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)':
     dependencies:
       axios: 1.6.7
       chalk: 5.3.0
@@ -10544,15 +10544,15 @@ snapshots:
       - ts-node
       - typescript
 
-  '@synthetixio/synpress-core@0.0.1(@playwright/test@1.44.1)':
+  '@synthetixio/synpress-core@0.0.4(@playwright/test@1.44.1)':
     dependencies:
       '@playwright/test': 1.44.1
 
-  '@synthetixio/synpress-metamask@0.0.1(@playwright/test@1.44.1)(bufferutil@4.0.9)(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)(utf-8-validate@5.0.10)':
+  '@synthetixio/synpress-metamask@0.0.4(@playwright/test@1.44.1)(bufferutil@4.0.9)(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@playwright/test': 1.44.1
-      '@synthetixio/synpress-cache': 0.0.1(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)
-      '@synthetixio/synpress-core': 0.0.1(@playwright/test@1.44.1)
+      '@synthetixio/synpress-cache': 0.0.4(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)
+      '@synthetixio/synpress-core': 0.0.4(@playwright/test@1.44.1)
       '@viem/anvil': 0.0.7(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       fs-extra: 11.2.0
       zod: 3.22.4
@@ -10568,13 +10568,13 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@synthetixio/synpress@4.0.0(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(@playwright/test@1.44.1)(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
+  '@synthetixio/synpress@4.0.3(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(@playwright/test@1.44.1)(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
     dependencies:
       '@playwright/test': 1.44.1
-      '@synthetixio/ethereum-wallet-mock': 0.0.1(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(@playwright/test@1.44.1)(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
-      '@synthetixio/synpress-cache': 0.0.1(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)
-      '@synthetixio/synpress-core': 0.0.1(@playwright/test@1.44.1)
-      '@synthetixio/synpress-metamask': 0.0.1(@playwright/test@1.44.1)(bufferutil@4.0.9)(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)(utf-8-validate@5.0.10)
+      '@synthetixio/ethereum-wallet-mock': 0.0.4(@depay/solana-web3.js@1.28.0)(@depay/web3-blockchains@9.7.8)(@playwright/test@1.44.1)(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+      '@synthetixio/synpress-cache': 0.0.4(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)
+      '@synthetixio/synpress-core': 0.0.4(@playwright/test@1.44.1)
+      '@synthetixio/synpress-metamask': 0.0.4(@playwright/test@1.44.1)(bufferutil@4.0.9)(playwright-core@1.44.1)(postcss@8.5.1)(typescript@5.7.3)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - '@depay/solana-web3.js'
       - '@depay/web3-blockchains'
