@@ -783,8 +783,6 @@ export class WidgetPage extends BasePage {
   }
   async validateWidgetFontIs(font: string) {
     await test.step(`Making sure the widget uses ${font} as the font`, async () => {
-      await this.page.waitForTimeout(3000);
-
       await expect(this.networkSelectionButton.locator("input")).toHaveCSS(
         "font-family",
         font,
