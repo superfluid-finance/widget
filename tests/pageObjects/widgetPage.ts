@@ -752,6 +752,7 @@ export class WidgetPage extends BasePage {
       await expect(this.continueButton.locator("span")).toHaveCSS(
         "border-radius",
         `${radius}px`,
+        { timeout: 3000 },
       );
     });
   }
