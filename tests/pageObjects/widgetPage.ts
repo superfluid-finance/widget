@@ -786,36 +786,44 @@ export class WidgetPage extends BasePage {
       await expect(this.networkSelectionButton.locator("input")).toHaveCSS(
         "font-family",
         font,
+        { timeout: 3000 },
       );
       await expect(this.tokenSelectionButton.locator("input")).toHaveCSS(
         "font-family",
         font,
+        { timeout: 3000 },
       );
-      await expect(this.continueButton).toHaveCSS("font-family", font);
+      await expect(this.continueButton).toHaveCSS("font-family", font, {
+        timeout: 3000,
+      });
       await expect(
         this.page.locator("[data-testid=step-1] .MuiStepLabel-label"),
-      ).toHaveCSS("font-family", font);
+      ).toHaveCSS("font-family", font, { timeout: 3000 });
       await expect(
         this.page.locator("[data-testid=step-2] .MuiStepLabel-label"),
-      ).toHaveCSS("font-family", font);
+      ).toHaveCSS("font-family", font, { timeout: 3000 });
       await expect(
         this.page.locator("[data-testid=step-3] .MuiStepLabel-label"),
-      ).toHaveCSS("font-family", font);
+      ).toHaveCSS("font-family", font, { timeout: 3000 });
       await expect(this.page.locator("[data-testid=step-1] text")).toHaveCSS(
         "font-family",
         font,
+        { timeout: 3000 },
       );
       await expect(this.page.locator("[data-testid=step-2] text")).toHaveCSS(
         "font-family",
         font,
+        { timeout: 3000 },
       );
       await expect(this.page.locator("[data-testid=step-3] text")).toHaveCSS(
         "font-family",
         font,
+        { timeout: 3000 },
       );
       await expect(this.poweredBySuperfluidButton).toHaveCSS(
         "font-family",
         font,
+        { timeout: 3000 },
       );
       await expect(this.page).toHaveScreenshot(
         `changedFont-${font.replace(/"/g, "")}.png`,
