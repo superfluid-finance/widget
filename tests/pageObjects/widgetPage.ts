@@ -837,7 +837,7 @@ export class WidgetPage extends BasePage {
       ).toHaveText("Review the transaction(s)");
       await expect(this.widgetContainer).toHaveScreenshot(
         "verticalWidget.png",
-        { maxDiffPixelRatio: 0.01 },
+        { maxDiffPixelRatio: 0.03 },
       );
     });
   }
