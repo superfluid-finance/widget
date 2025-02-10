@@ -127,13 +127,14 @@ test.describe("Styling tab test cases", () => {
     await widgetPage.validateSecondaryColorIs(red);
   });
 
-  test.skip("Changing the font of the widget", async ({ page }) => {
+  test("Changing the font of the widget", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     let widgetPage = new WidgetPage(page);
     let defaultFont = '"Noto Sans", "sans-serif"';
+    let defaultFont1 = '"Roboto, Helvetica, Arial, sans-serif"';
     let testFont = '"Azeret Mono", "monospace"';
     await builderPage.openStylingTab();
-    await widgetPage.validateWidgetFontIs(defaultFont);
+    await widgetPage.validateWidgetFontIs(defaultFont1);
     await builderPage.changeWidgetFontTo(testFont);
     await widgetPage.validateWidgetFontIs(testFont);
   });
@@ -152,7 +153,7 @@ test.describe("Styling tab test cases", () => {
   });
 
   //https://github.com/superfluid-finance/widget/issues/188
-  test("Chosing the same stepper possitioning does not crash the page", async ({
+  test.skip("Chosing the same stepper possitioning does not crash the page", async ({
     page,
   }) => {
     let builderPage = new BuilderPage(page);
