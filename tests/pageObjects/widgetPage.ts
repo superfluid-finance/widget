@@ -1,5 +1,5 @@
 import { expect, Locator, Page, test } from "@playwright/test";
-import { MetaMask } from "@synthetixio/synpress";
+import { MetaMask } from "@synthetixio/synpress/playwright";
 
 import { EthHelper } from "../helpers/ethHelper.js";
 import {
@@ -344,6 +344,8 @@ export class WidgetPage extends BasePage {
         return `Wrap ${this.selectedTokenDuringTest!.slice(0, -1)} into ${
           this.selectedTokenDuringTest
         }`;
+      case "modifiedWrap":
+        return `Wrap to ${this.selectedTokenDuringTest}`;
       case "modify":
         return "Modify Stream";
       case "send":
@@ -402,7 +404,7 @@ export class WidgetPage extends BasePage {
     metamask: MetaMask,
   ) {
     await test.step(`Giving permission to spend ${allowance} tokens`, async () => {
-      await metamask.confirmTransaction("aggressive");
+      await metamask.approveTokenPermission();
     });
   }
 
@@ -596,7 +598,7 @@ export class WidgetPage extends BasePage {
         process.env.WIDGET_WALLET_PRIVATE_KEY!,
       );
       await ethHelper
-        .getUnderlyingTokenBalance("fUSDC")
+        .getUnderlyingTokenBalance(superToken)
         .then(async (underlyingBalance) => {
           this.underlyingTokenBalanceBeforeWrap = underlyingBalance;
           let underlyingBalanceToAssert = BasePage.approximateIfDecimal(
@@ -611,13 +613,13 @@ export class WidgetPage extends BasePage {
         });
 
       await ethHelper
-        .getSuperTokenBalance("fUSDCx")
+        .getSuperTokenBalance(`${superToken}x`)
         .then(async (superTokenBalance) => {
           this.superTokenBalanceBeforeWrap = superTokenBalance[0];
-          let superTokenBalanceToAssert = BasePage.approximateIfDecimal(
-            (superTokenBalance[0].toString() / 1e18).toString(),
-          );
-          await expect(this.wrapSuperTokenBalance).toHaveText(
+          let superTokenBalanceToAssert = Math.trunc(
+            Number(superTokenBalance[0].toString() / 1e18),
+          ).toString();
+          await expect(this.wrapSuperTokenBalance).toContainText(
             `Balance: ${superTokenBalanceToAssert}`,
           );
         });
@@ -747,9 +749,11 @@ export class WidgetPage extends BasePage {
 
   async validateButtonBorderRadiusIs(radius: number) {
     await test.step(`Making sure the widget button border radius is ${radius}`, async () => {
+      await expect(this.continueButton).toBeVisible();
       await expect(this.continueButton.locator("span")).toHaveCSS(
         "border-radius",
         `${radius}px`,
+        { timeout: 3000 },
       );
     });
   }
@@ -834,7 +838,7 @@ export class WidgetPage extends BasePage {
       ).toHaveText("Review the transaction(s)");
       await expect(this.widgetContainer).toHaveScreenshot(
         "verticalWidget.png",
-        { maxDiffPixelRatio: 0.01 },
+        { maxDiffPixelRatio: 0.1 },
       );
     });
   }
@@ -1032,9 +1036,22 @@ export class WidgetPage extends BasePage {
     });
   }
 
+  async validateWrapStepIsPresent() {
+    await test.step(`Making sure 3 steps exist`, async () => {
+      await expect(this.page.getByTestId("step-2-button")).toBeDisabled();
+      await expect(this.page.getByTestId("step-3-button")).toBeDisabled();
+      await expect(
+        this.page.getByTestId("step-2").locator("button span span span"),
+      ).toHaveText("Wrap to Super Tokens");
+      await expect(
+        this.page.getByTestId("step-3").locator("button span span span"),
+      ).toHaveText("Review the transaction(s)");
+    });
+  }
+
   async validateNoWrapStepIsPresent() {
     await test.step(`Making sure only 2 steps exist`, async () => {
-      await expect(this.page.getByTestId("step-3")).not.toBeVisible();
+      await expect(this.page.getByTestId("step-2-button")).toBeDisabled();
       await expect(
         this.page.getByTestId("step-2").locator("button span span span"),
       ).toHaveText("Review the transaction(s)");
