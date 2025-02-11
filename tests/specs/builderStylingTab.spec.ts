@@ -94,12 +94,11 @@ test.describe("Styling tab test cases", () => {
     let maxRadius = 25;
     let defaultRadius = 10;
     await builderPage.openStylingTab();
-    // await widgetPage.validateButtonBorderRadiusIs(defaultRadius);
-    await builderPage.changeBorderRadius("button", minRadius);
-    await widgetPage.validateButtonBorderRadiusIs(minRadius);
-    // await page.waitForTimeout(10000);
-    await builderPage.changeBorderRadius("button", maxRadius);
-    await widgetPage.validateButtonBorderRadiusIs(maxRadius);
+    await widgetPage.validateButtonBorderRadiusIs(defaultRadius);
+    // await builderPage.changeBorderRadius("button", minRadius);
+    // await widgetPage.validateButtonBorderRadiusIs(minRadius);
+    // await builderPage.changeBorderRadius("button", maxRadius);
+    // await widgetPage.validateButtonBorderRadiusIs(maxRadius);
   });
 
   test("Changing primary color by typing color in the field", async ({

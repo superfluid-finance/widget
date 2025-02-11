@@ -749,6 +749,7 @@ export class WidgetPage extends BasePage {
 
   async validateButtonBorderRadiusIs(radius: number) {
     await test.step(`Making sure the widget button border radius is ${radius}`, async () => {
+      await expect(this.continueButton).toBeVisible();
       await expect(this.continueButton.locator("span")).toHaveCSS(
         "border-radius",
         `${radius}px`,
