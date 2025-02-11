@@ -87,7 +87,7 @@ test.describe("Styling tab test cases", () => {
     await widgetPage.validateFieldBorderRadiusIs(maxRadius);
   });
 
-  test.skip("Changing button border radius", async ({ page }) => {
+  test("Changing button border radius", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     let widgetPage = new WidgetPage(page);
     let minRadius = 0;
@@ -101,7 +101,7 @@ test.describe("Styling tab test cases", () => {
     await widgetPage.validateButtonBorderRadiusIs(maxRadius);
   });
 
-  test.skip("Changing primary color by typing color in the field", async ({
+  test("Changing primary color by typing color in the field", async ({
     page,
   }) => {
     let builderPage = new BuilderPage(page);
@@ -127,7 +127,7 @@ test.describe("Styling tab test cases", () => {
     await widgetPage.validateSecondaryColorIs(red);
   });
 
-  test.skip("Changing the font of the widget", async ({ page }) => {
+  test("Changing the font of the widget", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     let widgetPage = new WidgetPage(page);
     let defaultFont = '"Noto Sans", "sans-serif"';
@@ -138,9 +138,7 @@ test.describe("Styling tab test cases", () => {
     await widgetPage.validateWidgetFontIs(testFont);
   });
 
-  test.skip("Changing the stepper to vertical and horizontal", async ({
-    page,
-  }) => {
+  test("Changing the stepper to vertical and horizontal", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     let widgetPage = new WidgetPage(page);
     await builderPage.openStylingTab();
@@ -152,7 +150,7 @@ test.describe("Styling tab test cases", () => {
   });
 
   //https://github.com/superfluid-finance/widget/issues/188
-  test.skip("Chosing the same stepper possitioning does not crash the page", async ({
+  test("Chosing the same stepper possitioning does not crash the page", async ({
     page,
   }) => {
     let builderPage = new BuilderPage(page);
