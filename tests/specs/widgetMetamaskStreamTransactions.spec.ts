@@ -1,9 +1,6 @@
 import { Page } from "@playwright/test";
-import {
-  MetaMask,
-  metaMaskFixtures,
-  testWithSynpress,
-} from "@synthetixio/synpress";
+import { testWithSynpress } from "@synthetixio/synpress";
+import { MetaMask, metaMaskFixtures } from "@synthetixio/synpress/playwright";
 
 import { paymentOptions, rebounderAddresses } from "../pageObjects/basePage.js";
 import { BuilderPage } from "../pageObjects/builderPage.js";
@@ -30,20 +27,23 @@ test.describe("Transactional test cases", () => {
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("ETHx");
     await widgetPage.connectWallet(metamask);
+    await widgetPage.clickContinueButton();
     await widgetPage.validateAndSaveSenderAndReceiverAddresses(
       process.env.WIDGET_WALLET_PUBLIC_KEY!,
       rebounderAddresses["optimism-sepolia"],
     );
     await widgetPage.waitForTransactionsToGetValidated();
     await widgetPage.clickContinueButton();
-    await widgetPage.validateTransactionStatuses(["send"], ["Ready to send"]);
+    await widgetPage.validateTransactionStatuses(
+      ["modifiedWrap", "send"],
+      ["Ready to send", "Queued"],
+    );
     await widgetPage.validateTransactionButtonTextAndClick();
     await widgetPage.validateTransactionButtonLoading();
     await widgetPage.acceptMetamaskTransaction(metamask);
-    await widgetPage.validateTransactionStatuses(
-      ["send"],
-      ["Transaction sent"],
-    );
+    await widgetPage.validateTransactionButtonTextAndClick();
+    await widgetPage.validateTransactionButtonLoading();
+    await widgetPage.acceptMetamaskTransaction(metamask);
     await widgetPage.validateSuccessMessage("1");
   });
 

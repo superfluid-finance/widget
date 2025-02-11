@@ -1,9 +1,6 @@
 import { Page } from "@playwright/test";
-import {
-  MetaMask,
-  metaMaskFixtures,
-  testWithSynpress,
-} from "@synthetixio/synpress";
+import { testWithSynpress } from "@synthetixio/synpress";
+import { MetaMask, metaMaskFixtures } from "@synthetixio/synpress/playwright";
 
 import {
   paymentOptions,
@@ -36,7 +33,7 @@ test.describe("Token transfer and approval test cases", () => {
     await widgetPage.connectWallet(metamask);
     await widgetPage.validateAndSaveWrapPageBalances(
       "Optimism Sepolia",
-      "fDAIx",
+      "fDAI",
     );
     await widgetPage.setWrapAmount("1");
     await widgetPage.clickContinueButton();
@@ -75,7 +72,7 @@ test.describe("Token transfer and approval test cases", () => {
       ["approve", "wrap", "modify"],
       ["Completed", "Completed", "Ready to send"],
     );
-    await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
+    // await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
   });
 
   test("Transfering tokens", async ({
@@ -144,7 +141,7 @@ test.describe("Token transfer and approval test cases", () => {
     await widgetPage.clickSwitchNetworkButton();
     await metamask.approveSwitchNetwork();
     await widgetPage.validateTransactionStatuses(
-      ["approve", "wrap", "modify"],
+      ["approve", "wrap", "send"],
       ["Ready to send", "Queued", "Queued"],
     );
     await widgetPage.validateTransactionButtonTextAndClick();

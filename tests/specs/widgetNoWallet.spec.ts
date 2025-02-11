@@ -86,7 +86,7 @@ test.describe("Misc test cases without wallet connected", () => {
     await widgetPage.validateNoWrapStepIsPresent();
   });
 
-  test("Wrap step not being shown for native tokens", async ({ page }) => {
+  test("Wrap step being shown for native tokens", async ({ page }) => {
     let widgetPage = new WidgetPage(page);
     let builderPage = new BuilderPage(page);
     let testOption = paymentOptions.defaultPaymentOption;
@@ -96,7 +96,7 @@ test.describe("Misc test cases without wallet connected", () => {
     await builderPage.addPaymentOption(testOption);
     await widgetPage.selectPaymentNetwork("Optimism Sepolia");
     await widgetPage.selectPaymentToken("ETHx");
-    await widgetPage.validateNoWrapStepIsPresent();
+    await widgetPage.validateWrapStepIsPresent();
   });
 
   // TODO Playwright forces the focus on the element and at that point scroll bar appears and it is possible to scroll to, re-enable this test case once https://github.com/superfluid-finance/widget/issues/92 is fixed and add visual regression test

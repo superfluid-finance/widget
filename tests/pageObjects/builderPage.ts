@@ -1433,8 +1433,8 @@ export class BuilderPage extends BasePage {
         this.page,
         this.bookDemoButton,
         "https://use.superfluid.finance/subscriptions",
-        "https://airtable.com/appmq3TJDdQUrTQpx/shrJ9Og5dbweZfxB8",
-        "Superfluid Subscriptions",
+        "https://airtable.com/appmq3TJDdQUrTQpx/shrWouN6ursCkOQ86",
+        "Contact",
       );
     });
   }
