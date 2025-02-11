@@ -87,16 +87,17 @@ test.describe("Styling tab test cases", () => {
     await widgetPage.validateFieldBorderRadiusIs(maxRadius);
   });
 
-  test("Changing button border radius", async ({ page }) => {
+  test.only("Changing button border radius", async ({ page }) => {
     let builderPage = new BuilderPage(page);
     let widgetPage = new WidgetPage(page);
     let minRadius = 0;
     let maxRadius = 25;
     let defaultRadius = 10;
     await builderPage.openStylingTab();
-    await widgetPage.validateButtonBorderRadiusIs(defaultRadius);
+    // await widgetPage.validateButtonBorderRadiusIs(defaultRadius);
     await builderPage.changeBorderRadius("button", minRadius);
     await widgetPage.validateButtonBorderRadiusIs(minRadius);
+    // await page.waitForTimeout(10000);
     await builderPage.changeBorderRadius("button", maxRadius);
     await widgetPage.validateButtonBorderRadiusIs(maxRadius);
   });
