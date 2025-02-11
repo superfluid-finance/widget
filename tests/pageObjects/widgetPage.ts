@@ -573,7 +573,7 @@ export class WidgetPage extends BasePage {
       await ethHelper
         .getUnderlyingTokenBalance(underlyingToken)
         .then(async (underlyingBalance) => {
-          await expect(
+          expect(
             this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
           ).toEqual(underlyingBalance);
         });
@@ -581,9 +581,12 @@ export class WidgetPage extends BasePage {
       await ethHelper
         .getSuperTokenBalance(token)
         .then(async (superTokenBalance) => {
-          await expect(
-            this.superTokenBalanceBeforeWrap! + wrappedAmount,
-          ).toEqual(superTokenBalance[0]);
+          // Validate only first 5 digits because there's ongoing stream
+          expect(
+            (this.superTokenBalanceBeforeWrap! + wrappedAmount)
+              .toString()
+              .slice(0, 5),
+          ).toEqual(superTokenBalance[0].toString().slice(0, 5));
         });
     });
   }
