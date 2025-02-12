@@ -1,5 +1,6 @@
 import { expect, Locator, Page, test } from "@playwright/test";
 import { MetaMask } from "@synthetixio/synpress/playwright";
+import { formatEther } from "ethers";
 
 import { EthHelper } from "../helpers/ethHelper.js";
 import {
@@ -573,7 +574,7 @@ export class WidgetPage extends BasePage {
       await ethHelper
         .getUnderlyingTokenBalance(underlyingToken)
         .then(async (underlyingBalance) => {
-          await expect(
+          expect(
             this.underlyingTokenBalanceBeforeWrap! - wrappedAmount,
           ).toEqual(underlyingBalance);
         });
@@ -581,9 +582,12 @@ export class WidgetPage extends BasePage {
       await ethHelper
         .getSuperTokenBalance(token)
         .then(async (superTokenBalance) => {
-          await expect(
-            this.superTokenBalanceBeforeWrap! + wrappedAmount,
-          ).toEqual(superTokenBalance[0]);
+          // Approximate validation because there's ongoing stream
+          expect(
+            Number(
+              formatEther(this.superTokenBalanceBeforeWrap! + wrappedAmount),
+            ),
+          ).toBeCloseTo(Number(formatEther(superTokenBalance[0])));
         });
     });
   }
