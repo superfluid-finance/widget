@@ -72,7 +72,7 @@ test.describe("Token transfer and approval test cases", () => {
       ["approve", "wrap", "modify"],
       ["Completed", "Completed", "Ready to send"],
     );
-    // await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
+    await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
   });
 
   test("Transfering tokens", async ({

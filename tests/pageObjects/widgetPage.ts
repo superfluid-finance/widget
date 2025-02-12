@@ -1,5 +1,6 @@
 import { expect, Locator, Page, test } from "@playwright/test";
 import { MetaMask } from "@synthetixio/synpress/playwright";
+import { formatEther } from "ethers";
 
 import { EthHelper } from "../helpers/ethHelper.js";
 import {
@@ -581,12 +582,12 @@ export class WidgetPage extends BasePage {
       await ethHelper
         .getSuperTokenBalance(token)
         .then(async (superTokenBalance) => {
-          // Validate only first 5 digits because there's ongoing stream
+          // Approximate validation because there's ongoing stream
           expect(
-            (this.superTokenBalanceBeforeWrap! + wrappedAmount)
-              .toString()
-              .slice(0, 5),
-          ).toEqual(superTokenBalance[0].toString().slice(0, 5));
+            Number(
+              formatEther(this.superTokenBalanceBeforeWrap! + wrappedAmount),
+            ),
+          ).toBeCloseTo(Number(formatEther(superTokenBalance[0])));
         });
     });
   }
