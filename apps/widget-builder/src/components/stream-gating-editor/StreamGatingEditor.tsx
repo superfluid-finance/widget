@@ -99,7 +99,7 @@ const StreamGatingEditor: FC<StreamGatingEditorProps> = ({
 
   useEffect(() => {
     if (!errors) return;
-    // Temporary until we have desings for error handling
+    // Temporary until we have designs for error handling
     alert(`${errors.error}${errors.message ? ": " + errors.message : ""}`);
   }, [errors]);
 

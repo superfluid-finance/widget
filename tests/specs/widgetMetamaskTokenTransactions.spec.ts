@@ -75,7 +75,7 @@ test.describe("Token transfer and approval test cases", () => {
     await widgetPage.validateTokenBalanceAfterWrap("fDAIx");
   });
 
-  test("Transfering tokens", async ({
+  test("Transferring tokens", async ({
     page,
     metamask,
   }: {

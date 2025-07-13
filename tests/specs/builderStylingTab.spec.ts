@@ -150,7 +150,7 @@ test.describe("Styling tab test cases", () => {
   });
 
   //https://github.com/superfluid-finance/widget/issues/188
-  test("Chosing the same stepper possitioning does not crash the page", async ({
+  test("Choosing the same stepper positioning does not crash the page", async ({
     page,
   }) => {
     let builderPage = new BuilderPage(page);
@@ -183,7 +183,7 @@ test.describe("Styling tab test cases", () => {
   // Playwright can't seem to find the correct bounding boxes for the slider and thumb,
   // It might be related to it scrolling during the test case and getting the bounding box relative to the main frame viewport
   // https://playwright.dev/docs/api/class-locator#locator-bounding-box
-  // Tried to simply offset the x/y but basicly every time the coordinates end up being random and failing the test
+  // Tried to simply offset the x/y but basically every time the coordinates end up being random and failing the test
   // test("Changing primary color by using the color picker", async ({ page }) => {
   //   let builderPage = new BuilderPage(page);
   //   let widgetPage = new WidgetPage(page);

@@ -70,7 +70,7 @@ test.describe("Error state test cases", () => {
     );
   });
 
-  test("Need atleast 24 hours worth of stream error", async ({
+  test("Need at least 24 hours worth of stream error", async ({
     page,
     metamask,
   }: {

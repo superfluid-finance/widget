@@ -496,7 +496,7 @@ export class WidgetPage extends BasePage {
     await test.step(`Checking if an error is shown in the widget if no payment options are set`, async () => {
       await expect(this.widgetErrorTitle).toHaveText("Input Error");
       //TODO validate the message too, playwright returns 17 strings??
-      //This will probobly be a nicer message in the future so wont spend time on it for now
+      //This will probobly be a nicer message in the future so won't spend time on it for now
     });
   }
   async validateUsedTestImage() {
@@ -564,7 +564,7 @@ export class WidgetPage extends BasePage {
   }
 
   async validateTokenBalanceAfterWrap(token: string) {
-    await test.step(`Checking if token got wrapped succesfully`, async () => {
+    await test.step(`Checking if token got wrapped successfully`, async () => {
       let wrappedAmount = BigInt(1e18) * BigInt(this.wrapAmountDuringTest!);
       const underlyingToken = token.slice(0, -1);
       const ethHelper = new EthHelper(
