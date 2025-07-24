@@ -1,5 +1,5 @@
 /**
- * WARINGING: Don't mix imports from wagmi.ts and wagmi-demo.ts.
+ * WARNING: Don't mix imports from wagmi.ts and wagmi-demo.ts.
  * It will break the main page, as wagmi's createConfig in the wagmi-demo.ts
  * will override the config in wagmi.ts, since wagmi has a global store.
  */
