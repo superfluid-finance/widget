@@ -45,12 +45,12 @@ const NFTDeploymentDialog: FC<NFTDeploymentDialogProps> = ({
   }, [cloneAddresses]);
 
   const [successfulDeployments, failedDeployments] = useMemo(() => {
-    const succesfulDeployments =
+    const successfulDeployments =
       Object.values(cloneAddresses).filter(Boolean).length;
     const failedDeployments =
-      Object.values(cloneAddresses).length - succesfulDeployments;
+      Object.values(cloneAddresses).length - successfulDeployments;
 
-    return [succesfulDeployments, failedDeployments];
+    return [successfulDeployments, failedDeployments];
   }, [cloneAddresses]);
 
   return (
