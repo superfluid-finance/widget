@@ -113,10 +113,22 @@ export function WidgetCore({
     }
   }, [validationResult]);
 
-  const { superTokens, underlyingTokens } = useMemo(
-    () => filterSuperTokensFromTokenList(tokenList),
-    [tokenList],
-  ); // TODO: Worry about consumer having to keep the token list reference unchanged.
+  const { superTokens, underlyingTokens } = useMemo(() => {
+    const filtered = filterSuperTokensFromTokenList(tokenList);
+
+    // Debug information about token list usage
+    // Only log in development builds when console.debug is available
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug("[Superfluid Widget] Token list processed:", {
+        totalTokens: tokenList.tokens.length,
+        superTokens: filtered.superTokens.length,
+        underlyingTokens: filtered.underlyingTokens.length,
+        networks: [...new Set(tokenList.tokens.map((t) => t.chainId))],
+      });
+    }
+
+    return filtered;
+  }, [tokenList]); // TODO: Worry about consumer having to keep the token list reference unchanged.
 
   // TODO: Check if network is configured in wagmi.
   const networks: ReadonlyArray<SupportedNetwork> = useMemo(
@@ -304,8 +316,6 @@ export function WidgetCore({
   );
 
   const theme = useMemo(() => createWidgetTheme(theme_), [theme_]);
-
-  // TODO(KK): debug message about what token list is used?
 
   const paymentDetailsKey = useMemo(
     () => nanoid(),
